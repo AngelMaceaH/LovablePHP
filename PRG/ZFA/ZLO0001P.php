@@ -64,7 +64,7 @@
                 <ul class="tablist" role="tablist">
                     <li id="tab1" class="tablist__tab text-center p-3 is-active" aria-controls="panel1" aria-selected="true" role="tab" tabindex="0">Día y Mes</li>
                     <li id="tab2" class="tablist__tab text-center p-3 " aria-controls="panel2" aria-selected="false" role="tab" tabindex="0">Anual</li>
-                    <li id="tab3" class="tablist__tab text-center p-3 " aria-controls="panel3" aria-selected="false" role="tab" tabindex="0">Promedios</li>
+                    <li id="tab3" class="tablist__tab text-center p-3 " aria-controls="panel3" aria-selected="false" role="tab" tabindex="0">Promedio por Transacción</li>
                 </ul>
                 <div id="panel1" class="tablist__panel p-2" aria-labelledby="tab1" aria-hidden="false" role="tabpanel">
                   <div class="position-relative">
@@ -180,25 +180,38 @@
                                 $ano2 = number_format(rtrim(utf8_encode($row_compAnual['ANO2'])),0);
                                 $varia =number_format(rtrim(utf8_encode($row_compAnual['VARIA'])),0);
                               }
-                           
-                             
-                              $crecimiento =0;
-
+                              
+                              $crecimiento=0;
+                            
                               if ($row_compAnual['ANO1']!=0 && $row_compAnual['ANO2']!=0) {
                                 $crecimiento = round((($row_compAnual['ANO1']/$row_compAnual['ANO2'])-1)*100);
                               }
-                             
-                            
+                             $crecimiento=number_format($crecimiento,0);
                                 if($row_compAnual['ID'] != "")
                                 {
+                                  
+
                                     print '<tr  onclick="location.href=\'/LovablePHP/PRG/ZFA/ZLO0001PA.php?id='.$row_compAnual['ID'].'&dat='.$_SESSION['FechaFiltro'].'\';">';
                                     print   '<td class="responsive-font-example" ><b>' .$row_compAnual['CODSEC'].'</b></td>';
                                     print   '<td class="responsive-font-example" ><b>' .$row_compAnual['ID'].'</b></td>';
                                     print   '<td class="responsive-font-example"><b>' .$compañiaAnual.'</b></td>';
                                     print   '<td class="responsive-font-example text-end"><b>'.$ano1.'</b></td>';
                                     print   '<td class="responsive-font-example text-end"><b>' .$ano2.'</b></td>';
-                                    print   '<td class="responsive-font-example text-end"><b>' .$varia.'</b></td>';
-                                    print   '<td class="responsive-font-example text-end"><b>'.$crecimiento.'</b></td>';
+                                    if ($row_compAnual['VARIA']<0) {
+                                      print   '<td class="responsive-font-example text-end"><b><span class="text-danger">'.$varia.'</b></td>';
+                                    }elseif ($row_compAnual['VARIA']>0) {
+                                      print   '<td class="responsive-font-example text-end"><b><span class="text-success">'.$varia.'</b></td>';
+                                    }else{
+                                      print   '<td class="responsive-font-example text-end"><b><span>'.$varia.'</b></td>';
+                                    }   
+
+                                    if ($crecimiento<0) {
+                                      print   '<td class="responsive-font-example text-end text-danger"><b>'.$crecimiento.'</b></td>';
+                                    }elseif ($crecimiento>0) {
+                                      print   '<td class="responsive-font-example text-end text-success"><b>'.$crecimiento.'</b></td>';
+                                    }else {
+                                      print   '<td class="responsive-font-example text-end"><b>'.$crecimiento.'</b></td>';
+                                    }                            
                                     print '</tr>';
                                     
                                 }
@@ -206,7 +219,7 @@
                             while($row_compAnual = odbc_fetch_array($result_compAnual));
                         
                         }else{
-                          //echo "<script>window.location = '/LovablePHP/404.html'</script>";
+                          echo "<script>window.location = '/LovablePHP/404.html'</script>";
                         }
                         
                     ?>
@@ -306,7 +319,6 @@
                 var tabs = $('.tablist__tab'),
                     tabPanels = $('.tablist__panel');
 
-                
                 tabs.on('click', function() {
                 
                     // Cache selectors
@@ -343,6 +355,7 @@
 
                
            $( document ).ready(function() {
+
              if (<?php echo isset($_SESSION['opcion']) ? $_SESSION['opcion'] : "1"; ?>==3) {
                   $("#btnradio2").addClass("d-none");
                     $("#btnnradio2").addClass("d-none");
