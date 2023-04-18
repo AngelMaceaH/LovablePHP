@@ -608,6 +608,7 @@
 
   <?php include 'graficas.php';?>
   <script>
+  
     function obtenerNombreMes(numeroMes) {
               const nombresMes = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
               return nombresMes[numeroMes - 1];
@@ -619,7 +620,6 @@
             var compFiltro = <?php echo $compFiltroP; ?>;
 
     $(document).ready(function () {
-      
       $('#fechaCk').prop('checked', <?php echo  $fechacheck ?>);
       $("#cbbMesgra").val(compFiltro);
       $("#tituloGraficasVentas").empty();

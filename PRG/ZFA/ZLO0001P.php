@@ -44,16 +44,16 @@
                <input type="date" class="form-control" name="fechapro" id="fechapro" data-date-format="dd/mm/yyyy" onfocus="(this.type='date')" onkeydown="return false;">
               </div>
               <div class="btn-group mt-3 d-flex justify-content-center justify-content-md-start" role="group" aria-label="Basic radio toggle button group">
-                <input type="radio" class="btn-check " name="btnradio" id="btnradio1" autocomplete="off">
+                <input type="radio" class="btn-check " name="btnradio1" id="btnradio1" autocomplete="off">
                 <label class="btn btn-outline-secondary responsive-font-example pt-3 pb-3" for="btnradio1"><b>Unidades</b></label>
 
-                <input type="radio" class="btn-check" name="btnradio" autocomplete="off" id="btnradio2">
+                <input type="radio" class="btn-check" name="btnradio2"  id="btnradio2" autocomplete="off">
                 <label class="btn btn-outline-secondary responsive-font-example  pt-3 pb-3" for="btnradio2" id="btnnradio2"><b>Transacciones</b></label>
 
-                <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off">
+                <input type="radio" class="btn-check" name="btnradio3" id="btnradio3" autocomplete="off">
                 <label class="btn btn-outline-secondary responsive-font-example  pt-3 pb-3" for="btnradio3"><b>Valores Dolarizados</b></label>
 
-                <input type="radio" class="btn-check" name="btnradio" id="btnradio4" autocomplete="off" checked>
+                <input type="radio" class="btn-check" name="btnradio4" id="btnradio4" autocomplete="off" >
                 <label class="btn btn-outline-secondary responsive-font-example  pt-3 pb-3" for="btnradio4"><b>Moneda Nacional</b></label>
             </div>
 
@@ -62,34 +62,52 @@
           <hr>   
           <div class="demo">
                 <ul class="tablist" role="tablist">
-                    <li id="tab1" class="tablist__tab text-center p-3 is-active" aria-controls="panel1" aria-selected="true" role="tab" tabindex="0">Dia y Mes</li>
+                    <li id="tab1" class="tablist__tab text-center p-3 is-active" aria-controls="panel1" aria-selected="true" role="tab" tabindex="0">Día y Mes</li>
                     <li id="tab2" class="tablist__tab text-center p-3 " aria-controls="panel2" aria-selected="false" role="tab" tabindex="0">Anual</li>
                     <li id="tab3" class="tablist__tab text-center p-3 " aria-controls="panel3" aria-selected="false" role="tab" tabindex="0">Promedios</li>
                 </ul>
                 <div id="panel1" class="tablist__panel p-2" aria-labelledby="tab1" aria-hidden="false" role="tabpanel">
                   <div class="position-relative">
                     <table id="myTable" class="table stripe table-hover mt-2" style="width:100%" >
-                        <thead>
-                            <tr>
-                                <th class="text-center"></th>
-                                <th class="text-center">ID</th>
-                                <th class="text-start">Punto de venta</th>
-                                <th class="text-end">Ventas dia</th>
-                                <th class="text-end">Ventas mes</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        <?php
-                        
+                    <?php
+                    $label1="";$label2="";
+                          switch ($_SESSION['filtro']) {
+                            case 1:
+                              $label1="Unidades día"; $label2="Unidades mes";
+                              break;
+                              case 2:
+                                $label1="Trans. día"; $label2="Trans. mes";
+                                break;
+                            default:
+                                 $label1="Ventas día"; $label2="Ventas mes";
+                              break;
+                          }                    
+                       echo ' <thead>
+                                <tr>
+                                    <th class="text-center"></th>
+                                    <th class="text-center  responsive-font-example">ID</th>
+                                    <th class="text-start  responsive-font-example">Punto de venta</th>
+                                    <th class="text-end  responsive-font-example">'. $label1.'</th>
+                                    <th class="text-end  responsive-font-example">'. $label2.'</th>
+                                </tr>
+                            </thead>
+                            <tbody>';
+                       
                               if($row_zlo0001p = odbc_fetch_array($result_zlo0001p)){
                                   
                                   do{
                                     $compañia = rtrim(utf8_encode($row_zlo0001p['COMDES']));
-                                    $mon = rtrim(utf8_encode($row_zlo0001p['MON']));
+                                    if ($_SESSION['filtro']==3) {
+                                      $mon='D';
+                                    }else{
+                                      $mon = rtrim(utf8_encode($row_zlo0001p['MON']));
+                                    }
                                     $subdia = $mon.'.'.number_format(rtrim(utf8_encode($row_zlo0001p['SUBDIA'])),2, '.', ',');
                                     $submes = $mon.'.'.number_format(rtrim(utf8_encode($row_zlo0001p['SUBMES'])),2, '.', ',');
-                                  
-                                  
+                                    if ($_SESSION['filtro']==1 || $_SESSION['filtro']==2) {
+                                      $subdia = number_format(rtrim(utf8_encode($row_zlo0001p['SUBDIA'])),0);
+                                      $submes = number_format(rtrim(utf8_encode($row_zlo0001p['SUBMES'])),0);
+                                    }
                                       if($row_zlo0001p['ID'] != "")
                                       {
                                           print '<tr  onclick="location.href=\'/LovablePHP/PRG/ZFA/ZLO0001PA.php?id='.$row_zlo0001p['ID'].'&dat='.$_SESSION['FechaFiltro'].'\';">';
@@ -99,13 +117,12 @@
                                           print   '<td class="responsive-font-example text-darkblue text-end"><b>'.$subdia.'</b></td>';
                                           print   '<td class="responsive-font-example text-pink text-end"><b>' .$submes.'</b></td>';
                                           print '</tr>';
-                                          
                                       }
                                   }
                                   while($row_zlo0001p = odbc_fetch_array($result_zlo0001p));
                               
                               }else{
-                                echo "<script>window.location = '/LovablePHP/404.html'</script>";
+                               echo "<script>window.location = '/LovablePHP/404.html'</script>";
                               }
                               
                           ?>
@@ -119,29 +136,54 @@
                   <div class="position-relative">
                   <div class="table-responsive">
                     <table id="myTableAnual" class="table stripe table-hover mt-2" style="width:100%" >
-                        <thead>
-                            <tr>
-                                <th class="text-center responsive-font-example"></th>
-                                <th class="text-center responsive-font-example">ID</th>
-                                <th class="text-start responsive-font-example">Punto de venta</th>
-                                <th class="text-end responsive-font-example">Venta Anual</th>
-                                <th class="text-end responsive-font-example">Venta Año Comparación</th>
-                                <th class="text-end responsive-font-example">Variación</th>
-                                <th class="text-end responsive-font-example">%Crecimiento</th>
-                            </tr>
-                        </thead>
-                        <tbody>
+                       
                         <?php
+                    $label3="";$label4="";
+                          switch ($_SESSION['filtro']) {
+                            case 1:
+                              $label3="Unidades Anual"; $label4="Unidades Año Comparación";
+                              break;
+                              case 2:
+                                $label3="Trans. Anual"; $label4="Trans. Año Comparación";
+                                break;
+                            default:
+                                 $label3="Venta Anual"; $label4="Venta Año Comparación";
+                              break;
+                          }                    
+                       echo '<thead>
+                                <tr>
+                                    <th class="text-center responsive-font-example"></th>
+                                    <th class="text-center responsive-font-example">ID</th>
+                                    <th class="text-start responsive-font-example">Punto de venta</th>
+                                    <th class="text-end responsive-font-example">'.$label3.'</th>
+                                    <th class="text-end responsive-font-example">'.$label4.'</th>
+                                    <th class="text-end responsive-font-example">Variación</th>
+                                    <th class="text-end responsive-font-example">%Crecimiento</th>
+                                </tr>
+                            </thead>
+                            <tbody>';
                         
                         if($row_compAnual = odbc_fetch_array($result_compAnual)){
                             
                             do{
                               $compañiaAnual = rtrim(utf8_encode($row_compAnual['COMDES']));
-                              $monAnual = rtrim(utf8_encode($row_compAnual['MON']));
+                              if ($_SESSION['filtro']==3) {
+                                $monAnual='D';
+                              }else{
+                                $monAnual = rtrim(utf8_encode($row_compAnual['MON']));
+                              }
                               $ano1 = $monAnual.'.'.number_format(rtrim(utf8_encode($row_compAnual['ANO1'])),2, '.', ',');
                               $ano2 = $monAnual.'.'.number_format(rtrim(utf8_encode($row_compAnual['ANO2'])),2, '.', ',');
                               $varia = $monAnual.'.'.number_format(rtrim(utf8_encode($row_compAnual['VARIA'])),2, '.', ',');
+                              if ($_SESSION['filtro']==1 || $_SESSION['filtro']==2) {
+                                $ano1 = number_format(rtrim(utf8_encode($row_compAnual['ANO1'])),0);
+                                $ano2 = number_format(rtrim(utf8_encode($row_compAnual['ANO2'])),0);
+                                $varia =number_format(rtrim(utf8_encode($row_compAnual['VARIA'])),0);
+                              }
+                           
+                             
                               $crecimiento =0;
+
                               if ($row_compAnual['ANO1']!=0 && $row_compAnual['ANO2']!=0) {
                                 $crecimiento = round((($row_compAnual['ANO1']/$row_compAnual['ANO2'])-1)*100);
                               }
@@ -164,7 +206,7 @@
                             while($row_compAnual = odbc_fetch_array($result_compAnual));
                         
                         }else{
-                          echo "<script>window.location = '/LovablePHP/404.html'</script>";
+                          //echo "<script>window.location = '/LovablePHP/404.html'</script>";
                         }
                         
                     ?>
@@ -175,23 +217,72 @@
                     </div>
                     <div id="panel3" class="tablist__panel is-hidden p-2" aria-labelledby="tab3" aria-hidden="true" role="tabpanel">
                     <div class="position-relative">
+                    <div class="table-responsive">
                     <table id="myTableTransacciones" class="table stripe table-hover mt-2" style="width:100%" >
                         <thead>
                             <tr>
                                 <th class="text-center responsive-font-example"></th>
                                 <th class="text-center responsive-font-example">ID</th>
                                 <th class="text-start responsive-font-example">Punto de venta</th>
-                                <th class="text-end responsive-font-example">Trans. Mes</th>
-                                <th class="text-end responsive-font-example">Trans. Año</th>
-                                <th class="text-end responsive-font-example">Trans. Año Comparación</th>
+                                <th class="text-end responsive-font-example">Promedio día</th>
+                                <th class="text-end responsive-font-example">Promedio Mes</th>
+                                <th class="text-end responsive-font-example">Promedio Año</th>
+                                <th class="text-end responsive-font-example">Promedio Año Comparación</th>
                             </tr>
                         </thead>
                         <tbody>
+                        <?php
+                        if($_SESSION['filtro']!=2 ){
+                            if($rowPromedios = odbc_fetch_array($resultpromedios) ){
+                                
+                                do{
+                              
+                                  $compañiaPromedios = rtrim(utf8_encode($rowPromedios['COMDES']));
+                                  if ($_SESSION['filtro']==3) {
+                                    $monPromedios='D';
+                                  }else{
+                                    $monPromedios = rtrim(utf8_encode($rowPromedios['MON']));
+                                  }
+                                
+                                  $prodia = $monPromedios.'.'.number_format(rtrim(utf8_encode($rowPromedios['PRODIA']==""? 0:$rowPromedios['PRODIA'])),2, '.', ',');
+                                  $promes = $monPromedios.'.'.number_format(rtrim(utf8_encode($rowPromedios['PROMES']==""? 0:$rowPromedios['PROMES'])),2, '.', ',');
+                                  $proano = $monPromedios.'.'.number_format(rtrim(utf8_encode($rowPromedios['PROANO']==""? 0:$rowPromedios['PROANO'])),2, '.', ',');
+                                  $proano2 = $monPromedios.'.'.number_format(rtrim(utf8_encode($rowPromedios['PROANO2']==""? 0:$rowPromedios['PROANO2'])),2, '.', ',');
+                                  if ($_SESSION['filtro']==1) {
+
+                                    $prodia = number_format(rtrim(utf8_encode(($rowPromedios['SUBDIA']==0||$rowPromedios['DIATRA']==0)? 0:$rowPromedios['SUBDIA']/$rowPromedios['DIATRA'])),2, '.', ',');
+                                    $promes = number_format(rtrim(utf8_encode(($rowPromedios['SUBMES']==0||$rowPromedios['MESTRA']==0)? 0:$rowPromedios['SUBMES']/$rowPromedios['MESTRA'])),2, '.', ',');
+                                    $proano = number_format(rtrim(utf8_encode(($rowPromedios['ANO1']==0||$rowPromedios['ANOTRA']==0)? 0:$rowPromedios['ANO1']/$rowPromedios['ANOTRA'])),2, '.', ',');
+                                    $proano2 = number_format(rtrim(utf8_encode(($rowPromedios['ANO2']==0||$rowPromedios['ANO2TRA']==0)? 0:$rowPromedios['ANO2']/$rowPromedios['ANO2TRA'])),2, '.', ',');
+                                  }
+                                
+                                    if($rowPromedios['ID'] != "")
+                                    {
+                                        print '<tr  onclick="location.href=\'/LovablePHP/PRG/ZFA/ZLO0001PA.php?id='.$rowPromedios['ID'].'&dat='.$_SESSION['FechaFiltro'].'\';">';
+                                        print   '<td class="responsive-font-example" ><b>' .$rowPromedios['CODSEC'].'</b></td>';
+                                        print   '<td class="responsive-font-example" ><b>' .$rowPromedios['ID'].'</b></td>';
+                                        print   '<td class="responsive-font-example"><b>' .$compañiaPromedios.'</b></td>';
+                                        print   '<td class="responsive-font-example text-end"><b>'.$prodia.'</b></td>';
+                                        print   '<td class="responsive-font-example text-end"><b>' .$promes.'</b></td>';
+                                        print   '<td class="responsive-font-example text-end"><b>'.$proano.'</b></td>';
+                                        print   '<td class="responsive-font-example text-end"><b>' .$proano2.'</b></td>';
+                                        print '</tr>';
+                                        
+                                    }
+                                }
+                                while($rowPromedios = odbc_fetch_array($resultpromedios));
+                            
+                            }else{
+                              echo "<script>window.location = '/LovablePHP/404.html'</script>";
+                            }
+                          }
                         
+                    ?>
                         
                        
                         </tbody>
                         </table>
+                      </div>
                       </div>  
                     </div>
                   </div>   
@@ -200,6 +291,11 @@
         </div>
       </div>
     </div>
+    <div class="spinner-wrapper">
+          <div class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+        </div> 
       <div class="footer bg-blck flex-grow-1 d-flex justify-content-center">
       <p class="bggray responsive-font-example"><i>Lovable de Honduras S.A. de C.V</i></p>
       </div>
@@ -244,15 +340,59 @@
                 });
                 
                 });
-                $("#tab3").click(function () {
-                    $("#btnradio2").addClass("d-none");
+
+               
+           $( document ).ready(function() {
+             if (<?php echo isset($_SESSION['opcion']) ? $_SESSION['opcion'] : "1"; ?>==3) {
+                  $("#btnradio2").addClass("d-none");
+                    $("#btnnradio2").addClass("d-none");
+                }else{
+                  $("#btnradio2").removeClass("d-none");
+                    $("#btnnradio2").removeClass("d-none");
+                }
+                if(<?php echo isset($_SESSION['filtro']) ? $_SESSION['filtro'] : "1"; ?>==2){
+                  $("#tab3").addClass("d-none");
+                }
+                
+                $("#tab3").click(function() {
+                  $("#btnradio2").addClass("d-none");
                     $("#btnnradio2").addClass("d-none");
                 });
-                $("#tab1, #tab2").click(function () {
-                    $("#btnradio2").removeClass("d-none");
+                $("#tab1, #tab2").click(function() {
+                  $("#btnradio2").removeClass("d-none");
                     $("#btnnradio2").removeClass("d-none");
                 });
-           $( document ).ready(function() {
+            //BOTONES
+            var tab;
+            $(".tablist__tab").click(function() {
+              $(".tablist__tab").removeClass("is-active");
+              $(this).addClass("is-active");
+              var activeTab = $(".tablist__tab").filter(".is-active").attr("id");
+              tab=(activeTab.substring(3,4));
+            });
+
+            var button = 'btnradio'+<?php echo   $_SESSION['filtro'] ?>;
+            $('#'+button+'').prop('checked',true);
+            $('input[type="radio"]').click(function() {
+              tab= tab!=null? tab: <?php echo isset($_SESSION['opcion']) ? $_SESSION['opcion'] : "1"; ?>;
+              window.location.href="/LovablePHP/PRG/ZFA/ZLO0001P.php?opc="+tab+"&fil="+($(this).attr('id')).substring(8,9)+"";
+            });
+
+            var tabSeleccionado=<?php echo isset($_SESSION['opcion']) ? $_SESSION['opcion'] : "false"; ?>;
+            if (tabSeleccionado != false) {
+                    var tabs = $('.tablist__tab'),
+                                tabPanels = $('.tablist__panel');
+                            var thisTab = $("#tab"+tabSeleccionado+""),
+                                    thisTabPanelId = thisTab.attr('aria-controls'),
+                                    thisTabPanel = $('#panel'+tabSeleccionado+'');
+                    tabs.attr('aria-selected', 'false').removeClass('is-active');
+                    thisTab.attr('aria-selected', 'true').addClass('is-active');
+                    tabPanels.attr('aria-hidden', 'true').addClass('is-hidden');
+                    thisTabPanel.attr('aria-hidden', 'false').removeClass('is-hidden');
+                }
+            
+            
+
             $('#productosCk').prop('checked', <?php echo  $ckProductos ?>);
             var fechafiltro = "<?php echo $fechafiltro ?>";
             var compfiltro = "<?php echo $compfiltro ?>";
@@ -272,11 +412,7 @@
               return year + "-" + month + "-" + day;
             }
     </script>
-  
+
 </body>
-<div class="spinner-wrapper">
-          <div class="spinner-border" role="status">
-            <span class="visually-hidden">Loading...</span>
-          </div>
-        </div> 
+
 </html>
