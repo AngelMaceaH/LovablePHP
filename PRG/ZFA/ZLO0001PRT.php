@@ -12,6 +12,11 @@
     </style>
 </head>
 <body>
+<div class="spinner-wrapper">
+<div class="spinner-border text-danger" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
+        </div> 
 <?php
       include '../layout-prg.php';
       $sqlCorrelativo="SELECT CODCIA,TIPFAC,NUMFAC,CORRELATIVO FROM(
@@ -151,7 +156,7 @@
             throw new Exception("La variable Plazo no está definida.");
           }
       } catch(Exception $e) {
-        echo "<script>window.location = '/LovablePHP/404.html'</script>";
+        echo "<script>window.location = '/".$_SESSION['DEV']."LovablePHP/404.html'</script>";
       }
      }
       $resultDetalle=odbc_exec($connIBM,$sqlDetalle);
@@ -411,9 +416,5 @@
       <p class="bggray responsive-font-example"><i>Lovable de Honduras S.A. de C.V</i></p>
     </div>
 </body>
-<div class="spinner-wrapper">
-          <div class="spinner-border" role="status">
-            <span class="visually-hidden">Loading...</span>
-          </div>
-        </div> 
+
 </html> 

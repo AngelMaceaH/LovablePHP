@@ -5,6 +5,11 @@
   <link rel="icon" type="image/x-icon" href="../../assets/img/favicon.ico">
 </head>
 <body>
+<div class="spinner-wrapper">
+<div class="spinner-border text-danger" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
+        </div> 
 <?php
 
       include '../layout-prg.php';
@@ -40,7 +45,7 @@
                             <h2 class="fs-4 mb-1 mt-4 text-center">Detalle de ventas por <b>factura</b>.</h2>
                         </div>
                         <div class="col-1 ">
-                        <a class='btn btn-light mt-2' href="/LovablePHP/PRG/ZFA/ZLO0001P.php"><b>Regresar</b></a>
+                        <a class='btn btn-light mt-2' href="/<?php echo $_SESSION['DEV'] ?>LovablePHP/PRG/ZFA/ZLO0001P.php"><b>Regresar</b></a>
                         </div>
                     </div>
                         
@@ -51,7 +56,7 @@
                                 <select class="form-control" id="comppro1" name="comppro1" >
                                     <?php
                                     while ($rowCOMARC = odbc_fetch_array($resultCOMARC)) {
-                                    echo "<option  value='" . $rowCOMARC['COMCOD'] . "'>" . ucfirst(strtolower(rtrim(utf8_encode($rowCOMARC['COMDES'])))) . "</option>";
+                                    echo "<option  value='" . $rowCOMARC['COMCOD'] . "'>" . rtrim(utf8_encode($rowCOMARC['COMDES'])) . "</option>";
                                     }
                                     ?>
                                 </select>
@@ -119,7 +124,6 @@
                             }
                             if($rowFacturaDia['FACCO4'] != "" )
                             {
-                              // echo "<script>console.log(".$rowFacturaDia['FACNU3'].",".$rowFacturaDia['FACFA3'].");</script>";
                                 if (number_format($rowFacturaDia['FACTO2'],2, '.', ',')==0 && 
                                     number_format($rowFacturaDia['FACSU3'],2, '.', ',')==0 && 
                                     number_format($rowFacturaDia['FACIM1'],2, '.', ',')==0 && 
@@ -162,8 +166,7 @@
                                     $impuestoSuma=0;
                                     $netoSuma=0; 
                                 }
-                                /* */
-                                print '<tr onclick="location.href=\'/LovablePHP/PRG/ZFA/ZLO0001PRT.php?id='.$rowFacturaDia['FACCO4'].'&fac='.$rowFacturaDia['FACNU3'].'\';">';
+                                print '<tr onclick="location.href=\'/'.$_SESSION['DEV'].'LovablePHP/PRG/ZFA/ZLO0001PRT.php?id='.$rowFacturaDia['FACCO4'].'&fac='.$rowFacturaDia['FACNU3'].'\';">';
                                 print   '<td >' .$rowFacturaDia['FACCO4'].'</td>';
                                 print   '<td class="text-center">' .$diaFicha.'</td>';
                                 print   '<td class="text-center"><b>'.$rowFacturaDia['FACNU3'].'</b></td>';
@@ -205,7 +208,7 @@
                         print   '<td class=" text-end"><b>'.$_SESSION['MON'].'.'.number_format($netoTotal,2, '.', ',').'</b></td>';
                         print '</tr>';
                     }else{
-                        //echo "<script>window.location = '/LovablePHP/404.html'</script>";
+                        //echo "<script>window.location = '/".$_SESSION['DEV']."LovablePHP/404.html'</script>";
                       }
                     
                     ?>
@@ -222,7 +225,7 @@
                         <h2 class="fs-4 mb-1 mt-4 text-center">Resumen de ventas por <b>días</b>.</h2>
                         </div>
                         <div class="col-1 ">
-                        <a class='btn btn-light mt-2' href="/LovablePHP/PRG/ZFA/ZLO0001P.php"><b>Regresar</b></a>
+                        <a class='btn btn-light mt-2' href="/<?php echo $_SESSION['DEV'] ?>LovablePHP/PRG/ZFA/ZLO0001P.php"><b>Regresar</b></a>
                         </div>
                     </div>
                        
@@ -368,7 +371,7 @@
                                     print '</tr>';
                     
                                 }else{
-                                    //echo "<script>window.location = '/LovablePHP/404.html'</script>";
+                                    //echo "<script>window.location = '/".$_SESSION['DEV']."LovablePHP/404.html'</script>";
                                   }
                                ?> 
                         </tbody>
@@ -482,9 +485,5 @@
                             });
     </script>
 </body>
-<div class="spinner-wrapper">
-          <div class="spinner-border" role="status">
-            <span class="visually-hidden">Loading...</span>
-          </div>
-        </div> 
+
 </html>

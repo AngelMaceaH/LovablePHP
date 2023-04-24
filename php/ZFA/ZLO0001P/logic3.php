@@ -24,5 +24,5 @@
      $_SESSION['anofiltro']= isset($_POST['cbbAno']) ? $_POST['cbbAno']: "";
      $_SESSION['SelectionTab']="true";
      $compro2 = isset($_POST['comppro2']) ? $_POST['comppro2']: "";
-     header("Location: /LovablePHP/PRG/ZFA/ZLO0001PA.php?id=".$compro2.'&dat='.$_SESSION['anofiltro'].$_SESSION['mesfiltro'].$dia);
+     header("Location: /".$_SESSION['DEV']."LovablePHP/PRG/ZFA/ZLO0001PA.php?id=".$compro2.'&dat='.$_SESSION['anofiltro'].$_SESSION['mesfiltro'].$dia);
 ?>

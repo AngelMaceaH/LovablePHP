@@ -4,358 +4,46 @@
 <head>
   <meta charset="utf-8">
   <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico">
+  <style type='text/css'>
+   
+    @media (min-width: 1200px) {
+    <?php
+    $FiltroDiv=(float)(isset($_GET['c'])? $_GET['c']:1);
+    if($FiltroDiv==2||$FiltroDiv==3||$FiltroDiv==4||$FiltroDiv==5||$FiltroDiv==6)
+    {
+    echo '#colHonMes3,#colHonMes2 {margin-top:11%; margin-bottom:13%;}';
+    }
+  ?>
+  }
+  @media (min-width: 1600px) {
+    <?php
+    $FiltroDiv=(float)(isset($_GET['c'])? $_GET['c']:1);
+    if($FiltroDiv==2||$FiltroDiv==3||$FiltroDiv==4||$FiltroDiv==5||$FiltroDiv==6)
+    {
+    echo '#colHonMes3,#colHonMes2 {margin-top:11%; margin-bottom:15%;}';
+    }
+  ?>
+  }
+  
+  
+</style>
 </head>
 
 <body>
+<div class="spinner-wrapper">
+  <div class="spinner-border text-danger" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
+</div>
   <?php
-
-    function obtenerNombreMes($numeroMes) {
-      $nombresMes = array('Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre');
-      return $nombresMes[$numeroMes - 1];
-    }
       include 'layout.php';
-      $fechacheck=isset($_GET['ck'])? $_GET['ck']:"false";
-      $fecha_actual = date("Ymd");
-      $mes_actual=date("m");
-      $ano_actual=date("Y");
-      $compFiltroP=(float)(isset($_GET['c'])? $_GET['c']:1);
-      $fechaGraficas=isset($_GET['d'])? $_GET['d']:$fecha_actual;
-      $aniografica=substr($fechaGraficas,0,4);
-      $mesgrafica=substr($fechaGraficas,4,2);
-      $diacbb = substr($fechaGraficas,6,2);
-      if ($fechacheck=="true") {
-        $diagrafica=substr($fechaGraficas,6,2);
-      }else{
-        $diagrafica="31";
-      }
-
-      $mesGraficas1=(float)(isset($_GET['m'])? $_GET['m']:$mes_actual);
-      $mesGraficas2=(float)(isset($_GET['m'])? $_GET['m']:$mes_actual) - 1;
-      if ($mesGraficas2==0) {
-          $mesGraficas2=12;
-      }
-      if (strlen($mesGraficas1)==1) {
-        $mesGraficas1 = "0".$mesGraficas1;
-      }
-      if (strlen($mesGraficas2)==1) {
-        $mesGraficas2 = "0".$mesGraficas2;
-      }
-      $anoGraficas1=(float)(isset($_GET['y'])? $_GET['y']:$ano_actual);
-      $anoGraficas2=(float)(isset($_GET['y'])? $_GET['y']:$ano_actual) - 1;
-
-      $sqlGraficasDias="SELECT T2.CODCIA,T2.NOMCIA NOMCIA, SUM(TOTAL) TOTAL FROM (SELECT CODCIA,VENDIA AS TOTAL FROM LBPRDDAT/LO2132
-      WHERE FECFAC=".$fechaGraficas." UNION ALL
-      SELECT CODCIA as CODCIA,SUBTOT AS TOTAL FROM LBPRDDAT/LO0849 WHERE FECPRO=".$fechaGraficas."
-      UNION ALL SELECT codcia,0 AS TOTAL FROM LBPRDDAT/LO0849	
-      WHERE NOT EXISTS ( SELECT 1 FROM LBDESDAT/LO0849 WHERE fecpro = ".$fechaGraficas.")  GROUP BY CODCIA) AS T1 
-      INNER JOIN LBPRDDAT/LO0705 AS T2 ON T1.CODCIA = T2.CODCIA
-      INNER JOIN LBPRDDAT/DETA1699 AS T3 ON T3.DETC90=T1.CODCIA WHERE T3.DETUSU='MARVIN' AND T3.DETPR1 = 'LO1512P' GROUP BY T2.CODCIA,T2.NOMCIA ORDER BY CODCIA";
-      $resultG=odbc_exec($connIBM,$sqlGraficasDias);
-      $compHonduras=array();$vendiaHonduras=array(); $compGuatemala=array(); $vendiaGuatemala=array();$compElSalvador=array(); $vendiaElSalvador=array();
-      $compNicaragua=array(); $vendiaNicaragua=array();$compCostaRica=array(); $vendiaCostaRica=array();$compRepDomi=array(); $vendiaRepDomi=array();
-      while ($rowG= odbc_fetch_array($resultG)) {
-        $codcia=$rowG['CODCIA'];
-        $vendia=$rowG['TOTAL'];
-        if ((float)$vendia !=0) {
-          if ($compFiltroP==1) {
-            if (in_array($codcia, array(1))) {
-              $compHonduras[]=$rowG['NOMCIA'];
-              $vendiaHonduras[] = (float)$vendia;
-            }
-          } else if ($compFiltroP==2) {
-        if (in_array($codcia, array(35, 47,57,52,63,64,72,74,20,22,56,59,65,68,75,76,85,70,73,78,82))) {
-            $compHonduras[]=$rowG['NOMCIA'];
-            $vendiaHonduras[] = (float)$vendia;
-        }}else if ($compFiltroP==3){
-          if (in_array($codcia, array(49,66,69,71,86))) {
-            $compHonduras[]=$rowG['NOMCIA'];
-            $vendiaHonduras[] = (float)$vendia;
-        }
-        }else if ($compFiltroP==4){
-          if (in_array($codcia, array(48,53,62,61))) {
-            $compHonduras[]=$rowG['NOMCIA'];
-            $vendiaHonduras[] = (float)$vendia;
-        }
-        }else if ($compFiltroP==5){
-          if (in_array($codcia, array(83,87))) {
-            $compHonduras[]=$rowG['NOMCIA'];
-            $vendiaHonduras[] = (float)$vendia;
-        }
-        }else if ($compFiltroP==6){
-          if (in_array($codcia, array(60,80))) {
-            $compHonduras[]=$rowG['NOMCIA'];
-            $vendiaHonduras[] = (float)$vendia;
-        }
-        }else if ($compFiltroP==7){
-          if (in_array($codcia, array(81))) {
-            $compHonduras[]=$rowG['NOMCIA'];
-            $vendiaHonduras[] = (float)$vendia;
-        }
-        }
-        }
-      }
-
-      switch ($compFiltroP) {
-        case 1:
-          $_SESSION['MONE']="L";
-          break;
-          case 2:
-            $_SESSION['MONE']="L";
-            break;
-            case 3:
-              $_SESSION['MONE']="Q";
-              break;
-              case 4:
-                $_SESSION['MONE']="D";
-                break;
-                case 5:
-                  $_SESSION['MONE']="D";
-                  break;
-                  case 6:
-                    $_SESSION['MONE']="C";
-                    break;
-                    case 7:
-                      $_SESSION['MONE']="P";
-                      break;
-        default:
-        $_SESSION['MONE']=" ";
-          break;
-      }
-
-      $compMesHonduras=array(); $venmesHonduras=array(); $venmes1Honduras=0; $venmes2Honduras=0; $venmes3Honduras=0; 
-      
-      $ventasMesGrafica=array();
-      $sqlValoresMes="SELECT T1.CODCIA, T1.NOMCIA, T1.SUBTOT MES1 FROM (
-        (SELECT T2.CODCIA CODCIA, T2.NOMCIA NOMCIA, SUM(SUBTOT) SUBTOT FROM(SELECT codcia, subtot 
-        FROM LBPRDDAT/LO0850 WHERE MESPRO = ".$mesGraficas1." AND ANOPRO =".$anoGraficas1." UNION ALL SELECT codcia, 0 AS subtot
-        FROM LBPRDDAT/LO0850 WHERE NOT EXISTS (SELECT 1 FROM LBDESDAT/LO0850 WHERE MESPRO= ".$mesGraficas1." AND ANOPRO=".$anoGraficas1." )
-        GROUP BY CODCIA) AS T1 INNER JOIN LBPRDDAT/LO0705 AS T2 ON T1.CODCIA = T2.CODCIA INNER JOIN LBPRDDAT/DETA1699 AS T3 ON T3.DETC90=T1.CODCIA
-        WHERE T3.DETUSU='MARVIN' AND T3.DETPR1 = 'LO1512P' GROUP BY T2.CODCIA,T2.NOMCIA ORDER BY CODCIA)) AS T1";
-    
-      $resultVMes=odbc_exec($connIBM,$sqlValoresMes);  
-      while ($rowValorM= odbc_fetch_array($resultVMes)) { 
-        $codMeses1=$rowValorM['CODCIA'];
-        if ($compFiltroP==1) {
-          if (in_array($codMeses1, array(1))) {
-            $ventasMesGrafica[] = (float)$rowValorM['MES1'];
-          }
-       }else if ($compFiltroP==2) {
-            if (in_array($codMeses1, array(35, 47,57,52,63,64,72,74,20,22,56,59,65,68,75,76,85,70,73,78,82))) {
-              $ventasMesGrafica[] = (float)$rowValorM['MES1'];
-            }
-         }
-         else if ($compFiltroP==3) {
-          if (in_array($codMeses1, array(49,66,69,71,86))) {
-            $ventasMesGrafica[] = (float)$rowValorM['MES1'];
-          }
-       }
-          else if ($compFiltroP==4) {
-              if (in_array($codMeses1, array(48,53,62,61))) {
-                $ventasMesGrafica[] = (float)$rowValorM['MES1'];
-                }
-            }
-          else if ($compFiltroP==5) {
-              if (in_array($codMeses1, array(83,87))) {
-                $ventasMesGrafica[] = (float)$rowValorM['MES1'];
-              }
-          }
-          else if ($compFiltroP==6) {
-            if (in_array($codMeses1, array(60,80))) {
-              $ventasMesGrafica[] = (float)$rowValorM['MES1'];
-            }
-          }
-          else if ($compFiltroP==7) {
-            if (in_array($codMeses1, array(81))) {
-              $ventasMesGrafica[] = (float)$rowValorM['MES1'];
-            }
-         }
-      
-      }
-
-      if ($mesGraficas2==12) {
-        $sqlGraficasMes="SELECT T1.CODCIA, T1.NOMCIA, T1.SUBTOT MES1, T2.SUBTOT MES2,T3.SUBTOT MES3 FROM (
-          (SELECT T2.CODCIA CODCIA, T2.NOMCIA NOMCIA, SUM(SUBTOT) SUBTOT FROM(SELECT CODCIA,SUM(SUBTOT) SUBTOT  
-          FROM LBPRDDAT/LO0849 WHERE FECPRO BETWEEN 20230401 AND 20230411 GROUP BY CODCIA  UNION ALL SELECT codcia, 0 AS subtot
-          FROM LBPRDDAT/LO0850 WHERE NOT EXISTS (SELECT 1 FROM LBDESDAT/LO0850 WHERE MESPRO= ".$mesGraficas1." AND ANOPRO=".$anoGraficas1." )
-          GROUP BY CODCIA) AS T1 INNER JOIN LBPRDDAT/LO0705 AS T2 ON T1.CODCIA = T2.CODCIA INNER JOIN LBPRDDAT/DETA1699 AS T3 ON T3.DETC90=T1.CODCIA
-          WHERE T3.DETUSU='MARVIN' AND T3.DETPR1 = 'LO1512P' GROUP BY T2.CODCIA,T2.NOMCIA ORDER BY CODCIA) AS T1
-          LEFT JOIN (SELECT T2.CODCIA CODCIA, T2.NOMCIA NOMCIA, SUM(SUBTOT) SUBTOT FROM(SELECT codcia, subtot 
-          FROM LBPRDDAT/LO0850 WHERE MESPRO = ".$mesGraficas2." AND ANOPRO =".$anoGraficas2." UNION ALL SELECT codcia, 0 AS subtot
-          FROM LBPRDDAT/LO0850 WHERE NOT EXISTS (SELECT 1 FROM LBDESDAT/LO0850 WHERE MESPRO= ".$mesGraficas2." AND ANOPRO=".$anoGraficas2." )
-          GROUP BY CODCIA) AS T1 INNER JOIN LBPRDDAT/LO0705 AS T2 ON T1.CODCIA = T2.CODCIA INNER JOIN LBPRDDAT/DETA1699 AS T3 ON T3.DETC90=T1.CODCIA
-          WHERE T3.DETUSU='MARVIN' AND T3.DETPR1 = 'LO1512P' GROUP BY T2.CODCIA,T2.NOMCIA ORDER BY CODCIA) AS T2 ON T2.CODCIA = T1.CODCIA
-          LEFT JOIN (SELECT T2.CODCIA CODCIA, T2.NOMCIA NOMCIA, SUM(SUBTOT) SUBTOT FROM(SELECT codcia, subtot 
-          FROM LBPRDDAT/LO0850 WHERE MESPRO = ".$mesGraficas1." AND ANOPRO =".$anoGraficas2." UNION ALL SELECT codcia, 0 AS subtot
-          FROM LBPRDDAT/LO0850 WHERE NOT EXISTS (SELECT 1 FROM LBDESDAT/LO0850 WHERE MESPRO= ".$mesGraficas1." AND ANOPRO=".$anoGraficas2." )
-          GROUP BY CODCIA) AS T1 INNER JOIN LBPRDDAT/LO0705 AS T2 ON T1.CODCIA = T2.CODCIA INNER JOIN LBPRDDAT/DETA1699 AS T3 ON T3.DETC90=T1.CODCIA
-          WHERE T3.DETUSU='MARVIN' AND T3.DETPR1 = 'LO1512P' GROUP BY T2.CODCIA,T2.NOMCIA ORDER BY CODCIA) AS T3 ON T3.CODCIA = T1.CODCIA)";
-      }else{
-        $sqlGraficasMes="SELECT T1.CODCIA, T1.NOMCIA, T1.SUBTOT MES1, T2.SUBTOT MES2,T3.SUBTOT MES3 FROM (
-          (SELECT T2.CODCIA CODCIA, T2.NOMCIA NOMCIA, SUM(SUBTOT) SUBTOT FROM(SELECT CODCIA,SUM(SUBTOT) SUBTOT 
-          FROM LBPRDDAT/LO0849 WHERE FECPRO BETWEEN ".$anoGraficas1.$mesGraficas1."01 AND ".$anoGraficas1.$mesGraficas1.$diagrafica." GROUP BY CODCIA  UNION ALL SELECT codcia, 0 AS subtot
-          FROM LBPRDDAT/LO0850 WHERE NOT EXISTS (SELECT 1 FROM LBDESDAT/LO0850 WHERE MESPRO= ".$mesGraficas1." AND ANOPRO=".$anoGraficas1." )
-          GROUP BY CODCIA) AS T1 INNER JOIN LBPRDDAT/LO0705 AS T2 ON T1.CODCIA = T2.CODCIA INNER JOIN LBPRDDAT/DETA1699 AS T3 ON T3.DETC90=T1.CODCIA
-          WHERE T3.DETUSU='MARVIN' AND T3.DETPR1 = 'LO1512P' GROUP BY T2.CODCIA,T2.NOMCIA ORDER BY CODCIA) AS T1
-          LEFT JOIN (SELECT T2.CODCIA CODCIA, T2.NOMCIA NOMCIA, SUM(SUBTOT) SUBTOT FROM(SELECT CODCIA,SUM(SUBTOT) SUBTOT
-          FROM LBPRDDAT/LO0849 WHERE FECPRO BETWEEN ".$anoGraficas1.$mesGraficas2."01 AND ".$anoGraficas1.$mesGraficas2.$diagrafica." GROUP BY CODCIA  UNION ALL SELECT codcia, 0 AS subtot
-          FROM LBPRDDAT/LO0850 WHERE NOT EXISTS (SELECT 1 FROM LBDESDAT/LO0850 WHERE MESPRO= ".$mesGraficas2." AND ANOPRO=".$anoGraficas1." )
-          GROUP BY CODCIA) AS T1 INNER JOIN LBPRDDAT/LO0705 AS T2 ON T1.CODCIA = T2.CODCIA INNER JOIN LBPRDDAT/DETA1699 AS T3 ON T3.DETC90=T1.CODCIA
-          WHERE T3.DETUSU='MARVIN' AND T3.DETPR1 = 'LO1512P' GROUP BY T2.CODCIA,T2.NOMCIA ORDER BY CODCIA) AS T2 ON T2.CODCIA = T1.CODCIA
-          LEFT JOIN (SELECT T2.CODCIA CODCIA, T2.NOMCIA NOMCIA, SUM(SUBTOT) SUBTOT FROM(SELECT CODCIA,SUM(SUBTOT) SUBTOT
-          FROM LBPRDDAT/LO0849 WHERE FECPRO BETWEEN ".$anoGraficas2.$mesGraficas1."01 AND ".$anoGraficas2.$mesGraficas1.$diagrafica." GROUP BY CODCIA UNION ALL SELECT codcia, 0 AS subtot
-          FROM LBPRDDAT/LO0850 WHERE NOT EXISTS (SELECT 1 FROM LBDESDAT/LO0850 WHERE MESPRO= ".$mesGraficas1." AND ANOPRO=".$anoGraficas2." )
-          GROUP BY CODCIA) AS T1 INNER JOIN LBPRDDAT/LO0705 AS T2 ON T1.CODCIA = T2.CODCIA INNER JOIN LBPRDDAT/DETA1699 AS T3 ON T3.DETC90=T1.CODCIA
-          WHERE T3.DETUSU='MARVIN' AND T3.DETPR1 = 'LO1512P' GROUP BY T2.CODCIA,T2.NOMCIA ORDER BY CODCIA) AS T3 ON T3.CODCIA = T1.CODCIA)";
-        
-      }
-      
-      $resultM=odbc_exec($connIBM,$sqlGraficasMes); 
-      while ($rowM= odbc_fetch_array($resultM)) { 
-        $codMes=$rowM['CODCIA'];
-        $venmes=$rowM['MES1'];
-        if ((float)$venmes !=0) {
-          if ($compFiltroP==1) {
-            if (in_array($codMes, array(0,1))) {
-              $compMesHonduras[]=$rowM['NOMCIA'];
-              $venmesHonduras[] = (float)$venmes;
-              $venmes1Honduras+=$rowM['MES1'];
-              $venmes2Honduras+=$rowM['MES2'];
-              $venmes3Honduras+=$rowM['MES3'];
-            }
-          } else if ($compFiltroP==2) {
-          if (in_array($codMes, array(35, 47,57,52,63,64,72,74,20,22,56,59,65,68,75,76,85,70,73,78,82))) {
-            $compMesHonduras[]=$rowM['NOMCIA'];
-            $venmesHonduras[] = (float)$venmes;
-            $venmes1Honduras+=$rowM['MES1'];
-            $venmes2Honduras+=$rowM['MES2'];
-            $venmes3Honduras+=$rowM['MES3'];
-          }
-        } else if ($compFiltroP==3) {
-          if (in_array($codMes, array(49,66,69,71,86))) {
-            $compMesHonduras[]=$rowM['NOMCIA'];
-            $venmesHonduras[] = (float)$venmes;
-            $venmes1Honduras+=$rowM['MES1'];
-            $venmes2Honduras+=$rowM['MES2'];
-            $venmes3Honduras+=$rowM['MES3'];
-          }
-        }else if ($compFiltroP==4) {
-          if (in_array($codMes, array(48,53,62,61))) {
-            $compMesHonduras[]=$rowM['NOMCIA'];
-            $venmesHonduras[] = (float)$venmes;
-            $venmes1Honduras+=$rowM['MES1'];
-            $venmes2Honduras+=$rowM['MES2'];
-            $venmes3Honduras+=$rowM['MES3'];
-          }
-        }else if ($compFiltroP==5) {
-          if (in_array($codMes, array(83,87))) {
-            $compMesHonduras[]=$rowM['NOMCIA'];
-            $venmesHonduras[] = (float)$venmes;
-            $venmes1Honduras+=$rowM['MES1'];
-            $venmes2Honduras+=$rowM['MES2'];
-            $venmes3Honduras+=$rowM['MES3'];
-          }
-        }else if ($compFiltroP==6) {
-          if (in_array($codMes, array(60,80))) {
-            $compMesHonduras[]=$rowM['NOMCIA'];
-            $venmesHonduras[] = (float)$venmes;
-            $venmes1Honduras+=$rowM['MES1'];
-            $venmes2Honduras+=$rowM['MES2'];
-            $venmes3Honduras+=$rowM['MES3'];
-          }
-        }else if ($compFiltroP==7) {
-          if (in_array($codMes, array(81))) {
-            $compMesHonduras[]=$rowM['NOMCIA'];
-            $venmesHonduras[] = (float)$venmes;
-            $venmes1Honduras+=$rowM['MES1'];
-            $venmes2Honduras+=$rowM['MES2'];
-            $venmes3Honduras+=$rowM['MES3'];
-          }
-        }
-       }
-      }
-      if ($venmes==0) {
-        if ($mesGraficas2==12) {
-         $sqlMesesPasados="SELECT T2.CODCIA, T2.NOMCIA, T2.SUBTOT MES2,T3.SUBTOT MES3 FROM (
-          (SELECT T2.CODCIA CODCIA, T2.NOMCIA NOMCIA, SUM(SUBTOT) SUBTOT FROM(SELECT codcia, subtot 
-          FROM LBPRDDAT/LO0850 WHERE MESPRO = ".$mesGraficas2." AND ANOPRO = ".$anoGraficas2." UNION ALL SELECT codcia, 0 AS subtot
-          FROM LBPRDDAT/LO0850 WHERE NOT EXISTS (SELECT 1 FROM LBDESDAT/LO0850 WHERE MESPRO= ".$mesGraficas2." AND ANOPRO=".$anoGraficas2." )
-          GROUP BY CODCIA) AS T1 INNER JOIN LBPRDDAT/LO0705 AS T2 ON T1.CODCIA = T2.CODCIA INNER JOIN LBPRDDAT/DETA1699 AS T3 ON T3.DETC90=T1.CODCIA
-          WHERE T3.DETUSU='MARVIN' AND T3.DETPR1 = 'LO1512P' GROUP BY T2.CODCIA,T2.NOMCIA ORDER BY CODCIA) AS T2
-          LEFT JOIN (SELECT T2.CODCIA CODCIA, T2.NOMCIA NOMCIA, SUM(SUBTOT) SUBTOT FROM(SELECT codcia, subtot 
-          FROM LBPRDDAT/LO0850 WHERE MESPRO = ".$mesGraficas1." AND ANOPRO = ".$anoGraficas2." UNION ALL SELECT codcia, 0 AS subtot
-          FROM LBPRDDAT/LO0850 WHERE NOT EXISTS (SELECT 1 FROM LBDESDAT/LO0850 WHERE MESPRO= ".$mesGraficas1." AND ANOPRO=".$anoGraficas2." )
-          GROUP BY CODCIA) AS T1 INNER JOIN LBPRDDAT/LO0705 AS T2 ON T1.CODCIA = T2.CODCIA INNER JOIN LBPRDDAT/DETA1699 AS T3 ON T3.DETC90=T1.CODCIA
-          WHERE T3.DETUSU='MARVIN' AND T3.DETPR1 = 'LO1512P' GROUP BY T2.CODCIA,T2.NOMCIA ORDER BY CODCIA) AS T3 ON T3.CODCIA = T2.CODCIA)";
-          }else{
-            $sqlMesesPasados="SELECT T2.CODCIA, T2.NOMCIA, T2.SUBTOT MES2,T3.SUBTOT MES3 FROM (
-              (SELECT T2.CODCIA CODCIA, T2.NOMCIA NOMCIA, SUM(SUBTOT) SUBTOT FROM(SELECT codcia, subtot 
-              FROM LBPRDDAT/LO0850 WHERE MESPRO = ".$mesGraficas2." AND ANOPRO = ".$anoGraficas1." UNION ALL SELECT codcia, 0 AS subtot
-              FROM LBPRDDAT/LO0850 WHERE NOT EXISTS (SELECT 1 FROM LBDESDAT/LO0850 WHERE MESPRO= ".$mesGraficas2." AND ANOPRO=".$anoGraficas1." )
-              GROUP BY CODCIA) AS T1 INNER JOIN LBPRDDAT/LO0705 AS T2 ON T1.CODCIA = T2.CODCIA INNER JOIN LBPRDDAT/DETA1699 AS T3 ON T3.DETC90=T1.CODCIA
-              WHERE T3.DETUSU='MARVIN' AND T3.DETPR1 = 'LO1512P' GROUP BY T2.CODCIA,T2.NOMCIA ORDER BY CODCIA) AS T2
-              LEFT JOIN (SELECT T2.CODCIA CODCIA, T2.NOMCIA NOMCIA, SUM(SUBTOT) SUBTOT FROM(SELECT codcia, subtot 
-              FROM LBPRDDAT/LO0850 WHERE MESPRO = ".$mesGraficas1." AND ANOPRO = ".$anoGraficas2." UNION ALL SELECT codcia, 0 AS subtot
-              FROM LBPRDDAT/LO0850 WHERE NOT EXISTS (SELECT 1 FROM LBDESDAT/LO0850 WHERE MESPRO= ".$mesGraficas1." AND ANOPRO=".$anoGraficas2." )
-              GROUP BY CODCIA) AS T1 INNER JOIN LBPRDDAT/LO0705 AS T2 ON T1.CODCIA = T2.CODCIA INNER JOIN LBPRDDAT/DETA1699 AS T3 ON T3.DETC90=T1.CODCIA
-              WHERE T3.DETUSU='MARVIN' AND T3.DETPR1 = 'LO1512P' GROUP BY T2.CODCIA,T2.NOMCIA ORDER BY CODCIA) AS T3 ON T3.CODCIA = T2.CODCIA)";
-          }
-           $resultMeses=odbc_exec($connIBM,$sqlMesesPasados); 
-           
-           while ($rowMeses= odbc_fetch_array($resultMeses)) { 
-            $codMeses=$rowMeses['CODCIA'];
-            if ($compFiltroP==1) {
-              if (in_array($codMeses, array(1))) {
-                  $venmes2Honduras+=$rowMeses['MES2'];
-                  $venmes3Honduras+=$rowMeses['MES3'];
-              }
-           }else if ($compFiltroP==2) {
-                if (in_array($codMeses, array(35, 47,57,52,63,64,72,74,20,22,56,59,65,68,75,76,85,70,73,78,82))) {
-                    $venmes2Honduras+=$rowMeses['MES2'];
-                    $venmes3Honduras+=$rowMeses['MES3'];
-                }
-             }
-             else if ($compFiltroP==3) {
-              if (in_array($codMeses, array(49,66,69,71,86))) {
-                  $venmes2Honduras+=$rowMeses['MES2'];
-                  $venmes3Honduras+=$rowMeses['MES3'];
-              }
-           }
-              else if ($compFiltroP==4) {
-                  if (in_array($codMeses, array(48,53,62,61))) {
-                      $venmes2Honduras+=$rowMeses['MES2'];
-                      $venmes3Honduras+=$rowMeses['MES3'];
-                    }
-                }
-              else if ($compFiltroP==5) {
-                  if (in_array($codMeses, array(83,87))) {
-                      $venmes2Honduras+=$rowMeses['MES2'];
-                      $venmes3Honduras+=$rowMeses['MES3'];
-                  }
-              }
-              else if ($compFiltroP==6) {
-                if (in_array($codMeses, array(60,80))) {
-                    $venmes2Honduras+=$rowMeses['MES2'];
-                    $venmes3Honduras+=$rowMeses['MES3'];
-                }
-              }
-              else if ($compFiltroP==7) {
-                if (in_array($codMeses, array(81))) {
-                    $venmes2Honduras+=$rowMeses['MES2'];
-                    $venmes3Honduras+=$rowMeses['MES3'];
-                }
-             }
-           }
-      }
-      $ventasdeldia=0; $ventasdelmes=0;
-      $ventasdeldia=count($vendiaHonduras)>0 ? $vendiaHonduras[0]:0;
-      $ventasdelmes=count($ventasMesGrafica)>0 ? $ventasMesGrafica[0]:0;
-
+      include 'php/index/phpindex.php';
     ?>
   <div class="container-fluid">
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb my-0 ms-2">
         <li class="breadcrumb-item">
-          <!-- if breadcrumb is single--><span>Inicio</span>
+              <span>Inicio</span>
         </li>
         <li class="breadcrumb-item active"><span>Pagina Principal</span></li>
       </ol>
@@ -363,91 +51,9 @@
   </div>
   </header>
   <div class="body flex-grow-1 px-3">
-    <div class="container-lg">
-      <!--  <div class="d-flex justify-content-center">
-            <div>
-              <div class="card mb-4 text-white bg-primary me-1">
-                <div class="card-body pb-0 d-flex justify-content-between align-items-start">
-                  <div>
-                    <div class="fs-4 fw-semibold">Lunes</div>
-                    <div>Users</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div>
-              <div class="card mb-4 text-white bg-primary  me-1">
-                <div class="card-body pb-0 d-flex justify-content-between align-items-start">
-                  <div>
-                    <div class="fs-4 fw-semibold">Martes</div>
-                    <div>Users</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-    
-            <div>
-              <div class="card mb-4 text-white bg-primary  me-1">
-                <div class="card-body pb-0 d-flex justify-content-between align-items-start">
-                  <div>
-                    <div class="fs-4 fw-semibold">Miércoles</div>
-                    <div>Users</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-         
-            <div>
-              <div class="card mb-4 text-white bg-primary  me-1">
-                <div class="card-body pb-0 d-flex justify-content-between align-items-start">
-                  <div>
-                    <div class="fs-4 fw-semibold">Jueves</div>
-                    <div>Users</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-         
-            <div>
-              <div class="card mb-4 text-white bg-primary  me-1">
-                <div class="card-body pb-0 d-flex justify-content-between align-items-start">
-                  <div>
-                    <div class="fs-4 fw-semibold">Viernes</div>
-                    <div>Users</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-      
-            <div>
-              <div class="card mb-4 text-white bg-primary  me-1">
-                <div class="card-body pb-0 d-flex justify-content-between align-items-start">
-                  <div>
-                    <div class="fs-4 fw-semibold">Sábado</div>
-                    <div>Users</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-         
-            <div>
-              <div class="card mb-4 text-white bg-primary  me-1">
-                <div class="card-body pb-0 d-flex justify-content-between align-items-start">
-                  <div>
-                    <div class="fs-4 fw-semibold">Domingo</div>
-                    <div>Users</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-      
-          </div>-->
-      <!-- /.row-->
-
-      <div class="card">
+      <div class="card mb-3">
         <div class="card-body">
-          <form id="formGraficas" action="grafica-filtro.php" method="POST">
+          <form id="formGraficas" action="php/index/grafica-filtro.php" method="POST">
             <div class="row mb-2">
               <div class="col-sm-12 col-lg-6 mt-2">
                 <label>Fecha:</label>
@@ -455,147 +61,323 @@
                   onfocus="(this.type='date')" onkeydown="return false;">
               </div>
               <div class="col-sm-12 col-lg-6 mt-2">
-                <label>País:</label>
+                <label>Vista por:</label>
                 <select class="form-control" id="cbbMesgra" name="cbbMesgra">
-                      <option value="1">Lovable de Honduras</option>
-                      <option value="2">Tiendas Honduras</option>
-                      <option value="3">Tiendas Guatemala</option>
-                        <option value="4">Tiendas El Salvador</option>
-                        <option value="5">Tiendas Nicaragua</option>
-                        <option value="6">Tiendas Costa Rica</option>
-                        <option value="7">Tiendas Republica Dominicana</option>
+                      <option class="fw-bold" value="1">Lovable de Honduras</option>
+                      <option class="fw-bold" value="2">Tiendas Honduras</option>
+                      <option class="fw-bold" value="3">Tiendas Guatemala</option>
+                        <option class="fw-bold" value="4">Tiendas El Salvador</option>
+                        <option class="fw-bold" value="5">Tiendas Nicaragua</option>
+                        <option class="fw-bold" value="6">Tiendas Costa Rica</option>
+                        <option class="fw-bold" value="7">Tiendas Republica Dominicana</option>
+                        <?php
+                      while ($rowCOMARCIndex = odbc_fetch_array($resultCOMARCIndex)) {
+                        echo "<option value='" . $rowCOMARCIndex['COMCOD'] . "'>" . rtrim(utf8_encode($rowCOMARCIndex['COMDES'])) . "</option>";
+                      }
+                      ?>
                         </select>  
                 <input type="text" id="fechaCk10" name="fechaCk10" class="d-none"> 
               </div>
             </div>
           </form>
         </div>
+        <div class="card-footer"></div>
       </div>
-      <!--<div class="card mt-2">
-          <div class="card-header"></div>
-          <div class="card-body"><canvas id="GraficaBarra" class="mt-2 mb-2"></canvas></div>
-          <div class="card-footer"></div>
-        </div>-->
-
+ 
       <div class="padding-graficas mb-4">
-        <div class="row mt-1">
-          <!--HONDURAS-->
-          <div class="col-12 col-md-12">
-            <div class="row">
-              <div class="col-12 col-md-12">
-                <!--<div class="card bg-blck">
-              <h2 class="text-center mt-2 text-light">Honduras</h2>
-              <hr class="text-light">
-             </div>-->
-              <div class="card">
-                    <div class="card-header">
-                      <h4 class="text-center fw-bold" id="tituloGraficasVentas"> </h4>
-                    </div>
+                <div class="card">
                     <div class="card-body">
-                      <div id="HonRow" class="row">
-                        <?php
-                            if ( $compFiltroP==1 ||$compFiltroP==7 ) {
-                              echo '<div id="colHonDia"  class="justify-content-center col-12 col-lg-3">
-                              <h5 class="mt-2 mb-1 text-center">Ventas del día</h5>
-                              <canvas  id="HonDia" class="mt-3 mb-3" ></canvas>
-                              <label class="form-control text-darkblue fw-bold fs-3 text-center mt-5 pt-2 pb-2">'.$_SESSION['MONE'].'. '.number_format($ventasdeldia,2, '.', ',').'</label>
-                              </div>';
-                              echo '<script> $("#HonDia").hide()</script>';
-                            }else{
-                              echo '<div id="colHonDia"  class="justify-content-center col-12 col-lg-3">
-                              <h5 class="mt-2 mb-1 text-center">Ventas del día</h5>
-                              <canvas  id="HonDia" class="mt-3 mb-3" ></canvas>
-                              </div>';
-                            }
+                    <h4 class="text-center fw-bold" id="tituloGraficasVentas"> </h4>
+                  </div>
+                </div>
+                <div class="row mt-2">
+                  <div class="col-12">
+                    <div class="row">
+                      <div class="col-12 col-lg-8 d-flex flex-column" id="caja1">
+                      <div class="col-12" >
+                          <div class="card pb-4 pt-3">
+                              <div class="card-body">
+                              <div class="row justify-content-evenly">
+                              <?php
+                                    if ( $compFiltroP==2 ||$compFiltroP==3||$compFiltroP==4 ||$compFiltroP==5||$compFiltroP==6) {
+                                        echo '<div id="colHonDia"  class=" col-12 col-lg-4">
+                                        <h5 class="mt-2 mb-1 text-center">Ventas del día</h5>
+                                        <canvas  id="HonDia" class="mt-3 mb-3" ></canvas>
+                                        </div>';
+                                    }else{
+                                      echo '<div id="colHonDia"  class="col-12 col-lg-6">
+                                      <h5 class="mt-2 mb-1 text-center">Ventas del día</h5>
+                                      <canvas  id="HonDia" class="mt-3 mb-3" ></canvas>
+                                      <label class="form-control text-primary responsive-font-example fw-bold fs-3 text-center mt-3 pt-2 pb-2">'.$_SESSION['MONE'].'.'.number_format($ventasdeldia,2, '.', ',').'</label>
+                                      </div>';
+                                      echo '<script> $("#HonDia").hide()</script>';
+                                    }
 
-                            if ( $compFiltroP==1 ||$compFiltroP==7 ) {
-                              echo '<div id="colHonMes" class="col-12 col-lg-3">
-                            <h5 class="mt-2 mb-1 text-center">Ventas del Mes</h5>
-                            <canvas  id="HonMes1" class="mt-3 mb-3" ></canvas>
-                            <label class="form-control text-pink fw-bold fs-3 text-center mt-5 pt-2 pb-2">'.$_SESSION['MONE'].'. '.number_format($ventasdelmes,2, '.', ',').'</label>
-                            </div>';
-                              echo '<script> $("#HonMes1").hide()</script>';
-                            }else{
-                              echo '<div id="colHonMes" class="col-12 col-lg-3">
-                              <h5 class="mt-2 mb-1 text-center">Ventas del Mes</h5>
-                              <canvas  id="HonMes1" class="mt-3 mb-3" ></canvas>
-                              </div>';
-                            }
-                           
-// <h6 class="mt-2 mb-1 text-center responsive-font-example ">'.obtenerNombreMes($mesGraficas1).' '.$anoGraficas1.' VS '.obtenerNombreMes($mesGraficas2).' '.$anoGraficas2.'</h6>
-                            if ($mesGraficas2==12) {
-                              echo '<div id="colHonMes2" class="col-12 col-lg-3">
-                              
-                              <div class="input-group mt-4 mb-md-2 mt-md-2">
+                                    if ( $compFiltroP==2 ||$compFiltroP==3||$compFiltroP==4 ||$compFiltroP==5||$compFiltroP==6) {
+                                      echo '<div id="colHonMes" class="col-12 col-lg-4">
+                                      <h5 class="mt-2 mb-1 text-center">Ventas del Mes</h5>                            
+                                      <canvas  id="HonMes1" class="mt-3 mb-3" ></canvas>
+                                      </div>';
+                                    }else{
+                                      echo '<div id="colHonMes" class="col-12 col-lg-6">
+                                      <h5 class="mt-2 mb-1 text-center">Ventas del Mes</h5>
+                                      <canvas  id="HonMes1" class="mt-3 mb-3" ></canvas>
+                                      <label class="form-control text-primary responsive-font-example fw-bold fs-3 text-center mt-3 pt-2 pb-2">'.$_SESSION['MONE'].'.'.number_format($ventasdelmes,2, '.', ',').'</label>
+                                      </div>';
+                                        echo '<script> $("#HonMes1").hide()</script>';
+                                    }
+                                ?>
+                              </div>
+                            </div>
+                          </div>
+                          </div>
+                          <div class="col-12">
+                                  <div class="card mt-2 mb-2 pb-5 pt-4">
+                                    <div class="card-body justify-content-center">
+                                      <?php
+                                        echo '
+                                        <div class="d-flex justify-content-center">
+                                        <div id="" class="col-12 col-lg-4">
+                                          <h5 class="text-center fw-bold">Comparativo Anual</h5>
+                                         
+                                          <div class="position-relative">
+                                          <canvas id="AnualGrafica" height="230px" ></canvas>
+                                          </div>
+                                          <div class="d-flex justify-content-around">
+                                          <div>
+                                          <label class="responsive-font-example fw-bold">Año '.$anoGraficas1.'</label>
+                                          <div class="" style="display:inline-block; width:30px; height:20px; background-color:rgba(25, 170, 222,1);"></div>
+                                          </div>
+                                          <div >
+                                          <label class="responsive-font-example fw-bold">Año '.$anoGraficas2.'</label>
+                                          <div class="" style="display:inline-block; width:30px; height:20px; background-color:rgba(125, 58, 193,1);"></div>
+                                          </div>
+                                        </div>
+                                        </div>
+                                        </div>';
+                                        
+                                      ?>
+                                    </div>
+                                  </div>
+                                  <div class="card mb-2 pb-4 pt-3">
+                                    <div class="card-body">
+                                      <div class="row">
+                                      <?php
+                                        print '<div id="colHonDia"  class="col-12 col-md-6">';
+                                        print '<h5 class="mt-md-2 text-center">Variación Anual</h5>';
+                                        if ($variacion<0) {
+                                          print '<label class="form-control text-danger responsive-font-example fw-bold fs-3 text-center mt-2 pt-2 pb-2">'.$_SESSION['MONE'].'.'.number_format($variacion,2, '.', ',').'</label>';
+                                        }else{
+                                          print '<label class="form-control text-success responsive-font-example fw-bold fs-3 text-center mt-2 pt-2 pb-2">'.$_SESSION['MONE'].'.'.number_format($variacion,2, '.', ',').'</label>';
+                                        }
+                                        print '</div>';
+
+                                        print '<div id="colHonDia"  class="col-12 col-md-6">';
+                                        print '<h5 class="mt-2 text-center">Crecimiento Anual</h5>';
+                                        if ($crecimiento<0) {
+                                          print'<label class="form-control text-danger responsive-font-example fw-bold fs-3 text-center mt-2 pt-2 pb-2">'.$crecimiento.'%</label>';
+                                        }else{
+                                          print'<label class="form-control text-success responsive-font-example fw-bold fs-3 text-center mt-2 pt-2 pb-2">'.$crecimiento.'%</label>';
+                                        }
+                                        print '</div>';
+                                    
+                                      ?>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="card mb-2 ">
+                                    <div class="card-body">
+                                        <h5 class="text-center mb-4 pb-4 pt-3">Promedios por transacción</h5>
+                                      <div class="row">
+                                      <?php
+                                        print '<div id="colHonDia"  class="col-12 col-md-2">';
+                                        print '<h6 class="mt-2 text-center ">Dia</h6>';
+                                        print '<p class=" fs-6  fw-bold  text-center mt-2 pt-2 ">'.$_SESSION['MONE'].'.'.number_format($prodia,2, '.', ',').'</p>';
+                                        print '</div>';
+
+                                        print '<div id="colHonDia"  class="col-12 col-md-2">';
+                                        print '<h6 class="mt-md-2 text-center ">Mes</h6>';
+                                        print'<p class="  fs-6  fw-bold text-center mt-2 pt-2 pb-2">'.$_SESSION['MONE'].'.'.number_format($promes,2, '.', ',').'</p>';
+                                        print '</div>';
+                                        print '<div id="colHonDia"  class="col-12 col-md-2">';
+                                        print '<h6 class="mt-md-2 text-center ">Año '.$anoGraficas1.'</h6>';
+                                        print '<p class=" fs-6 fw-bold  text-center mt-2 pt-2 pb-2">'.$_SESSION['MONE'].'.'.number_format($proano,2, '.', ',').'</p>';
+                                        print '</div>';
+
+                                        print '<div id="colHonDia"  class="col-12 col-md-2">';
+                                        print '<h6 class="mt-md-2 text-center ">Año '.$anoGraficas2.'</h6>';
+                                        print'<p class=" fs-6 fw-bold  text-center mt-2 pt-2 pb-2">'.$_SESSION['MONE'].'.'.number_format($proano2,2, '.', ',').'</p>';
+                                        print '</div>';
+                                        print '<div id="colHonDia"  class="col-12 col-md-2">';
+                                        print '<h6 class="mt-md-2 text-center ">Variación</h6>';
+                                        if ($variacionpro<0) {
+                                          print '<p class=" text-danger fs-6 fw-bold text-center mt-2 pt-2 pb-2">'.$_SESSION['MONE'].'.'.number_format($variacionpro,2, '.', ',').'</p>';
+                                        }else{
+                                          print '<p class=" text-success fs-6  fw-bold  text-center mt-2 pt-2 pb-2">'.$_SESSION['MONE'].'.'.number_format($variacionpro,2, '.', ',').'</p>';
+                                        }
+                                        print '</div>';
+
+                                        print '<div id="colHonDia"  class="col-12 col-md-2">';
+                                        print '<h6 class="mt-md-2 text-center ">Crecimiento</h6>';
+                                        if ($crecimientopro<0) {
+                                          print'<p class=" text-danger fs-6 fw-bold  text-center mt-2 pt-2 pb-2">'.$crecimientopro.'%</p>';
+                                        }else{
+                                          print'<p class=" text-success fs-6 fw-bold  text-center mt-2 pt-2 pb-2">'.$crecimientopro.'%</p>';
+                                        }
+                                        print '</div>';
+                                      ?>
+                                      </div>
+                                    </div>
+                                  </div>
+                          </div>
+                      </div>
+                      <div class="col-12 col-lg-4 " id="caja2">
+                        <!-- Contenido de la caja2 -->
+                        <div class="col-12">
+                            <div class="card mb-2 ">
+                              <div class="card-body">
+                                <div class="input-group ">
                                 <input class="me-2" type="checkbox" value="1" id="fechaCk" name="fechaCk">
-                                <label for="productosCk">Filtrar hasta la fecha: </label>
-                              </div>
-                            <div class="d-flex justify-content-evenly">
-                              <div>
-                              <label class="responsive-font-example fw-bold">'.obtenerNombreMes($mesGraficas1).' '.$anoGraficas1.'</label>
-                              <div class="mt-3" style="display:inline-block; width:30px; height:20px; background-color:rgba(25, 170, 222,0.6);"></div>
-                              </div>
-                              <div >
-                              <label class="responsive-font-example fw-bold">'.obtenerNombreMes($mesGraficas2).' '.$anoGraficas2.'</label>
-                              <div class="mt-3" style="display:inline-block; width:30px; height:20px; background-color:rgba(222, 84, 44,0.6);"></div>
+                                  <label for="productosCk">Mostrar valores hasta <b>final de mes</b></label>
+                                </div>
                               </div>
                             </div>
-                          <canvas id="HonMes2" ></canvas>
-                          </div>';
+                        </div>
+                <div class="card ">
+                    <div class="card-body  ">
+                      <h5 class="text-center fw-bold">Comparativo Mensual</h5>
+                      <div class="row justify-content-center ">
+                        <?php
+                        if ($mesGraficas2==12) {
+                          echo '
+                          <div id="colHonMes2" class="col-12 col-lg-9">
+                          <div class="d-flex justify-content-evenly">
+                          <div>
+                          <label class="responsive-font-example fw-bold">'.obtenerNombreMes($mesGraficas1).' '.$anoGraficas1.'</label>
+                          <div class="" style="display:inline-block; width:30px; height:20px; background-color:rgba(25, 170, 222,1);"></div>
+                          </div>
+                          <div >
+                          <label class="responsive-font-example fw-bold">'.obtenerNombreMes($mesGraficas2).' '.$anoGraficas2.'</label>
+                          <div class="" style="display:inline-block; width:30px; height:20px; background-color:rgba(125, 58, 193,1);"></div>
+                          </div>
+                        </div>
+                        <div class="position-relative">
+                         <canvas id="HonMes2" height="230px" ></canvas>
+                         </div>
+                         <label for="productosCk">Mostrar valores hasta <b>final de mes</b></label>
+                      </div>';
+                        }else{
+                          echo '
+                          <div id="colHonMes2" class="col-12 col-lg-9">
+                          <div class="d-flex justify-content-evenly">
+                          <div>
+                          <label class="responsive-font-example fw-bold">'.obtenerNombreMes($mesGraficas1).' '.$anoGraficas1.'</label>
+                          <div class="" style="display:inline-block; width:30px; height:20px; background-color:rgba(25, 170, 222,1);"></div>
+                          </div>
+                          <div >
+                          <label class="responsive-font-example fw-bold">'.obtenerNombreMes($mesGraficas2).' '.$anoGraficas1.'</label>
+                          <div class="" style="display:inline-block; width:30px; height:20px; background-color:rgba(125, 58, 193,1);"></div>
+                          </div>
+                        </div>
+                        <div class="position-relative">
+                         <canvas id="HonMes2" height="230px" ></canvas>
+                         </div>
+                         <label class="fs-6">Valores hasta: <b>'.(($fechacheck=="true")? 'Final del mes': 'Fecha Actual').'</b></label>
+                      </div>';
+                        }
+                        ?>
+                      </div>
+                  </div>
+                </div><div class="card mt-2">
+                          <div class="card-body">
+                          <div class="row justify-content-center ">
+                            <?php
+                            print ' <div class="col-7">';
+                            print'<h6 class="text-center">Variación</h6>';
+                            if ($variacionmes2<0) {
+                              print '<p class=" text-danger fs-5 fw-bold text-center">'.$_SESSION['MONE'].'.'.number_format($variacionmes2,2, '.', ',').'</p>';
+                            }elseif ($variacionmes2>0) {
+                              print '<p class=" text-success fs-5 fw-bold text-center">'.$_SESSION['MONE'].'.'.number_format($variacionmes2,2, '.', ',').'</p>';
                             }else{
-                          //  <h6 class="mt-2 mb-1 text-center responsive-font-example">'.obtenerNombreMes($mesGraficas1).' '.$anoGraficas1.' VS '.obtenerNombreMes($mesGraficas2).' '.$anoGraficas1.'</h6>
-                              echo '<div id="colHonMes2" class="col-12 col-lg-3">
-                              <div class="input-group mt-4 mb-md-2 mt-md-2">
-                                <input class="me-2" type="checkbox" value="1" id="fechaCk" name="fechaCk">
-                                <label for="productosCk">Filtrar hasta la fecha: <b>'.$diacbb.'/'.$mesgrafica.'/'.$aniografica.'</b></label>
-                              </div>
-                            <div class="d-flex justify-content-evenly">
-                              <div>
-                              <label class="responsive-font-example fw-bold">'.obtenerNombreMes($mesGraficas1).' '.$anoGraficas1.'</label>
-                              <div class="mt-3" style="display:inline-block; width:30px; height:20px; background-color:rgba(25, 170, 222,0.6);"></div>
-                              </div>
-                              <div >
-                              <label class="responsive-font-example fw-bold">'.obtenerNombreMes($mesGraficas2).' '.$anoGraficas1.'</label>
-                              <div class="mt-3" style="display:inline-block; width:30px; height:20px; background-color:rgba(222, 84, 44,0.6);"></div>
-                              </div>
-                            </div>
-                          <canvas id="HonMes2" ></canvas>
-                          </div>';
+                              print '<p class=" fs-5 fw-bold text-center">'.$_SESSION['MONE'].'.'.number_format($variacionmes2,2, '.', ',').'</p>';
                             }
-                        //<h6 class="mt-2 mb-1 text-center responsive-font-example">'.obtenerNombreMes($mesGraficas1).' '.$anoGraficas1.' VS '.obtenerNombreMes($mesGraficas1).' '.$anoGraficas2.'</h6>
-                            echo ' <div id="colHonMes3" class="col-12 col-lg-3">
-                            <div class=" mb-md-4 pb-md-3">
-                                
-                              </div>
-                            <div class="d-flex justify-content-evenly">
-                              <div>
-                              <label class="responsive-font-example fw-bold" >'.obtenerNombreMes($mesGraficas1).' '.$anoGraficas1.'</label>
-                              <div class="mt-3" style="display:inline-block; width:30px; height:20px; background-color:rgba(25, 170, 222,0.6);"></div>
-                              </div>
-                              <div >
-                              <label class="responsive-font-example fw-bold">'.obtenerNombreMes($mesGraficas1).' '.$anoGraficas2.'</label>
-                              <div class="mt-3" style="display:inline-block; width:30px; height:20px; background-color:rgba(222, 84, 44,0.6);"></div>
-                              </div>
+                            print '</div>';
+                            print '<div class="col-5">';
+                            print '<h6 class="text-center">Crecimiento</h6>';
+                            if ($crecimientomes2<0) {
+                              print '<p class=" text-danger fs-5 fw-bold text-center">'.number_format($crecimientomes2,0, '.', ',').'%</p>';
+                            }elseif ($crecimientomes2>0) {
+                              print '<p class=" text-success fs-5 fw-bold text-center">'.number_format($crecimientomes2,0, '.', ',').'%</p>';
+                            }else{
+                              print '<p class="fs-5 fw-bold text-center">'.number_format($crecimientomes2,0, '.', ',').'%</p>';
+                            }
+                          
+                            print '</div>';
+                            ?>
                             </div>
-                            <canvas id="HonMes3" ></canvas>
+                          </div>
+                        </div>
+                        <div class="card mt-2">
+                          <div class="card-body">
+                          <h5 class="text-center fw-bold">Comparativo Mensual</h5>
+                          <div class="row justify-content-center ">
+                            <?php
+                            echo ' <div id="colHonMes3" class="col-12  col-lg-9">
+                                <div class="d-flex justify-content-evenly">
+                                  <div>
+                                  <label class="responsive-font-example fw-bold" >'.obtenerNombreMes($mesGraficas1).' '.$anoGraficas1.'</label>
+                                  <div class="" style="display:inline-block; width:30px; height:20px; background-color:rgba(25, 170, 222,1);"></div>
+                                  </div>
+                                  <div >
+                                  <label class="responsive-font-example fw-bold">'.obtenerNombreMes($mesGraficas1).' '.$anoGraficas2.'</label>
+                                  <div class="" style="display:inline-block; width:30px; height:20px; background-color:rgba(125, 58, 193,1);"></div>
+                                  </div>
+                                 
+                                </div>
+                                <div class="position-relative">
+                                <canvas id="HonMes3" height="230px" ></canvas>
+                                </div>
+                                <label class="fs-6">Valores hasta: <b>'.(($fechacheck=="true")? 'Final del mes': 'Fecha Actual').'</b></label>
                             </div>';
-                        
-                          ?>
+                            ?>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="card mt-2">
+                          <div class="card-body">
+                          <div class="row justify-content-center ">
+                          <?php
+                            print ' <div class="col-7">';
+                            print'<h6 class="text-center">Variación</h6>';
+                            if ($variacionmes3<0) {
+                              print '<p class=" text-danger fs-5 fw-bold text-center">'.$_SESSION['MONE'].'.'.number_format($variacionmes3,2, '.', ',').'</p>';
+                            }elseif ($variacionmes3>0) {
+                              print '<p class=" text-success fs-5 fw-bold text-center">'.$_SESSION['MONE'].'.'.number_format($variacionmes3,2, '.', ',').'</p>';
+                            }else{
+                              print '<p class=" fs-5 fw-bold text-center">'.$_SESSION['MONE'].'.'.number_format($variacionmes3,2, '.', ',').'</p>';
+                            }
+                            print '</div>';
+                            print '<div class="col-5">';
+                            print '<h6 class="text-center">Crecimiento</h6>';
+                            if ($crecimientomes3<0) {
+                              print '<p class=" text-danger fs-5 fw-bold text-center">'.number_format($crecimientomes3,0, '.', ',').'%</p>';
+                            }elseif ($crecimientomes3>0) {
+                              print '<p class=" text-success fs-5 fw-bold text-center">'.number_format($crecimientomes3,0, '.', ',').'%</p>';
+                            }else{
+                              print '<p class="fs-5 fw-bold text-center">'.number_format($crecimientomes3,0, '.', ',').'%</p>';
+                            }
+                          
+                            print '</div>';
+                            ?>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                  <!-- <div class="card-footer"></div>-->
                 </div>
-              </div>
-            </div>
-
-          </div>
-
         </div>
       </div>
-     
-
-    </div>
-    <!--CONTAINER LG-->
   </div>
   <!--BODY-->
   <div class="footer bg-blck flex-grow-1 d-flex justify-content-center">
@@ -606,9 +388,8 @@
   <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
 
-  <?php include 'graficas.php';?>
+  <?php include 'php/index/graficas.php';?>
   <script>
-  
     function obtenerNombreMes(numeroMes) {
               const nombresMes = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
               return nombresMes[numeroMes - 1];
@@ -635,10 +416,6 @@
     }
   </script>
 </body>
-<div class="spinner-wrapper">
-  <div class="spinner-border" role="status">
-    <span class="visually-hidden">Loading...</span>
-  </div>
-</div>
+
 
 </html>

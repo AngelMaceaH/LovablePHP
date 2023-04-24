@@ -29,54 +29,11 @@
 
             
         Chart.register(ChartDataLabels);
-            //GRAFICO DE BARRA
-          // Obtener el contexto del canvas
-         /* var ctx27 = document.getElementById('GraficaBarra').getContext('2d');
-
-          var miGrafico = new Chart(ctx27, {
-              type: 'bar',
-              data: {
-                labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
-                datasets: [{
-                  label: 'Ventas hace 2 años',
-                  data: [100,100,100,100,100,100,100,100,100,100,100,100],
-                  backgroundColor: "rgba(20, 36, 89,0.6)",
-                  borderColor: '#fff',
-                  borderWidth: 1
-                },
-                {
-                  label: 'Ventas hace 1 año',
-                  data: [200,200,200,200,200,200,150,200,200,200,200,200],
-                  backgroundColor: "rgba(23, 107, 160,0.6)",
-                  borderColor: '#fff',
-                  borderWidth: 1
-                },
-                {
-                  label: 'Ventas este año',
-                  data: [300,300,300,300,300,300,300,300,300,350,300,30,],
-                  backgroundColor: "rgba(25, 170, 222,0.6)",
-                  borderColor: '#fff',
-                  borderWidth: 1
-                }]
-              },
-              options: {
-                responsive: true,
-                    maintainAspectRatio: false,
-                  scales: {
-                    y: {
-                      beginAtZero: true
-                    }
-                  }
-                }
-            });*/
-
-
-
-
-        //HONDURAS GRAFICOS
+        //GRAFICOS VENTAS
         <?php
-    if (count($vendiaHonduras)>0) {
+    if (array_sum($vendiaHonduras)>0) {
     ?>
+      
          var ctx = document.getElementById('HonDia').getContext('2d');
          var myChart1 = new Chart(ctx, {
               type: 'doughnut',
@@ -171,7 +128,7 @@
     });
     <?php
     }
-    if (count($venmesHonduras)>0) {
+    if (array_sum($venmesHonduras)>0) {
     ?>
     var ctx20 = document.getElementById('HonMes1').getContext('2d');
          var myChart1 = new Chart(ctx20, {
@@ -264,19 +221,24 @@
     const ventas1 = <?php echo $venmes1Honduras; ?>;
     const ventas2 = <?php echo $venmes2Honduras; ?>;
     const totalVentas = ventas2 + ventas1;
-
+    var gradient1 = ctx.createLinearGradient(0, 0, 0, 400);
+      gradient1.addColorStop(0, 'rgba(25, 170, 222,1)');   
+      gradient1.addColorStop(1, 'rgba(24, 57, 70,1)');
+        var gradient2 = ctx.createLinearGradient(0, 0, 0, 400);
+      gradient2.addColorStop(0, 'rgba(125, 58, 193,1)');   
+      gradient2.addColorStop(1, 'rgba(38, 17, 59,1)');
     const data = {
                 
                 datasets: [{
                   label: [<?php echo json_encode($_SESSION['MONE']); ?>],
                   data: [ventas1, totalVentas],
-                  backgroundColor: ["rgba(25, 170, 222,0.6)", "rgba(20, 36, 89,0.6)"],
+                  backgroundColor: [gradient1, "rgba(20, 36, 89,0.6)"],
                   borderColor: ["#fff"],
                   borderWidth: 1
                 }, {
                   label: [<?php echo json_encode($_SESSION['MONE']); ?>],
                   data: [ventas2, totalVentas],
-                  backgroundColor: ["rgba(222, 84, 44,0.6)", "rgba(20, 36, 89,0.6)"],
+                  backgroundColor: [gradient2, "rgba(20, 36, 89,0.6)"],
                   borderColor: ["#fff"],
                   borderWidth: 1
                 }]
@@ -306,15 +268,16 @@
 
             ctx.textAlign='right';
             //ctx.fillText(abreviarNumero(totalVentas),right - 15,yCoor + 20);
-
-            ctx.font = '20px sans-serif';
+            ctx.class='responsive-font-example';
+            //ctx.font = '20px sans-serif';
             ctx.textAlign='center';
-            ctx.fillText(abreviarNumero(ventas2),xCoor ,yCoor - 25);
+            const yCoor3 = yCoor - 1.6 * (height / 2);
+           ctx.fillText(abreviarNumero(ventas2),xCoor ,yCoor - yCoor3);
 
-            ctx.font = '20px sans-serif';
-            ctx.textAlign='center';
-            const yCoor2 = yCoor - 0.40 * (height / 2);
-            ctx.fillText(abreviarNumero(ventas1),xCoor ,yCoor - yCoor2);
+           
+           ctx.textAlign='center';
+           const yCoor2 = yCoor -0.19 * (height / 2);
+           ctx.fillText(abreviarNumero(ventas1),xCoor ,yCoor - yCoor2);
            /* ctx.font = '150px sans-serif';
             ctx.textAlign='center';
             ctx.textBaseLine = 'bottom';
@@ -326,10 +289,17 @@
       type: 'doughnut',
       data,
       options: {
+        
+        layout: {
+            padding: {
+              top: 20
+            }
+          },
                 cutout: '50%',
                 tooltips: {
           enabled: false
         },
+        maintainAspectRatio:false,
             responsive: true,
             "plugins": {
           "legend": {
@@ -402,15 +372,16 @@
 
             ctx.textAlign='right';
             //ctx.fillText(abreviarNumero(totalVentas),right - 15,yCoor + 20);
-
-            ctx.font = '20px sans-serif';
+            ctx.class='responsive-font-example';
+            //ctx.font = '20px sans-serif';
             ctx.textAlign='center';
-            ctx.fillText(0,xCoor ,yCoor - 25);
+            const yCoor3 = yCoor - 1.6 * (height / 2);
+           ctx.fillText(0,xCoor ,yCoor - yCoor3);
 
-            ctx.font = '20px sans-serif';
-            ctx.textAlign='center';
-            const yCoor2 = yCoor - 0.40 * (height / 2);
-            ctx.fillText(0,xCoor ,yCoor - yCoor2);
+           
+           ctx.textAlign='center';
+           const yCoor2 = yCoor -0.19 * (height / 2);
+           ctx.fillText(0,xCoor ,yCoor - yCoor2);
            /* ctx.font = '150px sans-serif';
             ctx.textAlign='center';
             ctx.textBaseLine = 'bottom';
@@ -422,10 +393,16 @@
       type: 'doughnut',
       data,
       options: {
+        layout: {
+            padding: {
+              top: 20
+            }
+          },
                 cutout: '50%',
                 tooltips: {
           enabled: false
         },
+        maintainAspectRatio:false,
             responsive: true,
             "plugins": {
           "legend": {
@@ -462,18 +439,13 @@
       ?>
           
     <?php
-    if ($venmes3Honduras>0) {
+    if ($venmes3Honduras>0 || $venmes1Honduras>0) {
     ?>
       const ventas3 = <?php echo $venmes1Honduras; ?>;
       const ventas4 = <?php echo $venmes3Honduras; ?>;
       const totalVentas1 = ventas3 + ventas4;
-
-
  var ctx21 = document.getElementById('HonMes3').getContext('2d');
-
- const data2 = {
-               
-              };
+ const data2 = {};
  const gaugeChartText2={
         id:'gaugeChartText2',
         afterDatasetsDraw(chart, args, pluginOptions){
@@ -498,44 +470,56 @@
 
             ctx.textAlign='right';
            // ctx.fillText(abreviarNumero(totalVentas1),right - 15,yCoor + 20);
-
-            ctx.font = '20px sans-serif';
+           ctx.class='responsive-font-example';
+           // ctx.font = '20px sans-serif';
             ctx.textAlign='center';
-            ctx.fillText(abreviarNumero(ventas4),xCoor ,yCoor - 25);
+            const yCoor3 = yCoor - 1.6 * (height / 2);
+           ctx.fillText(abreviarNumero(ventas4),xCoor ,yCoor - yCoor3);
 
-            ctx.font = '20px sans-serif';
-            ctx.textAlign='center';
-            const yCoor2 = yCoor - 0.40 * (height / 2);
-            ctx.fillText(abreviarNumero(ventas3),xCoor ,yCoor - yCoor2);
+           
+           ctx.textAlign='center';
+           const yCoor2 = yCoor -0.19 * (height / 2);
+           ctx.fillText(abreviarNumero(ventas3),xCoor ,yCoor - yCoor2);
            /* ctx.font = '150px sans-serif';
             ctx.textAlign='center';
             ctx.textBaseLine = 'bottom';
             ctx.fillText('Fair',xCoor,yCoor - 35);*/
         }
     }
-
+    var gradient1 = ctx.createLinearGradient(0, 0, 0, 400);
+      gradient1.addColorStop(0, 'rgba(25, 170, 222,1)');   
+      gradient1.addColorStop(1, 'rgba(24, 57, 70,1)');
+        var gradient2 = ctx.createLinearGradient(0, 0, 0, 400);
+      gradient2.addColorStop(0, 'rgba(125, 58, 193,1)');   
+      gradient2.addColorStop(1, 'rgba(38, 17, 59,1)');
 var myChart1 = new Chart(ctx21, {
       type: 'doughnut',
       data: {
         datasets: [{
           label: [<?php echo json_encode($_SESSION['MONE']); ?>],
                   data: [ventas3, totalVentas1],
-                  backgroundColor: ["rgba(25, 170, 222,0.6)", "rgba(20, 36, 89,0.6)"],
+                  backgroundColor: [gradient1, "rgba(20, 36, 89,0.6)"],
                   borderColor: ["#fff"],
                   borderWidth: 1
                 }, {
                   label: [<?php echo json_encode($_SESSION['MONE']); ?>],
                   data: [ventas4, totalVentas1],
-                  backgroundColor: ["rgba(222, 84, 44,0.6)", "rgba(20, 36, 89,0.6)"],
+                  backgroundColor: [gradient2, "rgba(20, 36, 89,0.6)"],
                   borderColor: ["#fff"],
                   borderWidth: 1
                 }],
       },
       options: {
+        layout: {
+            padding: {
+              top: 20
+            }
+          },
                 cutout: '50%',
                 tooltips: {
           enabled: false
         },
+        maintainAspectRatio:false,
             responsive: true,
             "plugins": {
           "legend": {
@@ -597,13 +581,14 @@ const gaugeChartText2={
            ctx.textAlign='right';
           // ctx.fillText(abreviarNumero(totalVentas1),right - 15,yCoor + 20);
 
-           ctx.font = '20px sans-serif';
+           ctx.class='responsive-font-example';
            ctx.textAlign='center';
-           ctx.fillText(0,xCoor ,yCoor - 25);
+           const yCoor3 = yCoor - 1.6 * (height / 2);
+           ctx.fillText(0,xCoor ,yCoor - yCoor3);
 
-           ctx.font = '20px sans-serif';
+           
            ctx.textAlign='center';
-           const yCoor2 = yCoor - 0.40 * (height / 2);
+           const yCoor2 = yCoor -0.19 * (height / 2);
            ctx.fillText(0,xCoor ,yCoor - yCoor2);
           /* ctx.font = '150px sans-serif';
            ctx.textAlign='center';
@@ -629,11 +614,17 @@ var myChart1 = new Chart(ctx21, {
                }],
      },
      options: {
+      layout: {
+            padding: {
+              top: 20
+            }
+          },
                cutout: '50%',
                tooltips: {
          enabled: false
        },
-           responsive: true,
+       maintainAspectRatio:false,
+            responsive: true,
            "plugins": {
          "legend": {
            "display": false,
@@ -662,8 +653,203 @@ var myChart1 = new Chart(ctx21, {
 
       <?php
     }
+    if ($venAnual2>0 || $venAnual1>0) {
+      ?>
+      const ventas5 = <?php echo $venAnual1; ?>;
+      const ventas6 = <?php echo $venAnual2; ?>;
+      const totalVentasAnuales = ventas5 + ventas6;
+      var ctx30 = document.getElementById('AnualGrafica').getContext('2d');
+const data3 = {};
+const gaugeChartText3={
+       id:'gaugeChartText2',
+       afterDatasetsDraw(chart, args, pluginOptions){
+           const { ctx, data, chartArea: {top, bottom, left, right, width, height
+           }, scales: {r}}=chart;
 
+           ctx.save();
+           const xCoor= chart.getDatasetMeta(0).data[0].x;
+           const yCoor= chart.getDatasetMeta(0).data[0].y;
+           const score = data.datasets[0].data[0];
+           let rating;
 
+           if (score<600) {
+               rating= ''
+           }
+
+           ctx.font = '14px sans-serif';
+           ctx.fillStyle='#666';
+           ctx.textBaseLine = 'top';
+           ctx.textAlign='left';
+
+           ctx.textAlign='right';
+           ctx.class='responsive-font-example';
+           ctx.textAlign='center';
+           const yCoor3 = yCoor - 1.6 * (height / 2);
+           ctx.fillText(abreviarNumero(ventas6),xCoor ,yCoor - yCoor3);
+
+           
+           ctx.textAlign='center';
+           const yCoor2 = yCoor -0.20 * (height / 2);
+           ctx.fillText(abreviarNumero(ventas5),xCoor ,yCoor - yCoor2);
+       }
+   }
+  
+   var gradient1 = ctx.createLinearGradient(0, 0, 0, 400);
+      gradient1.addColorStop(0, 'rgba(25, 170, 222,1)');   
+      gradient1.addColorStop(1, 'rgba(24, 57, 70,1)');
+        var gradient2 = ctx.createLinearGradient(0, 0, 0, 400);
+      gradient2.addColorStop(0, 'rgba(125, 58, 193,1)');   
+      gradient2.addColorStop(1, 'rgba(38, 17, 59,1)');
+var myChart1 = new Chart(ctx30, {
+      type: 'doughnut',
+      data: {
+        datasets: [{
+          label: [<?php echo json_encode($_SESSION['MONE']); ?>],
+                  data: [ventas5, totalVentasAnuales],
+                  backgroundColor: [gradient1, "rgba(20, 36, 89,0.6)"],
+                  borderColor: ["#fff"],
+                  borderWidth: 1
+                }, {
+                  label: [<?php echo json_encode($_SESSION['MONE']); ?>],
+                  data: [ventas6, totalVentasAnuales],
+                  backgroundColor: [gradient2, "rgba(20, 36, 89,0.6)"],
+                  borderColor: ["#fff"],
+                  borderWidth: 1
+                }],
+      },
+      options: {
+        layout: {
+            padding: {
+              top: 20
+            }
+          },
+              cutout: '50%',
+              tooltips: {
+          enabled: false
+        },
+            maintainAspectRatio:false,
+            responsive: true,
+            "plugins": {
+          "legend": {
+            "display": false,
+            "position": "bottom",
+          },
+          datalabels: { "display": false,
+            formatter: (value, ctx30) => {
+              const datapoints = ctx30.chart.data.datasets[0].data
+              const total = datapoints.reduce((total, datapoint) => total + datapoint, 0)
+              const percentage = value / total * 100
+              return percentage.toFixed(2) + "%";
+            },
+            color: '#fff',
+            offset: -10,
+          }
+        },
+            animation: {
+                animateScale: true,
+                animateRotate: true
+            },
+            rotation: -90,
+            circumference: 180,
+        },
+      plugins: [gaugeChartText3] 
+    });
+      <?php
+    }else{
+    ?>
+       var ctx30 = document.getElementById('AnualGrafica').getContext('2d');
+const data3 = {};
+const gaugeChartText3={
+       id:'gaugeChartText2',
+       afterDatasetsDraw(chart, args, pluginOptions){
+           const { ctx, data, chartArea: {top, bottom, left, right, width, height
+           }, scales: {r}}=chart;
+
+           ctx.save();
+           const xCoor= chart.getDatasetMeta(0).data[0].x;
+           const yCoor= chart.getDatasetMeta(0).data[0].y;
+           const score = data.datasets[0].data[0];
+           let rating;
+
+           if (score<600) {
+               rating= ''
+           }
+
+           ctx.font = '14px sans-serif';
+           ctx.fillStyle='#666';
+           ctx.textBaseLine = 'top';
+           ctx.textAlign='left';
+
+           ctx.textAlign='right';
+           ctx.class='responsive-font-example';
+           ctx.textAlign='center';
+           const yCoor3 = yCoor - 1.6 * (height / 2);
+           ctx.fillText(0,xCoor ,yCoor - yCoor3);
+
+           
+           ctx.textAlign='center';
+           const yCoor2 = yCoor -0.19 * (height / 2);
+           ctx.fillText(0,xCoor ,yCoor - yCoor2);
+       }
+   }
+
+var myChart1 = new Chart(ctx30, {
+     type: 'doughnut',
+     data: {
+       datasets: [{
+
+                 data: [-1],
+                 backgroundColor: [ "rgba(20, 36, 89,0.6)"],
+                 borderColor: ["#fff"],
+                 borderWidth: 1
+               }, {
+                 data: [-1],
+                 backgroundColor: [ "rgba(20, 36, 89,0.6)"],
+                 borderColor: ["#fff"],
+                 borderWidth: 1
+               }],
+     },
+      options: {
+        layout: {
+            padding: {
+              top: 20
+            }
+          },
+                cutout: '50%',
+                tooltips: {
+          enabled: false
+        },
+        maintainAspectRatio:false,
+            responsive: true,
+            "plugins": {
+          "legend": {
+            "display": false,
+            "position": "bottom",
+          },
+          datalabels: { "display": false,
+            formatter: (value, ctx2) => {
+              const datapoints = ctx2.chart.data.datasets[0].data
+              const total = datapoints.reduce((total, datapoint) => total + datapoint, 0)
+              const percentage = value / total * 100
+              return percentage.toFixed(2) + "%";
+            },
+            color: '#fff',
+            offset: -10,
+          }
+        },
+            animation: {
+                animateScale: true,
+                animateRotate: true
+            },
+            rotation: -90,
+            circumference: 180,
+        },
+      plugins: [gaugeChartText3] 
+    });
+    <?php
+    }
+    ?>
+      
     /*          function GraficoFuncion($ctxId, $label, $datos, $labels) {
                   echo "var ctx = document.getElementById('" . $ctxId . "').getContext('2d');";
                   echo 'var chart = new Chart(ctx, {
@@ -717,7 +903,7 @@ var myChart1 = new Chart(ctx21, {
                   });';
                 }
 */
-   ?>
+   
   </script>
 
   

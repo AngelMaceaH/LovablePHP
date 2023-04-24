@@ -5,6 +5,11 @@
   <link rel="icon" type="image/x-icon" href="../../assets/img/favicon.ico">
 </head>
 <body>
+<div class="spinner-wrapper">
+      <div class="spinner-border text-danger" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+        </div> 
 <?php
       include '../layout-prg.php';
 ?>
@@ -27,9 +32,5 @@
       
     </div>
 </body>
-<div class="spinner-wrapper">
-          <div class="spinner-border" role="status">
-            <span class="visually-hidden">Loading...</span>
-          </div>
-        </div> 
+
 </html>

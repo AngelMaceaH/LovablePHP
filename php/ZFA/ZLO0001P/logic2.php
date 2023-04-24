@@ -6,6 +6,6 @@
   $_SESSION['comppro2']=$compro;
   $_SESSION['FechaFiltro2'] =  date("Ymd", strtotime($fechapro));
   $_SESSION['SelectionTab']="false";
-  header("Location: /LovablePHP/PRG/ZFA/ZLO0001PA.php?id=".$compro.'&dat='. $_SESSION['FechaFiltro2']);
+  header("Location: /".$_SESSION['DEV']."LovablePHP/PRG/ZFA/ZLO0001PA.php?id=".$compro.'&dat='. $_SESSION['FechaFiltro2']);
 
 ?>

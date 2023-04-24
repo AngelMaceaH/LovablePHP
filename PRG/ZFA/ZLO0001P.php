@@ -5,6 +5,11 @@
   <link rel="icon" type="image/x-icon" href="../../assets/img/favicon.ico">
 </head>
 <body>
+<div class="spinner-wrapper">
+<div class="spinner-border text-danger" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
+        </div> 
 <?php
       include '../layout-prg.php';
       include 'ZLO0001Psql.php';
@@ -34,7 +39,7 @@
                     <option value="0" selected>Todas las compañías</option>
                     <?php
                     while ($rowCOMARC = odbc_fetch_array($resultCOMARC)) {
-                      echo "<option value='" . $rowCOMARC['COMCOD'] . "'>" . ucfirst(strtolower(rtrim(utf8_encode($rowCOMARC['COMDES'])))) . "</option>";
+                      echo "<option value='" . $rowCOMARC['COMCOD'] . "'>" . rtrim(utf8_encode($rowCOMARC['COMDES'])) . "</option>";
                      }
                     ?>
                   </select>
@@ -110,7 +115,7 @@
                                     }
                                       if($row_zlo0001p['ID'] != "")
                                       {
-                                          print '<tr  onclick="location.href=\'/LovablePHP/PRG/ZFA/ZLO0001PA.php?id='.$row_zlo0001p['ID'].'&dat='.$_SESSION['FechaFiltro'].'\';">';
+                                          print '<tr  onclick="location.href=\'/'.$_SESSION['DEV'].'LovablePHP/PRG/ZFA/ZLO0001PA.php?id='.$row_zlo0001p['ID'].'&dat='.$_SESSION['FechaFiltro'].'\';">';
                                           print   '<td class="responsive-font-example" ><b>' .$row_zlo0001p['CODSEC'].'</b></td>';
                                           print   '<td class="responsive-font-example" ><b>' .$row_zlo0001p['ID'].'</b></td>';
                                           print   '<td class="responsive-font-example"><b>' .$compañia.'</b></td>';
@@ -122,7 +127,7 @@
                                   while($row_zlo0001p = odbc_fetch_array($result_zlo0001p));
                               
                               }else{
-                               echo "<script>window.location = '/LovablePHP/404.html'</script>";
+                               echo "<script>window.location = '/".$_SESSION['DEV']."LovablePHP/404.html'</script>";
                               }
                               
                           ?>
@@ -158,7 +163,7 @@
                                     <th class="text-end responsive-font-example">'.$label3.'</th>
                                     <th class="text-end responsive-font-example">'.$label4.'</th>
                                     <th class="text-end responsive-font-example">Variación</th>
-                                    <th class="text-end responsive-font-example">%Crecimiento</th>
+                                    <th class="text-end responsive-font-example">Crecimiento</th>
                                 </tr>
                             </thead>
                             <tbody>';
@@ -191,7 +196,7 @@
                                 {
                                   
 
-                                    print '<tr  onclick="location.href=\'/LovablePHP/PRG/ZFA/ZLO0001PA.php?id='.$row_compAnual['ID'].'&dat='.$_SESSION['FechaFiltro'].'\';">';
+                                    print '<tr  onclick="location.href=\'/'.$_SESSION['DEV'].'LovablePHP/PRG/ZFA/ZLO0001PA.php?id='.$row_compAnual['ID'].'&dat='.$_SESSION['FechaFiltro'].'\';">';
                                     print   '<td class="responsive-font-example" ><b>' .$row_compAnual['CODSEC'].'</b></td>';
                                     print   '<td class="responsive-font-example" ><b>' .$row_compAnual['ID'].'</b></td>';
                                     print   '<td class="responsive-font-example"><b>' .$compañiaAnual.'</b></td>';
@@ -206,11 +211,11 @@
                                     }   
 
                                     if ($crecimiento<0) {
-                                      print   '<td class="responsive-font-example text-end text-danger"><b>'.$crecimiento.'</b></td>';
+                                      print   '<td class="responsive-font-example text-end text-danger"><b>'.$crecimiento.'%</b></td>';
                                     }elseif ($crecimiento>0) {
-                                      print   '<td class="responsive-font-example text-end text-success"><b>'.$crecimiento.'</b></td>';
+                                      print   '<td class="responsive-font-example text-end text-success"><b>'.$crecimiento.'%</b></td>';
                                     }else {
-                                      print   '<td class="responsive-font-example text-end"><b>'.$crecimiento.'</b></td>';
+                                      print   '<td class="responsive-font-example text-end"><b>'.$crecimiento.'%</b></td>';
                                     }                            
                                     print '</tr>';
                                     
@@ -219,7 +224,7 @@
                             while($row_compAnual = odbc_fetch_array($result_compAnual));
                         
                         }else{
-                          echo "<script>window.location = '/LovablePHP/404.html'</script>";
+                          echo "<script>window.location = '/".$_SESSION['DEV']."LovablePHP/404.html'</script>";
                         }
                         
                     ?>
@@ -239,8 +244,10 @@
                                 <th class="text-start responsive-font-example">Punto de venta</th>
                                 <th class="text-end responsive-font-example">Promedio día</th>
                                 <th class="text-end responsive-font-example">Promedio Mes</th>
-                                <th class="text-end responsive-font-example">Promedio Año</th>
-                                <th class="text-end responsive-font-example">Promedio Año Comparación</th>
+                                <th class="text-end responsive-font-example">Año <?php echo $_SESSION['AnoFiltro']; ?></th>
+                                <th class="text-end responsive-font-example">Año <?php echo $_SESSION['AnoFiltro']-1; ?></th>
+                                <th class="text-end responsive-font-example">Variación</th>
+                                <th class="text-end responsive-font-example">Crecimiento</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -254,24 +261,34 @@
                                   if ($_SESSION['filtro']==3) {
                                     $monPromedios='D';
                                   }else{
-                                    $monPromedios = rtrim(utf8_encode($rowPromedios['MON']));
+                                    $monPromedios = rtrim(utf8_encode($rowPromedios['MON'])).'.';
                                   }
-                                
-                                  $prodia = $monPromedios.'.'.number_format(rtrim(utf8_encode($rowPromedios['PRODIA']==""? 0:$rowPromedios['PRODIA'])),2, '.', ',');
-                                  $promes = $monPromedios.'.'.number_format(rtrim(utf8_encode($rowPromedios['PROMES']==""? 0:$rowPromedios['PROMES'])),2, '.', ',');
-                                  $proano = $monPromedios.'.'.number_format(rtrim(utf8_encode($rowPromedios['PROANO']==""? 0:$rowPromedios['PROANO'])),2, '.', ',');
-                                  $proano2 = $monPromedios.'.'.number_format(rtrim(utf8_encode($rowPromedios['PROANO2']==""? 0:$rowPromedios['PROANO2'])),2, '.', ',');
-                                  if ($_SESSION['filtro']==1) {
+                                  $variacionPromedios=0;$crecimientoPromedios=0;
+    
+                                  $prodia = $monPromedios.number_format(rtrim(utf8_encode($rowPromedios['PRODIA']==""? 0:$rowPromedios['PRODIA'])),2, '.', ',');
+                                  $promes = $monPromedios.number_format(rtrim(utf8_encode($rowPromedios['PROMES']==""? 0:$rowPromedios['PROMES'])),2, '.', ',');
+                                  $proano=rtrim(utf8_encode($rowPromedios['PROANO']==""? 0:$rowPromedios['PROANO']));
+                                  $proano2 =rtrim(utf8_encode($rowPromedios['PROANO2']==""? 0:$rowPromedios['PROANO2']));
+                                  $variacionPromedios=number_format($proano-$proano2,2, '.', ',');
+                                  if ($proano!=0 && $proano2!=0) {
+                                    $crecimientoPromedios=round((($proano/$proano2)-1)*100);
+                                  }
 
+                                  $proano = $monPromedios.$proano;
+                                  $proano2 = $monPromedios.$proano2;
+                                
+                                  if ($_SESSION['filtro']==1) {
+                                    $monPromedios ='';
                                     $prodia = number_format(rtrim(utf8_encode(($rowPromedios['SUBDIA']==0||$rowPromedios['DIATRA']==0)? 0:$rowPromedios['SUBDIA']/$rowPromedios['DIATRA'])),2, '.', ',');
                                     $promes = number_format(rtrim(utf8_encode(($rowPromedios['SUBMES']==0||$rowPromedios['MESTRA']==0)? 0:$rowPromedios['SUBMES']/$rowPromedios['MESTRA'])),2, '.', ',');
                                     $proano = number_format(rtrim(utf8_encode(($rowPromedios['ANO1']==0||$rowPromedios['ANOTRA']==0)? 0:$rowPromedios['ANO1']/$rowPromedios['ANOTRA'])),2, '.', ',');
                                     $proano2 = number_format(rtrim(utf8_encode(($rowPromedios['ANO2']==0||$rowPromedios['ANO2TRA']==0)? 0:$rowPromedios['ANO2']/$rowPromedios['ANO2TRA'])),2, '.', ',');
+                                  
                                   }
-                                
+                                  
                                     if($rowPromedios['ID'] != "")
                                     {
-                                        print '<tr  onclick="location.href=\'/LovablePHP/PRG/ZFA/ZLO0001PA.php?id='.$rowPromedios['ID'].'&dat='.$_SESSION['FechaFiltro'].'\';">';
+                                        print '<tr  onclick="location.href=\'/'.$_SESSION['DEV'].'LovablePHP/PRG/ZFA/ZLO0001PA.php?id='.$rowPromedios['ID'].'&dat='.$_SESSION['FechaFiltro'].'\';">';
                                         print   '<td class="responsive-font-example" ><b>' .$rowPromedios['CODSEC'].'</b></td>';
                                         print   '<td class="responsive-font-example" ><b>' .$rowPromedios['ID'].'</b></td>';
                                         print   '<td class="responsive-font-example"><b>' .$compañiaPromedios.'</b></td>';
@@ -279,6 +296,20 @@
                                         print   '<td class="responsive-font-example text-end"><b>' .$promes.'</b></td>';
                                         print   '<td class="responsive-font-example text-end"><b>'.$proano.'</b></td>';
                                         print   '<td class="responsive-font-example text-end"><b>' .$proano2.'</b></td>';
+                                        if ($variacionPromedios<0) {
+                                          print   '<td class="responsive-font-example text-end text-danger"><b>'.$monPromedios.$variacionPromedios.'</b></td>';
+                                        }elseif ($variacionPromedios>0){
+                                          print   '<td class="responsive-font-example text-end text-success"><b>'.$monPromedios.$variacionPromedios.'</b></td>';
+                                        }else{
+                                          print   '<td class="responsive-font-example text-end"><b>'.$variacionPromedios.'</b></td>';
+                                        }
+                                        if ($crecimientoPromedios<0) {
+                                          print   '<td class="responsive-font-example text-end text-danger"><b>'.$crecimientoPromedios.'%</b></td>';
+                                        }elseif ($crecimientoPromedios>0){
+                                          print   '<td class="responsive-font-example text-end text-success"><b>'.$crecimientoPromedios.'%</b></td>';
+                                        }else{
+                                          print   '<td class="responsive-font-example text-end"><b>'.$crecimientoPromedios.'%</b></td>';
+                                        }
                                         print '</tr>';
                                         
                                     }
@@ -286,7 +317,7 @@
                                 while($rowPromedios = odbc_fetch_array($resultpromedios));
                             
                             }else{
-                              echo "<script>window.location = '/LovablePHP/404.html'</script>";
+                              echo "<script>window.location = '/".$_SESSION['DEV']."LovablePHP/404.html'</script>";
                             }
                           }
                         
@@ -304,11 +335,7 @@
         </div>
       </div>
     </div>
-    <div class="spinner-wrapper">
-          <div class="spinner-border" role="status">
-            <span class="visually-hidden">Loading...</span>
-          </div>
-        </div> 
+   
       <div class="footer bg-blck flex-grow-1 d-flex justify-content-center">
       <p class="bggray responsive-font-example"><i>Lovable de Honduras S.A. de C.V</i></p>
       </div>
@@ -388,7 +415,7 @@
             $('#'+button+'').prop('checked',true);
             $('input[type="radio"]').click(function() {
               tab= tab!=null? tab: <?php echo isset($_SESSION['opcion']) ? $_SESSION['opcion'] : "1"; ?>;
-              window.location.href="/LovablePHP/PRG/ZFA/ZLO0001P.php?opc="+tab+"&fil="+($(this).attr('id')).substring(8,9)+"";
+              window.location.href="/<?php echo $_SESSION['DEV'] ?>LovablePHP/PRG/ZFA/ZLO0001P.php?opc="+tab+"&fil="+($(this).attr('id')).substring(8,9)+"";
             });
 
             var tabSeleccionado=<?php echo isset($_SESSION['opcion']) ? $_SESSION['opcion'] : "false"; ?>;

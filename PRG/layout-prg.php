@@ -26,13 +26,15 @@
           date_default_timezone_set('America/Tegucigalpa');
           session_set_cookie_params(86400);
           session_start();
+          $_SESSION['DEV']="";
+
           include '../../php/conn.php';
           if($_SESSION["NOMUSU"] == ""){
-              header('Location: /LovablePHP/login.php');
+              header('Location: /'.$_SESSION['DEV'].'LovablePHP/login.php');
           }
           if(isset($_GET['logout'])){
               session_destroy();
-              header('Location: /LovablePHP/login.php');
+              header('Location: /'.$_SESSION['DEV'].'LovablePHP/login.php');
           } 
           $connIBM=conexionIBM();
           $sqlModulos= "SELECT DETA16.DETC91, APLARC.APLDES, COUNT(*) as count 
@@ -52,7 +54,7 @@
               const spinnerWrapperEl = document.querySelector('.spinner-wrapper');
               setTimeout(() => {
                     spinnerWrapperEl.style.display = 'none';
-                }, 1000);
+                }, 200);
                 function tableInit(name) {
                    var table = $(name).DataTable( {
                       "ordering": false,
@@ -155,7 +157,7 @@
                   }
               }
               if ($rowPR['DETC91']==$rowLM['DETC91']) {
-                echo '$("#'.$rowLM['DETC91'].'").append("<li class=\"nav-item\"><a class=\"nav-link\" href=\"/LovablePHP/PRG/'.$rowPR['DETC91'].'/'.preg_replace('/\s+/', '', $rowPR['CATNOM']).'.php\"><span class=\"nav-icon\"></span>'.$programaDescripcion.'</a></li>");';
+                echo '$("#'.$rowLM['DETC91'].'").append("<li class=\"nav-item\"><a class=\"nav-link\" href=\"/'.$_SESSION['DEV'].'LovablePHP/PRG/'.$rowPR['DETC91'].'/'.preg_replace('/\s+/', '', $rowPR['CATNOM']).'.php\"><span class=\"nav-icon\"></span>'.$programaDescripcion.'</a></li>");';
                 echo "$('#".$rowLM['DETC91']." #hiddenli').remove();";
               }
             }
@@ -167,11 +169,11 @@
       
     <div class="sidebar bg-blck sidebar-fixed" id="sidebar">
    
-      <div class="sidebar-brand d-none d-md-flex p-4"><a href="/LovablePHP/">
+      <div class="sidebar-brand d-none d-md-flex p-4"><a href="/<?php echo $_SESSION['DEV'] ?>LovablePHP/">
         <img src="../../assets/img/lovableLogoDark.jpg" class="img-fluid" alt="Lovable Logo"></a>
       </div>
       <ul class="sidebar-nav bg-blck2 mt-3" data-coreui="navigation" data-simplebar="">
-        <li class="nav-item mt-3"><a class="nav-link" href="/LovablePHP/">
+        <li class="nav-item mt-3"><a class="nav-link" href="/<?php echo $_SESSION['DEV'] ?>LovablePHP/">
              Inicio</a>
         </li>
        <div id="menu-display">
@@ -188,7 +190,7 @@
             <svg class="icon icon-lg">
               <use xlink:href="../../vendors/@coreui/icons/svg/free.svg#cil-menu"></use>
             </svg>
-          </button><a class="header-brand d-md-none" href="/LovablePHP/">
+          </button><a class="header-brand d-md-none" href="/<?php echo $_SESSION['DEV'] ?>LovablePHP/">
              <img src="../../assets/img/lovableLogo.png" width="205px" alt="Lovable Logo">
             </a>
           <ul class="header-nav d-none d-md-flex">
@@ -223,7 +225,7 @@
     <script>
     
       function logOut() {
-        window.location.assign('/LovablePHP/index.php?logout=1');
+        window.location.assign('/<?php echo $_SESSION['DEV'] ?>LovablePHP/index.php?logout=1');
       }
       
     </script>

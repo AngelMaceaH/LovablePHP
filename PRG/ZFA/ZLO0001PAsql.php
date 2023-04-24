@@ -16,7 +16,7 @@
         $_SESSION['anioanterior']=$anio;
     }
     if($_GET['dat']=="19700101"){
-        echo "<script>window.location = '/LovablePHP/PRG/ZFA/ZLO0001PA.php?id=".$_SESSION['comppro2']."&dat='</script>";
+        echo "<script>window.location = '/".$_SESSION['DEV']."LovablePHP/PRG/ZFA/ZLO0001PA.php?id=".$_SESSION['comppro2']."&dat='</script>";
     }
     $ckProductos1 = isset($_SESSION['productosCk1']) ? $_SESSION['productosCk1'] : "";
     $ckProductos2 = isset($_SESSION['productosCk2']) ? $_SESSION['productosCk2'] : "";
@@ -118,12 +118,13 @@
              }
         }
         $resultFacturaMes=odbc_exec($connIBM,$sqlFacturaMes);
-  $sqlCOMARC = "SELECT T2.CODSEC,COMARC.COMCOD, COMARC.COMDES 
-    FROM LBPRDDAT/COMARC
-    INNER JOIN LBPRDDAT/DETA16 ON DETA16.DETC90 = COMARC.COMCOD
-    INNER JOIN LBPRDDAT/LO0686 AS T2 ON T2.CODCIA = COMARC.COMCOD
-    WHERE DETA16.DETUSU ='".$_SESSION["CODUSU"]."' AND DETA16.DETPR1 = 'LO1512P' 
-    ORDER BY T2.CODSEC";
+  //COMBOBOX
+  $sqlCOMARC = "SELECT T2.CODSEC,LO0705.CODCIA COMCOD, LO0705.NOMCIA COMDES 
+  FROM LBPRDDAT/LO0705
+  INNER JOIN LBPRDDAT/DETA16 ON DETA16.DETC90 = LO0705.CODCIA
+  INNER JOIN LBPRDDAT/LO0686 AS T2 ON T2.CODCIA = LO0705.CODCIA
+  WHERE DETA16.DETUSU ='".$_SESSION["CODUSU"]."' AND DETA16.DETPR1 = 'LO1512P' 
+  ORDER BY T2.CODSEC";
   $resultCOMARC=odbc_exec($connIBM,$sqlCOMARC);
   $resultCOMARC2=odbc_exec($connIBM,$sqlCOMARC);
 
