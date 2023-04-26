@@ -54,7 +54,7 @@
               const spinnerWrapperEl = document.querySelector('.spinner-wrapper');
               setTimeout(() => {
                     spinnerWrapperEl.style.display = 'none';
-                }, 200);
+                }, 500);
                 function tableInit(name) {
                    var table = $(name).DataTable( {
                       "ordering": false,

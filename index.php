@@ -78,6 +78,12 @@
                         </select>  
                 <input type="text" id="fechaCk10" name="fechaCk10" class="d-none"> 
               </div>
+              <div class="col-12 mt-3">
+              <div class="form-check form-switch ms-2">
+                <input class="form-check-input fs-5 " type="checkbox" role="switch" id="dolaresCk" name="dolaresChk" >
+                <label class="form-check-label fs-5 fw-bold " for="dolaresCk">Valores en dólares</label>
+              </div>
+              </div>
             </div>
           </form>
         </div>
@@ -108,7 +114,7 @@
                                       echo '<div id="colHonDia"  class="col-12 col-lg-6">
                                       <h5 class="mt-2 mb-1 text-center">Ventas del día</h5>
                                       <canvas  id="HonDia" class="mt-3 mb-3" ></canvas>
-                                      <label class="form-control text-primary responsive-font-example fw-bold fs-3 text-center mt-3 pt-2 pb-2">'.$_SESSION['MONE'].'.'.number_format($ventasdeldia,2, '.', ',').'</label>
+                                      <label class="form-control text-darkblue responsive-font-example fw-bold fs-3 text-center mt-3 pt-2 pb-2">'.$_SESSION['MONE'].'.'.number_format($ventasdeldia,2, '.', ',').'</label>
                                       </div>';
                                       echo '<script> $("#HonDia").hide()</script>';
                                     }
@@ -122,7 +128,7 @@
                                       echo '<div id="colHonMes" class="col-12 col-lg-6">
                                       <h5 class="mt-2 mb-1 text-center">Ventas del Mes</h5>
                                       <canvas  id="HonMes1" class="mt-3 mb-3" ></canvas>
-                                      <label class="form-control text-primary responsive-font-example fw-bold fs-3 text-center mt-3 pt-2 pb-2">'.$_SESSION['MONE'].'.'.number_format($ventasdelmes,2, '.', ',').'</label>
+                                      <label class="form-control text-pink responsive-font-example fw-bold fs-3 text-center mt-3 pt-2 pb-2">'.$_SESSION['MONE'].'.'.number_format($ventasdelmes,2, '.', ',').'</label>
                                       </div>';
                                         echo '<script> $("#HonMes1").hide()</script>';
                                     }
@@ -401,6 +407,8 @@
             var compFiltro = <?php echo $compFiltroP; ?>;
 
     $(document).ready(function () {
+      
+      $('#dolaresCk').prop('checked', <?php echo $dolarescheck; ?>);
       $('#fechaCk').prop('checked', <?php echo  $fechacheck ?>);
       $("#cbbMesgra").val(compFiltro);
       $("#tituloGraficasVentas").empty();

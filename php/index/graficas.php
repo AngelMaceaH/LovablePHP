@@ -1,5 +1,5 @@
 <script>
-            $("#fechagra , #cbbMesgra, #fechaCk").change(function() {
+            $("#fechagra , #cbbMesgra, #fechaCk, #dolaresCk").change(function() {
               var state = $("#fechaCk").is(":checked");
               $("#fechaCk10").val(state);
                

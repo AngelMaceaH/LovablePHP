@@ -147,7 +147,6 @@
     <script src="vendors/@coreui/utils/js/coreui-utils.js"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
     <script>
-      
       function logOut() {
         window.location.assign('/<?php echo $_SESSION['DEV'] ?>LovablePHP/index.php?logout=1');
       }

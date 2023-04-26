@@ -56,7 +56,7 @@
                 <label class="btn btn-outline-secondary responsive-font-example  pt-3 pb-3" for="btnradio2" id="btnnradio2"><b>Transacciones</b></label>
 
                 <input type="radio" class="btn-check" name="btnradio3" id="btnradio3" autocomplete="off">
-                <label class="btn btn-outline-secondary responsive-font-example  pt-3 pb-3" for="btnradio3"><b>Valores Dolarizados</b></label>
+                <label class="btn btn-outline-secondary responsive-font-example  pt-3 pb-3" for="btnradio3"><b>Valores Dólarizados</b></label>
 
                 <input type="radio" class="btn-check" name="btnradio4" id="btnradio4" autocomplete="off" >
                 <label class="btn btn-outline-secondary responsive-font-example  pt-3 pb-3" for="btnradio4"><b>Moneda Nacional</b></label>
@@ -127,7 +127,7 @@
                                   while($row_zlo0001p = odbc_fetch_array($result_zlo0001p));
                               
                               }else{
-                               echo "<script>window.location = '/".$_SESSION['DEV']."LovablePHP/404.html'</script>";
+                               //echo "<script>window.location = '/".$_SESSION['DEV']."LovablePHP/404.html'</script>";
                               }
                               
                           ?>
@@ -224,7 +224,7 @@
                             while($row_compAnual = odbc_fetch_array($result_compAnual));
                         
                         }else{
-                          echo "<script>window.location = '/".$_SESSION['DEV']."LovablePHP/404.html'</script>";
+                          //echo "<script>window.location = '/".$_SESSION['DEV']."LovablePHP/404.html'</script>";
                         }
                         
                     ?>
@@ -317,13 +317,11 @@
                                 while($rowPromedios = odbc_fetch_array($resultpromedios));
                             
                             }else{
-                              echo "<script>window.location = '/".$_SESSION['DEV']."LovablePHP/404.html'</script>";
+                             // echo "<script>window.location = '/".$_SESSION['DEV']."LovablePHP/404.html'</script>";
                             }
                           }
-                        
+  
                     ?>
-                        
-                       
                         </tbody>
                         </table>
                       </div>
