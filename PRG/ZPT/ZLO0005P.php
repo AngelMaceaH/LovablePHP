@@ -14,7 +14,7 @@
               <li class="breadcrumb-item">
                 <!-- if breadcrumb is single--><span>Producto Terminado</span>
               </li>
-              <li class="breadcrumb-item active"><span>ZLO0002P</span></li>
+              <li class="breadcrumb-item active"><span>ZLO0005P</span></li>
             </ol>
           </nav>
         </div>

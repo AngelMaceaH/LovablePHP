@@ -18,8 +18,8 @@
   }else{
     $diagrafica=substr($fechaGraficas,6,2);
   }
-  $mesGraficas1=(float)(isset($_GET['m'])? $_GET['m']:$mes_actual);
-  $mesGraficas2=(float)(isset($_GET['m'])? $_GET['m']:$mes_actual) - 1;
+  $mesGraficas1=(float)(isset($mesgrafica)? $mesgrafica:$mes_actual);
+  $mesGraficas2=(float)(isset($mesgrafica)? $mesgrafica:$mes_actual) - 1;
   if ($mesGraficas2==0) {
       $mesGraficas2=12;
   }
@@ -29,8 +29,8 @@
   if (strlen($mesGraficas2)==1) {
     $mesGraficas2 = "0".$mesGraficas2;
   }
-  $anoGraficas1=(float)(isset($_GET['y'])? $_GET['y']:$ano_actual);
-  $anoGraficas2=(float)(isset($_GET['y'])? $_GET['y']:$ano_actual) - 1;
+  $anoGraficas1=(float)(isset($aniografica)? $aniografica:$ano_actual);
+  $anoGraficas2=(float)(isset($aniografica)? $aniografica:$ano_actual) - 1;
 
   if ($dolarescheck=="true") {
     $tablaDIA="LO0710";

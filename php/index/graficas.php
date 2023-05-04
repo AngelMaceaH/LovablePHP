@@ -216,7 +216,7 @@
       <?php
     }
  
-    if ($venmes2Honduras>0) {
+    if ($venmes1Honduras>0 || $venmes2Honduras>0) {
     ?>
     const ventas1 = <?php echo $venmes1Honduras; ?>;
     const ventas2 = <?php echo $venmes2Honduras; ?>;
