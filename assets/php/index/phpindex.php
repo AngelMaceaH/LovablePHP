@@ -10,6 +10,7 @@
   $ano_actual=date("Y");
   $compFiltroP=(float)(isset($_SESSION['$compFiltro'])? $_SESSION['$compFiltro']:1);
   $fechaGraficas=isset($_SESSION['FechaGraficas'])? $_SESSION['FechaGraficas']:$fecha_actual;
+ 
   $aniografica=substr($fechaGraficas,0,4);
   $mesgrafica=substr($fechaGraficas,4,2);
   $diacbb = substr($fechaGraficas,6,2);
@@ -220,20 +221,20 @@ INNER JOIN (
       $sqlValoresPromedio= $promedios.'WHERE CODCIA=1';
       break;
       case 2:
-        $sqlGraficasDias = $GraficasDias. 'WHERE CODCIA=35 OR CODCIA=47 OR CODCIA=57 OR CODCIA=52 OR CODCIA=63 OR CODCIA=64 OR CODCIA=72 OR CODCIA=74 OR CODCIA=20 OR CODCIA=22 OR CODCIA=56 OR CODCIA=59 OR CODCIA=65 OR CODCIA=68 OR CODCIA=75 OR CODCIA=76 OR CODCIA=85 OR CODCIA=70 OR CODCIA=73 OR CODCIA=78 OR CODCIA=82';
-        $sqlValoresMes = $ValoresMes.'WHERE CODCIA=35 OR CODCIA=47 OR CODCIA=57 OR CODCIA=52 OR CODCIA=63 OR CODCIA=64 OR CODCIA=72 OR CODCIA=74 OR CODCIA=20 OR CODCIA=22 OR CODCIA=56 OR CODCIA=59 OR CODCIA=65 OR CODCIA=68 OR CODCIA=75 OR CODCIA=76 OR CODCIA=85 OR CODCIA=70 OR CODCIA=73 OR CODCIA=78 OR CODCIA=82';
-        $sqlGraficasMes = $GraficasMes.'WHERE CODCIA=35 OR CODCIA=47 OR CODCIA=57 OR CODCIA=52 OR CODCIA=63 OR CODCIA=64 OR CODCIA=72 OR CODCIA=74 OR CODCIA=20 OR CODCIA=22 OR CODCIA=56 OR CODCIA=59 OR CODCIA=65 OR CODCIA=68 OR CODCIA=75 OR CODCIA=76 OR CODCIA=85 OR CODCIA=70 OR CODCIA=73 OR CODCIA=78 OR CODCIA=82';
-        $sqlMesesPasados = $MesesPasados. 'WHERE CODCIA=35 OR CODCIA=47 OR CODCIA=57 OR CODCIA=52 OR CODCIA=63 OR CODCIA=64 OR CODCIA=72 OR CODCIA=74 OR CODCIA=20 OR CODCIA=22 OR CODCIA=56 OR CODCIA=59 OR CODCIA=65 OR CODCIA=68 OR CODCIA=75 OR CODCIA=76 OR CODCIA=85 OR CODCIA=70 OR CODCIA=73 OR CODCIA=78 OR CODCIA=82';
-        $sqlValoresAnual = $ValoresAnual. 'WHERE CODCIA=35 OR CODCIA=47 OR CODCIA=57 OR CODCIA=52 OR CODCIA=63 OR CODCIA=64 OR CODCIA=72 OR CODCIA=74 OR CODCIA=20 OR CODCIA=22 OR CODCIA=56 OR CODCIA=59 OR CODCIA=65 OR CODCIA=68 OR CODCIA=75 OR CODCIA=76 OR CODCIA=85 OR CODCIA=70 OR CODCIA=73 OR CODCIA=78 OR CODCIA=82';
-        $sqlValoresPromedio= $promedios.'WHERE CODCIA=35 OR CODCIA=47 OR CODCIA=57 OR CODCIA=52 OR CODCIA=63 OR CODCIA=64 OR CODCIA=72 OR CODCIA=74 OR CODCIA=20 OR CODCIA=22 OR CODCIA=56 OR CODCIA=59 OR CODCIA=65 OR CODCIA=68 OR CODCIA=75 OR CODCIA=76 OR CODCIA=85 OR CODCIA=70 OR CODCIA=73 OR CODCIA=78 OR CODCIA=82';
+        $sqlGraficasDias = $GraficasDias. 'WHERE CODCIA IN(35,47,57,52,63,64,72,74,20,22,56,59,65,68,75,76,85,70,73,78,82)';
+        $sqlValoresMes = $ValoresMes.'WHERE CODCIA IN(35,47,57,52,63,64,72,74,20,22,56,59,65,68,75,76,85,70,73,78,82)';
+        $sqlGraficasMes = $GraficasMes.'WHERE CODCIA IN(35,47,57,52,63,64,72,74,20,22,56,59,65,68,75,76,85,70,73,78,82)';
+        $sqlMesesPasados = $MesesPasados. 'WHERE CODCIA IN(35,47,57,52,63,64,72,74,20,22,56,59,65,68,75,76,85,70,73,78,82)';
+        $sqlValoresAnual = $ValoresAnual. 'WHERE CODCIA IN(35,47,57,52,63,64,72,74,20,22,56,59,65,68,75,76,85,70,73,78,82)';
+        $sqlValoresPromedio= $promedios.'WHERE CODCIA IN(35,47,57,52,63,64,72,74,20,22,56,59,65,68,75,76,85,70,73,78,82)';
         break;
         case 3:
-          $sqlGraficasDias = $GraficasDias. 'WHERE CODCIA=49 OR CODCIA=66 OR CODCIA=69 OR CODCIA=71 OR CODCIA=86';
-          $sqlValoresMes = $ValoresMes.'WHERE CODCIA=49 OR CODCIA=66 OR CODCIA=69 OR CODCIA=71 OR CODCIA=86';
-          $sqlGraficasMes = $GraficasMes.'WHERE CODCIA=49 OR CODCIA=66 OR CODCIA=69 OR CODCIA=71 OR CODCIA=86';
-          $sqlMesesPasados = $MesesPasados. 'WHERE CODCIA=49 OR CODCIA=66 OR CODCIA=69 OR CODCIA=71 OR CODCIA=86';
-          $sqlValoresAnual = $ValoresAnual.'WHERE CODCIA=49 OR CODCIA=66 OR CODCIA=69 OR CODCIA=71 OR CODCIA=86';
-          $sqlValoresPromedio= $promedios.'WHERE CODCIA=49 OR CODCIA=66 OR CODCIA=69 OR CODCIA=71 OR CODCIA=86';
+          $sqlGraficasDias = $GraficasDias. 'WHERE CODCIA IN(49,66,69,71,86)';
+          $sqlValoresMes = $ValoresMes.'WHERE CODCIA IN(49,66,69,71,86)';
+          $sqlGraficasMes = $GraficasMes.'WHERE CODCIA IN(49,66,69,71,86)';
+          $sqlMesesPasados = $MesesPasados. 'WHERE CODCIA IN(49,66,69,71,86)';
+          $sqlValoresAnual = $ValoresAnual.'WHERE CODCIA IN(49,66,69,71,86)';
+          $sqlValoresPromedio= $promedios.'WHERE CODCIA IN(49,66,69,71,86)';
           break;
           case 4:
             $sqlGraficasDias = $GraficasDias. 'WHERE CODCIA=48  OR CODCIA=53  OR CODCIA=62  OR CODCIA=61';
@@ -296,6 +297,7 @@ INNER JOIN (
   }
 //VENTAS MES GRAFICAS MEDIA DONA  
   $variacionmes2=0;$variacionmes3=0;$crecimientomes2=0;$crecimientomes3=0;
+ 
   $resultM=odbc_exec($connIBM,$sqlGraficasMes); 
   while ($rowM= odbc_fetch_array($resultM)) { 
     $codMes=$rowM['CODCIA'];
@@ -355,4 +357,6 @@ INNER JOIN (
   if ($proano!=0 && $proano2!=0) {
     $crecimientopro = round((($proano/$proano2)-1)*100);
   }
+
+
 ?>

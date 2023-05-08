@@ -7,18 +7,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>Lovable </title>
     <link rel="icon" type="image/x-icon" href="../../assets/img/favicon.ico">
-    <link rel="stylesheet" href="../../vendors/simplebar/css/simplebar.css">
-    <link rel="stylesheet" href="../../css/vendors/simplebar.css">
-    <link href="../../css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/vendors/simplebar/css/simplebar.css">
+    <link rel="stylesheet" href="../../assets/css/vendors/simplebar.css">
+    <link href="../../assets/css/style.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/themes/prism.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
-    <link href="../../css/examples.css" rel="stylesheet">
-    <link href="../../css/mystyle.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.2/css/jquery.dataTables.css" />
+   
+    <link href="../../assets/css/examples.css" rel="stylesheet">
+    <link href="../../assets/css/mystyle.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/js/all.min.js"
         integrity="sha512-2bMhOkE/ACz21dJT8zBOMgMecNxx0d37NND803ExktKiKdSzdwn+L7i9fdccw/3V06gM/DBWKbYmQvKMdAA9Nw=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@500&display=swap" rel="stylesheet">
+    <style>
+        h1,h2,h3,h4,h5,h6,p,span,td,th,a,button,label,b,li,ul{
+    font-family: 'Rubik', sans-serif;
+      }
+    </style>
   </head>
   <body>
  
@@ -28,7 +38,7 @@
           session_start();
           $_SESSION['DEV']="";
 
-          include '../../php/conn.php';
+          include '../../assets/php/conn.php';
           if($_SESSION["NOMUSU"] == ""){
               header('Location: /'.$_SESSION['DEV'].'LovablePHP/login.php');
           }
@@ -52,44 +62,7 @@
         <script>    
          $( document ).ready(function() {
               const spinnerWrapperEl = document.querySelector('.spinner-wrapper');
-              setTimeout(() => {
-                    spinnerWrapperEl.style.display = 'none';
-                }, 500);
-                function tableInit(name) {
-                   var table = $(name).DataTable( {
-                      "ordering": false,
-                    "pageLength": 100,
-                    "language": {
-                        url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json',
-                    },
-                    "columnDefs": [
-                    {
-                        target: 0,
-                        visible: false,
-                        searchable: false,
-                    },
-                    {
-                        target: 1,
-                        visible: false,
-                        searchable: true,
-                    },
-                    {
-                        target: 3,
-                        visible: true,
-                        searchable: false,
-                    },
-                    {
-                        target: 4,
-                        visible: true,
-                        searchable: false,
-                    },
-                  ],
-                  } );
-                  return table;
-                }
-                tableInit("#myTable");
-                tableInit("#myTableAnual");
-                tableInit("#myTableTransacciones");
+              setTimeout(() => {spinnerWrapperEl.style.display = 'none';}, 500);
 
                 
               var table2 = $('#myTable2, myTable3').DataTable( {
@@ -212,14 +185,105 @@
         </div>
         <div class="header-divider"></div>
         
-    
+    <script>
+         $(function() {
+                
+                // Cache selectors
+                var tabs = $('.tablist__tab'),
+                    tabPanels = $('.tablist__panel');
+
+                tabs.on('click', function() {
+                
+                    // Cache selectors
+                    var thisTab = $(this),
+                        thisTabPanelId = thisTab.attr('aria-controls'),
+                        thisTabPanel = $('#' + thisTabPanelId);
+
+                    // De-select all the tabs
+                    tabs.attr('aria-selected', 'false').removeClass('is-active');
+
+                    // Select this tab
+                    thisTab.attr('aria-selected', 'true').addClass('is-active');
+
+                    // Hide all the tab panels
+                    tabPanels.attr('aria-hidden', 'true').addClass('is-hidden');
+
+                    // Show this tab panel
+                    thisTabPanel.attr('aria-hidden', 'false').removeClass('is-hidden');
+
+                });
+                
+                // Add enter key to the basic click event
+                tabs.on('keydown', function(e) {
+                    
+                    var thisTab = $(this);
+                    
+                    if(e.which == 13) {
+                    thisTab.click();
+                    }
+                    
+                });
+                
+                });
+    </script>
     <!-- CoreUI and necessary plugins-->
-    <script src="../../vendors/@coreui/coreui/js/coreui.bundle.min.js"></script>
-    <script src="../../vendors/simplebar/js/simplebar.min.js"></script>
+    <script src="../../assets/vendors/@coreui/coreui/js/coreui.bundle.min.js"></script>
+    <script src="../../assets/vendors/simplebar/js/simplebar.min.js"></script>
     <!-- Plugins and scripts required by this view-->
-    <script src="../../vendors/@coreui/utils/js/coreui-utils.js"></script>
+    <script src="../../assets/vendors/@coreui/utils/js/coreui-utils.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+   
+    
+    <script type="text/javascript" charset="utf8"
+        src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"> </script>
+    <script type="text/javascript" charset="utf8"
+        src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"> </script>
+    <script type="text/javascript" charset="utf8"
+        src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"> </script>
+    <script type="text/javascript" charset="utf8"
+        src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"> </script>
+    <script type="text/javascript" charset="utf8"
+        src="https://cdn.datatables.net/buttons/2.3.4/js/dataTables.buttons.min.js"> </script>
+    <script type="text/javascript" charset="utf8"
+        src="https://cdn.datatables.net/buttons/2.3.4/js/buttons.html5.min.js"> </script>
+    <script type="text/javascript" charset="utf8"
+        src="https://cdn.datatables.net/buttons/2.3.4/js/buttons.print.min.js"> </script>
+    <!--<script src="../../js/table.js"></script>-->
+    <script>
+        $( document ).ready(function() {
+          $("#myTable, #myTableAnual, #myTableTransacciones, #myTableInvMeses").DataTable( {
+            stateSave: true,
+            language: {
+                url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json',
+            },
+            "ordering": false,
+            "pageLength": 100,
+            "columnDefs": [
+                {
+                    target: 0,
+                    visible: false,
+                    searchable: false,
+                },
+                {
+                    target: 1,
+                    visible: false,
+                    searchable: true,
+                },
+                {
+                    target: 3,
+                    visible: true,
+                    searchable: false,
+                },
+                {
+                    target: 4,
+                    visible: true,
+                    searchable: false,
+                },
+                ],
+          });
+      });
+    </script>
+    
 
     
     <script>

@@ -7,13 +7,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>Lovable </title>
     <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico">
-    <link rel="stylesheet" href="vendors/simplebar/css/simplebar.css">
-    <link rel="stylesheet" href="css/vendors/simplebar.css">
-    <link href="css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/vendors/simplebar/css/simplebar.css">
+    <link rel="stylesheet" href="assets/css/vendors/simplebar.css">
+    <link href="assets/css/style.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/themes/prism.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
-    <link href="css/examples.css" rel="stylesheet">
-    <link href="css/mystyle.css" rel="stylesheet">
+    <link href="assets/css/examples.css" rel="stylesheet">
+    <link href="assets/css/mystyle.css" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@500&display=swap" rel="stylesheet">
+    <style>
+        h1,h2,h3,h4,h5,h6,p,span,td,th,a,button,label,b,li,ul{
+    font-family: 'Rubik', sans-serif;
+      }
+    </style>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   </head>
   <body>
@@ -24,7 +33,7 @@
            $_SESSION['DEV']="";
 
 
-          include 'php/conn.php';
+          include 'assets/php/conn.php';
           if (!isset($_SESSION["NOMUSU"]) || $_SESSION["NOMUSU"] == "") {
             header('Location: /'.$_SESSION['DEV'].'LovablePHP/login.php');
          }
@@ -115,7 +124,7 @@
         <div class="container-fluid">
           <button class="header-toggler px-md-0 me-md-3" type="button" onclick="coreui.Sidebar.getInstance(document.querySelector('#sidebar')).toggle()">
             <svg class="icon icon-lg">
-              <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-menu"></use>
+              <use xlink:href="assets/vendors/@coreui/icons/svg/free.svg#cil-menu"></use>
             </svg>
           </button><a class="header-brand d-md-none" href="/<?php echo $_SESSION['DEV'] ?>LovablePHP/">
              <img src="assets/img/lovableLogo.png" width="205px" alt="Lovable Logo">
@@ -131,7 +140,7 @@
             </div>
                 <button type="button" class="btn btn-light" onclick="logOut()">
                   <svg class="icon me-2">
-                    <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-account-logout"></use>
+                    <use xlink:href="assets/vendors/@coreui/icons/svg/free.svg#cil-account-logout"></use>
                   </svg>
                 </button>
           </ul>
@@ -141,10 +150,10 @@
         
     
     <!-- CoreUI and necessary plugins-->
-    <script src="vendors/@coreui/coreui/js/coreui.bundle.min.js"></script>
-    <script src="vendors/simplebar/js/simplebar.min.js"></script>
+    <script src="assets/vendors/@coreui/coreui/js/coreui.bundle.min.js"></script>
+    <script src="assets/vendors/simplebar/js/simplebar.min.js"></script>
     <!-- Plugins and scripts required by this view-->
-    <script src="vendors/@coreui/utils/js/coreui-utils.js"></script>
+    <script src="assets/vendors/@coreui/utils/js/coreui-utils.js"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
     <script>
       function logOut() {

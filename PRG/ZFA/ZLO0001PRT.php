@@ -14,7 +14,7 @@
 <body>
 <div class="spinner-wrapper">
 <div class="spinner-border text-danger" role="status">
-    <span class="visually-hidden">Loading...</span>
+    
   </div>
         </div> 
 <?php
@@ -181,42 +181,42 @@
     <div id="body-div" class="body flex-grow-1">
         <div class="card mb-5">
             <div class="card-header ">
-              <h2 class="fs-6 text-start mt-2 mb-2"> <?php echo ($Correlativo!="" ? "Docto. Fiscal <b>".$Correlativo."</b>": ""); ?></h2>
+              <h5 class=" text-start responsive-font-example mt-2 mb-2"> <?php echo ($Correlativo!="" ? "Docto. Fiscal <b>".$Correlativo."</b>": ""); ?></h5>
             </div>
             <div class="card-body">
               <div class="bg-factura p-1 rounded">
               <div class="row">
                 <div class="col-3">
-                  <h4 class="fs-6 text-start mt-2 mb-2">Factura: <b><?php echo $facturaRefer; ?></b></h4>
+                  <h5 class=" text-start responsive-font-example mt-2 mb-2">Factura: <b><?php echo $facturaRefer; ?></b></h5>
                 </div>
                 <div class="col-6">
-                <h4 class="fs-6 text-start mt-2 mb-2">Cliente: <b><?php echo $Ciudad.' '.$CodClie.' '.$DesClie; ?></b></h4>
+                <h5 class=" text-start responsive-font-example mt-2 mb-2">Cliente: <b><?php echo $Ciudad.' '.$CodClie.' '.$DesClie; ?></b></h5>
                 </div>
                 <div class="col-3">
-                <h4 class="fs-6 text-start mt-2 mb-2">Tipo: <b><?php echo $Tipo; ?></b></h4>
+                <h5 class=" text-start responsive-font-example mt-2 mb-2">Tipo: <b><?php echo $Tipo; ?></b></h5>
                 </div>
               </div>
               <div class="row">
                 <div class="col-8 col-lg-6">
-                  <h4 class="fs-6 text-start mb-2">Vendedor: <?php echo $codVend.' '.$Vendedor; ?></h4>
+                  <h5 class=" text-start responsive-font-example mb-2">Vendedor: <?php echo $codVend.' '.$Vendedor; ?></h5>
                 </div>
 
                 <div class="col-4 col-lg-2">
-                <h4 class="fs-6 text-start mb-2">Fecha: <?php echo $fechaFac; ?></h4>
+                <h5 class=" text-start responsive-font-example mb-2">Fecha: <?php echo $fechaFac; ?></h5>
                 </div>
               </div>
               <div class="row">
                 <div class="col-4 col-lg-3">
-                  <h4 class="fs-6 text-start mb-2">Plazo:<b><?php echo ($Plazo!=0 ? $Plazo: ""); ?></b></h4>
+                  <h5 class=" text-start responsive-font-example mb-2">Plazo:<b><?php echo ($Plazo!=0 ? $Plazo: ""); ?></b></h5>
                 </div>
                 <div class="col-4 col-lg-3">
-                 <h4 class="fs-6 text-start mb-2">Moneda: <b><?php echo $Moneda; ?></b></h4>
+                 <h5 class=" text-start responsive-font-example mb-2">Moneda: <b><?php echo $Moneda; ?></b></h5>
                 </div>
                 <div class="col-4 col-lg-3">
-                  <h4 class="fs-6 text-start mb-2">Impuesto (S/N): <b><?php echo ($ImpuestoGra!=0 ? number_format($ImpuestoGra,2, '.', ','): ""); ?></b></h4>
+                  <h5 class=" text-start responsive-font-example mb-2">Impuesto (S/N): <b><?php echo ($ImpuestoGra!=0 ? number_format($ImpuestoGra,2, '.', ','): ""); ?></b></h5>
                 </div>
                 <div class="col-3 col-lg-3">
-                  <h4 class="fs-6 text-start mb-2">No. Bultos: <b><?php echo $Bultos; ?></b></h4>
+                  <h5 class=" text-start responsive-font-example mb-2">No. Bultos: <b><?php echo $Bultos; ?></b></h5>
                 </div>
               </div>
               </div>
@@ -225,35 +225,35 @@
                 if ($enca2==true) {
                   echo '<div class="row ">
                   <div class="col-6 ">
-                    <h4 class="fs-6 text-start mb-2"><b>Consecutivo</b></h4>
+                    <h5 class=" text-start responsive-font-example mb-2"><b>Consecutivo</b></h5>
                   </div>
                   <div class="col-6">
-                   <h4 class="fs-6 text-start mb-2"><b>Clave</b></h4>
+                   <h5 class=" text-start responsive-font-example mb-2"><b>Clave</b></h5>
                   </div>
                 </div>
                 <div class="row">
                   <div class="col-6">
-                    <h4 class="fs-6 text-start mb-2"><b>'.($Consecu!="" ? $Consecu: "").'</b></h4>
+                    <h5 class=" text-start responsive-font-example mb-2"><b>'.($Consecu!="" ? $Consecu: "").'</b></h5>
                   </div>
                   <div class="col-6">
-                   <h4 class="fs-6 text-start mb-2"><b>'.$Clave.'</b></h4>
+                   <h5 class=" text-start responsive-font-example mb-2"><b>'.$Clave.'</b></h5>
                   </div>
                 </div>';
                 }else{
                   echo '<div class="row ">
                   <div class="col-6 ">
-                    <h4 class="fs-6 text-start mb-2"><b>P E D I D O S</b></h4>
+                    <h5 class=" text-start responsive-font-example mb-2"><b>P E D I D O S</b></h5>
                   </div>
                   <div class="col-6">
-                   <h4 class="fs-6 text-start mb-2"><b>P R E V E N T A S</b></h4>
+                   <h5 class=" text-start responsive-font-example mb-2"><b>P R E V E N T A S</b></h5>
                   </div>
                 </div>
                 <div class="row">
                   <div class="col-6">
-                    <h4 class="fs-6 text-start mb-2"><b>'.($Preventas!=0 ? $Preventas: "").'</b></h4>
+                    <h5 class=" text-start responsive-font-example mb-2"><b>'.($Preventas!=0 ? $Preventas: "").'</b></h5>
                   </div>
                   <div class="col-6">
-                   <h4 class="fs-6 text-start mb-2"><b>'.$Preventas.'</b></h4>
+                   <h5 class=" text-start responsive-font-example mb-2"><b>'.$Preventas.'</b></h5>
                   </div>
                 </div>';
                 }
@@ -262,39 +262,39 @@
               <div class="bg-factura p-1 rounded">
               <div class="row">
                 <div class="col-6">
-                  <h4 class="fs-6 text-start mb-2">Fecha Ven: <b><?php echo $FechaVen; ?></b></h4>
+                  <h5 class=" text-start responsive-font-example mb-2">Fecha Ven: <b><?php echo $FechaVen; ?></b></h5>
                 </div>
                 <div class="col-6">
-                  <h4 class="fs-6 text-start mb-2">Lugar de Destino: <b><?php echo $LugarDes; ?></b></h4>
+                  <h5 class=" text-start responsive-font-example mb-2">Lugar de Destino: <b><?php echo $LugarDes; ?></b></h5>
                 </div>
               </div>
               <div class="row">
                 <div class="col-6">
-                  <h4 class="fs-6 text-start mb-2">Transporte: <b><?php echo $Transp; ?></b></h4>
+                  <h5 class=" text-start responsive-font-example mb-2">Transporte: <b><?php echo $Transp; ?></b></h5>
                 </div>
                 <div class="col-6">
-                  <h4 class="fs-6 text-start mb-2">Fecha Embarque: <b><?php echo $FechaEmbar!=0 ? formatDate($FechaEmbar) : ""; ?></b></h4>
+                  <h5 class=" text-start responsive-font-example mb-2">Fecha Embarque: <b><?php echo $FechaEmbar!=0 ? formatDate($FechaEmbar) : ""; ?></b></h5>
                 </div>
               </div>
               <div class="row">
                 <div class="col-3">
-                  <h4 class="fs-6 text-start mb-2">Total Bruto: <span class="responsive-font-example"><b><?php echo ($TBruto!=0 ? number_format($TBruto,2, '.', ','): ""); ?></b></span></h4>
+                  <h5 class=" text-start responsive-font-example mb-2">Total Bruto: <span class="responsive-font-example"><b><?php echo ($TBruto!=0 ? number_format($TBruto,2, '.', ','): ""); ?></b></span></h5>
                 </div>
                 <div class="col-3">
-                  <h4 class="fs-6 text-start mb-2">Desc: <span class="responsive-font-example"><b><?php echo   ($Desc!=0 ? number_format($Desc,2, '.', ','): ""); ?></b></span></h4>
+                  <h5 class=" text-start responsive-font-example mb-2">Desc: <span class="responsive-font-example"><b><?php echo   ($Desc!=0 ? number_format($Desc,2, '.', ','): ""); ?></b></span></h5>
                 </div>
                 <div class="col-3">
-                  <h4 class="fs-6 text-start  mb-2">Imp: <span class="responsive-font-example"><b><?php echo $Imp!=0 ? number_format($Imp,2, '.', ',') : ""; ?></b></span></h4>
+                  <h5 class=" text-start responsive-font-example  mb-2">Imp: <span class="responsive-font-example"><b><?php echo $Imp!=0 ? number_format($Imp,2, '.', ',') : ""; ?></b></span></h5>
                 </div>
                 <div class="col-3">
-                  <h4 class="fs-6 text-start mb-2">Total Neto: <span class="responsive-font-example"><b><?php echo ($TNeto!=0 ?  number_format($TNeto,2, '.', ','): ""); ?></b></span></h4>
+                  <h5 class=" text-start responsive-font-example mb-2">Total Neto: <span class="responsive-font-example"><b><?php echo ($TNeto!=0 ?  number_format($TNeto,2, '.', ','): ""); ?></b></span></h5>
                 </div>
               </div>
               <?php
                 if ($enca2==true){
                     echo '<div class="row">
                     <div class="col-12">
-                      <h4 class="fs-6 text-start mb-2">Tot.c/Desc: <span class="responsive-font-example"><b>'. ($TTDesc!=0 ?  number_format($TTDesc,2, '.', ','): "").'</b></span></h4>
+                      <h5 class="text-start responsive-font-example mb-2">Tot.c/Desc: <span class="responsive-font-example"><b>'. ($TTDesc!=0 ?  number_format($TTDesc,2, '.', ','): "").'</b></span></h5>
                     </div>
                   </div>';
                 }?>

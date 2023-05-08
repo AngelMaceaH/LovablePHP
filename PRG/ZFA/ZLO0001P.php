@@ -7,9 +7,9 @@
 <body>
 <div class="spinner-wrapper">
 <div class="spinner-border text-danger" role="status">
-    <span class="visually-hidden">Loading...</span>
-  </div>
-        </div> 
+    
+</div>
+</div> 
 <?php
       include '../layout-prg.php';
       include 'ZLO0001Psql.php';
@@ -20,7 +20,7 @@
               <li class="breadcrumb-item">
               <span>Modulo de facturacion</span>
               </li>
-              <li class="breadcrumb-item active"><span>VLO0119P</span></li>
+              <li class="breadcrumb-item active"><span>ZLO0001P</span></li>
             </ol>
           </nav>
         </div>
@@ -31,11 +31,11 @@
           <h1 class="fs-4 mb-1 mt-2 text-center">Consulta de ventas resumidas</h1>
           </div>
           <div class="card-body">
-            <form id="formFiltros" action="../../php/ZFA/ZLO0001P/logic.php" method="POST">
+            <form id="formFiltros" action="../../assets/php/ZFA/ZLO0001P/logic.php" method="POST">
           <div class="row mb-2">
               <div class="col-sm-12 col-lg-6 mt-2">
                 <label>Compañía:</label>
-                <select class="form-control" id="comppro" name="comppro" >
+                <select class="form-select" id="comppro" name="comppro" >
                     <option value="0" selected>Todas las compañías</option>
                     <?php
                     while ($rowCOMARC = odbc_fetch_array($resultCOMARC)) {
@@ -338,47 +338,7 @@
       <p class="bggray responsive-font-example"><i>Lovable de Honduras S.A. de C.V</i></p>
       </div>
       <script>
-                    $(function() {
-                
-                // Cache selectors
-                var tabs = $('.tablist__tab'),
-                    tabPanels = $('.tablist__panel');
-
-                tabs.on('click', function() {
-                
-                    // Cache selectors
-                    var thisTab = $(this),
-                        thisTabPanelId = thisTab.attr('aria-controls'),
-                        thisTabPanel = $('#' + thisTabPanelId);
-
-                    // De-select all the tabs
-                    tabs.attr('aria-selected', 'false').removeClass('is-active');
-
-                    // Select this tab
-                    thisTab.attr('aria-selected', 'true').addClass('is-active');
-
-                    // Hide all the tab panels
-                    tabPanels.attr('aria-hidden', 'true').addClass('is-hidden');
-
-                    // Show this tab panel
-                    thisTabPanel.attr('aria-hidden', 'false').removeClass('is-hidden');
-
-                });
-                
-                // Add enter key to the basic click event
-                tabs.on('keydown', function(e) {
-                    
-                    var thisTab = $(this);
-                    
-                    if(e.which == 13) {
-                    thisTab.click();
-                    }
-                    
-                });
-                
-                });
-
-               
+ 
            $( document ).ready(function() {
 
              if (<?php echo isset($_SESSION['opcion']) ? $_SESSION['opcion'] : "1"; ?>==3) {

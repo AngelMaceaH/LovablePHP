@@ -7,7 +7,7 @@
 <body>
 <div class="spinner-wrapper">
 <div class="spinner-border text-danger" role="status">
-    <span class="visually-hidden">Loading...</span>
+    
   </div>
         </div> 
 <?php
@@ -21,7 +21,7 @@
               <li class="breadcrumb-item">
               <span>Modulo de facturacion</span>
               </li>
-              <li class="breadcrumb-item active"><span>ZLO0001P</span></li>
+              <li class="breadcrumb-item active"><span>ZLO0001PA</span></li>
             </ol>
           </nav>
 
@@ -49,11 +49,11 @@
                         </div>
                     </div>
                         
-                        <form id="formFiltros" action="../../php/ZFA/ZLO0001P/logic2.php" method="POST">
+                        <form id="formFiltros" action="../../assets/php/ZFA/ZLO0001P/logic2.php" method="POST">
                         <div class="row mb-2">
                             <div class="col-sm-12 col-lg-6 mt-2">
                                 <label>Compañía:</label>
-                                <select class="form-control" id="comppro1" name="comppro1" >
+                                <select class="form-select" id="comppro1" name="comppro1" >
                                     <?php
                                     while ($rowCOMARC = odbc_fetch_array($resultCOMARC)) {
                                     echo "<option  value='" . $rowCOMARC['COMCOD'] . "'>" . rtrim(utf8_encode($rowCOMARC['COMDES'])) . "</option>";
@@ -229,11 +229,11 @@
                         </div>
                     </div>
                        
-                        <form id="formFiltros2" action="../../php/ZFA/ZLO0001P/logic3.php" method="POST">
+                        <form id="formFiltros2" action="../../assets/php/ZFA/ZLO0001P/logic3.php" method="POST">
                         <div class="row mb-2">
                             <div class="col-sm-12 col-lg-6 mt-2">
                                 <label>Compañía:</label>
-                                <select class="form-control" id="comppro2" name="comppro2" >
+                                <select class="form-select" id="comppro2" name="comppro2" >
                                     <?php
                                     while ($rowCOMARC = odbc_fetch_array($resultCOMARC2)) {
                                         echo "<option  value='" . $rowCOMARC['COMCOD'] . "'>" . ucfirst(strtolower(rtrim(utf8_encode($rowCOMARC['COMDES'])))) . "</option>";
@@ -245,7 +245,7 @@
                                 <div class="row">
                                     <div class="col-sm-12 col-lg-6" >
                                     <label>Mes:</label>
-                                    <select class="form-control" id="cbbMes" name="cbbMes">
+                                    <select class="form-select" id="cbbMes" name="cbbMes">
                                         <option value="01">Enero</option>
                                         <option value="02">Febrero</option>
                                         <option value="03">Marzo</option>
@@ -262,7 +262,7 @@
                                     </div>
                                     <div class="col-sm-12 col-lg-6">
                                     <label>Año:</label>
-                                        <select class="form-control" id="cbbAno" name="cbbAno">
+                                        <select class="form-select" id="cbbAno" name="cbbAno">
                                         <?php
                                             $anio_actual = date('Y');
                                             for ($i = $anio_actual; $i >= 1990; $i--) {

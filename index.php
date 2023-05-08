@@ -32,12 +32,11 @@
 <body>
 <div class="spinner-wrapper">
   <div class="spinner-border text-danger" role="status">
-    <span class="visually-hidden">Loading...</span>
   </div>
 </div>
   <?php
       include 'layout.php';
-      include 'php/index/phpindex.php';
+      include 'assets/php/index/phpindex.php';
     ?>
   <div class="container-fluid">
     <nav aria-label="breadcrumb">
@@ -53,7 +52,7 @@
   <div class="body flex-grow-1 px-3">
       <div class="card mb-3">
         <div class="card-body">
-          <form id="formGraficas" action="php/index/grafica-filtro.php" method="POST">
+          <form id="formGraficas" action="assets/php/index/grafica-filtro.php" method="POST">
             <div class="row mb-2">
               <div class="col-sm-12 col-lg-6 mt-2">
                 <label>Fecha:</label>
@@ -62,7 +61,7 @@
               </div>
               <div class="col-sm-12 col-lg-6 mt-2">
                 <label>Vista por:</label>
-                <select class="form-control" id="cbbMesgra" name="cbbMesgra">
+                <select class="form-select" id="cbbMesgra" name="cbbMesgra">
                       <option class="fw-bold" value="1">Lovable de Honduras</option>
                       <option class="fw-bold" value="2">Tiendas Honduras</option>
                       <option class="fw-bold" value="3">Tiendas Guatemala</option>
@@ -394,7 +393,7 @@
   <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
 
-  <?php include 'php/index/graficas.php';?>
+  <?php include 'assets/php/index/graficas.php';?>
   <script>
     function obtenerNombreMes(numeroMes) {
               const nombresMes = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
