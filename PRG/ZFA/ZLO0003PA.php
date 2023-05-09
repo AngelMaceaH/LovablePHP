@@ -32,7 +32,7 @@
   <div id="body-div" class="body flex-grow-3">
     <div class="card mb-5">
       <div class="card-header">
-      <h1 class="fs-4 mb-1 mt-2 text-center">Comparativo Ventas de marcas por país</h1>
+      <h1 class="fs-4 mb-1 mt-2 text-center">Consulta Comp. tiendas por marca, pais y meses</h1>
       </div>
       <div class="card-body">
             <div class="position-relative">

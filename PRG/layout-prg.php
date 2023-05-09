@@ -161,7 +161,7 @@
           
           <button class="header-toggler px-md-0 me-md-3" type="button" onclick="coreui.Sidebar.getInstance(document.querySelector('#sidebar')).toggle()">
             <svg class="icon icon-lg">
-              <use xlink:href="../../vendors/@coreui/icons/svg/free.svg#cil-menu"></use>
+              <use xlink:href="../../assets/vendors/@coreui/icons/svg/free.svg#cil-menu"></use>
             </svg>
           </button><a class="header-brand d-md-none" href="/<?php echo $_SESSION['DEV'] ?>LovablePHP/">
              <img src="../../assets/img/lovableLogo.png" width="205px" alt="Lovable Logo">
@@ -177,7 +177,7 @@
             </div>
                 <button type="button" class="btn btn-light" onclick="logOut()">
                   <svg class="icon me-2">
-                    <use xlink:href="../../vendors/@coreui/icons/svg/free.svg#cil-account-logout"></use>
+                    <use xlink:href="../../assets/vendors/@coreui/icons/svg/free.svg#cil-account-logout"></use>
                   </svg>
                 </button>
           </ul>
@@ -251,8 +251,7 @@
     <!--<script src="../../js/table.js"></script>-->
     <script>
         $( document ).ready(function() {
-          $("#myTable, #myTableAnual, #myTableTransacciones, #myTableInvMeses").DataTable( {
-            stateSave: true,
+          $("#myTable, #myTableAnual, #myTableTransacciones").DataTable( {
             language: {
                 url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json',
             },

@@ -10,11 +10,6 @@
     <link href="assets/css/mystyle.css" rel="stylesheet">
   </head>
   <body>
-  <div class="spinner-wrapper">
-<div class="spinner-border text-danger" role="status">
-    
-</div>
-</div> 
     <?php
       session_start();
     ?>
@@ -78,10 +73,6 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> 
     <script>
         $( document ).ready(function() {
-          const spinnerWrapperEl = document.querySelector('.spinner-wrapper');
-              setTimeout(() => {
-                    spinnerWrapperEl.style.display = 'none';
-                }, 500);
                 
       var val = "<?php echo isset($_SESSION["val"]) ? $_SESSION["val"] : "";?>";
       if (val=="2" && $("#user").val()!=' ' && $("#password").val()!=' ') {

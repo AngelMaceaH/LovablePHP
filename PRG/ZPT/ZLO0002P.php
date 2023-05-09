@@ -41,20 +41,25 @@
   </div>
 <?php
       include '../layout-prg.php';
-      if (!isset($_SESSION['Orden'])) {
-        $_SESSION['Orden']="0";
-      }
+      $ordenFiltro=isset($_SESSION['Orden2']) ? $_SESSION['Orden2'] : 1;
+      $ordenFiltro2=isset($_SESSION['Orden3']) ? $_SESSION['Orden3'] : 1;
+      $_SESSION['tab3'] = isset($_COOKIE['tabselected3']) ? $_COOKIE['tabselected3'] : "1";
 
-      if ( $_SESSION['Orden']=="1") {
-        $labelOrden="Mayor a Menor";
-        $sqlOrden="MAESA2 ASC";
-      }else if ( $_SESSION['Orden']=="2"){
-        $labelOrden="Menor a Mayor";
+      if ($ordenFiltro==1) {
+        $sqlOrden="CODSEC";
+      }else if($ordenFiltro==2){
         $sqlOrden="MAESA2 DESC";
       }else{
-        $labelOrden="Mayor a Menor";
-        $sqlOrden="CODSEC";
+        $sqlOrden="MAESA2 ASC";
       }
+      if ($ordenFiltro2==1) {
+        $sqlOrden2="CODSEC";
+      }else if($ordenFiltro2==2){
+        $sqlOrden2="MAESA2 ASC";
+      }else{
+        $sqlOrden2="MAESA2 DESC";
+      }
+    
       
 
       //punto de venta
@@ -164,9 +169,9 @@
                     }
                   }
 
-                  if ( $_SESSION['Orden']=="1") {
+                  if ( $ordenFiltro2=="2") {
                     $invPaises[]=asort($invPaises);
-                  }else if ( $_SESSION['Orden']=="2"){
+                  }else if ( $ordenFiltro2=="3"){
                     $invPaises[]=arsort($invPaises);
                   }
                   $removed = array_pop($invPaises);  
@@ -209,6 +214,18 @@
                       <canvas id="miGrafica4"></canvas>
                   </div>
                   <hr class="mt-2 mb-5">
+                    <form action="../../assets/php/ZPT/ZLO0002P/ordenLogica1.php" method="POST" id="formOrden"  class="mb-3">
+                      <div class="row">
+                      <div class="col-12 mt-2 d-flex">
+                        <label for="cbbOrden2" class="me-3 mt-2" id="lblcbbOrden2">Organizar por: </label>
+                        <select name="cbbOrden2" id="cbbOrden2" class="form-select" style="width: 170px">
+                          <option value="1">Compañia</option>
+                          <option value="2">Mayor a Menor</option>
+                          <option value="3">Menor a Mayor</option>
+                        </select>
+                      </div>
+                      </div>
+                    </form>
                 <table id="myTableInventario" class="table stripe table-hover " style="width:100%">
                   <thead>
                       <tr>
@@ -246,7 +263,7 @@
                 <div id="panel2" class="tablist__panel is-hidden" aria-labelledby="tab2" aria-hidden="true" role="tabpanel">
                 <div class="card p-3">
                 <h5 class="fs-4 mb-4 mt-2 text-center responsive-font-example">Inventario disponible por <u>país</u></h5>
-                  <div class="positionRel" style='width:60%'>
+                  <div class="positionRel" style='width:70%'>
                     <div class="graficasPC">
                       <canvas id="miGrafica"></canvas>
                     </div>
@@ -255,7 +272,19 @@
                       <canvas id="miGrafica3" ></canvas>
                   </div>
                   <hr class="mt-2 mb-5">
-                <table id="myTableInventarioPaises" class="table stripe table-hover " style="width:100%">
+                  <form action="../../assets/php/ZPT/ZLO0002P/ordenLogica1.php" method="POST" id="formOrden3"  class="mb-3">
+                      <div class="row">
+                      <div class="col-12 mt-2 d-flex">
+                        <label for="cbbOrden3" class="me-3 mt-2" id="lblcbbOrden3">Organizar por: </label>
+                        <select name="cbbOrden3" id="cbbOrden3" class="form-select" style="width: 170px">
+                          <option value="1">Compañia</option>
+                          <option value="2">Mayor a Menor</option>
+                          <option value="3">Menor a Mayor</option>
+                        </select>
+                      </div>
+                      </div>
+                    </form>
+                <table id="myTableInventarioPaises" class="table stripe table-hover " style="width:100%" >
                   <thead>
                       <tr>
                           <th class="d-none">ID</th>
@@ -308,6 +337,40 @@
       <script>
         $( document ).ready(function() {
 
+          //BOTONES
+            var tab;
+                $(".tablist__tab").click(function() {
+                  $(".tablist__tab").removeClass("is-active");
+                  $(this).addClass("is-active");
+                  var activeTab = $(".tablist__tab").filter(".is-active").attr("id");
+                  tab=(activeTab.substring(3,4));
+                  document.cookie="tabselected3="+tab;
+                });
+              
+                var tabSeleccionado=<?php echo isset($_SESSION['tab3']) ? $_SESSION['tab3'] : "false"; ?>;
+                if (tabSeleccionado != false) {
+                        var tabs = $('.tablist__tab'),
+                                    tabPanels = $('.tablist__panel');
+                                var thisTab = $("#tab"+tabSeleccionado+""),
+                                        thisTabPanelId = thisTab.attr('aria-controls'),
+                                        thisTabPanel = $('#panel'+tabSeleccionado+'');
+                        tabs.attr('aria-selected', 'false').removeClass('is-active');
+                        thisTab.attr('aria-selected', 'true').addClass('is-active');
+                        tabPanels.attr('aria-hidden', 'true').addClass('is-hidden');
+                        thisTabPanel.attr('aria-hidden', 'false').removeClass('is-hidden');
+                    }
+
+
+          $("#cbbOrden2").val(<?php echo $ordenFiltro;  ?>); 
+          $("#cbbOrden3").val(<?php echo $ordenFiltro2;  ?>); 
+          
+          $("#cbbOrden2").change(function() {
+            $("#formOrden").submit();
+          });
+          $("#cbbOrden3").change(function() {
+            $("#formOrden3").submit();
+          });
+          
           $("#myTableInventario, #myTableInventarioPaises ").DataTable( {
               language: {
                   url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json',
@@ -331,27 +394,6 @@
                       searchable: false,
                   },
                   ],
-                  "bLengthChange" : false, 
-                  "bInfo":false,
-                  dom: 'Bfltip',
-                    buttons: [
-                        {
-                            className: 'btn',
-                            text: "Ordenar por: <span class='bg-secondary text-white p-2 rounded'><?php echo $labelOrden; ?></span>",
-                            action: function () {
-                              <?php 
-                                  if ($_SESSION['Orden']=="1") {
-                                    $_SESSION['Orden']="2";
-                                  }else if ($_SESSION['Orden']=="2") {
-                                    $_SESSION['Orden']="1";
-                                  }else{
-                                    $_SESSION['Orden']="1";
-                                  }
-                                ?>
-                              window.location.href = "<?php echo '/'.$_SESSION['DEV'].'LovablePHP/PRG/ZPT/ZLO0002P.php'; ?>";
-                            },
-                        }
-                    ],
           });
     
           Chart.register(ChartDataLabels);
@@ -372,8 +414,8 @@
                   },
                 ],
               };
-              const options = {
-                "maintainAspectRatio":false,
+              const options1 = {
+                "maintainAspectRatio":true,
                     "responsive": true,
                   plugins: {
                     "legend": {
@@ -396,7 +438,7 @@
               const myChart = new Chart(ctx, {
                 type: 'bar',
                 data: data,
-                options: options,
+                options: options1,
               });
             //GRAFICA PAISES DONA
             const ctx3 = document.getElementById('miGrafica3').getContext('2d');
@@ -436,13 +478,7 @@
                     "position": "bottom",
                     
                   },
-                  datalabels: {
-                    formatter: (value, ctx) => {
-                      const datapoints = ctx.chart.data.datasets[0].data
-                      const total = datapoints.reduce((total, datapoint) => total + datapoint, 0)
-                      const percentage = value / total * 100
-                      return percentage.toFixed(2) + "%";
-                    },
+                  datalabels: {   
                     color: '#fff',
                     offset: -10,
                   }
@@ -480,6 +516,24 @@
                 ],
               };
 
+              const options = {
+                "maintainAspectRatio":false,
+                    "responsive": true,
+                  plugins: {
+                    "legend": {
+                          "display": false,
+                          "position": "bottom",   
+                          },
+                      "datalabels": {
+                        "color": "rgba(0,0,0,0.8)",
+                        "font": {
+                          "weight": 'bold',
+                          "size": 16,
+                        }
+                      }
+                    }
+                };
+              
               const myChart2 = new Chart(ctx2, {
                 type: 'bar',
                 data: data2,
