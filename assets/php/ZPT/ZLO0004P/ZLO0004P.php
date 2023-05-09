@@ -456,7 +456,6 @@ var tab;
     lang: {      
           viewFullscreen:"Ver en pantalla completa",
           exitFullscreen:"Salir de pantalla completa",
-          downloadJPEG:"Descargar imagen JPEG",
           downloadPDF:"Descargar en PDF",
       },
       chart: {
@@ -572,7 +571,7 @@ var tab;
     exporting: {
           buttons: {
               contextButton: {
-                  menuItems: ["viewFullscreen", "separator", "downloadJPEG", "downloadPDF"]
+                  menuItems: ["viewFullscreen", "separator", "downloadPDF"]
               }
           }
       },

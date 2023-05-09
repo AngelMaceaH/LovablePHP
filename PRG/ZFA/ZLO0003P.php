@@ -1,20 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
   <meta charset="utf-8">
   <link rel="icon" type="image/x-icon" href="../../assets/img/favicon.ico">
+    <link rel="stylesheet" href="../../assets/vendors/monthpicker/material.css">
+    <link href="../../assets/vendors/monthpicker/picker.css" rel="stylesheet">
 </head>
-
 <body>
   <div class="spinner-wrapper">
     <div class="spinner-border text-danger" role="status">
-      
     </div>
   </div>
   <?php
       include '../layout-prg.php';
       include 'ZLO0003Psql.php';
+      
 ?>
   <div class="container-fluid">
     <nav aria-label="breadcrumb">
@@ -48,38 +49,25 @@
                             ?>
                         </select>
                       </div>
-                      <div class="col-sm-12 col-lg-3 mt-2">
-                        <label>Año:</label>
-                        <select class="form-select  mt-1" id="cbbAno" name="cbbAno">
-                          <?php
-                                $anio_actual = date('Y');
-                                for ($i = $anio_actual; $i >= 2009; $i--) {
-                                echo "<option value='$i'>$i</option>";
-                                }
-                            ?>
-                        </select>
-                      </div>
-                      <div class="col-sm-12 col-lg-3 mt-2">
-                        <label>Hasta el mes:</label>
-                        <select class="form-select mt-1" id="cbbMes" name="cbbMes">
-                          <option value="01">Enero</option>
-                          <option value="02">Febrero</option>
-                          <option value="03">Marzo</option>
-                          <option value="04">Abril</option>
-                          <option value="05">Mayo</option>
-                          <option value="06">Junio</option>
-                          <option value="07">Julio</option>
-                          <option value="08">Agosto</option>
-                          <option value="09">Septiembre</option>
-                          <option value="10">Octubre</option>
-                          <option value="11">Noviembre</option>
-                          <option value="12">Diciembre</option>
-                        </select>
+                      <div class="col-sm-12 col-lg-6 mt-2">
+                          <label>Rango de meses:</label>
+                            <div id="wrapper">
+                            <input id="daterangepicker" class="fs-5 fw-bold"  type="text" placeholder="Selecciona un rango de meses" onclick="this.blur();" oninput="this.value = this.value.replace(/[^0-9\/\s-]/g, '').replace(/(\..*?)\..*/g, '$1').replace(/^0[^.]/, '0'); if(!(/^(0[1-9]|1[0-2])\/\d{4}\s-\s(0[1-9]|1[0-2])\/\d{4}$/.test(this.value))) this.value = '';">
+                            <input class="d-none" id="startdate" name="startdate">
+                            <input class="d-none" id="enddate" name="enddate">
+                          </div>
                       </div>
                 </div>
               </form>
               </div>
               <hr>
+              <div class="row">
+                      <div class="col-12 col-lg-12">
+                        <figure class="highcharts-figure" >
+                                <div id="container2" ></div>
+                        </figure>
+                      </div>
+              </div>
               <div class="table-responsive">
               <table id="myTableMarcas" class="table stripe table-hover " style="width:100%">
                 <thead>
@@ -102,6 +90,8 @@
                     $ano1nic=0;$ano2nic=0;$varnic=0;$crenic=0;
                     $ano1rep=0;$ano2rep=0;$varrep=0;$crerep=0;
                     $ano1tot=0;$ano2tot=0;$vartot=0;$cretot=0;
+                    $paisesLabel=['Honduras','Guatemala','El Salvador','Costa Rica','Nicaragua','Rep. Dominicana']; 
+                    $valorAno1[]=array(); $valorAno2[]=array();
                     while($rowMarcas = odbc_fetch_array($resultMarcas)){
                         //HONDURAS
                         $ano1hon=($rowMarcas['HONVALANO1']!=0)?($rowMarcas['HONVALANO1']/$factorL):0;$ano2hon=($rowMarcas['HONVALANO2']!=0)?($rowMarcas['HONVALANO2']/$factorL):0;
@@ -184,7 +174,8 @@
                         if ($varrep<0) {print '<td class="text-danger fw-bold">'.number_format(($varrep),2).'</td>';}else{if ($varrep>0) {print '<td class="text-success fw-bold">'.number_format(($varrep),2).'</td>';}else{print '<td class="fw-bold">'.(($varrep==0)?' ':number_format( $varrep,2)).'</td>';}}
                         if ($crerep<0) {print '<td class="text-danger fw-bold">'.number_format(($crerep),0).'%</td>';}else{if ($crerep>0) {print '<td class="text-success fw-bold">'.number_format(($crerep),0).'%</td>';}else{print '<td class="fw-bold">'.(($crerep==0)?' ':number_format( $crerep,0)).'</td>';}}
                         print '</tr>';
-                        
+                        $valorAno1=[round($ano1hon,2),round($ano1gua,2),round($ano1sal,2),round($ano1cos,2),round($ano1nic,2),round($ano1rep,2)];  
+                        $valorAno2=[round($ano2hon,2),round($ano2gua,2),round($ano2sal,2),round($ano2cos,2),round($ano2nic,2),round($ano2rep,2)];
                     }
 
                     print '<tr>';
@@ -207,6 +198,10 @@
   <div class="footer bg-blck flex-grow-1 d-flex justify-content-center">
       <p class="bggray responsive-font-example"><i>Lovable de Honduras S.A. de C.V</i></p>
       </div>
+      <script src="https://code.highcharts.com/highcharts.js"></script>
+      <script src="https://code.highcharts.com/modules/exporting.js"></script>
+      <script src="https://code.highcharts.com/modules/export-data.js"></script>
+      <script src="https://code.highcharts.com/modules/accessibility.js"></script>
   <script>
 
 $( document ).ready(function() {
@@ -216,6 +211,8 @@ $( document ).ready(function() {
         $("#cbbMes").val("<?php echo $mesfiltro; ?>");
         $("#cbbMarca").val(<?php echo $marcaFiltro;  ?>); 
         $("#cbbAno").val(<?php echo $anofiltro;  ?>); 
+        $("#daterangepicker").val("<?php echo $labelSelect;  ?>"); 
+        
           $("#cbbMarca, #cbbAno, #cbbMes").change(function() {
               $("#formFiltros").submit();
             });
@@ -356,8 +353,92 @@ $( document ).ready(function() {
         ]
     });
 
+
+            //GRAFICAS---------------------------------------------------------------       
+             //PAISES AÑO1 VS AÑO2
+          var chart = Highcharts.chart('container2', {
+
+        chart: {
+            type: 'column'
+        },
+        lang: {      
+              viewFullscreen:"Ver en pantalla completa",
+              exitFullscreen:"Salir de pantalla completa",
+              downloadJPEG:"Descargar imagen JPEG",
+              downloadPDF:"Descargar en PDF",
+          },
+          exporting: {
+              buttons: {
+                  contextButton: {
+                      menuItems: ["viewFullscreen", "separator", "downloadJPEG", "downloadPDF"]
+                  }
+              }
+          },
+        title: {
+            text: 'Año <?php echo $anofiltro; ?> vs Año <?php echo $anofiltro-1; ?>',
+            margin: 50
+        },
+
+        xAxis: {
+            categories: <?php echo json_encode($paisesLabel); ?>,
+            labels: {
+                x: -10
+            }
+        },
+
+        yAxis: {
+            allowDecimals: false,
+            title: {
+                text: ' '
+            }
+        },
+        credits: {
+          enabled: false
+        },
+        series: [{
+            name: 'Año <?php echo $anofiltro; ?>',
+            data: <?php echo json_encode($valorAno1); ?>,
+        }, {
+          name: 'Año <?php echo $anofiltro-1; ?>',
+            data: <?php echo json_encode($valorAno2); ?>, 
+        },],
+
+        responsive: {
+            rules: [{
+                condition: {
+                    maxWidth: 500
+                },
+                chartOptions: {
+                    legend: {
+                        align: 'center',
+                        verticalAlign: 'bottom',
+                        layout: 'horizontal'
+                    },
+                    yAxis: {
+                        labels: {
+                            align: 'left',
+                            x: 0,
+                            y: -5
+                        },
+                        title: {
+                            text: null
+                        }
+                    },
+                    subtitle: {
+                        text: null
+                    },
+                    credits: {
+                        enabled: false
+                    }
+                }
+            }]
+        }
+        });
+
     });
   </script>
+  <script src="../../assets/vendors/monthpicker/picker.js"></script>
+    <script src="../../assets/vendors/monthpicker/calendars.min.js"></script>
   </body>
 
 </html>

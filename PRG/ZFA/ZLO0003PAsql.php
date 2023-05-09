@@ -3,8 +3,10 @@ function obtenerNombreMes($numeroMes) {
     $nombresMes = array('ENERO', 'FEBRERO', 'MARZO', 'ABRIL', 'MAYO', 'JUNIO', 'JULIO', 'AGOSTO', 'SEPTIEMBRE', 'OCTUBRE', 'NOVIEMBRE', 'DICIEMBRE');
     return $nombresMes[$numeroMes - 1];
   }
-$mesfiltro=isset($_SESSION['mesfiltro'])? $_SESSION['mesfiltro']:  $mes_actual; 
-$anofiltro=isset($_SESSION['anofiltro'])? $_SESSION['anofiltro']: $ano_actual; 
+  $mes_actual=date("m");
+ $ano_actual=date("Y");
+$mesfiltro=(isset($_SESSION['mesfiltro'])&& $_SESSION['mesfiltro']!='')? $_SESSION['mesfiltro']:  $mes_actual; 
+$anofiltro=(isset($_SESSION['anofiltro'])&& $_SESSION['anofiltro']!='')? $_SESSION['anofiltro']: $ano_actual; 
 $ckfiltro=isset($_SESSION['radioCk'])? $_SESSION['radioCk']:1;
 isset($_SESSION['validacion'])? $_SESSION['validacion']:$_SESSION['validacion']="false";
 
@@ -163,6 +165,7 @@ if ($ckfiltro==1) {
         GROUP BY HISM38) ORDER BY HISM38
                         )AS NIC ON HON.HISM38 = NIC.HISM38
                         ORDER BY HON.HISM38";
+
     $resultMarcas=odbc_exec($connIBM,$marcassql);
   
 

@@ -42,7 +42,7 @@
 <?php
       include '../layout-prg.php';
       $ordenFiltro=isset($_SESSION['Orden2']) ? $_SESSION['Orden2'] : 1;
-      $ordenFiltro2=isset($_SESSION['Orden3']) ? $_SESSION['Orden3'] : 1;
+      $ordenFiltro3=isset($_SESSION['Orden3']) ? $_SESSION['Orden3'] : 1;
       $_SESSION['tab3'] = isset($_COOKIE['tabselected3']) ? $_COOKIE['tabselected3'] : "1";
 
       if ($ordenFiltro==1) {
@@ -52,13 +52,6 @@
       }else{
         $sqlOrden="MAESA2 ASC";
       }
-      if ($ordenFiltro2==1) {
-        $sqlOrden2="CODSEC";
-      }else if($ordenFiltro2==2){
-        $sqlOrden2="MAESA2 ASC";
-      }else{
-        $sqlOrden2="MAESA2 DESC";
-      }
     
       
 
@@ -66,10 +59,10 @@
       $sqlInv=" SELECT CODSEC,MAEC12,NOMCIA,(FLOOR(((FLOOR(MAESA2)*12) +ROUND((MAESA2 - FLOOR(MAESA2)) * 100))) -
                           FLOOR(((FLOOR(MAECA3)*12) +ROUND((MAECA3 - FLOOR(MAECA3)) * 100)))) MAESA2 
       FROM( SELECT CODSEC,MAEC12,NOMCIA, sum(maesa2)MAESA2, sum(maeca3) MAECA3
-      FROM lbprddat/MAEAR2 
-      INNER JOIN LBPRDDAT/DETA16 ON DETA16.DETC90 = MAEAR2.MAEC12
-      INNER JOIN LBPRDDAT/LO0705 ON LO0705.CODCIA = MAEAR2.MAEC12
-      INNER JOIN LBPRDDAT/LO0686 ON LO0686.CODCIA = MAEAR2.MAEC12
+      FROM lbprddat/MAEAR280 
+      INNER JOIN LBPRDDAT/DETA16 ON DETA16.DETC90 = MAEAR280.MAEC12
+      INNER JOIN LBPRDDAT/LO0705 ON LO0705.CODCIA = MAEAR280.MAEC12
+      INNER JOIN LBPRDDAT/LO0686 ON LO0686.CODCIA = MAEAR280.MAEC12
       WHERE DETA16.DETUSU ='".$_SESSION["CODUSU"]."' AND DETA16.DETPR1 = 'LO1512P' and MAEC12<>1
       GROUP BY CODSEC,MAEC12,NOMCIA)ORDER BY ".$sqlOrden."";
        $resultInv=odbc_exec($connIBM,$sqlInv); 
@@ -78,10 +71,10 @@
        $sqlInvHon="SELECT '1' CON,(SUM(FLOOR(((FLOOR(MAESA2)*12) +ROUND((MAESA2 - FLOOR(MAESA2)) * 100)))) -
                                           SUM(FLOOR(((FLOOR(MAECA3)*12) +ROUND((MAECA3 - FLOOR(MAECA3)) * 100))))) MAESA2 
       FROM( SELECT CODSEC,MAEC12,NOMCIA, sum(maesa2)MAESA2, sum(maeca3) MAECA3
-      FROM lbprddat/MAEAR2 
-      INNER JOIN LBPRDDAT/DETA16 ON DETA16.DETC90 = MAEAR2.MAEC12
-      INNER JOIN LBPRDDAT/LO0705 ON LO0705.CODCIA = MAEAR2.MAEC12
-      INNER JOIN LBPRDDAT/LO0686 ON LO0686.CODCIA = MAEAR2.MAEC12
+      FROM lbprddat/MAEAR280 
+      INNER JOIN LBPRDDAT/DETA16 ON DETA16.DETC90 = MAEAR280.MAEC12
+      INNER JOIN LBPRDDAT/LO0705 ON LO0705.CODCIA = MAEAR280.MAEC12
+      INNER JOIN LBPRDDAT/LO0686 ON LO0686.CODCIA = MAEAR280.MAEC12
       WHERE DETA16.DETUSU ='".$_SESSION["CODUSU"]."' AND DETA16.DETPR1 = 'LO1512P' and MAEC12 IN (35,47,57,64,63,72,52,74,75,68,56,76,59,85,65,70,73,78,82,20,22)
       GROUP BY CODSEC,MAEC12,NOMCIA)";
         $resultInvHon=odbc_exec($connIBM,$sqlInvHon); 
@@ -90,10 +83,10 @@
        $sqlInvGua="SELECT '1' CON,(SUM(FLOOR(((FLOOR(MAESA2)*12) +ROUND((MAESA2 - FLOOR(MAESA2)) * 100)))) -
                 SUM(FLOOR(((FLOOR(MAECA3)*12) +ROUND((MAECA3 - FLOOR(MAECA3)) * 100))))) MAESA2 
           FROM( SELECT CODSEC,MAEC12,NOMCIA, sum(maesa2)MAESA2, sum(maeca3) MAECA3
-          FROM lbprddat/MAEAR2 
-          INNER JOIN LBPRDDAT/DETA16 ON DETA16.DETC90 = MAEAR2.MAEC12
-          INNER JOIN LBPRDDAT/LO0705 ON LO0705.CODCIA = MAEAR2.MAEC12
-          INNER JOIN LBPRDDAT/LO0686 ON LO0686.CODCIA = MAEAR2.MAEC12
+          FROM lbprddat/MAEAR280 
+          INNER JOIN LBPRDDAT/DETA16 ON DETA16.DETC90 = MAEAR280.MAEC12
+          INNER JOIN LBPRDDAT/LO0705 ON LO0705.CODCIA = MAEAR280.MAEC12
+          INNER JOIN LBPRDDAT/LO0686 ON LO0686.CODCIA = MAEAR280.MAEC12
           WHERE DETA16.DETUSU ='".$_SESSION["CODUSU"]."' AND DETA16.DETPR1 = 'LO1512P' and MAEC12 IN (49,66,69,71,86)
           GROUP BY CODSEC,MAEC12,NOMCIA)";
         $resultInvGua=odbc_exec($connIBM,$sqlInvGua); 
@@ -101,10 +94,10 @@
        $sqlInvSal="SELECT '1' CON,(SUM(FLOOR(((FLOOR(MAESA2)*12) +ROUND((MAESA2 - FLOOR(MAESA2)) * 100)))) -
                         SUM(FLOOR(((FLOOR(MAECA3)*12) +ROUND((MAECA3 - FLOOR(MAECA3)) * 100))))) MAESA2 
                   FROM( SELECT CODSEC,MAEC12,NOMCIA, sum(maesa2)MAESA2, sum(maeca3) MAECA3
-                  FROM lbprddat/MAEAR2 
-                  INNER JOIN LBPRDDAT/DETA16 ON DETA16.DETC90 = MAEAR2.MAEC12
-                  INNER JOIN LBPRDDAT/LO0705 ON LO0705.CODCIA = MAEAR2.MAEC12
-                  INNER JOIN LBPRDDAT/LO0686 ON LO0686.CODCIA = MAEAR2.MAEC12
+                  FROM lbprddat/MAEAR280 
+                  INNER JOIN LBPRDDAT/DETA16 ON DETA16.DETC90 = MAEAR280.MAEC12
+                  INNER JOIN LBPRDDAT/LO0705 ON LO0705.CODCIA = MAEAR280.MAEC12
+                  INNER JOIN LBPRDDAT/LO0686 ON LO0686.CODCIA = MAEAR280.MAEC12
                   WHERE DETA16.DETUSU ='".$_SESSION["CODUSU"]."' AND DETA16.DETPR1 = 'LO1512P' and MAEC12 IN(48,53,61,62)
                   GROUP BY CODSEC,MAEC12,NOMCIA)";
 
@@ -113,10 +106,10 @@
        $sqlInvCos="SELECT '1' CON,(SUM(FLOOR(((FLOOR(MAESA2)*12) +ROUND((MAESA2 - FLOOR(MAESA2)) * 100)))) -
                       SUM(FLOOR(((FLOOR(MAECA3)*12) +ROUND((MAECA3 - FLOOR(MAECA3)) * 100))))) MAESA2 
                 FROM( SELECT CODSEC,MAEC12,NOMCIA, sum(maesa2)MAESA2, sum(maeca3) MAECA3
-                FROM lbprddat/MAEAR2 
-                INNER JOIN LBPRDDAT/DETA16 ON DETA16.DETC90 = MAEAR2.MAEC12
-                INNER JOIN LBPRDDAT/LO0705 ON LO0705.CODCIA = MAEAR2.MAEC12
-                INNER JOIN LBPRDDAT/LO0686 ON LO0686.CODCIA = MAEAR2.MAEC12
+                FROM lbprddat/MAEAR280 
+                INNER JOIN LBPRDDAT/DETA16 ON DETA16.DETC90 = MAEAR280.MAEC12
+                INNER JOIN LBPRDDAT/LO0705 ON LO0705.CODCIA = MAEAR280.MAEC12
+                INNER JOIN LBPRDDAT/LO0686 ON LO0686.CODCIA = MAEAR280.MAEC12
                 WHERE DETA16.DETUSU ='".$_SESSION["CODUSU"]."' AND DETA16.DETPR1 = 'LO1512P' and MAEC12 IN(60,80)
                 GROUP BY CODSEC,MAEC12,NOMCIA)";
         $resultInvCos=odbc_exec($connIBM,$sqlInvCos); 
@@ -124,10 +117,10 @@
        $sqlInvNic="SELECT '1' CON,(SUM(FLOOR(((FLOOR(MAESA2)*12) +ROUND((MAESA2 - FLOOR(MAESA2)) * 100)))) -
                         SUM(FLOOR(((FLOOR(MAECA3)*12) +ROUND((MAECA3 - FLOOR(MAECA3)) * 100))))) MAESA2 
                   FROM( SELECT CODSEC,MAEC12,NOMCIA, sum(maesa2)MAESA2, sum(maeca3) MAECA3
-                  FROM lbprddat/MAEAR2 
-                  INNER JOIN LBPRDDAT/DETA16 ON DETA16.DETC90 = MAEAR2.MAEC12
-                  INNER JOIN LBPRDDAT/LO0705 ON LO0705.CODCIA = MAEAR2.MAEC12
-                  INNER JOIN LBPRDDAT/LO0686 ON LO0686.CODCIA = MAEAR2.MAEC12
+                  FROM lbprddat/MAEAR280 
+                  INNER JOIN LBPRDDAT/DETA16 ON DETA16.DETC90 = MAEAR280.MAEC12
+                  INNER JOIN LBPRDDAT/LO0705 ON LO0705.CODCIA = MAEAR280.MAEC12
+                  INNER JOIN LBPRDDAT/LO0686 ON LO0686.CODCIA = MAEAR280.MAEC12
                   WHERE DETA16.DETUSU ='".$_SESSION["CODUSU"]."' AND DETA16.DETPR1 = 'LO1512P' and MAEC12 IN(83,87)
                   GROUP BY CODSEC,MAEC12,NOMCIA)";
         $resultInvNic=odbc_exec($connIBM,$sqlInvNic); 
@@ -135,10 +128,10 @@
        $sqlInvRep="SELECT '1' CON,(SUM(FLOOR(((FLOOR(MAESA2)*12) +ROUND((MAESA2 - FLOOR(MAESA2)) * 100)))) -
                         SUM(FLOOR(((FLOOR(MAECA3)*12) +ROUND((MAECA3 - FLOOR(MAECA3)) * 100))))) MAESA2 
                   FROM( SELECT CODSEC,MAEC12,NOMCIA, sum(maesa2)MAESA2, sum(maeca3) MAECA3
-                  FROM lbprddat/MAEAR2 
-                  INNER JOIN LBPRDDAT/DETA16 ON DETA16.DETC90 = MAEAR2.MAEC12
-                  INNER JOIN LBPRDDAT/LO0705 ON LO0705.CODCIA = MAEAR2.MAEC12
-                  INNER JOIN LBPRDDAT/LO0686 ON LO0686.CODCIA = MAEAR2.MAEC12
+                  FROM lbprddat/MAEAR280 
+                  INNER JOIN LBPRDDAT/DETA16 ON DETA16.DETC90 = MAEAR280.MAEC12
+                  INNER JOIN LBPRDDAT/LO0705 ON LO0705.CODCIA = MAEAR280.MAEC12
+                  INNER JOIN LBPRDDAT/LO0686 ON LO0686.CODCIA = MAEAR280.MAEC12
                   WHERE DETA16.DETUSU ='".$_SESSION["CODUSU"]."' AND DETA16.DETPR1 = 'LO1512P' and MAEC12 IN(81)
                   GROUP BY CODSEC,MAEC12,NOMCIA)";
         $resultInvRep=odbc_exec($connIBM,$sqlInvRep); 
@@ -169,10 +162,10 @@
                     }
                   }
 
-                  if ( $ordenFiltro2=="2") {
-                    $invPaises[]=asort($invPaises);
-                  }else if ( $ordenFiltro2=="3"){
+                  if ( $ordenFiltro3=="2") {
                     $invPaises[]=arsort($invPaises);
+                  }else if ( $ordenFiltro3=="3"){
+                    $invPaises[]=asort($invPaises);
                   }
                   $removed = array_pop($invPaises);  
                   
@@ -362,7 +355,7 @@
 
 
           $("#cbbOrden2").val(<?php echo $ordenFiltro;  ?>); 
-          $("#cbbOrden3").val(<?php echo $ordenFiltro2;  ?>); 
+          $("#cbbOrden3").val(<?php echo $ordenFiltro3;  ?>); 
           
           $("#cbbOrden2").change(function() {
             $("#formOrden").submit();
@@ -371,29 +364,103 @@
             $("#formOrden3").submit();
           });
           
-          $("#myTableInventario, #myTableInventarioPaises ").DataTable( {
-              language: {
-                  url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json',
-              },
-              "ordering": false,
-              "pageLength": 100,
-              "columnDefs": [
-                  {
-                      target: 0,
-                      visible: false,
-                      searchable: false,
-                  },
-                  {
-                      target: 1,
-                      visible: true,
-                      searchable: true,
-                  },
-                  {
-                      target: 2,
-                      visible: true,
-                      searchable: false,
-                  },
-                  ],
+          $("#myTableInventario, #myTableInventarioPaises").DataTable( {
+            stateSave: true,
+        language: {
+            url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json',
+        },
+
+        columns: [
+            {},
+            {},
+            {},
+        ],
+        "ordering": false,
+        "pageLength": 100,
+        "columnDefs": [
+            {
+                target: 0,
+                visible: false,
+                searchable: true,
+            },
+            {
+                target: 1,
+                visible: true,
+                searchable: true,
+            },
+            {
+                target: 2,
+                visible: true,
+                searchable: false,
+            },
+            ],
+        dom: 'Bfrtip',
+        buttons: [
+            {
+                extend: 'excelHtml5',
+                text: '<i class="fa-solid fa-file-excel"></i> <b >Enviar a Excel</b>',
+                className: "btn btn-success text-light fs-6 ",
+                exportOptions: {
+                    columns: [1,2]
+                },
+                title: 'ReporteInventario Tiendas',
+                
+                customize: function (xlsx) {
+                    var sheet = xlsx.xl.worksheets['sheet1.xml'];
+                    var sSh = xlsx.xl['styles.xml'];
+                    var lastXfIndex = $('cellXfs xf', sSh).length - 1;
+                    var lastFontIndex = $('fonts font', sSh).length - 1;
+                    var i; var y;
+                    var f1 = '<font>'+
+                     '<sz val="11" />'+
+                     '<name val="Calibri" />'+
+                     '<color rgb="FF0000" />'+ // color rojo en la fuente
+                   '</font>';
+                   var f2 = '<font>'+
+                     '<sz val="11" />'+
+                     '<name val="Calibri" />'+
+                     '<color rgb="007800" />'+ // color verde en la fuente
+                   '</font>';
+                    var n1 = '<numFmt formatCode="##0%"   numFmtId="300"/>';
+                    var n2 = '<numFmt formatCode="#,##0.00"   numFmtId="200"/>';
+                    var s1 = '<xf numFmtId="300" fontId="0" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyNumberFormat="1"/>';
+                    var s2 = '<xf numFmtId="0" fontId="2" fillId="2" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
+                                '<alignment horizontal="center"/></xf>';
+                    var s3 = '<xf numFmtId="4" fontId="2" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyNumberFormat="1"/>'
+                    var s4 = '<xf numFmtId="0" fontId="2" fillId="2" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
+                                '<alignment horizontal="center" wrapText="1"/></xf>'
+                    var s5 = '<xf  numFmtId="200" fontId="'+(lastFontIndex+1)+'" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
+                     '<alignment horizontal="right"/></xf>';  
+                     var s6 = '<xf  numFmtId="200" fontId="'+(lastFontIndex+2)+'" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
+                     '<alignment horizontal="right"/></xf>';  
+                     var s7 = '<xf  numFmtId="300" fontId="'+(lastFontIndex+1)+'" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
+                     '<alignment horizontal="right"/></xf>';  
+                     var s8 = '<xf  numFmtId="300" fontId="'+(lastFontIndex+2)+'" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
+                     '<alignment horizontal="right"/></xf>';
+                    sSh.childNodes[0].childNodes[0].innerHTML += n1 + n2;
+                    sSh.childNodes[0].childNodes[1].innerHTML += f1 + f2;
+                    sSh.childNodes[0].childNodes[5].innerHTML += s1 + s2 + s3 + s4 + s5 + s6 + s7 + s8; 
+                     
+                    var fourDecPlaces    = lastXfIndex + 1;
+                    var greyBoldCentered = lastXfIndex + 2;
+                    var twoDecPlacesBold = lastXfIndex + 3;
+                    var greyBoldWrapText = lastXfIndex + 4;
+                    var textred1 = lastXfIndex + 5;
+                    var textgreen1 = lastXfIndex + 6;
+                    var textred2 = lastXfIndex + 7;
+                    var textgreen2 = lastXfIndex + 8;
+                    
+                    $('c[r=A1] t', sheet).text( 'REPORTE DE INVENTARIO DISPONIBLE' );
+                    $('row:eq(0) c', sheet).attr( 's', greyBoldCentered );
+                    $('row:eq(1) c', sheet).attr( 's', 7 );
+
+                    var tagName = sSh.getElementsByTagName('sz');
+                    for (i = 0; i < tagName.length; i++) {
+                      tagName[i].setAttribute("val", "13")
+                    }
+                  }
+            }
+           ]
           });
     
           Chart.register(ChartDataLabels);

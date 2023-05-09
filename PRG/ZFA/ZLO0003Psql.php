@@ -3,9 +3,29 @@ function obtenerNombreMes($numeroMes) {
   $nombresMes = array('ENERO', 'FEBRERO', 'MARZO', 'ABRIL', 'MAYO', 'JUNIO', 'JULIO', 'AGOSTO', 'SEPTIEMBRE', 'OCTUBRE', 'NOVIEMBRE', 'DICIEMBRE');
   return $nombresMes[$numeroMes - 1];
 }
+function obtenerNombreMesAbr($numeroMes) {
+  $nombresMes = array('Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic');
+  return $nombresMes[$numeroMes - 1];
+}
+function obtenerNumeroMes($nombre_mes) {
+  $nombres_mes = array('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec');
+  $numero_mes = array_search($nombre_mes, $nombres_mes) + 1;
+  return $numero_mes;
+}
+
  $mes_actual=date("m");
  $ano_actual=date("Y");
-      $mesfiltro=isset($_SESSION['mesfiltro'])? $_SESSION['mesfiltro']:  $mes_actual; 
+ $mesLabel1 = (isset($_SESSION['mes1']) && $_SESSION['mes1']!='')? obtenerNombreMesAbr(obtenerNumeroMes($_SESSION['mes1'])):  obtenerNombreMesAbr(1);
+ $mesLabel2 = (isset($_SESSION['mes2']) && $_SESSION['mes2']!=' ')? obtenerNombreMesAbr(obtenerNumeroMes($_SESSION['mes2'])):  obtenerNombreMesAbr($mes_actual);
+ $mesNum1=(isset($_SESSION['mes1']) && $_SESSION['mes1']!='')? obtenerNumeroMes($_SESSION['mes1']):  '01';
+ $mesNum2=(isset($_SESSION['mes2']) && $_SESSION['mes2']!='')? obtenerNumeroMes($_SESSION['mes2']):  $mes_actual;
+
+ $ano1 = (isset($_SESSION['ano1']) && $_SESSION['ano1']!='')? $_SESSION['ano1']:  $ano_actual;
+ $ano2 = (isset($_SESSION['ano2']) && $_SESSION['ano2']!='')? $_SESSION['ano2']:  $ano_actual;
+ $labelSelect= "$mesLabel1 $ano1 - $mesLabel2 $ano2";
+ //echo $mesNum1.' '.$ano1.' - '.$mesNum2.' '.$ano2;
+
+      $mesfiltro=isset($_SESSION['mesFiltro'])? $_SESSION['mesFiltro']:  $mes_actual; 
       $anofiltro=isset($_SESSION['anofiltro'])? $_SESSION['anofiltro']: $ano_actual; 
       isset($_SESSION['validacion'])? $_SESSION['validacion']:$_SESSION['validacion']="false";
       
@@ -17,7 +37,7 @@ function obtenerNombreMes($numeroMes) {
               $_SESSION['validacion']="false";
           }
       }
-      
+   
     $marcaFiltro=isset($_SESSION['marcaFiltro'])? $_SESSION['marcaFiltro']: 100; 
     //DESCRIPCIONES
     $marcasDescripcion="SELECT * FROM LBPRDDAT/DESARC WHERE DESCOD=01";
@@ -27,21 +47,22 @@ function obtenerNombreMes($numeroMes) {
 
   
   $valorFiltro=$anofiltro.$_SESSION['mesFiltro'];
+  
   //FACTORES CAMBIO
    $sqlfactor="SELECT  * FROM (
-      (SELECT * FROM lbprddat/lo0709 WHERE MONORI='L' AND MONDES='D' AND FECPRO LIKE '".$valorFiltro."%'
+      (SELECT * FROM lbprddat/lo0709 WHERE MONORI='L' AND MONDES='D' AND FECPRO LIKE '".trim($valorFiltro)."%'
         ORDER BY FECPRO DESC LIMIT 1)
       UNION ALL   
-      (SELECT * FROM lbprddat/lo0709 WHERE MONORI='Q' AND MONDES='D' AND FECPRO LIKE '".$valorFiltro."%'
+      (SELECT * FROM lbprddat/lo0709 WHERE MONORI='Q' AND MONDES='D' AND FECPRO LIKE '".trim($valorFiltro)."%'
         ORDER BY FECPRO DESC LIMIT 1)       
       UNION ALL 
-      (SELECT * FROM lbprddat/lo0709 WHERE MONORI='C' AND MONDES='D' AND FECPRO LIKE '".$valorFiltro."%'
+      (SELECT * FROM lbprddat/lo0709 WHERE MONORI='C' AND MONDES='D' AND FECPRO LIKE '".trim($valorFiltro)."%'
         ORDER BY FECPRO DESC LIMIT 1)
       UNION ALL          
-      (SELECT * FROM lbprddat/lo0709 WHERE MONORI='P' AND MONDES='D' AND FECPRO LIKE '".$valorFiltro."%'
+      (SELECT * FROM lbprddat/lo0709 WHERE MONORI='P' AND MONDES='D' AND FECPRO LIKE '".trim($valorFiltro)."%'
         ORDER BY FECPRO DESC LIMIT 1)        
       UNION ALL 
-      (SELECT * FROM lbprddat/lo0709 WHERE MONORI='D' AND MONDES='D' AND FECPRO LIKE '".$valorFiltro."%'
+      (SELECT * FROM lbprddat/lo0709 WHERE MONORI='D' AND MONDES='D' AND FECPRO LIKE '".trim($valorFiltro)."%'
         ORDER BY FECPRO DESC LIMIT 1))";
       
   $factorL=0;$factorQ=0;$factorC=0;$factorP=0;$factorD=1;
