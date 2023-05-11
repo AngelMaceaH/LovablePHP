@@ -19,7 +19,7 @@
       $ordenFiltro=isset($_SESSION['Orden']) ? $_SESSION['Orden'] : 1;
       $mes_actual=date("m")-1;
       $ano_actual=date("Y");
-           $mesfiltro=isset($_SESSION['mesfiltro2'])? $_SESSION['mesfiltro2']: $mes_actual; 
+           $mesfiltro=isset($_SESSION['mesfiltro3'])? $_SESSION['mesfiltro3']: $mes_actual; 
            $anofiltro=isset($_SESSION['anofiltro2'])? $_SESSION['anofiltro2']: $ano_actual; 
            $paisfiltro=isset($_SESSION['paisfiltro2'])? $_SESSION['paisfiltro2']: 1; 
            $cia="";
@@ -90,17 +90,13 @@
             ".$cia." and ANOPRO=".$anoConsulta[5]." AND MESPRO=".($mesConsulta[5]).") AS M6 ON M1.CODCIA=M6.CODCIA 
       )AS T1
       INNER JOIN LBPRDDAT/LO0705 AS T2 ON T1.CODCIA = T2.CODCIA
-      INNER JOIN LBPRDDAT/DETA16 AS T3 ON T3.DETC90 = T1.CODCIA
-      INNER JOIN LBPRDDAT/LO0686 AS T4 ON T4.CODCIA = T1.CODCIA
-      WHERE T3.DETUSU ='".$_SESSION["CODUSU"]."' AND T3.DETPR1 = 'LO1512P' ".$sqlOrden."";
+      INNER JOIN LBPRDDAT/LO0686 AS T4 ON T4.CODCIA = T1.CODCIA ".$sqlOrden."";
       $resultMeses=odbc_exec($connIBM,$sqlmeses); 
 
       $sqlUnidades="SELECT T4.CODSEC,T1.CODCIA,T2.NOMCIA,UNICOM,UNIVEN, UNIEXI FROM LBPRDDAT/LO1960 AS T1
       INNER JOIN LBPRDDAT/LO0705 AS T2 ON T1.CODCIA = T2.CODCIA
-      INNER JOIN LBPRDDAT/DETA16 AS T3 ON T3.DETC90 = T1.CODCIA
       INNER JOIN LBPRDDAT/LO0686 AS T4 ON T4.CODCIA = T1.CODCIA
-      WHERE T1.".$cia." AND ANOPRO=".$anofiltro." AND MESPRO=".$mesfiltro." AND 
-      T3.DETUSU ='".$_SESSION["CODUSU"]."' AND T3.DETPR1 = 'LO1512P' 
+      WHERE T1.".$cia." AND ANOPRO=".$anofiltro." AND MESPRO=".$mesfiltro."
       ORDER BY T4.CODSEC";
       $resultUnidades=odbc_exec($connIBM,$sqlUnidades); 
 ?>
@@ -182,9 +178,12 @@
                         <li id="tab2" class="tablist__tab text-center p-3" aria-controls="panel2" aria-selected="false" role="tab" tabindex="0">Unidades</li>
                     </ul>
                     <div id="panel1" class="tablist__panel p-3" aria-labelledby="tab1" aria-hidden="false" role="tabpanel">
-                        <figure class="highcharts-figure" >
+                    <div id="grafica1">
+                      <figure class="highcharts-figure" >
                                 <div id="container" ></div>
                         </figure>
+                    </div>    
+                    
                     <div class="table-responsive mt-3" style="width:100%">
                           <table id="myTableInvMeses" class="table stripe table-hover " style="width:100%">
                             <thead>
@@ -208,7 +207,9 @@
                                 $paisesM4[]=array();
                                 $paisesM5[]=array();
                                 $paisesM6[]=array();
+                                $validator1="true";
                                    while($rowMeses = odbc_fetch_array($resultMeses)){
+                                    $validator1="false";
                                     print '<tr>';
                                       print '<td>'.$rowMeses['CODSEC'].'</td>';
                                       print '<td class="responsive-font-example fw-bold text-start">'.$rowMeses['NOMCIA'].'</td>';
@@ -234,7 +235,7 @@
                       </div>
                     </div>
                     <div id="panel2" class="tablist__panel is-hidden p-3" aria-labelledby="tab2" aria-hidden="true" role="tabpanel">
-                    <div class="row">
+                    <div id="grafica2" class="row">
                       <div class="col-12 col-lg-6">
                         <figure class="highcharts-figure" >
                                 <div id="container2" ></div>
@@ -261,15 +262,17 @@
                             <tbody>
                                 <?php
                                  $paisesUndComp[]=array();  $paisesUndVen[]=array(); $paisesUndExi[]=array();$cont1=0;
+                                 $validator2="true";
                                    while($rowUni = odbc_fetch_array($resultUnidades)){
+                                    $validator2="false";
                                     $variacion=$rowUni['UNIVEN'] - $rowUni['UNICOM'];
                                     print '<tr>';
                                       print '<td>'.$rowUni['CODSEC'].'</td>';
                                       print '<td class="responsive-font-example fw-bold text-start">'.$rowUni['NOMCIA'].'</td>';
-                                      print '<td class="responsive-font-example fw-bold text-end">'.number_format($rowUni['UNICOM'],0).'</td>';
-                                      print '<td class="responsive-font-example fw-bold text-end">'.number_format($rowUni['UNIVEN'],0).'</td>';
+                                      print '<td class="responsive-font-example fw-bold text-end">'.number_format($rowUni['UNICOM'],2).'</td>';
+                                      print '<td class="responsive-font-example fw-bold text-end">'.number_format($rowUni['UNIVEN'],2).'</td>';
                                       if ($variacion<0) {print '<td class="text-danger responsive-font-example fw-bold text-end">'.number_format(($variacion),0).'</td>';}else{if ($variacion>0) {print '<td class="text-success responsive-font-example fw-bold text-end">'.number_format(($variacion),0).'</td>';}else{print '<td class="fw-bold responsive-font-example text-end">'.(($variacion==0)?' ':number_format( $variacion,0)).'</td>';}}
-                                      print '<td class="responsive-font-example fw-bold text-end">'.number_format($rowUni['UNIEXI'],0).'</td>';
+                                      print '<td class="responsive-font-example fw-bold text-end">'.number_format($rowUni['UNIEXI'],2).'</td>';
                                     print '</tr>';
                                     $paisesUndComp[$cont1]=round($rowUni['UNICOM'],0);
                                     $paisesUndVen[$cont1]=round($rowUni['UNIVEN'],0);

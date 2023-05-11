@@ -221,14 +221,22 @@ INNER JOIN (
       $sqlValoresPromedio= $promedios.'WHERE CODCIA=1';
       break;
       case 2:
-        $sqlGraficasDias = $GraficasDias. 'WHERE CODCIA IN(35,47,57,52,63,64,72,74,20,22,56,59,65,68,75,76,85,70,73,78,82)';
-        $sqlValoresMes = $ValoresMes.'WHERE CODCIA IN(35,47,57,52,63,64,72,74,20,22,56,59,65,68,75,76,85,70,73,78,82)';
-        $sqlGraficasMes = $GraficasMes.'WHERE CODCIA IN(35,47,57,52,63,64,72,74,20,22,56,59,65,68,75,76,85,70,73,78,82)';
-        $sqlMesesPasados = $MesesPasados. 'WHERE CODCIA IN(35,47,57,52,63,64,72,74,20,22,56,59,65,68,75,76,85,70,73,78,82)';
-        $sqlValoresAnual = $ValoresAnual. 'WHERE CODCIA IN(35,47,57,52,63,64,72,74,20,22,56,59,65,68,75,76,85,70,73,78,82)';
-        $sqlValoresPromedio= $promedios.'WHERE CODCIA IN(35,47,57,52,63,64,72,74,20,22,56,59,65,68,75,76,85,70,73,78,82)';
+        $sqlGraficasDias = $GraficasDias. 'WHERE CODCIA IN(35,47,57,52,63,64,72,74,56,59,65,68,75,76,85,70,73,78,82)';
+        $sqlValoresMes = $ValoresMes. 'WHERE CODCIA IN(35,47,57,52,63,64,72,74,56,59,65,68,75,76,85,70,73,78,82)';
+        $sqlGraficasMes = $GraficasMes. 'WHERE CODCIA IN(35,47,57,52,63,64,72,74,56,59,65,68,75,76,85,70,73,78,82)';
+        $sqlMesesPasados = $MesesPasados.  'WHERE CODCIA IN(35,47,57,52,63,64,72,74,56,59,65,68,75,76,85,70,73,78,82)';
+        $sqlValoresAnual = $ValoresAnual. 'WHERE CODCIA IN(35,47,57,52,63,64,72,74,56,59,65,68,75,76,85,70,73,78,82)';
+        $sqlValoresPromedio= $promedios. 'WHERE CODCIA IN(35,47,57,52,63,64,72,74,56,59,65,68,75,76,85,70,73,78,82)';
         break;
         case 3:
+          $sqlGraficasDias = $GraficasDias. 'WHERE CODCIA IN(20,22)';
+          $sqlValoresMes = $ValoresMes.'WHERE CODCIA IN(20,22)';
+          $sqlGraficasMes = $GraficasMes.'WHERE CODCIA IN(20,22)';
+          $sqlMesesPasados = $MesesPasados.'WHERE CODCIA IN(20,22)';
+          $sqlValoresAnual = $ValoresAnual. 'WHERE CODCIA IN(20,22)';
+          $sqlValoresPromedio= $promedios.'WHERE CODCIA IN(20,22)';
+          break;
+        case 4:
           $sqlGraficasDias = $GraficasDias. 'WHERE CODCIA IN(49,66,69,71,86)';
           $sqlValoresMes = $ValoresMes.'WHERE CODCIA IN(49,66,69,71,86)';
           $sqlGraficasMes = $GraficasMes.'WHERE CODCIA IN(49,66,69,71,86)';
@@ -236,7 +244,7 @@ INNER JOIN (
           $sqlValoresAnual = $ValoresAnual.'WHERE CODCIA IN(49,66,69,71,86)';
           $sqlValoresPromedio= $promedios.'WHERE CODCIA IN(49,66,69,71,86)';
           break;
-          case 4:
+          case 5:
             $sqlGraficasDias = $GraficasDias. 'WHERE CODCIA=48  OR CODCIA=53  OR CODCIA=62  OR CODCIA=61';
             $sqlValoresMes = $ValoresMes.'WHERE CODCIA=48  OR CODCIA=53  OR CODCIA=62  OR CODCIA=61';
             $sqlGraficasMes = $GraficasMes.'WHERE CODCIA=48  OR CODCIA=53  OR CODCIA=62  OR CODCIA=61';
@@ -244,7 +252,7 @@ INNER JOIN (
             $sqlValoresAnual = $ValoresAnual. 'WHERE CODCIA=48  OR CODCIA=53  OR CODCIA=62  OR CODCIA=61';
             $sqlValoresPromedio= $promedios.'WHERE CODCIA=48  OR CODCIA=53  OR CODCIA=62  OR CODCIA=61';
             break;
-            case 5:
+            case 6:
               $sqlGraficasDias = $GraficasDias. 'WHERE CODCIA=83 OR CODCIA=87';
               $sqlValoresMes = $ValoresMes.'WHERE CODCIA=83 OR CODCIA=87';
               $sqlGraficasMes = $GraficasMes.'WHERE CODCIA=83 OR CODCIA=87';
@@ -252,7 +260,7 @@ INNER JOIN (
               $sqlValoresAnual = $ValoresAnual. 'WHERE CODCIA=83 OR CODCIA=87';
               $sqlValoresPromedio= $promedios.'WHERE CODCIA=83 OR CODCIA=87';
               break;
-              case 6:
+              case 7:
                 $sqlGraficasDias = $GraficasDias. 'WHERE CODCIA=60 OR CODCIA=80';
                 $sqlValoresMes = $ValoresMes.'WHERE CODCIA=60 OR CODCIA=80';
                 $sqlGraficasMes = $GraficasMes.'WHERE CODCIA=60 OR CODCIA=80';
@@ -260,7 +268,7 @@ INNER JOIN (
                 $sqlValoresAnual = $ValoresAnual. 'WHERE CODCIA=60 OR CODCIA=80';
                 $sqlValoresPromedio= $promedios.'WHERE CODCIA=60 OR CODCIA=80';
                 break;
-                case 7:
+                case 8:
                   $sqlGraficasDias = $GraficasDias. 'WHERE CODCIA=81';
                   $sqlValoresMes = $ValoresMes.'WHERE CODCIA=81';
                   $sqlGraficasMes = $GraficasMes.'WHERE CODCIA=81';

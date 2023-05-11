@@ -8,7 +8,7 @@ var tab;
       $(this).addClass("is-active");
       var activeTab = $(".tablist__tab").filter(".is-active").attr("id");
       tab=(activeTab.substring(3,4));
-      document.cookie="tabselected3="+tab;
+      document.cookie="tabselected="+tab;
     });
    
     var tabSeleccionado=<?php echo isset($_SESSION['tab']) ? $_SESSION['tab'] : "false"; ?>;
@@ -303,11 +303,20 @@ var tab;
           downloadPDF:"Descargar en PDF",
       },
       exporting: {
+        enabled: true,
+    filename: 'Inventario-Comparativo Tiendas',
           buttons: {
               contextButton: {
                   menuItems: ["viewFullscreen", "separator", "downloadJPEG", "downloadPDF"]
               }
-          }
+          },
+          plotOptions: {
+                series: {
+                    dataLabels: {
+                        enabled: true
+                    }
+                }
+            }
       },
     title: {
         text: 'Unidades Compradas vs. Unidades vendidas',
@@ -332,11 +341,35 @@ var tab;
     },
     series: [{
         name: 'Und. Compradas',
-        data: <?php echo json_encode($paisesUndComp); ?>
+        data: <?php echo json_encode($paisesUndComp); ?>,
+        dataLabels: {
+      align: "center",
+      enabled: true,
+      borderColor: "",
+      style: {
+        fontSize: "12px",
+        fontWeight: 'bold',
+        fontFamily: "Arial",
+        textShadow: false
+      }
+    }
     }, {
       name: 'Und. Vendidas',
-        data: <?php echo json_encode($paisesUndVen); ?>
-    },],
+        data: <?php echo json_encode($paisesUndVen); ?>,
+        dataLabels: {
+      align: "center",
+      enabled: true,
+      borderColor: "",
+      style: {
+        fontSize: "12px",
+        fontWeight: 'bold',
+        fontFamily: "Arial",
+        textShadow: false
+      }
+    }
+    },
+    ],
+    
 
     responsive: {
         rules: [{
@@ -382,11 +415,20 @@ var tab;
           downloadPDF:"Descargar en PDF",
       },
       exporting: {
+        enabled: true,
+    filename: 'Unidades-existencias Tiendas',
           buttons: {
               contextButton: {
                   menuItems: ["viewFullscreen", "separator", "downloadJPEG", "downloadPDF"]
               }
-          }
+          },
+          plotOptions: {
+                series: {
+                    dataLabels: {
+                        enabled: true
+                    }
+                }
+            }
       },
     title: {
         text: 'Unidades Existencias',
@@ -411,7 +453,18 @@ var tab;
     },
     series: [{
         name: 'Und. Existencia',
-        data: <?php echo json_encode($paisesUndExi); ?>
+        data: <?php echo json_encode($paisesUndExi); ?>,
+        dataLabels: {
+      align: "center",
+      enabled: true,
+      borderColor: "",
+      style: {
+        fontSize: "12px",
+        fontWeight: 'bold',
+        fontFamily: "Arial",
+        textShadow: false
+      }
+    }
     },],
 
     responsive: {
@@ -456,18 +509,19 @@ var tab;
     lang: {      
           viewFullscreen:"Ver en pantalla completa",
           exitFullscreen:"Salir de pantalla completa",
+          downloadJPEG:"Descargar imagen JPEG",
           downloadPDF:"Descargar en PDF",
       },
       chart: {
-        height: (<?php echo $paisfiltro;?>==1)? 1500:500,
+        height: (<?php echo $paisfiltro;?>==1)? 2500:500,
           type: 'bar'
       },
       title: {
-          text: 'Comparativo meses de inventario',
+          text: 'Comparativo meses de inventario Tiendas',
           margin: 50
       },
       xAxis: {
-        className: 'responsive-font-example fw-bold',
+        className: 'fw-bold',
           categories: <?php echo json_encode($paisesLabel); ?>,
       },
       yAxis: {
@@ -502,7 +556,7 @@ var tab;
             enabled: true,
             inside: true,
             style: {
-                fontSize: '1vw',
+                fontSize:'16px',
                 color: '#000',
             }
         }],
@@ -514,7 +568,7 @@ var tab;
             enabled: true,
             inside: true,
             style: {
-                fontSize: '1vw',
+                fontSize:'16px',
                 color: '#000',
             }
         }],
@@ -526,7 +580,7 @@ var tab;
             enabled: true,
             inside: true,
             style: {
-                fontSize: '1vw',
+                fontSize:'16px',
                 color: '#000',
             }
         }],
@@ -538,7 +592,7 @@ var tab;
             enabled: true,
             inside: true,
             style: {
-                fontSize: '1vw',
+                fontSize:'16px',
                 color: '#000',
             }
         }],
@@ -550,7 +604,7 @@ var tab;
             enabled: true,
             inside: true,
             style: {
-                fontSize: '1vw',
+                fontSize:'16px',
                 color: '#000',
             }
         }],
@@ -562,7 +616,7 @@ var tab;
             enabled: true,
             inside: true,
             style: {
-                fontSize: '1vw',
+                fontSize:'16px',
                 color: '#000',
             }
         }],
@@ -571,11 +625,71 @@ var tab;
     exporting: {
           buttons: {
               contextButton: {
-                  menuItems: ["viewFullscreen", "separator", "downloadPDF"]
+                  menuItems: ["viewFullscreen", "separator","downloadJPEG", "downloadPDF"]
               }
+          },
+           enabled: true,
+    filename: 'Inventario-meses Tiendas',
+    sourceWidth: (<?php echo $paisfiltro;?>==1)? 1600:800,
+    sourceHeight:(<?php echo $paisfiltro;?>==1)? 900:600,
+    chartOptions: {
+     
+      title: {
+        style: {
+            fontSize: (<?php echo $paisfiltro;?>==1)? '30px':'20px',
+                }
+         },
+      series: [{
+        dataLabels: {
+          style: {
+            fontSize: "16px",
+            fontWeight: "normal"
           }
+        }
+      }],
+      
+      xAxis: {
+        //lineWidth: 1,
+        labels: {
+          rotate: -45,
+          enabled: true,
+          //format: "{value:.0f}",
+          style: {
+            fontSize: "10px",
+            fontFamily: "Arial"
+          }
+        },
       },
+      yAxis: {
+        lineWidth: 1,
+        title: {
+          text: " ",
+          style: {
+            fontFamily: "Arial",
+            fontSize: "16px",
+          }
+        },
+        labels: {
+          //rotate: -45,
+          enabled: true,
+          format: "{value:.0f}",
+          style: {
+            fontSize: "16px",
+            fontFamily: "Arial"
+          }
+        },
+        gridLineWidth: 0
+      },
+    },
+      },
+      
   });
 
+  if (<?php echo $validator1;?>) {
+    $("#grafica1").addClass("d-none");
+  }
+  if (<?php echo $validator2;?>) {
+    $("#grafica2").addClass("d-none");
+  }
 });
 </script>

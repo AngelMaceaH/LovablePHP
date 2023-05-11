@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
   <meta charset="utf-8">
@@ -9,7 +9,7 @@
     @media (min-width: 1200px) {
     <?php
     $FiltroDiv=(float)(isset($_GET['c'])? $_GET['c']:1);
-    if($FiltroDiv==2||$FiltroDiv==3||$FiltroDiv==4||$FiltroDiv==5||$FiltroDiv==6)
+    if($FiltroDiv==2||$FiltroDiv==3||$FiltroDiv==4||$FiltroDiv==5||$FiltroDiv==6||$FiltroDiv==7)
     {
     echo '#colHonMes3,#colHonMes2 {margin-top:11%; margin-bottom:13%;}';
     }
@@ -18,7 +18,7 @@
   @media (min-width: 1600px) {
     <?php
     $FiltroDiv=(float)(isset($_GET['c'])? $_GET['c']:1);
-    if($FiltroDiv==2||$FiltroDiv==3||$FiltroDiv==4||$FiltroDiv==5||$FiltroDiv==6)
+    if($FiltroDiv==2||$FiltroDiv==3||$FiltroDiv==4||$FiltroDiv==5||$FiltroDiv==6||$FiltroDiv==7)
     {
     echo '#colHonMes3,#colHonMes2 {margin-top:11%; margin-bottom:15%;}';
     }
@@ -63,12 +63,14 @@
                 <label>Vista por:</label>
                 <select class="form-select" id="cbbMesgra" name="cbbMesgra">
                       <option class="fw-bold" value="1">Lovable de Honduras</option>
-                      <option class="fw-bold" value="2">Tiendas Honduras</option>
-                      <option class="fw-bold" value="3">Tiendas Guatemala</option>
-                        <option class="fw-bold" value="4">Tiendas El Salvador</option>
-                        <option class="fw-bold" value="5">Tiendas Nicaragua</option>
-                        <option class="fw-bold" value="6">Tiendas Costa Rica</option>
-                        <option class="fw-bold" value="7">Tiendas Republica Dominicana</option>
+                      <option class="fw-bold" value="2">Tiendas Honduras (Lov. Ecommerce)</option>
+                      <option class="fw-bold" value="3">Tiendas Honduras (Mod. Íntima)</option>
+                      <option class="fw-bold" value="4">Tiendas Guatemala</option>
+                        <option class="fw-bold" value="5">Tiendas El Salvador</option>
+                        <option class="fw-bold" value="6">Tiendas Nicaragua</option>
+                        <option class="fw-bold" value="7">Tiendas Costa Rica</option>
+                        <option class="fw-bold" value="8">Tiendas Republica Dominicana</option>
+
                         <?php
                       while ($rowCOMARCIndex = odbc_fetch_array($resultCOMARCIndex)) {
                         echo "<option value='" . $rowCOMARCIndex['COMCOD'] . "'>" . rtrim(utf8_encode($rowCOMARCIndex['COMDES'])) . "</option>";
@@ -104,7 +106,7 @@
                               <div class="card-body">
                               <div class="row justify-content-evenly">
                               <?php
-                                    if ( $compFiltroP==2 ||$compFiltroP==3||$compFiltroP==4 ||$compFiltroP==5||$compFiltroP==6) {
+                                    if ( $compFiltroP==2 ||$compFiltroP==3||$compFiltroP==4 ||$compFiltroP==5||$compFiltroP==6||$compFiltroP==7) {
                                         echo '<div id="colHonDia"  class=" col-12 col-lg-4">
                                         <h5 class="mt-2 mb-1 text-center">Ventas del día</h5>
                                         <canvas  id="HonDia" class="mt-3 mb-3" ></canvas>
@@ -118,7 +120,7 @@
                                       echo '<script> $("#HonDia").hide()</script>';
                                     }
 
-                                    if ( $compFiltroP==2 ||$compFiltroP==3||$compFiltroP==4 ||$compFiltroP==5||$compFiltroP==6) {
+                                    if ( $compFiltroP==2 ||$compFiltroP==3||$compFiltroP==4 ||$compFiltroP==5||$compFiltroP==6||$compFiltroP==7) {
                                       echo '<div id="colHonMes" class="col-12 col-lg-4">
                                       <h5 class="mt-2 mb-1 text-center">Ventas del Mes</h5>                            
                                       <canvas  id="HonMes1" class="mt-3 mb-3" ></canvas>

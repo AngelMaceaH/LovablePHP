@@ -21,7 +21,7 @@
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb my-0 ms-2">
         <li class="breadcrumb-item">
-          <span>Modulo de facturacion</span>
+          <span>Modulo de facturación</span>
         </li>
         <li class="breadcrumb-item active"><span>ZLO0003P</span></li>
       </ol>
@@ -52,7 +52,7 @@
                       <div class="col-sm-12 col-lg-6 mt-2">
                           <label>Rango de meses:</label>
                             <div id="wrapper">
-                            <input id="daterangepicker" class="fs-5 fw-bold"  type="text" placeholder="Selecciona un rango de meses" onclick="this.blur();" oninput="this.value = this.value.replace(/[^0-9\/\s-]/g, '').replace(/(\..*?)\..*/g, '$1').replace(/^0[^.]/, '0'); if(!(/^(0[1-9]|1[0-2])\/\d{4}\s-\s(0[1-9]|1[0-2])\/\d{4}$/.test(this.value))) this.value = '';">
+                            <input id="daterangepicker" class="fs-6 p-2 fw-bold"  type="text" placeholder="Selecciona un rango de meses" onclick="this.blur();" oninput="this.value = this.value.replace(/[^0-9\/\s-]/g, '').replace(/(\..*?)\..*/g, '$1').replace(/^0[^.]/, '0'); if(!(/^(0[1-9]|1[0-2])\/\d{4}\s-\s(0[1-9]|1[0-2])\/\d{4}$/.test(this.value))) this.value = '';">
                             <input class="d-none" id="startdate" name="startdate">
                             <input class="d-none" id="enddate" name="enddate">
                           </div>
@@ -61,7 +61,7 @@
               </form>
               </div>
               <hr>
-              <div class="row">
+              <div class="row" id="grafica">
                       <div class="col-12 col-lg-12">
                         <figure class="highcharts-figure" >
                                 <div id="container2" ></div>
@@ -75,8 +75,8 @@
                         <th class="d-none">ID</th>
                         <th>Paises</th>
                         <th></th>
-                        <th>Año <?php echo $anofiltro;?></th>
-                        <th>Año <?php echo ($anofiltro-1);?></th>
+                        <th>Año <?php echo $ano2;?></th>
+                        <th>Año <?php echo $ano2-1;?></th>
                         <th>Variación</th>
                         <th>Crecimiento</th>
                     </tr>
@@ -92,24 +92,26 @@
                     $ano1tot=0;$ano2tot=0;$vartot=0;$cretot=0;
                     $paisesLabel=['Honduras','Guatemala','El Salvador','Costa Rica','Nicaragua','Rep. Dominicana']; 
                     $valorAno1[]=array(); $valorAno2[]=array();
+                    $validator="true";
                     while($rowMarcas = odbc_fetch_array($resultMarcas)){
+                      $validator="false";
                         //HONDURAS
-                        $ano1hon=($rowMarcas['HONVALANO1']!=0)?($rowMarcas['HONVALANO1']/$factorL):0;$ano2hon=($rowMarcas['HONVALANO2']!=0)?($rowMarcas['HONVALANO2']/$factorL):0;
+                        $ano1hon=($rowMarcas['HONVALANO1']!=0)?($rowMarcas['HONVALANO1']/1):0;$ano2hon=($rowMarcas['HONVALANO2']!=0)?($rowMarcas['HONVALANO2']/1):0;
                         $varhon=$ano1hon-$ano2hon;$crehon=($ano1hon!=0 && $ano2hon!=0)? round((($ano1hon/$ano2hon)-1)*100):0;
                         //GUATEMALA
-                        $ano1gua=($rowMarcas['GUAVALANO1']!=0)?($rowMarcas['GUAVALANO1']/$factorQ):0;$ano2gua=($rowMarcas['GUAVALANO2']!=0)?($rowMarcas['GUAVALANO2']/$factorQ):0;
+                        $ano1gua=($rowMarcas['GUAVALANO1']!=0)?($rowMarcas['GUAVALANO1']/1):0;$ano2gua=($rowMarcas['GUAVALANO2']!=0)?($rowMarcas['GUAVALANO2']/1):0;
                         $vargua=$ano1gua-$ano2gua; $cregua=($ano1gua!=0 && $ano2gua!=0)? round((($ano1gua/$ano2gua)-1)*100):0;
                         //EL SALVADOR
                         $ano1sal=($rowMarcas['SALVALANO1']!=0)?($rowMarcas['SALVALANO1']/1):0; $ano2sal=($rowMarcas['SALVALANO2']!=0)?($rowMarcas['SALVALANO2']/1):0;
                         $varsal=$ano1sal-$ano2sal;$cresal=($ano1sal!=0 && $ano2sal!=0)? round((($ano1sal/$ano2sal)-1)*100):0;
                         //COSTA RICA
-                        $ano1cos=($rowMarcas['COSVALANO1']!=0)?($rowMarcas['COSVALANO1']/$factorC):0; $ano2cos=($rowMarcas['COSVALANO2']!=0)?($rowMarcas['COSVALANO2']/$factorC):0;
+                        $ano1cos=($rowMarcas['COSVALANO1']!=0)?($rowMarcas['COSVALANO1']/1):0; $ano2cos=($rowMarcas['COSVALANO2']!=0)?($rowMarcas['COSVALANO2']/1):0;
                         $varcos=$ano1cos-$ano2cos;$crecos=($ano1cos!=0 && $ano2cos!=0)? round((($ano1cos/$ano2cos)-1)*100):0;
                         //NICARAGUA
                         $ano1nic=($rowMarcas['NICVALANO1']!=0)?($rowMarcas['NICVALANO1']/1):0; $ano2nic=($rowMarcas['NICVALANO2']!=0)?($rowMarcas['NICVALANO2']/1):0;
                         $varnic=$ano1nic-$ano2nic;$crenic=($ano1nic!=0 && $ano2nic!=0)? round((($ano1nic/$ano2nic)-1)*100):0;
                         //REP. DOMINICANA
-                        $ano1rep=($rowMarcas['REPVALANO1']!=0)?($rowMarcas['REPVALANO1']/$factorP):0; $ano2rep=($rowMarcas['REPVALANO2']!=0)?($rowMarcas['REPVALANO2']/$factorP):0;
+                        $ano1rep=($rowMarcas['REPVALANO1']!=0)?($rowMarcas['REPVALANO1']/1):0; $ano2rep=($rowMarcas['REPVALANO2']!=0)?($rowMarcas['REPVALANO2']/1):0;
                         $varrep=$ano1rep-$ano2rep;$crerep=($ano1rep!=0 && $ano2rep!=0)? round((($ano1rep/$ano2rep)-1)*100):0;
                         //TOTALES
                         $ano1tot=$ano1hon+$ano1gua+$ano1sal+$ano1cos+$ano1nic+$ano1rep;$ano2tot=$ano2hon+$ano2gua+$ano2sal+$ano2cos+$ano2nic+$ano2rep;
@@ -177,16 +179,17 @@
                         $valorAno1=[round($ano1hon,2),round($ano1gua,2),round($ano1sal,2),round($ano1cos,2),round($ano1nic,2),round($ano1rep,2)];  
                         $valorAno2=[round($ano2hon,2),round($ano2gua,2),round($ano2sal,2),round($ano2cos,2),round($ano2nic,2),round($ano2rep,2)];
                     }
-
-                    print '<tr>';
-                    print '<td class="fw-bold d-none">99999</td>';
-                    print '<td class="fw-bold">TOTAL FINAL</td>';
-                    print '<td class="fw-bold">D.</td>';
-                    print '<td>'.(($ano1tot==0)?' ':number_format( $ano1tot,2)).'</td>';
-                    print '<td>'.(($ano2tot==0)?' ':number_format( $ano2tot,2)).'</td>';
-                    if ($vartot<0) {print '<td class="text-danger fw-bold">'.number_format(($vartot),2).'</td>';}else{if ($vartot>0) {print '<td class="text-success fw-bold">'.number_format(($vartot),2).'</td>';}else{print '<td class="fw-bold">'.(($vartot==0)?' ':number_format( $vartot,2)).'</td>';}}
-                    if ($cretot<0) {print '<td class="text-danger fw-bold">'.number_format(($cretot),0).'%</td>';}else{if ($cretot>0) {print '<td class="text-success fw-bold">'.number_format(($cretot),0).'%</td>';}else{print '<td class="fw-bold">'.(($cretot==0)?' ':number_format( $cretot,2)).'</td>';}}
-                    print '</tr>';
+                        if ( $validator!="true") {
+                          print '<tr>';
+                          print '<td class="fw-bold d-none">99999</td>';
+                          print '<td class="fw-bold">TOTAL FINAL</td>';
+                          print '<td class="fw-bold">D.</td>';
+                          print '<td>'.(($ano1tot==0)?' ':number_format( $ano1tot,2)).'</td>';
+                          print '<td>'.(($ano2tot==0)?' ':number_format( $ano2tot,2)).'</td>';
+                          if ($vartot<0) {print '<td class="text-danger fw-bold">'.number_format(($vartot),2).'</td>';}else{if ($vartot>0) {print '<td class="text-success fw-bold">'.number_format(($vartot),2).'</td>';}else{print '<td class="fw-bold">'.(($vartot==0)?' ':number_format( $vartot,2)).'</td>';}}
+                          if ($cretot<0) {print '<td class="text-danger fw-bold">'.number_format(($cretot),0).'%</td>';}else{if ($cretot>0) {print '<td class="text-success fw-bold">'.number_format(($cretot),0).'%</td>';}else{print '<td class="fw-bold">'.(($cretot==0)?' ':number_format( $cretot,2)).'</td>';}}
+                          print '</tr>';
+                        }               
                     ?>
                     
                 </tbody>                
@@ -215,7 +218,7 @@ $( document ).ready(function() {
         
           $("#cbbMarca, #cbbAno, #cbbMes").change(function() {
               $("#formFiltros").submit();
-            });
+          });
             
     $("#myTableMarcas").DataTable( {
         stateSave: true,
@@ -323,7 +326,7 @@ $( document ).ready(function() {
                     var textred2 = lastXfIndex + 7;
                     var textgreen2 = lastXfIndex + 8;
                     
-                    $('c[r=A1] t', sheet).text( 'COMPARATIVO VENTAS DE MARCAS POR PAÍS  AÑO: <?php echo $anofiltro; ?>  HASTA: <?php echo obtenerNombreMes($mesfiltro); ?>' );
+                    $('c[r=A1] t', sheet).text( 'COMPARATIVO VENTAS DE MARCAS POR PAÍS' );
                     $('row:eq(0) c', sheet).attr( 's', greyBoldCentered );
                     $('row:eq(1) c', sheet).attr( 's', 7 );
                     for (let index = 3; index <= 9; index++) {
@@ -434,6 +437,10 @@ $( document ).ready(function() {
             }]
         }
         });
+
+        if (<?php echo $validator;?>==true) {
+           $("#grafica").addClass("d-none");
+        }
 
     });
   </script>

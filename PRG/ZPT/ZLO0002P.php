@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
   <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -56,83 +56,70 @@
       
 
       //punto de venta
-      $sqlInv=" SELECT CODSEC,MAEC12,NOMCIA,(FLOOR(((FLOOR(MAESA2)*12) +ROUND((MAESA2 - FLOOR(MAESA2)) * 100))) -
-                          FLOOR(((FLOOR(MAECA3)*12) +ROUND((MAECA3 - FLOOR(MAECA3)) * 100)))) MAESA2 
-      FROM( SELECT CODSEC,MAEC12,NOMCIA, sum(maesa2)MAESA2, sum(maeca3) MAECA3
+      $sqlInv=" SELECT CODSEC,MAEC12,NOMCIA,(MAESA2-MAECA3)MAESA2
+      FROM(SELECT CODSEC,MAEC12,NOMCIA, sum(maesa2)MAESA2, sum(maeca3) MAECA3
       FROM lbprddat/MAEAR280 
-      INNER JOIN LBPRDDAT/DETA16 ON DETA16.DETC90 = MAEAR280.MAEC12
       INNER JOIN LBPRDDAT/LO0705 ON LO0705.CODCIA = MAEAR280.MAEC12
       INNER JOIN LBPRDDAT/LO0686 ON LO0686.CODCIA = MAEAR280.MAEC12
-      WHERE DETA16.DETUSU ='".$_SESSION["CODUSU"]."' AND DETA16.DETPR1 = 'LO1512P' and MAEC12<>1
+      WHERE  MAEC12<>1 
       GROUP BY CODSEC,MAEC12,NOMCIA)ORDER BY ".$sqlOrden."";
+     
        $resultInv=odbc_exec($connIBM,$sqlInv); 
       $ciaArray=array();$invArray=array();
        //HONDURAS
-       $sqlInvHon="SELECT '1' CON,(SUM(FLOOR(((FLOOR(MAESA2)*12) +ROUND((MAESA2 - FLOOR(MAESA2)) * 100)))) -
-                                          SUM(FLOOR(((FLOOR(MAECA3)*12) +ROUND((MAECA3 - FLOOR(MAECA3)) * 100))))) MAESA2 
+       $sqlInvHon="SELECT '1' CON,(SUM(MAESA2)-SUM(MAECA3)) MAESA2
       FROM( SELECT CODSEC,MAEC12,NOMCIA, sum(maesa2)MAESA2, sum(maeca3) MAECA3
       FROM lbprddat/MAEAR280 
-      INNER JOIN LBPRDDAT/DETA16 ON DETA16.DETC90 = MAEAR280.MAEC12
       INNER JOIN LBPRDDAT/LO0705 ON LO0705.CODCIA = MAEAR280.MAEC12
       INNER JOIN LBPRDDAT/LO0686 ON LO0686.CODCIA = MAEAR280.MAEC12
-      WHERE DETA16.DETUSU ='".$_SESSION["CODUSU"]."' AND DETA16.DETPR1 = 'LO1512P' and MAEC12 IN (35,47,57,64,63,72,52,74,75,68,56,76,59,85,65,70,73,78,82,20,22)
+      WHERE  MAEC12 IN (35,47,57,64,63,72,52,74,75,68,56,76,59,85,65,70,73,78,82,20,22)
       GROUP BY CODSEC,MAEC12,NOMCIA)";
         $resultInvHon=odbc_exec($connIBM,$sqlInvHon); 
         //GUATEMALA
        
-       $sqlInvGua="SELECT '1' CON,(SUM(FLOOR(((FLOOR(MAESA2)*12) +ROUND((MAESA2 - FLOOR(MAESA2)) * 100)))) -
-                SUM(FLOOR(((FLOOR(MAECA3)*12) +ROUND((MAECA3 - FLOOR(MAECA3)) * 100))))) MAESA2 
+       $sqlInvGua="SELECT '1' CON,(MAESA2-MAECA3) MAESA2
           FROM( SELECT CODSEC,MAEC12,NOMCIA, sum(maesa2)MAESA2, sum(maeca3) MAECA3
           FROM lbprddat/MAEAR280 
-          INNER JOIN LBPRDDAT/DETA16 ON DETA16.DETC90 = MAEAR280.MAEC12
           INNER JOIN LBPRDDAT/LO0705 ON LO0705.CODCIA = MAEAR280.MAEC12
           INNER JOIN LBPRDDAT/LO0686 ON LO0686.CODCIA = MAEAR280.MAEC12
-          WHERE DETA16.DETUSU ='".$_SESSION["CODUSU"]."' AND DETA16.DETPR1 = 'LO1512P' and MAEC12 IN (49,66,69,71,86)
+          WHERE  MAEC12 IN (49,66,69,71,86)
           GROUP BY CODSEC,MAEC12,NOMCIA)";
         $resultInvGua=odbc_exec($connIBM,$sqlInvGua); 
         //EL SALVADOR
-       $sqlInvSal="SELECT '1' CON,(SUM(FLOOR(((FLOOR(MAESA2)*12) +ROUND((MAESA2 - FLOOR(MAESA2)) * 100)))) -
-                        SUM(FLOOR(((FLOOR(MAECA3)*12) +ROUND((MAECA3 - FLOOR(MAECA3)) * 100))))) MAESA2 
+       $sqlInvSal="SELECT '1' CON,(MAESA2-MAECA3) MAESA2
                   FROM( SELECT CODSEC,MAEC12,NOMCIA, sum(maesa2)MAESA2, sum(maeca3) MAECA3
                   FROM lbprddat/MAEAR280 
-                  INNER JOIN LBPRDDAT/DETA16 ON DETA16.DETC90 = MAEAR280.MAEC12
                   INNER JOIN LBPRDDAT/LO0705 ON LO0705.CODCIA = MAEAR280.MAEC12
                   INNER JOIN LBPRDDAT/LO0686 ON LO0686.CODCIA = MAEAR280.MAEC12
-                  WHERE DETA16.DETUSU ='".$_SESSION["CODUSU"]."' AND DETA16.DETPR1 = 'LO1512P' and MAEC12 IN(48,53,61,62)
+                  WHERE  MAEC12 IN(48,53,61,62)
                   GROUP BY CODSEC,MAEC12,NOMCIA)";
 
         $resultInvSal=odbc_exec($connIBM,$sqlInvSal); 
          //COSTA RICA
-       $sqlInvCos="SELECT '1' CON,(SUM(FLOOR(((FLOOR(MAESA2)*12) +ROUND((MAESA2 - FLOOR(MAESA2)) * 100)))) -
-                      SUM(FLOOR(((FLOOR(MAECA3)*12) +ROUND((MAECA3 - FLOOR(MAECA3)) * 100))))) MAESA2 
+       $sqlInvCos="SELECT '1' CON,(MAESA2-MAECA3) MAESA2
                 FROM( SELECT CODSEC,MAEC12,NOMCIA, sum(maesa2)MAESA2, sum(maeca3) MAECA3
                 FROM lbprddat/MAEAR280 
-                INNER JOIN LBPRDDAT/DETA16 ON DETA16.DETC90 = MAEAR280.MAEC12
                 INNER JOIN LBPRDDAT/LO0705 ON LO0705.CODCIA = MAEAR280.MAEC12
                 INNER JOIN LBPRDDAT/LO0686 ON LO0686.CODCIA = MAEAR280.MAEC12
-                WHERE DETA16.DETUSU ='".$_SESSION["CODUSU"]."' AND DETA16.DETPR1 = 'LO1512P' and MAEC12 IN(60,80)
+                WHERE  MAEC12 IN(60,80)
                 GROUP BY CODSEC,MAEC12,NOMCIA)";
         $resultInvCos=odbc_exec($connIBM,$sqlInvCos); 
          //NICARAGUA
-       $sqlInvNic="SELECT '1' CON,(SUM(FLOOR(((FLOOR(MAESA2)*12) +ROUND((MAESA2 - FLOOR(MAESA2)) * 100)))) -
-                        SUM(FLOOR(((FLOOR(MAECA3)*12) +ROUND((MAECA3 - FLOOR(MAECA3)) * 100))))) MAESA2 
+       $sqlInvNic="SELECT '1' CON,(MAESA2-MAECA3) MAESA2
                   FROM( SELECT CODSEC,MAEC12,NOMCIA, sum(maesa2)MAESA2, sum(maeca3) MAECA3
                   FROM lbprddat/MAEAR280 
-                  INNER JOIN LBPRDDAT/DETA16 ON DETA16.DETC90 = MAEAR280.MAEC12
                   INNER JOIN LBPRDDAT/LO0705 ON LO0705.CODCIA = MAEAR280.MAEC12
                   INNER JOIN LBPRDDAT/LO0686 ON LO0686.CODCIA = MAEAR280.MAEC12
-                  WHERE DETA16.DETUSU ='".$_SESSION["CODUSU"]."' AND DETA16.DETPR1 = 'LO1512P' and MAEC12 IN(83,87)
+                  WHERE  MAEC12 IN(83,87)
                   GROUP BY CODSEC,MAEC12,NOMCIA)";
         $resultInvNic=odbc_exec($connIBM,$sqlInvNic); 
          //REP DOMINICANA
-       $sqlInvRep="SELECT '1' CON,(SUM(FLOOR(((FLOOR(MAESA2)*12) +ROUND((MAESA2 - FLOOR(MAESA2)) * 100)))) -
-                        SUM(FLOOR(((FLOOR(MAECA3)*12) +ROUND((MAECA3 - FLOOR(MAECA3)) * 100))))) MAESA2 
+       $sqlInvRep="SELECT '1' CON,(MAESA2-MAECA3) MAESA2
                   FROM( SELECT CODSEC,MAEC12,NOMCIA, sum(maesa2)MAESA2, sum(maeca3) MAECA3
                   FROM lbprddat/MAEAR280 
-                  INNER JOIN LBPRDDAT/DETA16 ON DETA16.DETC90 = MAEAR280.MAEC12
                   INNER JOIN LBPRDDAT/LO0705 ON LO0705.CODCIA = MAEAR280.MAEC12
                   INNER JOIN LBPRDDAT/LO0686 ON LO0686.CODCIA = MAEAR280.MAEC12
-                  WHERE DETA16.DETUSU ='".$_SESSION["CODUSU"]."' AND DETA16.DETPR1 = 'LO1512P' and MAEC12 IN(81)
+                  WHERE  MAEC12 IN(81)
                   GROUP BY CODSEC,MAEC12,NOMCIA)";
         $resultInvRep=odbc_exec($connIBM,$sqlInvRep); 
            
@@ -143,18 +130,49 @@
                         while($rowCos= odbc_fetch_array($resultInvCos)){
                           while($rowRep= odbc_fetch_array($resultInvRep)){
                             while($rowNic= odbc_fetch_array($resultInvNic)){
-                              $invHonduras=$rowHon['MAESA2'];
-                              $invGuatemala= $rowGua['MAESA2']; 
-                              $invElSalvador=$rowSal['MAESA2'];
-                              $invCostaRica=$rowCos['MAESA2'];
-                              $invRepDominicana=$rowRep['MAESA2'];
-                              $invNicaragua=$rowNic['MAESA2'];
-                              $invPaises=array("Honduras" => $rowHon['MAESA2'],
-                                               "Guatemala"=>$rowGua['MAESA2'],
-                                               "El Salvador"=>$rowSal['MAESA2'],
-                                               "Costa Rica"=>$rowCos['MAESA2'],
-                                               "Rep. Dominicana"=>$rowRep['MAESA2'],
-                                               "Nicaragua"=>$rowNic['MAESA2']); 
+                              //CALCULO HONDURAS
+                              $docenas=floor($rowHon['MAESA2']);
+                              $decimales=floor((substr($rowHon['MAESA2'],strpos($rowHon['MAESA2'],'.')+1,2))/12);
+                              $residuo="0.".(substr($rowHon['MAESA2'],strpos($rowHon['MAESA2'],'.')+1,2))%12;
+                              $cantidadInv=$docenas+$decimales+$residuo;
+                              $invHonduras=$cantidadInv;
+                              //CALCULO GUATEMALA
+                              $docenas=floor($rowGua['MAESA2']);
+                              $decimales=floor((substr($rowGua['MAESA2'],strpos($rowGua['MAESA2'],'.')+1,2))/12);
+                              $residuo="0.".(substr($rowGua['MAESA2'],strpos($rowGua['MAESA2'],'.')+1,2))%12;
+                              $cantidadInv=$docenas+$decimales+$residuo;
+                              $invGuatemala= $cantidadInv; 
+                              
+                             //CALCULO EL SALVADOR
+                              $docenas=floor($rowSal['MAESA2']);
+                              $decimales=floor((substr($rowGua['MAESA2'],strpos($rowGua['MAESA2'],'.')+1,2))/12);
+                              $residuo="0.".(substr($rowGua['MAESA2'],strpos($rowGua['MAESA2'],'.')+1,2))%12;
+                              $cantidadInv=$docenas+$decimales+$residuo;
+                              $invElSalvador=$cantidadInv;
+                              //CALCULO COSTA RICA
+                              $docenas=floor($rowCos['MAESA2']);
+                              $decimales=floor((substr($rowGua['MAESA2'],strpos($rowGua['MAESA2'],'.')+1,2))/12);
+                              $residuo="0.".(substr($rowGua['MAESA2'],strpos($rowGua['MAESA2'],'.')+1,2))%12;
+                              $cantidadInv=$docenas+$decimales+$residuo;
+                              $invCostaRica=$cantidadInv;
+                                //CALCULO REP DOMINICANA
+                                $docenas=floor($rowRep['MAESA2']);
+                                $decimales=floor((substr($rowGua['MAESA2'],strpos($rowGua['MAESA2'],'.')+1,2))/12);
+                                $residuo="0.".(substr($rowGua['MAESA2'],strpos($rowGua['MAESA2'],'.')+1,2))%12;
+                                $cantidadInv=$docenas+$decimales+$residuo;
+                              $invRepDominicana=$cantidadInv;
+                             //CALCULO NICARAGUA
+                             $docenas=floor($rowNic['MAESA2']);
+                             $decimales=floor((substr($rowGua['MAESA2'],strpos($rowGua['MAESA2'],'.')+1,2))/12);
+                             $residuo="0.".(substr($rowGua['MAESA2'],strpos($rowGua['MAESA2'],'.')+1,2))%12;
+                             $cantidadInv=$docenas+$decimales+$residuo;
+                              $invNicaragua=$cantidadInv;
+                              $invPaises=array("Honduras" => $invHonduras,
+                                               "Guatemala"=>$invGuatemala,
+                                               "El Salvador"=>$invElSalvador,
+                                               "Costa Rica"=>$invCostaRica,
+                                               "Rep. Dominicana"=>$invRepDominicana,
+                                               "Nicaragua"=>$invNicaragua); 
                             }
                           }
                         }
@@ -197,12 +215,13 @@
 
                 <div id="panel1" class="tablist__panel" aria-labelledby="tab1" aria-hidden="false" role="tabpanel">
                 <div class="card p-3">
-                <h5 class="fs-4 mb-4 mt-2 text-center responsive-font-example">Inventario disponible por <u>punto de venta</u></h5>
-                  <div class="positionRel" style='width:100%;'>
+                <h5 class="fs-4 mb-4 mt-2 text-center responsive-font-example">Inventario disponible por punto de venta</h5>
+                
                     <div class="graficasPC">
-                      <canvas id="miGrafica2" height="500px"></canvas>
+                      <figure class="highcharts-figure" >
+                                <div id="container" ></div>
+                        </figure>
                     </div>
-                  </div>
                   <div class="graficasMovil justify-content-center mt-3 mb-3" style='width:100%;'>
                       <canvas id="miGrafica4"></canvas>
                   </div>
@@ -224,30 +243,39 @@
                       <tr>
                           <th class="d-none">ID</th>
                           <th >Punto de Venta</th>
-                          <th >Total en Docenas</th>
+                          <th >Total</th>
                       </tr>
                   </thead>
                   <tbody>
                       <?php 
-                        $cantidadInv=0; $cantidadTot=0;$con=0;
+                        $cantidadInv=0; $cantidadTotDocenas=0;$cantidadTotDecimal=0;$cantidadTotResiduo=0;$cantidadInvTot=0;$con=0;
                         while($rowInv = odbc_fetch_array($resultInv)){
-                          $cantidadInv=$rowInv['MAESA2'];
-                          $cantidadInv=($cantidadInv<0)? 0:$cantidadInv/12;
-                          $cantidadTot+=$cantidadInv;
+                          $docenas=floor($rowInv['MAESA2']);
+                          $decimales=floor((substr($rowInv['MAESA2'],strpos($rowInv['MAESA2'],'.')+1,2))/12);
+                          $residuo="0.".(substr($rowInv['MAESA2'],strpos($rowInv['MAESA2'],'.')+1,2))%12;
+                          $cantidadInv=$docenas+$decimales+$residuo;
+                        
                                 print '<tr>';
                                 print '<td>'.$rowInv['CODSEC'].'</td>';
                                 print '<td class="fw-bold">'.$rowInv['NOMCIA'].'</td>';
-                                print '<td class="fw-bold">'.number_format($cantidadInv,0).'</td>';
+                                print '<td class="fw-bold">'.$cantidadInv.'</td>';
                                 print '</tr>';
                                 $ciaArray[$con]=$rowInv['NOMCIA'];
                                 $invArray[$con]=$cantidadInv;
                                 $con++;
                         }
+                       
+                       /*
+                         $cantidadTotDocenas+=floor($cantidadInv);
+                          $cantidadTotDecimal+=(substr($cantidadInv,strpos($cantidadInv+0.001,'.')+1,2));
+                          $cantidadTotResiduo="0.".(substr($cantidadInv,strpos($cantidadInv+0.001,'.')+1,2))%12;
+
+                       $cantidadInvTot=$cantidadTotDocenas+$cantidadTotDecimal+$cantidadTotResiduo;
                         print '<tr>';
                         print '<td>9999</td>';
                         print '<td class="fw-bold">TOTAL</td>';
-                        print '<td class="fw-bold">'.number_format($cantidadTot,0).' docenas</td>';
-                        print '</tr>';
+                        print '<td class="fw-bold">'.$cantidadInvTot.'</td>';
+                        print '</tr>';*/
                       ?>
                   </tbody>
                   </table>
@@ -255,10 +283,12 @@
                 </div>
                 <div id="panel2" class="tablist__panel is-hidden" aria-labelledby="tab2" aria-hidden="true" role="tabpanel">
                 <div class="card p-3">
-                <h5 class="fs-4 mb-4 mt-2 text-center responsive-font-example">Inventario disponible por <u>país</u></h5>
+                <h5 class="fs-4 mb-4 mt-2 text-center responsive-font-example">Inventario disponible por país</h5>
                   <div class="positionRel" style='width:70%'>
                     <div class="graficasPC">
-                      <canvas id="miGrafica"></canvas>
+                    <figure class="highcharts-figure" >
+                                <div id="container2" ></div>
+                        </figure>
                     </div>
                   </div>
                   <div class="graficasMovil justify-content-center mt-3 mb-3" >
@@ -282,7 +312,7 @@
                       <tr>
                           <th class="d-none">ID</th>
                           <th >Pais</th>
-                          <th>Total en Docenas</th>
+                          <th>Total</th>
                       </tr>
                   </thead>
                   <tbody>
@@ -290,21 +320,21 @@
                       $InvPaisTot=0;$cont=1;
                         
                        foreach($invPaises as $x => $x_value) {
-                        $valor=($x_value<0)? 0:$x_value/12;
+                        $valor=($x_value<0)? 0:$x_value;
                         print '<tr>';
                         print '<td>'.$cont.'</td>';
                         print '<td class="fw-bold">'.$x.'</td>';
-                        print '<td class="fw-bold">'.number_format($valor,0).'</td>';
+                        print '<td class="fw-bold">'.$valor.'</td>';
                         print '</tr>';
                         $InvPaisTot+=$valor;
                         $cont++;
                       }
                         
-                        print '<tr>';
+                       /* print '<tr>';
                         print '<td>9999</td>';
                         print '<td class="fw-bold">TOTAL</td>';
-                        print '<td class="fw-bold">'.number_format($InvPaisTot,0).' docenas</td>';
-                        print '</tr>';
+                        print '<td class="fw-bold">'.number_format($InvPaisTot,2).'</td>';
+                        print '</tr>';*/
                       ?>
                   </tbody>
                   </table>
@@ -327,6 +357,10 @@
       <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
       <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
+      <script src="https://code.highcharts.com/highcharts.js"></script>
+      <script src="https://code.highcharts.com/modules/exporting.js"></script>
+      <script src="https://code.highcharts.com/modules/export-data.js"></script>
+      <script src="https://code.highcharts.com/modules/accessibility.js"></script>
       <script>
         $( document ).ready(function() {
 
@@ -464,49 +498,131 @@
           });
     
           Chart.register(ChartDataLabels);
-          //GRAFICA PAISES BARRA     
-            const ctx = document.getElementById('miGrafica').getContext('2d');
-              const data = {
-                labels: [<?php foreach($invPaises as $x => $x_value) { echo "'".$x."',"; }?>],
-                datasets: [
-                  {
-                    label: 'Docenas',
-                    data: [<?php foreach($invPaises as $x => $x_value) {$valor=($x_value<0)? 0:$x_value/12; echo "'".round($valor)."',"; }?>],
-                    backgroundColor: [
-                                      "rgba(20, 36, 89,0.6)","rgba(23, 107, 160,0.6)","rgba(25, 170, 222,0.6)","rgba(26, 201, 230,0.6)","rgba(29, 228, 219,0.6)","rgba(109, 240, 210,0.6)",
-                                      "rgba(41, 6, 107,0.6)","rgba(125, 58, 193,0.6)","rgba(175, 75, 206,0.6)","rgba(219, 76, 178,0.6)","rgba(130, 4, 1,0.6)","rgba(192, 35, 35,0.6)",
-                                      "rgba(222, 84, 44,0.6)","rgba(239, 126, 50,0.6)","rgba(238, 154, 58,0.6)","rgba(234, 219, 56,0.6)","rgba(79, 32, 13,0.6)","rgba(231, 227, 78,0.6)",
-                                    ],
-                    borderWidth: 1,
-                  },
-                ],
-              };
-              const options1 = {
-                "maintainAspectRatio":true,
-                    "responsive": true,
-                  plugins: {
-                    "legend": {
-                          "display": false,
-                          "position": "bottom",   
-                          },
-                      "datalabels": {
-                        "color": "rgba(0,0,0,0.8)",
-                        "font": {
-                          "weight": 'bold',
-                          "size": 16,
-                        }
-                      }
+          //GRAFICA PAISES BARRA    
+          
+
+              Highcharts.chart('container2', {
+    lang: {      
+          viewFullscreen:"Ver en pantalla completa",
+          exitFullscreen:"Salir de pantalla completa",
+          downloadJPEG:"Descargar imagen JPEG",
+          downloadPDF:"Descargar en PDF",
+      },
+      chart: {
+        height: 800,
+        type: 'column'
+      },
+      title: {
+          text: '',
+      },
+      xAxis: {
+        className: 'fw-bold',
+          categories: [<?php foreach($invPaises as $x => $x_value) { echo "'".$x."',"; }?>],
+      },
+      yAxis: {
+      min: 0,
+      endOnTick: false,
+      tickInterval: 900,
+        lineWidth: 1,
+        title: {
+            text: ' '
+
+        },
+    },
+      legend: {
+          reversed: true
+      },
+      plotOptions: {
+          series: {
+              stacking: 'normal',
+              dataLabels: {
+                  enabled: true
+              }
+          }
+      },
+      credits: {
+      enabled: false
+    },
+      series: [
+        {
+          name: 'Inventario Disponible',
+          data: [<?php foreach($invPaises as $x => $x_value) {$valor=($x_value<0)? 0:$x_value; echo $valor.','; }?>],
+          dataLabels: [{
+            align: "center",
+            inside: false,
+            enabled: true,
+            borderColor: "",
+            style: {
+              fontSize: "12px",
+              fontWeight: 'bold',
+              fontFamily: "Arial",
+              textShadow: false
+            }
+          }],
+        }, 
+    ],
+        exporting: {
+              buttons: {
+                  contextButton: {
+                      menuItems: ["viewFullscreen", "separator","downloadJPEG", "downloadPDF"]
+                  }
+              },
+              enabled: true,
+        filename: 'Inventario-disponible Países',
+        sourceWidth: 1600,
+        sourceHeight: 900,
+        chartOptions: {
+        
+          title: {
+            style: {
+                fontSize: '20px',
                     }
-                };
-              
-
-
-
-              const myChart = new Chart(ctx, {
-                type: 'bar',
-                data: data,
-                options: options1,
-              });
+            },
+          series: [{
+            dataLabels: {
+              style: {
+                fontSize: "16px",
+                fontWeight: "normal"
+              }
+            }
+          }],
+          
+          xAxis: {
+            //lineWidth: 1,
+            labels: {
+              rotate: -45,
+              enabled: true,
+              //format: "{value:.0f}",
+              style: {
+                fontSize: "10px",
+                fontFamily: "Arial"
+              }
+            },
+          },
+          yAxis: {
+            lineWidth: 1,
+            title: {
+              text: " ",
+              style: {
+                fontFamily: "Arial",
+                fontSize: "16px",
+              }
+            },
+            labels: {
+              //rotate: -45,
+              enabled: true,
+              format: "{value:.0f}",
+              style: {
+                fontSize: "16px",
+                fontFamily: "Arial"
+              }
+            },
+            gridLineWidth: 0
+          },
+        },
+          },
+          
+      });
             //GRAFICA PAISES DONA
             const ctx3 = document.getElementById('miGrafica3').getContext('2d');
             var myChart3 = new Chart(ctx3, {
@@ -515,7 +631,7 @@
                   labels:  [<?php foreach($invPaises as $x => $x_value) { echo "'".$x."',"; }?>],
                   datasets: [{
                     label: 'Docenas',
-                    data: [<?php foreach($invPaises as $x => $x_value) {$valor=($x_value<0)? 0:$x_value/12; echo "'".round($valor)."',"; }?>],
+                    data: [<?php foreach($invPaises as $x => $x_value) {$valor=($x_value<0)? 0:$x_value; echo "'".($valor)."',"; }?>],
                       backgroundColor: [
                         "rgba(20, 36, 89,0.6)","rgba(23, 107, 160,0.6)","rgba(25, 170, 222,0.6)","rgba(26, 201, 230,0.6)","rgba(29, 228, 219,0.6)","rgba(109, 240, 210,0.6)",
                         "rgba(41, 6, 107,0.6)","rgba(125, 58, 193,0.6)","rgba(175, 75, 206,0.6)","rgba(219, 76, 178,0.6)","rgba(130, 4, 1,0.6)","rgba(192, 35, 35,0.6)",
@@ -563,49 +679,132 @@
             var invArray=[];
             for (let index = 0; index < arrayValores.length; index++) {
               const element = arrayValores[index];
-              invArray.push(Math.round(element));
+              invArray.push((element));
             }
 
-            const ctx2 = document.getElementById('miGrafica2').getContext('2d');
-              const data2 = {
-                labels: <?php echo json_encode($ciaArray); ?>,
-                datasets: [
-                  {
-                    label: 'Docenas',
-                    data: invArray,
-                    backgroundColor: [
-                                      "rgba(20, 36, 89,0.6)","rgba(23, 107, 160,0.6)","rgba(25, 170, 222,0.6)","rgba(26, 201, 230,0.6)","rgba(29, 228, 219,0.6)","rgba(109, 240, 210,0.6)",
-                                      "rgba(41, 6, 107,0.6)","rgba(125, 58, 193,0.6)","rgba(175, 75, 206,0.6)","rgba(219, 76, 178,0.6)","rgba(130, 4, 1,0.6)","rgba(192, 35, 35,0.6)",
-                                      "rgba(222, 84, 44,0.6)","rgba(239, 126, 50,0.6)","rgba(238, 154, 58,0.6)","rgba(234, 219, 56,0.6)","rgba(79, 32, 13,0.6)","rgba(231, 227, 78,0.6)",
-                                    ],
-                    borderWidth: 1,
-                  },
-                ],
-              };
+            //PAISES INVENTARIO
+  Highcharts.chart('container', {
+    lang: {      
+          viewFullscreen:"Ver en pantalla completa",
+          exitFullscreen:"Salir de pantalla completa",
+          downloadJPEG:"Descargar imagen JPEG",
+          downloadPDF:"Descargar en PDF",
+      },
+      chart: {
+        height: 800,
+        type: 'column'
+      },
+      title: {
+          text: '',
+      },
+      xAxis: {
+        className: 'fw-bold',
+          categories: <?php echo json_encode($ciaArray); ?>,
+      },
+      yAxis: {
+      min: 0,
+      endOnTick: false,
+      tickInterval: 500,
+        lineWidth: 1,
+        title: {
+            text: ' '
 
-              const options = {
-                "maintainAspectRatio":false,
-                    "responsive": true,
-                  plugins: {
-                    "legend": {
-                          "display": false,
-                          "position": "bottom",   
-                          },
-                      "datalabels": {
-                        "color": "rgba(0,0,0,0.8)",
-                        "font": {
-                          "weight": 'bold',
-                          "size": 16,
-                        }
-                      }
+        },
+    },
+      legend: {
+          reversed: true
+      },
+      plotOptions: {
+          series: {
+              stacking: 'normal',
+              dataLabels: {
+                  enabled: true
+              }
+          }
+      },
+      credits: {
+      enabled: false
+    },
+      series: [
+        {
+          name: 'Inventario Disponible',
+          data: invArray,
+          dataLabels: [{
+            align: "center",
+            inside: false,
+            enabled: true,
+            borderColor: "",
+            style: {
+              fontSize: "12px",
+              fontWeight: 'bold',
+              fontFamily: "Arial",
+              textShadow: false
+            }
+          }],
+        }, 
+    ],
+        exporting: {
+              buttons: {
+                  contextButton: {
+                      menuItems: ["viewFullscreen", "separator","downloadJPEG", "downloadPDF"]
+                  }
+              },
+              enabled: true,
+        filename: 'Inventario-disponible Tiendas',
+        sourceWidth: 1600,
+        sourceHeight: 900,
+        chartOptions: {
+        
+          title: {
+            style: {
+                fontSize: '20px',
                     }
-                };
-              
-              const myChart2 = new Chart(ctx2, {
-                type: 'bar',
-                data: data2,
-                options: options,
-              });
+            },
+          series: [{
+            dataLabels: {
+              style: {
+                fontSize: "16px",
+                fontWeight: "normal"
+              }
+            }
+          }],
+          
+          xAxis: {
+            //lineWidth: 1,
+            labels: {
+              rotate: -45,
+              enabled: true,
+              //format: "{value:.0f}",
+              style: {
+                fontSize: "10px",
+                fontFamily: "Arial"
+              }
+            },
+          },
+          yAxis: {
+            lineWidth: 1,
+            title: {
+              text: " ",
+              style: {
+                fontFamily: "Arial",
+                fontSize: "16px",
+              }
+            },
+            labels: {
+              //rotate: -45,
+              enabled: true,
+              format: "{value:.0f}",
+              style: {
+                fontSize: "16px",
+                fontFamily: "Arial"
+              }
+            },
+            gridLineWidth: 0
+          },
+        },
+          },
+          
+      });
               //GRAFICA PUNTO DE VENTA DONA
             const ctx4 = document.getElementById('miGrafica4').getContext('2d');
 

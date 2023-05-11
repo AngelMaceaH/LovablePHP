@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
   <head>
   <meta charset="utf-8">
   <link rel="icon" type="image/x-icon" href="../../assets/img/favicon.ico">
@@ -19,7 +19,7 @@
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb my-0 ms-2">
               <li class="breadcrumb-item">
-              <span>Modulo de facturacion</span>
+              <span>Modulo de facturación</span>
               </li>
               <li class="breadcrumb-item active"><span>ZLO0001PA</span></li>
             </ol>

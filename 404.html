@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
   <head>
   <meta name="google" content="notranslate">
   <meta charset="utf-8">

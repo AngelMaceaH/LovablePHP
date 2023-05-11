@@ -5,7 +5,7 @@ function obtenerNombreMes($numeroMes) {
   }
   $mes_actual=date("m");
  $ano_actual=date("Y");
-$mesfiltro=(isset($_SESSION['mesfiltro'])&& $_SESSION['mesfiltro']!='')? $_SESSION['mesfiltro']:  $mes_actual; 
+$mesfiltro=(isset($_SESSION['mesfiltro2'])&& $_SESSION['mesfiltro2']!='')? $_SESSION['mesfiltro2']:  $mes_actual; 
 $anofiltro=(isset($_SESSION['anofiltro'])&& $_SESSION['anofiltro']!='')? $_SESSION['anofiltro']: $ano_actual; 
 $ckfiltro=isset($_SESSION['radioCk'])? $_SESSION['radioCk']:1;
 isset($_SESSION['validacion'])? $_SESSION['validacion']:$_SESSION['validacion']="false";
@@ -22,149 +22,102 @@ if (!isset($_SESSION['mesFiltro'])) {
 //DESCRIPCIONES
 $marcasDescripcion="SELECT * FROM LBPRDDAT/DESARC WHERE DESCOD=01";
 $resultDescripcion=odbc_exec($connIBM,$marcasDescripcion);
-
-$valorFiltro=$anofiltro.$_SESSION['mesFiltro'];
-//FACTORES CAMBIO
- $sqlfactor="SELECT  * FROM (
-    (SELECT * FROM lbprddat/lo0709 WHERE MONORI='L' AND MONDES='D' AND FECPRO LIKE '".$valorFiltro."%'
-      ORDER BY FECPRO DESC LIMIT 1)
-    UNION ALL   
-    (SELECT * FROM lbprddat/lo0709 WHERE MONORI='Q' AND MONDES='D' AND FECPRO LIKE '".$valorFiltro."%'
-      ORDER BY FECPRO DESC LIMIT 1)       
-    UNION ALL 
-    (SELECT * FROM lbprddat/lo0709 WHERE MONORI='C' AND MONDES='D' AND FECPRO LIKE '".$valorFiltro."%'
-      ORDER BY FECPRO DESC LIMIT 1)
-    UNION ALL          
-    (SELECT * FROM lbprddat/lo0709 WHERE MONORI='P' AND MONDES='D' AND FECPRO LIKE '".$valorFiltro."%'
-      ORDER BY FECPRO DESC LIMIT 1)        
-    UNION ALL 
-    (SELECT * FROM lbprddat/lo0709 WHERE MONORI='D' AND MONDES='D' AND FECPRO LIKE '".$valorFiltro."%'
-      ORDER BY FECPRO DESC LIMIT 1))";
-    
-$factorL=0;$factorQ=0;$factorC=0;$factorP=0;$factorD=1;
- $resultFactor=odbc_exec($connIBM,$sqlfactor); 
-if (!odbc_num_rows($resultFactor)) {
-    $_SESSION['mesFiltro']=($_SESSION['mesFiltro']-1);
-    if (strlen($_SESSION['mesFiltro'])==1) {
-        $_SESSION['mesFiltro']='0'.($_SESSION['mesFiltro']);
-    }
-    $_SESSION['validacion']=="false";
-    echo '<script>window.location.replace("/'.$_SESSION['DEV'].'LovablePHP/PRG/ZFA/ZLO0003PA.php")</script>'; 
-}
- 
- while($rowFactor = odbc_fetch_array($resultFactor)){
-    switch ($rowFactor['MONORI']) {
-        case 'L':
-            $factorL=$rowFactor['FACTOR'];
-            break;
-            case 'Q':
-                $factorQ=$rowFactor['FACTOR'];
-                break;
-                case 'C':
-                    $factorC=$rowFactor['FACTOR'];
-                    break;
-                    case 'P':
-                        $factorP=$rowFactor['FACTOR'];
-                        break;
-        default:
-                $factorD=1;
-            break;
-    }
-}    
+$_SESSION['mesFiltro']=$_SESSION['mesFiltro']-1;
+$valorFiltro=$anofiltro.(strlen($_SESSION['mesFiltro'])==1? "0".$_SESSION['mesFiltro']:$_SESSION['mesFiltro']);
 
 $selectMes = $mesfiltro;
 if ($ckfiltro==1) {
-    $selectMes ="HISM37=".$mesfiltro."";
+    $selectMes ="MESPRO=".$mesfiltro."";
 }else{
-    $selectMes ="HISM37 BETWEEN 1 AND ".$mesfiltro."";
+    $selectMes ="MESPRO BETWEEN 1 AND ".$mesfiltro."";
 }
 //HONDURAS
- $marcassql="SELECT HON.HISM38,HON.DESDES,HON.CANTIDAD CANHON,HON.VALOR VALHON,
+ $marcassql="SELECT HON.MARCA,HON.DESDES,HON.CANTIDAD CANHON,HON.VALOR VALHON,
                                           GUA.CANTIDAD CANGUA,GUA.VALOR VALGUA,
                                           SAL.CANTIDAD CANSAL,SAL.VALOR VALSAL,
                                           COS.CANTIDAD CANCOS,COS.VALOR VALCOS,
                                           REP.CANTIDAD CANREP,REP.VALOR VALREP,
                                           NIC.CANTIDAD CANNIC,NIC.VALOR VALNIC
-  FROM(SELECT HISM38,DESDES,FLOOR(((FLOOR(CANTIDAD)*12) +ROUND((CANTIDAD - FLOOR(CANTIDAD)) * 100))) CANTIDAD, VALOR FROM (
-    SELECT HISM38, MAX(DESDES) as DESDES, SUM(HIS057) CANTIDAD, SUM(HISV22) VALOR
+  FROM(SELECT MARCA,DESDES,FLOOR(((FLOOR(CANTIDAD)*12) +ROUND((CANTIDAD - FLOOR(CANTIDAD)) * 100))) CANTIDAD, VALOR FROM (
+    SELECT MARCA, MAX(DESDES) as DESDES, SUM(CANVEN) CANTIDAD, SUM(VALVEN) VALOR
         FROM (
-            SELECT HIS056, HISM38, HIS057, HISV22
-            FROM LBPRDDAT/hisa5804
-            WHERE HISA60=".$anofiltro." AND ".$selectMes." AND (
-                HIS056=35 OR HIS056=47 OR HIS056=50 OR HIS056=52 OR HIS056=56 OR
-                HIS056=57 OR HIS056=59 OR HIS056=63 OR HIS056=64 OR HIS056=65 OR 
-                HIS056=68 OR HIS056=70 OR HIS056=72 OR HIS056=73 OR HIS056=74 OR 
-                HIS056=75 OR HIS056=76 OR HIS056=78 OR HIS056=82 OR HIS056=85
+            SELECT CODCIA, MARCA, CANVEN, VALVEN
+            FROM LBPRDDAT/LO2234
+            WHERE ANOPRO=".$anofiltro." AND ".$selectMes." AND (
+                CODCIA=35 OR CODCIA=47 OR CODCIA=50 OR CODCIA=52 OR CODCIA=56 OR
+                CODCIA=57 OR CODCIA=59 OR CODCIA=63 OR CODCIA=64 OR CODCIA=65 OR 
+                CODCIA=68 OR CODCIA=70 OR CODCIA=72 OR CODCIA=73 OR CODCIA=74 OR 
+                CODCIA=75 OR CODCIA=76 OR CODCIA=78 OR CODCIA=82 OR CODCIA=85
             )
         ) T1
-        INNER JOIN LBPRDDAT/DESARC T2 ON T1.HISM38=T2.DESCO1 AND T1.HIS056=T2.DESCOD
-        GROUP BY HISM38))AS HON LEFT JOIN 
+        INNER JOIN LBPRDDAT/DESARC T2 ON T1.MARCA=T2.DESCO1 AND T1.CODCIA=T2.DESCOD
+        GROUP BY MARCA))AS HON LEFT JOIN 
                         (
-                          SELECT HISM38,DESDES,FLOOR(((FLOOR(CANTIDAD)*12) +ROUND((CANTIDAD - FLOOR(CANTIDAD)) * 100))) CANTIDAD, VALOR FROM (
-    SELECT HISM38, MAX(DESDES) as DESDES, SUM(HIS057) CANTIDAD, SUM(HISV22) VALOR
+                          SELECT MARCA,DESDES,FLOOR(((FLOOR(CANTIDAD)*12) +ROUND((CANTIDAD - FLOOR(CANTIDAD)) * 100))) CANTIDAD, VALOR FROM (
+    SELECT MARCA, MAX(DESDES) as DESDES, SUM(CANVEN) CANTIDAD, SUM(VALVEN) VALOR
         FROM (
-            SELECT HIS056, HISM38, HIS057, HISV22
-            FROM LBPRDDAT/hisa5804
-            WHERE HISA60=".$anofiltro." AND ".$selectMes." AND (
-                HIS056=49 OR HIS056=66 OR HIS056=69 OR HIS056=71 OR HIS056=86
+            SELECT CODCIA, MARCA, CANVEN, VALVEN
+            FROM LBPRDDAT/LO2234
+            WHERE ANOPRO=".$anofiltro." AND ".$selectMes." AND (
+                CODCIA=49 OR CODCIA=66 OR CODCIA=69 OR CODCIA=71 OR CODCIA=86
             )
         ) T1
-        INNER JOIN LBPRDDAT/DESARC T2 ON T1.HISM38=T2.DESCO1 AND T1.HIS056=T2.DESCOD
-        GROUP BY HISM38) ORDER BY HISM38
-                        )AS GUA ON HON.HISM38=GUA.HISM38 LEFT JOIN 
+        INNER JOIN LBPRDDAT/DESARC T2 ON T1.MARCA=T2.DESCO1 AND T1.CODCIA=T2.DESCOD
+        GROUP BY MARCA) ORDER BY MARCA
+                        )AS GUA ON HON.MARCA=GUA.MARCA LEFT JOIN 
                         (
-                          SELECT HISM38,DESDES,FLOOR(((FLOOR(CANTIDAD)*12) +ROUND((CANTIDAD - FLOOR(CANTIDAD)) * 100))) CANTIDAD, VALOR FROM (
-    SELECT HISM38, MAX(DESDES) as DESDES, SUM(HIS057) CANTIDAD, SUM(HISV22) VALOR
+                          SELECT MARCA,DESDES,FLOOR(((FLOOR(CANTIDAD)*12) +ROUND((CANTIDAD - FLOOR(CANTIDAD)) * 100))) CANTIDAD, VALOR FROM (
+    SELECT MARCA, MAX(DESDES) as DESDES, SUM(CANVEN) CANTIDAD, SUM(VALVEN) VALOR
         FROM (
-            SELECT HIS056, HISM38, HIS057, HISV22
-            FROM LBPRDDAT/hisa5804
-            WHERE HISA60=".$anofiltro." AND ".$selectMes." AND (
-                HIS056=48 OR HIS056=53 OR HIS056=61 OR HIS056=62 OR HIS056=77
+            SELECT CODCIA, MARCA, CANVEN, VALVEN
+            FROM LBPRDDAT/LO2234
+            WHERE ANOPRO=".$anofiltro." AND ".$selectMes." AND (
+                CODCIA=48 OR CODCIA=53 OR CODCIA=61 OR CODCIA=62 OR CODCIA=77
             )
         ) T1
-        INNER JOIN LBPRDDAT/DESARC T2 ON T1.HISM38=T2.DESCO1 AND T1.HIS056=T2.DESCOD
-        GROUP BY HISM38) ORDER BY HISM38
-                        )AS SAL ON HON.HISM38=SAL.HISM38 LEFT JOIN 
+        INNER JOIN LBPRDDAT/DESARC T2 ON T1.MARCA=T2.DESCO1 AND T1.CODCIA=T2.DESCOD
+        GROUP BY MARCA) ORDER BY MARCA
+                        )AS SAL ON HON.MARCA=SAL.MARCA LEFT JOIN 
                         (
-                          SELECT HISM38,DESDES,FLOOR(((FLOOR(CANTIDAD)*12) +ROUND((CANTIDAD - FLOOR(CANTIDAD)) * 100))) CANTIDAD, VALOR FROM (
-    SELECT HISM38, MAX(DESDES) as DESDES, SUM(HIS057) CANTIDAD, SUM(HISV22) VALOR
+                          SELECT MARCA,DESDES,FLOOR(((FLOOR(CANTIDAD)*12) +ROUND((CANTIDAD - FLOOR(CANTIDAD)) * 100))) CANTIDAD, VALOR FROM (
+    SELECT MARCA, MAX(DESDES) as DESDES, SUM(CANVEN) CANTIDAD, SUM(VALVEN) VALOR
         FROM (
-            SELECT HIS056, HISM38, HIS057, HISV22
-            FROM LBPRDDAT/hisa5804
-            WHERE HISA60=".$anofiltro." AND ".$selectMes." AND (
-                HIS056=54 OR HIS056=60 OR HIS056=80
+            SELECT CODCIA, MARCA, CANVEN, VALVEN
+            FROM LBPRDDAT/LO2234
+            WHERE ANOPRO=".$anofiltro." AND ".$selectMes." AND (
+                CODCIA=54 OR CODCIA=60 OR CODCIA=80
             )
         ) T1
-        INNER JOIN LBPRDDAT/DESARC T2 ON T1.HISM38=T2.DESCO1 AND T1.HIS056=T2.DESCOD
-        GROUP BY HISM38) ORDER BY HISM38
-                        )AS COS ON HON.HISM38 = COS.HISM38 LEFT JOIN 
+        INNER JOIN LBPRDDAT/DESARC T2 ON T1.MARCA=T2.DESCO1 AND T1.CODCIA=T2.DESCOD
+        GROUP BY MARCA) ORDER BY MARCA
+                        )AS COS ON HON.MARCA = COS.MARCA LEFT JOIN 
                         (
-                          SELECT HISM38,DESDES,FLOOR(((FLOOR(CANTIDAD)*12) +ROUND((CANTIDAD - FLOOR(CANTIDAD)) * 100))) CANTIDAD, VALOR FROM (
-    SELECT HISM38, MAX(DESDES) as DESDES, SUM(HIS057) CANTIDAD, SUM(HISV22) VALOR
+                          SELECT MARCA,DESDES,FLOOR(((FLOOR(CANTIDAD)*12) +ROUND((CANTIDAD - FLOOR(CANTIDAD)) * 100))) CANTIDAD, VALOR FROM (
+    SELECT MARCA, MAX(DESDES) as DESDES, SUM(CANVEN) CANTIDAD, SUM(VALVEN) VALOR
         FROM (
-            SELECT HIS056, HISM38, HIS057, HISV22
-            FROM LBPRDDAT/hisa5804
-            WHERE HISA60=".$anofiltro." AND ".$selectMes." AND (
-                HIS056=81
+            SELECT CODCIA, MARCA, CANVEN, VALVEN
+            FROM LBPRDDAT/LO2234
+            WHERE ANOPRO=".$anofiltro." AND ".$selectMes." AND (
+                CODCIA=81
             )
         ) T1
-        INNER JOIN LBPRDDAT/DESARC T2 ON T1.HISM38=T2.DESCO1 AND T1.HIS056=T2.DESCOD
-        GROUP BY HISM38) ORDER BY HISM38
-                        )AS REP ON HON.HISM38 = REP.HISM38 LEFT JOIN 
+        INNER JOIN LBPRDDAT/DESARC T2 ON T1.MARCA=T2.DESCO1 AND T1.CODCIA=T2.DESCOD
+        GROUP BY MARCA) ORDER BY MARCA
+                        )AS REP ON HON.MARCA = REP.MARCA LEFT JOIN 
                         (
-                          SELECT HISM38,DESDES,FLOOR(((FLOOR(CANTIDAD)*12) +ROUND((CANTIDAD - FLOOR(CANTIDAD)) * 100))) CANTIDAD, VALOR FROM (
-    SELECT HISM38, MAX(DESDES) as DESDES, SUM(HIS057) CANTIDAD, SUM(HISV22) VALOR
+                          SELECT MARCA,DESDES,FLOOR(((FLOOR(CANTIDAD)*12) +ROUND((CANTIDAD - FLOOR(CANTIDAD)) * 100))) CANTIDAD, VALOR FROM (
+    SELECT MARCA, MAX(DESDES) as DESDES, SUM(CANVEN) CANTIDAD, SUM(VALVEN) VALOR
         FROM (
-            SELECT HIS056, HISM38, HIS057, HISV22
-            FROM LBPRDDAT/hisa5804
-            WHERE HISA60=".$anofiltro." AND ".$selectMes." AND (
-                HIS056=83 OR HIS056=87 
+            SELECT CODCIA, MARCA, CANVEN, VALVEN
+            FROM LBPRDDAT/LO2234
+            WHERE ANOPRO=".$anofiltro." AND ".$selectMes." AND (
+                CODCIA=83 OR CODCIA=87 
             )
         ) T1
-        INNER JOIN LBPRDDAT/DESARC T2 ON T1.HISM38=T2.DESCO1 AND T1.HIS056=T2.DESCOD
-        GROUP BY HISM38) ORDER BY HISM38
-                        )AS NIC ON HON.HISM38 = NIC.HISM38
-                        ORDER BY HON.HISM38";
+        INNER JOIN LBPRDDAT/DESARC T2 ON T1.MARCA=T2.DESCO1 AND T1.CODCIA=T2.DESCOD
+        GROUP BY MARCA) ORDER BY MARCA
+                        )AS NIC ON HON.MARCA = NIC.MARCA
+                        ORDER BY HON.MARCA";
 
     $resultMarcas=odbc_exec($connIBM,$marcassql);
   

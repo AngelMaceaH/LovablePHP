@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
   <meta charset="utf-8">
@@ -22,7 +22,7 @@
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb my-0 ms-2">
         <li class="breadcrumb-item">
-          <span>Modulo de facturacion</span>
+          <span>Modulo de facturación</span>
         </li>
         <li class="breadcrumb-item active"><span>ZLO0003PA</span></li>
       </ol>
@@ -190,7 +190,7 @@
                   $registrosMarcas = array();
                   while($rowMarcas = odbc_fetch_array($resultMarcas)){
                     $registro = array(
-                      "HISM38" => $rowMarcas['HISM38'],
+                      "HISM38" => $rowMarcas['MARCA'],
                       "DESDES" => $rowMarcas['DESDES'],
                       "CANHON" => $rowMarcas['CANHON'],
                       "VALHON" => $rowMarcas['VALHON'],
@@ -212,10 +212,10 @@
 
                     //HONDURAS
                     $totunHon+=$rowMarcas['CANHON'];
-                    $totvalHon+=(($rowMarcas['VALHON']!=0)? ($rowMarcas['VALHON']/$factorL):0);
+                    $totvalHon+=(($rowMarcas['VALHON']!=0)? ($rowMarcas['VALHON']/1):0);
                     //GUATEMALA
                     $totunGua+=$rowMarcas['CANGUA'];
-                    $totvalGua+= (($rowMarcas['VALGUA']!=0)? ($rowMarcas['VALGUA']/$factorQ):0);
+                    $totvalGua+= (($rowMarcas['VALGUA']!=0)? ($rowMarcas['VALGUA']/1):0);
                    
                     //EL SALVADOR
                     $totunSal+=$rowMarcas['CANSAL'];
@@ -223,11 +223,11 @@
                     
                      //COSTA RICA
                      $totunCos+=$rowMarcas['CANCOS'];
-                     $totvalCos+= (($rowMarcas['VALCOS']!=0)? ($rowMarcas['VALCOS']/$factorC):0);
+                     $totvalCos+= (($rowMarcas['VALCOS']!=0)? ($rowMarcas['VALCOS']/1):0);
                     
                      //REPUBLICA DOMINICANA 
                      $totunRep+=$rowMarcas['CANREP'];
-                     $totvalRep+=(($rowMarcas['VALREP']!=0)? ($rowMarcas['VALREP']/$factorP):0);
+                     $totvalRep+=(($rowMarcas['VALREP']!=0)? ($rowMarcas['VALREP']/1):0);
                      
                      //NICARAGUA
                      $totunNic+=$rowMarcas['CANNIC'];
@@ -245,7 +245,7 @@
                     //HONDURAS
                     $porunHon=(($rowMarcas['CANHON']!=0)?(($rowMarcas['CANHON']/$totunHon)*100):0);
                     $portotunHon=($totunHon/$totunTot)*100;
-                    $porvalHon=(($rowMarcas['VALHON']!=0)?((($rowMarcas['VALHON']/$factorL)/$totvalHon)*100):0);
+                    $porvalHon=(($rowMarcas['VALHON']!=0)?((($rowMarcas['VALHON']/1)/$totvalHon)*100):0);
                     $portotvalHon=($totvalHon/$totvalTot)*100;
                     print '<td id="hontd1" class="fw-bold responsive-font-example">'.(($rowMarcas['CANHON']==0)?' ':number_format( $rowMarcas['CANHON'],0)).'</td>';
                     print '<td id="hontd2" class="responsive-font-example">'.(($porunHon==0)?' ':number_format( $porunHon,2)).'</td>';
@@ -254,7 +254,7 @@
                     //GUATEMALA
                     $porunGua=(($rowMarcas['CANGUA']!=0)?(($rowMarcas['CANGUA']/$totunGua)*100):0);
                     $portotunGua=($totunGua/$totunTot)*100;
-                    $porvalGua=(($rowMarcas['VALGUA']!=0)?((($rowMarcas['VALGUA']/$factorQ)/$totvalGua)*100):0);
+                    $porvalGua=(($rowMarcas['VALGUA']!=0)?((($rowMarcas['VALGUA']/1)/$totvalGua)*100):0);
                     
                     $portotvalGua=($totvalGua/$totvalTot)*100;
                     print '<td id="guatd1" class="fw-bold responsive-font-example">'.(($rowMarcas['CANGUA']==0)?' ':number_format( $rowMarcas['CANGUA'],0)).'</td>';
@@ -274,7 +274,7 @@
                     //COSTA RICA
                     $porunCos=(($rowMarcas['CANCOS']!=0)?(($rowMarcas['CANCOS']/$totunCos)*100):0);
                     $portotunCos=($totunCos/$totunTot)*100;
-                    $porvalCos=(($rowMarcas['VALCOS']!=0)?((($rowMarcas['VALCOS']/$factorC)/$totvalCos)*100):0);
+                    $porvalCos=(($rowMarcas['VALCOS']!=0)?((($rowMarcas['VALCOS']/1)/$totvalCos)*100):0);
                     
                     $portotvalCos=($totvalCos/$totvalTot)*100;
                     print '<td id="costd1" class="fw-bold responsive-font-example">'.(($rowMarcas['CANCOS']==0)?' ':number_format( $rowMarcas['CANCOS'],0)).'</td>';
@@ -284,7 +284,7 @@
                     //REPUBLICA DOMINICANA
                     $porunRep=(($rowMarcas['CANREP']!=0)?(($rowMarcas['CANREP']/$totunRep)*100):0);
                     $portotunRep=($totunRep/$totunTot)*100;
-                    $porvalRep=(($rowMarcas['VALREP']!=0)?((($rowMarcas['VALREP']/$factorP)/$totvalRep)*100):0);
+                    $porvalRep=(($rowMarcas['VALREP']!=0)?((($rowMarcas['VALREP']/1)/$totvalRep)*100):0);
                     $portotvalRep=($totvalRep/$totvalTot)*100;
                     print '<td id="reptd1" class="fw-bold responsive-font-example">'.(($rowMarcas['CANREP']==0)?' ':number_format( $rowMarcas['CANREP'],0)).'</td>';
                     print '<td id="reptd2" class="responsive-font-example">'.(($porunRep==0)?' ':number_format( $porunRep,2)).'</td>';
@@ -303,11 +303,11 @@
                     print '<td id="nictd4" class="responsive-font-example">'.(($porvalNic==0)?' ':number_format( $porvalNic,2)).'</td>';
                      //TOTALES
                      $totuniMarca=$rowMarcas['CANHON']+$rowMarcas['CANGUA']+$rowMarcas['CANSAL']+$rowMarcas['CANCOS']+$rowMarcas['CANREP']+$rowMarcas['CANNIC'];
-                     $totvalMarca=(($rowMarcas['VALHON']!=0)?($rowMarcas['VALHON']/$factorL):0)+
-                                  (($rowMarcas['VALGUA']!=0)?($rowMarcas['VALGUA']/$factorQ):0)+
+                     $totvalMarca=(($rowMarcas['VALHON']!=0)?($rowMarcas['VALHON']/1):0)+
+                                  (($rowMarcas['VALGUA']!=0)?($rowMarcas['VALGUA']/1):0)+
                                   (($rowMarcas['VALSAL']!=0)?($rowMarcas['VALSAL']/1):0)+
-                                  (($rowMarcas['VALCOS']!=0)?($rowMarcas['VALCOS']/$factorC):0)+
-                                  (($rowMarcas['VALREP']!=0)?($rowMarcas['VALREP']/$factorP):0)+
+                                  (($rowMarcas['VALCOS']!=0)?($rowMarcas['VALCOS']/1):0)+
+                                  (($rowMarcas['VALREP']!=0)?($rowMarcas['VALREP']/1):0)+
                                   (($rowMarcas['VALNIC']!=0)?($rowMarcas['VALNIC']/1):0);
                      $porunTot=(($totuniMarca/$totunTot)*100);
                      $porvalTot=(($totvalMarca/$totvalTot)*100);
