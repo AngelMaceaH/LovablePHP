@@ -142,11 +142,11 @@
       
     <div class="sidebar bg-blck sidebar-fixed" id="sidebar">
    
-      <div class="sidebar-brand d-none d-md-flex p-4"><a href="/<?php echo $_SESSION['DEV'] ?>LovablePHP/">
+      <div class="sidebar-brand d-none d-md-flex p-4"><a href="/<?php echo $_SESSION['DEV'] ?>LovablePHP/<?php echo $_SESSION['INDEX']; ?>">
         <img src="../../assets/img/lovableLogoDark.jpg" class="img-fluid" alt="Lovable Logo"></a>
       </div>
       <ul class="sidebar-nav bg-blck2 mt-3" data-coreui="navigation" data-simplebar="">
-        <li class="nav-item mt-3"><a class="nav-link" href="/<?php echo $_SESSION['DEV'] ?>LovablePHP/">
+        <li class="nav-item mt-3"><a class="nav-link" href="/<?php echo $_SESSION['DEV'] ?>LovablePHP/<?php echo $_SESSION['INDEX']; ?>">
              Inicio</a>
         </li>
        <div id="menu-display">
@@ -245,7 +245,7 @@
     <script type="text/javascript" charset="utf8"
         src="https://cdn.datatables.net/buttons/2.3.4/js/dataTables.buttons.min.js"> </script>
     <script type="text/javascript" charset="utf8"
-        src="https://cdn.datatables.net/buttons/2.3.4/js/buttons.html5.min.js"> </script>
+        src="../../assets/js/buttons.html5.js"> </script>
     <script type="text/javascript" charset="utf8"
         src="https://cdn.datatables.net/buttons/2.3.4/js/buttons.print.min.js"> </script>
     <!--<script src="../../js/table.js"></script>-->

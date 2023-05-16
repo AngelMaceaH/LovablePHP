@@ -56,71 +56,78 @@
       
 
       //punto de venta
-      $sqlInv=" SELECT CODSEC,MAEC12,NOMCIA,(MAESA2-MAECA3)MAESA2
-      FROM(SELECT CODSEC,MAEC12,NOMCIA, sum(maesa2)MAESA2, sum(maeca3) MAECA3
+      $sqlInv="SELECT CODSEC,MAEC12,NOMCIA,(MAESA2-MAECA3) MAESA2 FROM( SELECT CODSEC,MAEC12,NOMCIA,SUM(MAESA2) MAESA2, SUM(MAECA3) MAECA3
+      FROM( SELECT CODSEC,MAEC12,NOMCIA, (FLOOR(((FLOOR(MAESA2)*12) +ROUND((MAESA2 - FLOOR(MAESA2)) * 100)))) MAESA2,
+                                          (FLOOR(((FLOOR(MAECA3)*12) +ROUND((MAECA3 - FLOOR(MAECA3)) * 100)))) MAECA3
       FROM lbprddat/MAEAR280 
       INNER JOIN LBPRDDAT/LO0705 ON LO0705.CODCIA = MAEAR280.MAEC12
       INNER JOIN LBPRDDAT/LO0686 ON LO0686.CODCIA = MAEAR280.MAEC12
-      WHERE  MAEC12<>1 
-      GROUP BY CODSEC,MAEC12,NOMCIA)ORDER BY ".$sqlOrden."";
-     
+      WHERE MAEC12<>1)
+      GROUP BY CODSEC,MAEC12,NOMCIA) ORDER BY ".$sqlOrden."";
+      
        $resultInv=odbc_exec($connIBM,$sqlInv); 
       $ciaArray=array();$invArray=array();
        //HONDURAS
-       $sqlInvHon="SELECT '1' CON,(SUM(MAESA2)-SUM(MAECA3)) MAESA2
-      FROM( SELECT CODSEC,MAEC12,NOMCIA, sum(maesa2)MAESA2, sum(maeca3) MAECA3
+       $sqlInvHon="SELECT (SUM(MAESA2)-SUM(MAECA3)) MAESA2
+      FROM( SELECT CODSEC,MAEC12,NOMCIA,SUM(MAESA2) MAESA2, SUM(MAECA3) MAECA3
+      FROM( SELECT CODSEC,MAEC12,NOMCIA, (FLOOR(((FLOOR(MAESA2)*12) +ROUND((MAESA2 - FLOOR(MAESA2)) * 100)))) MAESA2,
+                                          (FLOOR(((FLOOR(MAECA3)*12) +ROUND((MAECA3 - FLOOR(MAECA3)) * 100)))) MAECA3
       FROM lbprddat/MAEAR280 
       INNER JOIN LBPRDDAT/LO0705 ON LO0705.CODCIA = MAEAR280.MAEC12
       INNER JOIN LBPRDDAT/LO0686 ON LO0686.CODCIA = MAEAR280.MAEC12
-      WHERE  MAEC12 IN (35,47,57,64,63,72,52,74,75,68,56,76,59,85,65,70,73,78,82,20,22)
-      GROUP BY CODSEC,MAEC12,NOMCIA)";
+      WHERE MAEC12 IN (35,47,57,64,63,72,52,74,75,68,56,76,59,85,65,70,73,78,82,20,22))GROUP BY CODSEC,MAEC12,NOMCIA)";
         $resultInvHon=odbc_exec($connIBM,$sqlInvHon); 
         //GUATEMALA
        
-       $sqlInvGua="SELECT '1' CON,(MAESA2-MAECA3) MAESA2
-          FROM( SELECT CODSEC,MAEC12,NOMCIA, sum(maesa2)MAESA2, sum(maeca3) MAECA3
-          FROM lbprddat/MAEAR280 
-          INNER JOIN LBPRDDAT/LO0705 ON LO0705.CODCIA = MAEAR280.MAEC12
-          INNER JOIN LBPRDDAT/LO0686 ON LO0686.CODCIA = MAEAR280.MAEC12
-          WHERE  MAEC12 IN (49,66,69,71,86)
-          GROUP BY CODSEC,MAEC12,NOMCIA)";
+       $sqlInvGua="SELECT (SUM(MAESA2)-SUM(MAECA3)) MAESA2
+       FROM( SELECT CODSEC,MAEC12,NOMCIA,SUM(MAESA2) MAESA2, SUM(MAECA3) MAECA3
+       FROM( SELECT CODSEC,MAEC12,NOMCIA, (FLOOR(((FLOOR(MAESA2)*12) +ROUND((MAESA2 - FLOOR(MAESA2)) * 100)))) MAESA2,
+                                           (FLOOR(((FLOOR(MAECA3)*12) +ROUND((MAECA3 - FLOOR(MAECA3)) * 100)))) MAECA3
+       FROM lbprddat/MAEAR280 
+       INNER JOIN LBPRDDAT/LO0705 ON LO0705.CODCIA = MAEAR280.MAEC12
+       INNER JOIN LBPRDDAT/LO0686 ON LO0686.CODCIA = MAEAR280.MAEC12
+       WHERE MAEC12 IN (49,66,69,71,86))GROUP BY CODSEC,MAEC12,NOMCIA)";
         $resultInvGua=odbc_exec($connIBM,$sqlInvGua); 
         //EL SALVADOR
-       $sqlInvSal="SELECT '1' CON,(MAESA2-MAECA3) MAESA2
-                  FROM( SELECT CODSEC,MAEC12,NOMCIA, sum(maesa2)MAESA2, sum(maeca3) MAECA3
-                  FROM lbprddat/MAEAR280 
-                  INNER JOIN LBPRDDAT/LO0705 ON LO0705.CODCIA = MAEAR280.MAEC12
-                  INNER JOIN LBPRDDAT/LO0686 ON LO0686.CODCIA = MAEAR280.MAEC12
-                  WHERE  MAEC12 IN(48,53,61,62)
-                  GROUP BY CODSEC,MAEC12,NOMCIA)";
+       $sqlInvSal="SELECT (SUM(MAESA2)-SUM(MAECA3)) MAESA2
+       FROM( SELECT CODSEC,MAEC12,NOMCIA,SUM(MAESA2) MAESA2, SUM(MAECA3) MAECA3
+       FROM( SELECT CODSEC,MAEC12,NOMCIA, (FLOOR(((FLOOR(MAESA2)*12) +ROUND((MAESA2 - FLOOR(MAESA2)) * 100)))) MAESA2,
+                                           (FLOOR(((FLOOR(MAECA3)*12) +ROUND((MAECA3 - FLOOR(MAECA3)) * 100)))) MAECA3
+       FROM lbprddat/MAEAR280 
+       INNER JOIN LBPRDDAT/LO0705 ON LO0705.CODCIA = MAEAR280.MAEC12
+       INNER JOIN LBPRDDAT/LO0686 ON LO0686.CODCIA = MAEAR280.MAEC12
+       WHERE  MAEC12 IN(48,53,61,62))GROUP BY CODSEC,MAEC12,NOMCIA)";
 
         $resultInvSal=odbc_exec($connIBM,$sqlInvSal); 
          //COSTA RICA
-       $sqlInvCos="SELECT '1' CON,(MAESA2-MAECA3) MAESA2
-                FROM( SELECT CODSEC,MAEC12,NOMCIA, sum(maesa2)MAESA2, sum(maeca3) MAECA3
-                FROM lbprddat/MAEAR280 
-                INNER JOIN LBPRDDAT/LO0705 ON LO0705.CODCIA = MAEAR280.MAEC12
-                INNER JOIN LBPRDDAT/LO0686 ON LO0686.CODCIA = MAEAR280.MAEC12
-                WHERE  MAEC12 IN(60,80)
-                GROUP BY CODSEC,MAEC12,NOMCIA)";
+       $sqlInvCos="SELECT (SUM(MAESA2)-SUM(MAECA3)) MAESA2
+       FROM( SELECT CODSEC,MAEC12,NOMCIA,SUM(MAESA2) MAESA2, SUM(MAECA3) MAECA3
+       FROM( SELECT CODSEC,MAEC12,NOMCIA, (FLOOR(((FLOOR(MAESA2)*12) +ROUND((MAESA2 - FLOOR(MAESA2)) * 100)))) MAESA2,
+                                           (FLOOR(((FLOOR(MAECA3)*12) +ROUND((MAECA3 - FLOOR(MAECA3)) * 100)))) MAECA3
+       FROM lbprddat/MAEAR280 
+       INNER JOIN LBPRDDAT/LO0705 ON LO0705.CODCIA = MAEAR280.MAEC12
+       INNER JOIN LBPRDDAT/LO0686 ON LO0686.CODCIA = MAEAR280.MAEC12
+       WHERE  MAEC12 IN(60,80))GROUP BY CODSEC,MAEC12,NOMCIA)";
         $resultInvCos=odbc_exec($connIBM,$sqlInvCos); 
          //NICARAGUA
-       $sqlInvNic="SELECT '1' CON,(MAESA2-MAECA3) MAESA2
-                  FROM( SELECT CODSEC,MAEC12,NOMCIA, sum(maesa2)MAESA2, sum(maeca3) MAECA3
-                  FROM lbprddat/MAEAR280 
-                  INNER JOIN LBPRDDAT/LO0705 ON LO0705.CODCIA = MAEAR280.MAEC12
-                  INNER JOIN LBPRDDAT/LO0686 ON LO0686.CODCIA = MAEAR280.MAEC12
-                  WHERE  MAEC12 IN(83,87)
-                  GROUP BY CODSEC,MAEC12,NOMCIA)";
+       $sqlInvNic="SELECT (SUM(MAESA2)-SUM(MAECA3)) MAESA2
+       FROM( SELECT CODSEC,MAEC12,NOMCIA,SUM(MAESA2) MAESA2, SUM(MAECA3) MAECA3
+       FROM( SELECT CODSEC,MAEC12,NOMCIA, (FLOOR(((FLOOR(MAESA2)*12) +ROUND((MAESA2 - FLOOR(MAESA2)) * 100)))) MAESA2,
+                                           (FLOOR(((FLOOR(MAECA3)*12) +ROUND((MAECA3 - FLOOR(MAECA3)) * 100)))) MAECA3
+       FROM lbprddat/MAEAR280 
+       INNER JOIN LBPRDDAT/LO0705 ON LO0705.CODCIA = MAEAR280.MAEC12
+       INNER JOIN LBPRDDAT/LO0686 ON LO0686.CODCIA = MAEAR280.MAEC12
+       WHERE  MAEC12 IN(83,87))GROUP BY CODSEC,MAEC12,NOMCIA)";
         $resultInvNic=odbc_exec($connIBM,$sqlInvNic); 
          //REP DOMINICANA
-       $sqlInvRep="SELECT '1' CON,(MAESA2-MAECA3) MAESA2
-                  FROM( SELECT CODSEC,MAEC12,NOMCIA, sum(maesa2)MAESA2, sum(maeca3) MAECA3
-                  FROM lbprddat/MAEAR280 
-                  INNER JOIN LBPRDDAT/LO0705 ON LO0705.CODCIA = MAEAR280.MAEC12
-                  INNER JOIN LBPRDDAT/LO0686 ON LO0686.CODCIA = MAEAR280.MAEC12
-                  WHERE  MAEC12 IN(81)
-                  GROUP BY CODSEC,MAEC12,NOMCIA)";
+       $sqlInvRep="SELECT (SUM(MAESA2)-SUM(MAECA3)) MAESA2
+       FROM( SELECT CODSEC,MAEC12,NOMCIA,SUM(MAESA2) MAESA2, SUM(MAECA3) MAECA3
+       FROM( SELECT CODSEC,MAEC12,NOMCIA, (FLOOR(((FLOOR(MAESA2)*12) +ROUND((MAESA2 - FLOOR(MAESA2)) * 100)))) MAESA2,
+                                           (FLOOR(((FLOOR(MAECA3)*12) +ROUND((MAECA3 - FLOOR(MAECA3)) * 100)))) MAECA3
+       FROM lbprddat/MAEAR280 
+       INNER JOIN LBPRDDAT/LO0705 ON LO0705.CODCIA = MAEAR280.MAEC12
+       INNER JOIN LBPRDDAT/LO0686 ON LO0686.CODCIA = MAEAR280.MAEC12
+       WHERE  MAEC12 IN(81))GROUP BY CODSEC,MAEC12,NOMCIA)";
         $resultInvRep=odbc_exec($connIBM,$sqlInvRep); 
            
            $invHonduras=0;$invGuatemala=0; $invElSalvador=0;$invCostaRica=0;$invRepDominicana=0; 0;
@@ -131,42 +138,62 @@
                           while($rowRep= odbc_fetch_array($resultInvRep)){
                             while($rowNic= odbc_fetch_array($resultInvNic)){
                               //CALCULO HONDURAS
-                              $docenas=floor($rowHon['MAESA2']);
-                              $decimales=floor((substr($rowHon['MAESA2'],strpos($rowHon['MAESA2'],'.')+1,2))/12);
-                              $residuo="0.".(substr($rowHon['MAESA2'],strpos($rowHon['MAESA2'],'.')+1,2))%12;
-                              $cantidadInv=$docenas+$decimales+$residuo;
-                              $invHonduras=$cantidadInv;
+                              $docenas=floor($rowHon['MAESA2']/12);
+                              $decimales=($rowHon['MAESA2']-($docenas*12));
+                              if (strlen($decimales)==1) {
+                                $decimales= "0.0".$decimales;
+                              }else{
+                                $decimales="0.".$decimales;
+                              }
+                              $invHonduras=$docenas+$decimales;
                               //CALCULO GUATEMALA
-                              $docenas=floor($rowGua['MAESA2']);
-                              $decimales=floor((substr($rowGua['MAESA2'],strpos($rowGua['MAESA2'],'.')+1,2))/12);
-                              $residuo="0.".(substr($rowGua['MAESA2'],strpos($rowGua['MAESA2'],'.')+1,2))%12;
-                              $cantidadInv=$docenas+$decimales+$residuo;
-                              $invGuatemala= $cantidadInv; 
+                              $docenas=floor($rowGua['MAESA2']/12);
+                              $decimales=($rowGua['MAESA2']-($docenas*12));
+                              if (strlen($decimales)==1) {
+                                $decimales= "0.0".$decimales;
+                              }else{
+                                $decimales="0.".$decimales;
+                              }
+                              $invGuatemala=$docenas+$decimales;
                               
                              //CALCULO EL SALVADOR
-                              $docenas=floor($rowSal['MAESA2']);
-                              $decimales=floor((substr($rowGua['MAESA2'],strpos($rowGua['MAESA2'],'.')+1,2))/12);
-                              $residuo="0.".(substr($rowGua['MAESA2'],strpos($rowGua['MAESA2'],'.')+1,2))%12;
-                              $cantidadInv=$docenas+$decimales+$residuo;
-                              $invElSalvador=$cantidadInv;
+                              $docenas=floor($rowSal['MAESA2']/12);
+                              $decimales=($rowSal['MAESA2']-($docenas*12));
+                              if (strlen($decimales)==1) {
+                                $decimales= "0.0".$decimales;
+                              }else{
+                                $decimales="0.".$decimales;
+                              }
+                              $invElSalvador=$docenas+$decimales;
                               //CALCULO COSTA RICA
-                              $docenas=floor($rowCos['MAESA2']);
-                              $decimales=floor((substr($rowGua['MAESA2'],strpos($rowGua['MAESA2'],'.')+1,2))/12);
-                              $residuo="0.".(substr($rowGua['MAESA2'],strpos($rowGua['MAESA2'],'.')+1,2))%12;
-                              $cantidadInv=$docenas+$decimales+$residuo;
-                              $invCostaRica=$cantidadInv;
+                              $docenas=floor($rowCos['MAESA2']/12);
+                              $decimales=($rowCos['MAESA2']-($docenas*12));
+                              if (strlen($decimales)==1) {
+                                $decimales= "0.0".$decimales;
+                              }else{
+                                $decimales="0.".$decimales;
+                              }
+                              $invCostaRica=$docenas+$decimales;
+
                                 //CALCULO REP DOMINICANA
-                                $docenas=floor($rowRep['MAESA2']);
-                                $decimales=floor((substr($rowGua['MAESA2'],strpos($rowGua['MAESA2'],'.')+1,2))/12);
-                                $residuo="0.".(substr($rowGua['MAESA2'],strpos($rowGua['MAESA2'],'.')+1,2))%12;
-                                $cantidadInv=$docenas+$decimales+$residuo;
-                              $invRepDominicana=$cantidadInv;
+                                $docenas=floor($rowRep['MAESA2']/12);
+                                $decimales=($rowRep['MAESA2']-($docenas*12));
+                                if (strlen($decimales)==1) {
+                                  $decimales= "0.0".$decimales;
+                                }else{
+                                  $decimales="0.".$decimales;
+                                }
+                                $invRepDominicana=$docenas+$decimales;
+
                              //CALCULO NICARAGUA
-                             $docenas=floor($rowNic['MAESA2']);
-                             $decimales=floor((substr($rowGua['MAESA2'],strpos($rowGua['MAESA2'],'.')+1,2))/12);
-                             $residuo="0.".(substr($rowGua['MAESA2'],strpos($rowGua['MAESA2'],'.')+1,2))%12;
-                             $cantidadInv=$docenas+$decimales+$residuo;
-                              $invNicaragua=$cantidadInv;
+                             $docenas=floor($rowNic['MAESA2']/12);
+                             $decimales=($rowNic['MAESA2']-($docenas*12));
+                             if (strlen($decimales)==1) {
+                               $decimales= "0.0".$decimales;
+                             }else{
+                               $decimales="0.".$decimales;
+                             }
+                             $invNicaragua=$docenas+$decimales;
                               $invPaises=array("Honduras" => $invHonduras,
                                                "Guatemala"=>$invGuatemala,
                                                "El Salvador"=>$invElSalvador,
@@ -250,15 +277,19 @@
                       <?php 
                         $cantidadInv=0; $cantidadTotDocenas=0;$cantidadTotDecimal=0;$cantidadTotResiduo=0;$cantidadInvTot=0;$con=0;
                         while($rowInv = odbc_fetch_array($resultInv)){
-                          $docenas=floor($rowInv['MAESA2']);
-                          $decimales=floor((substr($rowInv['MAESA2'],strpos($rowInv['MAESA2'],'.')+1,2))/12);
-                          $residuo="0.".(substr($rowInv['MAESA2'],strpos($rowInv['MAESA2'],'.')+1,2))%12;
-                          $cantidadInv=$docenas+$decimales+$residuo;
+                          $docenas=floor($rowInv['MAESA2']/12);
+                          $decimales=($rowInv['MAESA2']-($docenas*12));
+                          if (strlen($decimales)==1) {
+                            $decimales= "0.0".$decimales;
+                          }else{
+                            $decimales="0.".$decimales;
+                          }
+                          $cantidadInv=$docenas+$decimales;
                         
                                 print '<tr>';
                                 print '<td>'.$rowInv['CODSEC'].'</td>';
                                 print '<td class="fw-bold">'.$rowInv['NOMCIA'].'</td>';
-                                print '<td class="fw-bold">'.$cantidadInv.'</td>';
+                                print '<td class="fw-bold">'.number_format($cantidadInv,2).'</td>';
                                 print '</tr>';
                                 $ciaArray[$con]=$rowInv['NOMCIA'];
                                 $invArray[$con]=$cantidadInv;
@@ -324,7 +355,7 @@
                         print '<tr>';
                         print '<td>'.$cont.'</td>';
                         print '<td class="fw-bold">'.$x.'</td>';
-                        print '<td class="fw-bold">'.$valor.'</td>';
+                        print '<td class="fw-bold">'.number_format($valor,2).'</td>';
                         print '</tr>';
                         $InvPaisTot+=$valor;
                         $cont++;
@@ -522,7 +553,7 @@
       yAxis: {
       min: 0,
       endOnTick: false,
-      tickInterval: 900,
+      tickInterval: 2600.01,
         lineWidth: 1,
         title: {
             text: ' '

@@ -106,11 +106,11 @@
        
 
     <div class="sidebar bg-blck sidebar-fixed" id="sidebar">
-      <div class="sidebar-brand d-none d-md-flex p-4"><a href="/<?php echo $_SESSION['DEV'] ?>LovablePHP/">
+      <div class="sidebar-brand d-none d-md-flex p-4"><a href="/<?php echo $_SESSION['DEV'] ?>LovablePHP/<?php echo $_SESSION['INDEX']; ?>">
         <img src="assets/img/lovableLogoDark.jpg" class="img-fluid" alt="Lovable Logo"></a>
       </div>
       <ul class="sidebar-nav bg-blck2 mt-3" data-coreui="navigation" data-simplebar="">
-        <li class="nav-item mt-3"><a class="nav-link" href="index.php">
+        <li class="nav-item mt-3"><a class="nav-link" href="<?php echo $_SESSION['INDEX']; ?>">
              Inicio</a>
         </li>
        <div id="menu-display">
