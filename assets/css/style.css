@@ -8611,7 +8611,7 @@ html:not([dir=rtl]) .sidebar-nav .nav-group-toggle::after {
   list-style: none;
 }
 html:not([dir=rtl]) .sidebar-nav .nav-group-items .nav-link {
-  padding-left: var(--cui-sidebar-nav-icon-width);
+  padding-left: 20px ;
 }
 *[dir=rtl] .sidebar-nav .nav-group-items .nav-link {
   padding-right: var(--cui-sidebar-nav-icon-width);

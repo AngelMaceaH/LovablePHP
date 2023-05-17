@@ -7,7 +7,11 @@
  $_SESSION['paisfiltro2']= isset($_POST['cbbPais']) ? $_POST['cbbPais']: 1;
  $_SESSION['Orden']= isset($_POST['cbbOrden']) ? $_POST['cbbOrden']: 1;
 
- header("Location: /".$_SESSION['DEV']."LovablePHP/PRG/ZPT/ZLO0004P.php");
+if ($_SESSION['paisfiltro2']==8) {
+    header("Location: /".$_SESSION['DEV']."LovablePHP/PRG/ZPT/ZLO0004PA.php");
+}else{
+    header("Location: /".$_SESSION['DEV']."LovablePHP/PRG/ZPT/ZLO0004P.php");
+}
  
 
 ?>

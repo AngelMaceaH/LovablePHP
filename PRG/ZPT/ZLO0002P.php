@@ -464,7 +464,7 @@
             {
                 extend: 'excelHtml5',
                 text: '<i class="fa-solid fa-file-excel"></i> <b >Enviar a Excel</b>',
-                className: "btn btn-success text-light fs-6 ",
+                className: "btn btn-success text-light fs-6 mb-2",
                 exportOptions: {
                     columns: [1,2]
                 },

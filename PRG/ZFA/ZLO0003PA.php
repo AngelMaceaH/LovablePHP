@@ -76,9 +76,9 @@
             </div>
             <div class="btn-group flex-wrap d-flex justify-content-center justify-content-md-start mb-2 mt-2" role="group" aria-label="Basic radio toggle button group">
                 <input type="radio" class="btn-check" name="btncols" id="btncolCos" autocomplete="off" >
-                <label class="btn btn-outline-secondary responsive-font-example  pt-3 pb-3 text-black" for="btncolCos"><b>Costa Rica</b></label>
+                <label class="btn btn-outline-secondary responsive-font-example  pt-3 pb-3 text-black" for="btncolCos"><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Costa Rica&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
                 <input type="radio" class="btn-check" name="btncols" id="btncolNic" autocomplete="off" >
-                <label class="btn btn-outline-secondary responsive-font-example  pt-3 pb-3 text-black" for="btncolNic"><b>Nicaragua</b></label>
+                <label class="btn btn-outline-secondary responsive-font-example  pt-3 pb-3 text-black" for="btncolNic"><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Nicaragua&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
                 <input type="radio" class="btn-check" name="btncols" id="btncolRep" autocomplete="off" >
                 <label class="btn btn-outline-secondary responsive-font-example  pt-3 pb-3 text-black" for="btncolRep"><b>Rep. Dominicana</b></label>
             </div>
@@ -129,10 +129,10 @@
                     <th class="text-start responsive-font-example">Marcas</th>
                     <th id="honth1" class="text-start responsive-font-example">Unidades Año <?php echo $ano2;?></th>
                     <th id="honth2" class="text-start responsive-font-example">Unidades Año <?php echo $ano2-1;?></th>
-                    <th id="honth3">Valor Año <?php echo $ano2;?></th>
-                    <th id="honth4">Valor Año <?php echo $ano2-1;?></th>
-                    <th id="honth5">Variación</th>
-                    <th id="honth6">Crecimiento</th>
+                    <th id="honth3" class="responsive-font-example">Valor Año <?php echo $ano2;?></th>
+                    <th id="honth4" class="responsive-font-example">Valor Año <?php echo $ano2-1;?></th>
+                    <th id="honth5" class="responsive-font-example">Variación</th>
+                    <th id="honth6" class="responsive-font-example">Crecimiento</th>
                     <th id="guath1" class="d-none text-start responsive-font-example">Unidades Año <?php echo $ano2;?></th>
                     <th id="guath2" class="d-none text-start responsive-font-example">Unidades Año <?php echo $ano2-1;?></th>
                     <th id="guath3" class="d-none text-start responsive-font-example">Valor Año <?php echo $ano2;?></th>

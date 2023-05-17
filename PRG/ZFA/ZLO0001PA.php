@@ -77,6 +77,7 @@
                         <hr> 
                         
                         <div class="table-responsive">
+                        <label class="m-4 fw-bold">**Presione doble clic sobre la factura para ver detalles de la factura**</label>
                         <table id="myTable2" class="table stripe table-hover mt-4" style="width:100%" >
                         <thead>
                             <tr>
@@ -234,10 +235,10 @@
                             <div class="col-sm-12 col-lg-6 mt-2">
                                 <label>Compañía:</label>
                                 <select class="form-select" id="comppro2" name="comppro2" >
-                                    <?php
+                                <?php
                                     while ($rowCOMARC = odbc_fetch_array($resultCOMARC2)) {
-                                        echo "<option  value='" . $rowCOMARC['COMCOD'] . "'>" . ucfirst(strtolower(rtrim(utf8_encode($rowCOMARC['COMDES'])))) . "</option>";
-                                        }
+                                    echo "<option  value='" . $rowCOMARC['COMCOD'] . "'>" . rtrim(utf8_encode($rowCOMARC['COMDES'])) . "</option>";
+                                    }
                                     ?>
                                 </select>
                             </div>

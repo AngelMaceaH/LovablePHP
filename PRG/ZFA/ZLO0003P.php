@@ -41,7 +41,7 @@
                 <div class="col-sm-12 col-lg-6 mt-2">
                         <label>Marca:</label>
                         <select class="form-select  mt-1" id="cbbMarca" name="cbbMarca">
-                        <option value="0">TODAS LAS MARCAS</option>
+                        <option value="0" checked>TODAS LAS MARCAS</option>
                           <?php
                            while($rowDesc = odbc_fetch_array($resultDescripcion)){
                             echo "<option value='".$rowDesc['DESCO1']."'>".$rowDesc['DESDES']."</option>";
@@ -74,9 +74,9 @@
                     <tr>
                         <th class="d-none">ID</th>
                         <th>Paises</th>
-                        <th>Unidades Año <?php echo $ano2;?></th>
+                        <th>Und. Año <?php echo $ano2;?></th>
                         <th>Valor Año <?php echo $ano2;?></th>
-                        <th>Unidades Año <?php echo $ano2-1;?></th>
+                        <th>Und. Año <?php echo $ano2-1;?></th>
                         <th>Valor Año <?php echo $ano2-1;?></th>
                         <th>Variación</th>
                         <th>Crecimiento</th>

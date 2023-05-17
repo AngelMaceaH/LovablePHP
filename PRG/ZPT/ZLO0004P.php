@@ -22,6 +22,9 @@
            $mesfiltro=isset($_SESSION['mesfiltro3'])? $_SESSION['mesfiltro3']: $mes_actual; 
            $anofiltro=isset($_SESSION['anofiltro2'])? $_SESSION['anofiltro2']: $ano_actual; 
            $paisfiltro=isset($_SESSION['paisfiltro2'])? $_SESSION['paisfiltro2']: 1; 
+           if ($paisfiltro==8) {
+            $paisfiltro=1;
+           }
            $cia="";
            switch ($paisfiltro) {
             case 1:
@@ -123,6 +126,7 @@
                 <div class="col-sm-12 col-lg-6 mt-2">
                         <label>País:</label>
                         <select class="form-select  mt-1" id="cbbPais" name="cbbPais">
+                          <option value="8">Todos los países</option>
                           <option value="1">Honduras (Lov. Ecommerce)</option>
                           <option value="2">Honduras (Mod. Íntima)</option>
                           <option value="3">Guatemala</option>

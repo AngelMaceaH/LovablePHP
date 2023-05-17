@@ -73,6 +73,7 @@
                 </ul>
                 <div id="panel1" class="tablist__panel p-2" aria-labelledby="tab1" aria-hidden="false" role="tabpanel">
                   <div class="position-relative">
+                  <label class="m-4 fw-bold">**Presione doble clic sobre el punto de venta para ver facturas**</label>
                     <table id="myTable" class="table stripe table-hover mt-2" style="width:100%" >
                     <?php
                     $label1="";$label2="";
@@ -119,8 +120,8 @@
                                           print   '<td class="responsive-font-example" ><b>' .$row_zlo0001p['CODSEC'].'</b></td>';
                                           print   '<td class="responsive-font-example" ><b>' .$row_zlo0001p['ID'].'</b></td>';
                                           print   '<td class="responsive-font-example"><b>' .$compañia.'</b></td>';
-                                          print   '<td class="responsive-font-example text-darkblue text-end"><b>'.$subdia.'</b></td>';
-                                          print   '<td class="responsive-font-example text-pink text-end"><b>' .$submes.'</b></td>';
+                                          if ($row_zlo0001p['SUBDIA']==0) {print '<td class="responsive-font-example text-danger text-end"><b>'.$subdia.'</b></td>';}else{print '<td class="responsive-font-example text-darkblue text-end"><b>'.$subdia.'</b></td>';}
+                                          if ($row_zlo0001p['SUBMES']==0) {print '<td class="responsive-font-example text-danger text-end"><b>' .$submes.'</b></td>';}else{print '<td class="responsive-font-example text-pink text-end"><b>' .$submes.'</b></td>';}
                                           print '</tr>';
                                       }
                                   }
@@ -140,6 +141,7 @@
                <div id="panel2" class="tablist__panel is-hidden p-2" aria-labelledby="tab2" aria-hidden="true" role="tabpanel">
                   <div class="position-relative">
                   <div class="table-responsive">
+                    <label class="m-4 fw-bold">**Presione doble clic sobre el punto de venta para ver facturas**</label>
                     <table id="myTableAnual" class="table stripe table-hover mt-2" style="width:100%" >
                        
                         <?php
@@ -200,8 +202,8 @@
                                     print   '<td class="responsive-font-example" ><b>' .$row_compAnual['CODSEC'].'</b></td>';
                                     print   '<td class="responsive-font-example" ><b>' .$row_compAnual['ID'].'</b></td>';
                                     print   '<td class="responsive-font-example"><b>' .$compañiaAnual.'</b></td>';
-                                    print   '<td class="responsive-font-example text-end"><b>'.$ano1.'</b></td>';
-                                    print   '<td class="responsive-font-example text-end"><b>' .$ano2.'</b></td>';
+                                    if ($row_compAnual['ANO1']==0) {print   '<td class="responsive-font-example text-end text-danger"><b>'.$ano1.'</b></td>';}else{print   '<td class="responsive-font-example text-end"><b>'.$ano1.'</b></td>';}
+                                    if ($row_compAnual['ANO2']==0) {print   '<td class="responsive-font-example text-end text-danger"><b>' .$ano2.'</b></td>';}else{print   '<td class="responsive-font-example text-end"><b>' .$ano2.'</b></td>';} 
                                     if ($row_compAnual['VARIA']<0) {
                                       print   '<td class="responsive-font-example text-end"><b><span class="text-danger">'.$varia.'</b></td>';
                                     }elseif ($row_compAnual['VARIA']>0) {
@@ -236,6 +238,7 @@
                     <div id="panel3" class="tablist__panel is-hidden p-2" aria-labelledby="tab3" aria-hidden="true" role="tabpanel">
                     <div class="position-relative">
                     <div class="table-responsive">
+                    <label class="m-4 fw-bold">**Presione doble clic sobre el punto de venta para ver facturas**</label>
                     <table id="myTableTransacciones" class="table stripe table-hover mt-2" style="width:100%" >
                         <thead>
                             <tr>
@@ -259,7 +262,7 @@
                               
                                   $compañiaPromedios = rtrim(utf8_encode($rowPromedios['COMDES']));
                                   if ($_SESSION['filtro']==3) {
-                                    $monPromedios='D';
+                                    $monPromedios='D.';
                                   }else{
                                     $monPromedios = rtrim(utf8_encode($rowPromedios['MON'])).'.';
                                   }
@@ -292,10 +295,10 @@
                                         print   '<td class="responsive-font-example" ><b>' .$rowPromedios['CODSEC'].'</b></td>';
                                         print   '<td class="responsive-font-example" ><b>' .$rowPromedios['ID'].'</b></td>';
                                         print   '<td class="responsive-font-example"><b>' .$compañiaPromedios.'</b></td>';
-                                        print   '<td class="responsive-font-example text-end"><b>'.$prodia.'</b></td>';
-                                        print   '<td class="responsive-font-example text-end"><b>' .$promes.'</b></td>';
-                                        print   '<td class="responsive-font-example text-end"><b>'.$proano.'</b></td>';
-                                        print   '<td class="responsive-font-example text-end"><b>' .$proano2.'</b></td>';
+                                        if ($rowPromedios['PRODIA']==0) {print '<td class="responsive-font-example text-end text-danger"><b>'.$prodia.'</b></td>';}else{print '<td class="responsive-font-example text-end"><b>'.$prodia.'</b></td>';} 
+                                        if ($rowPromedios['PROMES']==0) {print '<td class="responsive-font-example text-end text-danger"><b>' .$promes.'</b></td>';}else{print '<td class="responsive-font-example text-end"><b>' .$promes.'</b></td>';} 
+                                        if ($rowPromedios['PROANO']==0) {print  '<td class="responsive-font-example text-end text-danger"><b>'.$proano.'</b></td>';}else{print '<td class="responsive-font-example text-end"><b>'.$proano.'</b></td>';}
+                                        if ($rowPromedios['PROANO2']==0) {print   '<td class="responsive-font-example text-end text-danger"><b>' .$proano2.'</b></td>';}else{print  '<td class="responsive-font-example text-end"><b>' .$proano2.'</b></td>';}
                                         if ($variacionPromedios<0) {
                                           print   '<td class="responsive-font-example text-end text-danger"><b>'.$monPromedios.$variacionPromedios.'</b></td>';
                                         }elseif ($variacionPromedios>0){

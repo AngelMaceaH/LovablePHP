@@ -74,7 +74,7 @@
                     $moduloDescripcion .= $modulo[$i] . " ";
                 }
             }
-            echo '$("#menu-display").append(\'<li class="nav-group mt-2"><a class="nav-link nav-group-toggle" href="#">\
+            echo '$("#menu-display").append(\'<li class="nav-group "><a class="nav-link nav-group-toggle" href="#">\
             '.$moduloDescripcion.'\</a>\
             <ul class="nav-group-items">\
               <div id="'.$rowLM['DETC91'].'">\

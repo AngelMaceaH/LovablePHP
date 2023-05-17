@@ -12,7 +12,7 @@
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb my-0 ms-2">
               <li class="breadcrumb-item">
-                <!-- if breadcrumb is single--><span>Modluo de Facturación</span>
+                <!-- if breadcrumb is single--><span>Modulo de Facturación</span>
               </li>
               <li class="breadcrumb-item active"><span>ZLO0007P</span></li>
             </ol>
