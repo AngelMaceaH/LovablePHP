@@ -543,11 +543,7 @@ var tab;
       },
        tooltip: {
             formatter: function() {
-                if(tooltipShow) {
-                    return false;
-                } else {
-                    return false; // now you don't
-                }
+              return false;
             }
         },
       plotOptions: {
@@ -561,29 +557,35 @@ var tab;
       series: [
               {
           name: 'Meses Inv. 6M',
-          data: <?php if ($firstvalue!=0) {echo "[".$paisesM1[0].",".($paisesM1[1]*2).",".($paisesM1[2]*2).",".($paisesM1[3]*4).",".($paisesM1[4]*4).",".($paisesM1[5]*4).","."]"; }else{ echo "[0,0,0,0,0,0]";} ?>,
+          data: <?php if ($firstvalue!=0) {echo "[".$paisesM1[0].",".($paisesM1[1]*2).",".($paisesM1[2]*2).",".($paisesM1[3]*4).",".($paisesM1[4]*4).",".($paisesM1[5]*4).",".($paisesM1[6]*4).","."]"; }else{ echo "[0,0,0,0,0,0]";} ?>,
           dataLabels: {
             enabled: true,
             inside: true,
             formatter: function() {
-              if (this.point.index === 0) {
-                if (this.y != 0) {
-                  return this.y;
-                }else{
-                  return null;
-                }
-              } else if (this.point.index === 1 || this.point.index === 2) {
-                if (this.y != 0) {
-                  return this.y / 2;
-                }else{
-                  return null;
-                }
-              }else{
-                if (this.y != 0) {
-                  return this.y / 4;
-                }else{
-                  return null;
-                }
+              switch (this.point.index) {
+                  case 0:
+                  return (this.y/19).toFixed(2);
+                  break;
+                  case 1:
+                  return ((this.y/2)/2).toFixed(2);
+                  break;
+                  case 2:
+                  return ((this.y/2)/5).toFixed(2);
+                  break;
+                  case 3:
+                  return ((this.y/4)/4).toFixed(2);
+                  break;
+                  case 4:
+                  return ((this.y/4)/2).toFixed(2);
+                  break;
+                  case 5:
+                  return ((this.y/4)/2).toFixed(2);
+                  break;
+                  case 6:
+                  return ((this.y/4)/1).toFixed(2);
+                  break;
+                default:
+                  break;
               }
             },
             style: {
@@ -594,29 +596,35 @@ var tab;
         },
         {
           name: 'Meses Inv. 6M (Mes Anterior)',
-          data: <?php if ($firstvalue!=0) {echo "[".$paisesM2[0].",".($paisesM2[1]*2).",".($paisesM2[2]*2).",".($paisesM2[3]*4).",".($paisesM2[4]*4).",".($paisesM2[5]*4).","."]";}else{ echo "[0,0,0,0,0,0]";} ?>,
+          data: <?php if ($firstvalue!=0) {echo "[".$paisesM2[0].",".($paisesM2[1]*2).",".($paisesM2[2]*2).",".($paisesM2[3]*4).",".($paisesM2[4]*4).",".($paisesM2[5]*4).",".($paisesM2[6]*4).","."]";}else{ echo "[0,0,0,0,0,0]";} ?>,
           dataLabels: {
             enabled: true,
             inside: true,
             formatter: function() {
-              if (this.point.index === 0) {
-                if (this.y != 0) {
-                  return this.y;
-                }else{
-                  return null;
-                }
-              }else if (this.point.index === 1 || this.point.index === 2) {
-                if (this.y != 0) {
-                  return this.y / 2;
-                }else{
-                  return null;
-                }
-              } else {
-                if (this.y != 0) {
-                  return this.y / 4;
-                }else{
-                  return null;
-                }
+              switch (this.point.index) {
+                  case 0:
+                  return (this.y/19).toFixed(2);
+                  break;
+                  case 1:
+                  return ((this.y/2)/2).toFixed(2);
+                  break;
+                  case 2:
+                  return ((this.y/2)/5).toFixed(2);
+                  break;
+                  case 3:
+                  return ((this.y/4)/4).toFixed(2);
+                  break;
+                  case 4:
+                  return ((this.y/4)/2).toFixed(2);
+                  break;
+                  case 5:
+                  return ((this.y/4)/2).toFixed(2);
+                  break;
+                  case 6:
+                  return ((this.y/4)/1).toFixed(2);
+                  break;
+                default:
+                  break;
               }
             },
             style: {
@@ -627,29 +635,35 @@ var tab;
         }, 
         {
           name: 'Meses Inv. 6M (2 Meses Anterior)',
-          data: <?php if ($firstvalue!=0) {echo "[".$paisesM3[0].",".($paisesM3[1]*2).",".($paisesM3[2]*2).",".($paisesM3[3]*4).",".($paisesM3[4]*4).",".($paisesM3[5]*4).","."]";}else{ echo "[0,0,0,0,0,0]";} ?>,
+          data: <?php if ($firstvalue!=0) {echo "[".$paisesM3[0].",".($paisesM3[1]*2).",".($paisesM3[2]*2).",".($paisesM3[3]*4).",".($paisesM3[4]*4).",".($paisesM3[5]*4).",".($paisesM3[6]*4).","."]";}else{ echo "[0,0,0,0,0,0]";} ?>,
           dataLabels: {
             enabled: true,
             inside: true,
             formatter: function() {
-              if (this.point.index === 0) {
-                if (this.y != 0) {
-                  return this.y;
-                }else{
-                  return null;
-                }
-              }else if (this.point.index === 1 || this.point.index === 2) {
-                if (this.y != 0) {
-                  return this.y / 2;
-                }else{
-                  return null;
-                }
-              } else {
-                if (this.y != 0) {
-                  return this.y / 4;
-                }else{
-                  return null;
-                }
+              switch (this.point.index) {
+                  case 0:
+                  return (this.y/19).toFixed(2);
+                  break;
+                  case 1:
+                  return ((this.y/2)/2).toFixed(2);
+                  break;
+                  case 2:
+                  return ((this.y/2)/5).toFixed(2);
+                  break;
+                  case 3:
+                  return ((this.y/4)/4).toFixed(2);
+                  break;
+                  case 4:
+                  return ((this.y/4)/2).toFixed(2);
+                  break;
+                  case 5:
+                  return ((this.y/4)/2).toFixed(2);
+                  break;
+                  case 6:
+                  return ((this.y/4)/1).toFixed(2);
+                  break;
+                default:
+                  break;
               }
             },
             style: {
@@ -660,29 +674,35 @@ var tab;
         }, 
         {
           name: 'Meses Inv. 6M (4 Meses Anterior)',
-          data: <?php if ($firstvalue!=0) {echo "[".$paisesM4[0].",".($paisesM4[1]*2).",".($paisesM4[2]*2).",".($paisesM4[3]*4).",".($paisesM4[4]*4).",".($paisesM4[5]*4).","."]";}else{ echo "[0,0,0,0,0,0]";} ?>,
+          data: <?php if ($firstvalue!=0) {echo "[".$paisesM4[0].",".($paisesM4[1]*2).",".($paisesM4[2]*2).",".($paisesM4[3]*4).",".($paisesM4[4]*4).",".($paisesM4[5]*4).",".($paisesM4[6]*4).","."]";}else{ echo "[0,0,0,0,0,0]";} ?>,
           dataLabels: {
             enabled: true,
             inside: true,
             formatter: function() {
-              if (this.point.index === 0) {
-                if (this.y != 0) {
-                  return this.y;
-                }else{
-                  return null;
-                }
-              }else if (this.point.index === 1 || this.point.index === 2) {
-                if (this.y != 0) {
-                  return this.y / 2;
-                }else{
-                  return null;
-                }
-              } else {
-                if (this.y != 0) {
-                  return this.y / 4;
-                }else{
-                  return null;
-                }
+              switch (this.point.index) {
+                  case 0:
+                  return (this.y/19).toFixed(2);
+                  break;
+                  case 1:
+                  return ((this.y/2)/2).toFixed(2);
+                  break;
+                  case 2:
+                  return ((this.y/2)/5).toFixed(2);
+                  break;
+                  case 3:
+                  return ((this.y/4)/4).toFixed(2);
+                  break;
+                  case 4:
+                  return ((this.y/4)/2).toFixed(2);
+                  break;
+                  case 5:
+                  return ((this.y/4)/2).toFixed(2);
+                  break;
+                  case 6:
+                  return ((this.y/4)/1).toFixed(2);
+                  break;
+                default:
+                  break;
               }
             },
             style: {
@@ -693,29 +713,35 @@ var tab;
         }, 
         {
           name: 'Meses Inv. 6M (4 Meses Anterior)',
-          data: <?php if ($firstvalue!=0) {echo "[".$paisesM5[0].",".($paisesM5[1]*2).",".($paisesM5[2]*2).",".($paisesM5[3]*4).",".($paisesM5[4]*4).",".($paisesM5[5]*4).","."]";}else{ echo "[0,0,0,0,0,0]";} ?>,
+          data: <?php if ($firstvalue!=0) {echo "[".$paisesM5[0].",".($paisesM5[1]*2).",".($paisesM5[2]*2).",".($paisesM5[3]*4).",".($paisesM5[4]*4).",".($paisesM5[5]*4).",".($paisesM5[6]*4).","."]";}else{ echo "[0,0,0,0,0,0]";} ?>,
           dataLabels: {
             enabled: true,
             inside: true,
             formatter: function() {
-              if (this.point.index === 0) {
-                if (this.y != 0) {
-                  return this.y;
-                }else{
-                  return null;
-                }
-              }else if (this.point.index === 1 || this.point.index === 2) {
-                if (this.y != 0) {
-                  return this.y / 2;
-                }else{
-                  return null;
-                }
-              } else {
-                if (this.y != 0) {
-                  return this.y / 4;
-                }else{
-                  return null;
-                }
+              switch (this.point.index) {
+                  case 0:
+                  return (this.y/19).toFixed(2);
+                  break;
+                  case 1:
+                  return ((this.y/2)/2).toFixed(2);
+                  break;
+                  case 2:
+                  return ((this.y/2)/5).toFixed(2);
+                  break;
+                  case 3:
+                  return ((this.y/4)/4).toFixed(2);
+                  break;
+                  case 4:
+                  return ((this.y/4)/2).toFixed(2);
+                  break;
+                  case 5:
+                  return ((this.y/4)/2).toFixed(2);
+                  break;
+                  case 6:
+                  return ((this.y/4)/1).toFixed(2);
+                  break;
+                default:
+                  break;
               }
             },
             style: {
@@ -726,23 +752,35 @@ var tab;
         }, 
         {
           name: 'Meses Inv. 6M (5 Meses Anterior)',
-          data: <?php if ($firstvalue!=0) {echo "[".$paisesM6[0].",".($paisesM6[1]*2).",".($paisesM6[2]*2).",".($paisesM6[3]*4).",".($paisesM6[4]*4).",".($paisesM6[5]*4).","."]";}else{ echo "[0,0,0,0,0,0]";} ?>,
+          data: <?php if ($firstvalue!=0) {echo "[".$paisesM6[0].",".($paisesM6[1]*2).",".($paisesM6[2]*2).",".($paisesM6[3]*4).",".($paisesM6[4]*4).",".($paisesM6[5]*4).",".($paisesM6[6]*4).","."]";}else{ echo "[0,0,0,0,0,0]";} ?>,
           dataLabels: {
             enabled: true,
             inside: true,
             formatter: function() {
-              if (this.point.index === 0) {
-                if (this.y != 0) {
-                  return this.y;
-                }else{
-                  return null;
-                }
-              } else {
-                if (this.y != 0) {
-                  return this.y / 4;
-                }else{
-                  return null;
-                }
+              switch (this.point.index) {
+                  case 0:
+                  return (this.y/19).toFixed(2);
+                  break;
+                  case 1:
+                  return ((this.y/2)/2).toFixed(2);
+                  break;
+                  case 2:
+                  return ((this.y/2)/5).toFixed(2);
+                  break;
+                  case 3:
+                  return ((this.y/4)/4).toFixed(2);
+                  break;
+                  case 4:
+                  return ((this.y/4)/2).toFixed(2);
+                  break;
+                  case 5:
+                  return ((this.y/4)/2).toFixed(2);
+                  break;
+                  case 6:
+                  return ((this.y/4)/1).toFixed(2);
+                  break;
+                default:
+                  break;
               }
             },
             style: {
