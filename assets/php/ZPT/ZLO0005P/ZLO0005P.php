@@ -210,7 +210,7 @@ var tab;
                 exportOptions: {
                     columns: [1,2,3,4,5]
                 },
-                title: 'ReporteUnidades FABRICA',
+                title: 'ReporteDocenas FABRICA',
                 messageTop:' ',
                 customize: function (xlsx) {
                     var sheet = xlsx.xl.worksheets['sheet1.xml'];
@@ -258,7 +258,7 @@ var tab;
                     var textred2 = lastXfIndex + 7;
                     var textgreen2 = lastXfIndex + 8;
                     
-                    $('c[r=A1] t', sheet).text( 'COMPARATIVO MESES DE INVENTARIO EN FABRICA (UNIDADES)');
+                    $('c[r=A1] t', sheet).text( 'COMPARATIVO MESES DE INVENTARIO EN FABRICA (Docenas)');
                     $('row:eq(0) c', sheet).attr( 's', greyBoldCentered );
                     $('row:eq(1) c', sheet).attr( 's', 7 );
 
@@ -290,7 +290,7 @@ var tab;
 
 
   //GRAFICAS---------------------------------------------------------------       
-  //PAISES UNIDADES COMPRADAS VS UNIDADES VENDIDAS
+  //PAISES Docenas COMPRADAS VS Docenas VENDIDAS
     var chart = Highcharts.chart('container2', {
 
     chart: {
@@ -319,7 +319,7 @@ var tab;
             }
       },
     title: {
-        text: 'Unidades Compradas vs. Unidades vendidas',
+        text: 'Ingresado a planta vs. Docenas vendidas',
         margin: 50
     },
 
@@ -340,7 +340,7 @@ var tab;
       enabled: false
     },
     series: [{
-        name: 'Und. Compradas',
+        name: 'Ingreso a planta',
         data: <?php echo json_encode($paisesUndComp); ?>,
         dataLabels: {
       align: "center",
@@ -354,7 +354,7 @@ var tab;
       }
     }
     }, {
-      name: 'Und. Vendidas',
+      name: 'Doc. Vendidas',
         data: <?php echo json_encode($paisesUndVen); ?>,
         dataLabels: {
       align: "center",
@@ -402,7 +402,7 @@ var tab;
         }]
     }
     });
-    //PAISES UNIDADES EXISTENCIAS
+    //PAISES Docenas EXISTENCIAS
     var chart = Highcharts.chart('container3', {
 
     chart: {
@@ -416,7 +416,7 @@ var tab;
       },
       exporting: {
         enabled: true,
-    filename: 'Unidades-existencias FABRICA',
+    filename: 'Docenas-existencias Fabrica',
           buttons: {
               contextButton: {
                   menuItems: ["viewFullscreen", "separator", "downloadJPEG", "downloadPDF"]
@@ -431,7 +431,7 @@ var tab;
             }
       },
     title: {
-        text: 'Unidades Existencias',
+        text: 'Docenas en Existencias',
         margin: 50
     },
 
@@ -513,11 +513,11 @@ var tab;
           downloadPDF:"Descargar en PDF",
       },
       chart: {
-        height: (<?php echo $paisfiltro;?>==1)? 2500:500,
+        height: 500,
           type: 'bar'
       },
       title: {
-          text: 'Comparativo meses de inventario FABRICA',
+          text: 'Comparativo meses de inventario Fabrica',
           margin: 50
       },
       xAxis: {
@@ -629,7 +629,7 @@ var tab;
               }
           },
            enabled: true,
-    filename: 'Inventario-meses FABRICA',
+    filename: 'Inventario-meses Fabrica',
     sourceWidth: (<?php echo $paisfiltro;?>==1)? 1600:800,
     sourceHeight:(<?php echo $paisfiltro;?>==1)? 900:600,
     chartOptions: {

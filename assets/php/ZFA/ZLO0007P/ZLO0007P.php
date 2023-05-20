@@ -1,4 +1,5 @@
 <script>
+
             const picker2 = new easepick.create({
             element: "#datepicker2",
             css: ["../../assets/vendors/dayrangepicker/index.css"],
@@ -20,10 +21,13 @@
                 $("#formFiltros").submit();
             });
 
+            if (<?php echo $validator1;?>) {
+              $("#grafica1").addClass("d-none");
+            }
             var labelActual="";
         if (<?php echo isset($_SESSION['clickCia'])? $_SESSION['clickCia']:0;?>==1) {
             if ($("#cbbCia").val()==999) {
-                labelActual=$('#cbbCia').find(":selected").text()+''+$('#cbbPais').find(":selected").text()+'';
+                labelActual=$('#cbbCia').find(":selected").text()+' '+$('#cbbPais').find(":selected").text()+'';
             }else{
                 labelActual=$('#cbbCia').find(":selected").text();
             }
@@ -146,7 +150,7 @@
           });
 
           //GRAFICA PIE
-
+          
           if (<?php echo $ciaFiltro; ?>==999 && <?php echo $paisFiltro; ?>==1) {
             Highcharts.chart('container4', {
     lang: {      
@@ -156,7 +160,7 @@
           downloadPDF:"Descargar en PDF",
       },
       chart: {
-        height: (<?php echo $ciaFiltro;?>==999 && <?php echo $paisFiltro;?>==1)? 1000:700,
+        height: (<?php echo $ciaFiltro;?>==999 && <?php echo $paisFiltro;?>==1)? 1000:600,
           type: 'bar'
       },
       title: {
@@ -208,7 +212,7 @@
     },
       series: [
         {
-          name: 'Unidades',
+          name: 'Ventas',
           data: <?php echo json_encode($vendedoresVentas2);?>,
           dataLabels: [{
             enabled: true,
@@ -284,6 +288,8 @@
               
           });
           }else{
+            var boolVal=(window.screen.width<900)? false:true;
+            //ELSE===============================================================================
             Highcharts.chart('container4', {
             lang: {      
                   viewFullscreen:"Ver en pantalla completa",
@@ -292,7 +298,7 @@
                   downloadPDF:"Descargar en PDF",
               },
     chart: {
-      height: (<?php echo $ciaFiltro;?>==999 && <?php echo $paisFiltro;?>==1)? 1000:700,
+      height: (<?php echo $ciaFiltro;?>==999 && <?php echo $paisFiltro;?>==1)? 1000:600,
         type: 'pie',
        /* options3d: {
             enabled: true,
@@ -326,11 +332,16 @@
             cursor: 'pointer',
             depth: 35,
             dataLabels: {
-                enabled: true,
-                format: '{point.name}'
-            },
-        }
+          enabled: true,
+        
+          color: '#333333',
+          formatter: function() {
+            return '<b>' + this.point.name + '</b>: <br/> <span class="fw-bold fs-6">' + this.point.y.toLocaleString('en-ES')+'</span>';
+          }
+        },
+        },
     },
+   
     credits: {
       enabled: false
     },
@@ -346,7 +357,10 @@
                         }
 
                       ?>
-                  ]
+                  ],
+                  dataLabels: {
+                    enabled: boolVal,
+                 }
               }],
               exporting: {
           buttons: {
@@ -355,7 +369,7 @@
               }
           },
            enabled: true,
-            filename: 'Reporte de transacciones - Vendedores',
+            filename: 'Reporte de ventas - Vendedores',
             sourceWidth: (<?php echo $ciaFiltro;?>==999 && <?php echo $paisFiltro;?>==1)? 3000:1600,
             sourceHeight:(<?php echo $ciaFiltro;?>==999 && <?php echo $paisFiltro;?>==1)? 3000:900,
             chartOptions: {
@@ -422,7 +436,7 @@
           downloadPDF:"Descargar en PDF",
       },
       chart: {
-        height: (<?php echo $ciaFiltro;?>==999 && <?php echo $paisFiltro;?>==1)? 1000:700,
+        height: (<?php echo $ciaFiltro;?>==999 && <?php echo $paisFiltro;?>==1)? 1000:600,
           type: 'bar'
       },
       title: {
@@ -551,6 +565,7 @@
           });
     }else{
         //ELSE---------------------------------------------------
+        var boolVal=(window.screen.width<900)? false:true;
         Highcharts.chart('container3', {
                   lang: {      
                   viewFullscreen:"Ver en pantalla completa",
@@ -559,7 +574,7 @@
                   downloadPDF:"Descargar en PDF",
               },
               chart: {
-                height: (<?php echo $ciaFiltro;?>==999 && <?php echo $paisFiltro;?>==1)? 1000:700,
+                height: (<?php echo $ciaFiltro;?>==999 && <?php echo $paisFiltro;?>==1)? 1000:600,
                   type: 'pie',
                  /* options3d: {
                       enabled: true,
@@ -578,12 +593,21 @@
         text: labelActual,
         align: 'center'
     },
-              plotOptions: {
-                  pie: {
-                      innerSize: 100,
-                      depth: 45
-                  }
-              },
+    plotOptions: {
+      pie: {
+        size: '100%',
+        center: ['50%', '50%'],
+        borderWidth: 0,
+        dataLabels: {
+          enabled: true,
+        
+          color: '#333333',
+          formatter: function() {
+            return '<b>' + this.point.name + '</b>: <br/> <span class="fw-bold fs-6">' + this.point.y.toLocaleString('en-ES')+' Und.</span>';
+          }
+        },
+      }
+    },
               credits: {
       enabled: false
     },
@@ -599,7 +623,12 @@
                         }
 
                       ?>
-                  ]
+                  ],
+                  dataLabels: {
+                    enabled: boolVal,
+                    inside: true,
+                 }
+                  
               }],
               exporting: {
           buttons: {
@@ -678,7 +707,7 @@
           downloadPDF:"Descargar en PDF",
       },
       chart: {
-        height: (<?php echo $ciaFiltro;?>==999 && <?php echo $paisFiltro;?>==1)? 1000:700,
+        height: (<?php echo $ciaFiltro;?>==999 && <?php echo $paisFiltro;?>==1)? 1000:600,
           type: 'bar'
       },
       title: {
@@ -821,7 +850,7 @@
           downloadPDF:"Descargar en PDF",
       },
       chart: {
-        height: (<?php echo $ciaFiltro;?>==999 && <?php echo $paisFiltro;?>==1)? 1000:700,
+        height: (<?php echo $ciaFiltro;?>==999 && <?php echo $paisFiltro;?>==1)? 1000:600,
           type: 'bar'
       },
       title: {
@@ -1052,7 +1081,7 @@
 
            
            ctx.textAlign='center';
-           const yCoor2 = yCoor -0.05 * (height / 2);
+           const yCoor2 = yCoor - ((window.screen.width<900)? 0.50:0.05) * (height / 2);
            ctx.fillText(abreviarNumero(ventas1),xCoor ,yCoor - yCoor2);
            /* ctx.font = '150px sans-serif';
             ctx.textAlign='center';

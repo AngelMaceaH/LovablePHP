@@ -89,7 +89,7 @@
             </div>
             <div class="card-body">
           <div class="position-relative">
-              <form id="formFiltros" action="../../assets/php/ZPT/ZLO0004P/filtrosLogica.php" method="POST">
+              <form id="formFiltros" action="../../assets/php/ZPT/ZLO0005P/filtrosLogica.php" method="POST">
                 <div class="row mb-2">
                 <div class="col-sm-12 col-lg-6 mt-2">
                         <label>Fabrica</label>
@@ -123,14 +123,7 @@
                           <option value="12">Diciembre</option>
                         </select>
                       </div>
-                      <div class="col-12 mt-2 d-flex">
-                        <label for="cbbOrden" class="me-3 mt-2" id="lblcbbOrden">Organizar por: </label>
-                        <select name="cbbOrden" id="cbbOrden" class="form-select" style="width: 170px">
-                          <option value="1">Compañia</option>
-                          <option value="2">Mayor a Menor</option>
-                          <option value="3">Menor a Mayor</option>
-                        </select>
-                      </div>
+                
                 </div>
               </form>
               </div>
@@ -138,7 +131,7 @@
                 <div class="demo">
                     <ul class="tablist" role="tablist">
                         <li id="tab1" class="tablist__tab text-center p-3  is-active" aria-controls="panel1" aria-selected="true" role="tab" tabindex="0">Meses</li>
-                        <li id="tab2" class="tablist__tab text-center p-3" aria-controls="panel2" aria-selected="false" role="tab" tabindex="0">Unidades</li>
+                        <li id="tab2" class="tablist__tab text-center p-3" aria-controls="panel2" aria-selected="false" role="tab" tabindex="0">Docenas</li>
                     </ul>
                     <div id="panel1" class="tablist__panel p-3" aria-labelledby="tab1" aria-hidden="false" role="tabpanel">
                     <div id="grafica1">
@@ -172,12 +165,30 @@
                                 $paisesM6[]=array();
                                 $validator1="true";
                                    while($rowMeses = odbc_fetch_array($resultMeses)){
+                                    
+                                    $docenas=floor($rowMeses['PRV12M']/12);
+                                    $decimales=($rowMeses['PRV12M']-($docenas*12));
+                                    if (strlen($decimales)==1) {
+                                      $decimales= "0.0".$decimales;
+                                    }else{
+                                      $decimales="0.".$decimales;
+                                    }
+                                    $PRV12M=$docenas+$decimales;
+
+                                    $docenas=floor($rowMeses['PRV06M']/12);
+                                    $decimales=($rowMeses['PRV06M']-($docenas*12));
+                                    if (strlen($decimales)==1) {
+                                      $decimales= "0.0".$decimales;
+                                    }else{
+                                      $decimales="0.".$decimales;
+                                    }
+                                    $PRV06M=$docenas+$decimales;
                                     $validator1="false";
                                     print '<tr>';
                                       print '<td>'.$rowMeses['CODSEC'].'</td>';
                                       print '<td class="responsive-font-example fw-bold text-start">'.$rowMeses['NOMCIA'].'</td>';
-                                      print '<td class="responsive-font-example fw-bold text-end">'.number_format($rowMeses['PRV12M'],2).'</td>';
-                                      print '<td class="responsive-font-example fw-bold text-end">'.number_format($rowMeses['PRV06M'],2).'</td>';
+                                      print '<td class="responsive-font-example fw-bold text-end">'.number_format($PRV12M,2).'</td>';
+                                      print '<td class="responsive-font-example fw-bold text-end">'.number_format($PRV06M,2).'</td>';
                                       print '<td class="responsive-font-example fw-bold text-end">'.number_format($rowMeses['MIN12M'],2).'</td>';
                                       print '<td class="responsive-font-example fw-bold text-end">'.number_format($rowMeses['M1'],2).'</td>';
                                       print '<td class="responsive-font-example fw-bold text-end">'.number_format($rowMeses['M2'],2).'</td>';
@@ -216,10 +227,10 @@
                                 <tr>
                                     <th>ID</th>
                                     <th class="responsive-font-example fw-bold text-start">Punto de Venta</th>
-                                    <th class="responsive-font-example fw-bold text-end">Unidades Compradas</th>
-                                    <th class="responsive-font-example fw-bold text-end">Unidades Vendidas</th>
+                                    <th class="responsive-font-example fw-bold text-end">Docenas Compradas  12M</th>
+                                    <th class="responsive-font-example fw-bold text-end">Docenas Vendidas  12M</th>
                                     <th class="responsive-font-example fw-bold text-end">Variación</th>
-                                    <th class="responsive-font-example fw-bold text-end">Unidades Existencia</th>
+                                    <th class="responsive-font-example fw-bold text-end">Docenas Existencia</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -228,18 +239,46 @@
                                  $validator2="true";
                                    while($rowUni = odbc_fetch_array($resultUnidades)){
                                     $validator2="false";
-                                    $variacion=$rowUni['UNIVEN'] - $rowUni['UNICOM'];
+                                    $docenas=floor($rowUni['UNICOM']/12);
+                                    $decimales=($rowUni['UNICOM']-($docenas*12));
+                                    if (strlen($decimales)==1) {
+                                      $decimales= "0.0".$decimales;
+                                    }else{
+                                      $decimales="0.".$decimales;
+                                    }
+                                    $UNICOM=$docenas+$decimales;
+                                  
+                                    $docenas=floor($rowUni['UNIVEN']/12);
+                                    $decimales=($rowUni['UNIVEN']-($docenas*12));
+                                    if (strlen($decimales)==1) {
+                                      $decimales= "0.0".$decimales;
+                                    }else{
+                                      $decimales="0.".$decimales;
+                                    }
+                                    $UNIVEN=$docenas+$decimales;
+
+                                    $docenas=floor($rowUni['UNIEXI']/12);
+                                    $decimales=($rowUni['UNIEXI']-($docenas*12));
+                                    if (strlen($decimales)==1) {
+                                      $decimales= "0.0".$decimales;
+                                    }else{
+                                      $decimales="0.".$decimales;
+                                    }
+                                    $UNIEXI=$docenas+$decimales;
+
+
+                                    $variacion=$UNIVEN-$UNICOM;
                                     print '<tr>';
                                       print '<td>'.$rowUni['CODSEC'].'</td>';
                                       print '<td class="responsive-font-example fw-bold text-start">'.$rowUni['NOMCIA'].'</td>';
-                                      print '<td class="responsive-font-example fw-bold text-end">'.number_format($rowUni['UNICOM'],2).'</td>';
-                                      print '<td class="responsive-font-example fw-bold text-end">'.number_format($rowUni['UNIVEN'],2).'</td>';
-                                      if ($variacion<0) {print '<td class="text-danger responsive-font-example fw-bold text-end">'.number_format(($variacion),0).'</td>';}else{if ($variacion>0) {print '<td class="text-success responsive-font-example fw-bold text-end">'.number_format(($variacion),0).'</td>';}else{print '<td class="fw-bold responsive-font-example text-end">'.(($variacion==0)?' ':number_format( $variacion,0)).'</td>';}}
-                                      print '<td class="responsive-font-example fw-bold text-end">'.number_format($rowUni['UNIEXI'],2).'</td>';
+                                      print '<td class="responsive-font-example fw-bold text-end">'.number_format($UNICOM,2).'</td>';
+                                      print '<td class="responsive-font-example fw-bold text-end">'.number_format($UNIVEN,2).'</td>';
+                                      if ($variacion<0) {print '<td class="text-danger responsive-font-example fw-bold text-end">'.number_format(($variacion),2).'</td>';}else{if ($variacion>0) {print '<td class="text-success responsive-font-example fw-bold text-end">'.number_format(($variacion),2).'</td>';}else{print '<td class="fw-bold responsive-font-example text-end">'.(($variacion==0)?' ':number_format( $variacion,2)).'</td>';}}
+                                      print '<td class="responsive-font-example fw-bold text-end">'.number_format($UNIEXI,2).'</td>';
                                     print '</tr>';
-                                    $paisesUndComp[$cont1]=round($rowUni['UNICOM'],0);
-                                    $paisesUndVen[$cont1]=round($rowUni['UNIVEN'],0);
-                                    $paisesUndExi[$cont1]=round($rowUni['UNIEXI'],0);
+                                    $paisesUndComp[$cont1]=round($UNICOM,2);
+                                    $paisesUndVen[$cont1]=round($UNIVEN,2);
+                                    $paisesUndExi[$cont1]=round($UNIEXI,2);
                                     $cont1++;
                                    }
                                 ?>
