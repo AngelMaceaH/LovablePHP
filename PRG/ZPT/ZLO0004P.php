@@ -21,7 +21,7 @@
       $ano_actual=date("Y");
            $mesfiltro=isset($_SESSION['mesfiltro3'])? $_SESSION['mesfiltro3']: $mes_actual; 
            $anofiltro=isset($_SESSION['anofiltro2'])? $_SESSION['anofiltro2']: $ano_actual; 
-           $paisfiltro=isset($_SESSION['paisfiltro2'])? $_SESSION['paisfiltro2']: 1; 
+           $paisfiltro=isset($_SESSION['paisfiltro9'])? $_SESSION['paisfiltro9']: 1; 
            if ($paisfiltro==8) {
             $paisfiltro=1;
            }
@@ -234,6 +234,31 @@
                                     $paisesM6[$cont]=round($rowMeses['M6'],2);
                                     $cont++;
                                    }
+                                   for ($i = 0; $i < ((count($paisesLabel))); $i++) {
+                                    if (
+                                        $paisesM1[$i] == 0 &&
+                                        $paisesM2[$i] == 0 &&
+                                        $paisesM3[$i] == 0 &&
+                                        $paisesM4[$i] == 0 &&
+                                        $paisesM5[$i] == 0 &&
+                                        $paisesM6[$i] == 0
+                                    ) {
+                                        unset($paisesLabel[$i]);
+                                        unset($paisesM1[$i]);
+                                        unset($paisesM2[$i]);
+                                        unset($paisesM3[$i]);
+                                        unset($paisesM4[$i]);
+                                        unset($paisesM5[$i]);
+                                        unset($paisesM6[$i]);
+                                    }
+                                }
+                                $paisesLabel = array_values($paisesLabel);
+                                $paisesM1 = array_values($paisesM1);
+                                $paisesM2 = array_values($paisesM2);
+                                $paisesM3 = array_values($paisesM3);
+                                $paisesM4 = array_values($paisesM4);
+                                $paisesM5 = array_values($paisesM5);
+                                $paisesM6 = array_values($paisesM6);
                                 ?>
                               </tbody>
                           </table>
@@ -241,16 +266,37 @@
                     </div>
                     <div id="panel2" class="tablist__panel is-hidden p-3" aria-labelledby="tab2" aria-hidden="true" role="tabpanel">
                     <div id="grafica2" class="row">
-                      <div class="col-12 col-lg-6">
-                        <figure class="highcharts-figure" >
-                                <div id="container2" ></div>
-                        </figure>
+                    <div id="carouselExampleDark" class="carousel carousel-dark slide"  data-bs-ride="carousel">
+                <div class="carousel-indicators">
+                  <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                  <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                </div>
+                    <div class="carousel-inner">
+                              <div class="carousel-item active">
+                                  <div class="me-5 ms-5">
+                                  <figure class="highcharts-figure" >
+                                          <div id="container2" ></div>
+                                  </figure>
+                                    </div>
+                                </div>
+                                <div class="carousel-item">
+                                <div class="me-5 ms-5">
+                                <figure class="highcharts-figure" >
+                                        <div id="container3" ></div>
+                                </figure>
+                                    </div>
+                                </div>
                       </div>
-                      <div class="col-12 col-lg-6">
-                      <figure class="highcharts-figure" >
-                                <div id="container3" ></div>
-                        </figure>
+                      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Next</span>
+                </button>
                       </div>
+                                
                     </div>
                     <div class="table-responsive mt-3">
                           <table id="myTableInvUnidades" class="table stripe table-hover " style="width:100%">
@@ -267,6 +313,7 @@
                             <tbody>
                                 <?php
                                  $paisesUndComp[]=array();  $paisesUndVen[]=array(); $paisesUndExi[]=array();$cont1=0;
+                                 $paisesLabel1[]=array();
                                  $validator2="true";
                                    while($rowUni = odbc_fetch_array($resultUnidades)){
                                     $validator2="false";
@@ -279,11 +326,29 @@
                                       if ($variacion<0) {print '<td class="text-danger responsive-font-example fw-bold text-end">'.number_format(($variacion),0).'</td>';}else{if ($variacion>0) {print '<td class="text-success responsive-font-example fw-bold text-end">'.number_format(($variacion),0).'</td>';}else{print '<td class="fw-bold responsive-font-example text-end">'.(($variacion==0)?' ':number_format( $variacion,0)).'</td>';}}
                                       print '<td class="responsive-font-example fw-bold text-end">'.number_format($rowUni['UNIEXI'],2).'</td>';
                                     print '</tr>';
+                                    $paisesLabel1[$cont1]=$rowUni['NOMCIA'];
                                     $paisesUndComp[$cont1]=round($rowUni['UNICOM'],0);
                                     $paisesUndVen[$cont1]=round($rowUni['UNIVEN'],0);
                                     $paisesUndExi[$cont1]=round($rowUni['UNIEXI'],0);
                                     $cont1++;
                                    }
+                                  
+                                   for ($i = 0; $i < ((count($paisesLabel1))); $i++) {
+                                     if (
+                                         $paisesUndComp[$i] == 0 &&
+                                         $paisesUndVen[$i] == 0 &&
+                                         $paisesUndExi[$i] == 0 
+                                     ) {
+                                         unset($paisesLabel1[$i]);
+                                         unset($paisesUndComp[$i]);
+                                         unset($paisesUndVen[$i]);
+                                         unset($paisesUndExi[$i]);
+                                     }
+                                 }
+                                 $paisesLabel1 = array_values($paisesLabel1);
+                                 $paisesUndComp = array_values($paisesUndComp);
+                                 $paisesUndVen = array_values($paisesUndVen);
+                                 $paisesUndExi = array_values($paisesUndExi);
                                 ?>
                               </tbody>
                           </table>
@@ -302,6 +367,7 @@
     <div class="footer bg-blck flex-grow-1 d-flex justify-content-center">
       <p class="bggray responsive-font-example"><i>Lovable de Honduras S.A. de C.V</i></p>
       </div>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
       <script src="https://code.highcharts.com/highcharts.js"></script>
       <script src="https://code.highcharts.com/modules/exporting.js"></script>
       <script src="https://code.highcharts.com/modules/export-data.js"></script>

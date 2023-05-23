@@ -28,11 +28,12 @@ var tab;
     $("#cbbMes").val("<?php echo $mesfiltro; ?>");
     $("#cbbPais").val("<?php echo $paisfiltro;?>"); 
     $("#cbbAno").val(<?php echo $anofiltro;  ?>); 
-    $("#cbbOrden").val(<?php echo $ordenFiltro;  ?>); 
+
     
       $("#cbbPais, #cbbAno, #cbbMes, #cbbOrden").change(function() {
         $("#formFiltros").submit();
        });
+
        var labelActual="";
       labelActual=$('#cbbPais').find(":selected").text();
        
@@ -260,7 +261,7 @@ var tab;
                     var textred2 = lastXfIndex + 7;
                     var textgreen2 = lastXfIndex + 8;
                     
-                    $('c[r=A1] t', sheet).text( 'COMPARATIVO MESES DE INVENTARIO POR LINEA '+labelActual.toUpperCase()+' (UNIDADES)');
+                    $('c[r=A1] t', sheet).text( 'COMPARATIVO MESES DE INVENTARIO POR LINEA '+labelActual.toUpperCase()+' (<?php if ($paisfiltro==="01") { echo "DOCENAS";}else{echo "UNIDADES";}  ?>)');
                     $('row:eq(0) c', sheet).attr( 's', greyBoldCentered );
                     $('row:eq(1) c', sheet).attr( 's', 7 );
 
@@ -324,7 +325,7 @@ var tab;
             }
       },
     title: {
-        text: 'Unidades Compradas vs. Unidades vendidas',
+        text: '<?php if ($paisfiltro==="01") { echo "Docenas";}else{echo "Unidades";}  ?> Compradas vs. <?php if ($paisfiltro==="01") { echo "Docenas";}else{echo "Unidades";}  ?> vendidas',
         margin: 50
     },
     subtitle: {
@@ -336,7 +337,7 @@ var tab;
             },
     },
     xAxis: {
-        categories: <?php echo json_encode($paisesLabel); ?>,
+        categories: <?php echo json_encode($paisesLabel2); ?>,
         labels: {
             x: -10
         }
@@ -429,7 +430,7 @@ var tab;
       },
       exporting: {
         enabled: true,
-    filename: 'Unidades-existencias Lineas',
+    filename: '<?php if ($paisfiltro==="01") { echo "Docenas";}else{echo "Unidades";}  ?>-existencias Lineas',
     sourceWidth: 1600,
     sourceHeight: 900,
           buttons: {
@@ -446,7 +447,7 @@ var tab;
             }
       },
     title: {
-        text: 'Unidades Existencias',
+        text: '<?php if ($paisfiltro==="01") { echo "Docenas";}else{echo "Unidades";}  ?> Existencias',
         margin: 50
     },
     subtitle: {
@@ -458,7 +459,7 @@ var tab;
             },
     },
     xAxis: {
-        categories: <?php echo json_encode($paisesLabel); ?>,
+        categories: <?php echo json_encode($paisesLabel2); ?>,
         labels: {
             x: -10
         }
@@ -552,7 +553,7 @@ var tab;
     },
       xAxis: {
         className: 'fw-bold',
-          categories: <?php echo json_encode($paisesLabel); ?>,
+          categories: <?php echo json_encode($paisesLabel1); ?>,
       },
       yAxis: {
       min: 0,

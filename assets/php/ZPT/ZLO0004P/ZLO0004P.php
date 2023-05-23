@@ -294,6 +294,7 @@ var tab;
     var chart = Highcharts.chart('container2', {
 
     chart: {
+      height:600,
         type: 'column'
     },
     lang: {      
@@ -305,6 +306,8 @@ var tab;
       exporting: {
         enabled: true,
     filename: 'Inventario-Comparativo Tiendas',
+    sourceWidth: 2500,
+    sourceHeight:900,
           buttons: {
               contextButton: {
                   menuItems: ["viewFullscreen", "separator", "downloadJPEG", "downloadPDF"]
@@ -324,7 +327,7 @@ var tab;
     },
 
     xAxis: {
-        categories: <?php echo json_encode($paisesLabel); ?>,
+        categories: <?php echo json_encode($paisesLabel1); ?>,
         labels: {
             x: -10
         }
@@ -406,6 +409,7 @@ var tab;
     var chart = Highcharts.chart('container3', {
 
     chart: {
+      height:600,
         type: 'column'
     },
     lang: {      
@@ -417,6 +421,8 @@ var tab;
       exporting: {
         enabled: true,
     filename: 'Unidades-existencias Tiendas',
+    sourceWidth: 2500,
+    sourceHeight:900,
           buttons: {
               contextButton: {
                   menuItems: ["viewFullscreen", "separator", "downloadJPEG", "downloadPDF"]
@@ -436,7 +442,7 @@ var tab;
     },
 
     xAxis: {
-        categories: <?php echo json_encode($paisesLabel); ?>,
+        categories: <?php echo json_encode($paisesLabel1); ?>,
         labels: {
             x: -10
         }
