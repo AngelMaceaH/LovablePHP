@@ -93,7 +93,7 @@
               event.stopPropagation()
               $("#Labelerror").remove();
             }else{
-              console.log("Usuario validado");
+             
             }
 
             form.classList.add('was-validated')

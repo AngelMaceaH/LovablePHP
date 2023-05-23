@@ -249,39 +249,6 @@
     <script type="text/javascript" charset="utf8"
         src="https://cdn.datatables.net/buttons/2.3.4/js/buttons.print.min.js"> </script>
     <!--<script src="../../js/table.js"></script>-->
-    <script>
-        $( document ).ready(function() {
-          $("#myTable, #myTableAnual, #myTableTransacciones").DataTable( {
-            language: {
-                url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json',
-            },
-            "ordering": false,
-            "pageLength": 100,
-            "columnDefs": [
-                {
-                    target: 0,
-                    visible: false,
-                    searchable: false,
-                },
-                {
-                    target: 1,
-                    visible: false,
-                    searchable: true,
-                },
-                {
-                    target: 3,
-                    visible: true,
-                    searchable: false,
-                },
-                {
-                    target: 4,
-                    visible: true,
-                    searchable: false,
-                },
-                ],
-          });
-      });
-    </script>
     
 
     

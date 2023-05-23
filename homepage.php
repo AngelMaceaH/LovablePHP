@@ -106,7 +106,7 @@
   <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
   <script>
-    console.log("NIVEL USUARIO "+<?php echo $_SESSION['NIVEL']; ?>)
+   
     function obtenerNombreMes(numeroMes) {
               const nombresMes = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
               return nombresMes[numeroMes - 1];

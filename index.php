@@ -397,7 +397,7 @@
 
   <?php include 'assets/php/index/graficas.php';?>
   <script>
-    console.log("NIVEL USUARIO "+<?php echo $_SESSION['NIVEL']; ?>)
+    
     function obtenerNombreMes(numeroMes) {
               const nombresMes = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
               return nombresMes[numeroMes - 1];

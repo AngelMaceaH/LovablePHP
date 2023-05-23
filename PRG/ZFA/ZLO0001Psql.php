@@ -345,5 +345,74 @@
    ORDER BY T2.CODSEC";
    $resultCOMARC=odbc_exec($connIBM,$sqlCOMARC);
 
+   $registrosAnual = array();
+  if($row_compAnual = odbc_fetch_array($result_compAnual)){
+                            
+    do{
+      $ano1 = number_format(rtrim(utf8_encode($row_compAnual['ANO1'])),2, '.', ',');
+      $ano2 = number_format(rtrim(utf8_encode($row_compAnual['ANO2'])),2, '.', ',');
+      $varia = number_format(rtrim(utf8_encode($row_compAnual['VARIA'])),2, '.', ',');
+      $crecimiento=0;
+      if($_SESSION['filtro']==1||$_SESSION['filtro']==2 ){
+        $ano1 = number_format(rtrim(utf8_encode($row_compAnual['ANO1'])),0, '.', ',');
+      $ano2 = number_format(rtrim(utf8_encode($row_compAnual['ANO2'])),0, '.', ',');
+      $varia = number_format(rtrim(utf8_encode($row_compAnual['VARIA'])),0, '.', ',');
+      }
+      if ($row_compAnual['ANO1']!=0 && $row_compAnual['ANO2']!=0) {
+        $crecimiento = round((($row_compAnual['ANO1']/$row_compAnual['ANO2'])-1)*100);
+      }
+     $crecimiento=number_format($crecimiento,0);
+        if($row_compAnual['ID'] != "")
+        {
+            $registro = array(
+                "ANO1" => strval($ano1),
+                "ANO2" => strval($ano2),
+                "VARIA" => strval($varia),
+                "CRECI" => strval($crecimiento),
+              );
+              $registrosAnual[] = $registro;
+        }
+    }
+    while($row_compAnual = odbc_fetch_array($result_compAnual));
+    }
+
+
+    if($_SESSION['filtro']!=2 ){
+      $registrosPromedios = array();
+        while($rowPromedios = odbc_fetch_array($resultpromedios)){
+        
+            $variacionPromedios=0;$crecimientoPromedios=0;
+
+            $prodia = number_format(rtrim(utf8_encode($rowPromedios['PRODIA']==""? 0:$rowPromedios['PRODIA'])),2, '.', ',');
+            $promes = number_format(rtrim(utf8_encode($rowPromedios['PROMES']==""? 0:$rowPromedios['PROMES'])),2, '.', ',');
+            $proano=rtrim(utf8_encode($rowPromedios['PROANO']==""? 0:$rowPromedios['PROANO']));
+            $proano2 =rtrim(utf8_encode($rowPromedios['PROANO2']==""? 0:$rowPromedios['PROANO2']));
+            $variacionPromedios=number_format($proano-$proano2,2, '.', ',');
+            if ($proano!=0 && $proano2!=0) {
+              $crecimientoPromedios=round((($proano/$proano2)-1)*100);
+            }
+            if ($_SESSION['filtro']==1) {
+              $prodia = number_format(rtrim(utf8_encode(($rowPromedios['SUBDIA']==0||$rowPromedios['DIATRA']==0)? 0:$rowPromedios['SUBDIA']/$rowPromedios['DIATRA'])),2, '.', ',');
+              $promes = number_format(rtrim(utf8_encode(($rowPromedios['SUBMES']==0||$rowPromedios['MESTRA']==0)? 0:$rowPromedios['SUBMES']/$rowPromedios['MESTRA'])),2, '.', ',');
+              $proano = number_format(rtrim(utf8_encode(($rowPromedios['ANO1']==0||$rowPromedios['ANOTRA']==0)? 0:$rowPromedios['ANO1']/$rowPromedios['ANOTRA'])),2, '.', ',');
+              $proano2 = number_format(rtrim(utf8_encode(($rowPromedios['ANO2']==0||$rowPromedios['ANO2TRA']==0)? 0:$rowPromedios['ANO2']/$rowPromedios['ANO2TRA'])),2, '.', ',');
+            }
+              if($rowPromedios['ID'] != "")
+              {
+                $registro = array(
+                  "PRODIA" => $prodia,
+                  "PROMES" => $promes,
+                  "PROANO" => $proano,
+                  "PROANO2" => $proano2,
+                  "VARIA" => $variacionPromedios,
+                  "CRECI" => $crecimientoPromedios,
+                );
+                $registrosPromedios[] = $registro;
+                  
+              }
+          }
+    }
+
+
 ?>
  
