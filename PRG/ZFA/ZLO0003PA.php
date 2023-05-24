@@ -2,171 +2,204 @@
 <html lang="es">
 
 <head>
-  <meta charset="utf-8">
-  <link rel="icon" type="image/x-icon" href="../../assets/img/favicon.ico">
+    <meta charset="utf-8">
+    <link rel="icon" type="image/x-icon" href="../../assets/img/favicon.ico">
     <link rel="stylesheet" href="../../assets/vendors/monthpicker/material.css">
     <link href="../../assets/vendors/monthpicker/picker.css" rel="stylesheet">
 </head>
 
 <body>
-  <div class="spinner-wrapper">
-    <div class="spinner-border text-danger" role="status">
-      
+    <div class="spinner-wrapper">
+        <div class="spinner-border text-danger" role="status">
+
+        </div>
     </div>
-  </div>
-  <?php
+    <?php
     $mes_actual=date("m");
     $ano_actual=date("Y");
       include '../layout-prg.php';
       include 'ZLO0003PAsql.php';
 ?>
-  <div class="container-fluid">
-    <nav aria-label="breadcrumb">
-      <ol class="breadcrumb my-0 ms-2">
-        <li class="breadcrumb-item">
-          <span>Modulo de facturación</span>
-        </li>
-        <li class="breadcrumb-item active"><span>ZLO0003PA</span></li>
-      </ol>
-    </nav>
-  </div>
-  </header>
-  <div id="body-div" class="body flex-grow-3">
-    <div class="card mb-5">
-      <div class="card-header">
-      <h1 class="fs-4 mb-1 mt-2 text-center">Consulta Comp. tiendas por marca, pais y meses</h1>
-      </div>
-      <div class="card-body">
-      <div class="position-relative">
-              <form id="formFiltros" action="../../assets/php/ZFA/ZLO0003P/filtrosLogica.php" method="POST">
-                <div class="row mb-2">
-                <div class="col-sm-12 col-lg-6 mt-2">
-                        <label>Marca:</label>
-                        <select class="form-select  mt-1" id="cbbMarca" name="cbbMarca">
-                        <option value="0">TODAS LAS MARCAS</option>
-                          <?php
+    <div class="container-fluid">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb my-0 ms-2">
+                <li class="breadcrumb-item">
+                    <span>Modulo de facturación</span>
+                </li>
+                <li class="breadcrumb-item active"><span>ZLO0003PA</span></li>
+            </ol>
+        </nav>
+    </div>
+    </header>
+    <div id="body-div" class="body flex-grow-3">
+        <div class="card mb-5">
+            <div class="card-header">
+                <h1 class="fs-4 mb-1 mt-2 text-center">Consulta Comp. tiendas por marca, pais y meses</h1>
+            </div>
+            <div class="card-body">
+                <div class="position-relative">
+                    <form id="formFiltros" action="../../assets/php/ZFA/ZLO0003P/filtrosLogica.php" method="POST">
+                        <div class="row mb-2">
+                            <div class="col-sm-12 col-lg-6 mt-2">
+                                <label>Marca:</label>
+                                <select class="form-select  mt-1" id="cbbMarca" name="cbbMarca">
+                                    <option value="0">TODAS LAS MARCAS</option>
+                                    <?php
                            while($rowDesc = odbc_fetch_array($resultDescripcion)){
                             echo "<option value='".$rowDesc['DESCO1']."'>".$rowDesc['DESDES']."</option>";
                            }
                             ?>
-                        </select>
-                      </div>
-                      <div class="col-sm-12 col-lg-6 mt-2">
-                          <label>Rango de meses:</label>
-                            <div id="wrapper">
-                            <input id="daterangepicker" class="fs-6 p-2 fw-bold"  type="text" placeholder="Selecciona un rango de meses" onclick="this.blur();" oninput="this.value = this.value.replace(/[^0-9\/\s-]/g, '').replace(/(\..*?)\..*/g, '$1').replace(/^0[^.]/, '0'); if(!(/^(0[1-9]|1[0-2])\/\d{4}\s-\s(0[1-9]|1[0-2])\/\d{4}$/.test(this.value))) this.value = '';">
-                            <input class="d-none" id="startdate" name="startdate">
-                            <input class="d-none" id="enddate" name="enddate">
-                          </div>
-                      </div>
+                                </select>
+                            </div>
+                            <div class="col-sm-12 col-lg-6 mt-2">
+                                <label>Rango de meses:</label>
+                                <div id="wrapper">
+                                    <input id="daterangepicker" class="fs-6 p-2 fw-bold" type="text"
+                                        placeholder="Selecciona un rango de meses" onclick="this.blur();"
+                                        oninput="this.value = this.value.replace(/[^0-9\/\s-]/g, '').replace(/(\..*?)\..*/g, '$1').replace(/^0[^.]/, '0'); if(!(/^(0[1-9]|1[0-2])\/\d{4}\s-\s(0[1-9]|1[0-2])\/\d{4}$/.test(this.value))) this.value = '';">
+                                    <input class="d-none" id="startdate" name="startdate">
+                                    <input class="d-none" id="enddate" name="enddate">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
                 </div>
-              </form>
-              </div>
-              <hr>
-         
-            <div class="btn-group flex-wrap d-flex justify-content-center justify-content-md-start mb-2 mt-2" role="group" aria-label="Basic radio toggle button group">
-                <input type="radio" class="btn-check " name="btncols" id="btncolHon" autocomplete="off" checked>
-                <label class="btn btn-outline-secondary responsive-font-example pt-3 pb-3 text-black" for="btncolHon"><b>Honduras</b></label>
-                <input type="radio" class="btn-check" name="btncols"  id="btncolGua" autocomplete="off">
-                <label class="btn btn-outline-secondary responsive-font-example  pt-3 pb-3 text-black" for="btncolGua" id="btnnradio2"><b>Guatemala</b></label>
-                <input type="radio" class="btn-check" name="btncols" id="btncolSal" autocomplete="off">
-                <label class="btn btn-outline-secondary responsive-font-example  pt-3 pb-3 text-black" for="btncolSal"><b>El Salvador</b></label>
+                <hr>
 
-                
-            </div>
-            <div class="btn-group flex-wrap d-flex justify-content-center justify-content-md-start mb-2 mt-2" role="group" aria-label="Basic radio toggle button group">
-                <input type="radio" class="btn-check" name="btncols" id="btncolCos" autocomplete="off" >
-                <label class="btn btn-outline-secondary responsive-font-example  pt-3 pb-3 text-black" for="btncolCos"><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Costa Rica&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
-                <input type="radio" class="btn-check" name="btncols" id="btncolNic" autocomplete="off" >
-                <label class="btn btn-outline-secondary responsive-font-example  pt-3 pb-3 text-black" for="btncolNic"><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Nicaragua&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
-                <input type="radio" class="btn-check" name="btncols" id="btncolRep" autocomplete="off" >
-                <label class="btn btn-outline-secondary responsive-font-example  pt-3 pb-3 text-black" for="btncolRep"><b>Rep. Dominicana</b></label>
-            </div>
-            <hr>
-              <div class="row" id="grafica">
-                      <div id="GRHON" class="col-12 col-lg-12">
-                        <figure class="highcharts-figure" >
-                                <div id="containerHon" ></div>
+                <div class="btn-group flex-wrap d-flex justify-content-center justify-content-md-start mb-2 mt-2"
+                    role="group" aria-label="Basic radio toggle button group">
+                    <input type="radio" class="btn-check " name="btncols" id="btncolHon" autocomplete="off" checked>
+                    <label class="btn btn-outline-secondary responsive-font-example pt-3 pb-3 text-black"
+                        for="btncolHon"><b>Honduras</b></label>
+                    <input type="radio" class="btn-check" name="btncols" id="btncolGua" autocomplete="off">
+                    <label class="btn btn-outline-secondary responsive-font-example  pt-3 pb-3 text-black"
+                        for="btncolGua" id="btnnradio2"><b>Guatemala</b></label>
+                    <input type="radio" class="btn-check" name="btncols" id="btncolSal" autocomplete="off">
+                    <label class="btn btn-outline-secondary responsive-font-example  pt-3 pb-3 text-black"
+                        for="btncolSal"><b>El Salvador</b></label>
+
+
+                </div>
+                <div class="btn-group flex-wrap d-flex justify-content-center justify-content-md-start mb-2 mt-2"
+                    role="group" aria-label="Basic radio toggle button group">
+                    <input type="radio" class="btn-check" name="btncols" id="btncolCos" autocomplete="off">
+                    <label class="btn btn-outline-secondary responsive-font-example  pt-3 pb-3 text-black"
+                        for="btncolCos"><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Costa
+                            Rica&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
+                    <input type="radio" class="btn-check" name="btncols" id="btncolNic" autocomplete="off">
+                    <label class="btn btn-outline-secondary responsive-font-example  pt-3 pb-3 text-black"
+                        for="btncolNic"><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Nicaragua&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
+                    <input type="radio" class="btn-check" name="btncols" id="btncolRep" autocomplete="off">
+                    <label class="btn btn-outline-secondary responsive-font-example  pt-3 pb-3 text-black"
+                        for="btncolRep"><b>Rep. Dominicana</b></label>
+                </div>
+                <hr>
+                <div class="row" id="grafica">
+                    <div id="GRHON" class="col-12 col-lg-12">
+                        <figure class="highcharts-figure">
+                            <div id="containerHon"></div>
                         </figure>
-                      </div>
-                      <div id="GRGUA" class="col-12 col-lg-12">
-                        <figure class="highcharts-figure" >
-                                <div id="containerGua" ></div>
+                    </div>
+                    <div id="GRGUA" class="col-12 col-lg-12">
+                        <figure class="highcharts-figure">
+                            <div id="containerGua"></div>
                         </figure>
-                      </div>
-                      <div id="GRSAL" class="col-12 col-lg-12">
-                        <figure class="highcharts-figure" >
-                                <div id="containerSal" ></div>
+                    </div>
+                    <div id="GRSAL" class="col-12 col-lg-12">
+                        <figure class="highcharts-figure">
+                            <div id="containerSal"></div>
                         </figure>
-                      </div>
-                      <div id="GRCOS" class="col-12 col-lg-12">
-                        <figure class="highcharts-figure" >
-                                <div id="containerCos" ></div>
+                    </div>
+                    <div id="GRCOS" class="col-12 col-lg-12">
+                        <figure class="highcharts-figure">
+                            <div id="containerCos"></div>
                         </figure>
-                      </div>
-                      <div id="GRREP" class="col-12 col-lg-12">
-                        <figure class="highcharts-figure" >
-                                <div id="containerRep" ></div>
+                    </div>
+                    <div id="GRREP" class="col-12 col-lg-12">
+                        <figure class="highcharts-figure">
+                            <div id="containerRep"></div>
                         </figure>
-                      </div>
-                      <div id="GRNIC" class="col-12 col-lg-12">
-                        <figure class="highcharts-figure" >
-                                <div id="containerNic" ></div>
+                    </div>
+                    <div id="GRNIC" class="col-12 col-lg-12">
+                        <figure class="highcharts-figure">
+                            <div id="containerNic"></div>
                         </figure>
-                      </div>
-              </div>
-         
-              <div class="table-responsive">
-             
-              <table id="myTableMarcas" class="table stripe table-hover " style="width:100%">
-                <thead>
-                <tr>
-                  <th colspan="2"> </th>
-                  <th colspan="6" class="text-center fs-4" id="Enca" >Honduras</th>
-                </tr>
-                  <tr>
-                    <th>ID</th>
-                    <th class="text-start responsive-font-example">Marcas</th>
-                    <th id="honth1" class="text-start responsive-font-example">Unidades Año <?php echo $ano2;?></th>
-                    <th id="honth2" class="text-start responsive-font-example">Unidades Año <?php echo $ano2-1;?></th>
-                    <th id="honth3" class="responsive-font-example">Valor Año <?php echo $ano2;?></th>
-                    <th id="honth4" class="responsive-font-example">Valor Año <?php echo $ano2-1;?></th>
-                    <th id="honth5" class="responsive-font-example">Variación</th>
-                    <th id="honth6" class="responsive-font-example">Crecimiento</th>
-                    <th id="guath1" class="d-none text-start responsive-font-example">Unidades Año <?php echo $ano2;?></th>
-                    <th id="guath2" class="d-none text-start responsive-font-example">Unidades Año <?php echo $ano2-1;?></th>
-                    <th id="guath3" class="d-none text-start responsive-font-example">Valor Año <?php echo $ano2;?></th>
-                    <th id="guath4" class="d-none text-start responsive-font-example">Valor Año <?php echo $ano2-1;?></th>
-                    <th id="guath5" class="d-none text-start responsive-font-example">Variación</th>
-                    <th id="guath6" class="d-none text-start responsive-font-example">Crecimiento</th>
-                    <th id="salth1" class="d-none text-start responsive-font-example">Unidades Año <?php echo $ano2;?></th>
-                    <th id="salth2" class="d-none text-start responsive-font-example">Unidades Año <?php echo $ano2-1;?></th>
-                    <th id="salth3" class="d-none text-start responsive-font-example">Valor Año <?php echo $ano2;?></th>
-                    <th id="salth4" class="d-none text-start responsive-font-example">Valor Año <?php echo $ano2-1;?></th>
-                    <th id="salth5" class="d-none text-start responsive-font-example">Variación</th>
-                    <th id="salth6" class="d-none text-start responsive-font-example">Crecimiento</th>
-                    <th id="costh1" class="d-none text-start responsive-font-example">Unidades Año <?php echo $ano2;?></th>
-                    <th id="costh2" class="d-none text-start responsive-font-example">Unidades Año <?php echo $ano2-1;?></th>
-                    <th id="costh3" class="d-none text-start responsive-font-example">Valor Año <?php echo $ano2;?></th>
-                    <th id="costh4" class="d-none text-start responsive-font-example">Valor Año <?php echo $ano2-1;?></th>
-                    <th id="costh5" class="d-none text-start responsive-font-example">Variación</th>
-                    <th id="costh6" class="d-none text-start responsive-font-example">Crecimiento</th>                   
-                    <th id="repth1" class="d-none text-start responsive-font-example">Unidades Año <?php echo $ano2;?></th>
-                    <th id="repth2" class="d-none text-start responsive-font-example">Unidades Año <?php echo $ano2-1;?></th>
-                    <th id="repth3" class="d-none text-start responsive-font-example">Valor Año <?php echo $ano2;?></th>
-                    <th id="repth4" class="d-none text-start responsive-font-example">Valor Año <?php echo $ano2-1;?></th>
-                    <th id="repth5" class="d-none text-start responsive-font-example">Variación</th>
-                    <th id="repth6" class="d-none text-start responsive-font-example">Crecimiento</th>
-                    <th id="nicth1" class="d-none text-start responsive-font-example">Unidades Año <?php echo $ano2;?></th>
-                    <th id="nicth2" class="d-none text-start responsive-font-example">Unidades Año <?php echo $ano2-1;?></th>
-                    <th id="nicth3" class="d-none text-start responsive-font-example">Valor Año <?php echo $ano2;?></th>
-                    <th id="nicth4" class="d-none text-start responsive-font-example">Valor Año <?php echo $ano2-1;?></th>
-                    <th id="nicth5" class="d-none text-start responsive-font-example">Variación</th>
-                    <th id="nicth6" class="d-none text-start responsive-font-example">Crecimiento</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <?php
+                    </div>
+                </div>
+
+                <div class="table-responsive">
+
+                    <table id="myTableMarcas" class="table stripe table-hover " style="width:100%">
+                        <thead>
+                            <tr>
+                                <th colspan="2"> </th>
+                                <th colspan="6" class="text-center fs-4" id="Enca">Honduras</th>
+                            </tr>
+                            <tr>
+                                <th>ID</th>
+                                <th class="text-start responsive-font-example">Marcas</th>
+                                <th id="honth1" class="text-start responsive-font-example">Unidades Año
+                                    <?php echo $ano2;?></th>
+                                <th id="honth2" class="text-start responsive-font-example">Unidades Año
+                                    <?php echo $ano2-1;?></th>
+                                <th id="honth3" class="responsive-font-example">Valor Año <?php echo $ano2;?></th>
+                                <th id="honth4" class="responsive-font-example">Valor Año <?php echo $ano2-1;?></th>
+                                <th id="honth5" class="responsive-font-example">Variación</th>
+                                <th id="honth6" class="responsive-font-example">Crecimiento</th>
+                                <th id="guath1" class="d-none text-start responsive-font-example">Unidades Año
+                                    <?php echo $ano2;?></th>
+                                <th id="guath2" class="d-none text-start responsive-font-example">Unidades Año
+                                    <?php echo $ano2-1;?></th>
+                                <th id="guath3" class="d-none text-start responsive-font-example">Valor Año
+                                    <?php echo $ano2;?></th>
+                                <th id="guath4" class="d-none text-start responsive-font-example">Valor Año
+                                    <?php echo $ano2-1;?></th>
+                                <th id="guath5" class="d-none text-start responsive-font-example">Variación</th>
+                                <th id="guath6" class="d-none text-start responsive-font-example">Crecimiento</th>
+                                <th id="salth1" class="d-none text-start responsive-font-example">Unidades Año
+                                    <?php echo $ano2;?></th>
+                                <th id="salth2" class="d-none text-start responsive-font-example">Unidades Año
+                                    <?php echo $ano2-1;?></th>
+                                <th id="salth3" class="d-none text-start responsive-font-example">Valor Año
+                                    <?php echo $ano2;?></th>
+                                <th id="salth4" class="d-none text-start responsive-font-example">Valor Año
+                                    <?php echo $ano2-1;?></th>
+                                <th id="salth5" class="d-none text-start responsive-font-example">Variación</th>
+                                <th id="salth6" class="d-none text-start responsive-font-example">Crecimiento</th>
+                                <th id="costh1" class="d-none text-start responsive-font-example">Unidades Año
+                                    <?php echo $ano2;?></th>
+                                <th id="costh2" class="d-none text-start responsive-font-example">Unidades Año
+                                    <?php echo $ano2-1;?></th>
+                                <th id="costh3" class="d-none text-start responsive-font-example">Valor Año
+                                    <?php echo $ano2;?></th>
+                                <th id="costh4" class="d-none text-start responsive-font-example">Valor Año
+                                    <?php echo $ano2-1;?></th>
+                                <th id="costh5" class="d-none text-start responsive-font-example">Variación</th>
+                                <th id="costh6" class="d-none text-start responsive-font-example">Crecimiento</th>
+                                <th id="repth1" class="d-none text-start responsive-font-example">Unidades Año
+                                    <?php echo $ano2;?></th>
+                                <th id="repth2" class="d-none text-start responsive-font-example">Unidades Año
+                                    <?php echo $ano2-1;?></th>
+                                <th id="repth3" class="d-none text-start responsive-font-example">Valor Año
+                                    <?php echo $ano2;?></th>
+                                <th id="repth4" class="d-none text-start responsive-font-example">Valor Año
+                                    <?php echo $ano2-1;?></th>
+                                <th id="repth5" class="d-none text-start responsive-font-example">Variación</th>
+                                <th id="repth6" class="d-none text-start responsive-font-example">Crecimiento</th>
+                                <th id="nicth1" class="d-none text-start responsive-font-example">Unidades Año
+                                    <?php echo $ano2;?></th>
+                                <th id="nicth2" class="d-none text-start responsive-font-example">Unidades Año
+                                    <?php echo $ano2-1;?></th>
+                                <th id="nicth3" class="d-none text-start responsive-font-example">Valor Año
+                                    <?php echo $ano2;?></th>
+                                <th id="nicth4" class="d-none text-start responsive-font-example">Valor Año
+                                    <?php echo $ano2-1;?></th>
+                                <th id="nicth5" class="d-none text-start responsive-font-example">Variación</th>
+                                <th id="nicth6" class="d-none text-start responsive-font-example">Crecimiento</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
                   $totunHon=0; $totunHon2=0; $totvalHon=0; $totvalHon2=0; $totvarHon=0; $porcreHon=0;  $totvarTotHon=0; $porcreTotHon=0;
                   $totunGua=0; $totunGua2=0; $totvalGua=0; $totvalGua2=0; $totvarGua=0; $porcreGua=0;
                   $totunSal=0; $totunSal2=0; $totvalSal=0; $totvalSal2=0; $totvarSal=0; $porcreSal=0; 
@@ -372,464 +405,1062 @@
                     print '</tr>';
                   }
                   ?>
-                </tbody>
-              </table>
-              </div>
-            
+                        </tbody>
+                    </table>
+                </div>
 
+
+            </div>
         </div>
-      </div>
     </div>
-  </div>
-  <script src="https://code.highcharts.com/highcharts.js"></script>
-      <script src="https://code.highcharts.com/modules/exporting.js"></script>
-      <script src="https://code.highcharts.com/modules/export-data.js"></script>
-      <script src="https://code.highcharts.com/modules/accessibility.js"></script>
-  <script>
-       $( document ).ready(function() {
+    </div>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+    <script>
+    $(document).ready(function() {
         $("#cbbMes").val("<?php echo $mesfiltro; ?>");
-        $("#cbbMarca").val(<?php echo $marcaFiltro;  ?>); 
-        $("#cbbAno").val(<?php echo $anofiltro;  ?>); 
-        $("#daterangepicker").val("<?php echo $labelSelect;  ?>"); 
-        
-          $("#cbbMarca, #cbbAno, #cbbMes").change(function() {
-              $("#formFiltros").submit();
-          });
-            
+        $("#cbbMarca").val(<?php echo $marcaFiltro;  ?>);
+        $("#cbbAno").val(<?php echo $anofiltro;  ?>);
+        $("#daterangepicker").val("<?php echo $labelSelect;  ?>");
 
-               var table5 = $('#myTableMarcas').DataTable({
-                          autoWidth: false,
-                          stateSave: true,
-                          "ordering": false,
-                          "pageLength": 100,
-                          "language": {
-                              url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json',
-                          },
-                          
-                          "columnDefs": [
-                              {
-                                  target: 0,
-                                  visible: false,
-                                  searchable: true,
-                              },
-                            ],
-                            dom: 'Bfrtip',
-                            buttons: [
-                                {
-                                    extend: 'excelHtml5',
-                                    text: '<i class="fa-solid fa-file-excel"></i> <b >Enviar a Excel</b>',
-                                    className: "btn btn-success text-light fs-6 ",
-                                    exportOptions: {
-                                        columns: [1,2,3,4,5,6,7,8,9,10,
-                                                  11,12,13,14,15,16,17,18,19,20,
-                                                  21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37]
-                                    },
-                                    createEmptyCells: true,
-                                    messageTop:'a',
-                                    title: 'Comparativo marcas, país y rango meses',
-                                    customize: function (xlsx) {
-                                      var sheet = xlsx.xl.worksheets['sheet1.xml'];
-                                      var sSh = xlsx.xl['styles.xml'];
-                                      var lastXfIndex = $('cellXfs xf', sSh).length - 1;
-                                      var lastFontIndex = $('fonts font', sSh).length - 1;
-                                      var i; var y;
-                                      var f1 = '<font>'+
-                                      '<sz val="11" />'+
-                                      '<name val="Calibri" />'+
-                                      '<color rgb="FF0000" />'+ // color rojo en la fuente
-                                    '</font>';
-                                    var f2 = '<font>'+
-                                      '<sz val="11" />'+
-                                      '<name val="Calibri" />'+
-                                      '<color rgb="007800" />'+ // color verde en la fuente
-                                    '</font>';
-                                      
-                                      var n1 = '<numFmt formatCode="##0%"   numFmtId="300"/>';
-                                      var n2 = '<numFmt formatCode="#,##0.00"   numFmtId="200" />';
-                                      var s1 = '<xf numFmtId="300" fontId="0" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyNumberFormat="1"/>';
-                                      var s2 = '<xf numFmtId="0" fontId="2" fillId="2" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
-                                                  '<alignment horizontal="center"/></xf>';
-                                      var s3 = '<xf numFmtId="4" fontId="2" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyNumberFormat="1"/>'
-                                      var s4 = '<xf numFmtId="0" fontId="2" fillId="2" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
-                                                  '<alignment horizontal="center" wrapText="1"/></xf>'
-                                      var s5 = '<xf  numFmtId="200" fontId="'+(lastFontIndex+1)+'" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
-                                      '<alignment horizontal="right"/></xf>';  
-                                      var s6 = '<xf  numFmtId="200" fontId="'+(lastFontIndex+2)+'" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
-                                      '<alignment horizontal="right"/></xf>';  
-                                      var s7 = '<xf  numFmtId="300" fontId="'+(lastFontIndex+1)+'" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
-                                      '<alignment horizontal="right"/></xf>';  
-                                      var s8 = '<xf  numFmtId="300" fontId="'+(lastFontIndex+2)+'" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
-                                      '<alignment horizontal="right"/></xf>';
-                                      sSh.childNodes[0].childNodes[0].innerHTML += n1 + n2;
-                                      sSh.childNodes[0].childNodes[1].innerHTML += f1 + f2;
-                                      sSh.childNodes[0].childNodes[5].innerHTML += s1 + s2 + s3 + s4 + s5 + s6 + s7 + s8; 
-                                      
-                                      var fourDecPlaces    = lastXfIndex + 1;
-                                      var greyBoldCentered = lastXfIndex + 2;
-                                      var twoDecPlacesBold = lastXfIndex + 3;
-                                      var greyBoldWrapText = lastXfIndex + 4;
-                                      var textred1 = lastXfIndex + 5;
-                                      var textgreen1 = lastXfIndex + 6;
-                                      var textred2 = lastXfIndex + 7;
-                                      var textgreen2 = lastXfIndex + 8;
-                                        $('c[r=A1] t', sheet).text('REPORTE DE VENTAS COMPARATIVO TIENDAS POR MARCAS, PAIS Y RANGO DE MESES                  <?php echo $labelSelect;  ?>');    
-                                        $('c[r=A2] t', sheet).text('_____________________|__________________________________________________HONDURAS______________________________________________________|__________________________________________________GUATEMALA______________________________________________________|________________________________________________________EL SALVADOR___________________________________________________|__________________________________________________COSTA RICA___________________________________________________________|__________________________________________________REP. DOMINICANA_______________________________________________|__________________________________________________NICARAGUA____________________________________________________________|');
-
-                                        $('row:eq(0) c', sheet).attr( 's', greyBoldCentered );
-                                        $('row:eq(1) c', sheet).attr( 's', 7 );
-                                        $('row:eq(2) c', sheet).attr( 's', greyBoldCentered );
-                                        //HONDURAS
-                      
-                                        for (let index = 3; index <= 22; index++) {
-                                        
-                                          if (parseFloat(($('row:eq('+index+') c[r^="F"]', sheet).text()).slice(2))<0) {
-                                            $('row:eq('+index+') c[r^="F"]', sheet).attr( 's', textred1 );  //ROJO
-                                          }else{
-                                            $('row:eq('+index+') c[r^="F"]', sheet).attr( 's', textgreen1 );  //VERDE
-                                          }
-                                        }
-                                        for (let index = 3; index <= 22; index++) {
-                                          if (($('row:eq('+index+') c[r^="G"]', sheet).text()*1<0)) {
-                                            $('row:eq('+index+') c[r^="G"]', sheet).attr( 's', textred2 );  //ROJO
-                                          }else{
-                                            $('row:eq('+index+') c[r^="G"]', sheet).attr( 's', textgreen2 );  //VERDE
-                                          }
-                                        }
-                                        //GUATEMALA
-                                        
-                                        for (let index = 3; index <= 22; index++) {
-                                        
-                                        if (parseFloat(($('row:eq('+index+') c[r^="L"]', sheet).text()).slice(2))<0) {
-                                          $('row:eq('+index+') c[r^="L"]', sheet).attr( 's', textred1 );  //ROJO
-                                        }else{
-                                          $('row:eq('+index+') c[r^="L"]', sheet).attr( 's', textgreen1 );  //VERDE
-                                        }
-                                      }
-                                      for (let index = 3; index <= 22; index++) {
-                                        if (($('row:eq('+index+') c[r^="M"]', sheet).text()*1<0)) {
-                                          $('row:eq('+index+') c[r^="M"]', sheet).attr( 's', textred2 );  //ROJO
-                                        }else{
-                                          $('row:eq('+index+') c[r^="M"]', sheet).attr( 's', textgreen2 );  //VERDE
-                                        }
-                                      }
-                                       //EL SALVADOR
-                                        
-                                       for (let index = 3; index <= 22; index++) {
-                                        
-                                        if (parseFloat(($('row:eq('+index+') c[r^="R"]', sheet).text()).slice(2))<0) {
-                                          $('row:eq('+index+') c[r^="R"]', sheet).attr( 's', textred1 );  //ROJO
-                                        }else{
-                                          $('row:eq('+index+') c[r^="R"]', sheet).attr( 's', textgreen1 );  //VERDE
-                                        }
-                                      }
-                                      for (let index = 3; index <= 22; index++) {
-                                        if (($('row:eq('+index+') c[r^="S"]', sheet).text()*1<0)) {
-                                          $('row:eq('+index+') c[r^="S"]', sheet).attr( 's', textred2 );  //ROJO
-                                        }else{
-                                          $('row:eq('+index+') c[r^="S"]', sheet).attr( 's', textgreen2 );  //VERDE
-                                        }
-                                      }
-                                       //COSTA RICA
-                                        
-                                       for (let index = 3; index <= 22; index++) {
-                                        
-                                        if (parseFloat(($('row:eq('+index+') c[r^="X"]', sheet).text()).slice(2))<0) {
-                                          $('row:eq('+index+') c[r^="X"]', sheet).attr( 's', textred1 );  //ROJO
-                                        }else{
-                                          $('row:eq('+index+') c[r^="X"]', sheet).attr( 's', textgreen1 );  //VERDE
-                                        }
-                                      }
-                                      for (let index = 3; index <= 22; index++) {
-                                        if (($('row:eq('+index+') c[r^="Y"]', sheet).text()*1<0)) {
-                                          $('row:eq('+index+') c[r^="Y"]', sheet).attr( 's', textred2 );  //ROJO
-                                        }else{
-                                          $('row:eq('+index+') c[r^="Y"]', sheet).attr( 's', textgreen2 );  //VERDE
-                                        }
-                                      }
-                                      //REP DOMINICANA
-                                        
-                                      for (let index = 3; index <= 22; index++) {
-                                        
-                                        if (parseFloat(($('row:eq('+index+') c[r^="AD"]', sheet).text()).slice(2))<0) {
-                                          $('row:eq('+index+') c[r^="AD"]', sheet).attr( 's', textred1 );  //ROJO
-                                        }else{
-                                          $('row:eq('+index+') c[r^="AD"]', sheet).attr( 's', textgreen1 );  //VERDE
-                                        }
-                                      }
-                                      for (let index = 3; index <= 22; index++) {
-                                        if (($('row:eq('+index+') c[r^="AE"]', sheet).text()*1<0)) {
-                                          $('row:eq('+index+') c[r^="AE"]', sheet).attr( 's', textred2 );  //ROJO
-                                        }else{
-                                          $('row:eq('+index+') c[r^="AE"]', sheet).attr( 's', textgreen2 );  //VERDE
-                                        }
-                                      }
-                                      //NICARAGUA
-                                        
-                                      for (let index = 3; index <= 22; index++) {
-                                        
-                                        if (parseFloat(($('row:eq('+index+') c[r^="AJ"]', sheet).text()).slice(2))<0) {
-                                          $('row:eq('+index+') c[r^="AJ"]', sheet).attr( 's', textred1 );  //ROJO
-                                        }else{
-                                          $('row:eq('+index+') c[r^="AJ"]', sheet).attr( 's', textgreen1 );  //VERDE
-                                        }
-                                      }
-                                      for (let index = 3; index <= 22; index++) {
-                                        if (($('row:eq('+index+') c[r^="AK"]', sheet).text()*1<0)) {
-                                          $('row:eq('+index+') c[r^="AK"]', sheet).attr( 's', textred2 );  //ROJO
-                                        }else{
-                                          $('row:eq('+index+') c[r^="AK"]', sheet).attr( 's', textgreen2 );  //VERDE
-                                        }
-                                      }
-                                        var tagName = sSh.getElementsByTagName('sz');                                     
-                                        for (i = 0; i < tagName.length; i++) {
-                                          tagName[i].setAttribute("val", "13")
-                                        }
-                                       
-                                      }
-                                      
-                                }
-                            ],
-                              paging: false,
-                        });
+        $("#cbbMarca, #cbbAno, #cbbMes").change(function() {
+            $("#formFiltros").submit();
+        });
 
 
+        var table5 = $('#myTableMarcas').DataTable({
+            autoWidth: false,
+            stateSave: true,
+            "ordering": false,
+            "pageLength": 100,
+            "language": {
+                url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json',
+            },
 
-                 $('#guatd1, #guatd2, #guatd3, #guatd4, #guatd5, #guatd6').addClass('d-none');
-                 $('#saltd1, #saltd2, #saltd3, #saltd4, #saltd5, #saltd6').addClass('d-none');
-                 $('#costd1, #costd2, #costd3, #costd4, #costd5, #costd6').addClass('d-none');
-                 $('#reptd1, #reptd2, #reptd3, #reptd4, #reptd5, #reptd6').addClass('d-none');
-                 $('#nictd1, #nictd2, #nictd3, #nictd4, #nictd5, #nictd6').addClass('d-none');
-                 $('#GRGUA, #GRSAL, #GRCOS, #GRNIC, #GRREP').addClass('d-none');
-                $('#btncolHon').click(function() {
-                  $('#Enca').text('Honduras');
-                  $('#GRHON').removeClass('d-none'); $('#GRGUA, #GRSAL, #GRCOS, #GRNIC, #GRREP').addClass('d-none'); 
-                  
-                  $('#hontd1, #hontd2, #hontd3, #hontd4, #hontd5, #hontd6').removeClass('d-none');
-                  $('#guatd1, #guatd2, #guatd3, #guatd4, #guatd5, #guatd6').addClass('d-none'); 
-                  $('#saltd1, #saltd2, #saltd3, #saltd4, #saltd5, #saltd6').addClass('d-none');
-                  $('#costd1, #costd2, #costd3, #costd4, #costd5, #costd6').addClass('d-none'); 
-                  $('#reptd1, #reptd2, #reptd3, #reptd4, #reptd5, #reptd6').addClass('d-none'); 
-                  $('#nictd1, #nictd2, #nictd3, #nictd4, #nictd5, #nictd6').addClass('d-none'); 
-                
-                });
+            "columnDefs": [{
+                target: 0,
+                visible: false,
+                searchable: true,
+            }, ],
+            dom: 'Bfrtip',
+            buttons: [{
+                extend: 'excelHtml5',
+                text: '<i class="fa-solid fa-file-excel"></i> <b >Enviar a Excel</b>',
+                className: "btn btn-success text-light fs-6 ",
+                exportOptions: {
+                    columns: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
+                        11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+                        21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37
+                    ]
+                },
+                createEmptyCells: true,
+                messageTop: 'a',
+                title: 'Comparativo marcas, país y rango meses',
+                customize: function(xlsx) {
+                    var sheet = xlsx.xl.worksheets['sheet1.xml'];
+                    var sSh = xlsx.xl['styles.xml'];
+                    var lastXfIndex = $('cellXfs xf', sSh).length - 1;
+                    var lastFontIndex = $('fonts font', sSh).length - 1;
+                    var i;
+                    var y;
+                    var f1 = '<font>' +
+                        '<sz val="11" />' +
+                        '<name val="Calibri" />' +
+                        '<color rgb="FF0000" />' + // color rojo en la fuente
+                        '</font>';
+                    var f2 = '<font>' +
+                        '<sz val="11" />' +
+                        '<name val="Calibri" />' +
+                        '<color rgb="007800" />' + // color verde en la fuente
+                        '</font>';
 
-                $('#btncolGua').click(function() {
-                  $('#Enca').text('Guatemala');
-                  $('#GRGUA').removeClass('d-none');  $('#GRHON, #GRSAL, #GRCOS, #GRNIC, #GRREP').addClass('d-none');
-                  $('#hontd1, #hontd2, #hontd3, #hontd4, #hontd5, #hontd6').addClass('d-none'); 
-                  $('#guatd1, #guatd2, #guatd3, #guatd4, #guatd5, #guatd6').removeClass('d-none'); 
-                  $('#saltd1, #saltd2, #saltd3, #saltd4, #saltd5, #saltd6').addClass('d-none'); 
-                  $('#costd1, #costd2, #costd3, #costd4, #costd5, #costd6').addClass('d-none');
-                  $('#reptd1, #reptd2, #reptd3, #reptd4, #reptd5, #reptd6').addClass('d-none');
-                  $('#nictd1, #nictd2, #nictd3, #nictd4, #nictd5, #nictd6').addClass('d-none'); 
-                
-                });
-                $('#btncolSal').click(function() {
-                  $('#GRSAL').removeClass('d-none'); $('#GRGUA, #GRHON, #GRCOS, #GRNIC, #GRREP').addClass('d-none'); 
-                  $('#Enca').text('El Salvador');
-                  $('#hontd1, #hontd2, #hontd3, #hontd4, #hontd5, #hontd6').addClass('d-none'); 
-                  $('#guatd1, #guatd2, #guatd3, #guatd4, #guatd5, #guatd6').addClass('d-none'); 
-                  $('#costd1, #costd2, #costd3, #costd4, #costd5, #costd6').addClass('d-none');
-                  $('#reptd1, #reptd2, #reptd3, #reptd4, #reptd5, #reptd6').addClass('d-none');
-                  $('#nictd1, #nictd2, #nictd3, #nictd4, #nictd5, #nictd6').addClass('d-none');                
-                  $('#saltd1, #saltd2, #saltd3, #saltd4, #saltd5, #saltd6').removeClass('d-none'); 
-                });
-                $('#btncolCos').click(function() {
-                  $('#GRCOS').removeClass('d-none'); $('#GRGUA, #GRHON, #GRSAL, #GRNIC, #GRREP').addClass('d-none'); 
-                  $('#Enca').text('Costa Rica');
-                  $('#hontd1, #hontd2, #hontd3, #hontd4, #hontd5, #hontd6').addClass('d-none');
-                  $('#guatd1, #guatd2, #guatd3, #guatd4, #guatd5, #guatd6').addClass('d-none'); 
-                  $('#saltd1, #saltd2, #saltd3, #saltd4, #saltd5, #saltd6').addClass('d-none');
-                  $('#reptd1, #reptd2, #reptd3, #reptd4, #reptd5, #reptd6').addClass('d-none'); 
-                  $('#nictd1, #nictd2, #nictd3, #nictd4, #nictd5, #nictd6').addClass('d-none');                
-                  $('#costd1, #costd2, #costd3, #costd4, #costd5, #costd6').removeClass('d-none'); 
-                });
-                $('#btncolNic').click(function() {
-                  $('#GRNIC').removeClass('d-none'); $('#GRGUA, #GRHON, #GRSAL, #GRCOS, #GRREP').addClass('d-none'); 
-                  $('#Enca').text('Nicaragua');
-                  $('#hontd1, #hontd2, #hontd3, #hontd4, #hontd5, #hontd6').addClass('d-none'); 
-                  $('#guatd1, #guatd2, #guatd3, #guatd4, #guatd5, #guatd6').addClass('d-none');
-                  $('#saltd1, #saltd2, #saltd3, #saltd4, #saltd5, #saltd6').addClass('d-none'); 
-                  $('#costd1, #costd2, #costd3, #costd4, #costd5, #costd6').addClass('d-none'); 
-                  $('#reptd1, #reptd2, #reptd3, #reptd4, #reptd5, #reptd6').addClass('d-none');              
-                  $('#nictd1, #nictd2, #nictd3, #nictd4, #nictd5, #nictd6').removeClass('d-none'); 
-                });
-                $('#btncolRep').click(function() {
-                  $('#GRREP').removeClass('d-none'); $('#GRGUA, #GRHON, #GRSAL, #GRCOS, #GRNIC').addClass('d-none'); 
-                  $('#Enca').text('República Dominicana');
-                  $('#hontd1, #hontd2, #hontd3, #hontd4, #hontd5, #hontd6').addClass('d-none'); 
-                  $('#guatd1, #guatd2, #guatd3, #guatd4, #guatd5, #guatd6').addClass('d-none'); 
-                  $('#saltd1, #saltd2, #saltd3, #saltd4, #saltd5, #saltd6').addClass('d-none'); 
-                  $('#costd1, #costd2, #costd3, #costd4, #costd5, #costd6').addClass('d-none');
-                  $('#nictd1, #nictd2, #nictd3, #nictd4, #nictd5, #nictd6').addClass('d-none');                  
-                  $('#reptd1, #reptd2, #reptd3, #reptd4, #reptd5, #reptd6').removeClass('d-none');
-                });
+                    var n1 = '<numFmt formatCode="##0%"   numFmtId="300"/>';
+                    var n2 = '<numFmt formatCode="#,##0.00"   numFmtId="200" />';
+                    var s1 =
+                        '<xf numFmtId="300" fontId="0" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyNumberFormat="1"/>';
+                    var s2 =
+                        '<xf numFmtId="0" fontId="2" fillId="2" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">' +
+                        '<alignment horizontal="center"/></xf>';
+                    var s3 =
+                        '<xf numFmtId="4" fontId="2" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyNumberFormat="1"/>'
+                    var s4 =
+                        '<xf numFmtId="0" fontId="2" fillId="2" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">' +
+                        '<alignment horizontal="center" wrapText="1"/></xf>'
+                    var s5 = '<xf  numFmtId="200" fontId="' + (lastFontIndex + 1) +
+                        '" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">' +
+                        '<alignment horizontal="right"/></xf>';
+                    var s6 = '<xf  numFmtId="200" fontId="' + (lastFontIndex + 2) +
+                        '" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">' +
+                        '<alignment horizontal="right"/></xf>';
+                    var s7 = '<xf  numFmtId="300" fontId="' + (lastFontIndex + 1) +
+                        '" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">' +
+                        '<alignment horizontal="right"/></xf>';
+                    var s8 = '<xf  numFmtId="300" fontId="' + (lastFontIndex + 2) +
+                        '" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">' +
+                        '<alignment horizontal="right"/></xf>';
+                    sSh.childNodes[0].childNodes[0].innerHTML += n1 + n2;
+                    sSh.childNodes[0].childNodes[1].innerHTML += f1 + f2;
+                    sSh.childNodes[0].childNodes[5].innerHTML += s1 + s2 + s3 + s4 + s5 +
+                        s6 + s7 + s8;
 
+                    var fourDecPlaces = lastXfIndex + 1;
+                    var greyBoldCentered = lastXfIndex + 2;
+                    var twoDecPlacesBold = lastXfIndex + 3;
+                    var greyBoldWrapText = lastXfIndex + 4;
+                    var textred1 = lastXfIndex + 5;
+                    var textgreen1 = lastXfIndex + 6;
+                    var textred2 = lastXfIndex + 7;
+                    var textgreen2 = lastXfIndex + 8;
+                    $('c[r=A1] t', sheet).text(
+                        'REPORTE DE VENTAS COMPARATIVO TIENDAS POR MARCAS, PAIS Y RANGO DE MESES                  <?php echo $labelSelect;  ?>'
+                        );
+                    $('c[r=A2] t', sheet).text(
+                        '_____________________|__________________________________________________HONDURAS______________________________________________________|__________________________________________________GUATEMALA______________________________________________________|________________________________________________________EL SALVADOR___________________________________________________|__________________________________________________COSTA RICA___________________________________________________________|__________________________________________________REP. DOMINICANA_______________________________________________|__________________________________________________NICARAGUA____________________________________________________________|'
+                        );
 
+                    $('row:eq(0) c', sheet).attr('s', greyBoldCentered);
+                    $('row:eq(1) c', sheet).attr('s', 7);
+                    $('row:eq(2) c', sheet).attr('s', greyBoldCentered);
+                    //HONDURAS
 
-                //GRAFICAS
-                //HONDURAS
-                var chart = Highcharts.chart('containerHon', {
-                    chart: { height: 600,type: 'column'},
-                    lang: {viewFullscreen:"Ver en pantalla completa",
-                          exitFullscreen:"Salir de pantalla completa",
-                          downloadJPEG:"Descargar imagen JPEG",
-                          downloadPDF:"Descargar en PDF",},
-                          exporting: {buttons: 
-                        {contextButton: {menuItems: ["viewFullscreen", "separator", "downloadJPEG", "downloadPDF"]}}, enabled: true,
-                      filename: 'Honduras-Comparativo Marcas',
-                      sourceWidth: 1200,
-                      sourceHeight: 800,},
-                    title: {text: 'HONDURAS<br><br> Año <?php echo $anofiltro; ?> vs Año <?php echo $anofiltro-1; ?>',margin: 50},xAxis: {
-                      categories: [<?php   foreach($registrosMarcas as $rowMarcas){ echo "'".$rowMarcas['DESDES']."',"; }; ?>],
-                        labels: {x: -10}},
-                        yAxis: {allowDecimals: true,title: {text: ' '},tickInterval: 100000,endOnTick: false,},
-                    credits: {enabled: false},
-                    series: [{name: 'Año <?php echo $anofiltro; ?>',data: [<?php   foreach($registrosMarcas as $rowMarcas){ echo (($rowMarcas['VALHON']==0)?0:$rowMarcas['VALHON']).","; }; ?>],dataLabels: [{align: "center",inside: false, rotation: 290,y:-25, x:-2 ,enabled: true,borderColor: "",style: {fontSize: "12px",fontWeight: 'bold',fontFamily: "Arial",textShadow: false}}],}, 
-                    {name: 'Año <?php echo $anofiltro-1; ?>',data: [<?php   foreach($registrosMarcas as $rowMarcas){ echo (($rowMarcas['VALHON2']==0)?0:$rowMarcas['VALHON2']).","; }; ?>],dataLabels: [{align: "center",inside: false, rotation: 290,y:-25, x:5 ,enabled: true,borderColor: "",style: {fontSize: "12px",fontWeight: 'bold',fontFamily: "Arial",textShadow: false}}], },],
-                    responsive: {rules: [{condition: {maxWidth: 500},
-                            chartOptions: {legend: {align: 'center',verticalAlign: 'bottom',layout: 'horizontal'},
-                                yAxis: {labels: {align: 'left',x: 0,y: -5},
-                                    title: {text: null}},
-                                subtitle: {text: null},
-                                credits: {enabled: false}}}]}});
-                //GUATEMALA
-                var chart = Highcharts.chart('containerGua', {
-                    chart: { height: 600,type: 'column'},
-                    lang: {viewFullscreen:"Ver en pantalla completa",
-                          exitFullscreen:"Salir de pantalla completa",
-                          downloadJPEG:"Descargar imagen JPEG",
-                          downloadPDF:"Descargar en PDF",},
-                          exporting: {buttons: 
-                        {contextButton: {menuItems: ["viewFullscreen", "separator", "downloadJPEG", "downloadPDF"]}}, enabled: true,
-                      filename: 'Guatemala-Comparativo Marcas',
-                      sourceWidth: 1200,
-                      sourceHeight: 800,},
-                    title: {text: 'GUATEMALA<br><br> Año <?php echo $anofiltro; ?> vs Año <?php echo $anofiltro-1; ?>',margin: 50},xAxis: {
-                      categories: [<?php   foreach($registrosMarcas as $rowMarcas){ echo "'".$rowMarcas['DESDES']."',"; }; ?>],
-                        labels: {x: -10}},
-                        yAxis: {allowDecimals: true,title: {text: ' '},endOnTick: false,},
-                    credits: {enabled: false},
-                    series: [{name: 'Año <?php echo $anofiltro; ?>',data: [<?php   foreach($registrosMarcas as $rowMarcas){ echo (($rowMarcas['VALGUA']==0)?0:$rowMarcas['VALGUA']).","; }; ?>],dataLabels: [{align: "center",inside: false, rotation: 290,y:-25, x:-2 ,enabled: true,borderColor: "",style: {fontSize: "12px",fontWeight: 'bold',fontFamily: "Arial",textShadow: false}}],}, 
-                    {name: 'Año <?php echo $anofiltro-1; ?>',data: [<?php   foreach($registrosMarcas as $rowMarcas){ echo (($rowMarcas['VALGUA2']==0)?0:$rowMarcas['VALGUA2']).","; }; ?>],dataLabels: [{align: "center",inside: false, rotation: 290,y:-25, x:5 ,enabled: true,borderColor: "",style: {fontSize: "12px",fontWeight: 'bold',fontFamily: "Arial",textShadow: false}}], },],
-                    responsive: {rules: [{condition: {maxWidth: 500},
-                            chartOptions: {legend: {align: 'center',verticalAlign: 'bottom',layout: 'horizontal'},
-                                yAxis: {labels: {align: 'left',x: 0,y: -5},
-                                    title: {text: null}},
-                                subtitle: {text: null},
-                                credits: {enabled: false}}}]}});
-                  //EL SALVADOR
-                  var chart = Highcharts.chart('containerSal', {
-                    chart: { height: 600,type: 'column'},
-                    lang: {viewFullscreen:"Ver en pantalla completa",
-                          exitFullscreen:"Salir de pantalla completa",
-                          downloadJPEG:"Descargar imagen JPEG",
-                          downloadPDF:"Descargar en PDF",},
-                          exporting: {buttons: 
-                        {contextButton: {menuItems: ["viewFullscreen", "separator", "downloadJPEG", "downloadPDF"]}}, enabled: true,
-                      filename: 'ElSalvador-Comparativo Marcas',
-                      sourceWidth: 1200,
-                      sourceHeight: 800,},
-                    title: {text: 'EL SALVADOR<br><br> Año <?php echo $anofiltro; ?> vs Año <?php echo $anofiltro-1; ?>',margin: 50},xAxis: {
-                      categories: [<?php   foreach($registrosMarcas as $rowMarcas){ echo "'".$rowMarcas['DESDES']."',"; }; ?>],
-                        labels: {x: -10}},
-                        yAxis: {allowDecimals: true,title: {text: ' '},endOnTick: false,},
-                    credits: {enabled: false},
-                    series: [{name: 'Año <?php echo $anofiltro; ?>',data: [<?php   foreach($registrosMarcas as $rowMarcas){ echo (($rowMarcas['VALSAL']==0)?0:$rowMarcas['VALSAL']).","; }; ?>],dataLabels: [{align: "center",inside: false, rotation: 290,y:-25, x:-2 ,enabled: true,borderColor: "",style: {fontSize: "12px",fontWeight: 'bold',fontFamily: "Arial",textShadow: false}}],}, 
-                    {name: 'Año <?php echo $anofiltro-1; ?>',data: [<?php   foreach($registrosMarcas as $rowMarcas){ echo (($rowMarcas['VALSAL2']==0)?0:$rowMarcas['VALSAL2']).","; }; ?>],dataLabels: [{align: "center",inside: false, rotation: 290,y:-25, x:5 ,enabled: true,borderColor: "",style: {fontSize: "12px",fontWeight: 'bold',fontFamily: "Arial",textShadow: false}}], },],
-                    responsive: {rules: [{condition: {maxWidth: 500},
-                            chartOptions: {legend: {align: 'center',verticalAlign: 'bottom',layout: 'horizontal'},
-                                yAxis: {labels: {align: 'left',x: 0,y: -5},
-                                    title: {text: null}},
-                                subtitle: {text: null},
-                                credits: {enabled: false}}}]}});
-                //COSTA RICA
-                var chart = Highcharts.chart('containerCos', {
-                    chart: { height: 600,type: 'column'},
-                    lang: {viewFullscreen:"Ver en pantalla completa",
-                          exitFullscreen:"Salir de pantalla completa",
-                          downloadJPEG:"Descargar imagen JPEG",
-                          downloadPDF:"Descargar en PDF",},
-                          exporting: {buttons: 
-                        {contextButton: {menuItems: ["viewFullscreen", "separator", "downloadJPEG", "downloadPDF"]}}, enabled: true,
-                      filename: 'CostaRica-Comparativo Marcas',
-                      sourceWidth: 1200,
-                      sourceHeight: 800,},
-                    title: {text: 'COSTA RICA<br><br> Año <?php echo $anofiltro; ?> vs Año <?php echo $anofiltro-1; ?>',margin: 50},xAxis: {
-                      categories: [<?php   foreach($registrosMarcas as $rowMarcas){ echo "'".$rowMarcas['DESDES']."',"; }; ?>],
-                        labels: {x: -10}},
-                        yAxis: {allowDecimals: true,title: {text: ' '},endOnTick: false,},
-                    credits: {enabled: false},
-                    series: [{name: 'Año <?php echo $anofiltro; ?>',data: [<?php   foreach($registrosMarcas as $rowMarcas){ echo (($rowMarcas['VALCOS']==0)?0:$rowMarcas['VALCOS']).","; }; ?>],dataLabels: [{align: "center",inside: false, rotation: 290,y:-25, x:-2 ,enabled: true,borderColor: "",style: {fontSize: "12px",fontWeight: 'bold',fontFamily: "Arial",textShadow: false}}],}, 
-                    {name: 'Año <?php echo $anofiltro-1; ?>',data: [<?php   foreach($registrosMarcas as $rowMarcas){ echo (($rowMarcas['VALCOS2']==0)?0:$rowMarcas['VALCOS2']).","; }; ?>],dataLabels: [{align: "center",inside: false, rotation: 290,y:-25, x:5 ,enabled: true,borderColor: "",style: {fontSize: "12px",fontWeight: 'bold',fontFamily: "Arial",textShadow: false}}], },],
-                    responsive: {rules: [{condition: {maxWidth: 500},
-                            chartOptions: {legend: {align: 'center',verticalAlign: 'bottom',layout: 'horizontal'},
-                                yAxis: {labels: {align: 'left',x: 0,y: -5},
-                                    title: {text: null}},
-                                subtitle: {text: null},
-                                credits: {enabled: false}}}]}});
-                //NICARAGUA
-                var chart = Highcharts.chart('containerNic', {
-                    chart: { height: 600,type: 'column'},
-                    lang: {viewFullscreen:"Ver en pantalla completa",
-                          exitFullscreen:"Salir de pantalla completa",
-                          downloadJPEG:"Descargar imagen JPEG",
-                          downloadPDF:"Descargar en PDF",},
-                          exporting: {buttons: 
-                        {contextButton: {menuItems: ["viewFullscreen", "separator", "downloadJPEG", "downloadPDF"]}}, enabled: true,
-                      filename: 'Nicaragua-Comparativo Marcas',
-                      sourceWidth: 1200,
-                      sourceHeight: 800,},
-                    title: {text: 'NICARAGUA<br><br> Año <?php echo $anofiltro; ?> vs Año <?php echo $anofiltro-1; ?>',margin: 50},xAxis: {
-                      categories: [<?php   foreach($registrosMarcas as $rowMarcas){ echo "'".$rowMarcas['DESDES']."',"; }; ?>],
-                        labels: {x: -10}},
-                        yAxis: {allowDecimals: true,title: {text: ' '},endOnTick: false,},
-                    credits: {enabled: false},
-                    series: [{name: 'Año <?php echo $anofiltro; ?>',data: [<?php   foreach($registrosMarcas as $rowMarcas){ echo (($rowMarcas['VALNIC']==0)?0:$rowMarcas['VALNIC']).","; }; ?>],dataLabels: [{align: "center",inside: false, rotation: 290,y:-25, x:-2 ,enabled: true,borderColor: "",style: {fontSize: "12px",fontWeight: 'bold',fontFamily: "Arial",textShadow: false}}],}, 
-                    {name: 'Año <?php echo $anofiltro-1; ?>',data: [<?php   foreach($registrosMarcas as $rowMarcas){ echo (($rowMarcas['VALNIC2']==0)?0:$rowMarcas['VALNIC2']).","; }; ?>],dataLabels: [{align: "center",inside: false, rotation: 290,y:-25, x:5 ,enabled: true,borderColor: "",style: {fontSize: "12px",fontWeight: 'bold',fontFamily: "Arial",textShadow: false}}], },],
-                    responsive: {rules: [{condition: {maxWidth: 500},
-                            chartOptions: {legend: {align: 'center',verticalAlign: 'bottom',layout: 'horizontal'},
-                                yAxis: {labels: {align: 'left',x: 0,y: -5},
-                                    title: {text: null}},
-                                subtitle: {text: null},
-                                credits: {enabled: false}}}]}});
-                //REP DOMINICANA
-                var chart = Highcharts.chart('containerRep', {
-                    chart: { height: 600,type: 'column'},
-                    lang: {viewFullscreen:"Ver en pantalla completa",
-                          exitFullscreen:"Salir de pantalla completa",
-                          downloadJPEG:"Descargar imagen JPEG",
-                          downloadPDF:"Descargar en PDF",},
-                          exporting: {buttons: 
-                        {contextButton: {menuItems: ["viewFullscreen", "separator", "downloadJPEG", "downloadPDF"]}}, enabled: true,
-                      filename: 'RepDominicana-Comparativo Marcas',
-                      sourceWidth: 1200,
-                      sourceHeight: 800,},
-                    title: {text: 'REP. DOMINICANA<br><br> Año <?php echo $anofiltro; ?> vs Año <?php echo $anofiltro-1; ?>',margin: 50},xAxis: {
-                      categories: [<?php   foreach($registrosMarcas as $rowMarcas){ echo "'".$rowMarcas['DESDES']."',"; }; ?>],
-                        labels: {x: -10}},
-                        yAxis: {allowDecimals: true,title: {text: ' '},endOnTick: false,},
-                    credits: {enabled: false},
-                    series: [{name: 'Año <?php echo $anofiltro; ?>',data: [<?php   foreach($registrosMarcas as $rowMarcas){ echo (($rowMarcas['VALREP']==0)?0:$rowMarcas['VALREP']).","; }; ?>],dataLabels: [{align: "center",inside: false, rotation: 290,y:-25, x:-2 ,enabled: true,borderColor: "",style: {fontSize: "12px",fontWeight: 'bold',fontFamily: "Arial",textShadow: false}}],}, 
-                    {name: 'Año <?php echo $anofiltro-1; ?>',data: [<?php   foreach($registrosMarcas as $rowMarcas){ echo (($rowMarcas['VALREP2']==0)?0:$rowMarcas['VALREP2']).","; }; ?>],dataLabels: [{align: "center",inside: false, rotation: 290,y:-25, x:5 ,enabled: true,borderColor: "",style: {fontSize: "12px",fontWeight: 'bold',fontFamily: "Arial",textShadow: false}}], },],
-                    responsive: {rules: [{condition: {maxWidth: 500},
-                            chartOptions: {legend: {align: 'center',verticalAlign: 'bottom',layout: 'horizontal'},
-                                yAxis: {labels: {align: 'left',x: 0,y: -5},
-                                    title: {text: null}},
-                                subtitle: {text: null},
-                                credits: {enabled: false}}}]}});
-             
+                    for (let index = 3; index <= 22; index++) {
 
-                
-                if (<?php echo $validator;?>==true) {
-                  $("#grafica").addClass("d-none");
+                        if (parseFloat(($('row:eq(' + index + ') c[r^="F"]', sheet).text())
+                                .slice(2)) < 0) {
+                            $('row:eq(' + index + ') c[r^="F"]', sheet).attr('s',
+                            textred1); //ROJO
+                        } else {
+                            $('row:eq(' + index + ') c[r^="F"]', sheet).attr('s',
+                                textgreen1); //VERDE
+                        }
+                    }
+                    for (let index = 3; index <= 22; index++) {
+                        if (($('row:eq(' + index + ') c[r^="G"]', sheet).text() * 1 < 0)) {
+                            $('row:eq(' + index + ') c[r^="G"]', sheet).attr('s',
+                            textred2); //ROJO
+                        } else {
+                            $('row:eq(' + index + ') c[r^="G"]', sheet).attr('s',
+                                textgreen2); //VERDE
+                        }
+                    }
+                    //GUATEMALA
+
+                    for (let index = 3; index <= 22; index++) {
+
+                        if (parseFloat(($('row:eq(' + index + ') c[r^="L"]', sheet).text())
+                                .slice(2)) < 0) {
+                            $('row:eq(' + index + ') c[r^="L"]', sheet).attr('s',
+                            textred1); //ROJO
+                        } else {
+                            $('row:eq(' + index + ') c[r^="L"]', sheet).attr('s',
+                                textgreen1); //VERDE
+                        }
+                    }
+                    for (let index = 3; index <= 22; index++) {
+                        if (($('row:eq(' + index + ') c[r^="M"]', sheet).text() * 1 < 0)) {
+                            $('row:eq(' + index + ') c[r^="M"]', sheet).attr('s',
+                            textred2); //ROJO
+                        } else {
+                            $('row:eq(' + index + ') c[r^="M"]', sheet).attr('s',
+                                textgreen2); //VERDE
+                        }
+                    }
+                    //EL SALVADOR
+
+                    for (let index = 3; index <= 22; index++) {
+
+                        if (parseFloat(($('row:eq(' + index + ') c[r^="R"]', sheet).text())
+                                .slice(2)) < 0) {
+                            $('row:eq(' + index + ') c[r^="R"]', sheet).attr('s',
+                            textred1); //ROJO
+                        } else {
+                            $('row:eq(' + index + ') c[r^="R"]', sheet).attr('s',
+                                textgreen1); //VERDE
+                        }
+                    }
+                    for (let index = 3; index <= 22; index++) {
+                        if (($('row:eq(' + index + ') c[r^="S"]', sheet).text() * 1 < 0)) {
+                            $('row:eq(' + index + ') c[r^="S"]', sheet).attr('s',
+                            textred2); //ROJO
+                        } else {
+                            $('row:eq(' + index + ') c[r^="S"]', sheet).attr('s',
+                                textgreen2); //VERDE
+                        }
+                    }
+                    //COSTA RICA
+
+                    for (let index = 3; index <= 22; index++) {
+
+                        if (parseFloat(($('row:eq(' + index + ') c[r^="X"]', sheet).text())
+                                .slice(2)) < 0) {
+                            $('row:eq(' + index + ') c[r^="X"]', sheet).attr('s',
+                            textred1); //ROJO
+                        } else {
+                            $('row:eq(' + index + ') c[r^="X"]', sheet).attr('s',
+                                textgreen1); //VERDE
+                        }
+                    }
+                    for (let index = 3; index <= 22; index++) {
+                        if (($('row:eq(' + index + ') c[r^="Y"]', sheet).text() * 1 < 0)) {
+                            $('row:eq(' + index + ') c[r^="Y"]', sheet).attr('s',
+                            textred2); //ROJO
+                        } else {
+                            $('row:eq(' + index + ') c[r^="Y"]', sheet).attr('s',
+                                textgreen2); //VERDE
+                        }
+                    }
+                    //REP DOMINICANA
+
+                    for (let index = 3; index <= 22; index++) {
+
+                        if (parseFloat(($('row:eq(' + index + ') c[r^="AD"]', sheet).text())
+                                .slice(2)) < 0) {
+                            $('row:eq(' + index + ') c[r^="AD"]', sheet).attr('s',
+                            textred1); //ROJO
+                        } else {
+                            $('row:eq(' + index + ') c[r^="AD"]', sheet).attr('s',
+                                textgreen1); //VERDE
+                        }
+                    }
+                    for (let index = 3; index <= 22; index++) {
+                        if (($('row:eq(' + index + ') c[r^="AE"]', sheet).text() * 1 < 0)) {
+                            $('row:eq(' + index + ') c[r^="AE"]', sheet).attr('s',
+                            textred2); //ROJO
+                        } else {
+                            $('row:eq(' + index + ') c[r^="AE"]', sheet).attr('s',
+                                textgreen2); //VERDE
+                        }
+                    }
+                    //NICARAGUA
+
+                    for (let index = 3; index <= 22; index++) {
+
+                        if (parseFloat(($('row:eq(' + index + ') c[r^="AJ"]', sheet).text())
+                                .slice(2)) < 0) {
+                            $('row:eq(' + index + ') c[r^="AJ"]', sheet).attr('s',
+                            textred1); //ROJO
+                        } else {
+                            $('row:eq(' + index + ') c[r^="AJ"]', sheet).attr('s',
+                                textgreen1); //VERDE
+                        }
+                    }
+                    for (let index = 3; index <= 22; index++) {
+                        if (($('row:eq(' + index + ') c[r^="AK"]', sheet).text() * 1 < 0)) {
+                            $('row:eq(' + index + ') c[r^="AK"]', sheet).attr('s',
+                            textred2); //ROJO
+                        } else {
+                            $('row:eq(' + index + ') c[r^="AK"]', sheet).attr('s',
+                                textgreen2); //VERDE
+                        }
+                    }
+                    var tagName = sSh.getElementsByTagName('sz');
+                    for (i = 0; i < tagName.length; i++) {
+                        tagName[i].setAttribute("val", "13")
+                    }
+
                 }
 
-       });
-     
-      
-  </script>
-  <script src="../../assets/vendors/monthpicker/picker.js"></script>
+            }],
+            paging: false,
+        });
+
+
+
+        $('#guatd1, #guatd2, #guatd3, #guatd4, #guatd5, #guatd6').addClass('d-none');
+        $('#saltd1, #saltd2, #saltd3, #saltd4, #saltd5, #saltd6').addClass('d-none');
+        $('#costd1, #costd2, #costd3, #costd4, #costd5, #costd6').addClass('d-none');
+        $('#reptd1, #reptd2, #reptd3, #reptd4, #reptd5, #reptd6').addClass('d-none');
+        $('#nictd1, #nictd2, #nictd3, #nictd4, #nictd5, #nictd6').addClass('d-none');
+        $('#GRGUA, #GRSAL, #GRCOS, #GRNIC, #GRREP').addClass('d-none');
+        $('#btncolHon').click(function() {
+            $('#Enca').text('Honduras');
+            $('#GRHON').removeClass('d-none');
+            $('#GRGUA, #GRSAL, #GRCOS, #GRNIC, #GRREP').addClass('d-none');
+
+            $('#hontd1, #hontd2, #hontd3, #hontd4, #hontd5, #hontd6').removeClass('d-none');
+            $('#guatd1, #guatd2, #guatd3, #guatd4, #guatd5, #guatd6').addClass('d-none');
+            $('#saltd1, #saltd2, #saltd3, #saltd4, #saltd5, #saltd6').addClass('d-none');
+            $('#costd1, #costd2, #costd3, #costd4, #costd5, #costd6').addClass('d-none');
+            $('#reptd1, #reptd2, #reptd3, #reptd4, #reptd5, #reptd6').addClass('d-none');
+            $('#nictd1, #nictd2, #nictd3, #nictd4, #nictd5, #nictd6').addClass('d-none');
+
+        });
+
+        $('#btncolGua').click(function() {
+            $('#Enca').text('Guatemala');
+            $('#GRGUA').removeClass('d-none');
+            $('#GRHON, #GRSAL, #GRCOS, #GRNIC, #GRREP').addClass('d-none');
+            $('#hontd1, #hontd2, #hontd3, #hontd4, #hontd5, #hontd6').addClass('d-none');
+            $('#guatd1, #guatd2, #guatd3, #guatd4, #guatd5, #guatd6').removeClass('d-none');
+            $('#saltd1, #saltd2, #saltd3, #saltd4, #saltd5, #saltd6').addClass('d-none');
+            $('#costd1, #costd2, #costd3, #costd4, #costd5, #costd6').addClass('d-none');
+            $('#reptd1, #reptd2, #reptd3, #reptd4, #reptd5, #reptd6').addClass('d-none');
+            $('#nictd1, #nictd2, #nictd3, #nictd4, #nictd5, #nictd6').addClass('d-none');
+
+        });
+        $('#btncolSal').click(function() {
+            $('#GRSAL').removeClass('d-none');
+            $('#GRGUA, #GRHON, #GRCOS, #GRNIC, #GRREP').addClass('d-none');
+            $('#Enca').text('El Salvador');
+            $('#hontd1, #hontd2, #hontd3, #hontd4, #hontd5, #hontd6').addClass('d-none');
+            $('#guatd1, #guatd2, #guatd3, #guatd4, #guatd5, #guatd6').addClass('d-none');
+            $('#costd1, #costd2, #costd3, #costd4, #costd5, #costd6').addClass('d-none');
+            $('#reptd1, #reptd2, #reptd3, #reptd4, #reptd5, #reptd6').addClass('d-none');
+            $('#nictd1, #nictd2, #nictd3, #nictd4, #nictd5, #nictd6').addClass('d-none');
+            $('#saltd1, #saltd2, #saltd3, #saltd4, #saltd5, #saltd6').removeClass('d-none');
+        });
+        $('#btncolCos').click(function() {
+            $('#GRCOS').removeClass('d-none');
+            $('#GRGUA, #GRHON, #GRSAL, #GRNIC, #GRREP').addClass('d-none');
+            $('#Enca').text('Costa Rica');
+            $('#hontd1, #hontd2, #hontd3, #hontd4, #hontd5, #hontd6').addClass('d-none');
+            $('#guatd1, #guatd2, #guatd3, #guatd4, #guatd5, #guatd6').addClass('d-none');
+            $('#saltd1, #saltd2, #saltd3, #saltd4, #saltd5, #saltd6').addClass('d-none');
+            $('#reptd1, #reptd2, #reptd3, #reptd4, #reptd5, #reptd6').addClass('d-none');
+            $('#nictd1, #nictd2, #nictd3, #nictd4, #nictd5, #nictd6').addClass('d-none');
+            $('#costd1, #costd2, #costd3, #costd4, #costd5, #costd6').removeClass('d-none');
+        });
+        $('#btncolNic').click(function() {
+            $('#GRNIC').removeClass('d-none');
+            $('#GRGUA, #GRHON, #GRSAL, #GRCOS, #GRREP').addClass('d-none');
+            $('#Enca').text('Nicaragua');
+            $('#hontd1, #hontd2, #hontd3, #hontd4, #hontd5, #hontd6').addClass('d-none');
+            $('#guatd1, #guatd2, #guatd3, #guatd4, #guatd5, #guatd6').addClass('d-none');
+            $('#saltd1, #saltd2, #saltd3, #saltd4, #saltd5, #saltd6').addClass('d-none');
+            $('#costd1, #costd2, #costd3, #costd4, #costd5, #costd6').addClass('d-none');
+            $('#reptd1, #reptd2, #reptd3, #reptd4, #reptd5, #reptd6').addClass('d-none');
+            $('#nictd1, #nictd2, #nictd3, #nictd4, #nictd5, #nictd6').removeClass('d-none');
+        });
+        $('#btncolRep').click(function() {
+            $('#GRREP').removeClass('d-none');
+            $('#GRGUA, #GRHON, #GRSAL, #GRCOS, #GRNIC').addClass('d-none');
+            $('#Enca').text('República Dominicana');
+            $('#hontd1, #hontd2, #hontd3, #hontd4, #hontd5, #hontd6').addClass('d-none');
+            $('#guatd1, #guatd2, #guatd3, #guatd4, #guatd5, #guatd6').addClass('d-none');
+            $('#saltd1, #saltd2, #saltd3, #saltd4, #saltd5, #saltd6').addClass('d-none');
+            $('#costd1, #costd2, #costd3, #costd4, #costd5, #costd6').addClass('d-none');
+            $('#nictd1, #nictd2, #nictd3, #nictd4, #nictd5, #nictd6').addClass('d-none');
+            $('#reptd1, #reptd2, #reptd3, #reptd4, #reptd5, #reptd6').removeClass('d-none');
+        });
+
+
+
+        //GRAFICAS
+        //HONDURAS
+        var chart = Highcharts.chart('containerHon', {
+            chart: {
+                height: 600,
+                type: 'column'
+            },
+            lang: {
+                viewFullscreen: "Ver en pantalla completa",
+                exitFullscreen: "Salir de pantalla completa",
+                downloadJPEG: "Descargar imagen JPEG",
+                downloadPDF: "Descargar en PDF",
+            },
+            exporting: {
+                buttons: {
+                    contextButton: {
+                        menuItems: ["viewFullscreen", "separator", "downloadJPEG", "downloadPDF"]
+                    }
+                },
+                enabled: true,
+                filename: 'Honduras-Comparativo Marcas',
+                sourceWidth: 1200,
+                sourceHeight: 800,
+            },
+            title: {
+                text: 'HONDURAS<br><br> Año <?php echo $anofiltro; ?> vs Año <?php echo $anofiltro-1; ?>',
+                margin: 50
+            },
+            xAxis: {
+                categories: [
+                    <?php   foreach($registrosMarcas as $rowMarcas){ echo "'".$rowMarcas['DESDES']."',"; }; ?>
+                ],
+                labels: {
+                    x: -10
+                }
+            },
+            yAxis: {
+                allowDecimals: true,
+                title: {
+                    text: ' '
+                },
+                tickInterval: 100000,
+                endOnTick: false,
+            },
+            credits: {
+                enabled: false
+            },
+            series: [{
+                    name: 'Año <?php echo $anofiltro; ?>',
+                    data: [
+                        <?php   foreach($registrosMarcas as $rowMarcas){ echo (($rowMarcas['VALHON']==0)?0:$rowMarcas['VALHON']).","; }; ?>],
+                    dataLabels: [{
+                        align: "center",
+                        inside: false,
+                        rotation: 290,
+                        y: -25,
+                        x: -2,
+                        enabled: true,
+                        borderColor: "",
+                        style: {
+                            fontSize: "12px",
+                            fontWeight: 'bold',
+                            fontFamily: "Arial",
+                            textShadow: false
+                        }
+                    }],
+                },
+                {
+                    name: 'Año <?php echo $anofiltro-1; ?>',
+                    data: [
+                        <?php   foreach($registrosMarcas as $rowMarcas){ echo (($rowMarcas['VALHON2']==0)?0:$rowMarcas['VALHON2']).","; }; ?>],
+                    dataLabels: [{
+                        align: "center",
+                        inside: false,
+                        rotation: 290,
+                        y: -25,
+                        x: 5,
+                        enabled: true,
+                        borderColor: "",
+                        style: {
+                            fontSize: "12px",
+                            fontWeight: 'bold',
+                            fontFamily: "Arial",
+                            textShadow: false
+                        }
+                    }],
+                },
+            ],
+            responsive: {
+                rules: [{
+                    condition: {
+                        maxWidth: 500
+                    },
+                    chartOptions: {
+                        legend: {
+                            align: 'center',
+                            verticalAlign: 'bottom',
+                            layout: 'horizontal'
+                        },
+                        yAxis: {
+                            labels: {
+                                align: 'left',
+                                x: 0,
+                                y: -5
+                            },
+                            title: {
+                                text: null
+                            }
+                        },
+                        subtitle: {
+                            text: null
+                        },
+                        credits: {
+                            enabled: false
+                        }
+                    }
+                }]
+            }
+        });
+        //GUATEMALA
+        var chart = Highcharts.chart('containerGua', {
+            chart: {
+                height: 600,
+                type: 'column'
+            },
+            lang: {
+                viewFullscreen: "Ver en pantalla completa",
+                exitFullscreen: "Salir de pantalla completa",
+                downloadJPEG: "Descargar imagen JPEG",
+                downloadPDF: "Descargar en PDF",
+            },
+            exporting: {
+                buttons: {
+                    contextButton: {
+                        menuItems: ["viewFullscreen", "separator", "downloadJPEG", "downloadPDF"]
+                    }
+                },
+                enabled: true,
+                filename: 'Guatemala-Comparativo Marcas',
+                sourceWidth: 1200,
+                sourceHeight: 800,
+            },
+            title: {
+                text: 'GUATEMALA<br><br> Año <?php echo $anofiltro; ?> vs Año <?php echo $anofiltro-1; ?>',
+                margin: 50
+            },
+            xAxis: {
+                categories: [
+                    <?php   foreach($registrosMarcas as $rowMarcas){ echo "'".$rowMarcas['DESDES']."',"; }; ?>
+                ],
+                labels: {
+                    x: -10
+                }
+            },
+            yAxis: {
+                allowDecimals: true,
+                title: {
+                    text: ' '
+                },
+                endOnTick: false,
+            },
+            credits: {
+                enabled: false
+            },
+            series: [{
+                    name: 'Año <?php echo $anofiltro; ?>',
+                    data: [
+                        <?php   foreach($registrosMarcas as $rowMarcas){ echo (($rowMarcas['VALGUA']==0)?0:$rowMarcas['VALGUA']).","; }; ?>],
+                    dataLabels: [{
+                        align: "center",
+                        inside: false,
+                        rotation: 290,
+                        y: -25,
+                        x: -2,
+                        enabled: true,
+                        borderColor: "",
+                        style: {
+                            fontSize: "12px",
+                            fontWeight: 'bold',
+                            fontFamily: "Arial",
+                            textShadow: false
+                        }
+                    }],
+                },
+                {
+                    name: 'Año <?php echo $anofiltro-1; ?>',
+                    data: [
+                        <?php   foreach($registrosMarcas as $rowMarcas){ echo (($rowMarcas['VALGUA2']==0)?0:$rowMarcas['VALGUA2']).","; }; ?>],
+                    dataLabels: [{
+                        align: "center",
+                        inside: false,
+                        rotation: 290,
+                        y: -25,
+                        x: 5,
+                        enabled: true,
+                        borderColor: "",
+                        style: {
+                            fontSize: "12px",
+                            fontWeight: 'bold',
+                            fontFamily: "Arial",
+                            textShadow: false
+                        }
+                    }],
+                },
+            ],
+            responsive: {
+                rules: [{
+                    condition: {
+                        maxWidth: 500
+                    },
+                    chartOptions: {
+                        legend: {
+                            align: 'center',
+                            verticalAlign: 'bottom',
+                            layout: 'horizontal'
+                        },
+                        yAxis: {
+                            labels: {
+                                align: 'left',
+                                x: 0,
+                                y: -5
+                            },
+                            title: {
+                                text: null
+                            }
+                        },
+                        subtitle: {
+                            text: null
+                        },
+                        credits: {
+                            enabled: false
+                        }
+                    }
+                }]
+            }
+        });
+        //EL SALVADOR
+        var chart = Highcharts.chart('containerSal', {
+            chart: {
+                height: 600,
+                type: 'column'
+            },
+            lang: {
+                viewFullscreen: "Ver en pantalla completa",
+                exitFullscreen: "Salir de pantalla completa",
+                downloadJPEG: "Descargar imagen JPEG",
+                downloadPDF: "Descargar en PDF",
+            },
+            exporting: {
+                buttons: {
+                    contextButton: {
+                        menuItems: ["viewFullscreen", "separator", "downloadJPEG", "downloadPDF"]
+                    }
+                },
+                enabled: true,
+                filename: 'ElSalvador-Comparativo Marcas',
+                sourceWidth: 1200,
+                sourceHeight: 800,
+            },
+            title: {
+                text: 'EL SALVADOR<br><br> Año <?php echo $anofiltro; ?> vs Año <?php echo $anofiltro-1; ?>',
+                margin: 50
+            },
+            xAxis: {
+                categories: [
+                    <?php   foreach($registrosMarcas as $rowMarcas){ echo "'".$rowMarcas['DESDES']."',"; }; ?>
+                ],
+                labels: {
+                    x: -10
+                }
+            },
+            yAxis: {
+                allowDecimals: true,
+                title: {
+                    text: ' '
+                },
+                endOnTick: false,
+            },
+            credits: {
+                enabled: false
+            },
+            series: [{
+                    name: 'Año <?php echo $anofiltro; ?>',
+                    data: [
+                        <?php   foreach($registrosMarcas as $rowMarcas){ echo (($rowMarcas['VALSAL']==0)?0:$rowMarcas['VALSAL']).","; }; ?>],
+                    dataLabels: [{
+                        align: "center",
+                        inside: false,
+                        rotation: 290,
+                        y: -25,
+                        x: -2,
+                        enabled: true,
+                        borderColor: "",
+                        style: {
+                            fontSize: "12px",
+                            fontWeight: 'bold',
+                            fontFamily: "Arial",
+                            textShadow: false
+                        }
+                    }],
+                },
+                {
+                    name: 'Año <?php echo $anofiltro-1; ?>',
+                    data: [
+                        <?php   foreach($registrosMarcas as $rowMarcas){ echo (($rowMarcas['VALSAL2']==0)?0:$rowMarcas['VALSAL2']).","; }; ?>],
+                    dataLabels: [{
+                        align: "center",
+                        inside: false,
+                        rotation: 290,
+                        y: -25,
+                        x: 5,
+                        enabled: true,
+                        borderColor: "",
+                        style: {
+                            fontSize: "12px",
+                            fontWeight: 'bold',
+                            fontFamily: "Arial",
+                            textShadow: false
+                        }
+                    }],
+                },
+            ],
+            responsive: {
+                rules: [{
+                    condition: {
+                        maxWidth: 500
+                    },
+                    chartOptions: {
+                        legend: {
+                            align: 'center',
+                            verticalAlign: 'bottom',
+                            layout: 'horizontal'
+                        },
+                        yAxis: {
+                            labels: {
+                                align: 'left',
+                                x: 0,
+                                y: -5
+                            },
+                            title: {
+                                text: null
+                            }
+                        },
+                        subtitle: {
+                            text: null
+                        },
+                        credits: {
+                            enabled: false
+                        }
+                    }
+                }]
+            }
+        });
+        //COSTA RICA
+        var chart = Highcharts.chart('containerCos', {
+            chart: {
+                height: 600,
+                type: 'column'
+            },
+            lang: {
+                viewFullscreen: "Ver en pantalla completa",
+                exitFullscreen: "Salir de pantalla completa",
+                downloadJPEG: "Descargar imagen JPEG",
+                downloadPDF: "Descargar en PDF",
+            },
+            exporting: {
+                buttons: {
+                    contextButton: {
+                        menuItems: ["viewFullscreen", "separator", "downloadJPEG", "downloadPDF"]
+                    }
+                },
+                enabled: true,
+                filename: 'CostaRica-Comparativo Marcas',
+                sourceWidth: 1200,
+                sourceHeight: 800,
+            },
+            title: {
+                text: 'COSTA RICA<br><br> Año <?php echo $anofiltro; ?> vs Año <?php echo $anofiltro-1; ?>',
+                margin: 50
+            },
+            xAxis: {
+                categories: [
+                    <?php   foreach($registrosMarcas as $rowMarcas){ echo "'".$rowMarcas['DESDES']."',"; }; ?>
+                ],
+                labels: {
+                    x: -10
+                }
+            },
+            yAxis: {
+                allowDecimals: true,
+                title: {
+                    text: ' '
+                },
+                endOnTick: false,
+            },
+            credits: {
+                enabled: false
+            },
+            series: [{
+                    name: 'Año <?php echo $anofiltro; ?>',
+                    data: [
+                        <?php   foreach($registrosMarcas as $rowMarcas){ echo (($rowMarcas['VALCOS']==0)?0:$rowMarcas['VALCOS']).","; }; ?>],
+                    dataLabels: [{
+                        align: "center",
+                        inside: false,
+                        rotation: 290,
+                        y: -25,
+                        x: -2,
+                        enabled: true,
+                        borderColor: "",
+                        style: {
+                            fontSize: "12px",
+                            fontWeight: 'bold',
+                            fontFamily: "Arial",
+                            textShadow: false
+                        }
+                    }],
+                },
+                {
+                    name: 'Año <?php echo $anofiltro-1; ?>',
+                    data: [
+                        <?php   foreach($registrosMarcas as $rowMarcas){ echo (($rowMarcas['VALCOS2']==0)?0:$rowMarcas['VALCOS2']).","; }; ?>],
+                    dataLabels: [{
+                        align: "center",
+                        inside: false,
+                        rotation: 290,
+                        y: -25,
+                        x: 5,
+                        enabled: true,
+                        borderColor: "",
+                        style: {
+                            fontSize: "12px",
+                            fontWeight: 'bold',
+                            fontFamily: "Arial",
+                            textShadow: false
+                        }
+                    }],
+                },
+            ],
+            responsive: {
+                rules: [{
+                    condition: {
+                        maxWidth: 500
+                    },
+                    chartOptions: {
+                        legend: {
+                            align: 'center',
+                            verticalAlign: 'bottom',
+                            layout: 'horizontal'
+                        },
+                        yAxis: {
+                            labels: {
+                                align: 'left',
+                                x: 0,
+                                y: -5
+                            },
+                            title: {
+                                text: null
+                            }
+                        },
+                        subtitle: {
+                            text: null
+                        },
+                        credits: {
+                            enabled: false
+                        }
+                    }
+                }]
+            }
+        });
+        //NICARAGUA
+        var chart = Highcharts.chart('containerNic', {
+            chart: {
+                height: 600,
+                type: 'column'
+            },
+            lang: {
+                viewFullscreen: "Ver en pantalla completa",
+                exitFullscreen: "Salir de pantalla completa",
+                downloadJPEG: "Descargar imagen JPEG",
+                downloadPDF: "Descargar en PDF",
+            },
+            exporting: {
+                buttons: {
+                    contextButton: {
+                        menuItems: ["viewFullscreen", "separator", "downloadJPEG", "downloadPDF"]
+                    }
+                },
+                enabled: true,
+                filename: 'Nicaragua-Comparativo Marcas',
+                sourceWidth: 1200,
+                sourceHeight: 800,
+            },
+            title: {
+                text: 'NICARAGUA<br><br> Año <?php echo $anofiltro; ?> vs Año <?php echo $anofiltro-1; ?>',
+                margin: 50
+            },
+            xAxis: {
+                categories: [
+                    <?php   foreach($registrosMarcas as $rowMarcas){ echo "'".$rowMarcas['DESDES']."',"; }; ?>
+                ],
+                labels: {
+                    x: -10
+                }
+            },
+            yAxis: {
+                allowDecimals: true,
+                title: {
+                    text: ' '
+                },
+                endOnTick: false,
+            },
+            credits: {
+                enabled: false
+            },
+            series: [{
+                    name: 'Año <?php echo $anofiltro; ?>',
+                    data: [
+                        <?php   foreach($registrosMarcas as $rowMarcas){ echo (($rowMarcas['VALNIC']==0)?0:$rowMarcas['VALNIC']).","; }; ?>],
+                    dataLabels: [{
+                        align: "center",
+                        inside: false,
+                        rotation: 290,
+                        y: -25,
+                        x: -2,
+                        enabled: true,
+                        borderColor: "",
+                        style: {
+                            fontSize: "12px",
+                            fontWeight: 'bold',
+                            fontFamily: "Arial",
+                            textShadow: false
+                        }
+                    }],
+                },
+                {
+                    name: 'Año <?php echo $anofiltro-1; ?>',
+                    data: [
+                        <?php   foreach($registrosMarcas as $rowMarcas){ echo (($rowMarcas['VALNIC2']==0)?0:$rowMarcas['VALNIC2']).","; }; ?>],
+                    dataLabels: [{
+                        align: "center",
+                        inside: false,
+                        rotation: 290,
+                        y: -25,
+                        x: 5,
+                        enabled: true,
+                        borderColor: "",
+                        style: {
+                            fontSize: "12px",
+                            fontWeight: 'bold',
+                            fontFamily: "Arial",
+                            textShadow: false
+                        }
+                    }],
+                },
+            ],
+            responsive: {
+                rules: [{
+                    condition: {
+                        maxWidth: 500
+                    },
+                    chartOptions: {
+                        legend: {
+                            align: 'center',
+                            verticalAlign: 'bottom',
+                            layout: 'horizontal'
+                        },
+                        yAxis: {
+                            labels: {
+                                align: 'left',
+                                x: 0,
+                                y: -5
+                            },
+                            title: {
+                                text: null
+                            }
+                        },
+                        subtitle: {
+                            text: null
+                        },
+                        credits: {
+                            enabled: false
+                        }
+                    }
+                }]
+            }
+        });
+        //REP DOMINICANA
+        var chart = Highcharts.chart('containerRep', {
+            chart: {
+                height: 600,
+                type: 'column'
+            },
+            lang: {
+                viewFullscreen: "Ver en pantalla completa",
+                exitFullscreen: "Salir de pantalla completa",
+                downloadJPEG: "Descargar imagen JPEG",
+                downloadPDF: "Descargar en PDF",
+            },
+            exporting: {
+                buttons: {
+                    contextButton: {
+                        menuItems: ["viewFullscreen", "separator", "downloadJPEG", "downloadPDF"]
+                    }
+                },
+                enabled: true,
+                filename: 'RepDominicana-Comparativo Marcas',
+                sourceWidth: 1200,
+                sourceHeight: 800,
+            },
+            title: {
+                text: 'REP. DOMINICANA<br><br> Año <?php echo $anofiltro; ?> vs Año <?php echo $anofiltro-1; ?>',
+                margin: 50
+            },
+            xAxis: {
+                categories: [
+                    <?php   foreach($registrosMarcas as $rowMarcas){ echo "'".$rowMarcas['DESDES']."',"; }; ?>
+                ],
+                labels: {
+                    x: -10
+                }
+            },
+            yAxis: {
+                allowDecimals: true,
+                title: {
+                    text: ' '
+                },
+                endOnTick: false,
+            },
+            credits: {
+                enabled: false
+            },
+            series: [{
+                    name: 'Año <?php echo $anofiltro; ?>',
+                    data: [
+                        <?php   foreach($registrosMarcas as $rowMarcas){ echo (($rowMarcas['VALREP']==0)?0:$rowMarcas['VALREP']).","; }; ?>],
+                    dataLabels: [{
+                        align: "center",
+                        inside: false,
+                        rotation: 290,
+                        y: -25,
+                        x: -2,
+                        enabled: true,
+                        borderColor: "",
+                        style: {
+                            fontSize: "12px",
+                            fontWeight: 'bold',
+                            fontFamily: "Arial",
+                            textShadow: false
+                        }
+                    }],
+                },
+                {
+                    name: 'Año <?php echo $anofiltro-1; ?>',
+                    data: [
+                        <?php   foreach($registrosMarcas as $rowMarcas){ echo (($rowMarcas['VALREP2']==0)?0:$rowMarcas['VALREP2']).","; }; ?>],
+                    dataLabels: [{
+                        align: "center",
+                        inside: false,
+                        rotation: 290,
+                        y: -25,
+                        x: 5,
+                        enabled: true,
+                        borderColor: "",
+                        style: {
+                            fontSize: "12px",
+                            fontWeight: 'bold',
+                            fontFamily: "Arial",
+                            textShadow: false
+                        }
+                    }],
+                },
+            ],
+            responsive: {
+                rules: [{
+                    condition: {
+                        maxWidth: 500
+                    },
+                    chartOptions: {
+                        legend: {
+                            align: 'center',
+                            verticalAlign: 'bottom',
+                            layout: 'horizontal'
+                        },
+                        yAxis: {
+                            labels: {
+                                align: 'left',
+                                x: 0,
+                                y: -5
+                            },
+                            title: {
+                                text: null
+                            }
+                        },
+                        subtitle: {
+                            text: null
+                        },
+                        credits: {
+                            enabled: false
+                        }
+                    }
+                }]
+            }
+        });
+
+
+
+        if (<?php echo $validator;?> == true) {
+            $("#grafica").addClass("d-none");
+        }
+
+    });
+    </script>
+    <script src="../../assets/vendors/monthpicker/picker.js"></script>
     <script src="../../assets/vendors/monthpicker/calendars.min.js"></script>
 </body>
 

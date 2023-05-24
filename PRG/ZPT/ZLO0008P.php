@@ -95,6 +95,7 @@
 
       $marcasLabel[]=array();  $cont=0;
       while($rowMarcas = odbc_fetch_array($resultMarcas)){
+        $marcasId[$cont]=$rowMarcas['DESCO1'];
         $marcasLabel[$cont]=$rowMarcas['DESDES'];
         $cont++;
       }
@@ -260,7 +261,13 @@
                                     
                                     print '<tr>';
                                       print '<td>1</td>';
-                                      print '<td class="responsive-font-example fw-bold text-start">'.$marcasLabel[$cont].'</td>';
+                                      for ($i=0; $i < count($marcasId); $i++) { 
+                                        if ($marcasId[$i]==$rowMeses['MARCA']) {
+                                             print '<td class="responsive-font-example fw-bold text-start">'.$marcasLabel[$i].'</td>';
+                                          $paisesLabel1[$cont]=$marcasLabel[$i];
+                                        }
+                                      }
+                                      
                                       if($PRV12M==0){print '<td class="responsive-font-example fw-bold text-end"> </td>';}else{print '<td class="responsive-font-example fw-bold text-end">'.number_format($PRV12M,2).'</td>';}
                                       if($PRV06M==0){print '<td class="responsive-font-example fw-bold text-end"> </td>';}else{print '<td class="responsive-font-example fw-bold text-end">'.number_format($PRV06M,2).'</td>';}
                                       if($rowMeses['MIN12M']==0){print '<td class="responsive-font-example fw-bold text-end"> </td>';}else{print '<td class="responsive-font-example fw-bold text-end">'.number_format($rowMeses['MIN12M'],2).'</td>';}
@@ -276,33 +283,7 @@
                                     $paisesM6[$cont]=round($rowMeses['M6'],2);
                                     $cont++;
                                    }}
-                                   $paisesLabel1=array_values($marcasLabel);
-                                   if(count($paisesM1)!=1 && count($paisesM2)!=1 && count($paisesM3)!=1 
-                                   && count($paisesM4)!=1 && count($paisesM5)!=1 && count($paisesM6)!=1){
-                                    for ($i=0; $i < 4; $i++) { 
-                                      for ($j = 0; $j < ((count($paisesLabel1))); $j++) {
-                                        if ( $paisesM1[$j] == 0 && $paisesM2[$j] == 0 && $paisesM3[$j] == 0 && $paisesM4[$j] == 0 && $paisesM5[$j] == 0 && $paisesM6[$j] == 0
-                                        ) { unset($paisesLabel1[$j]);
-                                            unset($paisesM1[$j]);
-                                            unset($paisesM2[$j]);
-                                            unset($paisesM3[$j]);
-                                            unset($paisesM4[$j]);
-                                            unset($paisesM5[$j]);
-                                            unset($paisesM6[$j]);
-                                        }
-                                    }
-                                    $paisesLabel1 = array_values($paisesLabel1);
-                                    $paisesM1 = array_values($paisesM1);
-                                    $paisesM2 = array_values($paisesM2);
-                                    $paisesM3 = array_values($paisesM3);
-                                    $paisesM4 = array_values($paisesM4);
-                                    $paisesM5 = array_values($paisesM5);
-                                    $paisesM6 = array_values($paisesM6);
-                                  
-                                    }
-                                    
-                               
-                              }
+
                                 ?>
                               </tbody>
                           </table>
@@ -402,8 +383,13 @@
                                      }
                                     
                                     print '<tr>';
-                                      print '<td>1</td>';
-                                      print '<td class="responsive-font-example fw-bold text-start">'.$marcasLabel[$cont1].'</td>';
+                                      print '<td>'.$rowUni['MARCA'].'</td>';
+                                      for ($i=0; $i < count($marcasId); $i++) { 
+                                        if ($marcasId[$i]==$rowUni['MARCA']) {
+                                             print '<td class="responsive-font-example fw-bold text-start">'.$marcasLabel[$i].'</td>';
+                                             $paisesLabel2[$cont1]=$marcasLabel[$i];
+                                        }
+                                      }
                                       if($UNICOM==0){print '<td class="responsive-font-example fw-bold text-end"> </td>';}else{print '<td class="responsive-font-example fw-bold text-end">'.number_format($UNICOM,2).'</td>';}
                                       if($UNIVEN==0){print '<td class="responsive-font-example fw-bold text-end"> </td>';}else{print '<td class="responsive-font-example fw-bold text-end">'.number_format($UNIVEN,2).'</td>';}
                                       if ($variacion<0) {print '<td class="text-danger responsive-font-example fw-bold text-end">'.number_format(($variacion),0).'</td>';}else{if ($variacion>0) {print '<td class="text-success responsive-font-example fw-bold text-end">'.number_format(($variacion),0).'</td>';}else{print '<td class="fw-bold responsive-font-example text-end">'.(($variacion==0)?' ':number_format( $variacion,0)).'</td>';}}
@@ -415,28 +401,7 @@
                                     $cont1++;
                                    }}
                                 
-                                   if (count($paisesUndComp)!=1) {
-                                  
-                                  $paisesLabel2=array_values($marcasLabel);
-                                  if(count($paisesUndComp)!=1 && count($paisesUndVen)!=1 && count($paisesUndExi)!=1 ){
-                                    
-                                  for ($i = 0; $i <= ((count($paisesLabel2))+10); $i++) {
-                                    if (
-                                        $paisesUndComp[$i] == 0 &&
-                                        $paisesUndVen[$i] == 0 &&
-                                        $paisesUndExi[$i] == 0 
-                                    ) {
-                                        unset($paisesLabel2[$i]);
-                                        unset($paisesUndComp[$i]);
-                                        unset($paisesUndVen[$i]);
-                                        unset($paisesUndExi[$i]);
-                                    }
-                                }
-                                $paisesLabel2 = array_values($paisesLabel2);
-                                $paisesUndComp = array_values($paisesUndComp);
-                                $paisesUndVen = array_values($paisesUndVen);
-                                $paisesUndExi = array_values($paisesUndExi);
-                              }}
+                                 
                                 ?>
                               </tbody>
                           </table>
