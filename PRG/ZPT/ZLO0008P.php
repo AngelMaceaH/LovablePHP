@@ -221,7 +221,7 @@
                             </thead>
                             <tbody>
                                 <?php
-                                $paisesLabel[]=array();  $cont=0;
+                                $paisesLabel1[]=array();  $cont=0;
                                 $paisesM1[]=array();
                                 $paisesM2[]=array();
                                 $paisesM3[]=array();
