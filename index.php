@@ -44,7 +44,7 @@
         <li class="breadcrumb-item">
               <span>Inicio</span>
         </li>
-        <li class="breadcrumb-item active"><span>Pagina Principal</span></li>
+        <li class="breadcrumb-item active"><span>Página principal</span></li>
       </ol>
     </nav>
   </div>

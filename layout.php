@@ -74,7 +74,7 @@
                     $moduloDescripcion .= $modulo[$i] . " ";
                 }
             }
-            echo '$("#menu-display").append(\'<li class="nav-group "><a class="nav-link nav-group-toggle" href="#">\
+            echo '$("#menu-display").append(\'<li class="nav-group mt-2"><a class="nav-link nav-group-toggle" href="#">\
             '.$moduloDescripcion.'\</a>\
             <ul class="nav-group-items">\
               <div id="'.$rowLM['DETC91'].'">\
@@ -111,8 +111,12 @@
       </div>
       <ul class="sidebar-nav bg-blck2 mt-3" data-coreui="navigation" data-simplebar="">
         <li class="nav-item mt-3"><a class="nav-link" href="<?php echo $_SESSION['INDEX']; ?>">
-             Inicio</a>
+          <svg class="nav-icon">
+              <use xlink:href="assets/vendors/@coreui/icons/svg/free.svg#cil-home"></use>
+            </svg>
+          Página principal</a>
         </li>
+        <hr>
        <div id="menu-display">
          
        </div>
