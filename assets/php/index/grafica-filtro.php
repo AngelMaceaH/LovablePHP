@@ -1,6 +1,6 @@
 <?php
 session_start();
-$_SESSION['dolaresCk']= isset($_POST['dolaresChk']) ? "true": "false";
+$_SESSION['dolaresCk']= isset($_POST['dolaresChk']) ? "1": "0";
 $_SESSION['fechack'] = isset($_POST['fechaCk10']) ? $_POST['fechaCk10']: "";
 $fechagrafica = isset($_POST['fechagra']) ? $_POST['fechagra']: "";
 $_SESSION['$compFiltro'] = isset($_POST['cbbMesgra']) ? $_POST['cbbMesgra']: "";

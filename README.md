@@ -1,2 +1,2 @@
 # DEVLovablePHP
- Desarrollo Proyecto PHP para Lovable Honduras
+ Ambiente Desarrollo Proyecto PHP para Lovable Honduras

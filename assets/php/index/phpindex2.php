@@ -3,7 +3,7 @@ function obtenerNombreMes($numeroMes) {
     $nombresMes = array('Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre');
     return $nombresMes[$numeroMes - 1];
   }
-  $dolarescheck=isset($_SESSION['dolaresCk'])? $_SESSION['dolaresCk']:"true";
+  $dolarescheck=isset($_SESSION['dolaresCk'])? $_SESSION['dolaresCk']:"1";
   $fechacheck=isset($_SESSION['fechack'])? $_SESSION['fechack']:"false";
   $fecha_actual = date("Ymd");
   $mes_actual=date("m");
