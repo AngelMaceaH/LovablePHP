@@ -191,6 +191,13 @@
                       <div class="row">
                         <div class="col-12 ">
                         <div class="row">
+                      <div class="col-12 col-lg-3 mt-2 d-flex  flex-wrap">
+                        <label for="cbbOrden4" class="me-3 mt-2" id="lblcbbOrden4">Organizar por: </label>
+                        <select name="cbbOrden4" id="cbbOrden4" class="form-select" >
+                          <option value="2">Mayor a Menor</option>
+                          <option value="3">Menor a Mayor</option>
+                        </select>
+                      </div>
                       <div class="col-12 col-lg-9 mt-2 d-flex flex-wrap">
                       </div>
                       <div class="col-12 mt-2">

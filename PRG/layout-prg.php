@@ -15,11 +15,12 @@
    
     <link href="../../assets/css/examples.css" rel="stylesheet">
     <link href="../../assets/css/mystyle.css" rel="stylesheet">
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/js/all.min.js"
         integrity="sha512-2bMhOkE/ACz21dJT8zBOMgMecNxx0d37NND803ExktKiKdSzdwn+L7i9fdccw/3V06gM/DBWKbYmQvKMdAA9Nw=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -53,46 +54,66 @@
               setTimeout(() => {spinnerWrapperEl.style.display = 'none';}, 500);
           var usuario='<?php echo $_SESSION['CODUSU'];?>';
           var isDev='<?php echo $_SESSION['DEV'];?>';
-           //MODULOS
-            var urlModulos='http://172.16.15.20/API.LovablePHP/Access/LayoutM/?user='+usuario+'';
-            var responseModulos = ajaxRequest(urlModulos);
-            if (responseModulos.code==200) {
-            for (let i = 0; i < responseModulos.data.length; i++) {
-              $("#menu-display").append(`<li class="nav-group mt-2"><a class="nav-link nav-group-toggle" href="#">
-              `+responseModulos.data[i]['APLDES']+`</a>
+         //MODULOS
+      var urlModulos = 'http://172.16.15.20/API.LovablePHP/Access/LayoutM/?user=' + usuario + '';
+      var responseModulos = ajaxRequest(urlModulos);
+      if (responseModulos.code == 200) {
+        for (let i = 0; i < responseModulos.data.length; i++) {
+          $("#menu-display").append(`<li class="nav-group mt-2"><a class="nav-link nav-group-toggle" href="#">` + responseModulos.data[i]['APLDES'] + `</a>
                                           <ul class="nav-group-items">
-                                            <div id="`+responseModulos.data[i]['DETC91']+`">
+                                            <div id="` + responseModulos.data[i]['DETC91'] + `">
+                                          </div>
+                                        </ul>
+                                      </li>`);
+        }
+      }
+      //SUBMODULOS
+        var urlSubModulosCount='http://172.16.15.20/API.LovablePHP/Access/LayoutSCount/?user='+usuario+'';
+        var responseSMCount = ajaxRequest(urlSubModulosCount);
+        var urlSubModulos='http://172.16.15.20/API.LovablePHP/Access/LayoutS/';
+        var responseSM = ajaxRequest(urlSubModulos);
+        if (responseSM.code==200) {
+          for (let i = 0; i < responseSM.data.length; i++) {
+           for (let j = 0; j < responseSMCount.data.length; j++) {
+              if (responseSM.data[i]['CATSE1']==responseSMCount.data[j]['CATSEC']) {
+                  $("#"+responseSMCount.data[j]['DETC91']+"").append(`<li class="nav-group mt-2" aria-expanded="false">
+                                      <a class="nav-link nav-group-toggle" href="#">` + responseSM.data[i]['CATDES'] + `</a>
+                                          <ul class="nav-group-items">
+                                            <div id="`+responseSMCount.data[j]['DETC91']+"-"+responseSM.data[i]['CATSE1'] + `">
                                               <li class="nav-item" id="hiddenli"><a class="nav-link" href="#"><span class="nav-icon"></span></a></li>
-                                            </div>
-                                          </ul>
-                                          </li>`);
-            }
+                                          </div>
+                                        </ul>
+                                      </li>`);
+                                      $("#"+responseSMCount.data[j]['DETC91']+" #hiddenli").remove();
+              }
+           }
           }
-           //PROGRAMAS
-            var urlProgramas='http://172.16.15.20/API.LovablePHP/Access/LayoutP/?user='+usuario+'';
-            var responseProgramas = ajaxRequest(urlProgramas);
-          if (responseProgramas.code==200) {
-            function descripcionPrograma(row) {
-                let programa = row.trim().replace(/\s+/g, ' ').split(' ');
-                let programaDescripcion = "";
-                for (let i = 0; i < programa.length; i++) {
-                  if ((i + 1) % 3 === 0) {
-                    programaDescripcion += programa[i] + "<br>";
-                  } else {
-                    programaDescripcion += programa[i] + " ";
-                  }
-                }
-                return programaDescripcion;
-              }
-            for (let i = 0; i < responseProgramas.data.length; i++) {
-                $("#"+responseProgramas.data[i]['DETC91']+"").append(`<li class="nav-item">
-                                                                        <a class="nav-link" href="/`+isDev+`LovablePHP/PRG/`+responseProgramas.data[i]['DETC91']+`/`+responseProgramas.data[i]['CATNOM']+`.php">
-                                                                        <span class="nav-icon"></span>`+descripcionPrograma(responseProgramas.data[i]['CATDE1'])+`
-                                                                        </a>
-                                                                    </li>`);
-              $("#"+responseProgramas.data[i]['DETC91']+" #hiddenli").remove();
+        }
+
+     //PROGRAMAS
+      var urlProgramas='http://172.16.15.20/API.LovablePHP/Access/LayoutP2/?user='+usuario+'';
+      var responsePRG= ajaxRequest(urlProgramas);
+      if (responsePRG.code==200) {
+        function descripcionPrograma(row) {
+            let programa = row.trim().replace(/\s+/g, ' ').split(' ');
+            let programaDescripcion = "";
+            for (let i = 0; i < programa.length; i++) {
+              if ((i + 1) % 3 === 0) {
+                programaDescripcion += programa[i] + "<br>";
+              } else {
+                programaDescripcion += programa[i] + " ";
               }
             }
+            return programaDescripcion;
+          }
+        for (let i = 0; i < responsePRG.data.length; i++) {
+          $("#"+responsePRG.data[i]['DETC91']+"-"+responsePRG.data[i]['CATSEC']+"").append(`<li class="nav-item">
+                                                                    <a class="nav-link" href="/`+isDev+`LovablePHP/PRG/`+responsePRG.data[i]['DETC91']+`/`+responsePRG.data[i]['CATNOM']+`.php">
+                                                                    <span class="nav-icon"></span>`+descripcionPrograma(responsePRG.data[i]['CATDE1'])+`
+                                                                    </a>
+                                                                </li>`);
+        }
+      }
        
         });
         </script>

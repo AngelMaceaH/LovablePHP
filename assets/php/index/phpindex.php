@@ -3,6 +3,7 @@
     $nombresMes = array('Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre');
     return $nombresMes[$numeroMes - 1];
   }
+  
   $dolarescheck=isset($_SESSION['dolaresCk'])? $_SESSION['dolaresCk']:"1";
   $fechacheck=isset($_SESSION['fechack'])? $_SESSION['fechack']:"false";
   $fecha_actual = date("Ymd");
@@ -32,6 +33,15 @@
   }
   $anoGraficas1=(float)(isset($aniografica)? $aniografica:$ano_actual);
   $anoGraficas2=(float)(isset($aniografica)? $aniografica:$ano_actual) - 1;
+
+  if ($_SESSION['NIVEL']==1) {
+    $_SESSION['INDEX']="index.php";
+   }elseif ($_SESSION['NIVEL']==2) {
+    echo "<script>location.href='".'/'.$_SESSION['DEV'].'LovablePHP/homepage.php'."';</script>";
+    $_SESSION['INDEX']="homepage.php";
+   }elseif ($_SESSION['NIVEL']==3) {
+    echo "<script>location.href='".'/'.$_SESSION['DEV'].'LovablePHP/homepag.php'."';</script>";
+   }
 ?>
 <script>
     function obtenerNombreMes(numeroMes) {

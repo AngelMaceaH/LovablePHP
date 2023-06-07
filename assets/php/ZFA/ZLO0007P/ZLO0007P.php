@@ -869,14 +869,14 @@
         min: 0,
         max: <?php echo (count($vendedoresLabel)>10)? 10: count($vendedoresLabel)-1;?>,
         scrollbar: {
-            enabled: false
+            enabled: true
         },
         className: 'fw-bold',
           categories:<?php echo json_encode($vendedoresLabel);?>,
       },
       yAxis: {
         scrollbar: {
-            enabled: false
+            enabled: true
         },
       min: 0,
       endOnTick: false,

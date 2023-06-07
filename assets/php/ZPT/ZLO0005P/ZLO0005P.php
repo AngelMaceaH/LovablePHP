@@ -532,7 +532,7 @@ var tab;
             }
       },
     title: {
-        text: 'Docenas en Existencias',
+        text: '',
         margin: 50
     },
 

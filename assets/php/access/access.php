@@ -37,7 +37,7 @@ if ($name!='' && $ps!='') {
      header('Location: /'.$_SESSION['DEV'].'LovablePHP/homepage.php');
      $_SESSION['INDEX']="homepage.php";
     }elseif ($_SESSION['NIVEL']==3) {
-     header('Location: /'.$_SESSION['DEV'].'LovablePHP/');
+     header('Location: /'.$_SESSION['DEV'].'LovablePHP/homepag.php');
     }
   }else{
     $_SESSION['val'] = "2";
