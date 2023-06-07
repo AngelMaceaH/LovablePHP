@@ -3,7 +3,9 @@
             <?php
               $ordenFiltro=isset($_SESSION['Orden2']) ? $_SESSION['Orden2'] : 1;
               $ordenFiltro3=isset($_SESSION['Orden3']) ? $_SESSION['Orden3'] : 1;
+              $ordenFiltro4=isset($_SESSION['Orden4']) ? $_SESSION['Orden4'] : 2;
               $productos=isset($_SESSION['productos']) ? $_SESSION['productos']:0;
+              $filtro1=isset($_SESSION['filtro1']) ? $_SESSION['filtro1']:1;
               $_SESSION['tab3'] = isset($_COOKIE['tabselected3']) ? $_COOKIE['tabselected3'] : "1";
             ?>
           //BOTONES
@@ -29,21 +31,31 @@
                     }
           $("#cbbOrden2").val(<?php echo $ordenFiltro;  ?>); 
           $("#cbbOrden3").val(<?php echo $ordenFiltro3;  ?>); 
-          $('#productos, #productos3').prop('checked',<?php echo $productos;  ?>);
-          $("#cbbOrden2, #productos").change(function() {
+          $("#cbbOrden4").val(<?php echo $ordenFiltro4;  ?>); 
+          $("#filtro1").val(<?php echo $filtro1;  ?>); 
+          $('#productos, #productos3, #productos4').prop('checked',<?php echo $productos;  ?>);
+          $("#cbbOrden2, #productos, #filtro1").change(function() {
             $("#formOrden").submit();
           });
           $("#cbbOrden3, #productos3").change(function() {
             $("#formOrden3").submit();
           });
+          $("#cbbOrden4, #productos4").change(function() {
+            $("#formOrden4").submit();
+          });
+
 
 
            //LLENADO TABLA
             var ordenPOV = '<?php echo $ordenFiltro; ?>';       
-            var otrosProd = '<?php echo $productos; ?>';     
-            var urlPOV='http://172.16.15.20/API.LovablePHP/ZLO0002P/ListPOV/?orden='+ordenPOV+'&otros='+otrosProd+'';
+            var otrosProd = '<?php echo $productos; ?>';  
+            var filtro1= '<?php echo $filtro1; ?>';  
+            var urlPOV='http://172.16.15.20/API.LovablePHP/ZLO0002P/ListPOV/?orden='+ordenPOV+'&otros='+otrosProd+''+'&filtro='+filtro1+'';
             var responsePOV = ajaxRequest(urlPOV);
-
+            var ordenFab = '<?php echo $ordenFiltro4; ?>';   
+            var urlFab='http://172.16.15.20/API.LovablePHP/ZLO0002P/ListFabrica/?orden='+ordenFab+'&otros='+otrosProd+'';
+            var responseFab= ajaxRequest(urlFab);
+            console.log(responseFab.data);
           if (responsePOV.code==200) {
             var cantidadInv=0; var docenas=0; var decimales=0;
             var ciaArray=[]; var invArray=[];
@@ -82,7 +94,29 @@
             }
         }
 
-          $("#myTableInventario, #myTableInventarioPaises").DataTable( {
+        if (responseFab.code==200) {
+            var cantidadInv=0; var docenas=0; var decimales=0;
+            var ciaFab=[]; var invFab=[];
+            for (let i = 0; i < responseFab.data.length; i++) {
+                docenas=Math.floor(parseFloat(responseFab.data[i]['MAESA2'])/12);
+                decimales=(parseFloat(responseFab.data[i]['MAESA2'])-(docenas*12));
+                decimales=decimales.toString();
+                if (decimales.length==1) {
+                decimales="0.0"+decimales;
+                }else{
+                decimales="0."+decimales;
+                }
+                cantidadInv=docenas+parseFloat(decimales);
+                $("#myTableInventarioFabBody").append(`<tr id="tl${i}">`);
+                    $('#tl'+i+'').append("<td class='fw-bold'>"+responseFab.data[i]['CODSEC']+"</td>");
+                    $('#tl'+i+'').append("<td class='fw-bold'>"+responseFab.data[i]['NOMCIA']+"</td>");
+                    $('#tl'+i+'').append("<td class='fw-bold'>"+cantidadInv.toLocaleString('es-419', {minimumFractionDigits: 2,maximumFractionDigits: 2})+"</td>");
+                $("#myTableInventarioFabBody").append(`</tr>`);
+                ciaFab.push(responseFab.data[i]['NOMCIA']);
+                invFab.push(parseFloat(cantidadInv));
+            }
+           }
+          $("#myTableInventario, #myTableInventarioPaises, #myTableInventarioFab").DataTable( {
             stateSave: true,
         language: {
             url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json',
@@ -538,7 +572,132 @@
                     }
                 }
             });
+
+             //GRAFICA FABRICA BARRA    
+          
+
+             Highcharts.chart('container3', {
+    lang: {      
+          viewFullscreen:"Ver en pantalla completa",
+          exitFullscreen:"Salir de pantalla completa",
+          downloadJPEG:"Descargar imagen JPEG",
+          downloadPDF:"Descargar en PDF",
+      },
+      chart: {
+        height: 500,
+        type: 'column'
+      },
+      title: {
+          text: '',
+      },
+      xAxis: {
+        className: 'fw-bold',
+          categories: ciaFab,
+      },
+      yAxis: {
+      min: 0,
+      endOnTick: false,
+        lineWidth: 1,
+        title: {
+            text: ' '
+
+        },
+    },
+      legend: {
+          reversed: true
+      },
+      plotOptions: {
+          series: {
+              stacking: 'normal',
+              dataLabels: {
+                  enabled: true
+              }
+          }
+      },
+      credits: {
+      enabled: false
+    },
+      series: [
+        {
+          name: 'Inventario Disponible',
+          data: invFab,
+          dataLabels: [{
+            align: "center",
+            inside: false,
+            enabled: true,
+            borderColor: "",
+            style: {
+              fontSize: "12px",
+              fontWeight: 'bold',
+              fontFamily: "Arial",
+              textShadow: false
+            }
+          }],
+        }, 
+    ],
+        exporting: {
+              buttons: {
+                  contextButton: {
+                      menuItems: ["viewFullscreen", "separator","downloadJPEG", "downloadPDF"]
+                  }
+              },
+              enabled: true,
+        filename: 'Inventario-disponible Fabrica',
+        sourceWidth: 1600,
+        sourceHeight: 900,
+        chartOptions: {
+        
+          title: {
+            style: {
+                fontSize: '20px',
+                    }
+            },
+          series: [{
+            dataLabels: {
+              style: {
+                fontSize: "16px",
+                fontWeight: "normal"
+              }
+            }
+          }],
+          
+          xAxis: {
+            //lineWidth: 1,
+            labels: {
+              rotate: -45,
+              enabled: true,
+              //format: "{value:.0f}",
+              style: {
+                fontSize: "10px",
+                fontFamily: "Arial"
+              }
+            },
+          },
+          yAxis: {
+            lineWidth: 1,
+            title: {
+              text: " ",
+              style: {
+                fontFamily: "Arial",
+                fontSize: "16px",
+              }
+            },
+            labels: {
+              //rotate: -45,
+              enabled: true,
+              format: "{value:.0f}",
+              style: {
+                fontSize: "16px",
+                fontFamily: "Arial"
+              }
+            },
+            gridLineWidth: 0
+          },
+        },
+          },
+          
+      });
         });
          
-        
+           
       </script>

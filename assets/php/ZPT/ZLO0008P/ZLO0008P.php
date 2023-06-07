@@ -587,7 +587,7 @@ var tab;
             enabled: true,
             inside: true,
             style: {
-                fontSize:'16px',
+                fontSize:'14px',
                 color: '#000',
             }
         }],
@@ -599,7 +599,7 @@ var tab;
             enabled: true,
             inside: true,
             style: {
-                fontSize:'16px',
+                fontSize:'14px',
                 color: '#000',
             }
         }],
@@ -611,7 +611,7 @@ var tab;
             enabled: true,
             inside: true,
             style: {
-                fontSize:'16px',
+                fontSize:'14px',
                 color: '#000',
             }
         }],
@@ -623,7 +623,7 @@ var tab;
             enabled: true,
             inside: true,
             style: {
-                fontSize:'16px',
+                fontSize:'14px',
                 color: '#000',
             }
         }],
@@ -635,7 +635,7 @@ var tab;
             enabled: true,
             inside: true,
             style: {
-                fontSize:'16px',
+                fontSize:'14px',
                 color: '#000',
             }
         }],
@@ -647,7 +647,7 @@ var tab;
             enabled: true,
             inside: true,
             style: {
-                fontSize:'16px',
+                fontSize:'14px',
                 color: '#000',
             }
         }],

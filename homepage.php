@@ -89,7 +89,7 @@
 
           </div>
           <div class="card-body">
-              <h1>Estadísticas de inventario en proceso...</h1>
+              <h1>Página principal en proceso...</h1>
           </div>
           <div class="card-footer">
 

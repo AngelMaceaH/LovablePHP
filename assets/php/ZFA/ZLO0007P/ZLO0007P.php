@@ -6,7 +6,7 @@
             zIndex: 10,
             plugins: ["RangePlugin"]});
             $( document ).ready(function() {
-               
+            
               var compfiltro = "<?php echo $ciaFiltro;?>";
               var paisfiltro = "<?php echo $paisFiltro; ?>";
               $("#cbbCia").val(compfiltro);
@@ -869,14 +869,14 @@
         min: 0,
         max: <?php echo (count($vendedoresLabel)>10)? 10: count($vendedoresLabel)-1;?>,
         scrollbar: {
-            enabled: true
+            enabled: false
         },
         className: 'fw-bold',
           categories:<?php echo json_encode($vendedoresLabel);?>,
       },
       yAxis: {
         scrollbar: {
-            enabled: true
+            enabled: false
         },
       min: 0,
       endOnTick: false,
@@ -1139,14 +1139,6 @@
     <?php
     }
     ?>
-
-
-
-
-
-
-
-
 
 
 

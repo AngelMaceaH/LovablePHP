@@ -267,20 +267,84 @@
                                           $paisesLabel1[$cont]=$marcasLabel[$i];
                                         }
                                       }
-                                      
+                                      switch ($paisfiltro) {
+                                        case 1:
+                                         $MIN12M=$rowMeses['MIN12M']/20;
+                                         $M1=$rowMeses['M1']/20;
+                                          $M2=$rowMeses['M2']/20;
+                                          $M3=$rowMeses['M3']/20;
+                                          $M4=$rowMeses['M4']/20;
+                                          $M5=$rowMeses['M5']/20;
+                                          $M6=$rowMeses['M6']/20;
+                                          break;
+                                          case 2:
+                                            $MIN12M=$rowMeses['MIN12M']/2;
+                                            $M1=$rowMeses['M1']/2;
+                                             $M2=$rowMeses['M2']/2;
+                                             $M3=$rowMeses['M3']/2;
+                                             $M4=$rowMeses['M4']/2;
+                                             $M5=$rowMeses['M5']/2;
+                                             $M6=$rowMeses['M6']/2;
+                                            break;
+                                          case 3:
+                                            $MIN12M=$rowMeses['MIN12M']/5;
+                                            $M1=$rowMeses['M1']/5;
+                                              $M2=$rowMeses['M2']/5;
+                                              $M3=$rowMeses['M3']/5;
+                                              $M4=$rowMeses['M4']/5;
+                                              $M5=$rowMeses['M5']/5;
+                                              $M6=$rowMeses['M6']/5;
+                                            break;
+                                            case 4:
+                                              $MIN12M=$rowMeses['MIN12M']/4;
+                                              $M1=$rowMeses['M1']/4;
+                                                $M2=$rowMeses['M2']/4;
+                                                $M3=$rowMeses['M3']/4;
+                                                $M4=$rowMeses['M4']/4;
+                                                $M5=$rowMeses['M5']/4;
+                                                $M6=$rowMeses['M6']/4;
+                                              break;
+                                              case 5:
+                                                $MIN12M=$rowMeses['MIN12M']/2;
+                                                  $M1=$rowMeses['M1']/2;
+                                                    $M2=$rowMeses['M2']/2;
+                                                    $M3=$rowMeses['M3']/2;
+                                                    $M4=$rowMeses['M4']/2;
+                                                    $M5=$rowMeses['M5']/2;
+                                                    $M6=$rowMeses['M6']/2;
+                                                break;
+                                                case 6:
+                                                  $MIN12M=$rowMeses['MIN12M']/2;
+                                                  $M1=$rowMeses['M1']/2;
+                                                   $M2=$rowMeses['M2']/2;
+                                                   $M3=$rowMeses['M3']/2;
+                                                   $M4=$rowMeses['M4']/2;
+                                                   $M5=$rowMeses['M5']/2;
+                                                   $M6=$rowMeses['M6']/2;
+                                                  break;
+                                                    default:
+                                                    $MIN12M=$rowMeses['MIN12M']/1;
+                                                    $M1=$rowMeses['M1']/1;
+                                                     $M2=$rowMeses['M2']/1;
+                                                     $M3=$rowMeses['M3']/1;
+                                                     $M4=$rowMeses['M4']/1;
+                                                     $M5=$rowMeses['M5']/1;
+                                                     $M6=$rowMeses['M6']/1;
+                                              break;
+                                          }
                                       if($PRV12M==0){print '<td class="responsive-font-example fw-bold text-end"> </td>';}else{print '<td class="responsive-font-example fw-bold text-end">'.number_format($PRV12M,2).'</td>';}
                                       if($PRV06M==0){print '<td class="responsive-font-example fw-bold text-end"> </td>';}else{print '<td class="responsive-font-example fw-bold text-end">'.number_format($PRV06M,2).'</td>';}
-                                      if($rowMeses['MIN12M']==0){print '<td class="responsive-font-example fw-bold text-end"> </td>';}else{print '<td class="responsive-font-example fw-bold text-end">'.number_format($rowMeses['MIN12M'],2).'</td>';}
-                                      if($rowMeses['M1']==0){print '<td class="responsive-font-example fw-bold text-end"> </td>';}else{print '<td class="responsive-font-example fw-bold text-end">'.number_format($rowMeses['M1'],2).'</td>';}
-                                      if($rowMeses['M2']==0){print '<td class="responsive-font-example fw-bold text-end"> </td>';}else{print '<td class="responsive-font-example fw-bold text-end">'.number_format($rowMeses['M2'],2).'</td>';}
-                                      if($rowMeses['M3']==0){print '<td class="responsive-font-example fw-bold text-end"> </td>';}else{print '<td class="responsive-font-example fw-bold text-end">'.number_format($rowMeses['M3'],2).'</td>';}
+                                      if($rowMeses['MIN12M']==0){print '<td class="responsive-font-example fw-bold text-end"> </td>';}else{print '<td class="responsive-font-example fw-bold text-end">'.number_format($MIN12M,2).'</td>';}
+                                      if($rowMeses['M1']==0){print '<td class="responsive-font-example fw-bold text-end"> </td>';}else{print '<td class="responsive-font-example fw-bold text-end">'.number_format($M1,2).'</td>';}
+                                      if($rowMeses['M2']==0){print '<td class="responsive-font-example fw-bold text-end"> </td>';}else{print '<td class="responsive-font-example fw-bold text-end">'.number_format($M2,2).'</td>';}
+                                      if($rowMeses['M3']==0){print '<td class="responsive-font-example fw-bold text-end"> </td>';}else{print '<td class="responsive-font-example fw-bold text-end">'.number_format($M3,2).'</td>';}
                                     print '</tr>';
-                                    $paisesM1[$cont]=round($rowMeses['M1'],2);
-                                    $paisesM2[$cont]=round($rowMeses['M2'],2);
-                                    $paisesM3[$cont]=round($rowMeses['M3'],2);
-                                    $paisesM4[$cont]=round($rowMeses['M4'],2);
-                                    $paisesM5[$cont]=round($rowMeses['M5'],2);
-                                    $paisesM6[$cont]=round($rowMeses['M6'],2);
+                                    $paisesM1[$cont]=round($M1,2);
+                                    $paisesM2[$cont]=round($M2,2);
+                                    $paisesM3[$cont]=round($M3,2);
+                                    $paisesM4[$cont]=round($M4,2);
+                                    $paisesM5[$cont]=round($M5,2);
+                                    $paisesM6[$cont]=round($M6,2);
                                     $cont++;
                                    }}
 
