@@ -319,7 +319,7 @@ var tab;
             }
       },
     title: {
-        text: 'Ingresado a planta vs. Docenas vendidas',
+        text: 'Ingresado de planta vs. Docenas vendidas (12 meses)',
         margin: 50
     },
 
@@ -340,7 +340,7 @@ var tab;
       enabled: false
     },
     series: [{
-        name: 'Ingreso a planta',
+        name: 'Ingresado de planta',
         data: <?php echo json_encode($paisesUndComp); ?>,
         dataLabels: {
       align: "center",
@@ -354,7 +354,7 @@ var tab;
       }
     }
     }, {
-      name: 'Doc. Vendidas',
+      name:  'Docenas vendidas',
         data: <?php echo json_encode($paisesUndVen); ?>,
         dataLabels: {
       align: "center",
@@ -506,46 +506,50 @@ var tab;
   });
   //PAISES INVENTARIO
   Highcharts.chart('container', {
+    chart: {
+        type: 'column'
+    },
     lang: {      
           viewFullscreen:"Ver en pantalla completa",
           exitFullscreen:"Salir de pantalla completa",
           downloadJPEG:"Descargar imagen JPEG",
           downloadPDF:"Descargar en PDF",
       },
-      chart: {
-        height: 500,
-          type: 'bar'
+      exporting: {
+        enabled: true,
+    filename: 'Docenas-existencias Fabrica',
+          buttons: {
+              contextButton: {
+                  menuItems: ["viewFullscreen", "separator", "downloadJPEG", "downloadPDF"]
+              }
+          },
+          plotOptions: {
+                series: {
+                    dataLabels: {
+                        enabled: true
+                    }
+                }
+            }
       },
-      title: {
-          text: 'Comparativo meses de inventario Fabrica',
-          margin: 50
-      },
-      xAxis: {
-        className: 'fw-bold',
-          categories: <?php echo json_encode($paisesLabel); ?>,
-      },
-      yAxis: {
-      min: 0,
-      endOnTick: false,
-      tickInterval: 20,
-        lineWidth: 1,
+    title: {
+        text: '',
+        margin: 50
+    },
+
+    xAxis: {
+        categories: <?php echo json_encode($paisesLabel); ?>,
+        labels: {
+            x: -10
+        }
+    },
+
+    yAxis: {
+        allowDecimals: false,
         title: {
             text: ' '
-
-        },
+        }
     },
-      legend: {
-          reversed: true
-      },
-      plotOptions: {
-          series: {
-              stacking: 'normal',
-              dataLabels: {
-                  enabled: true
-              }
-          }
-      },
-      credits: {
+    credits: {
       enabled: false
     },
       series: [

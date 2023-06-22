@@ -15,11 +15,12 @@
    
     <link href="../../assets/css/examples.css" rel="stylesheet">
     <link href="../../assets/css/mystyle.css" rel="stylesheet">
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/js/all.min.js"
         integrity="sha512-2bMhOkE/ACz21dJT8zBOMgMecNxx0d37NND803ExktKiKdSzdwn+L7i9fdccw/3V06gM/DBWKbYmQvKMdAA9Nw=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -31,7 +32,6 @@
     </style>
   </head>
   <body>
- 
         <?php
           date_default_timezone_set('America/Tegucigalpa');
           session_set_cookie_params(86400);
@@ -47,95 +47,73 @@
               header('Location: /'.$_SESSION['DEV'].'LovablePHP/login.php');
           } 
           $connIBM=conexionIBM();
-          $sqlModulos= "SELECT DETA16.DETC91, APLARC.APLDES, COUNT(*) as count 
-          FROM LBPRDDAT/DETA16
-          INNER JOIN LBPRDDAT/APLARC ON DETA16.DETC91 = APLARC.APLCOD
-          WHERE DETA16.DETUSU='".$_SESSION["CODUSU"]."' AND DETA16.DETC91 LIKE 'Z%'
-          GROUP BY DETA16.DETC91, APLARC.APLDES";
-          $resultModulos=odbc_exec($connIBM,$sqlModulos);
-          $sqlProgramas= "SELECT DETA16.DETC91, CATA99.CATNOM, CATA99.CATDE1, COUNT(*) as count 
-          FROM LBPRDDAT/DETA16
-          INNER JOIN LBPRDDAT/CATA99 ON DETA16.DETPR1 = CATA99.CATNOM
-          WHERE DETA16.DETUSU='".$_SESSION["CODUSU"]."' AND DETA16.DETC91 LIKE 'Z%'
-          GROUP BY DETA16.DETC91, CATA99.CATNOM, CATA99.CATDE1" ;
         ?>
         <script>    
          $( document ).ready(function() {
               const spinnerWrapperEl = document.querySelector('.spinner-wrapper');
               setTimeout(() => {spinnerWrapperEl.style.display = 'none';}, 500);
-
-                
-              var table2 = $('#myTable2, myTable3').DataTable( {
-                "ordering": false,
-                "pageLength": 100,
-                "language": {
-                    url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json',
-                },
-                "columnDefs": [
-                {
-                    target: 0,
-                    visible: false,
-                    searchable: false,
-                },
-              ],
-              } );
-              var tableFac = $('#myTableFactura').DataTable( {
-                "searching": false,
-                "paging": false,
-                "lengthChange": false,
-                "bInfo" : false,
-                "ordering": false,
-                "pageLength": 100,
-                "language": {
-                    url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json',
-                },
-                "columnDefs": [
-                {
-                    target: 0,
-                    visible: false,
-                    searchable: false,
-                },
-              ],
-              } );
-              
-          <?php
-          while($rowLM= odbc_fetch_array($resultModulos)){
-            $modulo = explode(" ", ucfirst(strtolower(rtrim(utf8_encode($rowLM['APLDES'])))));
-            $moduloDescripcion = "";
-            for ($i = 0; $i < count($modulo); $i++) {
-                if (($i + 1) % 3 == 0) {
-                    $moduloDescripcion .= $modulo[$i] . "<br>";
-                } else {
-                    $moduloDescripcion .= $modulo[$i] . " ";
-                }
-            }
-            echo '$("#menu-display").append(\'<li class="nav-group mt-2"><a class="nav-link nav-group-toggle" href="#">\
-            '.$moduloDescripcion.'\</a>\
-            <ul class="nav-group-items">\
-              <div id="'.$rowLM['DETC91'].'">\
-                <li class="nav-item" id="hiddenli"><a class="nav-link" href="#"><span class="nav-icon"></span></a></li>\
-              </div>\
-            </ul>\
-            </li>\');';
-         
-            $resultProgramas=odbc_exec($connIBM,$sqlProgramas);
-            while ($rowPR= odbc_fetch_array($resultProgramas)) {
-              $programa = explode(" ", ucfirst(strtolower(rtrim(utf8_encode($rowPR['CATDE1'])))));
-              $programaDescripcion = "";
-              for ($i = 0; $i < count($programa); $i++) {
-                  if (($i + 1) % 3 == 0) {
-                      $programaDescripcion .= $programa[$i] . "<br>";
-                  } else {
-                      $programaDescripcion .= $programa[$i] . " ";
-                  }
+          var usuario='<?php echo $_SESSION['CODUSU'];?>';
+          var isDev='<?php echo $_SESSION['DEV'];?>';
+         //MODULOS
+      var urlModulos = 'http://172.16.15.20/API.LovablePHP/Access/LayoutM/?user=' + usuario + '';
+      var responseModulos = ajaxRequest(urlModulos);
+      if (responseModulos.code == 200) {
+        for (let i = 0; i < responseModulos.data.length; i++) {
+          $("#menu-display").append(`<li class="nav-group mt-2"><a class="nav-link nav-group-toggle" href="#">` + responseModulos.data[i]['APLDES'] + `</a>
+                                          <ul class="nav-group-items">
+                                            <div id="` + responseModulos.data[i]['DETC91'] + `">
+                                          </div>
+                                        </ul>
+                                      </li>`);
+        }
+      }
+      //SUBMODULOS
+        var urlSubModulosCount='http://172.16.15.20/API.LovablePHP/Access/LayoutSCount/?user='+usuario+'';
+        var responseSMCount = ajaxRequest(urlSubModulosCount);
+        var urlSubModulos='http://172.16.15.20/API.LovablePHP/Access/LayoutS/';
+        var responseSM = ajaxRequest(urlSubModulos);
+        if (responseSM.code==200) {
+          for (let i = 0; i < responseSM.data.length; i++) {
+           for (let j = 0; j < responseSMCount.data.length; j++) {
+              if (responseSM.data[i]['CATSE1']==responseSMCount.data[j]['CATSEC']) {
+                  $("#"+responseSMCount.data[j]['DETC91']+"").append(`<li class="nav-group mt-2" aria-expanded="false">
+                                      <a class="nav-link nav-group-toggle" href="#">` + responseSM.data[i]['CATDES'] + `</a>
+                                          <ul class="nav-group-items">
+                                            <div id="`+responseSMCount.data[j]['DETC91']+"-"+responseSM.data[i]['CATSE1'] + `">
+                                              <li class="nav-item" id="hiddenli"><a class="nav-link" href="#"><span class="nav-icon"></span></a></li>
+                                          </div>
+                                        </ul>
+                                      </li>`);
+                                      $("#"+responseSMCount.data[j]['DETC91']+" #hiddenli").remove();
               }
-              if ($rowPR['DETC91']==$rowLM['DETC91']) {
-                echo '$("#'.$rowLM['DETC91'].'").append("<li class=\"nav-item\"><a class=\"nav-link\" href=\"/'.$_SESSION['DEV'].'LovablePHP/PRG/'.$rowPR['DETC91'].'/'.preg_replace('/\s+/', '', $rowPR['CATNOM']).'.php\"><span class=\"nav-icon\"></span>'.$programaDescripcion.'</a></li>");';
-                echo "$('#".$rowLM['DETC91']." #hiddenli').remove();";
-              }
-            }
+           }
           }
-          ?>
+        }
+
+     //PROGRAMAS
+      var urlProgramas='http://172.16.15.20/API.LovablePHP/Access/LayoutP2/?user='+usuario+'';
+      var responsePRG= ajaxRequest(urlProgramas);
+      if (responsePRG.code==200) {
+        function descripcionPrograma(row) {
+            let programa = row.trim().replace(/\s+/g, ' ').split(' ');
+            let programaDescripcion = "";
+            for (let i = 0; i < programa.length; i++) {
+              if ((i + 1) % 3 === 0) {
+                programaDescripcion += programa[i] + "<br>";
+              } else {
+                programaDescripcion += programa[i] + " ";
+              }
+            }
+            return programaDescripcion;
+          }
+        for (let i = 0; i < responsePRG.data.length; i++) {
+          $("#"+responsePRG.data[i]['DETC91']+"-"+responsePRG.data[i]['CATSEC']+"").append(`<li class="nav-item">
+                                                                    <a class="nav-link" href="/`+isDev+`LovablePHP/PRG/`+responsePRG.data[i]['DETC91']+`/`+responsePRG.data[i]['CATNOM']+`.php">
+                                                                    <span class="nav-icon"></span>`+descripcionPrograma(responsePRG.data[i]['CATDE1'])+`
+                                                                    </a>
+                                                                </li>`);
+        }
+      }
        
         });
         </script>
@@ -147,8 +125,12 @@
       </div>
       <ul class="sidebar-nav bg-blck2 mt-3" data-coreui="navigation" data-simplebar="">
         <li class="nav-item mt-3"><a class="nav-link" href="/<?php echo $_SESSION['DEV'] ?>LovablePHP/<?php echo $_SESSION['INDEX']; ?>">
-             Inicio</a>
+        <svg class="nav-icon">
+              <use xlink:href="../../assets/vendors/@coreui/icons/svg/free.svg#cil-home"></use>
+            </svg>
+             Página principal</a>
         </li>
+        <hr>
        <div id="menu-display">
          
        </div>
@@ -167,13 +149,10 @@
              <img src="../../assets/img/lovableLogo.png" width="205px" alt="Lovable Logo">
             </a>
           <ul class="header-nav d-none d-md-flex">
-           <!-- <li class="nav-item"><a class="nav-link" href="#">Dashboard</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Users</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Settings</a></li>-->
           </ul>
           <ul class="header-nav ms-auto mt-2">
             <div class="mt-2 me-4">
-                <h6><?php echo isset($_SESSION["NOMUSU"]) ? utf8_encode($_SESSION["NOMUSU"]) : ""; ?></h6>
+                <h6><?php echo isset($_SESSION["NOMUSU"]) ? $_SESSION["NOMUSU"] : ""; ?></h6>
             </div>
                 <button type="button" class="btn btn-light" onclick="logOut()">
                   <svg class="icon me-2">
@@ -184,56 +163,11 @@
           
         </div>
         <div class="header-divider"></div>
-        
-    <script>
-         $(function() {
-                
-                // Cache selectors
-                var tabs = $('.tablist__tab'),
-                    tabPanels = $('.tablist__panel');
-
-                tabs.on('click', function() {
-                
-                    // Cache selectors
-                    var thisTab = $(this),
-                        thisTabPanelId = thisTab.attr('aria-controls'),
-                        thisTabPanel = $('#' + thisTabPanelId);
-
-                    // De-select all the tabs
-                    tabs.attr('aria-selected', 'false').removeClass('is-active');
-
-                    // Select this tab
-                    thisTab.attr('aria-selected', 'true').addClass('is-active');
-
-                    // Hide all the tab panels
-                    tabPanels.attr('aria-hidden', 'true').addClass('is-hidden');
-
-                    // Show this tab panel
-                    thisTabPanel.attr('aria-hidden', 'false').removeClass('is-hidden');
-
-                });
-                
-                // Add enter key to the basic click event
-                tabs.on('keydown', function(e) {
-                    
-                    var thisTab = $(this);
-                    
-                    if(e.which == 13) {
-                    thisTab.click();
-                    }
-                    
-                });
-                
-                });
-    </script>
-    <!-- CoreUI and necessary plugins-->
     <script src="../../assets/vendors/@coreui/coreui/js/coreui.bundle.min.js"></script>
     <script src="../../assets/vendors/simplebar/js/simplebar.min.js"></script>
-    <!-- Plugins and scripts required by this view-->
     <script src="../../assets/vendors/@coreui/utils/js/coreui-utils.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-   
-    
+  
     <script type="text/javascript" charset="utf8"
         src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"> </script>
     <script type="text/javascript" charset="utf8"
@@ -249,17 +183,82 @@
     <script type="text/javascript" charset="utf8"
         src="https://cdn.datatables.net/buttons/2.3.4/js/buttons.print.min.js"> </script>
     <!--<script src="../../js/table.js"></script>-->
-    
-
-    
     <script>
-    
+
+     function ajaxRequest(url, data = {}, method = "GET") {
+          var dataResponse = null;
+          var Token = null;
+          var HTTPError = {
+              message: '',
+              code: 0,
+              success: false,
+              data: null
+          };
+          $.ajax({
+              url: url,
+              data: JSON.stringify(data),
+              method: method,
+              dataType: "json",
+              headers: {
+                  'Content-Type': 'application/json',
+              },
+              async: false,
+              success: function (response) {
+                  dataResponse = response;
+              },
+              error: function (jqXHR, exception) {
+                  HTTPError.code = jqXHR.status;
+                  HTTPError.data = jqXHR;
+                  HTTPError.message += "Request http Error: " + url + ", Exception: ";
+                  // http errors 
+                  if (jqXHR.status === 0) {
+                      HTTPError.message += 'Not connect.\n Verify Network.';
+                  } else if (jqXHR.status == 404) {
+                      HTTPError.message += 'Requested page not found. [404]';
+                  } else if (jqXHR.status == 500) {
+                      HTTPError.message += 'Internal Server Error [500].';
+                  } else if (jqXHR.status == 401) {
+                      HTTPError.message += 'Unauthorized Server Action [401].';
+                  }
+                  else if (exception === 'parsererror') {
+                      HTTPError.message += 'Requested JSON parse failed.';
+                  } else if (exception === 'timeout') {
+                      HTTPError.message += 'Time out error.';
+                  } else if (exception === 'abort') {
+                      HTTPError.message += 'Ajax request aborted.';
+                  } else {
+                      HTTPError.message += jqXHR.responseText;
+                  }
+                  dataResponse = HTTPError;
+                  console.log(HTTPError);
+              }
+          });
+          return dataResponse;
+          }
+          $(function() {
+                var tabs = $('.tablist__tab'),
+                    tabPanels = $('.tablist__panel');
+                tabs.on('click', function() {
+                    var thisTab = $(this),
+                        thisTabPanelId = thisTab.attr('aria-controls'),
+                        thisTabPanel = $('#' + thisTabPanelId);
+                    tabs.attr('aria-selected', 'false').removeClass('is-active');
+                    thisTab.attr('aria-selected', 'true').addClass('is-active');
+                    tabPanels.attr('aria-hidden', 'true').addClass('is-hidden');
+                    thisTabPanel.attr('aria-hidden', 'false').removeClass('is-hidden');
+                });
+                tabs.on('keydown', function(e) {
+                    var thisTab = $(this);
+                    if(e.which == 13) {
+                    thisTab.click();
+                    }
+                });
+                
+          });
+
       function logOut() {
         window.location.assign('/<?php echo $_SESSION['DEV'] ?>LovablePHP/index.php?logout=1');
       }
-      
     </script>
-
   </body>
-  
 </html>

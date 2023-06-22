@@ -176,7 +176,7 @@
                 </div>
                 <div class="carousel-inner">
                 <div class="carousel-item active">
-                                  <div class="me-5 ms-5">
+                                  <div class="me-5 ms-5 overflow-auto">
                                       <figure class="highcharts-figure" >
                                                 <div id="container" ></div>
                                         </figure>

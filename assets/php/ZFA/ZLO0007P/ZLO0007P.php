@@ -6,7 +6,7 @@
             zIndex: 10,
             plugins: ["RangePlugin"]});
             $( document ).ready(function() {
-               
+            
               var compfiltro = "<?php echo $ciaFiltro;?>";
               var paisfiltro = "<?php echo $paisFiltro; ?>";
               $("#cbbCia").val(compfiltro);
@@ -854,7 +854,7 @@
           type: 'bar'
       },
       title: {
-          text: 'Venta 2 Años Antes, Venta Año Anterior y Venta por Vendedor',
+          text: 'Venta 2 Años Antes, Venta Año Anterior y Venta por Vendedor (Dolares)',
           margin: 50
       },
       subtitle: {
@@ -1139,14 +1139,6 @@
     <?php
     }
     ?>
-
-
-
-
-
-
-
-
 
 
 

@@ -227,7 +227,7 @@
                                 <tr>
                                     <th>ID</th>
                                     <th class="responsive-font-example fw-bold text-start">Punto de Venta</th>
-                                    <th class="responsive-font-example fw-bold text-end">Docenas Compradas  12M</th>
+                                    <th class="responsive-font-example fw-bold text-end">Docenas ingresadas  12M</th>
                                     <th class="responsive-font-example fw-bold text-end">Docenas Vendidas  12M</th>
                                     <th class="responsive-font-example fw-bold text-end">Variación</th>
                                     <th class="responsive-font-example fw-bold text-end">Docenas Existencia</th>
