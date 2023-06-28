@@ -29,7 +29,7 @@
 
       $ciaFiltro=isset($_SESSION['ciaFiltro'])? $_SESSION['ciaFiltro']:999;
       $paisFiltro=isset($_SESSION['paisFiltro'])? $_SESSION['paisFiltro']:1;
-      $cia=" AND CODCIA IN(35,47,50,52,56,57,59,63,64,65,68,70,72,73,74,75,76,78,82,85)";
+      $cia=" AND CODCIA IN(35,47,50,52,56,57,59,63,64,65,68,70,72,73,74,75,76,78,82,85,88)";
 
       if (isset($_SESSION['clickPais']) && isset($_SESSION['clickCia'])) {
         if ($_SESSION['clickCia']==1) {
@@ -52,7 +52,7 @@
           }
           
           if ($ciaFiltro==999) {
-            $cia= " AND CODCIA IN(35,47,50,52,56,57,59,63,64,65,68,70,72,73,74,75,76,78,82,85)";
+            $cia= " AND CODCIA IN(35,47,50,52,56,57,59,63,64,65,68,70,72,73,74,75,76,78,82,85,88)";
             $paisFiltro=1;
           }else{
             $cia=" AND CODCIA IN(".$ciaFiltro.")";
@@ -61,7 +61,7 @@
         if ($_SESSION['clickPais']==1) {
           $ciaFiltro=999;
           if ($paisFiltro==1) {
-            $cia=" AND CODCIA IN(35,47,50,52,56,57,59,63,64,65,68,70,72,73,74,75,76,78,82,85)";
+            $cia=" AND CODCIA IN(35,47,50,52,56,57,59,63,64,65,68,70,72,73,74,75,76,78,82,85,88)";
           }elseif ($paisFiltro==2) {
             $cia=" AND CODCIA IN(20,22,21,23,24)";
           }elseif ($paisFiltro==3) {
