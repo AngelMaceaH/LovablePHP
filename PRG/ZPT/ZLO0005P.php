@@ -75,7 +75,7 @@
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb my-0 ms-2">
               <li class="breadcrumb-item">
-                <!-- if breadcrumb is single--><span>Producto Terminado</span>
+              <span>Producto Terminado / Meses de inventarios</span>
               </li>
               <li class="breadcrumb-item active"><span>ZLO0005P</span></li>
             </ol>

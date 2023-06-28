@@ -20,7 +20,7 @@
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb my-0 ms-2">
         <li class="breadcrumb-item">
-          <span>Modulo de facturación</span>
+        <span>Módulo de facturación / Consultas</span>
         </li>
         <li class="breadcrumb-item active"><span>ZLO0003P</span></li>
       </ol>
