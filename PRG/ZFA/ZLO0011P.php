@@ -22,7 +22,7 @@
               <li class="breadcrumb-item">
               <span>Producto Terminado / Clasificación de producto</span>
               </li>
-              <li class="breadcrumb-item active"><span>ZLO0009P</span></li>
+              <li class="breadcrumb-item active"><span>ZLO0011P</span></li>
             </ol>
           </nav>
         </div>
@@ -30,11 +30,11 @@
       <div id="body-div" class="body flex-grow-1">
         <div class="card mb-5">
             <div class="card-header">
-              <h1 class="fs-4 mb-1 mt-2 text-center">Inventario por Clasificación de Productos Tiendas</h1>
+              <h1 class="fs-4 mb-1 mt-2 text-center">Ventas por Clasificación de Productos Tiendas</h1>
             </div>
           <div class="card-body">
           <div class="position-relative">
-              <form id="formFiltros" action="../../assets/php/ZPT/ZLO0009P/filtrosLogica.php" method="POST">
+              <form id="formFiltros" action="../../assets/php/ZFA/ZLO0011P/filtrosLogica.php" method="POST">
                 <div class="row mb-2">
                       <div class="col-sm-12 col-md-6 mt-2">
                         <label>Año:</label>
@@ -80,6 +80,7 @@
                                     <th>ID</th>
                                     <th  class="responsive-font-example text-start" >Punto de Venta</th>
                                     <th  class="responsive-font-example text-end">Sin descuento</th>
+                                    <th  class="responsive-font-example text-end">10 %</th>
                                     <th  class="responsive-font-example text-end">20 %</th>
                                     <th  class="responsive-font-example text-end">30 %</th>
                                     <th  class="responsive-font-example text-end">40 %</th>
@@ -114,13 +115,13 @@
           var mespro='<?php echo $mespro; ?>';
           var anopro='<?php echo $anopro; ?>';
           var ciaSelect='<?php echo $cia; ?>';
-          var ciaHon1='<?php echo " AND LO2255.CODCIA IN(35,47,50,52,56,57,59,63,64,65,68,70,72,73,74,75,76,78,82,85,88)"; ?>';
-          var ciaHon2='<?php echo " AND LO2255.CODCIA IN(20,22,21,23,24)"; ?>';
-          var ciaGua='<?php echo " AND LO2255.CODCIA IN(49,66,69,71,86)"; ?>';
-          var ciaSal='<?php echo " AND LO2255.CODCIA IN(48,53,61,62,77)"; ?>';
-          var ciaCos='<?php echo " AND LO2255.CODCIA IN(60,80,54)"; ?>';
-          var ciaNic='<?php echo " AND LO2255.CODCIA IN(83,87)"; ?>';
-          var ciaRep='<?php echo " AND LO2255.CODCIA IN(81)"; ?>';
+          var ciaHon1='<?php echo "AND LO2261.CODCIA IN(35,47,50,52,56,57,59,63,64,65,68,70,72,73,74,75,76,78,82,85,88)"; ?>';
+          var ciaHon2='<?php echo "AND LO2261.CODCIA IN(20,22,21,23,24)"; ?>';
+          var ciaGua='<?php echo "AND LO2261.CODCIA IN(49,66,69,71,86)"; ?>';
+          var ciaSal='<?php echo "AND LO2261.CODCIA IN(48,53,61,62,77)"; ?>';
+          var ciaCos='<?php echo "AND LO2261.CODCIA IN(60,80,54)"; ?>';
+          var ciaNic='<?php echo "AND LO2261.CODCIA IN(83,87)"; ?>';
+          var ciaRep='<?php echo "AND LO2261.CODCIA IN(81)"; ?>';
           $("#cbbAno").val(anopro);
           $("#cbbMes").val(mespro);
           $("#filtro1").val(ciaSelect);
@@ -130,13 +131,16 @@
           var arrayList=[];
           var isEmpty=false;
           for (let j = 0; j < cias.length; j++) {
-            var urlList="http://172.16.15.20/API.LovablePHP/ZLO0009P/List/?anopro="+anopro+"&mespro="+mespro+"&cia="+cias[j]+"";
+            var urlList="http://172.16.15.20/API.LovablePHP/ZLO0011P/List/?anopro="+anopro+"&mespro="+mespro+"&cia="+cias[j]+"";
             var responseList=ajaxRequest(urlList);
+            console.log(urlList);
+            console.log(responseList);
             if (responseList.code==200) {
-            var sidesc=0;var por20=0;var por30=0;var por40=0;var por50=0;var por60=0;
+            var sidesc=0;var por10=0;var por20=0;var por30=0;var por40=0;var por50=0;var por60=0;
             var por70=0;var por80=0;var porz1=0;var porz2=0;var total=0;
            for (let i = 0; i < responseList.data.length; i++) {
             sidesc= sidesc+parseInt(responseList.data[i]['SIDESC']);
+            por10= por10+parseInt(responseList.data[i]['POR10']);
             por20= por20+parseInt(responseList.data[i]['POR20']);
             por30= por30+parseInt(responseList.data[i]['POR30']);
             por40= por40+parseInt(responseList.data[i]['POR40']);
@@ -150,16 +154,20 @@
            }
            arrayList[j] = {
               name: paises[j],
-              data: [parseInt(sidesc), parseInt(por20), parseInt(por30), parseInt(por40), parseInt(por50), parseInt(por60), 
+              data: [parseInt(sidesc),parseInt(por10), parseInt(por20), parseInt(por30), parseInt(por40), parseInt(por50), parseInt(por60), 
               parseInt(por70), parseInt(por80), parseInt(porz1), parseInt(porz2)]
             };
-            options+='<tr onclick="location.href=\'/<?php echo $_SESSION['DEV']; ?>LovablePHP/PRG/ZPT/ZLO0009PA.php?id='+(j + 1)+'\'">';
+            options+='<tr onclick="location.href=\'/<?php echo $_SESSION['DEV']; ?>LovablePHP/PRG/ZFA/ZLO0011PA.php?id='+(j + 1)+'\'">';
             options+='<td>'+1+'</td>';
             options+='<td class="fw-bold">'+paises[j]+'</td>';
             if (sidesc==0)
             options+='<td></td>';
             else
             options+='<td class="text-end">'+sidesc+'</td>';
+            if (por10==0)
+            options+='<td></td>';
+            else
+            options+='<td class="text-end">'+por10+'</td>';
             if (por20==0)
             options+='<td></td>';
             else
@@ -304,7 +312,7 @@
         text: ' '
     },
     xAxis: {
-      categories: ['Sin descuento','20%','30%', '40%', '50%', '60%', '70%', '80%', 'Z1', 'Z2'],
+      categories: ['Sin descuento','10%','20%','30%', '40%', '50%', '60%', '70%', '80%', 'Z1', 'Z2'],
         crosshair: true
     },
     yAxis: {

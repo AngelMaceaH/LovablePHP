@@ -4,8 +4,6 @@
   <meta charset="utf-8">
   <link rel="icon" type="image/x-icon" href="../../assets/img/favicon.ico">
   <style>
-
-
   </style>
 </head>
 <body>

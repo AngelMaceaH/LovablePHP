@@ -191,6 +191,9 @@
                                         <p class=" fs-6 fw-bold  text-center mt-2 pt-2 pb-2 text-success">`+mon+"."+variacionA.toLocaleString('es-419', {minimumFractionDigits: 2,maximumFractionDigits: 2})+`</p>
                                         </div>`);
             }
+            if (crecimientoA==null) {
+              crecimientoA=0;
+            }
           if (crecimientoA<=0) {
             $("#promediosVal").append(` <div id="colHonDia"  class="col-12 col-md-2"> 
                                         <h6 class="mt-md-2 text-center ">Crecimiento</h6>
@@ -268,7 +271,9 @@
           }
           if (mes2Comp1!=0) {
             var cre1= parseFloat(((mes1Comp1/mes2Comp1)-1)*100)};
-            
+            if (cre1==null) {
+              cre1= 0;
+            }
            if (cre1<=0) {
             $("#cre1").append('<p class=" text-danger fs-5 fw-bold text-center">'+cre1.toLocaleString('es-419', {minimumFractionDigits: 0,maximumFractionDigits: 0})+'%</p>');
           }else{
@@ -283,7 +288,10 @@
           }
           if (mes3Comp1!=0) {
             var cre2= parseFloat(((mes1Comp1/mes3Comp1)-1)*100)};
-            
+          
+            if (cre2==null) {
+              cre2= 0;
+            }
            if (cre2<=0) {
             $("#cre2").append('<p class=" text-danger fs-5 fw-bold text-center">'+cre2.toLocaleString('es-419', {minimumFractionDigits: 0,maximumFractionDigits: 0})+'%</p>');
           }else{
@@ -1138,14 +1146,6 @@ var myChart1 = new Chart(ctx30, {
       plugins: [gaugeChartText3] 
     });
   }
-
-
-
-
-
-
-
-
 
     });
   </script>

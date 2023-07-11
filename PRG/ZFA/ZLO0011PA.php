@@ -14,7 +14,27 @@
       include '../layout-prg.php';
       $anopro=isset($_SESSION['anofiltro'])? $_SESSION['anofiltro']:date("Y");
       $mespro=isset($_SESSION['mesfiltro'])? $_SESSION['mesfiltro']:date("m");
-      $cia=isset($_SESSION['cia'])? $_SESSION['cia']:'';
+      $cia="";
+      if (isset($_GET['id'])) {
+        $_SESSION['cia']=$_GET['id'];
+      }else{
+        $_SESSION['cia']=isset($_SESSION['cia'])? $_SESSION['cia']:1;
+      }
+      if ($_SESSION['cia']==1) {
+        $cia=" AND LO2261.CODCIA IN(35,47,50,52,56,57,59,63,64,65,68,70,72,73,74,75,76,78,82,85,88)";
+      }elseif ($_SESSION['cia']==2) {
+        $cia=" AND LO2261.CODCIA IN(20,22,21,23,24)";
+      }elseif ($_SESSION['cia']==3) {
+       $cia=" AND LO2261.CODCIA IN(49,66,69,71,86)";
+      }elseif ($_SESSION['cia']==4) {
+       $cia=" AND LO2261.CODCIA IN(48,53,61,62,77)";
+      }elseif ($_SESSION['cia']==5) {
+       $cia=" AND LO2261.CODCIA IN(60,80,54)";
+      }elseif ($_SESSION['cia']==6) {
+       $cia=" AND LO2261.CODCIA IN(83,87)";
+      }elseif ($_SESSION['cia']==7) {
+       $cia=" AND LO2261.CODCIA IN(81)";
+      }
     ?> 
      <div class="container-fluid">
           <nav aria-label="breadcrumb">
@@ -22,7 +42,7 @@
               <li class="breadcrumb-item">
               <span>Producto Terminado / Clasificación de producto</span>
               </li>
-              <li class="breadcrumb-item active"><span>ZLO0009P</span></li>
+              <li class="breadcrumb-item active"><span>ZLO0011PA</span></li>
             </ol>
           </nav>
         </div>
@@ -34,9 +54,21 @@
             </div>
           <div class="card-body">
           <div class="position-relative">
-              <form id="formFiltros" action="../../assets/php/ZPT/ZLO0009P/filtrosLogica.php" method="POST">
+              <form id="formFiltros" action="../../assets/php/ZFA/ZLO0011P/filtrosLogicaA.php" method="POST">
                 <div class="row mb-2">
-                      <div class="col-sm-12 col-md-6 mt-2">
+                      <div class="col-12 col-md-4 mt-2 d-flex flex-wrap">
+                        <label for="filtro1" class=" mt-2" id="">Visualizar por: </label>
+                        <select name="filtro1" id="filtro1" class="form-select">
+                          <option class="fw-bold" value="1">Honduras (Lov. Ecommerce)</option>
+                          <option class="fw-bold" value="2">Honduras (Mod. Íntima)</option>
+                          <option class="fw-bold" value="3">Guatemala</option>
+                          <option class="fw-bold" value="4">El Salvador</option>
+                          <option class="fw-bold" value="5">Costa Rica</option>
+                          <option class="fw-bold" value="6">Nicaragua</option>
+                          <option class="fw-bold" value="7">Rep. Dominicana</option>
+                        </select>
+                      </div>
+                      <div class="col-sm-12 col-md-4 mt-2">
                         <label>Año:</label>
                         <select class="form-select  mt-1" id="cbbAno" name="cbbAno">
                           <?php
@@ -47,7 +79,7 @@
                             ?>
                         </select>
                       </div>
-                      <div class="col-sm-12 col-md-6 mt-2">
+                      <div class="col-sm-12 col-md-4 mt-2">
                         <label>Mes:</label>
                         <select class="form-select mt-1" id="cbbMes" name="cbbMes">
                           <option value="01">Enero</option>
@@ -80,6 +112,7 @@
                                     <th>ID</th>
                                     <th  class="responsive-font-example text-start" >Punto de Venta</th>
                                     <th  class="responsive-font-example text-end">Sin descuento</th>
+                                    <th  class="responsive-font-example text-end">10 %</th>
                                     <th  class="responsive-font-example text-end">20 %</th>
                                     <th  class="responsive-font-example text-end">30 %</th>
                                     <th  class="responsive-font-example text-end">40 %</th>
@@ -113,53 +146,47 @@
         $( document ).ready(function() {
           var mespro='<?php echo $mespro; ?>';
           var anopro='<?php echo $anopro; ?>';
-          var ciaSelect='<?php echo $cia; ?>';
-          var ciaHon1='<?php echo " AND LO2255.CODCIA IN(35,47,50,52,56,57,59,63,64,65,68,70,72,73,74,75,76,78,82,85,88)"; ?>';
-          var ciaHon2='<?php echo " AND LO2255.CODCIA IN(20,22,21,23,24)"; ?>';
-          var ciaGua='<?php echo " AND LO2255.CODCIA IN(49,66,69,71,86)"; ?>';
-          var ciaSal='<?php echo " AND LO2255.CODCIA IN(48,53,61,62,77)"; ?>';
-          var ciaCos='<?php echo " AND LO2255.CODCIA IN(60,80,54)"; ?>';
-          var ciaNic='<?php echo " AND LO2255.CODCIA IN(83,87)"; ?>';
-          var ciaRep='<?php echo " AND LO2255.CODCIA IN(81)"; ?>';
+          var ciaSelect='<?php echo $_SESSION['cia']; ?>';
+          var cia='<?php echo $cia; ?>';
           $("#cbbAno").val(anopro);
           $("#cbbMes").val(mespro);
           $("#filtro1").val(ciaSelect);
-          var paises=['Honduras (Lov. Eccommerce)','Honduras (Mod. Íntima)','Guatemala','El Salvador','Costa Rica','Nicaragua','Rep. Dominicana']
-          var cias=[ciaHon1,ciaHon2,ciaGua,ciaSal,ciaCos,ciaNic,ciaRep];	
+          var urlList="http://172.16.15.20/API.LovablePHP/ZLO0011P/List/?anopro="+anopro+"&mespro="+mespro+"&cia="+cia+"";
           var options="";
+          var responseList=ajaxRequest(urlList);
+          console.log(urlList);
           var arrayList=[];
           var isEmpty=false;
-          for (let j = 0; j < cias.length; j++) {
-            var urlList="http://172.16.15.20/API.LovablePHP/ZLO0009P/List/?anopro="+anopro+"&mespro="+mespro+"&cia="+cias[j]+"";
-            var responseList=ajaxRequest(urlList);
-            if (responseList.code==200) {
-            var sidesc=0;var por20=0;var por30=0;var por40=0;var por50=0;var por60=0;
-            var por70=0;var por80=0;var porz1=0;var porz2=0;var total=0;
+          if (responseList.code==200) {
            for (let i = 0; i < responseList.data.length; i++) {
-            sidesc= sidesc+parseInt(responseList.data[i]['SIDESC']);
-            por20= por20+parseInt(responseList.data[i]['POR20']);
-            por30= por30+parseInt(responseList.data[i]['POR30']);
-            por40= por40+parseInt(responseList.data[i]['POR40']);
-            por50= por50+parseInt(responseList.data[i]['POR50']);
-            por60= por60+parseInt(responseList.data[i]['POR60']);
-            por70= por70+parseInt(responseList.data[i]['POR70']);
-            por80= por80+parseInt(responseList.data[i]['POR80']);
-            porz1= porz1+parseInt(responseList.data[i]['PORZ1']);
-            porz2= porz2+parseInt(responseList.data[i]['PORZ2']);
-            total= total+parseInt(responseList.data[i]['PORTOT']);
-           }
-           arrayList[j] = {
-              name: paises[j],
-              data: [parseInt(sidesc), parseInt(por20), parseInt(por30), parseInt(por40), parseInt(por50), parseInt(por60), 
+            var sidesc=responseList.data[i]['SIDESC'];
+            var por10=responseList.data[i]['POR10'];
+            var por20=responseList.data[i]['POR20'];
+            var por30=responseList.data[i]['POR30'];
+            var por40=responseList.data[i]['POR40'];
+            var por50=responseList.data[i]['POR50'];
+            var por60=responseList.data[i]['POR60'];
+            var por70=responseList.data[i]['POR70'];
+            var por80=responseList.data[i]['POR80'];
+            var porz1=responseList.data[i]['PORZ1'];
+            var porz2=responseList.data[i]['PORZ2'];
+            var total=responseList.data[i]['PORTOT'];
+            arrayList[i] = {
+              name: responseList.data[i]['NOMCIA'],
+              data: [parseInt(sidesc), parseInt(por10), parseInt(por20), parseInt(por30), parseInt(por40), parseInt(por50), parseInt(por60), 
               parseInt(por70), parseInt(por80), parseInt(porz1), parseInt(porz2)]
             };
-            options+='<tr onclick="location.href=\'/<?php echo $_SESSION['DEV']; ?>LovablePHP/PRG/ZPT/ZLO0009PA.php?id='+(j + 1)+'\'">';
-            options+='<td>'+1+'</td>';
-            options+='<td class="fw-bold">'+paises[j]+'</td>';
+            options+='<tr>';
+            options+='<td>'+responseList.data[i]['CODCIA']+'</td>';
+            options+='<td class="fw-bold">'+responseList.data[i]['NOMCIA']+'</td>';
             if (sidesc==0)
             options+='<td></td>';
             else
             options+='<td class="text-end">'+sidesc+'</td>';
+            if (por10==0)
+            options+='<td></td>';
+            else
+            options+='<td class="text-end">'+por10+'</td>';
             if (por20==0)
             options+='<td></td>';
             else
@@ -201,19 +228,18 @@
             else
             options+='<td class="text-end">'+total+'</td>';
             options+='</tr>';
+           }
             $("#myTableInvDesc tbody").html(options);
           }else{
-            //isEmpty=true;
+            isEmpty=true;
           }
-          }
-         
-          if (arrayList.length==0) {
+          if (isEmpty) {
             $("#grafica1").addClass("d-none");
           }
           $("#cbbAno, #cbbMes, #filtro1").on("change",function() {
             $("#formFiltros").submit();
           });
-         
+          console.log(arrayList);
               $("#myTableInvDesc").DataTable( {
         language: {
             url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json',
@@ -296,6 +322,7 @@
         ]
           });
 
+
           Highcharts.chart('container', {
     chart: {
         type: 'column'
@@ -304,7 +331,7 @@
         text: ' '
     },
     xAxis: {
-      categories: ['Sin descuento','20%','30%', '40%', '50%', '60%', '70%', '80%', 'Z1', 'Z2'],
+      categories: ['Sin descuento','10%','20%','30%', '40%', '50%', '60%', '70%', '80%', 'Z1', 'Z2'],
         crosshair: true
     },
     yAxis: {
@@ -327,9 +354,8 @@
             borderWidth: 0
         }
     },
-    series: arrayList.filter(elemento => elemento !== undefined)
+    series: arrayList
 });
-
         });
       </script>
 </body>
