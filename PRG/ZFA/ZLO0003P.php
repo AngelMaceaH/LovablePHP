@@ -8,10 +8,9 @@
     <link href="../../assets/vendors/monthpicker/picker.css" rel="stylesheet">
 </head>
 <body>
-  <div class="spinner-wrapper">
-    <div class="spinner-border text-danger" role="status">
-    </div>
-  </div>
+<div class="spinner-wrapper">
+<span class="loader"></span>
+</div>
   <?php
       include '../layout-prg.php';
       include '../../assets/js/PRG/ZFA/ZLO0003P.php';

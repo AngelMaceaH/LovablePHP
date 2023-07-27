@@ -7,11 +7,9 @@
 </head>
 
 <body>
-  <div class="spinner-wrapper">
-    <div class="spinner-border text-danger" role="status">
-      
-    </div>
-  </div>
+<div class="spinner-wrapper">
+<span class="loader"></span>
+</div>
   <?php
     $mes_actual=date("m");
     $ano_actual=date("Y");

@@ -6,10 +6,8 @@
 </head>
 <body>
 <div class="spinner-wrapper">
-<div class="spinner-border text-danger" role="status">
-    
+<span class="loader"></span>
 </div>
-</div> 
   <?php
       include '../layout-prg.php';
       $anopro=isset($_SESSION['anofiltro'])? $_SESSION['anofiltro']:date("Y");

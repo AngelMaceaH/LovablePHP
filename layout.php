@@ -38,6 +38,39 @@
     ul {
       font-family: 'Rubik', sans-serif;
     }
+
+    .loader {
+  position: relative;
+  width: 40px;
+  height: 60px;
+  animation: heartBeat 1.2s infinite cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+
+.loader:before,
+.loader:after {
+  content: "";
+  background: #ff3d00 ;
+  width: 40px;
+  height: 60px;
+  border-radius: 50px 50px 0 0;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  transform: rotate(45deg);
+  transform-origin: 50% 68%;
+  box-shadow: 5px 4px 5px #0004 inset;
+}
+.loader:after {
+  transform: rotate(-45deg);
+}
+@keyframes heartBeat {
+  0% { transform: scale(0.95) }
+  5% { transform: scale(1.1) }
+  39% { transform: scale(0.85) }
+  45% { transform: scale(1) }
+  60% { transform: scale(0.95) }
+  100% { transform: scale(0.9) }
+}
   </style>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
@@ -66,7 +99,7 @@
       const spinnerWrapperEl = document.querySelector('.spinner-wrapper');
       setTimeout(() => {
         spinnerWrapperEl.style.display = 'none';
-      }, 500);
+      }, 1000);
       //MODULOS
       var urlModulos = 'http://172.16.15.20/API.LovablePHP/Access/LayoutM/?user=' + usuario + '';
       var responseModulos = ajaxRequest(urlModulos);

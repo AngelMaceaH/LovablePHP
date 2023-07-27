@@ -6,10 +6,8 @@
 </head>
 <body>
 <div class="spinner-wrapper">
-<div class="spinner-border text-danger" role="status">
-    
-  </div>
-        </div> 
+<span class="loader"></span>
+</div>
 <?php
 
       include '../layout-prg.php';

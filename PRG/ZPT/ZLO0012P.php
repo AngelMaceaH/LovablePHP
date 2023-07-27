@@ -3,22 +3,26 @@
   <head>
   <meta charset="utf-8">
   <link rel="icon" type="image/x-icon" href="../../assets/img/favicon.ico">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Ladda/1.0.6/ladda-themeless.min.css" integrity="sha512-EOY99TUZ7AClCNvbnvrhtMXDuWzxUBXV7SFovruHvYf2dbvRB5ya+jgDPk5bOyTtZDbqFH3PTuTWl/D7+7MGsA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Ladda/1.0.0/spin.min.js" integrity="sha512-fgSmjQtBho/dzDJ+79r/yKH01H/35//QPPvA2LR8hnBTA5bTODFncYfSRuMal78C08vUa93q3jyxPa273cWzqA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Ladda/1.0.0/ladda.min.js" integrity="sha512-hZL8cWjOAFfWZza/p0uD0juwMeIuyLhAd5QDodiK4sBp1sG7BIeE1TbMGIbnUcUgwm3lVSWJzBK6KxqYTiDGkg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <style>
     .table th {
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
-    }
+    } 
   </style>
 </head>
 <body>
-<div class="spinner-wrapper">
-<div class="spinner-border text-danger" role="status">
-    
-</div>
-</div> 
+  <div class="spinner-wrapper">
+    <span class="loader"></span>
+  </div> 
   <?php
       include '../layout-prg.php';
+      $agrup=isset($_SESSION['agrup'])? $_SESSION['agrup']:'1';
+      $ckProductos1 = isset($_SESSION['productosCk1']) ? $_SESSION['productosCk1'] : "0";
+      $filtro=isset($_SESSION['filtro'])? $_SESSION['filtro']:'1';
     ?> 
      <div class="container-fluid">
           <nav aria-label="breadcrumb">
@@ -26,7 +30,7 @@
               <li class="breadcrumb-item">
               <span>Producto Terminado / Clasificación de producto</span>
               </li>
-              <li class="breadcrumb-item active"><span>ZLO0011P</span></li>
+              <li class="breadcrumb-item active"><span>ZLO0012P</span></li>
             </ol>
           </nav>
         </div>
@@ -38,40 +42,66 @@
             </div>
           <div class="card-body">
           <div class="position-relative">
-              <form id="formFiltros" action="../../assets/php/ZPT/ZLO0010P/filtrosLogica.php" method="POST">
+              <form id="formFiltros" action="../../assets/php/ZPT/ZLO0012P/filtrosLogica.php" method="POST">
                 <div class="row mb-2">
                       <div class="col-sm-12 col-md-6 mt-2">
-                        <label>Año:</label>
-                        <select class="form-select  mt-1" id="cbbAno" name="cbbAno">
-                          <?php
-                                $anio_actual = date('Y');
-                                for ($i = $anio_actual; $i >= 2021; $i--) {
-                                echo "<option value='$i'>$i</option>";
-                                }
-                            ?>
+                        <label>Visualizar por:</label>
+                        <select class="form-select  mt-1" id="cbbAgrupacion" name="cbbAgrupacion">
+                      
                         </select>
                       </div>
                       <div class="col-sm-12 col-md-6 mt-2">
-                        <label>Mes:</label>
-                        <select class="form-select mt-1" id="cbbMes" name="cbbMes">
-                          <option value="01">Enero</option>
-                          <option value="02">Febrero</option>
-                          <option value="03">Marzo</option>
-                          <option value="04">Abril</option>
-                          <option value="05">Mayo</option>
-                          <option value="06">Junio</option>
-                          <option value="07">Julio</option>
-                          <option value="08">Agosto</option>
-                          <option value="09">Septiembre</option>
-                          <option value="10">Octubre</option>
-                          <option value="11">Noviembre</option>
-                          <option value="12">Diciembre</option>
-                        </select>
+                      <label>Filtrar por:</label>
+                        <div class="row">
+                          <div class="col-6">
+                          <div class="form-check">
+                          <input class="form-check-input" value="1" type="radio" name="radioFiltro" id="check1" checked>
+                          <label class="form-check-label fs-6" for="check1">
+                            Inventario General
+                          </label>
+                        </div>
+                         
+                          </div>
+                          <div class="col-6">
+                          <div class="form-check">
+                            <input class="form-check-input" value="3" type="radio" name="radioFiltro" id="check3">
+                            <label class="form-check-label fs-6" for="check3">
+                              Inventario Descontinuado
+                            </label>
+                          </div>
+                          </div>
+                          <div class="col-6">
+                          <div class="form-check">
+                            <input class="form-check-input" value="2" type="radio" name="radioFiltro" id="check2">
+                            <label class="form-check-label fs-6" for="check2">
+                             Inventario en Linea
+                            </label>
+                          </div>
+                          </div>
+                          <div class="col-6">
+                          <div class="form-check">
+                            <input class="form-check-input" value="4" type="radio" name="radioFiltro" id="check4">
+                            <label class="form-check-label fs-6" for="check4">
+                             Inventario Obsoleto
+                            </label>
+                          </div>
+                          </div>
+                        </div>
                       </div>
+                      <div>
+                     <!-- <div class="col-sm-12 col-md-6 mt-3">
+                                <input class="me-2" type="checkbox" value="1" id="productosCk1" name="productosCk1">
+                                <label class="form-check-label fs-5" for="productosCk1">
+                                Mostrar todos los productos
+                                </label>
+                      </div>-->
                 </div>
               </form>
               </div>
               <hr>
+              <!--<button class="btn btn-success text-light fs-6 mb-2 ladda-button" data-style="expand-left">
+                <i class="fa-solid fa-file-excel"></i> <b >Enviar a Excel</span></b>
+              </button>-->
               <div class="table-responsive mt-3" style="width:100%">
                           <table id="myTableSeguimiento" class="table stripe table-hover " style="width:100%">
                             <thead>
@@ -92,6 +122,8 @@
                                     <th  class="responsive-font-example text-end">Días Ant. Ult/Compra</th>
                                     <th  class="responsive-font-example text-end">Días Ant. Ult/Venta</th>
                                     <th  class="responsive-font-example text-end">Tipo Inventario</th>
+                                    <th  class="responsive-font-example text-start">Marca</th>
+                                    <th  class="responsive-font-example text-start">Genero</th>
                                     
                                 </tr>
                             </thead>
@@ -114,110 +146,116 @@
       <script src="https://code.highcharts.com/modules/export-data.js"></script>
       <script src="https://code.highcharts.com/modules/accessibility.js"></script>
       <script>
+        var agrupSelect="";
+        var filtroP="";
         $( document ).ready(function() {
-          var urlData="http://172.16.15.20/API.LOVABLEPHP/ZLO0012P/List/";
-          var urlMarca="http://172.16.15.20/API.LOVABLEPHP/ZLO0012P/List2/";
-          var responseData=ajaxRequest(urlData);
-          var responseMarca=ajaxRequest(urlMarca);
-          console.log(responseData.data);
-          console.log(responseMarca.data);
-          var options="";
-          for (let i = 0; i < responseData.data.length; i++) {
-            options+="<tr>";
-            options+="<td>"+responseData.data[i]['ESTILO']+"</td>";
-            options+="<td>"+responseData.data[i]['TTOT']+"</td>";
-            options+="<td>"+responseData.data[i]['MESTOT']+"</td>";  
-            options+="<td>"+responseData.data[i]['UNIVEN']+"</td>";
-            options+="<td>"+responseData.data[i]['PROMEN']+"</td>";
-            options+="<td>"+responseData.data[i]['EXIACT']+"</td>";
-            options+="<td>"+responseData.data[i]['ROTINV']+"</td>";
-            options+="<td>"+responseData.data[i]['MESINV']+"</td>";
-            options+="<td>"+responseData.data[i]['PORDES']+"</td>";
-            options+="<td>"+responseData.data[i]['FECING']+"</td>";
-            options+="<td>"+responseData.data[i]['FECCOM']+"</td>";
-            options+="<td>"+responseData.data[i]['FECVEN']+"</td>";
-            options+="<td>"+responseData.data[i]['DIAANT']+"</td>";
-            options+="<td>"+responseData.data[i]['DIAANC']+"</td>";
-            options+="<td>"+responseData.data[i]['DIAANV']+"</td>";
-            options+="<td>"+responseData.data[i]['TIPINV']+"</td>";
-            options+="</tr>";
+          var urlAgrupaciones="http://172.16.15.20/API.LOVABLEPHP/ZLO0012P/ListAgrupacion/";
+          var responseAgrupaciones=ajaxRequest(urlAgrupaciones);
+          if (responseAgrupaciones.code==200) {
+            var options="";
+            for (let i = 0; i < responseAgrupaciones.data.length; i++) {
+              options+="<option value='"+responseAgrupaciones.data[i]['CODIGO']+"'>"+responseAgrupaciones.data[i]['DESCRI']+"</option>";
+            }
+            $("#cbbAgrupacion").append(options);
           }
-          $("#myTableSeguimientoBody").append(options);
+          agrupSelect='<?php echo $agrup; ?>';
+          $("#cbbAgrupacion").val(agrupSelect);
+         
+          $("#cbbAgrupacion").on("change",function() {
+            $("#formFiltros").submit();
+          });
+            var productosCk1=<?php echo $ckProductos1;  ?>;
+           $('#productosCk1').prop('checked', <?php echo  $ckProductos1 ?>);
 
-              $("#myTableSeguimiento").DataTable( {
-        language: {
+            $("#productosCk1").change(function() {
+              $("#formFiltros").submit();
+            });
+            var cond="";
+            if (productosCk1==true) {
+              cond="1";
+            }else{
+              cond="0";
+            }
+            filtroP='<?php echo $filtro; ?>';
+            $("#check4, #check3, #check2, #check1").on("change",function() {
+              $("#formFiltros").submit();
+            });
+            $("input[name=radioFiltro][value=" + filtroP + "]").prop('checked', true);
+          
+         var table= $('#myTableSeguimiento').DataTable({
+            language: {
             url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json',
         },
-        "pageLength": 10,
-        dom: 'Bfrtip',
-        buttons: [
-            {
-                extend: 'excelHtml5',
-                text: '<i class="fa-solid fa-file-excel"></i> <b >Enviar a Excel</b>',
-                className: "btn btn-success text-light fs-6 ",
-                exportOptions: {
-                    columns: [1,2,3,4,5,6,7,8,9,10,11,12,13]
+        "pageLength": 15,
+                "processing": true,
+                "serverSide": true,
+                "ajax": {
+                    "url": "http://172.16.15.20/API.LOVABLEPHP/ZLO0012P/List3/?agrup="+agrupSelect+"&cond=1&filtro="+filtroP+"",
+                    "type": "POST"
                 },
-                title: 'ReporteInv Descuentos',
-                
-                customize: function (xlsx) {
-                    var sheet = xlsx.xl.worksheets['sheet1.xml'];
-                    var sSh = xlsx.xl['styles.xml'];
-                    var lastXfIndex = $('cellXfs xf', sSh).length - 1;
-                    var lastFontIndex = $('fonts font', sSh).length - 1;
-                    var i; var y;
-                    var f1 = '<font>'+
-                     '<sz val="11" />'+
-                     '<name val="Calibri" />'+
-                     '<color rgb="FF0000" />'+ // color rojo en la fuente
-                   '</font>';
-                   var f2 = '<font>'+
-                     '<sz val="11" />'+
-                     '<name val="Calibri" />'+
-                     '<color rgb="007800" />'+ // color verde en la fuente
-                   '</font>';
-                    var n1 = '<numFmt formatCode="##0%"   numFmtId="300"/>';
-                    var n2 = '<numFmt formatCode="#,##0.00"   numFmtId="200"/>';
-                    var s1 = '<xf numFmtId="300" fontId="0" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyNumberFormat="1"/>';
-                    var s2 = '<xf numFmtId="0" fontId="2" fillId="2" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
-                                '<alignment horizontal="center"/></xf>';
-                    var s3 = '<xf numFmtId="4" fontId="2" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyNumberFormat="1"/>'
-                    var s4 = '<xf numFmtId="0" fontId="2" fillId="2" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
-                                '<alignment horizontal="center" wrapText="1"/></xf>'
-                    var s5 = '<xf  numFmtId="200" fontId="'+(lastFontIndex+1)+'" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
-                     '<alignment horizontal="right"/></xf>';  
-                     var s6 = '<xf  numFmtId="200" fontId="'+(lastFontIndex+2)+'" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
-                     '<alignment horizontal="right"/></xf>';  
-                     var s7 = '<xf  numFmtId="300" fontId="'+(lastFontIndex+1)+'" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
-                     '<alignment horizontal="right"/></xf>';  
-                     var s8 = '<xf  numFmtId="300" fontId="'+(lastFontIndex+2)+'" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
-                     '<alignment horizontal="right"/></xf>';
-                    sSh.childNodes[0].childNodes[0].innerHTML += n1 + n2;
-                    sSh.childNodes[0].childNodes[1].innerHTML += f1 + f2;
-                    sSh.childNodes[0].childNodes[5].innerHTML += s1 + s2 + s3 + s4 + s5 + s6 + s7 + s8; 
-                     
-                    var fourDecPlaces    = lastXfIndex + 1;
-                    var greyBoldCentered = lastXfIndex + 2;
-                    var twoDecPlacesBold = lastXfIndex + 3;
-                    var greyBoldWrapText = lastXfIndex + 4;
-                    var textred1 = lastXfIndex + 5;
-                    var textgreen1 = lastXfIndex + 6;
-                    var textred2 = lastXfIndex + 7;
-                    var textgreen2 = lastXfIndex + 8;
+                "columns": [
+                    { "data": "ESTILO"},
+                    { "data": "TTOT" },
+                    { "data": "MESTOT" },
+                    { "data": "UNIVEN" },
+                    { "data": "PROMEN" },
+                    { "data": "EXIACT" },
+                    { "data": "ROTINV" },
+                    { "data": "MESINV" },
+                    { "data": "PORDES" },
+                    { "data": "FECING" },
+                    { "data": "FECCOM" },
+                    { "data": "FECVEN" },
+                    { "data": "DIAANT" },
+                    { "data": "DIAANC" },
+                    { "data": "DIAANV" },
+                    { "data": "TIPINV" },
+                    { "data": "MARCA" },
+                    { "data": "GENERO" }
+                ],
+                ordering: true,
+                dom: 'Bfrtip',
+                buttons: [
+                  {
+                    text: '<i class="fa-solid fa-file-excel me-1"></i><b>Excel</b>',
+                    className: "btn btn-success text-light fs-6 mb-2 ladda-button",
+                    action: function ( e, dt, node, config ) {
                     
-                    $('c[r=A1] t', sheet).text( 'INVENTARIO POR CLASIFICACIÓN DE PRODUCTOS FABRICA' );
-                    $('row:eq(0) c', sheet).attr( 's', greyBoldCentered );
-                    $('row:eq(1) c', sheet).attr( 's', 7 );
-
-                    var tagName = sSh.getElementsByTagName('sz');
-                    for (i = 0; i < tagName.length; i++) {
-                      tagName[i].setAttribute("val", "13")
                     }
                   }
-            }
-        ]
-          });
+                ]
+
+            });
+            table.on('draw.dt', function() {
+                  $('.ladda-button').each(function() {
+                    var l = Ladda.create(this);
+                    $(this).on('click', function() {
+                      l.start();
+                      var urlExcel = "http://172.16.15.20/API.LOVABLEPHP/ZLO0012P/ExportAll/?agrup="+agrupSelect+"&cond=1&filtro="+filtroP+"";
+                     window.location.href = urlExcel;
+                      var xhr = new XMLHttpRequest();
+                      xhr.open('HEAD', urlExcel);
+                      xhr.onreadystatechange = function() {
+                        if (xhr.readyState === 4) {
+                          if (xhr.status === 200) {
+                            var procesosTerminados = xhr.getResponseHeader('X-Procesos-Terminados');
+                            if (procesosTerminados) {
+                              //console.log('Los procesos en segundo plano han terminado.');
+                            } else {
+                              //console.log('Los procesos en segundo plano están en progreso.');
+                            }
+                          } else {
+                            //console.log('Ocurrió un error al obtener el encabezado.');
+                          }
+                          l.stop();
+                        }
+                      };
+                      xhr.send();
+                    });
+                  });
+                });
         });
+       
       </script>
 </body>
 </html>

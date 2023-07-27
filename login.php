@@ -31,7 +31,7 @@
                                   <use xlink:href="assets/vendors/@coreui/icons/svg/free.svg#cil-user"></use>
                               </svg>
                               </span>
-                              <input class="form-control" type="text" id="user" name="user" placeholder="Usuario" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required>
+                              <input class="form-control" type="text" id="user" name="user" oninput="uppercase(this)" placeholder="Usuario" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required>
                               <div class="invalid-feedback">
                                    Ingrese un usuario.
                               </div>
@@ -150,7 +150,10 @@
           }, false)
         })
     
- 
+        function uppercase(this_) {
+          var upper = this_.value.toUpperCase();
+          return this_.value = upper;
+        }
     </script>
 
   </body>
