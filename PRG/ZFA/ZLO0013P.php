@@ -125,7 +125,7 @@
                                 <label class="mb-2">Formato de reportes:</label>
                                 <select class="form-select  mt-1 mb-3 mb-lg-0" id="cbbFormato" name="cbbFormato">
                                 <optgroup>
-                                    <option class="" value="0">Ninguno</option>
+                                    <option class="" value="0">Todos</option>
                                 </optgroup>
                                 <optgroup>
                                 <option class="fw-bold" value="0" disabled>Compra</option>
@@ -334,7 +334,11 @@
                                 <th class="text-black text-end"># MESES AÑO/ANT</th>
                                 <th class="text-black text-end">DOC. VEND. AÑO/ANT.</th>
                                 <th class="text-black text-end">VALOR VENDIDO AÑO/ANT</th>
-
+                                <th class="text-black text-end">IMPORTADO</th>
+                                <th class="text-black text-end">DOC. TOTALES</th>
+                                <th class="text-black text-end">NUEVO INV.</th>
+                                <th class="text-black text-end">NUEVO BALANCE</th>
+                                <th class="text-black text-end">MAT. PRIMA EN ALMACEN</th>
                             </tr>
                         </thead>
                         <tbody id="myTablePlaneacionBody">
@@ -388,8 +392,6 @@
         var repro='<?php echo $repro; ?>';
         var btnOrder='<?php echo $btnOrder; ?>';
         var formato='<?php echo $formato; ?>';
-        console.log("marca: "+ marca+" plan:"+plan+" estado:"+estado+" inventarios:"+inventarios+" clasificacion:"+clasificacion+" orden:"+orden+" filtro:"+filtro+" repro:"+repro+" btnOrder:"+btnOrder+" formato:"+formato+"");
-        console.log("http://172.16.15.20/API.LovablePHP/ZLO0013P/List/?marca="+marca+"&plan="+plan+"&estado="+estado+"&btnor="+btnOrder+"&inventarios="+inventarios+"&clasificacion="+clasificacion+"&orden="+orden+"&filtro="+filtro+"&repro="+repro+"&formato="+formato+"");
         if (btnOrder==0 || estado==0) {
             $("#btnOrder1").addClass("btn-secondary");
             $("#btnOrder2").addClass("btn-secondary");
@@ -414,12 +416,17 @@
             if (formato==0) {
                 var columnasExcel=[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32]; 
                 var visibleColumn=true;
+                var visibleColumn2=false;
             }else if (formato==10) {
                 var columnasExcel=[1,2,3,4,5,14,15,16,17,18,19,20,21,22,23,24,25]; 
                 var visibleColumn=false;
+                var visibleColumn2=false;
+            }else if(formato==20){
+                var columnasExcel=[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37]; 
+                var visibleColumn=true;
+                var visibleColumn2=true;
             }
-           
-
+        
             var requestError = false;
                 var table= $('#myTablePlaneacion').DataTable( {
                     language: {
@@ -435,16 +442,33 @@
                         $("#planeacionContainer").addClass("loading");
                     },
                     "complete": function (xhr) {
-                        if (requestError) {
-                            var table = $('#myTablePlaneacion');
-                            table.find('tbody').empty();
-                            table.append('<tbody><tr><td colspan="12" class="text-center" style="height:125px;"><span class="mt-2">No se encontraron resultados</span></td></tr></tbody>');
-                        } else {
-                            $("#planeacionContainer").removeClass("loading");
-                                        $("#thProcessing").addClass('d-none');
-                                        console.log(xhr.responseJSON);
+                        $("#planeacionContainer").removeClass("loading");
+                        $("#thProcessing").addClass('d-none');
+                        console.log(xhr.responseJSON);
+
+                        var registrosMismoEstilo = [];
+
+                var table = $('#myTablePlaneacion').DataTable();
+                table.rows().every(function (rowIdx, tableLoop, rowLoop) {
+                    var data = this.data();
+                    var rowNode = this.node();
+                    if (rowIdx < table.rows().count() - 1) {
+                        $(rowNode).addClass('clickable-row');
+                        $(rowNode).attr('data-estilo', data.ESTILO);
+                        registrosMismoEstilo.push(data);
+                    }
+                });
+                $('#myTablePlaneacion').on('click', '.clickable-row', function () {
+                    var estiloValue = $(this).data('estilo');  
+                    var registrosFiltrados = registrosMismoEstilo.filter(function (registro) {
+                        if (registro.ESTILO == estiloValue) {
+                            return  registro ;
                         }
+                    });       
+                    openModalVentas(estiloValue, registrosFiltrados);
+                });
                         
+                                        
                     },
                     error: function (xhr, status, error) {
                         console.log(error);
@@ -453,7 +477,7 @@
                 },
                 "columns": [
                     {data:"ROWNUM",
-                        className:"d-none",orderable: false },
+                        className:"d-none",orderable: false, },
                     {data:"MARCA",
                         className:"text-start",orderable: false },
                     {data:"ESTILO",
@@ -565,24 +589,70 @@
                         className:"text-end", render: function(data) {
         return data.toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     }},
+    {data:"IMPORT",className:"text-start"},
+    {data:"DOZTOT",className:"text-end", render: function(data) {
+        return parseFloat(data);
+    }},
+    {data:"NUEINV",className:"text-end", render: function(data) {
+        if (data!='&#160;') {
+            return parseFloat(data);
+        }else{
+            return data;
+        }
+        
+    }}, {data:"BALANCE",className:"text-end", render: function(data) {
+        if (data!='&#160;') {
+            return parseFloat(data);
+        }else{
+            return data;
+        }
+    }},
+        {data:"MATPRIMA",className:"text-end", render: function(data) {
+            if (data!='&#160;') {
+            return parseFloat(data);
+        }else{
+            return data;
+        }
+    }},
                 ],
                 "columnDefs": 
                 [
-                {"targets": [6], "visible": visibleColumn, },
-                {"targets": [7], "visible": visibleColumn, },
-                {"targets": [8], "visible": visibleColumn, },
-                {"targets": [9], "visible": visibleColumn, },
-                {"targets": [10], "visible": visibleColumn, },
-                {"targets": [11], "visible": visibleColumn, },
-                {"targets": [12], "visible": visibleColumn, },
-                {"targets": [13], "visible": visibleColumn, },
-                {"targets": [26], "visible": visibleColumn, },
-                {"targets": [27], "visible": visibleColumn, },
-                {"targets": [28], "visible": visibleColumn, },
-                {"targets": [29], "visible": visibleColumn, },
-                {"targets": [30], "visible": visibleColumn, },
-                {"targets": [31], "visible": visibleColumn, },
-                {"targets": [32], "visible": visibleColumn, },
+                {"targets": [0], "searchable": false, },
+                {"targets": [3], "searchable": false, },
+                {"targets": [4], "searchable": false, },
+                {"targets": [5], "searchable": false, },  
+                {"targets": [6], "visible": visibleColumn, "searchable": false, },
+                {"targets": [7], "visible": visibleColumn, "searchable": false,},
+                {"targets": [8], "visible": visibleColumn, "searchable": false,},
+                {"targets": [9], "visible": visibleColumn, "searchable": false,},
+                {"targets": [10], "visible": visibleColumn,"searchable": false, },
+                {"targets": [11], "visible": visibleColumn, "searchable": false,},
+                {"targets": [12], "visible": visibleColumn, "searchable": false,},
+                {"targets": [13], "visible": visibleColumn, "searchable": false,},
+                {"targets": [14], "searchable": false, },
+                    {"targets": [15], "searchable": false, },
+                    {"targets": [16], "searchable": false, },
+                    {"targets": [17], "searchable": false, }, 
+                    {"targets": [18], "searchable": false, },
+                    {"targets": [19], "searchable": false, },
+                    {"targets": [20], "searchable": false, },
+                    {"targets": [21], "searchable": false, }, 
+                    {"targets": [22], "searchable": false, },
+                    {"targets": [23], "searchable": false, },
+                    {"targets": [24], "searchable": false, },
+                    {"targets": [25], "searchable": false, }, 
+                {"targets": [26], "visible": visibleColumn, "searchable": false,},
+                {"targets": [27], "visible": visibleColumn,"searchable": false, },
+                {"targets": [28], "visible": visibleColumn,"searchable": false, },
+                {"targets": [29], "visible": visibleColumn,"searchable": false, },
+                {"targets": [30], "visible": visibleColumn,"searchable": false, },
+                {"targets": [31], "visible": visibleColumn,"searchable": false, },
+                {"targets": [32], "visible": visibleColumn,"searchable": false, },
+                {"targets": [33],"visible": visibleColumn2, "searchable": false, },  
+                {"targets": [34],"visible": visibleColumn2, "searchable": false, },  
+                {"targets": [35],"visible": visibleColumn2, "searchable": false, },  
+                {"targets": [36],"visible": visibleColumn2, "searchable": false, },  
+                {"targets": [37],"visible": visibleColumn2, "searchable": false, },  
                 ],
                 ordering: false,
                 dom: 'Bfrtip',
@@ -593,7 +663,7 @@
                     text: '<i class="fa-solid fa-file-excel me-1"></i><b>Enviar a Excel</b>',
                     className: "btn btn-success text-light fs-6 mb-2 text-center",
                     title: 'ReportePlaneacion',
-                    messageTop:' ', 
+                    messageTop:($("#cbbFormato").val()!=0)?'Formato: '+$("#cbbFormato option:selected").text():'Formato: Todos', 
                     exportOptions: {
                     columns:columnasExcel,
                     },
@@ -779,10 +849,200 @@
             }
         }
         }
-
             });
+            $("#myTablePlaneacion").append('<caption style="caption-side: top" class="fw-bold text-black"><label class="ms-2 fw-bold">**Presione clic sobre el estilo para ver sus Ventas**</label></caption>');
          });
+
+         function openModalVentas(estilo,data) {
+        var anoActual=new Date().getFullYear();
+          $("#lblEstilo").text(estilo);
+          $("#currentYear").text(anoActual);
+          
+          var urlResumen="http://172.16.15.20/API.LovablePHP/ZLO0013P/ListResumen/?ano="+anoActual+"&estilo="+estilo+"";
+          var responseResumen=ajaxRequest(urlResumen);
+          const tableResumenBody=$("#tableResumenBody");
+        tableResumenBody.empty();
+          if (responseResumen.code==200) {
+            var options;
+            for (let i = 0; i < responseResumen.data.length; i++) {
+                options+="<tr>";
+                options+="<td>"+responseResumen.data[i]['ANO']+"</td>";
+                if (responseResumen.data[i]['INGRE']!=0) {
+                    options+="<td>"+responseResumen.data[i]['INGRE'].toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 })+"</td>";
+                }else{
+                    options+="<td></td>";
+                }
+                if(responseResumen.data[i]['VENDI']!=null){
+                    options+="<td>"+responseResumen.data[i]['VENDI'].toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 })+"</td>";
+                }else{
+                    options+="<td></td>";
+                }
+                if (responseResumen.data[i]['PERDI']!=null) {
+                    options+="<td>"+responseResumen.data[i]['PERDI'].toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 })+"</td>";
+                }else{
+                    options+="<td></td>";
+                }
+                
+                options+="</tr>";
+            }
+            tableResumenBody.append(options);
+          }else{
+            tableResumenBody.append('<tr><td colspan="4" class="text-center">No se encontraron registros</td></tr>');
+          }
+          const myTableDetallesBody=$("#myTableDetallesBody");
+          options="";
+          myTableDetallesBody.empty();
+          for (let i = 0; i < data.length; i++) {
+            if (data[i]['TIPINV']=='TOTAL') {
+                options+="<tr class='total-row'>";
+            }else{
+                options+="<tr>";
+            }
+            
+            options+="<td>"+data[i]['MARCA']+"</td>";
+            options+="<td>"+data[i]['ESTILO']+"</td>";
+            options+="<td>"+data[i]['COLOR']+"</td>";
+            options+="<td>"+data[i]['TALLA']+"</td>";
+            options+="<td>"+data[i]['TIPINV']+"</td>";
+            options+="<td>"+data[i]['UNIVAA'].toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 })+"</td>";
+            options+="<td>"+data[i]['VALVAA'].toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 })+"</td>";
+            options+="<td>"+data[i]['UPRMAC'].toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 })+"</td>";
+            options+="<td>"+data[i]['NUMMES']+"</td>";
+            options+="<td>"+data[i]['DOCVAL'].toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 })+"</td>";
+            options+="<td>"+data[i]['UVENRE'].toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 })+"</td>";
+            options+="<td>"+data[i]['UVNRPR'].toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 })+"</td>";
+            options+="<td>"+data[i]['INVAPA'].toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 })+"</td>";
+            options+="<td>"+data[i]['APAVXC'].toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 })+"</td>";
+            options+="<td>"+data[i]['INVPTE'].toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 })+"</td>";
+            options+="<td>"+data[i]['INVPRO'].toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 })+"</td>";
+            options+="<td>"+data[i]['INVPR1'].toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 })+"</td>";
+            options+="<td>"+data[i]['INVCOR'].toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 })+"</td>";
+            options+="<td>"+data[i]['INVMTP'].toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 })+"</td>";
+            options+="<td>"+data[i]['WUNIINV'.toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 })]+"</td>";
+            options+="<td>"+data[i]['INVPGR'].toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 })+"</td>";
+            options+="<td>"+data[i]['LEATIE'].toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 })+"</td>";
+            options+="<td>"+data[i]['MESINV'].toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 })+"</td>";
+            options+="<td>"+data[i]['UPRM1A'].toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 })+"</td>";
+            options+="<td>"+data[i]['NUMME1']+"</td>";
+            options+="<td>"+data[i]['MESIN6'].toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 })+"</td>";
+            options+="<td>"+data[i]['UPRM6A'].toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 })+"</td>";
+            options+="<td>"+data[i]['NUMME6']+"</td>";
+            options+="<td>"+data[i]['UPRMAV'].toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 })+"</td>";
+            options+="<td>"+data[i]['NUMMEV'].toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 })+"</td>";
+            options+="<td>"+data[i]['DOCANT'].toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 })+"</td>";
+            options+="<td>"+data[i]['VALANT'].toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 })+"</td>";
+            options+="</tr>";
+          }
+          myTableDetallesBody.append(options);
+
+          $("#ventasModal").modal("show");  
+         }
+         function closeModal() {
+            $("#ventasModal").modal("hide"); 
+         }
     </script>
 </body>
+<!-- Modal -->
+<div class="modal fade" id="ventasModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Detalle de ventas</h1>
+        <button type="button" class="btn-close" onclick="closeModal()"></button>
+      </div>
+      <div class="modal-body">
+        <div class="card">
+            <div class="card-header">
 
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-12 col-md-3">
+                    <label for="" class="form-control mb-3 mb-md-0 mt-md-5">Estilo: <span id="lblEstilo"></span></label>
+                    </div>
+                    <div class="col-12 col-md-9">
+                    <h5><u>Resumen por año</u></h5>
+                    <div class="table-responsive mt-3  rounded" style="width:100%;">
+                        <table id="tableResumen" class="table stripe table-secondary table-hover "style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Año
+                                    </th>
+                                    <th>
+                                        Docenas ingresadas
+                                    </th>
+                                    <th>
+                                        Docenas Vendidas
+                                    </th>
+                                    <th>
+                                        Docenas Perdida Ventas
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableResumenBody">
+                               
+                            </tbody>
+                        </table>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                    <hr>
+                    <h5><u>Detalle del año</u>  <span id="currentYear"></span></h5>
+                    <div class="table-responsive mt-3  rounded" style="width:100%;">
+                    <table id="myTableDetalles" class="table stripe table-hover "style="width:100%">
+                        <thead>
+                            <tr class="sticky-top">
+                                <th class="d-none">rownum</th>
+                                <th class="text-black text-start">MARCA</th>
+                                <th class="text-black text-start">ESTILO</th>
+                                <th class="text-black text-start">COLOR</th>
+                                <th class="text-black text-start">TALLA</th>
+                                <th class="text-black text-start">T/INV</th>
+                                <th class="text-black text-end">DOC. VEN. AÑO/ACT</th>
+                                <th class="text-black text-end">VAL. VEN. AÑO/ACT</th>
+                                <th class="text-black text-end">PROM. MES</th>
+                                <th class="text-black text-end"># MESES</th>
+                                <th class="text-black text-end">UND VTAS. MES/ANT</th>
+                                <th class="text-black text-end">PERDIDA. VTAS</th>
+                                <th class="text-black text-end">PROM. PERDIDA VTAS</th>
+                                <th class="text-black text-end">APARTADO VEND</th>
+                                <th class="text-black text-end">APARTADO VENTA X CATALOGO</th>
+                                <th class="text-black text-end">INVENTARIO DISPONBLE</th>
+                                <th class="text-black text-end">INVENTARIO PROCESO</th>
+                                <th class="text-black text-end">INVENTARIO CORTADO</th>
+                                <th class="text-black text-end">CORTE</th>
+                                <th class="text-black text-end">INV. MTP</th>
+                                <th class="text-black text-end" >MESES INV</th>
+                                <th class="text-black text-end">PROGRAMA</th>
+                                <th class="text-black text-end">LEAD TIME</th>
+                                <th class="text-black text-end">MESES PRG 12M</th>
+                                <th class="text-black text-end">PROM. MEN. 12M</th>
+                                <th class="text-black text-end"># MESES 12M</th>
+                                <th class="text-black text-end">MESES INV. 6M</th>
+                                <th class="text-black text-end">PROM. MEN. 6M</th>
+                                <th class="text-black text-end"># MESES 6M</th>
+                                <th class="text-black text-end">PROM X MES AÑO/ANT</th>
+                                <th class="text-black text-end"># MESES AÑO/ANT</th>
+                                <th class="text-black text-end">DOC. VEND. AÑO/ANT.</th>
+                                <th class="text-black text-end">VALOR VENDIDO AÑO/ANT</th>
+                            </tr>
+                        </thead>
+                        <tbody id="myTableDetallesBody">
+
+                        </tbody>
+                    </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 </html>

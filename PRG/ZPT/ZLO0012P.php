@@ -203,9 +203,33 @@
                     { "data": "ROTINV" },
                     { "data": "MESINV" },
                     { "data": "PORDES" },
-                    { "data": "FECING" },
-                    { "data": "FECCOM" },
-                    { "data": "FECVEN" },
+                    { "data": "FECING",
+                      render: function (data, type, row) {
+              const fechaOriginal = data;
+              const year = fechaOriginal.slice(0, 4);
+              const month = fechaOriginal.slice(4, 6);
+              const day = fechaOriginal.slice(6, 8);
+              const fechaConvertida = `${day}/${month}/${year}`;
+              return fechaConvertida;
+            } },
+                    { "data": "FECCOM",
+                      render: function (data, type, row) {
+              const fechaOriginal = data;
+              const year = fechaOriginal.slice(0, 4);
+              const month = fechaOriginal.slice(4, 6);
+              const day = fechaOriginal.slice(6, 8);
+              const fechaConvertida = `${day}/${month}/${year}`;
+              return fechaConvertida;
+            } },
+                    { "data": "FECVEN",
+                      render: function (data, type, row) {
+              const fechaOriginal = data;
+              const year = fechaOriginal.slice(0, 4);
+              const month = fechaOriginal.slice(4, 6);
+              const day = fechaOriginal.slice(6, 8);
+              const fechaConvertida = `${day}/${month}/${year}`;
+              return fechaConvertida;
+            } },
                     { "data": "DIAANT" },
                     { "data": "DIAANC" },
                     { "data": "DIAANV" },
