@@ -105,7 +105,7 @@
       var responseModulos = ajaxRequest(urlModulos);
       if (responseModulos.code == 200) {
         for (let i = 0; i < responseModulos.data.length; i++) {
-          $("#menu-display").append(`<li class="nav-group mt-2"><a class="nav-link nav-group-toggle" href="#">` + responseModulos.data[i]['APLDES'] + `</a>
+          $("#menu-display").append(`<li class="nav-group mt-2"><a class="nav-link nav-group-toggle" style="word-wrap: break-word; white-space: normal;" href="#">` + responseModulos.data[i]['APLDES'] + `</a>
                                           <ul class="nav-group-items">
                                             <div id="` + responseModulos.data[i]['DETC91'] + `">
                                           </div>
@@ -123,7 +123,7 @@
            for (let j = 0; j < responseSMCount.data.length; j++) {
               if (responseSM.data[i]['CATSE1']==responseSMCount.data[j]['CATSEC']) {
                   $("#"+responseSMCount.data[j]['DETC91']+"").append(`<li class="nav-group mt-2" aria-expanded="false">
-                                      <a class="nav-link nav-group-toggle" href="#">` + responseSM.data[i]['CATDES'] + `</a>
+                                      <a class="nav-link nav-group-toggle" style="word-wrap: break-word; white-space: normal;" href="#">` + responseSM.data[i]['CATDES'] + `</a>
                                           <ul class="nav-group-items">
                                             <div id="`+responseSMCount.data[j]['DETC91']+"-"+responseSM.data[i]['CATSE1'] + `">
                                               <li class="nav-item" id="hiddenli"><a class="nav-link" href="#"><span class="nav-icon"></span></a></li>
@@ -153,7 +153,7 @@
           }
         for (let i = 0; i < responsePRG.data.length; i++) {
           $("#"+responsePRG.data[i]['DETC91']+"-"+responsePRG.data[i]['CATSEC']+"").append(`<li class="nav-item">
-                                                                    <a class="nav-link" href="/`+isDev+`LovablePHP/PRG/`+responsePRG.data[i]['DETC91']+`/`+responsePRG.data[i]['CATNOM']+`.php">
+                                                                    <a class="nav-link" style="word-wrap: break-word; white-space: normal;" href="/`+isDev+`LovablePHP/PRG/`+responsePRG.data[i]['DETC91']+`/`+responsePRG.data[i]['CATNOM']+`.php">
                                                                     <span class="nav-icon"></span>`+descripcionPrograma(responsePRG.data[i]['CATDE1'])+`
                                                                     </a>
                                                                 </li>`);

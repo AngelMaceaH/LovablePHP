@@ -56,7 +56,7 @@ var usuario='<?php echo $_SESSION["CODUSU"];?>';
                  varPromedios=(responsePromedios.data[i]['PROANO']-responsePromedios.data[i]['PROANO2']);
                 }
 
-                $("#myTableBody").append(`<tr id="tr${i}" onclick="location.href=\'/<?php echo $_SESSION['DEV']; ?>LovablePHP/PRG/ZFA/ZLO0001PA.php?id=${responseDiayMes.data[i]['ID']}&dat=<?php echo $_SESSION['FechaFiltro'];?>\';">`);
+                $("#myTableBody").append(`<tr id="tr${i}" ondblclick="location.href=\'/<?php echo $_SESSION['DEV']; ?>LovablePHP/PRG/ZFA/ZLO0001PA.php?id=${responseDiayMes.data[i]['ID']}&dat=<?php echo $_SESSION['FechaFiltro'];?>\';">`);
                 let vendias="";let venmes="";let tdAnual="";let tdCreciAnual="";
                   if(parseFloat(responseDiayMes.data[i]['SUBDIA'])<=0){
                     vendias="<td class='text-end responsive-font-example text-danger' id='tddia1'><b>"+mon+responseDiayMes.data[i]['SUBDIA'].toLocaleString('es-419', {minimumFractionDigits: 2,maximumFractionDigits: 2})+"</b></td>";}else{

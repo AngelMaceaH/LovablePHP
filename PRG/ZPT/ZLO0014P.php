@@ -20,6 +20,15 @@
         z-index: 1;
         top: 0;
     }
+    .text-lila{
+      color: #B9ABFF;
+    }
+    .text-green{
+      color: #0B8B00;
+    }
+    .text-brown {
+        color: #5B2503;
+    }
   </style>
 </head>
 <body>
@@ -38,7 +47,7 @@
               <li class="breadcrumb-item">
               <span>Producto Terminado / Clasificación de producto</span>
               </li>
-              <li class="breadcrumb-item active"><span>ZLO0012P</span></li>
+              <li class="breadcrumb-item active"><span>ZLO0014P</span></li>
             </ol>
           </nav>
         </div>
@@ -46,96 +55,49 @@
       <div id="body-div" class="body flex-grow-1">
         <div class="card mb-5">
             <div class="card-header">
-              <h1 class="fs-4 mb-1 mt-2 text-center">Análisis de movimiento de inventario</h1>
+              <h1 class="fs-4 mb-1 mt-2 text-center">Análisis de rotación de inventario</h1>
             </div>
           <div class="card-body">
           <div class="position-relative">
-              <form id="formFiltros" action="../../assets/php/ZPT/ZLO0012P/filtrosLogica.php" method="POST">
+              <form id="formFiltros" action="../../assets/php/ZPT/ZLO0014P/filtrosLogica.php" method="POST">
                 <div class="row mb-2">
-                      <div class="col-sm-12 col-md-6 mt-2">
+                      <div class="col-sm-12 col-md-12 mt-2">
                         <label>Visualizar por:</label>
                         <select class="form-select  mt-1" id="cbbAgrupacion" name="cbbAgrupacion">
                       
                         </select>
                       </div>
-                      <div class="col-sm-12 col-md-6 mt-2">
-                      <label>Filtrar por:</label>
-                        <div class="row">
-                          <div class="col-6">
-                          <div class="form-check">
-                          <input class="form-check-input" value="1" type="radio" name="radioFiltro" id="check1" checked>
-                          <label class="form-check-label fs-6" for="check1">
-                            Inventario General
-                          </label>
-                        </div>
-                         
-                          </div>
-                          <div class="col-6">
-                          <div class="form-check">
-                            <input class="form-check-input" value="3" type="radio" name="radioFiltro" id="check3">
-                            <label class="form-check-label fs-6" for="check3">
-                              Inventario Descontinuado
-                            </label>
-                          </div>
-                          </div>
-                          <div class="col-6">
-                          <div class="form-check">
-                            <input class="form-check-input" value="2" type="radio" name="radioFiltro" id="check2">
-                            <label class="form-check-label fs-6" for="check2">
-                             Inventario en Linea
-                            </label>
-                          </div>
-                          </div>
-                          <div class="col-6">
-                          <div class="form-check">
-                            <input class="form-check-input" value="4" type="radio" name="radioFiltro" id="check4">
-                            <label class="form-check-label fs-6" for="check4">
-                             Inventario Obsoleto
-                            </label>
-                          </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div>
-                     <!-- <div class="col-sm-12 col-md-6 mt-3">
-                                <input class="me-2" type="checkbox" value="1" id="productosCk1" name="productosCk1">
-                                <label class="form-check-label fs-5" for="productosCk1">
-                                Mostrar todos los productos
-                                </label>
-                      </div>-->
                 </div>
               </form>
               </div>
               <hr>
-              <!--<button class="btn btn-success text-light fs-6 mb-2 ladda-button" data-style="expand-left">
-                <i class="fa-solid fa-file-excel"></i> <b >Enviar a Excel</span></b>
-              </button>-->
               <div class="table-container mt-3" style="width:100%;">
                           <table id="myTableSeguimiento" class="table stripe table-hover " style="width:100%">
                             <thead>
                             <tr >
                                 <th colspan="20" id="thProcessing" style="height:100px;"></th>
                             </tr>
-                            <tr class="sticky-top bg-white">
-                                    <th  class="responsive-font-example text-start">Estilo</th>
-                                    <th  class="responsive-font-example text-end">Und. Vtas. Totales</th>
-                                    <th  class="responsive-font-example text-end">Und. Vtas. Mes Proceso</th>
-                                    <th  class="responsive-font-example text-end">Und. Vtas. Ult. 12 Meses</th>
-                                    <th  class="responsive-font-example text-end">Prom. Mensual</th>
-                                    <th  class="responsive-font-example text-end">Existencia Actual</th>
-                                    <th  class="responsive-font-example text-end">Rot. Inv</th>
-                                    <th  class="responsive-font-example text-end">Meses Inventario</th>
-                                    <th  class="responsive-font-example text-end">% Descuento</th>
-                                    <th  class="responsive-font-example text-end">Fecha Ingreso</th>
-                                    <th  class="responsive-font-example text-end">Fecha Ult/Compra</th>
-                                    <th  class="responsive-font-example text-end">Fecha Ult/Venta</th>
-                                    <th  class="responsive-font-example text-end">Días antigüedad </th>
-                                    <th  class="responsive-font-example text-end">Días Ant. Ult/Compra</th>
-                                    <th  class="responsive-font-example text-end">Días Ant. Ult/Venta</th>
-                                    <th  class="responsive-font-example text-end">Tipo Inventario</th>
-                                    <th  class="responsive-font-example text-start">Marca</th>
-                                    <th  class="responsive-font-example text-start">Genero</th>
-                                    
+                                <tr class="sticky-top bg-white">
+                                    <th  class="responsive-font-example text-start text-black">Marca</th>
+                                    <th  class="responsive-font-example text-end text-black">Estilo</th>
+                                    <th  class="responsive-font-example text-end text-black">Color</th>
+                                    <th  class="responsive-font-example text-end text-black">Talla</th>
+                                    <th  class="responsive-font-example text-end text-black">Tipo Invent.</th>
+                                    <th  class="responsive-font-example text-end text-black">Unidades Vtas 12 Meses</th>
+                                    <th  class="responsive-font-example text-end text-black">Promedio Mensual 12 Meses</th>
+                                    <th  class="responsive-font-example text-end text-black"># Meses 12 Meses</th>
+                                    <th  class="responsive-font-example text-end text-black">Existencia Actual</th>
+                                    <th  class="responsive-font-example text-end text-black">Rotación Inventario</th>
+                                    <th  class="responsive-font-example text-end text-black">Meses Inventario 12 Meses</th>
+                                    <th  class="responsive-font-example text-end text-black">% Descuento</th>
+                                    <th  class="responsive-font-example text-end text-black">Fecha Ingreso</th>
+                                    <th  class="responsive-font-example text-end text-black">Fecha Ult. Ing. Bod</th>
+                                    <th  class="responsive-font-example text-end text-black">Fecha Ult. Compra</th>
+                                    <th  class="responsive-font-example text-end text-black">Fecha Ult. Venta</th>
+                                    <th  class="responsive-font-example text-end text-black">Días Antiguedad</th>
+                                    <th  class="responsive-font-example text-end text-black">Días Ant. Ult. Compra</th>
+                                    <th  class="responsive-font-example text-start text-black">Marca</th>
+                                    <th  class="responsive-font-example text-start text-black">Genero</th>
                                 </tr>
                             </thead>
                             <tbody id="myTableSeguimientoBody">
@@ -197,11 +159,11 @@
             language: {
             url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json',
         },
-        "pageLength": 15,
+        "pageLength": 50,
                 "processing": true,
                 "serverSide": true,
                 "ajax": {
-                    "url": "http://172.16.15.20/API.LOVABLEPHP/ZLO0012P/List3/?agrup="+agrupSelect+"&cond=1&filtro="+filtroP+"",
+                    "url": "http://172.16.15.20/API.LOVABLEPHP/ZLO0014P/ListS/?agrup="+agrupSelect,
                     "type": "POST",
                     "complete": function (xhr) {
                       $("#thProcessing").addClass('d-none');
@@ -213,50 +175,92 @@
                         }
                 },
                 "columns": [
-                    { "data": "ESTILO"},
-                    { "data": "TTOT" },
-                    { "data": "MESTOT" },
-                    { "data": "UNIVEN" },
-                    { "data": "PROMEN" },
-                    { "data": "EXIACT" },
-                    { "data": "ROTINV" },
-                    { "data": "MESINV" },
-                    { "data": "PORDES" },
+                    { "data": "MARCA"},
+                    { "data": "ESTILO" },
+                    { "data": "COLOR" },
+                    { "data": "TALLA" },
+                    { "data": "TIPINV" },
+                    { "data": "UNIVEN", className: "text-primary",
+                        render: function(data) {
+        return data.toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    } },
+                    { "data": "PROMEN", className: "text-lila",
+                        render: function(data) {
+        return data.toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    } },
+                    { "data": "NUMM12", className: "text-primary", },
+                    { "data": "EXIACT", className: "text-green",
+                        render: function(data) {
+        return data.toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    } },
+                    { "data": "ROTINV", className: "text-success",  },
+                    { "data": "MESINV", className: "text-brown", 
+                        render: function(data) {
+        return data.toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    } },
+                    { "data": "PORDES",
+                        render: function(data) {
+        return data.toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    } },
                     { "data": "FECING",
                       render: function (data, type, row) {
-              const fechaOriginal = data;
-              const year = fechaOriginal.slice(0, 4);
-              const month = fechaOriginal.slice(4, 6);
-              const day = fechaOriginal.slice(6, 8);
-              const fechaConvertida = `${day}/${month}/${year}`;
-              return fechaConvertida;
+                        if (data!="") {
+                          const fechaOriginal = data;
+                        const year = fechaOriginal.slice(0, 4);
+                        const month = fechaOriginal.slice(4, 6);
+                        const day = fechaOriginal.slice(6, 8);
+                        const fechaConvertida = `${day}/${month}/${year}`;
+                        return fechaConvertida;
+                        }else{
+                          return " ";
+                        }
             } },
-                    { "data": "FECCOM",
+            { "data": "FECULT",
                       render: function (data, type, row) {
-              const fechaOriginal = data;
-              const year = fechaOriginal.slice(0, 4);
-              const month = fechaOriginal.slice(4, 6);
-              const day = fechaOriginal.slice(6, 8);
-              const fechaConvertida = `${day}/${month}/${year}`;
-              return fechaConvertida;
+                        if (data!="") {
+                          const fechaOriginal = data;
+                        const year = fechaOriginal.slice(0, 4);
+                        const month = fechaOriginal.slice(4, 6);
+                        const day = fechaOriginal.slice(6, 8);
+                        const fechaConvertida = `${day}/${month}/${year}`;
+                        return fechaConvertida;
+                        }else{
+                          return " ";
+                        }
+            } },
+                    { "data": "FECCOM", className: "text-success",
+                      render: function (data, type, row) {
+                        if (data!="") {
+                          const fechaOriginal = data;
+                        const year = fechaOriginal.slice(0, 4);
+                        const month = fechaOriginal.slice(4, 6);
+                        const day = fechaOriginal.slice(6, 8);
+                        const fechaConvertida = `${day}/${month}/${year}`;
+                        return fechaConvertida;
+                        }else{
+                          return " ";
+                        }
             } },
                     { "data": "FECVEN",
                       render: function (data, type, row) {
-              const fechaOriginal = data;
-              const year = fechaOriginal.slice(0, 4);
-              const month = fechaOriginal.slice(4, 6);
-              const day = fechaOriginal.slice(6, 8);
-              const fechaConvertida = `${day}/${month}/${year}`;
-              return fechaConvertida;
+                        if (data!="") {
+                          const fechaOriginal = data;
+                        const year = fechaOriginal.slice(0, 4);
+                        const month = fechaOriginal.slice(4, 6);
+                        const day = fechaOriginal.slice(6, 8);
+                        const fechaConvertida = `${day}/${month}/${year}`;
+                        return fechaConvertida;
+                        }else{
+                          return " ";
+                        }
+              
             } },
-                    { "data": "DIAANT" },
-                    { "data": "DIAANC" },
-                    { "data": "DIAANV" },
-                    { "data": "TIPINV" },
-                    { "data": "MARCA" },
-                    { "data": "GENERO" }
+                    { "data": "DIAANT"},
+                    { "data": "DIAANC"},
+                    { "data": "DESDES", className: "text-darkblue", },
+                    { "data": "ARCD07", className: "text-darkblue", },
                 ],
-                ordering: true,
+                ordering: false,
                 dom: 'Bfrtip',
                 buttons: [
                   {
@@ -274,7 +278,7 @@
                     var l = Ladda.create(this);
                     $(this).on('click', function() {
                       l.start();
-                      var urlExcel = "http://172.16.15.20/API.LOVABLEPHP/ZLO0012P/ExportAll/?agrup="+agrupSelect+"&cond=1&filtro="+filtroP+"&title="+($("#cbbAgrupacion option:selected").text()).toUpperCase()+"";
+                      var urlExcel = "http://172.16.15.20/API.LOVABLEPHP/ZLO0014P/ExportAll/?agrup="+agrupSelect+"&title="+($("#cbbAgrupacion option:selected").text()).toUpperCase()+"";
                      window.location.href = urlExcel;
                       var xhr = new XMLHttpRequest();
                       xhr.open('HEAD', urlExcel);
