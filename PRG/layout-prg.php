@@ -312,6 +312,24 @@
         localStorage.clear();
         window.location.href="/login.php";
         }
+
+        function setCookie(nombre, valor, expiracion) {
+        var fechaExpiracion = new Date();
+        fechaExpiracion.setTime(fechaExpiracion.getTime() + expiracion * 24 * 60 * 60 * 1000);
+        var cookie = nombre + "=" + encodeURIComponent(valor) + ";expires=" + fechaExpiracion.toUTCString() + ";path=/";
+        document.cookie = cookie;
+        }
+        function getCookie(nombre) {
+        var cookieName = nombre + "=";
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+        var cookie = cookies[i].trim();
+        if (cookie.indexOf(cookieName) === 0) {
+            return decodeURIComponent(cookie.substring(cookieName.length));
+        }
+        }
+        return null;
+        }
       </script>
 </body>
 

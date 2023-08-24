@@ -59,7 +59,7 @@
                             <div class="col-12 ">
                                 <input type="text" class="d-none" id="boole" name="boole">
                                 <div id="isComputer">
-                                <div class="btn-group flex-wrap d-flex justify-content-center justify-content-md-start mb-2 mt-2" role="group" aria-label="Basic radio toggle button group">
+                                <div class="btn-group flex-wrap d-flex justify-content-center justify-content-lg-start mb-2 mt-2" role="group" aria-label="Basic radio toggle button group">
                                     <input type="radio" class="btn-check " name="btncols" value="100" id="btn100" autocomplete="off" >
                                     <label class="btn btn-outline-secondary responsive-font-example pt-3 pb-3 text-black menuMarca"  for="btn100"><b><img class="img-fluid round1 imgButtons" src="../../assets/img/icons/100.GIF" alt="" ></b></label>
 
@@ -113,7 +113,7 @@
                                 <input type="radio" class="btn-check" name="btncols" value="all" id="btnall" autocomplete="off" >
                                 <label class="btn btn-outline-secondary responsive-font-example  text-black menuMarca"style="padding-top: 30px;"  for="btnall" ><b style="font-size:12px" >TODOS</b></label>
                                 </div>
-                           <!-- <div class="btn-group flex-wrap d-flex justify-content-center justify-content-md-start mb-2 mt-2" role="group" aria-label="Basic radio toggle button group">
+                           <!-- <div class="btn-group flex-wrap d-flex justify-content-center justify-content-lg-start mb-2 mt-2" role="group" aria-label="Basic radio toggle button group">
                                
                             </div>-->
                                 
@@ -129,7 +129,7 @@
                                     </div>
                                 </div> 
                             </div>
-                            <div class="col-12 col-md-4 ">
+                            <div class="col-12 col-lg-4 ">
                                 <label class="mb-2">Formato de reportes:</label>
                                 <select class="form-select  mt-1 mb-3 mb-lg-0" id="cbbFormato" name="cbbFormato">
                                 <optgroup>
@@ -145,7 +145,7 @@
                                 </optgroup>
                                 </select>
                             </div>
-                            <div class="col-12 col-md-4 ">
+                            <div class="col-12 col-lg-4 ">
                                 <label class="mb-2">Planeación Agregada:</label>
                                 <select class="form-select  mt-1 mb-3 mb-lg-0" id="cbbPlan" name="cbbPlan">
                                     <option value="1">Plan 30 días</option>
@@ -154,7 +154,7 @@
                                     <option value="4" selected>Todos</option>
                                 </select>
                             </div>
-                            <div class="col-12 col-md-4">
+                            <div class="col-12 col-lg-4">
                                 <div class="row">
                                 <div class="col-9">
                                 <label class="mb-2">Análisis estadístico</label>
@@ -401,6 +401,11 @@
         var repro='<?php echo $repro; ?>';
         var btnOrder='<?php echo $btnOrder; ?>';
         var formato='<?php echo $formato; ?>';
+        var searchBox=getCookie("searchVal");
+        document.cookie = "searchVal=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/";
+        if (searchBox==null) {
+            searchBox=0;
+        }
         if (btnOrder==0 || estado==0) {
             $("#btnOrder1").addClass("btn-secondary");
             $("#btnOrder2").addClass("btn-secondary");
@@ -436,7 +441,16 @@
                 var visibleColumn2=true;
             }
         
+            console.log("http://172.16.15.20/API.LovablePHP/ZLO0013P/List/?marca="+marca+"&plan="+plan+"&estado="+estado+"&btnor="+btnOrder+"&inventarios="+inventarios+"&clasificacion="+clasificacion+"&orden="+orden+"&filtro="+filtro+"&repro="+repro+"&formato="+formato+"&searchVal="+searchBox+"");
             var requestError = false;
+            $.fn.dataTable.ext.search.push(function(settings, searchData, index, rowData, counter) {
+                    var searchVal = $('#myTablePlaneacion').DataTable().search(); 
+                    var columnValue = searchData[2]; 
+                    if (!searchVal) {
+                        return true;
+                    }
+                    return columnValue.includes(searchVal);
+                });
                 var table= $('#myTablePlaneacion').DataTable( {
                     language: {
                     url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json',
@@ -445,7 +459,7 @@
                 "processing":true,
                 
                 "ajax": {
-                    "url": "http://172.16.15.20/API.LovablePHP/ZLO0013P/List/?marca="+marca+"&plan="+plan+"&estado="+estado+"&btnor="+btnOrder+"&inventarios="+inventarios+"&clasificacion="+clasificacion+"&orden="+orden+"&filtro="+filtro+"&repro="+repro+"&formato="+formato+"",
+                    "url": "http://172.16.15.20/API.LovablePHP/ZLO0013P/List/?marca="+marca+"&plan="+plan+"&estado="+estado+"&btnor="+btnOrder+"&inventarios="+inventarios+"&clasificacion="+clasificacion+"&orden="+orden+"&filtro="+filtro+"&repro="+repro+"&formato="+formato+"&searchVal="+searchBox+"",
                     "type": "POST",
                     "beforeSend": function () {
                         $("#planeacionContainer").addClass("loading");
@@ -784,7 +798,7 @@
                         return;
                     }
                     var row = $(this);
-                    $('c[r^="L"], c[r^="X"], c[r^="AA"]', row).attr('s', textred2);
+                    $('c[r^="L"], c[r^="X"], c[r^="AA"]', row).attr('s', textred1);
                     });
                     
                     $('row', sheet).each(function (index) {
@@ -859,9 +873,43 @@
         }
         }
             });
+            var searchTimer;
+var previousSearch = ""; 
+
+$('#myTablePlaneacion').on('search.dt', function () {
+    var searchBox = $('#myTablePlaneacion').closest('.dataTables_wrapper').find('input[type="search"]');
+    clearTimeout(searchTimer);
+    searchTimer = setTimeout(function() {
+        var searchText = searchBox.val();
+        if (searchText != previousSearch) {
+            setCookie("searchVal", searchText, 1);
+            previousSearch = searchText;
+            var tableData = $('#myTablePlaneacion').DataTable().column(2).data();
+            var found = false;
+            tableData.each(function (value, index) {
+                    if (value==searchText) {
+                        found = true;
+                        return false;
+                    }
+                });
+                if (!found) {
+                    location.reload();
+                }
+            }
+        }, 1500);
+    });
+
+
+
+            var toggleMarca=getCookie("marcasToggle");
+            console.log(toggleMarca);
+            if (toggleMarca!=null) {
+                animateMenu();
+            }
+
             $("#myTablePlaneacion").append('<caption style="caption-side: top" class="fw-bold text-black"><label class="ms-2 fw-bold">**Presione clic sobre el estilo para ver sus Ventas**</label></caption>');
          });
-
+        
          function openModalVentas(estilo,data) {
         var anoActual=new Date().getFullYear();
           $("#lblEstilo").text(estilo);
@@ -955,16 +1003,17 @@
 
                 if (icon.hasClass("fa-angles-up")) {
                     icon.removeClass("fa-angles-up");
-                    icon.addClass("fa-angles-down"); // Asumiendo que "fa-angles-down" es la clase para la flecha hacia abajo
-                   
+                    icon.addClass("fa-angles-down"); 
+                    document.cookie = "marcasToggle=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/";
+                   setCookie("marcasToggle",1,1);
                 } else {
                     icon.removeClass("fa-angles-down");
                     icon.addClass("fa-angles-up");
-              
+                    document.cookie = "marcasToggle=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/";
                 }
                 $("#menuMarcas").animate({
-    height: 'toggle'
-  });
+                    height: 'toggle'
+                });
             }
 
     </script>
@@ -984,10 +1033,10 @@
             </div>
             <div class="card-body">
                 <div class="row">
-                    <div class="col-12 col-md-3">
-                    <label for="" class="form-control mb-3 mb-md-0 mt-md-5">Estilo: <span id="lblEstilo"></span></label>
+                    <div class="col-12 col-lg-3">
+                    <label for="" class="form-control mb-3 mb-lg-0 mt-lg-5">Estilo: <span id="lblEstilo"></span></label>
                     </div>
-                    <div class="col-12 col-md-9">
+                    <div class="col-12 col-lg-9">
                     <h5><u>Resumen por año</u></h5>
                     <div class="table-responsive mt-3  rounded" style="width:100%;">
                         <table id="tableResumen" class="table stripe table-secondary table-hover "style="width:100%">
