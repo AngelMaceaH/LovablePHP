@@ -167,7 +167,6 @@
                     "type": "POST",
                     "complete": function (xhr) {
                       $("#thProcessing").addClass('d-none');
-                        console.log(xhr.responseJSON);
                         },
                         error: function (xhr, status, error) {
                             console.log(error);

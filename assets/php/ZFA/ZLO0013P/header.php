@@ -14,7 +14,10 @@
         text-overflow: ellipsis;
     }
     .imgButtons {
-        width: 70px;
+        width: 50px;
+    }
+    .menuMarca{
+        width: 5%;
     }
     .round1 {
         border-radius: 20px;
@@ -22,6 +25,9 @@
     .total-row {
         background-color: rgba(0, 0, 0, 0.2) !important;
         color: white !important;
+    }
+    .gray-letters{
+        color: transparent !important;
     }
     #isPhone {
         display: none;
@@ -41,7 +47,7 @@
     .table-container {
         width: 100%;
         overflow-x: auto;
-        max-height: 550px;
+        max-height: 750px;
         position: relative;
         z-index: 1;
         top: 0;

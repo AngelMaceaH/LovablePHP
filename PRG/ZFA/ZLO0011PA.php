@@ -152,7 +152,6 @@
           var urlList="http://172.16.15.20/API.LovablePHP/ZLO0011P/List/?anopro="+anopro+"&mespro="+mespro+"&cia="+cia+"";
           var options="";
           var responseList=ajaxRequest(urlList);
-          console.log(urlList);
           var arrayList=[];
           var isEmpty=false;
           if (responseList.code==200) {
@@ -237,7 +236,6 @@
           $("#cbbAno, #cbbMes, #filtro1").on("change",function() {
             $("#formFiltros").submit();
           });
-          console.log(arrayList);
               $("#myTableInvDesc").DataTable( {
         language: {
             url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json',

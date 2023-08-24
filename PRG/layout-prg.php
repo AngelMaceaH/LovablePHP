@@ -108,7 +108,7 @@
       var responseModulos = ajaxRequest(urlModulos);
       if (responseModulos.code == 200) {
         for (let i = 0; i < responseModulos.data.length; i++) {
-          $("#menu-display").append(`<li class="nav-group mt-2"><a class="nav-link nav-group-toggle" style="word-wrap: break-word; white-space: normal;" href="#">` + responseModulos.data[i]['APLDES'] + `</a>
+          $("#menu-display").append(`<li class="nav-group  me-2 ms-2 mt-1"><a class="nav-link nav-group-toggle" style="word-wrap: break-word; white-space: normal;" href="#">` + responseModulos.data[i]['APLDES'] + `</a>
                                           <ul class="nav-group-items">
                                             <div id="` + responseModulos.data[i]['DETC91'] + `">
                                           </div>
@@ -125,9 +125,9 @@
         for (let i = 0; i < responseSM.data.length; i++) {
           for (let j = 0; j < responseSMCount.data.length; j++) {
             if (responseSM.data[i]['CATSE1'] == responseSMCount.data[j]['CATSEC']) {
-              $("#" + responseSMCount.data[j]['DETC91'] + "").append(`<li class="nav-group mt-2" aria-expanded="false">
+              $("#" + responseSMCount.data[j]['DETC91'] + "").append(`<li class="nav-group" aria-expanded="false">
                                       <a class="nav-link nav-group-toggle" style="word-wrap: break-word; white-space: normal;" href="#">` + responseSM.data[i]['CATDES'] + `</a>
-                                          <ul class="nav-group-items">
+                                          <ul class="nav-group-items ">
                                             <div id="` + responseSMCount.data[j]['DETC91'] + "-" + responseSM.data[i]['CATSE1'] + `">
                                               <li class="nav-item" id="hiddenli"><a class="nav-link" href="#"><span class="nav-icon"></span></a></li>
                                           </div>
@@ -297,7 +297,20 @@
         });
 
         function logOut() {
+          deleteCookies();
           window.location.assign('/<?php echo $_SESSION['DEV'] ?>LovablePHP/index.php?logout=1');
+        }
+        function deleteCookies() {
+        var cookies = document.cookie.split(";");
+
+        for (var i = 0; i < cookies.length; i++) {
+          var cookie = cookies[i];
+          var eqPos = cookie.indexOf("=");
+          var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+          document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/";
+        }
+        localStorage.clear();
+        window.location.href="/login.php";
         }
       </script>
 </body>

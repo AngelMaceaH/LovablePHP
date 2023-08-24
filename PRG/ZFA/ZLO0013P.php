@@ -9,7 +9,7 @@
 </head>
 
 <body>
-<div class="spinner-wrapper">
+    <div class="spinner-wrapper">
         <span class="loader"></span>
     </div>
     <?php
@@ -45,69 +45,77 @@
                 <h1 class="fs-4 mb-1 mt-2 text-center">Planeación agregada de operaciones y ventas</h1>
             </div>
             <div class="card-body">
-                <div class="position-relative">
-                    <!---->
-                    <form class="" id="formFiltros" action="../../assets/php/ZFA/ZLO0013P/filtrosLogica.php" action="#" method="POST">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-12 text-end">
+                                <button type="button" class="btn" onclick="animateMenu()"> <i id="iconArrow" class="fa-solid fa-angles-up"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                   <div class="card-body" id="menuMarcas">
+                   <form class="" id="formFiltros" action="../../assets/php/ZFA/ZLO0013P/filtrosLogica.php" action="#" method="POST">
                         <div class="row mb-2">
-                            <div class="col-12">
+                            <div class="col-12 ">
                                 <input type="text" class="d-none" id="boole" name="boole">
                                 <div id="isComputer">
                                 <div class="btn-group flex-wrap d-flex justify-content-center justify-content-md-start mb-2 mt-2" role="group" aria-label="Basic radio toggle button group">
                                     <input type="radio" class="btn-check " name="btncols" value="100" id="btn100" autocomplete="off" >
-                                    <label class="btn btn-outline-secondary responsive-font-example pt-3 pb-3 text-black"  for="btn100"><b><img class="img-fluid round1 imgButtons" src="../../assets/img/icons/100.GIF" alt="" ></b></label>
+                                    <label class="btn btn-outline-secondary responsive-font-example pt-3 pb-3 text-black menuMarca"  for="btn100"><b><img class="img-fluid round1 imgButtons" src="../../assets/img/icons/100.GIF" alt="" ></b></label>
 
                                     <input type="radio" class="btn-check" name="btncols" value="200"  id="btn200" autocomplete="off">
-                                    <label class="btn btn-outline-secondary responsive-font-example  pt-3 pb-3 text-black" for="btn200"><b><img class="img-fluid round1 imgButtons" src="../../assets/img/icons/200.GIF" alt="" ></b></label>
+                                    <label class="btn btn-outline-secondary responsive-font-example  pt-3 pb-3 text-black menuMarca" for="btn200"><b><img class="img-fluid round1 imgButtons" src="../../assets/img/icons/200.GIF" alt="" ></b></label>
 
                                     <input type="radio" class="btn-check" name="btncols" value="210" id="btn210" autocomplete="off">
-                                    <label class="btn btn-outline-secondary responsive-font-example  pt-3 pb-3 text-black"  for="btn210"><b><img class="img-fluid round1 imgButtons" src="../../assets/img/icons/210.GIF" alt="" ></b></label>
+                                    <label class="btn btn-outline-secondary responsive-font-example  pt-3 pb-3 text-black menuMarca"  for="btn210"><b><img class="img-fluid round1 imgButtons" src="../../assets/img/icons/210.GIF" alt="" ></b></label>
 
                                     <input type="radio" class="btn-check" name="btncols" value="250" id="btn250" autocomplete="off" >
-                                    <label class="btn btn-outline-secondary responsive-font-example  pt-3 pb-3 text-black" for="btn250"><b><img class="img-fluid round1 imgButtons" src="../../assets/img/icons/250.JPG" alt="" style="height: 50px; margin-top:10px;"></b></label>
+                                    <label class="btn btn-outline-secondary responsive-font-example  pt-3 pb-3 text-black menuMarca" for="btn250"><b><img class="img-fluid round1 imgButtons" src="../../assets/img/icons/250.JPG" alt="" style="height: 50px; margin-top:10px;"></b></label>
 
                                     <input type="radio" class="btn-check" name="btncols" value="450" id="btn450" autocomplete="off" >
-                                    <label class="btn btn-outline-secondary responsive-font-example  pt-3 pb-3 text-black"  for="btn450"><b><img class="img-fluid round1 imgButtons" src="../../assets/img/icons/450.GIF" alt="" ></b></label>
+                                    <label class="btn btn-outline-secondary responsive-font-example  pt-3 pb-3 text-black menuMarca"  for="btn450"><b><img class="img-fluid round1 imgButtons" src="../../assets/img/icons/450.GIF" alt="" ></b></label>
 
                                     <input type="radio" class="btn-check" name="btncols" value="500" id="btn500" autocomplete="off"  >
-                                    <label class="btn btn-outline-secondary responsive-font-example  pt-3 pb-3 text-black" for="btn500"><b><img class="img-fluid round1 imgButtons" src="../../assets/img/icons/500.GIF" alt="" ></b></label>
+                                    <label class="btn btn-outline-secondary responsive-font-example  pt-3 pb-3 text-black menuMarca" for="btn500"><b><img class="img-fluid round1 imgButtons" src="../../assets/img/icons/500.GIF" alt="" ></b></label>
 
                                     <input type="radio" class="btn-check" name="btncols" value="550" id="btn550" autocomplete="off" >
-                                    <label class="btn btn-outline-secondary responsive-font-example  pt-3 pb-3 text-black"  for="btn550"><b><img class="img-fluid round1 imgButtons" src="../../assets/img/icons/550.GIF" alt="" style="height: 50px; margin-top:10px;"></b></label>
+                                    <label class="btn btn-outline-secondary responsive-font-example  pt-3 pb-3 text-black menuMarca"  for="btn550"><b><img class="img-fluid round1 imgButtons" src="../../assets/img/icons/550.GIF" alt="" style="height: 50px; margin-top:10px;"></b></label>
 
                                     <input type="radio" class="btn-check" name="btncols" value="600" id="btn600" autocomplete="off"  >
-                                    <label class="btn btn-outline-secondary responsive-font-example  pt-3 pb-3 text-black" for="btn600"><b><img class="img-fluid round1 imgButtons" src="../../assets/img/icons/600.GIF" alt="" ></b></label>
+                                    <label class="btn btn-outline-secondary responsive-font-example  pt-3 pb-3 text-black menuMarca" for="btn600"><b><img class="img-fluid round1 imgButtons" src="../../assets/img/icons/600.GIF" alt="" ></b></label>
 
                                     <input type="radio" class="btn-check" name="btncols" value="650" id="btn650" autocomplete="off"  >
-                                    <label class="btn btn-outline-secondary responsive-font-example  pt-3 pb-3 text-black" for="btn650"><b><img class="img-fluid round1 imgButtons" src="../../assets/img/icons/650.GIF" alt="" ></b></label>
-                                </div>
-                            <div class="btn-group flex-wrap d-flex justify-content-center justify-content-md-start mb-2 mt-2" role="group" aria-label="Basic radio toggle button group">
-                                <input type="radio" class="btn-check" name="btncols" value="700" id="btn700" autocomplete="off" >
-                                <label class="btn btn-outline-secondary responsive-font-example  pt-3 pb-3 text-black"  for="btn700"><b><img class="img-fluid round1 imgButtons" src="../../assets/img/icons/700.GIF" alt="" ></b></label>
+                                    <label class="btn btn-outline-secondary responsive-font-example  pt-3 pb-3 text-black menuMarca" for="btn650"><b><img class="img-fluid round1 imgButtons" src="../../assets/img/icons/650.GIF" alt="" ></b></label>
+                                    <input type="radio" class="btn-check" name="btncols" value="700" id="btn700" autocomplete="off" >
+                                <label class="btn btn-outline-secondary responsive-font-example  pt-3 pb-3 text-black menuMarca"  for="btn700"><b><img class="img-fluid round1 imgButtons" src="../../assets/img/icons/700.GIF" alt="" ></b></label>
                                 
                                 <input type="radio" class="btn-check" name="btncols" value="800" id="btn800" autocomplete="off" >
-                                <label class="btn btn-outline-secondary responsive-font-example  pt-3 pb-3 text-black"  for="btn800"><b><img class="img-fluid round1 imgButtons" src="../../assets/img/icons/800.GIF" alt="" ></b></label>
+                                <label class="btn btn-outline-secondary responsive-font-example  pt-3 pb-3 text-black menuMarca"  for="btn800"><b><img class="img-fluid round1 imgButtons" src="../../assets/img/icons/800.GIF" alt="" ></b></label>
 
                                 <input type="radio" class="btn-check" name="btncols" value="900" id="btn900" autocomplete="off">
-                                <label class="btn btn-outline-secondary responsive-font-example  pt-3 pb-3 text-black"  for="btn900"><b><img class="img-fluid round1 imgButtons" src="../../assets/img/icons/900.GIF" alt="" ></b></label>
+                                <label class="btn btn-outline-secondary responsive-font-example  pt-3 pb-3 text-black menuMarca"  for="btn900"><b><img class="img-fluid round1 imgButtons" src="../../assets/img/icons/900.GIF" alt="" ></b></label>
                             
                                 <input type="radio" class="btn-check" name="btncols" value="360" id="btn360" autocomplete="off" >
-                                <label class="btn btn-outline-secondary responsive-font-example  pt-3 pb-3 text-black"  for="btn360"><b><img class="img-fluid round1 imgButtons" src="../../assets/img/icons/360.GIF" alt="" style="height: 50px; margin-top:10px;"></b></label>
+                                <label class="btn btn-outline-secondary responsive-font-example  pt-3 pb-3 text-black menuMarca"  for="btn360"><b><img class="img-fluid round1 imgButtons" src="../../assets/img/icons/360.GIF" alt="" style="height: 50px; margin-top:10px;"></b></label>
                                 
                                 <input type="radio" class="btn-check" name="btncols" value="930" id="btn930" autocomplete="off" >
-                                <label class="btn btn-outline-secondary responsive-font-example  pt-3 pb-3 text-black"  for="btn930" ><b><img class="img-fluid round1 imgButtons" src="../../assets/img/icons/930.GIF" alt="" ></b></label>
+                                <label class="btn btn-outline-secondary responsive-font-example  pt-3 pb-3 text-black menuMarca"  for="btn930" ><b><img class="img-fluid round1 imgButtons" src="../../assets/img/icons/930.GIF" alt="" ></b></label>
 
                                 <input type="radio" class="btn-check" name="btncols" value="940" id="btn940" autocomplete="off" >
-                                <label class="btn btn-outline-secondary responsive-font-example  pt-3 pb-3 text-black"  for="btn940" ><b><img class="img-fluid round1 imgButtons" src="../../assets/img/icons/940.GIF" alt="" ></b></label>
+                                <label class="btn btn-outline-secondary responsive-font-example  pt-3 pb-3 text-black menuMarca"  for="btn940" ><b><img class="img-fluid round1 imgButtons" src="../../assets/img/icons/940.GIF" alt="" ></b></label>
                             
                                 <input type="radio" class="btn-check" name="btncols" value="950" id="btn950" autocomplete="off" >
-                                <label class="btn btn-outline-secondary responsive-font-example  pt-3 pb-3 text-black"  for="btn950" ><b><img class="img-fluid round1 imgButtons" src="../../assets/img/icons/950.GIF" alt="" ></b></label>
+                                <label class="btn btn-outline-secondary responsive-font-example  pt-3 pb-3 text-black menuMarca"  for="btn950" ><b><img class="img-fluid round1 imgButtons" src="../../assets/img/icons/950.GIF" alt="" ></b></label>
 
                                 <input type="radio" class="btn-check" name="btncols" value="230" id="btn230" autocomplete="off" >
-                                <label class="btn btn-outline-secondary responsive-font-example  pt-3 pb-3 text-black"  for="btn230" ><b><img class="img-fluid round1 imgButtons" src="../../assets/img/icons/230.GIF" alt="" ></b></label>
+                                <label class="btn btn-outline-secondary responsive-font-example  pt-3 pb-3 text-black menuMarca"  for="btn230" ><b><img class="img-fluid round1 imgButtons" src="../../assets/img/icons/230.GIF" alt="" ></b></label>
 
                                 <input type="radio" class="btn-check" name="btncols" value="all" id="btnall" autocomplete="off" >
-                                <label class="btn btn-outline-secondary responsive-font-example  text-black"style="padding-top: 40px;"  for="btnall" ><b class="fw-bold fs-5" >TODOS</b></label>
-                            </div>
+                                <label class="btn btn-outline-secondary responsive-font-example  text-black menuMarca"style="padding-top: 30px;"  for="btnall" ><b style="font-size:12px" >TODOS</b></label>
+                                </div>
+                           <!-- <div class="btn-group flex-wrap d-flex justify-content-center justify-content-md-start mb-2 mt-2" role="group" aria-label="Basic radio toggle button group">
+                               
+                            </div>-->
                                 
                                 </div> 
                                 <div id="isPhone">
@@ -292,8 +300,9 @@
                             
                         </div>
                     </form>
+                   </div>
                 </div>
-                <hr>
+                
                 <div class="table-container mt-3" id="planeacionContainer" style="width:100%;">
                     <table id="myTablePlaneacion" class="table stripe table-hover "style="width:100%">
                         <thead>
@@ -444,7 +453,6 @@
                     "complete": function (xhr) {
                         $("#planeacionContainer").removeClass("loading");
                         $("#thProcessing").addClass('d-none');
-                        console.log(xhr.responseJSON);
 
                         var registrosMismoEstilo = [];
 
@@ -840,6 +848,7 @@
                 rowCallback: function(row, data) {
         if (data.TIPINV === 'TOTAL') {
             $(row).addClass('total-row');
+            $('td:eq(1), td:eq(2), td:eq(5)', row).addClass('gray-letters');
         }else{
             if (data.UNIVAA !='') {
              totalUNIVAA += parseFloat(data.UNIVAA);
@@ -895,12 +904,13 @@
           for (let i = 0; i < data.length; i++) {
             if (data[i]['TIPINV']=='TOTAL') {
                 options+="<tr class='total-row'>";
+                options+="<td class='gray-letters'>"+data[i]['MARCA']+"</td>";
+                options+="<td class='gray-letters'>"+data[i]['ESTILO']+"</td>";
             }else{
                 options+="<tr>";
+                options+="<td>"+data[i]['MARCA']+"</td>";
+                options+="<td>"+data[i]['ESTILO']+"</td>";
             }
-            
-            options+="<td>"+data[i]['MARCA']+"</td>";
-            options+="<td>"+data[i]['ESTILO']+"</td>";
             options+="<td>"+data[i]['COLOR']+"</td>";
             options+="<td>"+data[i]['TALLA']+"</td>";
             options+="<td>"+data[i]['TIPINV']+"</td>";
@@ -940,6 +950,23 @@
          function closeModal() {
             $("#ventasModal").modal("hide"); 
          }
+         function animateMenu() {
+                let icon = $("#iconArrow");
+
+                if (icon.hasClass("fa-angles-up")) {
+                    icon.removeClass("fa-angles-up");
+                    icon.addClass("fa-angles-down"); // Asumiendo que "fa-angles-down" es la clase para la flecha hacia abajo
+                   
+                } else {
+                    icon.removeClass("fa-angles-down");
+                    icon.addClass("fa-angles-up");
+              
+                }
+                $("#menuMarcas").animate({
+    height: 'toggle'
+  });
+            }
+
     </script>
 </body>
 <!-- Modal -->

@@ -25,6 +25,8 @@ if ($e = curl_error($ch)) {
     $_SESSION['CODUSU'] = $registros[0]['data'][0]['CODUSU'];
     $_SESSION['NOMUSU'] = $registros[0]['data'][0]['NOMUSU'];
     $_SESSION['NIVEL'] = $registros[0]['data'][0]['NIVEL'];
+    $_SESSION['ANOING'] = $registros[0]['data'][0]['ANOING'];
+    $_SESSION['NUMEMP'] = $registros[0]['data'][0]['NUMEMP'];
   }
 curl_close($ch);
 if ($name!='' && $ps!='') {

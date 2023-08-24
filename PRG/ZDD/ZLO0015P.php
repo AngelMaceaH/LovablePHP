@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <link rel="icon" type="image/x-icon" href="../../assets/img/favicon.ico">
+    <link href="../../assets/vendors/uppyjs/uppy.min.css" rel="stylesheet">
+
+</head>
+
+<body>
+    <div class="spinner-wrapper">
+        <span class="loader"></span>
+    </div>
+    <?php
+      include '../layout-prg.php';
+     // include '../../assets/php/ZDD/ZLO0015P/header.php';
+    ?>
+    <div class="container-fluid">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb my-0 ms-2">
+                <li class="breadcrumb-item">
+                    <span>Digitalizacion de documentos / Subir</span>
+                </li>
+                <li class="breadcrumb-item active"><span>ZLO0015P</span></li>
+            </ol>
+        </nav>
+    </div>
+    </header>
+    <div id="body-div" class="body flex-grow-1">
+        <div class="card mb-5">
+            <div class="card-header">
+                <h1 class="fs-4 mb-1 mt-2 text-center">Subir documentos</h1>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-12 col-xl-8 mt-2">
+                        <div class="table-responsive">
+                        <div id="uppy"></div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-xl-4 mt-2" >
+                        <div class="card overflow-auto" style="height: 550px;">
+                            <div class="card-header">
+                                <h5 class="mb-1 mt-2">Información del documento</h5>
+                            </div>
+                            <div class="card-body text-center">
+                            <label class="text-danger d-none" id="lblError">Rellene todos los campos.</label>
+                                <div class="row mt-2">
+                                    <div class="col-12">
+                                        <h6 class="mb-3 text-start">Tipo de documento</h6>
+                                        <select class="form-select" id="tiposDoc">
+                                           <option value="1" selected disabled>Selecciona un tipo</option>
+                                    
+                                        </select>
+                                        <input id="tipDocs" class="d-none"/>
+                                    </div>
+                                    <div class="col-12" id="inputs">
+                                     
+                                    </div>
+                                    <div class="col-12">
+                                        <h6 class="mb-3 mt-4 text-start">Fecha</h6>
+                                        <input type="date" class="form-control" id="fechaDoc">
+                                    </div>
+                                    <div class="col-12">
+                                        <h6 class="mb-3 mt-4 text-start">Descripcion</h6>
+                                        <textarea id="descrpDoc" placeholder="Ingrese una descripcion del documento" class="form-control" rows="5" style="height:150px; resize: none;"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                           
+                        </div>
+                    </div>
+                </div>
+               
+               
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+
+    <div class="footer bg-blck flex-grow-1 d-flex justify-content-center">
+        <p class="bggray responsive-font-example"><i>Lovable de Honduras S.A. de C.V</i></p>
+    </div>
+    <script>
+        var codusu; var anoing; var numemp; var codsec=0; var coddep=0;
+    $(document).ready(function() {
+         codusu="<?php echo isset($_SESSION['CODUSU'])? $_SESSION['CODUSU']: ''; ?>";
+         anoing="<?php echo isset($_SESSION['ANOING'])? $_SESSION['ANOING']: ''; ?>";
+         numemp="<?php echo isset($_SESSION['NUMEMP'])? $_SESSION['NUMEMP']: ''; ?>";
+
+        var urlTipos="http://172.16.15.20/API.LovablePHP/ZLO0015P/ListTipos/";
+        var responseTipos = ajaxRequest(urlTipos);
+        if (responseTipos.code==200) {
+            const tipos= $("#tiposDoc");
+            for (let i = 0; i < responseTipos.data.length; i++) {
+                tipos.append(`<option value="`+responseTipos.data[i].TIPDOC+`">`+responseTipos.data[i].DESCRP+`</option>`);
+            }
+        }
+        var currentDate = new Date().toISOString().split('T')[0];
+        $('#fechaDoc').val(currentDate);
+
+      $("#tiposDoc").on('change',function() {
+        const inputs=$("#inputs");
+        inputs.empty();
+        var selectedTipo= $("#tiposDoc").val();
+        
+        var urlCampos="http://172.16.15.20/API.LovablePHP/ZLO0015P/ListTiposFind/?tipo="+selectedTipo;
+        var responseCampos = ajaxRequest(urlCampos);
+        if (responseCampos.code==200) {
+            $("#tipDocs").val(responseCampos.data[0]['TIPDOC']);
+            var camposDes=responseCampos.data[0].CAMPOS.split("/"); 
+            for (let i = 0; i < camposDes.length; i++) {
+                inputs.append(`<label class=" text-start" style="width:100%; margin-top: 15px;">`+camposDes[i]+`: <input type="text" class="form-control inputsDoc" id="`+responseCampos.data[0]['TIPDOC']+i+`" /></label>`);   
+            }}
+      });
+    });
+    function selectDepa() {
+    var value=$("#cbbDepartamentos").val();
+    var secdep=value.split("-")[0];
+    var seccod=value.split("-")[1];
+    //console.log(secdep+' '+seccod);
+        codsec=seccod;
+        coddep=secdep;
+        $(".btnSend").click();
+        $("#departModal").modal('hide');
+    }
+   </script>
+    <script type="module">
+        
+    import { Uppy, Dashboard } from "../../assets/vendors/uppyjs/uppy.min.js"
+    const uppy = new Uppy()
+    uppy.use(Dashboard, { target: '#uppy', inline: true })
+    function handleComplete(result) {
+        if ((numemp!=0 && anoing!=0) || (codsec!=0 && coddep!=0)) {
+                var fecgra=currentDate();
+                var horgra=currentTime();
+                var codeResponse = 0;
+                var promises = [];
+                result.successful.forEach(file => {
+                var promise = new Promise((resolve, reject) => {
+                    blobToBase64(file.data, (base64) => {
+                        var fileExtension = file.name.split('.').pop();
+                        var campos = {"CAM0": "","CAM1": "", "CAM2": "","CAM3": "","CAM4": "","CAM5": "","CAM6": "","CAM7": "","CAM8": "","CAM9": ""};
+                        const inputs=$(".inputsDoc");
+                        var tipo=$("#tipDocs").val();
+                        for (let i = 0; i < inputs.length; i++) {
+                            campos["CAM"+i]=$("#"+tipo+i+"").val();
+                        }
+                        var fecha=$("#fechaDoc").val();
+                        var descrip=$("#descrpDoc").val();
+                        var dataSave={
+                        "NOMDOC": file.name,
+                        "EXTDOC": fileExtension,
+                        "ANOING": anoing,
+                        "NUMEMP": numemp,
+                        "CODSEC": codsec,
+                        "CODDEP": coddep,
+                        "USUGRA": codusu,
+                        "FECGRA": fecgra,
+                        "HORGRA": horgra,
+                        "ARCHIVO":base64,
+                        "TIPDOC":tipo,
+                        "DESCRP":descrip,
+                        "FECHA":fecha.replace(/-/g, ''),
+                        "CAM1":campos['CAM0'],
+                        "CAM2":campos['CAM1'],
+                        "CAM3":campos['CAM2'],
+                        "CAM4":campos['CAM3'],
+                        "CAM5":campos['CAM4'],
+                        "CAM6":campos['CAM5'],
+                        "CAM7":campos['CAM6'],
+                        "CAM8":campos['CAM7'],
+                        "CAM9":campos['CAM8'],
+                        "CAM10":campos['CAM9']
+                    };
+                    
+                        var urlSave="http://172.16.15.20/API.LovablePHP/ZLO0015P/SaveDocument/";
+                        console.log(dataSave);
+                        var responseSave = ajaxRequest(urlSave, dataSave, "POST");
+                        if (responseSave.code == 200) {
+                            resolve(responseSave.code);
+                        } else {
+                            reject(responseSave.code);
+                        }
+                        resolve(200);
+                    });
+                    });
+                    promises.push(promise);
+                });
+                Promise.all(promises)
+                .then((responses) => {
+                    Swal.fire(
+                        'Realizado',
+                        'Archivos subidos correctamente.',
+                        'success'
+                    ).then((result) => {
+                        if (result.isConfirmed) {
+                            uppy.cancelAll(); 
+                            $("#tiposDoc").val(1).trigger('change');
+                            $("#descrpDoc").val("").trigger('change');
+                        }
+                    });
+                })
+                .catch((errorCode) => {
+                    console.log(errorCode);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Ha ocurrido un error.',
+                        text: 'Porfavor notifiquelo al administrador del sistema.',
+                    });
+                });
+        }else{
+                //console.log("No es empleado");
+                var urlDepas="http://172.16.15.20/API.LOVABLEPHP/ZLO0015P/ListDepas/";
+                var responseDepas = ajaxRequest(urlDepas);
+                if (responseDepas.code==200) {
+                    const departamentos= $("#cbbDepartamentos");
+                    departamentos.empty();
+                    departamentos.append(`<option value="0" selected disabled>Selecciona un departamento</option>`);
+                    for (let i = 0; i < responseDepas.data.length; i++) {
+                        departamentos.append(`<option value="`+responseDepas.data[i].SECDEP+`-`+responseDepas.data[i].SECCOD+`">`+responseDepas.data[i].SECDES+`</option>`);
+                        
+                    }
+                }
+                $("#departModal").modal('show');
+        }
+}
+
+function blobToBase64(blob, callback) {
+    const reader = new FileReader();
+    reader.onload = function() {
+        const dataUrl = reader.result;
+        const base64String = dataUrl.split(',')[1];
+        callback(base64String);
+    };
+    reader.readAsDataURL(blob);
+}
+
+function currentTime() {
+              const fecha = new Date();
+              const horas = fecha.getHours().toString().padStart(2, "0");
+              const minutos = fecha.getMinutes().toString().padStart(2, "0");
+              const segundos = fecha.getSeconds().toString().padStart(2, "0");            
+              const horaActual = horas + minutos + segundos;     
+              return horaActual;
+            }
+function currentDate() {
+              const fecha = new Date();
+              const año = fecha.getFullYear();
+              const mes = (fecha.getMonth() + 1).toString().padStart(2, "0");
+              const dia = fecha.getDate().toString().padStart(2, "0"); 
+              const fechaActual = año.toString() + mes + dia;
+              return fechaActual;
+            } 
+            uppy.on('complete', handleComplete);
+           
+       
+    </script>
+  
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <div class="modal fade" id="departModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel"></h1>
+            <button type="button" class="btn-close" onclick="$('#departModal').modal('hide')"></button>
+        </div>
+        <div class="modal-body">
+           <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <h6 class="mb-3 mt-4 text-start">Departamento</h6>
+                    </div>
+                    <select id="cbbDepartamentos" class="form-select" >
+                    </select>
+                </div>
+           </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary" onclick="selectDepa()">Aceptar</button>
+        </div>
+        </div>
+    </div>
+    </div>
+</body>
+
+</html>

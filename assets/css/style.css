@@ -7999,7 +7999,7 @@ html:not([dir=rtl]) .header-nav {
   --cui-sidebar-bg: #3c4b64;
   --cui-sidebar-padding-x: 0;
   --cui-sidebar-padding-y: 0;
-  --cui-sidebar-color: rgba(255, 255, 255, 0.87);
+  --cui-sidebar-color: rgba(255, 255, 255, 1);
   --cui-sidebar-border-width: 0;
   --cui-sidebar-border-color: transparent;
   --cui-sidebar-brand-color: rgba(255, 255, 255, 0.87);
@@ -8028,12 +8028,12 @@ html:not([dir=rtl]) .header-nav {
   --cui-sidebar-nav-link-padding-x: 1rem;
   --cui-sidebar-nav-link-padding-y: 0.8445rem;
   --cui-sidebar-nav-link-color: rgba(255, 255, 255, 0.6);
-  --cui-sidebar-nav-link-bg: transparent;
+  --cui-sidebar-nav-link-bg: rgba(255, 255, 255, 0.2);
   --cui-sidebar-nav-link-border-color: transparent;
   --cui-sidebar-nav-link-border: 0 solid var(--cui-sidebar-nav-link-border-color);
   --cui-sidebar-nav-link-border-radius: 0;
-  --cui-sidebar-nav-link-active-color: rgba(255, 255, 255, 0.87);
-  --cui-sidebar-nav-link-active-bg: rgba(255, 255, 255, 0.05);
+  --cui-sidebar-nav-link-active-color: rgba(255, 0, 0, 1);
+  --cui-sidebar-nav-link-active-bg: rgba(255, 255, 255, 1);
   --cui-sidebar-nav-link-active-icon-color: rgba(255, 255, 255, 0.87);
   --cui-sidebar-nav-link-disabled-color: rgba(255, 255, 255, 0.38);
   --cui-sidebar-nav-link-disabled-icon-color: rgba(255, 255, 255, 0.6);
@@ -8044,12 +8044,12 @@ html:not([dir=rtl]) .header-nav {
   --cui-sidebar-nav-icon-height: 1.25rem;
   --cui-sidebar-nav-icon-font-size: 1.25rem;
   --cui-sidebar-nav-link-icon-color: rgba(255, 255, 255, 0.6);
-  --cui-sidebar-nav-group-bg: rgba(0, 0, 0, 0.2);
+  --cui-sidebar-nav-group-bg: rgba(140, 11, 11, 1);
   --cui-sidebar-nav-group-items-padding-y: 0;
   --cui-sidebar-nav-group-items-padding-x: 0;
   --cui-sidebar-nav-group-indicator: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='rgba%28255, 255, 255, 0.6%29'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
   --cui-sidebar-nav-group-indicator-hover: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='rgba%28255, 255, 255, 0.87%29'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
-  --cui-sidebar-nav-group-toggle-show-color: rgba(255, 255, 255, 0.6);
+  --cui-sidebar-nav-group-toggle-show-color: rgba(255, 255, 255, 1);
   position: relative;
   display: flex;
   flex: 0 0 var(--cui-sidebar-width);
@@ -8409,7 +8409,7 @@ html:not([dir=rtl]) .sidebar-close {
   flex: 1;
   align-items: center;
   padding: var(--cui-sidebar-nav-link-padding-y) var(--cui-sidebar-nav-link-padding-x);
-  color: var(--cui-sidebar-nav-link-color);
+  color: #fff;
   text-decoration: none;
   white-space: nowrap;
   background: var(--cui-sidebar-nav-link-bg);
@@ -8423,14 +8423,18 @@ html:not([dir=rtl]) .sidebar-close {
   }
 }
 .sidebar-nav .nav-link.active {
-  color: var(--cui-sidebar-nav-link-active-color);
+  font-weight: 600;
+  color: #fff;
+  /*background-color: rgba(180, 57, 57, 1) !important;*/
+  border: #d49612 3px solid;
+ 
  
 }
 .sidebar-nav .nav-link.active .nav-icon {
-  color: var(--cui-sidebar-nav-link-active-icon-color);
+  color: #fff !important;
 }
 .sidebar-nav .nav-link.disabled {
-  color: var(--cui-sidebar-nav-link-disabled-color);
+  color: #fff;
   pointer-events: none;
   cursor: not-allowed;
   background: transparent;
@@ -8449,13 +8453,12 @@ html:not([dir=rtl]) .sidebar-close {
 }
 @media (hover: hover), (-ms-high-contrast: none) {
   .sidebar-nav .nav-link:hover {
-    color: var(--cui-sidebar-nav-link-hover-color);
+    color:#fff;
     text-decoration: none;
     background: var(--cui-sidebar-nav-link-hover-bg);
   }
-  .sidebar-nav .nav-link:hover .nav-icon {
-    color: var(--cui-sidebar-nav-link-hover-icon-color);
-  }
+  
+  
   .sidebar-nav .nav-link:hover.nav-group-toggle::after {
     background-image: var(--cui-sidebar-nav-group-indicator-hover);
   }
@@ -14019,4 +14022,3 @@ html:not([dir=rtl]) .wrapper {
   margin-bottom: 0.5rem;
 }
 
-/*# sourceMappingURL=style.css.map */

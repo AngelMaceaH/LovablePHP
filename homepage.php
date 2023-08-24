@@ -50,9 +50,25 @@
   </header>
   <div class="body flex-grow-1 px-3">
       
-      <div class="card mb-4" style="height:600px;">
-          <div class="card-body">
-
+      <div class="card mb-4">
+          <div class="card-body p-5">
+          <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+                  <div class="carousel-inner rounded">
+                  <div class="carousel-item active ">
+                      <img src="https://www.api.lovable.com.hn/uploads/banner/image/banner_principal_lovable_01_t.png" class="d-block w-100 " alt="...">
+                    </div>
+                    <div class="carousel-item ">
+                      <img src="https://www.api.lovable.com.hn/uploads/banner/image/banner_principal_swimwear_02_t.png" class="d-block w-100 " alt="...">
+                    </div>
+                    <div class="carousel-item ">
+                      <img src="https://www.api.lovable.com.hn/uploads/banner/image/banner_teen_03_t.png" class="d-block w-100 " alt="...">
+                    </div>
+                    <div class="carousel-item ">
+                      <img src="https://www.api.lovable.com.hn/uploads/banner/image/banner_principal_andros_04_t.png" class="d-block w-100 " alt="...">
+                    </div>
+                  </div>
+                </div>
+                
           </div>
         </div>
 
@@ -65,6 +81,8 @@
   <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
   <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js" integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa" crossorigin="anonymous"></script>
   <script>
    
     function obtenerNombreMes(numeroMes) {

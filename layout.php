@@ -19,62 +19,46 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@500&display=swap" rel="stylesheet">
-  <style>
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6,
-    p,
-    span,
-    td,
-    th,
-    a,
-    button,
-    label,
-    b,
-    li,
-    ul {
+  <style> 
+  
+    h1,h2,h3,h4,h5,h6,p,span,td,th,a,button,label,b,li,ul {
       font-family: 'Rubik', sans-serif;
     }
-
     .loader {
-  position: relative;
-  width: 40px;
-  height: 60px;
-  animation: heartBeat 1.2s infinite cubic-bezier(0.215, 0.61, 0.355, 1);
-}
+      position: relative;
+      width: 40px;
+      height: 60px;
+      animation: heartBeat 1.2s infinite cubic-bezier(0.215, 0.61, 0.355, 1);
+    }
 
-.loader:before,
-.loader:after {
-  content: "";
-  background: #ff3d00 ;
-  width: 40px;
-  height: 60px;
-  border-radius: 50px 50px 0 0;
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  transform: rotate(45deg);
-  transform-origin: 50% 68%;
-  box-shadow: 5px 4px 5px #0004 inset;
-}
-.loader:after {
-  transform: rotate(-45deg);
-}
-@keyframes heartBeat {
-  0% { transform: scale(0.95) }
-  5% { transform: scale(1.1) }
-  39% { transform: scale(0.85) }
-  45% { transform: scale(1) }
-  60% { transform: scale(0.95) }
-  100% { transform: scale(0.9) }
-}
+    .loader:before,
+    .loader:after {
+      content: "";
+      background: #ff3d00 ;
+      width: 40px;
+      height: 60px;
+      border-radius: 50px 50px 0 0;
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      transform: rotate(45deg);
+      transform-origin: 50% 68%;
+      box-shadow: 5px 4px 5px #0004 inset;
+    }
+    .loader:after {
+      transform: rotate(-45deg);
+    }
+    @keyframes heartBeat {
+      0% { transform: scale(0.95) }
+      5% { transform: scale(1.1) }
+      39% { transform: scale(0.85) }
+      45% { transform: scale(1) }
+      60% { transform: scale(0.95) }
+      100% { transform: scale(0.9) }
+    }
   </style>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
-
 <body>
   <?php
   date_default_timezone_set('America/Tegucigalpa');
@@ -105,7 +89,7 @@
       var responseModulos = ajaxRequest(urlModulos);
       if (responseModulos.code == 200) {
         for (let i = 0; i < responseModulos.data.length; i++) {
-          $("#menu-display").append(`<li class="nav-group mt-2"><a class="nav-link nav-group-toggle" style="word-wrap: break-word; white-space: normal;" href="#">` + responseModulos.data[i]['APLDES'] + `</a>
+          $("#menu-display").append(`<li class="nav-group  me-2 ms-2 mt-1"><a class="nav-link nav-group-toggle" style="word-wrap: break-word; white-space: normal;" href="#">` + responseModulos.data[i]['APLDES'] + `</a>
                                           <ul class="nav-group-items">
                                             <div id="` + responseModulos.data[i]['DETC91'] + `">
                                           </div>
@@ -122,9 +106,9 @@
           for (let i = 0; i < responseSM.data.length; i++) {
            for (let j = 0; j < responseSMCount.data.length; j++) {
               if (responseSM.data[i]['CATSE1']==responseSMCount.data[j]['CATSEC']) {
-                  $("#"+responseSMCount.data[j]['DETC91']+"").append(`<li class="nav-group mt-2" aria-expanded="false">
+                  $("#"+responseSMCount.data[j]['DETC91']+"").append(`<li class="nav-group" aria-expanded="false">
                                       <a class="nav-link nav-group-toggle" style="word-wrap: break-word; white-space: normal;" href="#">` + responseSM.data[i]['CATDES'] + `</a>
-                                          <ul class="nav-group-items">
+                                          <ul class="nav-group-items ">
                                             <div id="`+responseSMCount.data[j]['DETC91']+"-"+responseSM.data[i]['CATSE1'] + `">
                                               <li class="nav-item" id="hiddenli"><a class="nav-link" href="#"><span class="nav-icon"></span></a></li>
                                           </div>
@@ -195,7 +179,7 @@
         <img src="assets/img/lovableLogoDark.jpg" class="img-fluid" alt="Lovable Logo"></a>
     </div>
     <ul class="sidebar-nav bg-blck2 mt-3" data-coreui="navigation" data-simplebar="">
-      <li class="nav-item mt-3"><a class="nav-link" href="<?php echo $_SESSION['INDEX']; ?>">
+      <li class="nav-item mt-3"><a class="nav-link active" href="<?php echo $_SESSION['INDEX']; ?>">
           <svg class="nav-icon">
             <use xlink:href="assets/vendors/@coreui/icons/svg/free.svg#cil-home"></use>
           </svg>

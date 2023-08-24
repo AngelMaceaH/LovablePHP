@@ -131,8 +131,6 @@
           for (let j = 0; j < cias.length; j++) {
             var urlList="http://172.16.15.20/API.LovablePHP/ZLO0011P/List/?anopro="+anopro+"&mespro="+mespro+"&cia="+cias[j]+"";
             var responseList=ajaxRequest(urlList);
-            console.log(urlList);
-            console.log(responseList);
             if (responseList.code==200) {
             var sidesc=0;var por10=0;var por20=0;var por30=0;var por40=0;var por50=0;var por60=0;
             var por70=0;var por80=0;var porz1=0;var porz2=0;var total=0;
