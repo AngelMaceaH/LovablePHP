@@ -49,7 +49,7 @@
                     <div class="card-header">
                         <div class="row">
                             <div class="col-12 text-end">
-                                <button type="button" class="btn" onclick="animateMenu()"> <i id="iconArrow" class="fa-solid fa-angles-up"></i></button>
+                                <button type="button" class="btn btn-secondary pe-3 ps-3" onclick="animateMenu()"> <i id="iconArrow" class="fa-solid fa-angles-up text-white"></i></button>
                             </div>
                         </div>
                     </div>
@@ -474,16 +474,19 @@
                 table.rows().every(function (rowIdx, tableLoop, rowLoop) {
                     var data = this.data();
                     var rowNode = this.node();
-                    if (rowIdx < table.rows().count() - 1) {
+                    if (rowIdx < table.rows().count() - 1 && data.TIPINV !== 'TOTALM') {
                         $(rowNode).addClass('clickable-row');
+                        $(rowNode).attr('data-marca', data.MARCA);
                         $(rowNode).attr('data-estilo', data.ESTILO);
                         registrosMismoEstilo.push(data);
                     }
                 });
+
                 $('#myTablePlaneacion').on('click', '.clickable-row', function () {
-                    var estiloValue = $(this).data('estilo');  
+                    var marcaValue = $(this).data('marca'); 
+                    var estiloValue = $(this).data('estilo'); 
                     var registrosFiltrados = registrosMismoEstilo.filter(function (registro) {
-                        if (registro.ESTILO == estiloValue) {
+                        if (registro.MARCA == marcaValue && registro.ESTILO == estiloValue) {
                             return  registro ;
                         }
                     });       
@@ -517,7 +520,9 @@
     } },
                     {data:"VALVAA",
                         className:"text-end", render: function(data) {
-        return data.toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                            var valor=parseFloat(data);
+                            if (isNaN(valor)) {valor='';}                       
+        return  valor.toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     } },
                     {data:"UPRMAC",
                        className:"text-primary text-end", render: function(data) {
@@ -609,7 +614,9 @@
     }},
                     {data:"VALANT",
                         className:"text-end", render: function(data) {
-        return data.toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                            var valor=parseFloat(data);
+                            if (isNaN(valor)) {valor='';}                       
+        return  valor.toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     }},
     {data:"IMPORT",className:"text-start"},
     {data:"DOZTOT",className:"text-end", render: function(data) {
@@ -847,8 +854,9 @@
                     }
                     var row = $(this);
                     var cellE = $('c[r^="E"]', row);
-                    if (cellE.text() === "TOTAL") {
+                    if (cellE.text() === "TOTAL" || cellE.text() === "TOTALM") {
                         $('c[r^="A"], c[r^="B"], c[r^="C"], c[r^="D"], c[r^="E"], c[r^="F"], c[r^="G"], c[r^="H"], c[r^="I"], c[r^="J"], c[r^="K"], c[r^="L"], c[r^="M"], c[r^="N"], c[r^="O"], c[r^="P"], c[r^="Q"], c[r^="R"], c[r^="S"], c[r^="T"], c[r^="U"], c[r^="V"], c[r^="W"], c[r^="X"], c[r^="Y"], c[r^="Z"], c[r^="AA"], c[r^="AB"], c[r^="AC"], c[r^="AD"], c[r^="AE"], c[r^="AF"]', row).attr('s', 7);
+                        $('c[r^="A"], c[r^="B"], c[r^="C"], c[r^="D"], c[r^="E"]', row).text('s', ' ');
                     }
                     });
                 var tagName = sSh.getElementsByTagName('sz');
@@ -860,7 +868,7 @@
                     
                 ],
                 rowCallback: function(row, data) {
-        if (data.TIPINV === 'TOTAL') {
+        if (data.TIPINV === 'TOTAL' || data.TIPINV === 'TOTALM') {
             $(row).addClass('total-row');
             $('td:eq(1), td:eq(2), td:eq(5)', row).addClass('gray-letters');
         }else{

@@ -106,7 +106,7 @@
       var urlDia="http://172.16.15.20/API.LovablePHP/Index/ValorDia/?fechaGraficas="+fechasGraficas+"&compFiltro="+compFiltro+"&dck="+dolaresck+"";
       var responseDia = ajaxRequest(urlDia);
       //VENTAS MES
-      var urlMes="http://172.16.15.20/API.LovablePHP/Index/ValorMes/?mesGraficas1="+Mes1Num+"&anoGraficas1="+Anio1+"&compFiltro="+compFiltro+"&dck="+compFiltro+"";
+      var urlMes="http://172.16.15.20/API.LovablePHP/Index/ValorMes/?mesGraficas1="+Mes1Num+"&anoGraficas1="+Anio1+"&compFiltro="+compFiltro+"&dck="+dolaresck+"";
       var responseMes = ajaxRequest(urlMes);
       //VENTAS COMPARATIVO1
       var urlComp1="http://172.16.15.20/API.LovablePHP/Index/comp1/?mesGraficas1="+Mes1Num+"&anoGraficas1="+Anio1+"&diagrafica="+diagrafica+"&compFiltro="+compFiltro+"&mesGraficas2="+Mes2Num+"&anoGraficas2="+Anio2+"&dck="+dolaresck+"";

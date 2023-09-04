@@ -5,16 +5,14 @@
     <meta charset="utf-8">
     <link rel="icon" type="image/x-icon" href="../../assets/img/favicon.ico">
     <link href="../../assets/vendors/uppyjs/uppy.min.css" rel="stylesheet">
-
+    <link rel="stylesheet" href="../../assets/css/flexselect.css">
 </head>
-
 <body>
     <div class="spinner-wrapper">
         <span class="loader"></span>
     </div>
     <?php
       include '../layout-prg.php';
-     // include '../../assets/php/ZDD/ZLO0015P/header.php';
     ?>
     <div class="container-fluid">
         <nav aria-label="breadcrumb">
@@ -84,7 +82,13 @@
         <p class="bggray responsive-font-example"><i>Lovable de Honduras S.A. de C.V</i></p>
     </div>
     <script>
+       document.getElementById("descrpDoc").addEventListener("input", function(event) {
+        var input = event.target;
+        var newValue = input.value.replace(/[^\w\sáéíóúÁÉÍÓÚñÑ]/g, "");
+        input.value = newValue;
+        });
         var codusu; var anoing; var numemp; var codsec=0; var coddep=0;
+        var codigo="";
     $(document).ready(function() {
          codusu="<?php echo isset($_SESSION['CODUSU'])? $_SESSION['CODUSU']: ''; ?>";
          anoing="<?php echo isset($_SESSION['ANOING'])? $_SESSION['ANOING']: ''; ?>";
@@ -100,27 +104,79 @@
         }
         var currentDate = new Date().toISOString().split('T')[0];
         $('#fechaDoc').val(currentDate);
+        var urlProveedores="http://172.16.15.20/API.LovablePHP/ZLO0015P/ListProveedores/";
+        var responseProveedores = ajaxRequest(urlProveedores);
+        options="";
+        if (responseProveedores.code==200) {
+            for (let j = 0; j < responseProveedores.data.length; j++) {
+                options+='<tr onclick="sendProveedor(this)"><td style="width:10%;" class="TipProveedor">'+responseProveedores.data[j]['ARCCIU']+'</td><td style="width:10%;" class="IDProveedor">'+responseProveedores.data[j]['ARCCO1']+'</td><td class="descProveedor">'+responseProveedores.data[j]['ARCNOM']+'</td></tr>';
+            }
+            $("#tbProveedoresBody").append(options);
+            $('#tbProveedores thead th').each(function () {
+            var title = $(this).text();
+            $(this).html(title + '<br /><input type="text" class="form-control mt-2"/>');
+            });
+            var table= $('#tbProveedores').DataTable( {
+                    language: {
+                    url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json',
+                },
+                "pageLength": 10,
+                "ordering": false,
+                "dom": 'rtip',
+                
+            });
 
+            $('#tbProveedores thead input').on('keyup', function () {
+                  var columnIndex = $(this).parent().index();
+                  var inputValue = $(this).val().trim();
+              
+                  if (table.column(columnIndex).search() !== inputValue) {
+                      table
+                          .column(columnIndex)
+                          .search(inputValue)
+                          .draw();
+                  }
+              });
+        }
       $("#tiposDoc").on('change',function() {
         const inputs=$("#inputs");
         inputs.empty();
         var selectedTipo= $("#tiposDoc").val();
-        
         var urlCampos="http://172.16.15.20/API.LovablePHP/ZLO0015P/ListTiposFind/?tipo="+selectedTipo;
         var responseCampos = ajaxRequest(urlCampos);
         if (responseCampos.code==200) {
             $("#tipDocs").val(responseCampos.data[0]['TIPDOC']);
             var camposDes=responseCampos.data[0].CAMPOS.split("/"); 
             for (let i = 0; i < camposDes.length; i++) {
-                inputs.append(`<label class=" text-start" style="width:100%; margin-top: 15px;">`+camposDes[i]+`: <input type="text" class="form-control inputsDoc" id="`+responseCampos.data[0]['TIPDOC']+i+`" /></label>`);   
+                if (camposDes[i]=="Proveedor") {
+                    var select='<span class="" onclick="showProveedores()"><input type="text" class="text-muted form-select inputsDoc" id="'+responseCampos.data[0]['TIPDOC']+i+'" placeholder="Selecciona un proveedor" readonly /></span>';
+                    inputs.append(`<label class=" text-start" style="width:100%; margin-top: 15px;">`+camposDes[i]+`: `+select+`</label>`);
+                    //$(".selectProveedores").flexselect();
+                }else{
+                    inputs.append(`<label class=" text-start" style="width:100%; margin-top: 15px;">`+camposDes[i]+`: <input type="text" class="form-control inputsDoc" id="`+responseCampos.data[0]['TIPDOC']+i+`" /></label>`);   
+                }
+                
             }}
       });
     });
+        function showProveedores() {
+            $("#modalProveedores").modal('show');
+        }
+
+        function sendProveedor(row){
+            var tr=$(row).closest('tr');
+            var tds=tr.find('td');
+            var tipo=tds.eq(0).text();
+            var id=tds.eq(1).text();
+            var desc=tds.eq(2).text();
+            codigo=tipo+'-'+id;
+            $("#FAC0").val(tipo+' '+id+' '+desc);
+            $("#modalProveedores").modal('hide');
+        }
     function selectDepa() {
     var value=$("#cbbDepartamentos").val();
     var secdep=value.split("-")[0];
     var seccod=value.split("-")[1];
-    //console.log(secdep+' '+seccod);
         codsec=seccod;
         coddep=secdep;
         $(".btnSend").click();
@@ -145,8 +201,23 @@
                         var campos = {"CAM0": "","CAM1": "", "CAM2": "","CAM3": "","CAM4": "","CAM5": "","CAM6": "","CAM7": "","CAM8": "","CAM9": ""};
                         const inputs=$(".inputsDoc");
                         var tipo=$("#tipDocs").val();
-                        for (let i = 0; i < inputs.length; i++) {
-                            campos["CAM"+i]=$("#"+tipo+i+"").val();
+                        var length=inputs.length;
+                        for (let i = 0; i < length; i++) {
+                            if (tipo+"0"=="FAC0") {
+                                if (campos["CAM0"]=="" && campos["CAM1"]=="") {
+                                    var proveedor=codigo.split("-");
+                                    campos["CAM0"]=proveedor[0];
+                                    campos["CAM1"]=proveedor[1];
+                                    length=length+2;
+                                    i=2;
+                                }else{
+                                    campos["CAM"+(i-1)]=$("#"+tipo+(i-2)+"").val();
+                                }
+                                
+                            }else{
+                                campos["CAM"+i]=$("#"+tipo+i+"").val();
+                            }   
+                               
                         }
                         var fecha=$("#fechaDoc").val();
                         var descrip=$("#descrpDoc").val();
@@ -175,16 +246,14 @@
                         "CAM9":campos['CAM8'],
                         "CAM10":campos['CAM9']
                     };
-                    
                         var urlSave="http://172.16.15.20/API.LovablePHP/ZLO0015P/SaveDocument/";
-                        console.log(dataSave);
                         var responseSave = ajaxRequest(urlSave, dataSave, "POST");
                         if (responseSave.code == 200) {
                             resolve(responseSave.code);
                         } else {
                             reject(responseSave.code);
                         }
-                        resolve(200);
+                        //resolve(200);
                     });
                     });
                     promises.push(promise);
@@ -212,17 +281,17 @@
                     });
                 });
         }else{
-                //console.log("No es empleado");
                 var urlDepas="http://172.16.15.20/API.LOVABLEPHP/ZLO0015P/ListDepas/";
                 var responseDepas = ajaxRequest(urlDepas);
                 if (responseDepas.code==200) {
                     const departamentos= $("#cbbDepartamentos");
                     departamentos.empty();
-                    departamentos.append(`<option value="0" selected disabled>Selecciona un departamento</option>`);
+                    departamentos.append(`<option value="0"> </option>`);
                     for (let i = 0; i < responseDepas.data.length; i++) {
                         departamentos.append(`<option value="`+responseDepas.data[i].SECDEP+`-`+responseDepas.data[i].SECCOD+`">`+responseDepas.data[i].SECDES+`</option>`);
                         
                     }
+                    $("#cbbDepartamentos").flexselect();
                 }
                 $("#departModal").modal('show');
         }
@@ -258,7 +327,8 @@ function currentDate() {
            
        
     </script>
-  
+    <script src="../../assets/js/jquery.flexselect.js"></script>
+    <script src="../../assets/js/liquidmetal.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <div class="modal fade" id="departModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -274,7 +344,7 @@ function currentDate() {
                     <div class="col-12">
                         <h6 class="mb-3 mt-4 text-start">Departamento</h6>
                     </div>
-                    <select id="cbbDepartamentos" class="form-select" >
+                    <select id="cbbDepartamentos" class="form-select" data-placeholder="Selecciona una departamento">
                     </select>
                 </div>
            </div>
@@ -282,6 +352,34 @@ function currentDate() {
         <div class="modal-footer">
             <button type="button" class="btn btn-primary" onclick="selectDepa()">Aceptar</button>
         </div>
+        </div>
+    </div>
+    </div>
+
+    <div class="modal fade" id="modalProveedores" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel"></h1>
+
+            <button type="button" class="btn-close" onclick="$('#modalProveedores').modal('hide')"></button>
+        </div>
+            <div class="modal-body">
+                <div class="table-container mt-3" style="width:100%;">
+                    <table id="tbProveedores" class="table stripe table-hover "style="width:100%">
+                        <thead>
+                            <tr>
+                                <th colspan="10%" class="text-black text-start">Tipo</th>
+                                <th colspan="10%" class="text-black text-start">Proveedor</th>
+                                <th colspan="10%" class="text-black text-start">Descripción</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbProveedoresBody">
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
     </div>

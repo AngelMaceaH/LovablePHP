@@ -4,6 +4,7 @@
 <head>
     <meta charset="utf-8">
     <link rel="icon" type="image/x-icon" href="../../assets/img/favicon.ico">
+    <link rel="stylesheet" href="../../assets/css/flexselect.css">
     <style>
     .space-cards {
         width: 20%;
@@ -101,12 +102,12 @@
         <p class="bggray responsive-font-example"><i>Lovable de Honduras S.A. de C.V</i></p>
     </div>
     <script>
-       
         $(document).on('keypress', function(e) {
         if (e.which == 13) { 
             searchF(); 
         }
     });
+    var codigo="";
     $(document).ready(function() {
         var anoing = "<?php echo isset($_SESSION['ANOING'])? $_SESSION['ANOING']: ''; ?>";
         var numemp = "<?php echo isset($_SESSION['NUMEMP'])? $_SESSION['NUMEMP']: ''; ?>";
@@ -136,6 +137,7 @@
                         .data[i].SECCOD + `">` + responseDepas.data[i].SECDES + `</option>`);
 
                 }
+               // $("#cbbDepartamentos").flexselect();
             }
 
         } else {
@@ -150,21 +152,72 @@
                                         </select>
                                     </div>`);
         }
+       /* var originalValue = ""; 
+            $("#cbbDepartamentos_flexselect").on('mouseover', function() {
+                originalValue = $("#cbbDepartamentos_flexselect").val();
+                if ($("#cbbDepartamentos_flexselect").val() !== '') {
+                    $("#cbbDepartamentos_flexselect").val('');
+                }
+            });
+            $("#cbbDepartamentos_flexselect").on('click', function() {
+                    var inputElement = $("#cbbDepartamentos_flexselect").find('input')[0];
+                    console.log(inputElement);
+                    //inputElement.setSelectionRange(inputElement.selectionStart - 1, inputElement.selectionStart - 1);
+                });
 
+            $("#cbbDepartamentos_flexselect").on('mouseout', function() {
+                if ($("#cbbDepartamentos_flexselect").val() === '') {
+                    $("#cbbDepartamentos_flexselect").val(originalValue);
+                }
+            });*/
+        var urlProveedores="http://172.16.15.20/API.LovablePHP/ZLO0015P/ListProveedores/";
+        var responseProveedores = ajaxRequest(urlProveedores);
+        options="";
+        if (responseProveedores.code==200) {
+            for (let j = 0; j < responseProveedores.data.length; j++) {
+                options+='<tr onclick="sendProveedor(this)"><td style="width:10%;" class="TipProveedor">'+responseProveedores.data[j]['ARCCIU']+'</td><td style="width:10%;" class="IDProveedor">'+responseProveedores.data[j]['ARCCO1']+'</td><td class="descProveedor">'+responseProveedores.data[j]['ARCNOM']+'</td></tr>';
+            }
+            $("#tbProveedoresBody").append(options);
+            $('#tbProveedores thead th').each(function () {
+            var title = $(this).text();
+            $(this).html(title + '<br /><input type="text" class="form-control mt-2"/>');
+            });
+            var table= $('#tbProveedores').DataTable( {
+                    language: {
+                    url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json',
+                },
+                "pageLength": 10,
+                "ordering": false,
+                "dom": 'rtip',
+                
+            });
+
+            $('#tbProveedores thead input').on('keyup', function () {
+                  var columnIndex = $(this).parent().index();
+                  var inputValue = $(this).val().trim();
+              
+                  if (table.column(columnIndex).search() !== inputValue) {
+                      table
+                          .column(columnIndex)
+                          .search(inputValue)
+                          .draw();
+                  }
+              });
+        }
         chargeTable();
         var urlTipos = "http://172.16.15.20/API.LovablePHP/ZLO0015P/ListTipos/";
         var responseTipos = ajaxRequest(urlTipos);
         if (responseTipos.code == 200) {
             const tipos = $("#tiposDoc");
             for (let i = 0; i < responseTipos.data.length; i++) {
-                tipos.append(`<option value="` + responseTipos.data[i].TIPDOC + `">` + responseTipos.data[i]
-                    .DESCRP + `</option>`);
+                    tipos.append(`<option value="` + responseTipos.data[i].TIPDOC + `">` + responseTipos.data[i]
+                        .DESCRP + `</option>`);
+             }
+                var tipo = getCookie("tipdoc");
+            if (tipo!=null) {
+                $("#tiposDoc").val(tipo);
+                tiposChange();
             }
-            var tipo = getCookie("tipdoc");
-        if (tipo!=null) {
-            $("#tiposDoc").val(tipo);
-            tiposChange();
-        }
         }
        
         $("#tiposDoc").on('change', function() {
@@ -192,13 +245,18 @@
             if (responseCampos.code == 200) {
                 $("#tipDocs").val(responseCampos.data[0]['TIPDOC']);
                 var camposDes = responseCampos.data[0].CAMPOS.split("/");
+                var htmlAppend = "";
                 for (let i = 0; i < camposDes.length; i++) {
+                    htmlAppend+='<div id="input-first-name">';
+                    if (camposDes[i]=="Proveedor") {
+                       // htmlAppend+='<span onclick="showProveedores()"><input class="form-select inputsDoc fn" type="text" id="'+responseCampos.data[0]['TIPDOC']+i+'" required readonly /></span>';
+                            htmlAppend+='<input class="inputsDoc fn" style="font-size:16px;"  type="text" autocomplete="off" data-placeholder-focus="false" required id="'+responseCampos.data[0]['TIPDOC']+i+'" onclick="showProveedores()"  oninput="noTextInput(this)"/><button type="button" class="btn-close mb-2" onclick="vaciarInput()"></button>';
+                            htmlAppend+='<input class="d-none" id="originalData" /> <input class="d-none" id="codigo" />'
+                        }else{
+                        htmlAppend+='<input class="inputsDoc fn"  type="text" autocomplete="off" data-placeholder-focus="false" required id="'+responseCampos.data[0]['TIPDOC']+i+'"  />';
+                    }
                     
-                    inputs.append(
-                        `
-                        <div id="input-first-name">
-                                                    <input class="inputsDoc fn"  type="text" autocomplete="off" data-placeholder-focus="false" required id="`+responseCampos.data[0]['TIPDOC']+i+`"  />
-                                                    <label>` + camposDes[i] + `</label>
+                    htmlAppend+= `<label>` + camposDes[i] + `</label>
                                                     <svg class="icon--check" width="21px" height="17px"
                                                         viewBox="0 0 21 17" version="1.1"
                                                         xmlns="http://www.w3.org/2000/svg"
@@ -235,23 +293,62 @@
                                                             </g>
                                                         </g>
                                                     </svg>
-                                                </div>`);
-
+                                                </div>`;
+                    inputs.append(htmlAppend);
+                    htmlAppend="";
                 }
             }
     }
+        function vaciarInput() {
+            $('#FAC0').val('');
+            $('#codigo').val('');
+        }
+        function showProveedores() {
+            $("#modalProveedores").modal('show');
+        }
 
+        function sendProveedor(row){
+            var tr=$(row).closest('tr');
+            var tds=tr.find('td');
+            var tipo=tds.eq(0).text();
+            var id=tds.eq(1).text();
+            var desc=tds.eq(2).text();
+            $("#codigo").val(tipo+'-'+id);
+            $("#FAC0").val(tipo+' '+id+' '+desc);
+            $("#originalData").val(tipo+' '+id+' '+desc);
+            $("#modalProveedores").modal('hide');
+        }
+        function noTextInput(inputElement) {
+            var originalData=$("#originalData").val();
+            inputElement.value = originalData;
+         }
     function searchF() {
+       
         var campos = {"CAM0": "","CAM1": "", "CAM2": "","CAM3": "","CAM4": "","CAM5": "","CAM6": "","CAM7": "","CAM8": "","CAM9": ""};
         const inputs=$(".inputsDoc");
         var tipo=$("#tipDocs").val();
         for (let i = 0; i < inputs.length; i++) {
             campos["CAM"+i]=$("#"+tipo+i+"").val();
         }
+        var tipProv=""; var idProv="";
+        var proveedor=($("#codigo").val()).split('-');
+        tipProv=(proveedor[0]!=null)?proveedor[0]:"";
+        idProv=(proveedor[1]!=null)?proveedor[1]:"";
         for (let i = 0; i < 10; i++) {
-            var j= i+1;
-            document.cookie = "cam"+j+"=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/";
-            setCookie("cam"+j,campos['CAM'+i+''],1);
+            if (tipo+'0'=='FAC0') {
+                document.cookie = "cam1=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/";
+                    setCookie("cam1",tipProv,1);
+                document.cookie = "cam2=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/";
+                    setCookie("cam2",idProv,1);
+                document.cookie = "cam3=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/";
+                    setCookie("cam3",campos['CAM1'],1);
+                document.cookie = "cam4=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/";
+                    setCookie("cam4",campos['CAM2'],1);   
+            }else{
+                var j= i+1;
+                document.cookie = "cam"+j+"=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/";
+                setCookie("cam"+j,campos['CAM'+i+''],1);
+            }
         }
         var valArea=$("#cbbDepartamentos").val();
         if (valArea!=null) {
@@ -307,7 +404,9 @@
         var tipo = getCookie("tipdoc");
         var coddep=getCookie("coddep");
         var secdep=getCookie("secdep");
-       
+        document.cookie = "tipdoc=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/";
+        document.cookie = "coddep=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/";
+        document.cookie = "secdep=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/";
         var campos = {
             'CAM1': getCookie("cam1"),
             'CAM2': getCookie("cam2"),
@@ -318,12 +417,10 @@
             'CAM7': getCookie("cam7"),
             'CAM8': getCookie("cam8"),
             'CAM9': getCookie("cam9"),
-            'CAM10': getCookie("cam10")
-        };
-
+            'CAM10': getCookie("cam10")};
+        console.log(campos);
         var baseUrl = "http://172.16.15.20/API.LovablePHP/ZLO0016P/List/";
         var queryParams = [];
-
         if (anoing) queryParams.push("anoing=" + anoing);
         if (numemp) queryParams.push("numemp=" + numemp);
         if (tipo) queryParams.push("tipdoc=" + tipo);
@@ -338,7 +435,6 @@
 
         var urlList = baseUrl + "?" + queryParams.join("&");
 
-        console.log(urlList);
         var response = ajaxRequest(urlList);
         const body = $("#myTableBody");
         if (response.code == 200) {
@@ -567,6 +663,7 @@
 
     function showCard(nomcard, usugra, fecgra, horgra, extdoc, urldoc, tipdoc, descrp, fecha, cam0, cam1, cam2, cam3,
         cam4, cam5, cam6, cam7, cam8, cam9) {
+          
         $("#downloadFrame").empty();
         switch (extdoc) {
             case 'png':
@@ -632,13 +729,47 @@
             const inputs = $("#extraInfo");
             inputs.empty();
             var camposDes = responseCampos.data[0].CAMPOS.split("/");
-            for (let i = 0; i < camposDes.length; i++) {
-                inputs.append(`<div class="col-6 col-lg-3">
+            console.log(campos);
+            var cont=0;
+            var length=camposDes.length;
+            for (let i = 0; i < length; i++) {
+                    if (tipdoc=="FAC") {
+                                if (cont==0) {
+                                    cont=cont+1;
+                                    var tipo=campos['cam0'];
+                                    var prov=campos['cam1'];
+                                    var urlFind="http://172.16.15.20/API.LovablePHP/ZLO0015P/ProveedoresFind/?tipo="+tipo+"&proveedor="+prov+"";
+                                    var responseFind=ajaxRequest(urlFind);
+                                    var descripcionProveedor=" ";
+                                    if (responseFind.code==200) {
+                                        descripcionProveedor=responseFind.data[0]['ARCNOM'];
+                                    }
+                                    inputs.append(`<div class="col-6 col-lg-3">
+                                            <h6 class=" mt-1">`+camposDes[i]+`:</h6>
+                                        </div>
+                                        <div class="col-6 col-lg-3">
+                                            <span class="text-start">` + tipo + ` ` +prov + ` ` +descripcionProveedor + `</span>
+                                        </div>`);
+                                        length=length+2;
+                                        i=2;
+                                }else{
+                                    inputs.append(`<div class="col-6 col-lg-3">
+                                            <h6 class=" mt-1">` + camposDes[i-2] + `:</h6>
+                                        </div>
+                                        <div class="col-6 col-lg-3">
+                                            <span class="text-start">` + campos['cam' + (i-1)] + `</span>
+                                        </div>`);
+                                }
+                                
+                            }else{
+                                inputs.append(`<div class="col-6 col-lg-2">
                                 <h6 class=" mt-1">` + camposDes[i] + `:</h6>
-                            </div>
-                            <div class="col-6 col-lg-3">
-                                <span class="text-start">` + campos['cam' + i] + `</span>
-                            </div>`);
+                                    </div>
+                                    <div class="col-6 col-lg-4">
+                                        <span class="text-start">` + campos['cam' + i] + `</span>
+                                    </div>`);
+                            }   
+               
 
             }
         }
@@ -691,8 +822,10 @@
         return formattedTime;
     }
     </script>
+    <script src="../../assets/js/jquery.flexselect.js"></script>
+    <script src="../../assets/js/liquidmetal.js"></script>
     <div class="modal fade" id="docInfo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="exampleModalLabel">Información del documento</h1>
@@ -727,7 +860,7 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="container">
-                                        <div class="d-flex justify-content-between">
+                                        <div class="">
                                             <div>
                                                  <div class="row mb-2">
                                                     <div class="col-6 col-lg-3">
@@ -774,7 +907,33 @@
             </div>
         </div>
     </div>
+<div class="modal fade" id="modalProveedores" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel"></h1>
 
+            <button type="button" class="btn-close" onclick="$('#modalProveedores').modal('hide')"></button>
+        </div>
+            <div class="modal-body">
+                <div class="table-container mt-3" style="width:100%;">
+                    <table id="tbProveedores" class="table stripe table-hover "style="width:100%">
+                        <thead>
+                            <tr>
+                                <th colspan="10%" class="text-black text-start">Tipo</th>
+                                <th colspan="10%" class="text-black text-start">Proveedor</th>
+                                <th colspan="10%" class="text-black text-start">Descripción</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbProveedoresBody">
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
 
 </body>
 

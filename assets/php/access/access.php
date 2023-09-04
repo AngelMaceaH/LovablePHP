@@ -33,12 +33,15 @@ if ($name!='' && $ps!='') {
   if ($_SESSION['val']=="1") {
     //setcookie("user", "Angel", time() + 3600);
     if ($_SESSION['NIVEL']==1) {
+      $_SESSION['INDEX']='index.php';
      header('Location: /'.$_SESSION['DEV'].'LovablePHP/');
      $_SESSION['INDEX']="index.php";
     }elseif ($_SESSION['NIVEL']==2) {
+      $_SESSION['INDEX']='homepage.php';
      header('Location: /'.$_SESSION['DEV'].'LovablePHP/homepage.php');
      $_SESSION['INDEX']="homepage.php";
     }elseif ($_SESSION['NIVEL']==3) {
+      $_SESSION['INDEX']='homepag.php';
      header('Location: /'.$_SESSION['DEV'].'LovablePHP/homepag.php');
     }
   }else{
