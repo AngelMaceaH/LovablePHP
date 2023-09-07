@@ -1,15 +1,14 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="utf-8">
     <link rel="icon" type="image/x-icon" href="../../assets/img/favicon.ico">
     <link rel="stylesheet" href="../../assets/css/flexselect.css">
+    <link rel="stylesheet" href="../../assets/vendors/dayrangepicker/index.css">
     <style>
     .space-cards {
         width: 20%;
     }
-
     @media screen and (max-width: 1024px) {
         .space-cards {
             width: 33%;
@@ -29,7 +28,7 @@
     <?php
       include '../layout-prg.php';
       include '../../assets/php/ZDD/ZLO0016P/header.php';
-    ?>
+     ?>
     <div class="container-fluid">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb my-0 ms-2">
@@ -44,11 +43,11 @@
     <div id="body-div" class="body flex-grow-1">
         <div class="card mb-5">
             <div class="card-header">
-                 <h2 class="fs-5 mb-1 mt-2 text-center">Consulta de documentos: <span  id="descripArea"></span> </h2>
+                 <h2 class="fs-5 mb-1 mt-2 text-center">Consulta de documentos</h2>
             </div>
             <div class="card-body">
                 <div class="position-relative">
-                    <form id="formFiltros" action="../../assets/php/ZFA/ZLO0016P/filtrosLogica.php" method="POST">
+                    <form id="formFiltros" action="../../assets/php/ZDD/ZLO0016P/filtrosLogica.php" method="POST">
                         <div class="row mb-2">
                             <div class="col-12">
                                 <div class="row" id="isGerencia">
@@ -95,9 +94,6 @@
     </div>
     </div>
     </div>
-
-
-
     <div class="footer bg-blck flex-grow-1 d-flex justify-content-center">
         <p class="bggray responsive-font-example"><i>Lovable de Honduras S.A. de C.V</i></p>
     </div>
@@ -113,14 +109,13 @@
         var numemp = "<?php echo isset($_SESSION['NUMEMP'])? $_SESSION['NUMEMP']: ''; ?>";
        
         if (anoing == 0 & numemp == 0) {
-            $("#descripArea").text("TODOS LOS DOCUMENTOS");
-            $("#isGerencia").append(`<div class="col-6">
-                                        <h6 class="mb-3 text-start">Departamento</h6>
-                                        <select id="cbbDepartamentos" class="form-select" >
-                                            
+            $("#isGerencia").append(`<div class="col-12 col-lg-6">
+                                        <h6 class="mb-3 mt-2 text-start">Departamento y Sección</h6>
+                                        <select id="cbbDepartamentos" class="form-select" >   
                                         </select>
                                         </div>
-                                    <div class="col-6"> <h6 class="mb-3 text-start">Tipo de documento</h6>
+                                    <div class="col-12 col-lg-6"> 
+                                        <h6 class="mb-3 text-start mt-2">Tipo de documento</h6>
                                         <select class="form-select" id="tiposDoc">
                                            <option value="1" selected disabled>Selecciona un tipo</option>
                                         </select>
@@ -137,39 +132,16 @@
                         .data[i].SECCOD + `">` + responseDepas.data[i].SECDES + `</option>`);
 
                 }
-               // $("#cbbDepartamentos").flexselect();
             }
 
         } else {
-            var getArea="http://172.16.15.20/API.LovablePHP/ZLO0016P/FindArea/?anoing="+anoing+"&numemp="+numemp+"";
-            var responseArea = ajaxRequest(getArea);
-            if (responseArea.code==200){
-                $("#descripArea").text(responseArea.data['SECDES']);
-            }
+           
             $("#isGerencia").append(`<div class="col-12"> <h6 class="mb-3 text-start">Tipo de documento</h6>
                                         <select class="form-select" id="tiposDoc">
                                            <option value="1" selected disabled>Selecciona un tipo</option>
                                         </select>
                                     </div>`);
         }
-       /* var originalValue = ""; 
-            $("#cbbDepartamentos_flexselect").on('mouseover', function() {
-                originalValue = $("#cbbDepartamentos_flexselect").val();
-                if ($("#cbbDepartamentos_flexselect").val() !== '') {
-                    $("#cbbDepartamentos_flexselect").val('');
-                }
-            });
-            $("#cbbDepartamentos_flexselect").on('click', function() {
-                    var inputElement = $("#cbbDepartamentos_flexselect").find('input')[0];
-                    console.log(inputElement);
-                    //inputElement.setSelectionRange(inputElement.selectionStart - 1, inputElement.selectionStart - 1);
-                });
-
-            $("#cbbDepartamentos_flexselect").on('mouseout', function() {
-                if ($("#cbbDepartamentos_flexselect").val() === '') {
-                    $("#cbbDepartamentos_flexselect").val(originalValue);
-                }
-            });*/
         var urlProveedores="http://172.16.15.20/API.LovablePHP/ZLO0015P/ListProveedores/";
         var responseProveedores = ajaxRequest(urlProveedores);
         options="";
@@ -188,10 +160,8 @@
                 },
                 "pageLength": 10,
                 "ordering": false,
-                "dom": 'rtip',
-                
+                "dom": 'rtip',   
             });
-
             $('#tbProveedores thead input').on('keyup', function () {
                   var columnIndex = $(this).parent().index();
                   var inputValue = $(this).val().trim();
@@ -245,19 +215,28 @@
             if (responseCampos.code == 200) {
                 $("#tipDocs").val(responseCampos.data[0]['TIPDOC']);
                 var camposDes = responseCampos.data[0].CAMPOS.split("/");
+                var counter=camposDes.length;
+                camposDes[counter]='Rango de fechas';
                 var htmlAppend = "";
                 for (let i = 0; i < camposDes.length; i++) {
                     htmlAppend+='<div id="input-first-name">';
-                    if (camposDes[i]=="Proveedor") {
+                        if (camposDes[i].toLowerCase()=="proveedor") {
                        // htmlAppend+='<span onclick="showProveedores()"><input class="form-select inputsDoc fn" type="text" id="'+responseCampos.data[0]['TIPDOC']+i+'" required readonly /></span>';
-                            htmlAppend+='<input class="inputsDoc fn" style="font-size:16px;"  type="text" autocomplete="off" data-placeholder-focus="false" required id="'+responseCampos.data[0]['TIPDOC']+i+'" onclick="showProveedores()"  oninput="noTextInput(this)"/><button type="button" class="btn-close mb-2" onclick="vaciarInput()"></button>';
+                            htmlAppend+='<input class="inputsDoc fn" style="font-size:16px;"  type="text" autocomplete="off" data-placeholder-focus="false" required id="'+responseCampos.data[0]['TIPDOC']+i+'" onclick="showProveedores()"  oninput="noTextInput(this)"/><button type="button" class="btn p-0 m-0 fs-5" onclick="vaciarInput()"><i class="fa-solid fa-xmark"></i></button>';
                             htmlAppend+='<input class="d-none" id="originalData" /> <input class="d-none" id="codigo" />'
+                        }else if (camposDes[i]=="Rango de fechas") {
+                            htmlAppend+='<input class="inputsDoc fn" style="font-size:14px;"  type="text" autocomplete="off" data-placeholder-focus="false" required id="FechasDocs" onclick="showRange()"  oninput="noTextInput2(this)"/><button type="button" class="btn p-0 m-0 fs-5" onclick="vaciarInput2()"><i class="fa-solid fa-xmark"></i></button>';
+                            htmlAppend+='<input class="d-none" id="originalRange" /> <input class="d-none" id="valueTipo" />'
                         }else{
-                        htmlAppend+='<input class="inputsDoc fn"  type="text" autocomplete="off" data-placeholder-focus="false" required id="'+responseCampos.data[0]['TIPDOC']+i+'"  />';
-                    }
-                    
-                    htmlAppend+= `<label>` + camposDes[i] + `</label>
-                                                    <svg class="icon--check" width="21px" height="17px"
+                        htmlAppend+='<input class="inputsDoc fn"  type="text" autocomplete="off" data-placeholder-focus="false" required id="'+responseCampos.data[0]['TIPDOC']+i+'"  />'}
+                        
+                            if (camposDes[i]=="Rango de fechas") {
+                                htmlAppend+= `<label id="lblRange">` + camposDes[i] + `</label>`;
+                            }else{
+                                htmlAppend+= `<label>` + camposDes[i] + `</label>`;
+                            }
+                   
+                    htmlAppend+=`<svg class="icon--check" width="21px" height="17px"
                                                         viewBox="0 0 21 17" version="1.1"
                                                         xmlns="http://www.w3.org/2000/svg"
                                                         xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -297,11 +276,54 @@
                     inputs.append(htmlAppend);
                     htmlAppend="";
                 }
+               
             }
     }
+    var Date1; var Date2;
+    function showRange() {
+        $("#dayRange").empty();
+        var currentDate = new Date().toISOString().split('T')[0];
+        Date1=currentDate.substr(0,10); Date2=currentDate.substr(13,10);
+        var fechasActual=$("#FechasDocs").val();
+        if(fechasActual!=""){
+            
+            Date1=fechasActual.substr(0,10);
+            Date2=fechasActual.substr(13,10);
+        }
+                $("#dayRange").append(`<div class="input-group mt-1">
+                                        <input class="form-control" id="datepicker2" name="datepicker2"/>
+                                        <span class="input-group-text" id="basic-addon2"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar" viewBox="0 0 16 16">
+                                        <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
+                                        </svg></span>
+                                        </div>`);
+                    const picker2 = new easepick.create({
+                        element: "#datepicker2",
+                        css: ["../../assets/vendors/dayrangepicker/index.css"],
+                        zIndex: 10,
+                        plugins: ["RangePlugin"]});
+
+                $("#modalRange").modal('show');
+    }
+    function saveFecha(){
+        $("#lblRange").text($("#isFecha option:selected").text());
+        $("#valueTipo").val($("#isFecha").val());
+        $("#modalRange").modal('hide');
+    }
+    function sendForm(){
+            var rangeFechas=$('#datepicker2').val();
+            $("#originalRange").val(rangeFechas);
+            $("#FechasDocs").val(rangeFechas);
+            $("#lblRange").text($("#isFecha option:selected").text());
+            $("#valueTipo").val($("#isFecha").val());
+            $("#modalRange").modal('hide');
+        }
         function vaciarInput() {
             $('#FAC0').val('');
             $('#codigo').val('');
+        }
+        function vaciarInput2() {
+            $('#originalRange').val('');
+            $('#FechasDocs').val('');
         }
         function showProveedores() {
             $("#modalProveedores").modal('show');
@@ -321,6 +343,10 @@
         function noTextInput(inputElement) {
             var originalData=$("#originalData").val();
             inputElement.value = originalData;
+         }
+         function noTextInput2(inputElement) {
+            var originalData2=$("#originalRange").val();
+            inputElement.value = originalData2;
          }
     function searchF() {
        
@@ -360,7 +386,6 @@
             setCookie("valArea",valArea,1);
             setCookie("coddep",depa,1);
             setCookie("secdep",sec,1);
-            $("#descripArea").text($("#cbbDepartamentos option:selected").text());
         }
         
         chargeTable();
@@ -371,9 +396,6 @@
             var areaGen=getCookie("valArea");
             if (areaGen!=null) {
             $("#cbbDepartamentos").val(areaGen);
-            $("#descripArea").text($("#cbbDepartamentos option:selected").text());
-            }else{
-                $("#descripArea").text("TODOS LOS DOCUMENTOS");
             }
         }
             
@@ -404,6 +426,23 @@
         var tipo = getCookie("tipdoc");
         var coddep=getCookie("coddep");
         var secdep=getCookie("secdep");
+        
+        var fecha1='';var fecha2='';var tipoFecha='';
+        if (document.getElementById('FechasDocs')) {
+            if ($("#FechasDocs").val()!='') {
+            var fecha=$("#FechasDocs").val();
+            var fechas=fecha.split(' - ');
+             fecha1=formatFechaInput(fechas[0]);
+             fecha2=formatFechaInput(fechas[1]);
+            }
+        }
+        if (document.getElementById('valueTipo')) {
+            if($("#valueTipo").val()!=''){
+            tipoFecha=$("#valueTipo").val();
+        }
+        }
+        
+        
         document.cookie = "tipdoc=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/";
         document.cookie = "coddep=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/";
         document.cookie = "secdep=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/";
@@ -418,7 +457,6 @@
             'CAM8': getCookie("cam8"),
             'CAM9': getCookie("cam9"),
             'CAM10': getCookie("cam10")};
-        console.log(campos);
         var baseUrl = "http://172.16.15.20/API.LovablePHP/ZLO0016P/List/";
         var queryParams = [];
         if (anoing) queryParams.push("anoing=" + anoing);
@@ -426,6 +464,10 @@
         if (tipo) queryParams.push("tipdoc=" + tipo);
         if (coddep) queryParams.push("coddep=" + coddep);
         if (secdep) queryParams.push("secdep=" + secdep);
+        if (fecha1) queryParams.push("fecha1=" + fecha1);
+        if (fecha2) queryParams.push("fecha2=" + fecha2);
+        if (tipoFecha) queryParams.push("tipoFecha=" + tipoFecha);
+
 
         for (var key in campos) {
             if (campos[key]) {
@@ -434,7 +476,7 @@
         }
 
         var urlList = baseUrl + "?" + queryParams.join("&");
-
+        console.log(urlList);
         var response = ajaxRequest(urlList);
         const body = $("#myTableBody");
         if (response.code == 200) {
@@ -700,17 +742,27 @@
             '" download>Descargar</a>');
 
         $("#trashDoc").empty();
-        $("#trashDoc").append(
+        var permisos = "<?php echo isset($_SESSION['PERESP'])? $_SESSION['PERESP']: ''; ?>";
+        console.log(permisos);
+        if (permisos==='S') {
+            $("#trashDoc").append(
             ` <button type="button" class="btn btn-danger m-0 mt-2  text-white" onclick="deleteCard('` + nomcard +
             `','` + usugra + `','` + fecgra + `','` + horgra + `','` + extdoc + `','` + urldoc +
             `')" ><i class="fa-solid fa-trash-can"></i></button>`);
+        }
+        
         $("#titleDoc").text(nomcard);
-        $("#tipDoc").text(tipdoc);
+        var selectElement = document.getElementById('tiposDoc');
+        var optionText = Array.from(selectElement.options).find(option => option.value === tipdoc);
+        var textoSelect = "";
+        if (optionText) {
+         textoSelect = optionText.textContent || optionText.innerText;
+        } 
+        $("#tipDoc").text(textoSelect);
         $("#fechaDoc").text(formatFecha(fecha));
         $("#descrpDoc").text(descrp);
-        /*$("#usugra").text(usugra);
-        $("#fecgra").text(formatFecha(fecgra));
-        $("#horgra").text(formatTime(horgra));*/
+        $("#usuaGra").text(usugra);
+        $("#horaGra").text(formatFecha(fecgra)+' '+formatTime(horgra));
         var campos = {
             cam0,
             cam1,
@@ -729,7 +781,6 @@
             const inputs = $("#extraInfo");
             inputs.empty();
             var camposDes = responseCampos.data[0].CAMPOS.split("/");
-            console.log(campos);
             var cont=0;
             var length=camposDes.length;
             for (let i = 0; i < length; i++) {
@@ -744,11 +795,12 @@
                                     if (responseFind.code==200) {
                                         descripcionProveedor=responseFind.data[0]['ARCNOM'];
                                     }
-                                    inputs.append(`<div class="col-6 col-lg-3">
-                                            <h6 class=" mt-1">`+camposDes[i]+`:</h6>
+                                    inputs.append(`<div class="col-6 col-lg-2 d-flex">
+                                            <h6 class="mt-1">Tipo: </h6><span>&nbsp;&nbsp;` + tipo + `</span>&nbsp;&nbsp;
+                                            <h6 class="mt-1">`+camposDes[i]+`: </h6><span>&nbsp;&nbsp;` + prov + `</span>
                                         </div>
-                                        <div class="col-6 col-lg-3">
-                                            <span class="text-start">` + tipo + ` ` +prov + ` ` +descripcionProveedor + `</span>
+                                        <div class="col-6 col-lg-4">
+                                        &nbsp;&nbsp;<span class="text-start">`+descripcionProveedor+`</span>
                                         </div>`);
                                         length=length+2;
                                         i=2;
@@ -790,7 +842,6 @@
             chargeTable();
         }
         $("#docInfo").modal('hide');
-
     }
 
     function formatFecha(inputDate) {
@@ -798,6 +849,14 @@
         var month = inputDate.substring(4, 6);
         var day = inputDate.substring(6, 8);
         var formattedDate = day + "/" + month + "/" + year;
+
+        return formattedDate;
+    }
+    function formatFechaInput(inputDate) {
+        var year = inputDate.substring(10, 6);
+        var month = inputDate.substring(3, 5);
+        var day = inputDate.substring(0, 2);
+        var formattedDate = year+month+day;
 
         return formattedDate;
     }
@@ -821,9 +880,11 @@
         var formattedTime = formattedHour + ":" + minute + " " + ampm;
         return formattedTime;
     }
+       
     </script>
     <script src="../../assets/js/jquery.flexselect.js"></script>
     <script src="../../assets/js/liquidmetal.js"></script>
+    <script src="../../assets/vendors/dayrangepicker/index.umd.min.js"></script>
     <div class="modal fade" id="docInfo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
@@ -859,9 +920,8 @@
                                     <hr>
                                 </div>
                                 <div class="col-12">
-                                    <div class="container">
+                                    <div class="">
                                         <div class="">
-                                            <div>
                                                  <div class="row mb-2">
                                                     <div class="col-6 col-lg-3">
                                                         <h6 class=" mt-1">Tipo:</h6>
@@ -870,7 +930,7 @@
                                                         <span class="text-start" id="tipDoc"></span>
                                                     </div>
                                                     <div class="col-6 col-lg-3">
-                                                        <h6 class=" mt-1">Fecha:</h6>
+                                                        <h6 class=" mt-1">Fecha de documento:</h6>
                                                     </div>
                                                     <div class="col-6 col-lg-3">
                                                         <span class="text-start" id="fechaDoc"></span>
@@ -882,7 +942,6 @@
                                                         <span class="text-justify" id="descrpDoc"></span>
                                                     </div>
                                                 </div>
-                                            </div>
                                             <!--<div>
                                             <button class="btn p-0 m-0" style="width:50px;">Editar <i class="fa-solid fa-pen-to-square"></i></button>
                                             </div>-->
@@ -896,6 +955,25 @@
                                         <div class="row " id="extraInfo">
 
                                         </div>
+                                        <div class="row">
+                                    <div class="col-12">
+                                                        <hr>
+                                                    </div>
+                                    </div>
+                                        <div class="row mt-2">
+                                                    <div class="col-6 col-lg-3">
+                                                        <h6 class=" mt-1">Usuario grabación:</h6>
+                                                    </div>
+                                                    <div class="col-6 col-lg-3">
+                                                    <span class="text-start" id="usuaGra"></span>
+                                                    </div>
+                                                    <div class="col-6 col-lg-3">
+                                                        <h6 class=" mt-1">Fecha grabación:</h6>
+                                                    </div>
+                                                    <div class="col-6 col-lg-3">
+                                                    <span class="text-start" id="horaGra"></span>
+                                                    </div>
+                                                </div>
                                     </div>
                                 </div>
                             </div>
@@ -930,6 +1008,32 @@
                         </tbody>
                     </table>
                 </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <div class="modal fade" id="modalRange" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Selecciona un rango de fechas</h1>
+
+            <button type="button" class="btn-close" onclick="$('#modalRange').modal('hide')"></button>
+        </div>
+            <div class="modal-body">
+                       <div class="d-flex">
+                       <label class="me-3">Tipo: </label>
+                        <select id="isFecha" class="form-select mb-3" style="width:250px; ">
+                            <option value="1">Fecha de documento</option>
+                            <option value="2">Fecha de grabado</option>
+                        </select>
+                       </div>
+                        <div id="dayRange">
+
+                        </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="saveFecha()">Aceptar</button>
             </div>
         </div>
     </div>

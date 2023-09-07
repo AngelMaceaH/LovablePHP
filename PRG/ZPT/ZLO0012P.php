@@ -6,21 +6,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Ladda/1.0.6/ladda-themeless.min.css" integrity="sha512-EOY99TUZ7AClCNvbnvrhtMXDuWzxUBXV7SFovruHvYf2dbvRB5ya+jgDPk5bOyTtZDbqFH3PTuTWl/D7+7MGsA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Ladda/1.0.0/spin.min.js" integrity="sha512-fgSmjQtBho/dzDJ+79r/yKH01H/35//QPPvA2LR8hnBTA5bTODFncYfSRuMal78C08vUa93q3jyxPa273cWzqA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Ladda/1.0.0/ladda.min.js" integrity="sha512-hZL8cWjOAFfWZza/p0uD0juwMeIuyLhAd5QDodiK4sBp1sG7BIeE1TbMGIbnUcUgwm3lVSWJzBK6KxqYTiDGkg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  <style>
-    .table th {
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    } 
-    .table-container {
-        width: 100%;
-        overflow-x: auto;
-        max-height: 550px;
-        position: relative;
-        z-index: 1;
-        top: 0;
-    }
-  </style>
+  
 </head>
 <body>
   <div class="spinner-wrapper">
@@ -28,6 +14,7 @@
   </div> 
   <?php
       include '../layout-prg.php';
+      include '../../assets/php/ZPT/ZLO0012P/header.php';
       $agrup=isset($_SESSION['agrup'])? $_SESSION['agrup']:'1';
       $ckProductos1 = isset($_SESSION['productosCk1']) ? $_SESSION['productosCk1'] : "0";
       $filtro=isset($_SESSION['filtro'])? $_SESSION['filtro']:'1';
@@ -192,12 +179,11 @@
               $("#formFiltros").submit();
             });
             $("input[name=radioFiltro][value=" + filtroP + "]").prop('checked', true);
-          
          var table= $('#myTableSeguimiento').DataTable({
             language: {
             url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json',
         },
-        "pageLength": 15,
+        "pageLength": 20,
                 "processing": true,
                 "serverSide": true,
                 "ajax": {
@@ -205,7 +191,27 @@
                     "type": "POST",
                     "complete": function (xhr) {
                       $("#thProcessing").addClass('d-none');
-                        console.log(xhr.responseJSON);
+                        //console.log(xhr.responseJSON);
+                        var registrosMismoEstilo = [];
+                        var table = $('#myTableSeguimiento').DataTable();
+                            table.rows().every(function (rowIdx, tableLoop, rowLoop) {
+                                var data = this.data();
+                                var rowNode = this.node();
+                                if (rowIdx < table.rows().count() - 1){
+                                  $(rowNode).addClass('clickable-row');
+                                  $(rowNode).attr('data-estilo', data.ESTILO);
+                                  registrosMismoEstilo.push(data);
+                                }
+                            });
+                        $('#myTableSeguimiento').on('click', '.clickable-row', function () {
+                                var estiloValue = $(this).data('estilo'); 
+                                var registrosFiltrados = registrosMismoEstilo.filter(function (registro) {
+                                    if (registro.ESTILO == estiloValue) {
+                                        return  registro ;
+                                    }
+                                });       
+                                openModalDetalles(estiloValue);
+                            });
                         },
                         error: function (xhr, status, error) {
                             console.log(error);
@@ -213,54 +219,86 @@
                         }
                 },
                 "columns": [
-                    { "data": "ESTILO"},
-                    { "data": "TTOT" },
-                    { "data": "MESTOT" },
-                    { "data": "UNIVEN" },
-                    { "data": "PROMEN" },
-                    { "data": "EXIACT" },
-                    { "data": "ROTINV" },
-                    { "data": "MESINV" },
-                    { "data": "PORDES" },
+                    { "data": "ESTILO" ,className:"text-start"},
+                    { "data": "TTOT"   ,className:"text-end"},
+                    { "data": "MESTOT" ,className:"text-end"},
+                    { "data": "UNIVEN" ,className:"text-end", render: function(data) {
+                            var valor=parseFloat(data);
+                            if (isNaN(valor)) {valor='';}                       
+        return  valor.toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }},
+                    { "data": "PROMEN" ,className:"text-end", render: function(data) {
+                            var valor=parseFloat(data);
+                            if (isNaN(valor)) {valor='';}                       
+        return  valor.toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }},
+                    { "data": "EXIACT" ,className:"text-end", render: function(data) {
+                            var valor=parseFloat(data);
+                            if (isNaN(valor)) {valor='';}                       
+        return  valor.toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }},
+                    { "data": "ROTINV" ,className:"text-end", render: function(data) {
+                            var valor=parseFloat(data);
+                            if (isNaN(valor)) {valor='';}                       
+        return  valor.toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }},
+                    { "data": "MESINV" ,className:"text-end", render: function(data) {
+                            var valor=parseFloat(data);
+                            if (isNaN(valor)) {valor='';}                       
+        return  valor.toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }},
+                    { "data": "PORDES" ,className:"text-end"},
                     { "data": "FECING",
                       render: function (data, type, row) {
               const fechaOriginal = data;
+             if (fechaOriginal=="") {
+               return ""; 
+             }else{
               const year = fechaOriginal.slice(0, 4);
               const month = fechaOriginal.slice(4, 6);
               const day = fechaOriginal.slice(6, 8);
               const fechaConvertida = `${day}/${month}/${year}`;
               return fechaConvertida;
-            } },
+             }
+            } ,className:"text-end"},
                     { "data": "FECCOM",
                       render: function (data, type, row) {
               const fechaOriginal = data;
+              if (fechaOriginal=="") {
+               return ""; 
+             }else{
               const year = fechaOriginal.slice(0, 4);
               const month = fechaOriginal.slice(4, 6);
               const day = fechaOriginal.slice(6, 8);
               const fechaConvertida = `${day}/${month}/${year}`;
               return fechaConvertida;
-            } },
+             }
+            } ,className:"text-end"},
                     { "data": "FECVEN",
                       render: function (data, type, row) {
               const fechaOriginal = data;
+              if (fechaOriginal=="") {
+               return ""; 
+             }else{
               const year = fechaOriginal.slice(0, 4);
               const month = fechaOriginal.slice(4, 6);
               const day = fechaOriginal.slice(6, 8);
               const fechaConvertida = `${day}/${month}/${year}`;
               return fechaConvertida;
-            } },
-                    { "data": "DIAANT" },
-                    { "data": "DIAANC" },
-                    { "data": "DIAANV" },
-                    { "data": "TIPINV" },
-                    { "data": "MARCA" },
-                    { "data": "GENERO" }
+             }
+            } ,className:"text-end"},
+                    { "data": "DIAANT" ,className:"text-end"},
+                    { "data": "DIAANC" ,className:"text-end"},
+                    { "data": "DIAANV" ,className:"text-end"},
+                    { "data": "TIPINV" ,className:"text-end"},
+                    { "data": "MARCA"  ,className:"text-start"},
+                    { "data": "GENERO" ,className:"text-start"}
                 ],
                 ordering: true,
                 dom: 'Bfrtip',
                 buttons: [
                   {
-                    text: '<i class="fa-solid fa-file-excel me-1"></i><b>Excel</b>',
+                    text: '<i class="fa-solid fa-file-excel me-1"></i><b>Enviar a Excel</b>',
                     className: "btn btn-success text-light fs-6 mb-2 ladda-button",
                     action: function ( e, dt, node, config ) {
                     
@@ -269,6 +307,8 @@
                 ]
 
             });
+            $("#myTableSeguimiento").append('<caption style="caption-side: top" class="fw-bold text-black"><label class="ms-2 fw-bold">**Presione clic para ver detalles por estilo color y talla**</label></caption>'); 
+
             table.on('draw.dt', function() {
                   $('.ladda-button').each(function() {
                     var l = Ladda.create(this);
@@ -283,14 +323,11 @@
                           if (xhr.status === 200) {
                             var procesosTerminados = xhr.getResponseHeader('X-Procesos-Terminados');
                             if (procesosTerminados) {
-                              //console.log('Los procesos en segundo plano han terminado.');
                             } else {
-                              //console.log('Los procesos en segundo plano están en progreso.');
+                              l.stop();
                             }
                           } else {
-                            //console.log('Ocurrió un error al obtener el encabezado.');
                           }
-                          l.stop();
                         }
                       };
                       xhr.send();
@@ -298,7 +335,116 @@
                   });
                 });
         });
-       
+        function openModalDetalles(estilo){ 
+          var agrup=$("#cbbAgrupacion").val();
+          var urlDeta="http://172.16.15.20/API.LOVABLEPHP/ZLO0012P/GetDeta/?agrup="+agrup+"&estilo="+estilo+"";
+          var responseDeta=ajaxRequest(urlDeta);
+          if (responseDeta.code==200) {
+            var tableDetalles= $('#myTableDetallesBody');
+                tableDetalles.empty();
+                var options="";
+                for (let i = 0; i < responseDeta.data.length; i++) {
+                  if (responseDeta.data[i]['ISTOT']=='TOTAL') {
+                    options+="<tr class='total-row'>";
+                  }else{
+                    options+="<tr>";
+                  }
+                  options+="<td class='text-start'>"+responseDeta.data[i]['ESTILO']+"</td>";
+                  options+="<td class='text-start'>"+responseDeta.data[i]['COLOR']+"</td>";
+                  options+="<td class='text-start'>"+responseDeta.data[i]['TALLA']+"</td>";
+                  options+="<td class='text-end'>"+ returnBlank(responseDeta.data[i]['UNITOT'])+"</td>";
+                  options+="<td class='text-end text-primary'>"+ returnBlank(responseDeta.data[i]['VTAMES'])+"</td>";
+                  options+="<td class='text-end text-primary'>"+ returnBlank(responseDeta.data[i]['UNIVEN'])+"</td>";
+                  options+="<td class='text-end text-success'>"+ returnBlank(responseDeta.data[i]['EXIACT'])+"</td>";
+                  options+="<td class='text-end'>"+ returnBlank(responseDeta.data[i]['ROTINV'])+"</td>";
+                  options+="<td class='text-end text-danger'>"+ returnBlank(responseDeta.data[i]['MESINV'])+"</td>";
+                  options+="<td class='text-end'>"+ returnBlank(responseDeta.data[i]['PORDES'])+"</td>";
+                  options+="<td class='text-end'>"+formatFecha(responseDeta.data[i]['FECING'])+"</td>";
+                  options+="<td class='text-end'>"+formatFecha(responseDeta.data[i]['FECCOM'])+"</td>";
+                  options+="<td class='text-end'>"+formatFecha(responseDeta.data[i]['FECVEN'])+"</td>";
+                  options+="<td class='text-end'>"+ returnBlank(responseDeta.data[i]['DIAANT'])+"</td>";
+                  options+="<td class='text-end'>"+ returnBlank(responseDeta.data[i]['DIAANC'])+"</td>";
+                  options+="<td class='text-end'>"+ returnBlank(responseDeta.data[i]['DIAANV'])+"</td>";
+                  options+="<td class='text-end'>"+responseDeta.data[i]['TIPINV']+"</td>";
+                  options+="<td class='text-start'>"+responseDeta.data[i]['MARCA']+"</td>";
+                  options+="<td class='text-start'>"+responseDeta.data[i]['GENERO']+"</td>";
+                  options+="</tr>";
+                }
+                
+                tableDetalles.append(options);
+            $('#detallesModal').modal('show');
+          }
+        }
+        function returnBlank(value){
+          if (value=="" || value==null) {
+            return "";
+          }else{
+            return value.toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+          }
+        }
+
+        function formatFecha(fechaOriginal){
+          if (fechaOriginal=="" || fechaOriginal==0) {
+               return ""; 
+             }else{
+              const year = fechaOriginal.slice(0, 4);
+              const month = fechaOriginal.slice(4, 6);
+              const day = fechaOriginal.slice(6, 8);
+              const fechaConvertida = `${day}/${month}/${year}`;
+              return fechaConvertida;
+             }
+        }
       </script>
+
+<div class="modal fade" id="detallesModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn-close" onclick="$('#detallesModal').modal('hide')"></button>
+      </div>
+      <div class="modal-body">
+        <div class="card">
+            <div class="card-header">
+
+            </div>
+            <div class="card-body">
+                    <h5 class="text-center">Estilo, color y talla</h5>
+                    <div class="overflow-auto mt-3  rounded" style="width:100%; height: 400px;">
+                    <table id="myTableDetalles" class="table stripe"style="width:100%">
+                        <thead>
+                            <tr class="sticky-top bg-white">
+                                <th class="d-none">rownum</th>
+                                <th class="text-black text-start">ESTILO</th>
+                                <th class="text-black text-start">COLOR</th>
+                                <th class="text-black text-start">TALLA</th>
+                                <th class="text-black text-start">UNIDADES VTAS TOTALES</th>
+                                <th class="text-black text-end">UNIDADES VTAS MES PROCESO</th>
+                                <th class="text-black text-end">PROMEDIO MENSUAL</th>
+                                <th class="text-black text-end">EXISTENCIA ACTUAL</th>
+                                <th class="text-black text-end">ROT. INV.</th>
+                                <th class="text-black text-end">MESES INVENTARIO</th>
+                                <th class="text-black text-end">% DESCUENTO</th>
+                                <th class="text-black text-end">FECHA INGRESO</th>
+                                <th class="text-black text-end">FECHA ULT/COMPRA</th>
+                                <th class="text-black text-end">FECHA ULT/VENTA</th>
+                                <th class="text-black text-end">DIAS ANTIGUEDAD</th>
+                                <th class="text-black text-end">DIAS ANT. ULT/COMPRA</th>
+                                <th class="text-black text-end">DIAS ANT. ULT/VENTA</th>
+                                <th class="text-black text-end">TIPO INVENTARIO</th>
+                                <th class="text-black text-end">MARCA</th>
+                                <th class="text-black text-end">GENERO</th>
+                            </tr>
+                        </thead>
+                        <tbody id="myTableDetallesBody">
+                                
+                        </tbody>
+                    </table>
+                        </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 </body>
 </html>

@@ -170,6 +170,44 @@
           $("#"+responseProgramas.data[i]['DETC91']+" #hiddenli").remove();
           }
         }*/
+
+        var anoing = "<?php echo isset($_SESSION['ANOING'])? $_SESSION['ANOING']: ''; ?>";
+        var numemp = "<?php echo isset($_SESSION['NUMEMP'])? $_SESSION['NUMEMP']: ''; ?>";
+        var getArea="http://172.16.15.20/API.LovablePHP/ZLO0016P/FindArea/?anoing="+anoing+"&numemp="+numemp+"";
+            var responseArea = ajaxRequest(getArea);
+            if (responseArea.code==200){
+                $("#descripArea").text(responseArea.data['SECDES']);
+            }
+        if (anoing == 0 && numemp == 0) {
+          anoing=1;
+          numemp=1;
+        }else{
+          var getArea="http://172.16.15.20/API.LovablePHP/ZLO0016P/FindArea/?anoing="+anoing+"&numemp="+numemp+"";
+            var responseArea = ajaxRequest(getArea);
+            console.log(responseArea);
+            var areaDesc='';
+            var areaId='';
+            var seccionId='';
+            if (responseArea.code==200){
+              areaDesc=responseArea.data['SECDES'];
+              areaId=responseArea.data['SECDEP'];
+              seccionId=responseArea.data['SECCOD'];
+            }
+          $("#hasNumber").append(`<div class="col-12">
+                                        <span class="text-end" style="font-size: 14px;">ID: `+combineNumbers(anoing, numemp)+`</span>
+                                    </div>`);
+          $("#isEmpleado").append(`<div class="col-12">
+                                        <span class="text-end" style="font-size: 14px;">Depto: (`+areaId+`) `+areaDesc+`</span>&nbsp;&nbsp;
+                                    </div>
+                                    <div class="col-12">
+                                        <span class="text-end" style="font-size: 14px;">Sección: `+seccionId+`</span>
+                                    </div>`);
+        }
+        var urlCia="http://172.16.15.20/API.LovablePHP/Access/GetCia/?anoing="+anoing+"&numemp="+numemp+"";
+        var responseCia=ajaxRequest(urlCia);
+        if(responseCia.code==200){
+          $("#userCia").text(responseCia.data[0]['COMDES']);
+        }
     });
   </script>
 
@@ -204,16 +242,33 @@
         </a>
         <ul class="header-nav d-none d-md-flex">
         </ul>
-        <ul class="header-nav ms-auto mt-2">
-          <div class="mt-2 me-4">
-            <h6><?php echo isset($_SESSION["NOMUSU"]) ? $_SESSION["NOMUSU"] : ""; ?></h6>
-          </div>
-          <button type="button" class="btn btn-light" onclick="logOut()">
-            <svg class="icon me-2">
-              <use xlink:href="assets/vendors/@coreui/icons/svg/free.svg#cil-account-logout"></use>
-            </svg>
-          </button>
-        </ul>
+        <ul class="header-nav ms-auto mt-3">
+                    <div class="row">
+                        <div class="col-12 text-end">
+                          <span id="userCia" class=" me-lg-5 pe-lg-4"></span>
+                        </div>
+                        <div class="col-12">
+                            <div class="mt-2 me-4 d-flex justify-content-end" style="width: 100%;">
+                                <div class="row me-3">
+                                    <div class="col-12">
+                                        <span class="text-end"
+                                            style="font-size: 15px;">Usuario: <?php echo isset($_SESSION["NOMUSU"]) ? $_SESSION["NOMUSU"] : ""; ?></span>&nbsp;&nbsp;
+                                    </div>
+                                    <div id="hasNumber">
+                                    </div>
+                                </div>
+                                <div class="row" id="isEmpleado">     
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="button" class="btn btn-light" onclick="logOut()">
+                        <svg class="icon me-2">
+                            <use xlink:href="assets/vendors/@coreui/icons/svg/free.svg#cil-account-logout"></use>
+                        </svg>
+                    </button>
+                </ul>
 
       </div>
       <div class="header-divider"></div>
@@ -275,6 +330,15 @@
         function logOut() {
           window.location.assign('/<?php echo $_SESSION['DEV'] ?>LovablePHP/index.php?logout=1');
         }
+
+        function combineNumbers(num1, num2) {
+          let combined = num1 + num2;
+          while (combined.length < 6) {
+              num1 += "0";
+              combined = num1 + num2;
+          }
+          return parseInt(combined);
+      }
       </script>
 
 </body>

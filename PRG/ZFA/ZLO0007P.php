@@ -336,6 +336,9 @@
         var Date1=diaFiltro1+'/'+mesFiltro1+'/'+anoFiltro1;
         var Date2=diaFiltro2+'/'+mesFiltro2+'/'+anoFiltro2;
        
+        function sendForm(){
+          $("#formFiltros").submit();
+        }
       </script>
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
       <script src="../../assets/vendors/dayrangepicker/index.umd.min.js"></script>
@@ -345,9 +348,9 @@
       <script src="https://code.highcharts.com/stock/modules/accessibility.js"></script>
 
       <script src="https://cdn.jsdelivr.net/npm/chart.js@4.2.1"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
-  <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+      <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
      <?php include '../../assets/php/ZFA/ZLO0007P/ZLO0007P.php'; ?>
     
 </body>

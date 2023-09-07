@@ -3,7 +3,7 @@
  include '../conn.php';
  session_set_cookie_params(86400);
  session_start();
- $_SESSION['DEV']="";
+ $_SESSION['DEV'] ="";
  $connIBM=conexionIBM();
  $name=$_POST['user']; 
  $ps=$_POST['password']; 
@@ -27,6 +27,7 @@ if ($e = curl_error($ch)) {
     $_SESSION['NIVEL'] = $registros[0]['data'][0]['NIVEL'];
     $_SESSION['ANOING'] = $registros[0]['data'][0]['ANOING'];
     $_SESSION['NUMEMP'] = $registros[0]['data'][0]['NUMEMP'];
+    $_SESSION['PERESP'] = $registros[0]['data'][0]['PERESP'];
   }
 curl_close($ch);
 if ($name!='' && $ps!='') {

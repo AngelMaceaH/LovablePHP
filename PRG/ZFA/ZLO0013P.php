@@ -467,7 +467,7 @@
                     "complete": function (xhr) {
                         $("#planeacionContainer").removeClass("loading");
                         $("#thProcessing").addClass('d-none');
-
+                        console.log(xhr.responseJSON);
                         var registrosMismoEstilo = [];
 
                 var table = $('#myTablePlaneacion').DataTable();
@@ -504,7 +504,7 @@
                     {data:"ROWNUM",
                         className:"d-none",orderable: false, },
                     {data:"MARCA",
-                        className:"text-start",orderable: false },
+                        className:"text-end",orderable: false },
                     {data:"ESTILO",
                         className:"text-start",orderable: false },
                     {data:"COLOR",
@@ -516,7 +516,7 @@
                     {data:"UNIVAA",
                         className:"text-primary text-end",
                         render: function(data) {
-        return data.toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        return (isNaN(parseFloat(data))? 0:parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
     } },
                     {data:"VALVAA",
                         className:"text-end", render: function(data) {
@@ -526,7 +526,7 @@
     } },
                     {data:"UPRMAC",
                        className:"text-primary text-end", render: function(data) {
-        return data.toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        return (isNaN(parseFloat(data))? ' ':parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
     } },
                     {data:"NUMMES",
                         className:"text-end", render: function(data) {
@@ -534,51 +534,51 @@
     },orderable: false },
                     {data:"DOCVAL",
                          className:"text-brown text-end", render: function(data) {
-        return data.toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+       return (isNaN(parseFloat(data))? ' ':parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
     } },
                     {data:"UVENRE",
                        className:"text-darkblue text-end", render: function(data) {
-        return data.toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+       return (isNaN(parseFloat(data))? ' ':parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
     } },
                     {data:"UVNRPR",
                         className:"text-danger text-end", render: function(data) {
-        return data.toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+       return (isNaN(parseFloat(data))? ' ':parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
     } },
                     {data:"INVAPA",
                        className:"text-info text-end",  render: function(data) {
-        return data.toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+       return (isNaN(parseFloat(data))? ' ':parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
     } },
                     {data:"APAVXC",
                         className:"text-end", render: function(data) {
-        return data.toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+       return (isNaN(parseFloat(data))? ' ':parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
     } },
                     {data:"INVPTE",
                        className:"text-success text-end", render: function(data) {
-        return data.toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+       return (isNaN(parseFloat(data))? ' ':parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
     } },
                     {data:"INVPRO",
                         className:"text-end", render: function(data) {
-        return data.toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+       return (isNaN(parseFloat(data))? ' ':parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
     } },
                 {data:"INVPR1",
                         className:"text-end", render: function(data) {
-        return data.toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+       return (isNaN(parseFloat(data))? ' ':parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
     } },
                     {data:"INVCOR",
                         className:"text-end", render: function(data) {
-        return data.toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+       return (isNaN(parseFloat(data))? ' ':parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
     } },
                     {data:"INVMTP",
                         className:"text-end", render: function(data) {
-        return data.toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+       return (isNaN(parseFloat(data))? ' ':parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
     } },
                     {data:"WUNIINV",
                         className:"text-end", render: function(data) {
-        return data.toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                            return (isNaN(parseFloat(data))? 0:parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
     }},
                     {data:"INVPGR",
                         className:"text-end", render: function(data) {
-        return data.toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        return (isNaN(parseFloat(data))? ' ':parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
     } },
                     {data:"LEATIE",
                         className:"text-success text-end", render: function(data) {
@@ -587,30 +587,30 @@
                    
                     {data:"MESINV",
                        className:"text-darkblue text-end", render: function(data) {
-        return data.toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+       return (isNaN(parseFloat(data))? 0:parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
     } },
                     {data:"UPRM1A",
                        className:"text-danger text-end", render: function(data) {
-        return data.toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                        return (isNaN(parseFloat(data))? ' ':parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
     } },
                     {data:"NUMME1",
                         className:"text-end"},
                     {data:"MESIN6",
                         className:"text-darkblue text-end"},
-                    {data:"UPRM6A",className:"text-danger", render: function(data) {
-        return data.toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                    {data:"UPRM6A",className:"text-danger text-end", render: function(data) {
+                        return (isNaN(parseFloat(data))? ' ':parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
     } },
                     {data:"NUMME6",
                         className:"text-end"},
                     {data:"UPRMAV",
                         className:"text-info text-end", render: function(data) {
-        return data.toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+         return (isNaN(parseFloat(data))? 0:parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
     } },
                     {data:"NUMMEV",
                         className:"text-end"},
                     {data:"DOCANT",
                         className:"text-info text-end", render: function(data) {
-        return data.toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                            return (isNaN(parseFloat(data))? ' ':parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
     }},
                     {data:"VALANT",
                         className:"text-end", render: function(data) {
@@ -620,7 +620,11 @@
     }},
     {data:"IMPORT",className:"text-start"},
     {data:"DOZTOT",className:"text-end", render: function(data) {
-        return parseFloat(data);
+        if (data=='') {
+            return '';
+        }else{
+            return parseFloat(data);
+        }
     }},
     {data:"NUEINV",className:"text-end", render: function(data) {
         if (data!='&#160;') {
@@ -910,7 +914,6 @@ $('#myTablePlaneacion').on('search.dt', function () {
 
 
             var toggleMarca=getCookie("marcasToggle");
-            console.log(toggleMarca);
             if (toggleMarca!=null) {
                 animateMenu();
             }
@@ -924,6 +927,7 @@ $('#myTablePlaneacion').on('search.dt', function () {
           $("#currentYear").text(anoActual);
           
           var urlResumen="http://172.16.15.20/API.LovablePHP/ZLO0013P/ListResumen/?ano="+anoActual+"&estilo="+estilo+"";
+          console.log(urlResumen);
           var responseResumen=ajaxRequest(urlResumen);
           const tableResumenBody=$("#tableResumenBody");
         tableResumenBody.empty();
@@ -1074,10 +1078,10 @@ $('#myTablePlaneacion').on('search.dt', function () {
                     <div class="col-12">
                     <hr>
                     <h5><u>Detalle del año</u>  <span id="currentYear"></span></h5>
-                    <div class="table-responsive mt-3  rounded" style="width:100%;">
+                    <div class="overflow-auto mt-3  rounded" style="width:100%; height: 400px;">
                     <table id="myTableDetalles" class="table stripe table-hover "style="width:100%">
                         <thead>
-                            <tr class="sticky-top">
+                            <tr class="sticky-top bg-white">
                                 <th class="d-none">rownum</th>
                                 <th class="text-black text-start">MARCA</th>
                                 <th class="text-black text-start">ESTILO</th>
