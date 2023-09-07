@@ -57,7 +57,7 @@
                                      
                                     </div>
                                     <div class="col-12">
-                                        <h6 class="mb-3 mt-4 text-start">Fecha</h6>
+                                        <h6 class="mb-3 mt-4 text-start">Fecha de documento</h6>
                                         <input type="date" class="form-control" id="fechaDoc">
                                     </div>
                                     <div class="col-12">
@@ -89,10 +89,20 @@
         });
         var codusu; var anoing; var numemp; var codsec=0; var coddep=0;
         var codigo="";
+        var comarcOptions="";
     $(document).ready(function() {
          codusu="<?php echo isset($_SESSION['CODUSU'])? $_SESSION['CODUSU']: ''; ?>";
          anoing="<?php echo isset($_SESSION['ANOING'])? $_SESSION['ANOING']: ''; ?>";
          numemp="<?php echo isset($_SESSION['NUMEMP'])? $_SESSION['NUMEMP']: ''; ?>";
+         var usuario='<?php echo $_SESSION["CODUSU"];?>';
+         var urlComarc='http://172.16.15.20/API.LovablePHP/ZLO0001P/ListComarc/?usuario='+usuario+'';
+         var responseComarc = ajaxRequest(urlComarc);
+         console.log(responseComarc.data);
+            if (responseComarc.code==200) {
+                for (let i = 0; i < responseComarc.data.length; i++) {
+                   comarcOptions+='<option value="'+responseComarc.data[i].COMCOD+'">'+responseComarc.data[i].COMDES+'</option>';
+                }
+            }
 
         var urlTipos="http://172.16.15.20/API.LovablePHP/ZLO0015P/ListTipos/";
         var responseTipos = ajaxRequest(urlTipos);
@@ -148,10 +158,14 @@
             $("#tipDocs").val(responseCampos.data[0]['TIPDOC']);
             var camposDes=responseCampos.data[0].CAMPOS.split("/"); 
             for (let i = 0; i < camposDes.length; i++) {
-                if (camposDes[i]=="Proveedor") {
+                if (camposDes[i].toLowerCase()=="proveedor") {
                     var select='<span class="" onclick="showProveedores()"><input type="text" class="text-muted form-select inputsDoc" id="'+responseCampos.data[0]['TIPDOC']+i+'" placeholder="Selecciona un proveedor" readonly /></span>';
                     inputs.append(`<label class=" text-start" style="width:100%; margin-top: 15px;">`+camposDes[i]+`: `+select+`</label>`);
                     //$(".selectProveedores").flexselect();
+                }else if(camposDes[i].toLowerCase()=="tienda"){
+                    var select=`<label class=" text-start" style="width:100%; margin-top: 15px;">`+camposDes[i]+`:<select class="form-select inputsDoc" id="`+responseCampos.data[0]['TIPDOC']+i+`" placeholder="Selecciona un proveedor"  /></select></label>`;
+                    inputs.append(select);
+                    $("#"+responseCampos.data[0]['TIPDOC']+i).append(comarcOptions);
                 }else{
                     inputs.append(`<label class=" text-start" style="width:100%; margin-top: 15px;">`+camposDes[i]+`: <input type="text" class="form-control inputsDoc" id="`+responseCampos.data[0]['TIPDOC']+i+`" /></label>`);   
                 }
@@ -200,6 +214,7 @@
                         var fileExtension = file.name.split('.').pop();
                         var campos = {"CAM0": "","CAM1": "", "CAM2": "","CAM3": "","CAM4": "","CAM5": "","CAM6": "","CAM7": "","CAM8": "","CAM9": ""};
                         const inputs=$(".inputsDoc");
+                        console.log(inputs);
                         var tipo=$("#tipDocs").val();
                         var length=inputs.length;
                         for (let i = 0; i < length; i++) {
@@ -253,7 +268,8 @@
                         } else {
                             reject(responseSave.code);
                         }
-                        //resolve(200);
+                        /*console.log(dataSave);
+                        resolve(200);*/
                     });
                     });
                     promises.push(promise);

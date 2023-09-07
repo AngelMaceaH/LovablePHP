@@ -41,6 +41,8 @@
     $_SESSION['INDEX']="homepage.php";
    }elseif ($_SESSION['NIVEL']==3) {
     echo "<script>location.href='".'/'.$_SESSION['DEV'].'LovablePHP/homepag.php'."';</script>";
+   }elseif ($_SESSION['NIVEL']==0) {
+    echo "<script>location.href='".'/'.$_SESSION['DEV'].'LovablePHP/homepag.php'."';</script>";
    }
 ?>
 <script>

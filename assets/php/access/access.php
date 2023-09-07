@@ -37,11 +37,14 @@ if ($name!='' && $ps!='') {
       $_SESSION['INDEX']='index.php';
      header('Location: /'.$_SESSION['DEV'].'LovablePHP/');
      $_SESSION['INDEX']="index.php";
-    }elseif ($_SESSION['NIVEL']==2) {
+    }elseif ($_SESSION['NIVEL']==2){
       $_SESSION['INDEX']='homepage.php';
      header('Location: /'.$_SESSION['DEV'].'LovablePHP/homepage.php');
      $_SESSION['INDEX']="homepage.php";
-    }elseif ($_SESSION['NIVEL']==3) {
+    }elseif ($_SESSION['NIVEL']==3){
+      $_SESSION['INDEX']='homepag.php';
+     header('Location: /'.$_SESSION['DEV'].'LovablePHP/homepag.php');
+    }elseif ($_SESSION['NIVEL']==0){
       $_SESSION['INDEX']='homepag.php';
      header('Location: /'.$_SESSION['DEV'].'LovablePHP/homepag.php');
     }

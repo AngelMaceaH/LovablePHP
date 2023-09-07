@@ -104,10 +104,24 @@
         }
     });
     var codigo="";
+    var comarcOptions="";
+    var camposDes="";
     $(document).ready(function() {
         var anoing = "<?php echo isset($_SESSION['ANOING'])? $_SESSION['ANOING']: ''; ?>";
         var numemp = "<?php echo isset($_SESSION['NUMEMP'])? $_SESSION['NUMEMP']: ''; ?>";
-       
+        var usuario='<?php echo $_SESSION["CODUSU"];?>';
+
+        for (let i = 0; i < 10; i++) {
+            document.cookie = "cam"+i+"=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/";
+        }
+
+        var urlComarc='http://172.16.15.20/API.LovablePHP/ZLO0001P/ListComarc/?usuario='+usuario+'';
+        var responseComarc = ajaxRequest(urlComarc);
+            if (responseComarc.code==200) {
+                for (let i = 0; i < responseComarc.data.length; i++) {
+                   comarcOptions+='<option value="'+responseComarc.data[i].COMCOD+'">'+responseComarc.data[i].COMDES+'</option>';
+                }
+            }
         if (anoing == 0 & numemp == 0) {
             $("#isGerencia").append(`<div class="col-12 col-lg-6">
                                         <h6 class="mb-3 mt-2 text-start">Departamento y Sección</h6>
@@ -198,7 +212,6 @@
     function tiposChange(){
         var tipo=$("#tiposDoc").val();
         if (tipo!=null) {
-            document.cookie = "tipdoc=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/";
             setCookie("tipdoc",tipo,1); 
         }
         
@@ -209,12 +222,11 @@
                 if (selectedTipo==null) {
                     selectedTipo=getCookie("tipdoc");
                 }
-            var urlCampos = "http://172.16.15.20/API.LovablePHP/ZLO0015P/ListTiposFind/?tipo=" +
-                selectedTipo;
+            var urlCampos = "http://172.16.15.20/API.LovablePHP/ZLO0015P/ListTiposFind/?tipo=" +selectedTipo;
             var responseCampos = ajaxRequest(urlCampos);
             if (responseCampos.code == 200) {
                 $("#tipDocs").val(responseCampos.data[0]['TIPDOC']);
-                var camposDes = responseCampos.data[0].CAMPOS.split("/");
+                camposDes = responseCampos.data[0].CAMPOS.split("/");
                 var counter=camposDes.length;
                 camposDes[counter]='Rango de fechas';
                 var htmlAppend = "";
@@ -224,6 +236,10 @@
                        // htmlAppend+='<span onclick="showProveedores()"><input class="form-select inputsDoc fn" type="text" id="'+responseCampos.data[0]['TIPDOC']+i+'" required readonly /></span>';
                             htmlAppend+='<input class="inputsDoc fn" style="font-size:16px;"  type="text" autocomplete="off" data-placeholder-focus="false" required id="'+responseCampos.data[0]['TIPDOC']+i+'" onclick="showProveedores()"  oninput="noTextInput(this)"/><button type="button" class="btn p-0 m-0 fs-5" onclick="vaciarInput()"><i class="fa-solid fa-xmark"></i></button>';
                             htmlAppend+='<input class="d-none" id="originalData" /> <input class="d-none" id="codigo" />'
+                        }else if (camposDes[i].toLowerCase()=="tienda") {
+                       // htmlAppend+='<span onclick="showProveedores()"><input class="form-select inputsDoc fn" type="text" id="'+responseCampos.data[0]['TIPDOC']+i+'" required readonly /></span>';
+                            htmlAppend+='<input class="inputsDoc fn" style="font-size:16px;"  type="text" autocomplete="off" data-placeholder-focus="false" required id="'+responseCampos.data[0]['TIPDOC']+i+'" onclick="showTiendas(`'+responseCampos.data[0]['TIPDOC']+i+'`)"  oninput="noTextInput3(this)"/><button type="button" class="btn p-0 m-0 fs-5" onclick="vaciarInput3()"><i class="fa-solid fa-xmark"></i></button>';
+                            htmlAppend+='<input class="d-none" id="originalTienda" /> <input class="d-none" id="codigoTienda" />'
                         }else if (camposDes[i]=="Rango de fechas") {
                             htmlAppend+='<input class="inputsDoc fn" style="font-size:14px;"  type="text" autocomplete="off" data-placeholder-focus="false" required id="FechasDocs" onclick="showRange()"  oninput="noTextInput2(this)"/><button type="button" class="btn p-0 m-0 fs-5" onclick="vaciarInput2()"><i class="fa-solid fa-xmark"></i></button>';
                             htmlAppend+='<input class="d-none" id="originalRange" /> <input class="d-none" id="valueTipo" />'
@@ -280,6 +296,19 @@
             }
     }
     var Date1; var Date2;
+    function showTiendas(id) {
+        $("#inputIdTiendas").val(id);
+        $("#tiendasSelect").empty();
+        $("#tiendasSelect").append(comarcOptions);
+        $("#modalTiendas").modal('show');
+    }
+    function saveTienda(){
+        var id=$("#inputIdTiendas").val();
+        $("#codigoTienda").val($("#tiendasSelect").val());
+        $("#"+id).val($("#tiendasSelect option:selected").text());
+        $("#originalTienda").val($("#tiendasSelect option:selected").text());
+        $("#modalTiendas").modal('hide');
+    }
     function showRange() {
         $("#dayRange").empty();
         var currentDate = new Date().toISOString().split('T')[0];
@@ -323,7 +352,14 @@
         }
         function vaciarInput2() {
             $('#originalRange').val('');
+            $('#valueTipo').val('');
             $('#FechasDocs').val('');
+        }
+        function vaciarInput3() {
+            var id=$("#inputIdTiendas").val();
+            $('#originalTienda').val('');
+            $('#codigoTienda').val('');
+            $('#'+id).val('');
         }
         function showProveedores() {
             $("#modalProveedores").modal('show');
@@ -348,31 +384,37 @@
             var originalData2=$("#originalRange").val();
             inputElement.value = originalData2;
          }
+         function noTextInput3(inputElement) {
+            var originalData2=$("#originalTienda").val();
+            inputElement.value = originalData2;
+         }
     function searchF() {
        
         var campos = {"CAM0": "","CAM1": "", "CAM2": "","CAM3": "","CAM4": "","CAM5": "","CAM6": "","CAM7": "","CAM8": "","CAM9": ""};
         const inputs=$(".inputsDoc");
         var tipo=$("#tipDocs").val();
-        for (let i = 0; i < inputs.length; i++) {
-            campos["CAM"+i]=$("#"+tipo+i+"").val();
+        for (let i = 0; i < (inputs.length-1); i++) {
+            if (camposDes[i].toLowerCase()=="tienda") {
+                campos["CAM"+i]=$("#codigoTienda").val();
+            }else{
+                campos["CAM"+i]=$("#"+tipo+i+"").val();
+            }
+            
         }
         var tipProv=""; var idProv="";
-        var proveedor=($("#codigo").val()).split('-');
-        tipProv=(proveedor[0]!=null)?proveedor[0]:"";
-        idProv=(proveedor[1]!=null)?proveedor[1]:"";
+        if (tipo=='FAC') {
+            var proveedor=($("#codigo").val()).split('-');
+            tipProv=(proveedor[0]!=null)?proveedor[0]:"";
+            idProv=(proveedor[1]!=null)?proveedor[1]:"";
+        }
         for (let i = 0; i < 10; i++) {
             if (tipo+'0'=='FAC0') {
-                document.cookie = "cam1=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/";
                     setCookie("cam1",tipProv,1);
-                document.cookie = "cam2=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/";
                     setCookie("cam2",idProv,1);
-                document.cookie = "cam3=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/";
                     setCookie("cam3",campos['CAM1'],1);
-                document.cookie = "cam4=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/";
                     setCookie("cam4",campos['CAM2'],1);   
             }else{
                 var j= i+1;
-                document.cookie = "cam"+j+"=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/";
                 setCookie("cam"+j,campos['CAM'+i+''],1);
             }
         }
@@ -381,14 +423,12 @@
             var area=valArea.split('-');
             var depa=area[0];
             var sec=area[1];
-            document.cookie = "coddep=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/";
-            document.cookie = "secdep=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/";
             setCookie("valArea",valArea,1);
             setCookie("coddep",depa,1);
             setCookie("secdep",sec,1);
         }
         
-        chargeTable();
+       chargeTable();
     }
 
     function chargeTable() {
@@ -443,9 +483,7 @@
         }
         
         
-        document.cookie = "tipdoc=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/";
-        document.cookie = "coddep=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/";
-        document.cookie = "secdep=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/";
+
         var campos = {
             'CAM1': getCookie("cam1"),
             'CAM2': getCookie("cam2"),
@@ -743,7 +781,6 @@
 
         $("#trashDoc").empty();
         var permisos = "<?php echo isset($_SESSION['PERESP'])? $_SESSION['PERESP']: ''; ?>";
-        console.log(permisos);
         if (permisos==='S') {
             $("#trashDoc").append(
             ` <button type="button" class="btn btn-danger m-0 mt-2  text-white" onclick="deleteCard('` + nomcard +
@@ -814,11 +851,17 @@
                                 }
                                 
                             }else{
+                                var descripcion="";
+                                if (camposDes[i].toLowerCase()=="tienda") {
+                                    var urlDes="http://172.16.15.20/API.LovablePHP/ZLO0001P/FindComarc/?compFiltro="+ campos['cam' + i] +"";
+                                    var responseDes=ajaxRequest(urlDes);
+                                    descripcion=(responseDes.code==200)?responseDes.data[0]['COMDES']:"";
+                                }
                                 inputs.append(`<div class="col-6 col-lg-2">
                                 <h6 class=" mt-1">` + camposDes[i] + `:</h6>
                                     </div>
                                     <div class="col-6 col-lg-4">
-                                        <span class="text-start">` + campos['cam' + i] + `</span>
+                                        <span class="text-start">` + campos['cam' + i] + ` ` + descripcion.toUpperCase() + `</span>
                                     </div>`);
                             }   
                
@@ -1013,32 +1056,56 @@
     </div>
     </div>
     <div class="modal fade" id="modalRange" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-        <div class="modal-header">
-            <h1 class="modal-title fs-5" id="exampleModalLabel">Selecciona un rango de fechas</h1>
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Selecciona un rango de fechas</h1>
 
-            <button type="button" class="btn-close" onclick="$('#modalRange').modal('hide')"></button>
-        </div>
-            <div class="modal-body">
-                       <div class="d-flex">
-                       <label class="me-3">Tipo: </label>
-                        <select id="isFecha" class="form-select mb-3" style="width:250px; ">
-                            <option value="1">Fecha de documento</option>
-                            <option value="2">Fecha de grabado</option>
-                        </select>
-                       </div>
-                        <div id="dayRange">
-
+                <button type="button" class="btn-close" onclick="$('#modalRange').modal('hide')"></button>
+            </div>
+                <div class="modal-body">
+                        <div class="d-flex">
+                        <label class="me-3">Tipo: </label>
+                            <select id="isFecha" class="form-select mb-3" style="width:250px; ">
+                                <option value="1">Fecha de documento</option>
+                                <option value="2">Fecha de grabado</option>
+                            </select>
                         </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" onclick="saveFecha()">Aceptar</button>
+                            <div id="dayRange">
+
+                            </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="saveFecha()">Aceptar</button>
+                </div>
             </div>
         </div>
     </div>
-    </div>
+    <div class="modal fade" id="modalTiendas" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Selecciona un rango de fechas</h1>
 
+                <button type="button" class="btn-close" onclick="$('#modalTiendas').modal('hide')"></button>
+            </div>
+                <div class="modal-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <input type="text" class="d-none" id="inputIdTiendas">
+                            <label class="mb-3">Punto de venta: </label>
+                                <select id="tiendasSelect" class="form-select">
+                            
+                                </select>
+                            </div>
+                        </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="saveTienda()">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>

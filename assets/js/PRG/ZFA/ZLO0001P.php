@@ -1,4 +1,4 @@
- <script>  
+<script>  
 var usuario='<?php echo $_SESSION["CODUSU"];?>';
   var urlComarc='http://172.16.15.20/API.LovablePHP/ZLO0001P/ListComarc/?usuario='+usuario+'';
   var responseComarc = ajaxRequest(urlComarc);
@@ -25,6 +25,7 @@ var usuario='<?php echo $_SESSION["CODUSU"];?>';
       var url3='http://172.16.15.20/API.LovablePHP/ZLO0001P/ListValores3/?fechaFiltro='+fechafiltro+'&compFiltro='+compfiltro+'&usuario='+usuario+'&case='+case1+'';
       break;
   }
+ 
   var responseDiayMes = ajaxRequest(url1);
   var responseAnual= ajaxRequest(url2);
   if (case1!=2) { 
@@ -39,7 +40,9 @@ var usuario='<?php echo $_SESSION["CODUSU"];?>';
             }
 
             //LLENADO DE TABLA
-            if (responseDiayMes.code==200 || responseAnual.code==200) { 
+            console.log(responseDiayMes);
+            console.log(responseAnual);
+            if (responseDiayMes.code==200 && responseAnual.code==200) { 
               for (let i = 0; i < responseDiayMes.data.length; i++) {
                 let mon='';
                 var filtro
@@ -57,7 +60,7 @@ var usuario='<?php echo $_SESSION["CODUSU"];?>';
                 }
 
                 $("#myTableBody").append(`<tr id="tr${i}" ondblclick="location.href=\'/<?php echo $_SESSION['DEV']; ?>LovablePHP/PRG/ZFA/ZLO0001PA.php?id=${responseDiayMes.data[i]['ID']}&dat=<?php echo $_SESSION['FechaFiltro'];?>\';">`);
-                let vendias="";let venmes="";let tdAnual="";let tdCreciAnual="";
+                let vendias="";let venmes="";let venmes2="";let venmes3="";let tdAnual="";let tdCreciAnual="";
                   if(parseFloat(responseDiayMes.data[i]['SUBDIA'])<=0){
                     vendias="<td class='text-end responsive-font-example text-danger' id='tddia1'><b>"+mon+responseDiayMes.data[i]['SUBDIA'].toLocaleString('es-419', {minimumFractionDigits: 2,maximumFractionDigits: 2})+"</b></td>";}else{
                       vendias="<td class='text-end responsive-font-example text-darkblue' id='tddia1'><b>"+mon+responseDiayMes.data[i]['SUBDIA'].toLocaleString('es-419', {minimumFractionDigits: 2,maximumFractionDigits: 2})+"</b></td>";
@@ -65,6 +68,16 @@ var usuario='<?php echo $_SESSION["CODUSU"];?>';
                   if(parseFloat(responseDiayMes.data[i]['SUBMES'])<=0){
                     venmes="<td class='text-end responsive-font-example text-danger' id='tddia2'><b>"+mon+responseDiayMes.data[i]['SUBMES'].toLocaleString('es-419', {minimumFractionDigits: 2,maximumFractionDigits: 2})+"</b></td>";}else{
                       venmes="<td class='text-end responsive-font-example text-pink' id='tddia2'><b>"+mon+responseDiayMes.data[i]['SUBMES'].toLocaleString('es-419', {minimumFractionDigits: 2,maximumFractionDigits: 2})+"</b></td>";
+                  }
+                  if (case1!=1 && case1!=2) {
+                    if(parseFloat(responseDiayMes.data[i]['SUBMES2'])<=0){
+                      venmes2="<td class='text-end responsive-font-example ' id='tddia1'><b>"+mon+responseDiayMes.data[i]['SUBMES2'].toLocaleString('es-419', {minimumFractionDigits: 2,maximumFractionDigits: 2})+"</b></td>";}else{
+                        venmes2="<td class='text-end responsive-font-example ' id='tddia1'><b>"+mon+responseDiayMes.data[i]['SUBMES2'].toLocaleString('es-419', {minimumFractionDigits: 2,maximumFractionDigits: 2})+"</b></td>";
+                    }
+                    if(parseFloat(responseDiayMes.data[i]['SUBMES3'])<=0){
+                      venmes3="<td class='text-end responsive-font-example ' id='tddia2'><b>"+mon+responseDiayMes.data[i]['SUBMES3'].toLocaleString('es-419', {minimumFractionDigits: 2,maximumFractionDigits: 2})+"</b></td>";}else{
+                        venmes3="<td class='text-end responsive-font-example ' id='tddia2'><b>"+mon+responseDiayMes.data[i]['SUBMES3'].toLocaleString('es-419', {minimumFractionDigits: 2,maximumFractionDigits: 2})+"</b></td>";
+                    }
                   }
                   if(parseFloat(responseAnual.data[i]['VARIA'])<=0){
                     tdAnual="<td class='text-end responsive-font-example d-none text-danger' id='tdanual3'><b>"+mon+responseAnual.data[i]['VARIA'].toLocaleString('es-419', {minimumFractionDigits: 2,maximumFractionDigits: 2})+"</b></td>";}else{
@@ -79,6 +92,8 @@ var usuario='<?php echo $_SESSION["CODUSU"];?>';
                 $('#tr'+i+'').append("<td class='text-start responsive-font-example'><b>"+responseDiayMes.data[i]['COMDES']+"</b></td>");
                 $('#tr'+i+'').append(vendias);
                 $('#tr'+i+'').append(venmes);
+                $('#tr'+i+'').append(venmes2);
+                $('#tr'+i+'').append(venmes3);
                 $('#tr'+i+'').append("<td class='text-end responsive-font-example d-none' id='tdanual1'><b>"+mon+responseAnual.data[i]['ANO1'].toLocaleString('es-419', {minimumFractionDigits: 2,maximumFractionDigits: 2})+"</b></td>");
                 $('#tr'+i+'').append("<td class='text-end responsive-font-example d-none' id='tdanual2'><b>"+mon+responseAnual.data[i]['ANO2'].toLocaleString('es-419', {minimumFractionDigits: 2,maximumFractionDigits: 2})+"</b></td>");
                 $('#tr'+i+'').append(tdAnual);
@@ -334,17 +349,17 @@ var usuario='<?php echo $_SESSION["CODUSU"];?>';
                 thisTabPanel.attr('aria-hidden', 'false').removeClass('is-hidden');
 
                 if (tabSeleccionado==1) {
-                  $("#thdia1, #thdia2").removeClass("d-none");$("#tddia1, #tddia2").removeClass("d-none");    
+                  $("#thdia1, #thdia2,#thdia3, #thdia4").removeClass("d-none");$("#tddia1, #tddia2,#tddia3, #tddia4").removeClass("d-none");    
                   $("#thpro1, #thpro2, #thpro3, #thpro4, #thpro5, #thpro6").addClass("d-none");$("#tdpro1, #tdpro2, #tdpro3, #tdpro4, #tdpro5, #tdpro6").addClass("d-none");     
                   $("#thanual1, #thanual2, #thanual3, #thanual4").addClass("d-none");$("#tdanual1, #tdanual2, #tdanual3, #tdanual4").addClass("d-none");
                 }else if(tabSeleccionado==2){
                   $("#thanual1, #thanual2, #thanual3, #thanual4").removeClass("d-none");$("#tdanual1, #tdanual2, #tdanual3, #tdanual4").removeClass("d-none");
-                  $("#thdia1, #thdia2").addClass("d-none");$("#tddia1, #tddia2").addClass("d-none");        
+                  $("#thdia1, #thdia2,#thdia3, #thdia4").addClass("d-none");$("#tddia1, #tddia2,#tddia3, #tddia4").addClass("d-none");        
                   $("#thpro1, #thpro2, #thpro3, #thpro4, #thpro5, #thpro6").addClass("d-none");$("#tdpro1, #tdpro2, #tdpro3, #tdpro4, #tdpro5, #tdpro6").addClass("d-none");
                 }else if (tabSeleccionado==3) {
                   $("#thpro1, #thpro2, #thpro3, #thpro4, #thpro5, #thpro6").removeClass("d-none");$("#tdpro1, #tdpro2, #tdpro3, #tdpro4, #tdpro5, #tdpro6").removeClass("d-none");     
                   $("#thanual1, #thanual2, #thanual3, #thanual4").addClass("d-none");$("#tdanual1, #tdanual2, #tdanual3, #tdanual4").addClass("d-none");
-                  $("#thdia1, #thdia2").addClass("d-none");$("#tddia1, #tddia2").addClass("d-none");
+                  $("#thdia1, #thdia2,#thdia3, #thdia4").addClass("d-none");$("#tddia1, #tddia2,#tddia3, #tddia4").addClass("d-none");
                 }
                
         }
@@ -370,7 +385,7 @@ var usuario='<?php echo $_SESSION["CODUSU"];?>';
               $("#btnradio2").removeClass("d-none");
                 $("#btnnradio2").removeClass("d-none");
 
-        $("#thdia1, #thdia2").removeClass("d-none");$("#tddia1, #tddia2").removeClass("d-none");        
+        $("#thdia1, #thdia2,#thdia3, #thdia4").removeClass("d-none");$("#tddia1, #tddia2,#tddia3, #tddia4").removeClass("d-none");        
         $("#thanual1, #thanual2, #thanual3, #thanual4").addClass("d-none");$("#tdanual1, #tdanual2, #tdanual3, #tdanual4").addClass("d-none");
         $("#thpro1, #thpro2, #thpro3, #thpro4, #thpro5, #thpro6").addClass("d-none");$("#tdpro1, #tdpro2, #tdpro3, #tdpro4, #tdpro5, #tdpro6").addClass("d-none");
             });
@@ -379,7 +394,7 @@ var usuario='<?php echo $_SESSION["CODUSU"];?>';
                 $("#btnnradio2").removeClass("d-none");
         
         $("#thanual1, #thanual2, #thanual3, #thanual4").removeClass("d-none");$("#tdanual1, #tdanual2, #tdanual3, #tdanual4").removeClass("d-none");
-        $("#thdia1, #thdia2").addClass("d-none");$("#tddia1, #tddia2").addClass("d-none");        
+        $("#thdia1, #thdia2,#thdia3, #thdia4").addClass("d-none");$("#tddia1, #tddia2,#tddia3, #tddia4").addClass("d-none");        
         $("#thpro1, #thpro2, #thpro3, #thpro4, #thpro5, #thpro6").addClass("d-none");$("#tdpro1, #tdpro2, #tdpro3, #tdpro4, #tdpro5, #tdpro6").addClass("d-none");
             });
         $("#tab3").click(function() {
@@ -388,6 +403,6 @@ var usuario='<?php echo $_SESSION["CODUSU"];?>';
           
           $("#thpro1, #thpro2, #thpro3, #thpro4, #thpro5, #thpro6").removeClass("d-none");$("#tdpro1, #tdpro2, #tdpro3, #tdpro4, #tdpro5, #tdpro6").removeClass("d-none");     
           $("#thanual1, #thanual2, #thanual3, #thanual4").addClass("d-none");$("#tdanual1, #tdanual2, #tdanual3, #tdanual4").addClass("d-none");
-          $("#thdia1, #thdia2").addClass("d-none");$("#tddia1, #tddia2").addClass("d-none");        
+          $("#thdia1, #thdia2,#thdia3, #thdia4").addClass("d-none");$("#tddia1, #tddia2,#tddia3, #tddia4").addClass("d-none");        
         });
 </script>
