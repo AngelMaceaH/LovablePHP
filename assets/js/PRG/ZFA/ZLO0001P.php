@@ -25,7 +25,9 @@ var usuario='<?php echo $_SESSION["CODUSU"];?>';
       var url3='http://172.16.15.20/API.LovablePHP/ZLO0001P/ListValores3/?fechaFiltro='+fechafiltro+'&compFiltro='+compfiltro+'&usuario='+usuario+'&case='+case1+'';
       break;
   }
- 
+  console.log(url1);
+  console.log(url2);
+  console.log(url3);
   var responseDiayMes = ajaxRequest(url1);
   var responseAnual= ajaxRequest(url2);
   if (case1!=2) { 

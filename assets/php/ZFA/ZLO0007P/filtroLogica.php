@@ -26,6 +26,5 @@
             $_SESSION['clickPais']=1;
         }
     }
-    
     header("Location: /".$_SESSION['DEV']."LovablePHP/PRG/ZFA/ZLO0007P.php");
 ?>
