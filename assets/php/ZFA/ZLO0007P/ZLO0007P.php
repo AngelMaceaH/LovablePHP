@@ -6,7 +6,7 @@
             zIndex: 10,
             plugins: ["RangePlugin"]});
             $( document ).ready(function() {
-              $('#cbbCia').select2();
+              $('#cbbCia').select2({closeOnSelect: false});
               var compfiltro = ("<?php echo $arrayConversion;?>").split(",")
                                                                   .filter(item => item) 
                                                                   .map(item => Number(item));

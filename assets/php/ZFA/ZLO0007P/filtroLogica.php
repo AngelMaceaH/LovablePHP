@@ -22,6 +22,7 @@
          $_SESSION['clickPais']=0;
         }
         if ($_POST['cbbClick']=="cbbPais") {
+            $_SESSION['ciaFiltro']=[900];
             $_SESSION['clickCia']=0;
             $_SESSION['clickPais']=1;
         }
