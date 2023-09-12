@@ -34,9 +34,7 @@ function obtenerNumeroMes($nombre_mes) {
 
 ?>
 <script>
-    
 $( document ).ready(function() {
- 
         var urlComarc='http://172.16.15.20/API.LovablePHP/ZLO0003P/ListComarc/';
         var responseComarc = ajaxRequest(urlComarc);
 
@@ -64,6 +62,7 @@ $( document ).ready(function() {
     var marcaFiltro = '<?php echo $marcaFiltro; ?>';       
     var urlMarcas='http://172.16.15.20/API.LovablePHP/ZLO0003P/ListMarcas/?ano='+ano2+'&mes='+mesNum1+'&mes2='+mesNum2+'&marca='+marcaFiltro+'';
     var responseMarcas = ajaxRequest(urlMarcas);
+    //CONSTRUIR TIENDAS
     var paisesLabel=['Honduras','Guatemala','El Salvador','Nicaragua','Costa Rica','Rep. Dominicana'];
     var valorAno1=[];var valorAno2=[];
     var validator=true;
@@ -111,144 +110,143 @@ $( document ).ready(function() {
                         valorAno1=[parseFloat(ano1hon),parseFloat(ano1gua),parseFloat(ano1sal),parseFloat(ano1cos),parseFloat(ano1nic),parseFloat(ano1rep)];
                         valorAno2=[parseFloat(ano2hon),parseFloat(ano2gua),parseFloat(ano2sal),parseFloat(ano2cos),parseFloat(ano2nic),parseFloat(ano2rep)];
                         
-            $("#myTableMarcasBody").append(`<tr id="tr${i}">`);
+            $("#myTableMarcasPaisesBody").append(`<tr id="tr${i}">`);
             //HONDURAS
                   if(parseFloat(varhon)<0){
-                    varhon="<td class='fw-bold  text-danger'>D."+varhon.toLocaleString('es-419', {minimumFractionDigits: 2,maximumFractionDigits: 2})+"</td>";}else{
-                    varhon="<td class='fw-bold  text-success'>D."+varhon.toLocaleString('es-419', {minimumFractionDigits: 2,maximumFractionDigits: 2})+"</td>";
+                    varhon="<td class='fw-bold  text-danger text-end'>D."+varhon.toLocaleString('es-419', {minimumFractionDigits: 2,maximumFractionDigits: 2})+"</td>";}else{
+                    varhon="<td class='fw-bold  text-success text-end'>D."+varhon.toLocaleString('es-419', {minimumFractionDigits: 2,maximumFractionDigits: 2})+"</td>";
                   }
                   if(parseFloat(crehon)<0){
-                    crehon="<td class='fw-bold  text-danger'>"+crehon.toLocaleString('es-419', {maximumFractionDigits: 0})+"%</td>";}else{
-                        crehon="<td class='fw-bold  text-success'>"+crehon.toLocaleString('es-419', {maximumFractionDigits: 0})+"%</td>";
+                    crehon="<td class='fw-bold  text-danger text-end'>"+crehon.toLocaleString('es-419', {maximumFractionDigits: 0})+"%</td>";}else{
+                        crehon="<td class='fw-bold  text-success text-end'>"+crehon.toLocaleString('es-419', {maximumFractionDigits: 0})+"%</td>";
                   }
             $('#tr'+i+'').append("<td class='fw-bold'>1</td>");
-            $('#tr'+i+'').append("<td class='fw-bold'>Honduras</td>");
-            $('#tr'+i+'').append("<td class='fw-bold text-center'>"+parseFloat(can1hon).toLocaleString('es-419')+"</td>");
-            $('#tr'+i+'').append("<td>D."+parseFloat(ano1hon).toLocaleString('es-419', {minimumFractionDigits: 2,maximumFractionDigits: 2})+"</td>");
-            $('#tr'+i+'').append("<td class='fw-bold text-center'>"+parseFloat(can2hon).toLocaleString('es-419')+"</td>");
-            $('#tr'+i+'').append("<td>D."+parseFloat(ano2hon).toLocaleString('es-419', {minimumFractionDigits: 2,maximumFractionDigits: 2})+"</td>");
+            $('#tr'+i+'').append("<td class='fw-bold text-start'>Honduras</td>");
+            $('#tr'+i+'').append("<td class='fw-bold text-end'>"+parseFloat(can1hon).toLocaleString('es-419')+"</td>");
+            $('#tr'+i+'').append("<td class='text-end'>D."+parseFloat(ano1hon).toLocaleString('es-419', {minimumFractionDigits: 2,maximumFractionDigits: 2})+"</td>");
+            $('#tr'+i+'').append("<td class='fw-bold text-end'>"+parseFloat(can2hon).toLocaleString('es-419')+"</td>");
+            $('#tr'+i+'').append("<td class='text-end'>D."+parseFloat(ano2hon).toLocaleString('es-419', {minimumFractionDigits: 2,maximumFractionDigits: 2})+"</td>");
             $('#tr'+i+'').append(varhon);
             $('#tr'+i+'').append(crehon);
-            $("#myTableMarcasBody").append(`</tr>`);
-            $("#myTableMarcasBody").append(`<tr id="ta${i}">`);
+            $("#myTableMarcasPaisesBody").append(`</tr>`);
+            $("#myTableMarcasPaisesBody").append(`<tr id="ta${i}">`);
                 //GUATEMALA
                 if(parseFloat(vargua)<0){
-                    vargua="<td class='fw-bold  text-danger'>D."+vargua.toLocaleString('es-419', {minimumFractionDigits: 2,maximumFractionDigits: 2})+"</td>";}else{
-                    vargua="<td class='fw-bold  text-success'>D."+vargua.toLocaleString('es-419', {minimumFractionDigits: 2,maximumFractionDigits: 2})+"</td>";
+                    vargua="<td class='fw-bold  text-danger text-end'>D."+vargua.toLocaleString('es-419', {minimumFractionDigits: 2,maximumFractionDigits: 2})+"</td>";}else{
+                    vargua="<td class='fw-bold  text-success text-end'>D."+vargua.toLocaleString('es-419', {minimumFractionDigits: 2,maximumFractionDigits: 2})+"</td>";
                   }
                   if(parseFloat(cregua)<0){
-                    cregua="<td class='fw-bold  text-danger'>"+cregua.toLocaleString('es-419', {maximumFractionDigits: 0})+"%</td>";}else{
-                        cregua="<td class='fw-bold  text-success'>"+cregua.toLocaleString('es-419', {maximumFractionDigits: 0})+"%</td>";
+                    cregua="<td class='fw-bold  text-danger text-end'>"+cregua.toLocaleString('es-419', {maximumFractionDigits: 0})+"%</td>";}else{
+                        cregua="<td class='fw-bold  text-success text-end'>"+cregua.toLocaleString('es-419', {maximumFractionDigits: 0})+"%</td>";
                   }
             $('#ta'+i+'').append("<td class='fw-bold'>1</td>");
-            $('#ta'+i+'').append("<td class='fw-bold'>Guatemala</td>");
-            $('#ta'+i+'').append("<td class='fw-bold text-center'>"+parseFloat(can1gua).toLocaleString('es-419')+"</td>");
-            $('#ta'+i+'').append("<td>D."+parseFloat(ano1gua).toLocaleString('es-419', {minimumFractionDigits: 2,maximumFractionDigits: 2})+"</td>");
-            $('#ta'+i+'').append("<td class='fw-bold text-center'>"+parseFloat(can2gua).toLocaleString('es-419')+"</td>");
-            $('#ta'+i+'').append("<td>D."+parseFloat(ano2gua).toLocaleString('es-419', {minimumFractionDigits: 2,maximumFractionDigits: 2})+"</td>");
+            $('#ta'+i+'').append("<td class='fw-bold text-start'>Guatemala</td>");
+            $('#ta'+i+'').append("<td class='fw-bold text-end'>"+parseFloat(can1gua).toLocaleString('es-419')+"</td>");
+            $('#ta'+i+'').append("<td class='text-end'>D."+parseFloat(ano1gua).toLocaleString('es-419', {minimumFractionDigits: 2,maximumFractionDigits: 2})+"</td>");
+            $('#ta'+i+'').append("<td class='fw-bold text-end'>"+parseFloat(can2gua).toLocaleString('es-419')+"</td>");
+            $('#ta'+i+'').append("<td class='text-end'>D."+parseFloat(ano2gua).toLocaleString('es-419', {minimumFractionDigits: 2,maximumFractionDigits: 2})+"</td>");
             $('#ta'+i+'').append(vargua);
             $('#ta'+i+'').append(cregua);
-            $("#myTableMarcasBody").append(`</tr>`);
-            $("#myTableMarcasBody").append(`<tr id="tb${i}">`);
+            $("#myTableMarcasPaisesBody").append(`</tr>`);
+            $("#myTableMarcasPaisesBody").append(`<tr id="tb${i}">`);
                 //EL SALVADOR
                 if(parseFloat(varsal)<0){
-                    varsal="<td class='fw-bold  text-danger'>D."+varsal.toLocaleString('es-419', {minimumFractionDigits: 2,maximumFractionDigits: 2})+"</td>";}else{
-                    varsal="<td class='fw-bold  text-success'>D."+varsal.toLocaleString('es-419', {minimumFractionDigits: 2,maximumFractionDigits: 2})+"</td>";
+                    varsal="<td class='fw-bold  text-danger text-end'>D."+varsal.toLocaleString('es-419', {minimumFractionDigits: 2,maximumFractionDigits: 2})+"</td>";}else{
+                    varsal="<td class='fw-bold  text-success text-end'>D."+varsal.toLocaleString('es-419', {minimumFractionDigits: 2,maximumFractionDigits: 2})+"</td>";
                   }
                   if(parseFloat(cresal)<0){
-                    cresal="<td class='fw-bold  text-danger'>"+cresal.toLocaleString('es-419', {maximumFractionDigits: 0})+"%</td>";}else{
-                        cresal="<td class='fw-bold  text-success'>"+cresal.toLocaleString('es-419', {maximumFractionDigits: 0})+"%</td>";
+                    cresal="<td class='fw-bold  text-danger text-end'>"+cresal.toLocaleString('es-419', {maximumFractionDigits: 0})+"%</td>";}else{
+                        cresal="<td class='fw-bold  text-success text-end'>"+cresal.toLocaleString('es-419', {maximumFractionDigits: 0})+"%</td>";
                   }
             $('#tb'+i+'').append("<td class='fw-bold'>1</td>");
-            $('#tb'+i+'').append("<td class='fw-bold'>El Salvador</td>");
-            $('#tb'+i+'').append("<td class='fw-bold text-center'>"+parseFloat(can1sal).toLocaleString('es-419')+"</td>");
-            $('#tb'+i+'').append("<td>D."+parseFloat(ano1sal).toLocaleString('es-419', {minimumFractionDigits: 2,maximumFractionDigits: 2})+"</td>");
-            $('#tb'+i+'').append("<td class='fw-bold text-center'>"+parseFloat(can2sal).toLocaleString('es-419')+"</td>");
-            $('#tb'+i+'').append("<td>D."+parseFloat(ano2sal).toLocaleString('es-419', {minimumFractionDigits: 2,maximumFractionDigits: 2})+"</td>");
+            $('#tb'+i+'').append("<td class='fw-bold text-start'>El Salvador</td>");
+            $('#tb'+i+'').append("<td class='fw-bold text-end'>"+parseFloat(can1sal).toLocaleString('es-419')+"</td>");
+            $('#tb'+i+'').append("<td class='text-end'>D."+parseFloat(ano1sal).toLocaleString('es-419', {minimumFractionDigits: 2,maximumFractionDigits: 2})+"</td>");
+            $('#tb'+i+'').append("<td class='fw-bold text-end'>"+parseFloat(can2sal).toLocaleString('es-419')+"</td>");
+            $('#tb'+i+'').append("<td class='text-end'>D."+parseFloat(ano2sal).toLocaleString('es-419', {minimumFractionDigits: 2,maximumFractionDigits: 2})+"</td>");
             $('#tb'+i+'').append(varsal);
             $('#tb'+i+'').append(cresal);
-            $("#myTableMarcasBody").append(`</tr>`);
-            $("#myTableMarcasBody").append(`<tr id="tc${i}">`);
+            $("#myTableMarcasPaisesBody").append(`</tr>`);
+            $("#myTableMarcasPaisesBody").append(`<tr id="tc${i}">`);
                 //COSTA RICA
                 if(parseFloat(varcos)<0){
-                    varcos="<td class='fw-bold  text-danger'>D."+varcos.toLocaleString('es-419', {minimumFractionDigits: 2,maximumFractionDigits: 2})+"</td>";}else{
-                    varcos="<td class='fw-bold  text-success'>D."+varcos.toLocaleString('es-419', {minimumFractionDigits: 2,maximumFractionDigits: 2})+"</td>";
+                    varcos="<td class='fw-bold  text-danger text-end'>D."+varcos.toLocaleString('es-419', {minimumFractionDigits: 2,maximumFractionDigits: 2})+"</td>";}else{
+                    varcos="<td class='fw-bold  text-success text-end'>D."+varcos.toLocaleString('es-419', {minimumFractionDigits: 2,maximumFractionDigits: 2})+"</td>";
                   }
                   if(parseFloat(crecos)<0){
-                    crecos="<td class='fw-bold  text-danger'>"+crecos.toLocaleString('es-419', {maximumFractionDigits: 0})+"%</td>";}else{
-                        crecos="<td class='fw-bold  text-success'>"+crecos.toLocaleString('es-419', {maximumFractionDigits: 0})+"%</td>";
+                    crecos="<td class='fw-bold  text-danger text-end'>"+crecos.toLocaleString('es-419', {maximumFractionDigits: 0})+"%</td>";}else{
+                        crecos="<td class='fw-bold  text-success text-end'>"+crecos.toLocaleString('es-419', {maximumFractionDigits: 0})+"%</td>";
                   }
             $('#tc'+i+'').append("<td class='fw-bold'>1</td>");
-            $('#tc'+i+'').append("<td class='fw-bold'>Costa Rica</td>");
-            $('#tc'+i+'').append("<td class='fw-bold text-center'>"+parseFloat(can1cos).toLocaleString('es-419')+"</td>");
-            $('#tc'+i+'').append("<td>D."+parseFloat(ano1cos).toLocaleString('es-419', {minimumFractionDigits: 2,maximumFractionDigits: 2})+"</td>");
-            $('#tc'+i+'').append("<td class='fw-bold text-center'>"+parseFloat(can2cos).toLocaleString('es-419')+"</td>");
-            $('#tc'+i+'').append("<td>D."+parseFloat(ano2cos).toLocaleString('es-419', {minimumFractionDigits: 2,maximumFractionDigits: 2})+"</td>");
+            $('#tc'+i+'').append("<td class='fw-bold text-start'>Costa Rica</td>");
+            $('#tc'+i+'').append("<td class='fw-bold text-end'>"+parseFloat(can1cos).toLocaleString('es-419')+"</td>");
+            $('#tc'+i+'').append("<td class='text-end'>D."+parseFloat(ano1cos).toLocaleString('es-419', {minimumFractionDigits: 2,maximumFractionDigits: 2})+"</td>");
+            $('#tc'+i+'').append("<td class='fw-bold text-end'>"+parseFloat(can2cos).toLocaleString('es-419')+"</td>");
+            $('#tc'+i+'').append("<td class='text-end'>D."+parseFloat(ano2cos).toLocaleString('es-419', {minimumFractionDigits: 2,maximumFractionDigits: 2})+"</td>");
             $('#tc'+i+'').append(varcos);
             $('#tc'+i+'').append(crecos);
-            $("#myTableMarcasBody").append(`</tr>`);
-            $("#myTableMarcasBody").append(`<tr id="tf${i}">`);
+            $("#myTableMarcasPaisesBody").append(`</tr>`);
+            $("#myTableMarcasPaisesBody").append(`<tr id="tf${i}">`);
                 //NICARAGUA
                 if(parseFloat(varnic)<0){
-                    varnic="<td class='fw-bold  text-danger'>D."+varnic.toLocaleString('es-419', {minimumFractionDigits: 2,maximumFractionDigits: 2})+"</td>";}else{
-                    varnic="<td class='fw-bold  text-success'>D."+varnic.toLocaleString('es-419', {minimumFractionDigits: 2,maximumFractionDigits: 2})+"</td>";
+                    varnic="<td class='fw-bold  text-danger text-end'>D."+varnic.toLocaleString('es-419', {minimumFractionDigits: 2,maximumFractionDigits: 2})+"</td>";}else{
+                    varnic="<td class='fw-bold  text-success text-end'>D."+varnic.toLocaleString('es-419', {minimumFractionDigits: 2,maximumFractionDigits: 2})+"</td>";
                   }
                   if(parseFloat(crenic)<0){
-                    crenic="<td class='fw-bold  text-danger'>"+crenic.toLocaleString('es-419', {maximumFractionDigits: 0})+"%</td>";}else{
-                        crenic="<td class='fw-bold  text-success'>"+crenic.toLocaleString('es-419', {maximumFractionDigits: 0})+"%</td>";
+                    crenic="<td class='fw-bold  text-danger text-end'>"+crenic.toLocaleString('es-419', {maximumFractionDigits: 0})+"%</td>";}else{
+                        crenic="<td class='fw-bold  text-success text-end'>"+crenic.toLocaleString('es-419', {maximumFractionDigits: 0})+"%</td>";
                   }
             $('#tf'+i+'').append("<td class='fw-bold'>1</td>");
-            $('#tf'+i+'').append("<td class='fw-bold'>Nicaragua</td>");
-            $('#tf'+i+'').append("<td class='fw-bold text-center'>"+parseFloat(can1nic).toLocaleString('es-419')+"</td>");
-            $('#tf'+i+'').append("<td>D."+parseFloat(ano1nic).toLocaleString('es-419', {minimumFractionDigits: 2,maximumFractionDigits: 2})+"</td>");
-            $('#tf'+i+'').append("<td class='fw-bold text-center'>"+parseFloat(can2nic).toLocaleString('es-419')+"</td>");
-            $('#tf'+i+'').append("<td>D."+parseFloat(ano2nic).toLocaleString('es-419', {minimumFractionDigits: 2,maximumFractionDigits: 2})+"</td>");
+            $('#tf'+i+'').append("<td class='fw-bold text-start'>Nicaragua</td>");
+            $('#tf'+i+'').append("<td class='fw-bold text-end'>"+parseFloat(can1nic).toLocaleString('es-419')+"</td>");
+            $('#tf'+i+'').append("<td class='text-end'>D."+parseFloat(ano1nic).toLocaleString('es-419', {minimumFractionDigits: 2,maximumFractionDigits: 2})+"</td>");
+            $('#tf'+i+'').append("<td class='fw-bold text-end'>"+parseFloat(can2nic).toLocaleString('es-419')+"</td>");
+            $('#tf'+i+'').append("<td class='text-end'>D."+parseFloat(ano2nic).toLocaleString('es-419', {minimumFractionDigits: 2,maximumFractionDigits: 2})+"</td>");
             $('#tf'+i+'').append(varnic);
             $('#tf'+i+'').append(crenic);
-            $("#myTableMarcasBody").append(`</tr>`);
-            $("#myTableMarcasBody").append(`<tr id="tg${i}">`);
+            $("#myTableMarcasPaisesBody").append(`</tr>`);
+            $("#myTableMarcasPaisesBody").append(`<tr id="tg${i}">`);
                 //REP DOMINICANA
                 if(parseFloat(varrep)<0){
-                    varrep="<td class='fw-bold  text-danger'>D."+varrep.toLocaleString('es-419', {minimumFractionDigits: 2,maximumFractionDigits: 2})+"</td>";}else{
-                    varrep="<td class='fw-bold  text-success'>D."+varrep.toLocaleString('es-419', {minimumFractionDigits: 2,maximumFractionDigits: 2})+"</td>";
+                    varrep="<td class='fw-bold  text-danger text-end'>D."+varrep.toLocaleString('es-419', {minimumFractionDigits: 2,maximumFractionDigits: 2})+"</td>";}else{
+                    varrep="<td class='fw-bold  text-success text-end'>D."+varrep.toLocaleString('es-419', {minimumFractionDigits: 2,maximumFractionDigits: 2})+"</td>";
                   }
                   if(parseFloat(crerep)<0){
-                    crerep="<td class='fw-bold  text-danger'>"+crerep.toLocaleString('es-419', {maximumFractionDigits: 0})+"%</td>";}else{
-                        crerep="<td class='fw-bold  text-success'>"+crerep.toLocaleString('es-419', {maximumFractionDigits: 0})+"%</td>";
+                    crerep="<td class='fw-bold  text-danger text-end'>"+crerep.toLocaleString('es-419', {maximumFractionDigits: 0})+"%</td>";}else{
+                        crerep="<td class='fw-bold  text-success text-end'>"+crerep.toLocaleString('es-419', {maximumFractionDigits: 0})+"%</td>";
                   }
             $('#tg'+i+'').append("<td class='fw-bold'>1</td>");
-            $('#tg'+i+'').append("<td class='fw-bold'>Rep. Dominicana</td>");
-            $('#tg'+i+'').append("<td class='fw-bold text-center'>"+parseFloat(can1rep).toLocaleString('es-419')+"</td>");
-            $('#tg'+i+'').append("<td>D."+parseFloat(ano1rep).toLocaleString('es-419', {minimumFractionDigits: 2,maximumFractionDigits: 2})+"</td>");
-            $('#tg'+i+'').append("<td class='fw-bold text-center'>"+parseFloat(can2rep).toLocaleString('es-419')+"</td>");
-            $('#tg'+i+'').append("<td>D."+parseFloat(ano2rep).toLocaleString('es-419', {minimumFractionDigits: 2,maximumFractionDigits: 2})+"</td>");
+            $('#tg'+i+'').append("<td class='fw-bold text-start'>Rep. Dominicana</td>");
+            $('#tg'+i+'').append("<td class='fw-bold text-end'>"+parseFloat(can1rep).toLocaleString('es-419')+"</td>");
+            $('#tg'+i+'').append("<td class='text-end'>D."+parseFloat(ano1rep).toLocaleString('es-419', {minimumFractionDigits: 2,maximumFractionDigits: 2})+"</td>");
+            $('#tg'+i+'').append("<td class='fw-bold text-end'>"+parseFloat(can2rep).toLocaleString('es-419')+"</td>");
+            $('#tg'+i+'').append("<td class='text-end'>D."+parseFloat(ano2rep).toLocaleString('es-419', {minimumFractionDigits: 2,maximumFractionDigits: 2})+"</td>");
             $('#tg'+i+'').append(varrep);
             $('#tg'+i+'').append(crerep);
-            $("#myTableMarcasBody").append(`</tr>`);
-            $("#myTableMarcasBody").append(`<tr id="tj${i}">`);
+            $("#myTableMarcasPaisesBody").append(`</tr>`);
+            $("#myTableMarcasPaisesBody").append(`<tr id="tj${i}">`);
                 //TOTALES
                 if(parseFloat(vartot)<0){
-                    vartot="<td class='fw-bold  text-danger'>D."+vartot.toLocaleString('es-419', {minimumFractionDigits: 2,maximumFractionDigits: 2})+"</td>";}else{
-                    vartot="<td class='fw-bold  text-success'>D."+vartot.toLocaleString('es-419', {minimumFractionDigits: 2,maximumFractionDigits: 2})+"</td>";
+                    vartot="<td class='fw-bold  text-danger text-end'>D."+vartot.toLocaleString('es-419', {minimumFractionDigits: 2,maximumFractionDigits: 2})+"</td>";}else{
+                    vartot="<td class='fw-bold  text-success text-end'>D."+vartot.toLocaleString('es-419', {minimumFractionDigits: 2,maximumFractionDigits: 2})+"</td>";
                   }
                   if(parseFloat(cretot)<0){
-                    cretot="<td class='fw-bold  text-danger'>"+cretot.toLocaleString('es-419', {maximumFractionDigits: 0})+"%</td>";}else{
-                        cretot="<td class='fw-bold  text-success'>"+cretot.toLocaleString('es-419', {maximumFractionDigits: 0})+"%</td>";
+                    cretot="<td class='fw-bold  text-danger text-end'>"+cretot.toLocaleString('es-419', {maximumFractionDigits: 0})+"%</td>";}else{
+                        cretot="<td class='fw-bold  text-success text-end'>"+cretot.toLocaleString('es-419', {maximumFractionDigits: 0})+"%</td>";
                   }
             $('#tj'+i+'').append("<td class='fw-bold'>1</td>");
-            $('#tj'+i+'').append("<td class='fw-bold'>TOTAL FINAL</td>");
-            $('#tj'+i+'').append("<td class='fw-bold text-center'>"+parseFloat(can1tot).toLocaleString('es-419')+"</td>");
-            $('#tj'+i+'').append("<td>D."+parseFloat(ano1tot).toLocaleString('es-419', {minimumFractionDigits: 2,maximumFractionDigits: 2})+"</td>");
-            $('#tj'+i+'').append("<td class='fw-bold text-center'>"+parseFloat(can2tot).toLocaleString('es-419')+"</td>");
-            $('#tj'+i+'').append("<td>D."+parseFloat(ano2tot).toLocaleString('es-419', {minimumFractionDigits: 2,maximumFractionDigits: 2})+"</td>");
+            $('#tj'+i+'').append("<td class='fw-bold text-start'>TOTAL FINAL</td>");
+            $('#tj'+i+'').append("<td class='fw-bold text-end'>"+parseFloat(can1tot).toLocaleString('es-419')+"</td>");
+            $('#tj'+i+'').append("<td class='text-end'>D."+parseFloat(ano1tot).toLocaleString('es-419', {minimumFractionDigits: 2,maximumFractionDigits: 2})+"</td>");
+            $('#tj'+i+'').append("<td class='fw-bold text-end'>"+parseFloat(can2tot).toLocaleString('es-419')+"</td>");
+            $('#tj'+i+'').append("<td class='text-end'>D."+parseFloat(ano2tot).toLocaleString('es-419', {minimumFractionDigits: 2,maximumFractionDigits: 2})+"</td>");
             $('#tj'+i+'').append(vartot);
             $('#tj'+i+'').append(cretot);
-            $("#myTableMarcasBody").append(`</tr>`);
-
+            $("#myTableMarcasPaisesBody").append(`</tr>`);
         }
     }
 
-    $("#myTableMarcas").DataTable( {
+    $("#myTableMarcasPaises").DataTable( {
         stateSave: true,
         language: {
             url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json',
@@ -352,12 +350,159 @@ $( document ).ready(function() {
         ]
     });
 
+    //LLENADO DE TABLA TIENDAS
+    var urlMarcas2='http://172.16.15.20/API.LovablePHP/ZLO0003P/ListMarcasTiendas/?ano='+ano2+'&mes='+mesNum1+'&mes2='+mesNum2+'&marca='+marcaFiltro+'';
+    var responseTiendas=ajaxRequest(urlMarcas2);
+    var rows="";
+    var tiendasBody=$("#myTableMarcasTiendasBody");
+    var tiendasValores=[]
+    var tiendasLabel=[];
+    var tiendasAno1=[];var tiendasAno2=[];
+    if (responseTiendas.code==200) {
+      for (let i = 0; i < responseTiendas.data.length; i++) {
+        ano1hon=(responseTiendas.data[i]['HONVALANO1']!=0)?(responseTiendas.data[i]['HONVALANO1']):0;ano2hon=(responseTiendas.data[i]['HONVALANO2']!=0)?(responseTiendas.data[i]['HONVALANO2']):0;
+        can1hon=(responseTiendas.data[i]['HONCANANO1']!=0)?(responseTiendas.data[i]['HONCANANO1']):0;can2hon=(responseTiendas.data[i]['HONCANANO2']!=0)?(responseTiendas.data[i]['HONCANANO2']):0;
+        varhon=ano1hon-ano2hon;crehon=(ano1hon!=0 && ano2hon!=0)? parseFloat(((ano1hon/ano2hon)-1)*100):0;
+        if(parseFloat(varhon)<0){
+                    varhon="<td class='fw-bold  text-danger text-end'>D."+varhon.toLocaleString('es-419', {minimumFractionDigits: 2,maximumFractionDigits: 2})+"</td>";}else{
+                    varhon="<td class='fw-bold  text-success text-end'>D."+varhon.toLocaleString('es-419', {minimumFractionDigits: 2,maximumFractionDigits: 2})+"</td>";
+                  }
+                  if(parseFloat(crehon)<0){
+                    crehon="<td class='fw-bold  text-danger text-end'>"+crehon.toLocaleString('es-419', {maximumFractionDigits: 0})+"%</td>";}else{
+                        crehon="<td class='fw-bold  text-success text-end'>"+crehon.toLocaleString('es-419', {maximumFractionDigits: 0})+"%</td>";
+                  }
+                  tiendasValores.push({"CIA":responseTiendas.data[i]['NOMCIA'],"ANO1":parseFloat(ano1hon),"ANO2":parseFloat(ano2hon)});
+        rows+="<tr>";
+          rows+="<td>"+responseTiendas.data[i]['CODCIA']+"</td>";
+          rows+="<td class='text-start'>"+responseTiendas.data[i]['NOMCIA']+"</td>";
+          rows+="<td class='text-end'>"+parseFloat(can1hon).toLocaleString('es-419')+"</td>";
+          rows+="<td class='text-end'>D."+parseFloat(ano1hon).toLocaleString('es-419', {minimumFractionDigits: 2,maximumFractionDigits: 2})+"</td>";
+          rows+="<td class='text-end'>"+parseFloat(can2hon).toLocaleString('es-419')+"</td>";
+          rows+="<td class='text-end'>D."+parseFloat(ano2hon).toLocaleString('es-419', {minimumFractionDigits: 2,maximumFractionDigits: 2})+"</td>";
+          rows+=varhon;
+          rows+=crehon;
+        rows+="</tr>";
+      }
+      tiendasBody.append(rows);
+    }
+    tiendasValores.sort((a, b) => b.ANO1 - a.ANO1);
+    for (let i = 0; i < tiendasValores.length; i++) {
+      tiendasLabel.push(tiendasValores[i]['CIA']);
+      tiendasAno1.push(parseFloat(tiendasValores[i]['ANO1']));
+      tiendasAno2.push(parseFloat(tiendasValores[i]['ANO2']));
+      
+    }
+    console.log(tiendasLabel);
+    $("#myTableMarcasTiendas").DataTable( {
+        stateSave: true,
+        language: {
+            url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json',
+        },
+
+        "ordering": false,
+        "pageLength": 100,
+        "columnDefs": [
+            {
+                target: 0,
+                visible: false,
+                searchable: true,
+            },
+            ],
+        dom: 'Bfrtip',
+        buttons: [
+            {
+                extend: 'excelHtml5',
+                text: '<i class="fa-solid fa-file-excel"></i> <b >Enviar a Excel</b>',
+                className: "btn btn-success text-light fs-6 ",
+                exportOptions: {
+                    columns: [1,2,3,4,5,6,7]
+                },
+                title: 'ReporteMarcas',
+                messageTop:'MARCA: '+$('#cbbMarca option:selected').text()+'                                                                                                                                                                                                                   <?php echo $labelSelect; ?>',
+                customize: function (xlsx) {
+                    var sheet = xlsx.xl.worksheets['sheet1.xml'];
+                    var sSh = xlsx.xl['styles.xml'];
+                    var lastXfIndex = $('cellXfs xf', sSh).length - 1;
+                    var lastFontIndex = $('fonts font', sSh).length - 1;
+                    var i; var y;
+                    var f1 = '<font>'+
+                     '<sz val="11" />'+
+                     '<name val="Calibri" />'+
+                     '<color rgb="FF0000" />'+ // color rojo en la fuente
+                   '</font>';
+                   var f2 = '<font>'+
+                     '<sz val="11" />'+
+                     '<name val="Calibri" />'+
+                     '<color rgb="007800" />'+ // color verde en la fuente
+                   '</font>';
+                     
+                    var n1 = '<numFmt formatCode="##0%"   numFmtId="300"/>';
+                    var n2 = '<numFmt formatCode="#,##0.00"   numFmtId="200" />';
+                    var s1 = '<xf numFmtId="300" fontId="0" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyNumberFormat="1"/>';
+                    var s2 = '<xf numFmtId="0" fontId="2" fillId="2" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
+                                '<alignment horizontal="center"/></xf>';
+                    var s3 = '<xf numFmtId="4" fontId="2" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyNumberFormat="1"/>'
+                    var s4 = '<xf numFmtId="0" fontId="2" fillId="2" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
+                                '<alignment horizontal="center" wrapText="1"/></xf>'
+                    var s5 = '<xf  numFmtId="200" fontId="'+(lastFontIndex+1)+'" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
+                     '<alignment horizontal="right"/></xf>';  
+                     var s6 = '<xf  numFmtId="200" fontId="'+(lastFontIndex+2)+'" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
+                     '<alignment horizontal="right"/></xf>';  
+                     var s7 = '<xf  numFmtId="300" fontId="'+(lastFontIndex+1)+'" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
+                     '<alignment horizontal="right"/></xf>';  
+                     var s8 = '<xf  numFmtId="300" fontId="'+(lastFontIndex+2)+'" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
+                     '<alignment horizontal="right"/></xf>';
+                    sSh.childNodes[0].childNodes[0].innerHTML += n1 + n2;
+                    sSh.childNodes[0].childNodes[1].innerHTML += f1 + f2;
+                    sSh.childNodes[0].childNodes[5].innerHTML += s1 + s2 + s3 + s4 + s5 + s6 + s7 + s8; 
+                     
+                    var fourDecPlaces    = lastXfIndex + 1;
+                    var greyBoldCentered = lastXfIndex + 2;
+                    var twoDecPlacesBold = lastXfIndex + 3;
+                    var greyBoldWrapText = lastXfIndex + 4;
+                    var textred1 = lastXfIndex + 5;
+                    var textgreen1 = lastXfIndex + 6;
+                    var textred2 = lastXfIndex + 7;
+                    var textgreen2 = lastXfIndex + 8;
+                    
+                    $('c[r=A1] t', sheet).text( 'COMPARATIVO VENTAS DE MARCAS POR PAÍS' );
+                    $('row:eq(0) c', sheet).attr( 's', greyBoldCentered );
+                    $('row:eq(1) c', sheet).attr( 's', 7 );
+                    for (let index = 3; index <= 9; index++) {
+                      
+                      if (($('row:eq('+index+') c[r^="G"]', sheet).text()*1<0)) {
+                        $('row:eq('+index+') c[r^="G"]', sheet).attr( 's', textred2 );  //ROJO
+                      }else{
+                        $('row:eq('+index+') c[r^="G"]', sheet).attr( 's', textgreen2 );  //VERDE
+                      }
+                    }
+                    for (let index = 3; index <= 9; index++) {
+                     
+                      if (parseFloat(($('row:eq('+index+') c[r^="F"]', sheet).text()).slice(2))<0) {
+                        $('row:eq('+index+') c[r^="F"]', sheet).attr( 's', textred1 );  //ROJO
+                      }else{
+                        $('row:eq('+index+') c[r^="F"]', sheet).attr( 's', textgreen1 );  //VERDE
+                      }
+                    }
+
+                    var tagName = sSh.getElementsByTagName('sz');
+                    for (i = 0; i < tagName.length; i++) {
+                      tagName[i].setAttribute("val", "13");
+                    }
+                    
+ 
+                  }
+                  
+            }
+        ]
+    });
 
             //GRAFICAS---------------------------------------------------------------       
              //PAISES AÑO1 VS AÑO2
           var chart = Highcharts.chart('container2', {
 
         chart: {
+           height:600,
             type: 'column'
         },
         lang: {      
@@ -434,8 +579,90 @@ $( document ).ready(function() {
         }
         });
 
+           //TIENDAS AÑO1 VS AÑO2
+           var chart = Highcharts.chart('container3', {
+
+chart: {
+  height:600,
+    type: 'column'
+},
+lang: {      
+      viewFullscreen:"Ver en pantalla completa",
+      exitFullscreen:"Salir de pantalla completa",
+      downloadJPEG:"Descargar imagen JPEG",
+      downloadPDF:"Descargar en PDF",
+  },
+  exporting: {
+      buttons: {
+          contextButton: {
+              menuItems: ["viewFullscreen", "separator", "downloadJPEG", "downloadPDF"]
+          }
+      }
+  },
+title: {
+    text: 'Año <?php echo $anofiltro; ?> vs Año <?php echo $anofiltro-1; ?>',
+    margin: 50
+},
+
+xAxis: {
+    categories: tiendasLabel,
+    labels: {
+        x: -10
+    }
+},
+
+yAxis: {
+    allowDecimals: false,
+    title: {
+        text: ' '
+    }
+},
+credits: {
+  enabled: false
+},
+series: [{
+    name: 'Año <?php echo $anofiltro; ?>',
+    data: tiendasAno1,
+}, {
+  name: 'Año <?php echo $anofiltro-1; ?>',
+    data: tiendasAno2, 
+},],
+
+responsive: {
+    rules: [{
+        condition: {
+            maxWidth: 500
+        },
+        chartOptions: {
+            legend: {
+                align: 'center',
+                verticalAlign: 'bottom',
+                layout: 'horizontal'
+            },
+            yAxis: {
+                labels: {
+                    align: 'left',
+                    x: 0,
+                    y: -5
+                },
+                title: {
+                    text: null
+                }
+            },
+            subtitle: {
+                text: null
+            },
+            credits: {
+                enabled: false
+            }
+        }
+    }]
+}
+});
+
         if (validator) {
            $("#grafica").addClass("d-none");
+           $("#grafica2").addClass("d-none");
         } 
 
     });
