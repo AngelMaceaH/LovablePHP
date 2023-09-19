@@ -5,9 +5,6 @@
   <link rel="icon" type="image/x-icon" href="../../assets/img/favicon.ico">
 </head>
 <body>
-<div class="spinner-wrapper">
-<span class="loader"></span>
-</div> 
   <?php
       include '../layout-prg.php';
       $fecha_actual = date("Ymd");

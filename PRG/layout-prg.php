@@ -102,6 +102,10 @@
 </head>
 
 <body>
+<div class="spinner-wrapper">
+      <img src="../../assets/img/lovableLoader.png" alt="loader" style="width:250px;">
+      <span class="loader p-0 mb-5 me-4 "></span>
+  </div>
     <?php
   session_start();
   date_default_timezone_set('America/Tegucigalpa');
@@ -208,7 +212,6 @@
         }else{
           var getArea="http://172.16.15.20/API.LovablePHP/ZLO0016P/FindArea/?anoing="+anoing+"&numemp="+numemp+"";
             var responseArea = ajaxRequest(getArea);
-            console.log(responseArea);
             var areaDesc='';
             var areaId='';
             var seccionId='';

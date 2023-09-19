@@ -8,9 +8,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Ladda/1.0.0/ladda.min.js" integrity="sha512-hZL8cWjOAFfWZza/p0uD0juwMeIuyLhAd5QDodiK4sBp1sG7BIeE1TbMGIbnUcUgwm3lVSWJzBK6KxqYTiDGkg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 <body>
-  <div class="spinner-wrapper">
-    <span class="loader"></span>
-  </div> 
   <?php
       include '../layout-prg.php';
       include '../../assets/php/ZPT/ZLO0014P/header.php';

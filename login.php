@@ -8,31 +8,75 @@
     <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico">
     <link href="assets/css/style.css" rel="stylesheet">
     <link href="assets/css/mystyle.css" rel="stylesheet">
+    <style>
+      .login,
+.image {
+  min-height: 100vh;
+}
+.bg-image1, .bg-image2, .bg-image3 {
+  animation: carouselAnimation 5s infinite;
+}
+.bg-image1 {
+  background-image: url('assets/img/loginbg1.jpg');
+  background-size: cover;
+  background-position: center center;
+  animation-delay: 0s;
+}
+.bg-image2 {
+  background-image: url('assets/img/loginbg2.jpg');
+  background-size: cover;
+  background-position: center center;
+  animation-delay: 0s;
+}
+.bg-image3 {
+  background-image: url('assets/img/loginbg3.jpg');
+  background-size: cover;
+  background-position: center center;
+  animation-delay: 0s;
+}
+@keyframes carouselAnimation {
+  0% {
+    opacity: 0.4;
+  }
+  33% {
+    opacity: 1;
+  }
+  66% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.4;
+  }
+}
+
+
+    </style>
   </head>
   <body>
     <?php
       session_start();
     ?>
-    <div class="bg-light min-vh-100 d-flex flex-row align-items-center">
-      <div class="container">
-        <div class="row justify-content-center">
-          <div class="col-lg-8">
-            <div class="card-group d-block d-md-flex row">
-              <div class="card col-md-7 p-4 mb-0">
-                <div class="card-body">
-                <form action="assets/php/access/access.php" method="POST" class="needs-validation" novalidate>
-                <h1>Inicia Sesión</h1>
+    <div class="container-fluid  m-0">
+    <div class="row no-gutter">
+        <div class="col-md-6">
+            <div class="login d-flex align-items-center py-5">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-10 col-xl-7 mx-auto text-center">
+                        <img src="assets/img/lovableLogo.png" class="mb-5 ms-4" alt="Lovable Logo" width="275px">
+                            <form action="assets/php/access/access.php" method="POST" class="needs-validation" novalidate>
+                <h5 class="text-start">Inicia Sesión</h5>
                 <p class="text-medium-emphasis"> </p>
                         <div class="row">
                           <div class="col-12">
-                          <div class="input-group mb-3 has-validation">
+                          <div class="input-group mb-3 mt-1 has-validation">
                               <span class="input-group-text" id="inputGroupPrepend">
                                 <svg class="icon">
                                   <use xlink:href="assets/vendors/@coreui/icons/svg/free.svg#cil-user"></use>
                               </svg>
                               </span>
-                              <input class="form-control" type="text" id="user" name="user" oninput="uppercase(this)" placeholder="Usuario" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required>
-                              <div class="invalid-feedback">
+                              <input class="form-control" type="text" id="user" name="user" oninput="uppercase(this)" placeholder="Usuario" id="validationCustomUsername" aria-describedby="inputGroupPrepend" autocomplete="off" required>
+                              <div class="invalid-feedback text-start">
                                    Ingrese un usuario.
                               </div>
                             </div>
@@ -43,12 +87,12 @@
                               <use xlink:href="assets/vendors/@coreui/icons/svg/free.svg#cil-lock-locked"></use>
                             </svg>
                             </span>
-                            <input class="form-control" type="password" id="password" name="password" placeholder="Contraseña" id="validationCustomPassword" aria-describedby="inputGroupPrepend" required>
-                            <div class="invalid-feedback">
+                            <input class="form-control" type="password" id="password" name="password" placeholder="Contraseña" id="validationCustomPassword" aria-describedby="inputGroupPrepend" autocomplete="off" required>
+                            <div class="invalid-feedback text-start">
                                   Ingrese una contraseña.
                             </div>
                           </div>
-                          <div id="Labelerror" class="Labelerror mb-3" ></div>
+                          <div id="Labelerror" class="Labelerror mb-3 text-start" ></div>
                         </div>
                         
                         
@@ -56,23 +100,54 @@
                           <button class="btn bg-blck btn-dark px-5" type="submit">Ingresar</button>
                         </div>
                       </form>
-                </div>
-              </div>
-              <div class="card col-md-5 text-white bg-blck py-5">
-                <div class="card-body text-center">
-                <div class="position-absolute top-50 start-50 translate-middle">
-                   <img src="assets/img/lovableLogoDark.jpg" class="img-fluid" alt="Lovable Logo">
-                  </div>
-                </div>
-              </div>
+                        </div>
+                    </div>
+                </div><!-- End -->
+
             </div>
-          </div>
+        </div><!-- End -->
+  <!-- The image half -->
+      <div class="col-md-6 d-none d-md-flex bg-image m-0 p-0">
+        <div class="row" style="width:100%">
+        <div style="width:100%" id="bg-image1" class="bg-image1 col-12"></div>
+        <div style="width:100%" id="bg-image2" class="bg-image2 d-none col-12"></div>
+        <div style="width:100%" id="bg-image3" class="bg-image3 d-none col-12"></div>
         </div>
       </div>
+
     </div>
+</div>
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> 
     <script>
+      function bg1(){
+            $("#bg-image1").removeClass('d-none');
+            $("#bg-image2").addClass('d-none');
+            $("#bg-image3").addClass('d-none');
+            setTimeout(bg2, 4000); 
+        }
+
+        function bg2(){
+            $("#bg-image1").addClass('d-none');
+            $("#bg-image2").removeClass('d-none');
+            $("#bg-image3").addClass('d-none');
+
+            setTimeout(bg3, 4000); 
+        }
+
+        function bg3(){
+            $("#bg-image1").addClass('d-none');
+            $("#bg-image2").addClass('d-none');
+            $("#bg-image3").removeClass('d-none');
+
+            setTimeout(bg1, 4000); 
+        }
+
+        bg1(); 
+
+      
         $( document ).ready(function() {
+         
           function ajaxRequest(url, data = {}, method = "GET") {
           var dataResponse = null;
           var Token = null;

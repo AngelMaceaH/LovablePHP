@@ -26,6 +26,7 @@
     }
     .loader {
       position: relative;
+      background: #0000;
       width: 40px;
       height: 60px;
       animation: heartBeat 1.2s infinite cubic-bezier(0.215, 0.61, 0.355, 1);
@@ -34,7 +35,7 @@
     .loader:before,
     .loader:after {
       content: "";
-      background: #ff3d00 ;
+      background: #FF0000 ;
       width: 40px;
       height: 60px;
       border-radius: 50px 50px 0 0;
@@ -60,6 +61,10 @@
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
+<div class="spinner-wrapper">
+      <img src="assets/img/lovableLoader.png" alt="loader" style="width:250px;">
+      <span class="loader p-0 mb-5 me-4 "></span>
+  </div>
   <?php
   date_default_timezone_set('America/Tegucigalpa');
   session_set_cookie_params(86400);

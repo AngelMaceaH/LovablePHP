@@ -62,7 +62,6 @@ $( document ).ready(function() {
     var marcaFiltro = '<?php echo $marcaFiltro; ?>';       
     var urlMarcas='http://172.16.15.20/API.LovablePHP/ZLO0003P/ListMarcas/?ano='+ano2+'&mes='+mesNum1+'&mes2='+mesNum2+'&marca='+marcaFiltro+'';
     var responseMarcas = ajaxRequest(urlMarcas);
-    //CONSTRUIR TIENDAS
     var paisesLabel=['Honduras','Guatemala','El Salvador','Nicaragua','Costa Rica','Rep. Dominicana'];
     var valorAno1=[];var valorAno2=[];
     var validator=true;
@@ -271,7 +270,7 @@ $( document ).ready(function() {
                     columns: [1,2,3,4,5,6,7]
                 },
                 title: 'ReporteMarcas',
-                messageTop:'MARCA: '+$('#cbbMarca option:selected').text()+'                                                                                                                                                                                                                   <?php echo $labelSelect; ?>',
+                messageTop:'MARCA: '+$('#cbbMarca option:selected').text()+'                                                                            <?php echo $labelSelect; ?>',
                 customize: function (xlsx) {
                     var sheet = xlsx.xl.worksheets['sheet1.xml'];
                     var sSh = xlsx.xl['styles.xml'];
@@ -358,7 +357,9 @@ $( document ).ready(function() {
     var tiendasValores=[]
     var tiendasLabel=[];
     var tiendasAno1=[];var tiendasAno2=[];
+    var validator2=true;
     if (responseTiendas.code==200) {
+      validator2=false;
       for (let i = 0; i < responseTiendas.data.length; i++) {
         ano1hon=(responseTiendas.data[i]['HONVALANO1']!=0)?(responseTiendas.data[i]['HONVALANO1']):0;ano2hon=(responseTiendas.data[i]['HONVALANO2']!=0)?(responseTiendas.data[i]['HONVALANO2']):0;
         can1hon=(responseTiendas.data[i]['HONCANANO1']!=0)?(responseTiendas.data[i]['HONCANANO1']):0;can2hon=(responseTiendas.data[i]['HONCANANO2']!=0)?(responseTiendas.data[i]['HONCANANO2']):0;
@@ -418,7 +419,7 @@ $( document ).ready(function() {
                     columns: [1,2,3,4,5,6,7]
                 },
                 title: 'ReporteMarcas',
-                messageTop:'MARCA: '+$('#cbbMarca option:selected').text()+'                                                                                                                                                                                                                   <?php echo $labelSelect; ?>',
+                messageTop:'MARCA: '+$('#cbbMarca option:selected').text()+'                                                                            <?php echo $labelSelect; ?>',
                 customize: function (xlsx) {
                     var sheet = xlsx.xl.worksheets['sheet1.xml'];
                     var sSh = xlsx.xl['styles.xml'];
@@ -465,10 +466,10 @@ $( document ).ready(function() {
                     var textred2 = lastXfIndex + 7;
                     var textgreen2 = lastXfIndex + 8;
                     
-                    $('c[r=A1] t', sheet).text( 'COMPARATIVO VENTAS DE MARCAS POR PAÍS' );
+                    $('c[r=A1] t', sheet).text( 'COMPARATIVO VENTAS DE MARCAS POR TIENDAS' );
                     $('row:eq(0) c', sheet).attr( 's', greyBoldCentered );
                     $('row:eq(1) c', sheet).attr( 's', 7 );
-                    for (let index = 3; index <= 9; index++) {
+                    for (let index = 3; index <= 40; index++) {
                       
                       if (($('row:eq('+index+') c[r^="G"]', sheet).text()*1<0)) {
                         $('row:eq('+index+') c[r^="G"]', sheet).attr( 's', textred2 );  //ROJO
@@ -476,7 +477,7 @@ $( document ).ready(function() {
                         $('row:eq('+index+') c[r^="G"]', sheet).attr( 's', textgreen2 );  //VERDE
                       }
                     }
-                    for (let index = 3; index <= 9; index++) {
+                    for (let index = 3; index <= 40; index++) {
                      
                       if (parseFloat(($('row:eq('+index+') c[r^="F"]', sheet).text()).slice(2))<0) {
                         $('row:eq('+index+') c[r^="F"]', sheet).attr( 's', textred1 );  //ROJO
@@ -662,8 +663,10 @@ responsive: {
 
         if (validator) {
            $("#grafica").addClass("d-none");
-           $("#grafica2").addClass("d-none");
         } 
+        if (validator2) {
+          $("#grafica2").addClass("d-none");
+        }
 
     });
    

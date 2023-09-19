@@ -25,13 +25,11 @@
 </head>
 
 <body>
-<div class="spinner-wrapper">
-<span class="loader"></span>
-</div>
   <?php
   include 'layout.php';
   include 'assets/php/index/phpindex.php';
   ?>
+  
   <div class="container-fluid">
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb my-0 ms-2">

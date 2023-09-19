@@ -30,9 +30,6 @@
 </head>
 
 <body>
-<div class="spinner-wrapper">
-<span class="loader"></span>
-</div>
   <?php
       include 'layout.php';
       include 'assets/php/index/phpindex2.php';
@@ -67,8 +64,7 @@
                       <img src="https://www.api.lovable.com.hn/uploads/banner/image/banner_principal_andros_04_t.png" class="d-block w-100 " alt="...">
                     </div>
                   </div>
-                </div>
-                
+                </div> 
           </div>
         </div>
 

@@ -9,9 +9,6 @@
 </head>
 
 <body>
-    <div class="spinner-wrapper">
-        <span class="loader"></span>
-    </div>
     <?php
       include '../layout-prg.php';
       include '../../assets/js/PRG/ZFA/ZLO0003P.php';

@@ -8,9 +8,6 @@
     <link rel="stylesheet" href="../../assets/css/flexselect.css">
 </head>
 <body>
-    <div class="spinner-wrapper">
-        <span class="loader"></span>
-    </div>
     <?php
       include '../layout-prg.php';
     ?>
@@ -18,7 +15,7 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb my-0 ms-2">
                 <li class="breadcrumb-item">
-                    <span>Digitalizacion de documentos / Subir</span>
+                    <span>Digitalización de documentos / Subir</span>
                 </li>
                 <li class="breadcrumb-item active"><span>ZLO0015P</span></li>
             </ol>
@@ -60,10 +57,19 @@
                                         <h6 class="mb-3 mt-4 text-start">Fecha de documento</h6>
                                         <input type="date" class="form-control" id="fechaDoc">
                                     </div>
+                                    <div class="col-6">
+                                        <h6 class="mb-1 mt-4 text-start">Fecha de digitalización</h6>
+                                        <label  class="form-control" id="fechaDigit"></label>
+                                    </div>
+                                    <div class="col-6">
+                                        <h6 class="mb-1 mt-4 text-start">Hora de digitalización</h6>
+                                        <label  class="form-control" id="horaDigit"></label>
+                                    </div>
                                     <div class="col-12">
                                         <h6 class="mb-3 mt-4 text-start">Descripcion</h6>
                                         <textarea id="descrpDoc" placeholder="Ingrese una descripcion del documento" class="form-control" rows="5" style="height:150px; resize: none;"></textarea>
                                     </div>
+                                    
                                 </div>
                             </div>
                            
@@ -113,6 +119,7 @@
             }
         }
         var currentDate = new Date().toISOString().split('T')[0];
+        $('#fechaDigit').text(currentDate);
         $('#fechaDoc').val(currentDate);
         var urlProveedores="http://172.16.15.20/API.LovablePHP/ZLO0015P/ListProveedores/";
         var responseProveedores = ajaxRequest(urlProveedores);
@@ -340,7 +347,16 @@ function currentDate() {
               return fechaActual;
             } 
             uppy.on('complete', handleComplete);
-           
+         function updateClock() {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            const timeString = `${hours}:${minutes}:${seconds}`;
+            
+            document.getElementById('horaDigit').innerText = timeString;
+        }
+        setInterval(updateClock, 1000);
        
     </script>
     <script src="../../assets/js/jquery.flexselect.js"></script>

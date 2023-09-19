@@ -9,9 +9,6 @@
   </style>
 </head>
 <body>
-<div class="spinner-wrapper">
-<span class="loader"></span>
-</div>
 <?php
       include '../layout-prg.php';
       $_SESSION['tab'] = isset($_COOKIE['tabselected']) ? $_COOKIE['tabselected'] : "1";

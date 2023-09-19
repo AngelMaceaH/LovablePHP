@@ -30,9 +30,6 @@
 </head>
 
 <body>
-<div class="spinner-wrapper">
-<span class="loader"></span>
-</div>
   <?php
       include 'layout.php';
       include 'assets/php/index/phpindex2.php';

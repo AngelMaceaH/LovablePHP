@@ -12,9 +12,6 @@
     </style>
 </head>
 <body>
-<div class="spinner-wrapper">
-<span class="loader"></span>
-</div>
 <?php include '../layout-prg.php';?>
  <div class="container-fluid">
           <nav aria-label="breadcrumb">

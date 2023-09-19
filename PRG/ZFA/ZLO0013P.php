@@ -4,14 +4,8 @@
 <head>
     <meta charset="utf-8">
     <link rel="icon" type="image/x-icon" href="../../assets/img/favicon.ico">
-   
-
 </head>
-
 <body>
-    <div class="spinner-wrapper">
-        <span class="loader"></span>
-    </div>
     <?php
     include '../layout-prg.php';
     include '../../assets/php/ZFA/ZLO0013P/header.php';

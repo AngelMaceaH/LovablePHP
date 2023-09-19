@@ -22,9 +22,6 @@
 </head>
 
 <body>
-    <div class="spinner-wrapper">
-        <span class="loader"></span>
-    </div>
     <?php
       include '../layout-prg.php';
       include '../../assets/php/ZDD/ZLO0016P/header.php';
@@ -33,7 +30,7 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb my-0 ms-2">
                 <li class="breadcrumb-item">
-                    <span>Digitalizacion de documentos / Consultar</span>
+                    <span>Digitalización de documentos / Consultar</span>
                 </li>
                 <li class="breadcrumb-item active"><span>ZLO0016P</span></li>
             </ol>
@@ -131,7 +128,7 @@
                                     <div class="col-12 col-lg-6"> 
                                         <h6 class="mb-3 text-start mt-2">Tipo de documento</h6>
                                         <select class="form-select" id="tiposDoc">
-                                           <option value="1" selected disabled>Selecciona un tipo</option>
+                                           <option value="A" >TODOS LOS DOCUMENTOS</option>
                                         </select>
                                     </div>`);
 
@@ -140,7 +137,7 @@
             if (responseDepas.code == 200) {
                 const departamentos = $("#cbbDepartamentos");
                 departamentos.empty();
-                departamentos.append(`<option value="0-0" selected>TODOS LOS DOCUMENTOS</option>`);
+                departamentos.append(`<option value="0-0">TODAS LAS SECCIONES</option>`);
                 for (let i = 0; i < responseDepas.data.length; i++) {
                     departamentos.append(`<option value="` + responseDepas.data[i].SECDEP + `-` + responseDepas
                         .data[i].SECCOD + `">` + responseDepas.data[i].SECDES + `</option>`);
@@ -152,7 +149,7 @@
            
             $("#isGerencia").append(`<div class="col-12"> <h6 class="mb-3 text-start">Tipo de documento</h6>
                                         <select class="form-select" id="tiposDoc">
-                                           <option value="1" selected disabled>Selecciona un tipo</option>
+                                           <option value="A">TODOS LOS DOCUMENTOS</option>
                                         </select>
                                     </div>`);
         }
@@ -203,8 +200,20 @@
                 tiposChange();
             }
         }
-       
+        $("#cbbDepartamentos").on('change', function() {
+            if($("#cbbDepartamentos").val()=='0-0' || $("#tiposDoc").val()=='A'){
+                $("#filtrosDoc").addClass('d-none');
+            }else{
+                $("#filtrosDoc").removeClass('d-none');
+            }
+            tiposChange();
+        });
         $("#tiposDoc").on('change', function() {
+            if($("#tiposDoc").val()=='A'){
+                $("#filtrosDoc").addClass('d-none');
+            }else{
+                $("#filtrosDoc").removeClass('d-none');
+            }
             tiposChange();
         });
     });
@@ -225,10 +234,11 @@
             var urlCampos = "http://172.16.15.20/API.LovablePHP/ZLO0015P/ListTiposFind/?tipo=" +selectedTipo;
             var responseCampos = ajaxRequest(urlCampos);
             if (responseCampos.code == 200) {
-                $("#tipDocs").val(responseCampos.data[0]['TIPDOC']);
+                $("#tipDocs").val($("#tiposDocs").val());
                 camposDes = responseCampos.data[0].CAMPOS.split("/");
                 var counter=camposDes.length;
-                camposDes[counter]='Rango de fechas';
+                camposDes[counter]='Fecha de documento';
+                camposDes[counter+1]='Fecha de digitalización';
                 var htmlAppend = "";
                 for (let i = 0; i < camposDes.length; i++) {
                     htmlAppend+='<div id="input-first-name">';
@@ -240,13 +250,16 @@
                        // htmlAppend+='<span onclick="showProveedores()"><input class="form-select inputsDoc fn" type="text" id="'+responseCampos.data[0]['TIPDOC']+i+'" required readonly /></span>';
                             htmlAppend+='<input class="inputsDoc fn" style="font-size:16px;"  type="text" autocomplete="off" data-placeholder-focus="false" required id="'+responseCampos.data[0]['TIPDOC']+i+'" onclick="showTiendas(`'+responseCampos.data[0]['TIPDOC']+i+'`)"  oninput="noTextInput3(this)"/><button type="button" class="btn p-0 m-0 fs-5" onclick="vaciarInput3()"><i class="fa-solid fa-xmark"></i></button>';
                             htmlAppend+='<input class="d-none" id="originalTienda" /> <input class="d-none" id="codigoTienda" />'
-                        }else if (camposDes[i]=="Rango de fechas") {
+                        }else if (camposDes[i]=="Fecha de documento") {
                             htmlAppend+='<input class="inputsDoc fn" style="font-size:14px;"  type="text" autocomplete="off" data-placeholder-focus="false" required id="FechasDocs" onclick="showRange()"  oninput="noTextInput2(this)"/><button type="button" class="btn p-0 m-0 fs-5" onclick="vaciarInput2()"><i class="fa-solid fa-xmark"></i></button>';
-                            htmlAppend+='<input class="d-none" id="originalRange" /> <input class="d-none" id="valueTipo" />'
+                            htmlAppend+='<input class="d-none" id="originalRangeDocumento" /> <input class="d-none" id="valueTipo" />'
+                        }else if (camposDes[i]=="Fecha de digitalización") {
+                            htmlAppend+='<input class="inputsDoc fn" style="font-size:14px;"  type="text" autocomplete="off" data-placeholder-focus="false" required id="FechasGrabs" onclick="showRange2()"  oninput="noTextInput4(this)"/><button type="button" class="btn p-0 m-0 fs-5" onclick="vaciarInput4()"><i class="fa-solid fa-xmark"></i></button>';
+                            htmlAppend+='<input class="d-none" id="originalRangeGrabado" /> <input class="d-none" />'
                         }else{
                         htmlAppend+='<input class="inputsDoc fn"  type="text" autocomplete="off" data-placeholder-focus="false" required id="'+responseCampos.data[0]['TIPDOC']+i+'"  />'}
                         
-                            if (camposDes[i]=="Rango de fechas") {
+                            if (camposDes[i]=="Fecha de documento") {
                                 htmlAppend+= `<label id="lblRange">` + camposDes[i] + `</label>`;
                             }else{
                                 htmlAppend+= `<label>` + camposDes[i] + `</label>`;
@@ -331,29 +344,58 @@
                         zIndex: 10,
                         plugins: ["RangePlugin"]});
 
-                $("#modalRange").modal('show');
+                $("#modalRangeDocumento").modal('show');
+    }
+    function showRange2() {
+        $("#dayRange2").empty();
+        var currentDate = new Date().toISOString().split('T')[0];
+        Date1=currentDate.substr(0,10); Date2=currentDate.substr(13,10);
+        var fechasActual=$("#FechasGrabs").val();
+        if(fechasActual!=""){
+            
+            Date1=fechasActual.substr(0,10);
+            Date2=fechasActual.substr(13,10);
+        }
+                $("#dayRange2").append(`<div class="input-group mt-1">
+                                        <input class="form-control" id="datepicker3" name="datepicker3"/>
+                                        <span class="input-group-text" id="basic-addon2"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar" viewBox="0 0 16 16">
+                                        <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
+                                        </svg></span>
+                                        </div>`);
+                    const picker2 = new easepick.create({
+                        element: "#datepicker3",
+                        css: ["../../assets/vendors/dayrangepicker/index.css"],
+                        zIndex: 10,
+                        plugins: ["RangePlugin"]});
+
+                $("#modalRangeGrabado").modal('show');
     }
     function saveFecha(){
-        $("#lblRange").text($("#isFecha option:selected").text());
-        $("#valueTipo").val($("#isFecha").val());
-        $("#modalRange").modal('hide');
+        $("#lblRange").text("Fecha de documento");
+        $("#valueTipo").val(1);
+        $("#modalRangeDocumento").modal('hide');
     }
     function sendForm(){
-            var rangeFechas=$('#datepicker2').val();
-            $("#originalRange").val(rangeFechas);
-            $("#FechasDocs").val(rangeFechas);
-            $("#lblRange").text($("#isFecha option:selected").text());
-            $("#valueTipo").val($("#isFecha").val());
-            $("#modalRange").modal('hide');
+            var rangeDocumento=$('#datepicker2').val();
+            $("#originalRangeDocumento").val(rangeDocumento);
+            var rangeGrabado=$('#datepicker3').val();
+            $("#originalRangeGrabado").val(rangeGrabado);
+            $("#FechasDocs").val(rangeDocumento);
+            $("#FechasGrabs").val(rangeGrabado);
+            $("#lblRange").text("Fecha de documento");
+            $("#valueTipo").val(1);
+            $("#modalRangeDocumento").modal('hide');
+            $("#modalRangeGrabado").modal('hide');
         }
         function vaciarInput() {
             $('#FAC0').val('');
             $('#codigo').val('');
         }
         function vaciarInput2() {
-            $('#originalRange').val('');
+            $('#originalRangeDocumento').val('');
             $('#valueTipo').val('');
             $('#FechasDocs').val('');
+            $('#datepicker2').val('');
         }
         function vaciarInput3() {
             var id=$("#inputIdTiendas").val();
@@ -361,6 +403,12 @@
             $('#codigoTienda').val('');
             $('#'+id).val('');
         }
+        function vaciarInput4() {
+            $('#originalRangeGrabado').val('');
+            $('#FechasGrabs').val('');
+            $('#datepicker3').val('');
+        }
+
         function showProveedores() {
             $("#modalProveedores").modal('show');
         }
@@ -381,11 +429,15 @@
             inputElement.value = originalData;
          }
          function noTextInput2(inputElement) {
-            var originalData2=$("#originalRange").val();
+            var originalData2=$("#originalRangeDocumento").val();
             inputElement.value = originalData2;
          }
          function noTextInput3(inputElement) {
             var originalData2=$("#originalTienda").val();
+            inputElement.value = originalData2;
+         }
+         function noTextInput2(inputElement) {
+            var originalData2=$("#originalRangeGrabado").val();
             inputElement.value = originalData2;
          }
     function searchF() {
@@ -393,20 +445,20 @@
         var campos = {"CAM0": "","CAM1": "", "CAM2": "","CAM3": "","CAM4": "","CAM5": "","CAM6": "","CAM7": "","CAM8": "","CAM9": ""};
         const inputs=$(".inputsDoc");
         var tipo=$("#tipDocs").val();
-        for (let i = 0; i < (inputs.length-1); i++) {
+        for (let i = 0; i < (inputs.length-2); i++) {
             if (camposDes[i].toLowerCase()=="tienda") {
                 campos["CAM"+i]=$("#codigoTienda").val();
             }else{
                 campos["CAM"+i]=$("#"+tipo+i+"").val();
             }
-            
         }
-        var tipProv=""; var idProv="";
-        if (tipo=='FAC') {
-            var proveedor=($("#codigo").val()).split('-');
-            tipProv=(proveedor[0]!=null)?proveedor[0]:"";
-            idProv=(proveedor[1]!=null)?proveedor[1]:"";
-        }
+        var tipProv=""; var idProv="";            
+            if (tipo=='FAC' && tipo!='A') {
+                var proveedor=($("#codigo").val()).split('-');
+                tipProv=(proveedor[0]!=null)?proveedor[0]:"";
+                idProv=(proveedor[1]!=null)?proveedor[1]:"";
+            }
+
         for (let i = 0; i < 10; i++) {
             if (tipo+'0'=='FAC0') {
                     setCookie("cam1",tipProv,1);
@@ -464,10 +516,14 @@
         var anoing = "<?php echo isset($_SESSION['ANOING'])? $_SESSION['ANOING']: ''; ?>";
         var numemp = "<?php echo isset($_SESSION['NUMEMP'])? $_SESSION['NUMEMP']: ''; ?>";
         var tipo = getCookie("tipdoc");
+        if (tipo==null) {
+            tipo='A';
+        }
         var coddep=getCookie("coddep");
         var secdep=getCookie("secdep");
         
         var fecha1='';var fecha2='';var tipoFecha='';
+        var fecha3='';var fecha4='';
         if (document.getElementById('FechasDocs')) {
             if ($("#FechasDocs").val()!='') {
             var fecha=$("#FechasDocs").val();
@@ -475,11 +531,17 @@
              fecha1=formatFechaInput(fechas[0]);
              fecha2=formatFechaInput(fechas[1]);
             }
+            if ($("#FechasGrabs").val()!='') {
+            var fecha=$("#FechasGrabs").val();
+            var fechas=fecha.split(' - ');
+                fecha3=formatFechaInput(fechas[0]);
+                fecha4=formatFechaInput(fechas[1]);
+            }
         }
-        if (document.getElementById('valueTipo')) {
-            if($("#valueTipo").val()!=''){
-            tipoFecha=$("#valueTipo").val();
-        }
+            if (document.getElementById('valueTipo')) {
+                if($("#valueTipo").val()!=''){
+                tipoFecha=$("#valueTipo").val();
+            }
         }
         
         
@@ -504,6 +566,8 @@
         if (secdep) queryParams.push("secdep=" + secdep);
         if (fecha1) queryParams.push("fecha1=" + fecha1);
         if (fecha2) queryParams.push("fecha2=" + fecha2);
+        if (fecha3) queryParams.push("fecha3=" + fecha3);
+        if (fecha4) queryParams.push("fecha4=" + fecha4);
         if (tipoFecha) queryParams.push("tipoFecha=" + tipoFecha);
 
 
@@ -514,7 +578,6 @@
         }
 
         var urlList = baseUrl + "?" + queryParams.join("&");
-        console.log(urlList);
         var response = ajaxRequest(urlList);
         const body = $("#myTableBody");
         if (response.code == 200) {
@@ -821,7 +884,7 @@
             var cont=0;
             var length=camposDes.length;
             for (let i = 0; i < length; i++) {
-                    if (tipdoc=="FAC") {
+                    if (tipdoc=="FAC" && tipdoc!='A') {
                                 if (cont==0) {
                                     cont=cont+1;
                                     var tipo=campos['cam0'];
@@ -834,7 +897,7 @@
                                     }
                                     inputs.append(`<div class="col-6 col-lg-2 d-flex">
                                             <h6 class="mt-1">Tipo: </h6><span>&nbsp;&nbsp;` + tipo + `</span>&nbsp;&nbsp;
-                                            <h6 class="mt-1">`+camposDes[i]+`: </h6><span>&nbsp;&nbsp;` + prov + `</span>
+                                            <h6 class="mt-1">`+camposDes[i]+`: </h6><h6  class="mt-1">&nbsp;&nbsp;` + prov + `</h6>
                                         </div>
                                         <div class="col-6 col-lg-4">
                                         &nbsp;&nbsp;<span class="text-start">`+descripcionProveedor+`</span>
@@ -842,14 +905,12 @@
                                         length=length+2;
                                         i=2;
                                 }else{
-                                    inputs.append(`<div class="col-6 col-lg-3">
+                                    inputs.append(`<div class="col-6 col-lg-2">
                                             <h6 class=" mt-1">` + camposDes[i-2] + `:</h6>
                                         </div>
-                                        <div class="col-6 col-lg-3">
-                                            <span class="text-start">` + campos['cam' + (i-1)] + `</span>
-                                        </div>`);
-                                }
-                                
+                                        <div class="col-6 col-lg-4">
+                                            <label class="text-start form-control">` + campos['cam' + (i-1)] + `</label>
+                                        </div>`);}
                             }else{
                                 var descripcion="";
                                 if (camposDes[i].toLowerCase()=="tienda") {
@@ -861,7 +922,7 @@
                                 <h6 class=" mt-1">` + camposDes[i] + `:</h6>
                                     </div>
                                     <div class="col-6 col-lg-4">
-                                        <span class="text-start">` + campos['cam' + i] + ` ` + descripcion.toUpperCase() + `</span>
+                                        <label class="text-start form-control">` + campos['cam' + i] + ` ` + descripcion.toUpperCase() + `</label>
                                     </div>`);
                             }   
                
@@ -966,23 +1027,23 @@
                                     <div class="">
                                         <div class="">
                                                  <div class="row mb-2">
-                                                    <div class="col-6 col-lg-3">
+                                                    <div class="col-6 col-lg-2">
                                                         <h6 class=" mt-1">Tipo:</h6>
                                                     </div>
-                                                    <div class="col-6 col-lg-3">
-                                                        <span class="text-start" id="tipDoc"></span>
+                                                    <div class="col-6 col-lg-4">
+                                                        <label class="text-start form-control" id="tipDoc"></label>
                                                     </div>
-                                                    <div class="col-6 col-lg-3">
+                                                    <div class="col-6 col-lg-2">
                                                         <h6 class=" mt-1">Fecha de documento:</h6>
                                                     </div>
-                                                    <div class="col-6 col-lg-3">
-                                                        <span class="text-start" id="fechaDoc"></span>
+                                                    <div class="col-6 col-lg-4">
+                                                        <label class="text-start form-control" id="fechaDoc"></label>
                                                     </div>
-                                                    <div class="col-12 col-lg-3">
+                                                    <div class="col-12 col-lg-2 mt-2">
                                                         <h6 class=" mt-1">Descripcion:</h6>
                                                     </div>
-                                                    <div class="col-12 col-lg-9">
-                                                        <span class="text-justify" id="descrpDoc"></span>
+                                                    <div class="col-12 col-lg-10 mt-2">
+                                                        <span class="text-justify " id="descrpDoc"></span>
                                                     </div>
                                                 </div>
                                             <!--<div>
@@ -1004,17 +1065,17 @@
                                                     </div>
                                     </div>
                                         <div class="row mt-2">
-                                                    <div class="col-6 col-lg-3">
-                                                        <h6 class=" mt-1">Usuario grabación:</h6>
+                                                    <div class="col-6 col-lg-2">
+                                                        <h6 class=" mt-1">Usuario digitalización:</h6>
                                                     </div>
-                                                    <div class="col-6 col-lg-3">
-                                                    <span class="text-start" id="usuaGra"></span>
+                                                    <div class="col-6 col-lg-4">
+                                                    <label class="text-start form-control" id="usuaGra"></label>
                                                     </div>
-                                                    <div class="col-6 col-lg-3">
-                                                        <h6 class=" mt-1">Fecha grabación:</h6>
+                                                    <div class="col-6 col-lg-2">
+                                                        <h6 class=" mt-1">Fecha digitalización:</h6>
                                                     </div>
-                                                    <div class="col-6 col-lg-3">
-                                                    <span class="text-start" id="horaGra"></span>
+                                                    <div class="col-6 col-lg-4">
+                                                    <label class="text-start form-control" id="horaGra"></label>
                                                     </div>
                                                 </div>
                                     </div>
@@ -1055,22 +1116,16 @@
         </div>
     </div>
     </div>
-    <div class="modal fade" id="modalRange" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="modalRangeDocumento" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
             <div class="modal-header">
                 <h1 class="modal-title fs-5" id="exampleModalLabel">Selecciona un rango de fechas</h1>
 
-                <button type="button" class="btn-close" onclick="$('#modalRange').modal('hide')"></button>
+                <button type="button" class="btn-close" onclick="$('#modalRangeDocumento').modal('hide')"></button>
             </div>
                 <div class="modal-body">
-                        <div class="d-flex">
-                        <label class="me-3">Tipo: </label>
-                            <select id="isFecha" class="form-select mb-3" style="width:250px; ">
-                                <option value="1">Fecha de documento</option>
-                                <option value="2">Fecha de grabado</option>
-                            </select>
-                        </div>
+                        <label class="me-3">Fecha de documento</label>
                             <div id="dayRange">
 
                             </div>
@@ -1081,6 +1136,28 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="modalRangeGrabado" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Selecciona un rango de fechas</h1>
+
+                <button type="button" class="btn-close" onclick="$('#modalRangeGrabado').modal('hide')"></button>
+            </div>
+                <div class="modal-body">
+                        <label class="me-3">Fecha de digitalización</label>
+                            <div id="dayRange2">
+
+                            </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="saveFecha()">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
     <div class="modal fade" id="modalTiendas" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">

@@ -35,9 +35,6 @@
   </style>
 </head>
 <body>
-<div class="spinner-wrapper">
-<span class="loader"></span>
-</div>
 <?php
       include '../layout-prg.php';
 ?>
