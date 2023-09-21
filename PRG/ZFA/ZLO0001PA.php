@@ -5,11 +5,6 @@
   <link rel="icon" type="image/x-icon" href="../../assets/img/favicon.ico">
 </head>
 <body>
-<div class="spinner-wrapper">
-<div class="spinner-border text-danger" role="status">
-    
-  </div>
-        </div> 
 <?php
 
       include '../layout-prg.php';
@@ -43,7 +38,7 @@
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb my-0 ms-2">
               <li class="breadcrumb-item">
-              <span>Modulo de facturación</span>
+              <span>Módulo de facturación / Consultas</span>
               </li>
               <li class="breadcrumb-item active"><span>ZLO0001PA</span></li>
             </ol>

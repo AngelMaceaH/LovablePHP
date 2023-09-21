@@ -9,10 +9,6 @@
   </style>
 </head>
 <body>
-<div class="spinner-wrapper">
-    <div class="spinner-border text-danger" role="status">
-    </div>
-  </div>
 <?php
       include '../layout-prg.php';
       $_SESSION['tab'] = isset($_COOKIE['tabselected']) ? $_COOKIE['tabselected'] : "1";
@@ -28,7 +24,7 @@
            $cia="";
            switch ($paisfiltro) {
             case 1:
-              $cia="CODCIA IN (35,47,50,52,56,57,59,63,64,65,68,70,72,73,74,75,76,78,82,85)";
+              $cia="CODCIA IN (35,47,50,52,56,57,59,63,64,65,68,70,72,73,74,75,76,78,82,85,88)";
               break;
               case 2:
                 $cia="CODCIA IN (20,22)";
@@ -76,30 +72,30 @@
       SELECT M1.CODCIA, M1.PRV12M,M1.PRV06M, M1.MIN12M,M1.MIN06M M1, M2.MIN06M M2, M3.MIN06M M3,M4.MIN06M M4,M5.MIN06M M5, M6.MIN06M M6 FROM (
       SELECT CODCIA,PRV12M,PRV06M,MIN12M,MIN06M FROM lbprddat/LO1960 WHERE
       ".$cia." and ANOPRO=".$anoConsulta[0]." AND MESPRO=".$mesConsulta[0].") AS M1
-      INNER JOIN (
+      LEFT JOIN (
       SELECT CODCIA,MIN06M FROM lbprddat/LO1960 WHERE
       ".$cia." and ANOPRO=".$anoConsulta[1]." AND MESPRO=".($mesConsulta[1]).") AS M2 ON M1.CODCIA=M2.CODCIA  
-      INNER JOIN (
+      LEFT JOIN (
       SELECT CODCIA,MIN06M FROM lbprddat/LO1960 WHERE
       ".$cia." and ANOPRO=".$anoConsulta[2]." AND MESPRO=".($mesConsulta[2]).") AS M3 ON M1.CODCIA=M3.CODCIA 
-      INNER JOIN (
+      LEFT JOIN (
         SELECT CODCIA,MIN06M FROM lbprddat/LO1960 WHERE
         ".$cia." and ANOPRO=".$anoConsulta[3]." AND MESPRO=".($mesConsulta[3]).") AS M4 ON M1.CODCIA=M4.CODCIA 
-        INNER JOIN (
+        LEFT JOIN (
           SELECT CODCIA,MIN06M FROM lbprddat/LO1960 WHERE
           ".$cia." and ANOPRO=".$anoConsulta[4]." AND MESPRO=".($mesConsulta[4]).") AS M5 ON M1.CODCIA=M5.CODCIA 
-          INNER JOIN (
+          LEFT JOIN (
             SELECT CODCIA,MIN06M FROM lbprddat/LO1960 WHERE
             ".$cia." and ANOPRO=".$anoConsulta[5]." AND MESPRO=".($mesConsulta[5]).") AS M6 ON M1.CODCIA=M6.CODCIA 
       )AS T1
-      INNER JOIN LBPRDDAT/LO0705 AS T2 ON T1.CODCIA = T2.CODCIA
-      INNER JOIN LBPRDDAT/LO0686 AS T4 ON T4.CODCIA = T1.CODCIA ".$sqlOrden."";
+      LEFT JOIN LBPRDDAT/LO0705 AS T2 ON T1.CODCIA = T2.CODCIA
+      LEFT JOIN LBPRDDAT/LO0686 AS T4 ON T4.CODCIA = T1.CODCIA ".$sqlOrden."";
       
       $resultMeses=odbc_exec($connIBM,$sqlmeses); 
 
       $sqlUnidades="SELECT T4.CODSEC,T1.CODCIA,T2.NOMCIA,UNICOM,UNIVEN, UNIEXI FROM LBPRDDAT/LO1960 AS T1
-      INNER JOIN LBPRDDAT/LO0705 AS T2 ON T1.CODCIA = T2.CODCIA
-      INNER JOIN LBPRDDAT/LO0686 AS T4 ON T4.CODCIA = T1.CODCIA
+      LEFT JOIN LBPRDDAT/LO0705 AS T2 ON T1.CODCIA = T2.CODCIA
+      LEFT JOIN LBPRDDAT/LO0686 AS T4 ON T4.CODCIA = T1.CODCIA
       WHERE T1.".$cia." AND ANOPRO=".$anofiltro." AND MESPRO=".$mesfiltro."
       ORDER BY T4.CODSEC";
       $resultUnidades=odbc_exec($connIBM,$sqlUnidades); 
@@ -108,7 +104,7 @@
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb my-0 ms-2">
               <li class="breadcrumb-item">
-                <!-- if breadcrumb is single--><span>Producto Terminado</span>
+              <span>Producto Terminado / Meses de inventarios</span>
               </li>
               <li class="breadcrumb-item active"><span>ZLO0004P</span></li>
             </ol>

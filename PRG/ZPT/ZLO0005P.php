@@ -4,15 +4,9 @@
   <meta charset="utf-8">
   <link rel="icon" type="image/x-icon" href="../../assets/img/favicon.ico">
   <style>
-
-
   </style>
 </head>
 <body>
-<div class="spinner-wrapper">
-    <div class="spinner-border text-danger" role="status">
-    </div>
-  </div>
 <?php
       include '../layout-prg.php';
       $_SESSION['tab'] = isset($_COOKIE['tabselected']) ? $_COOKIE['tabselected'] : "1";
@@ -75,7 +69,7 @@
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb my-0 ms-2">
               <li class="breadcrumb-item">
-                <!-- if breadcrumb is single--><span>Producto Terminado</span>
+              <span>Producto Terminado / Meses de inventarios</span>
               </li>
               <li class="breadcrumb-item active"><span>ZLO0005P</span></li>
             </ol>

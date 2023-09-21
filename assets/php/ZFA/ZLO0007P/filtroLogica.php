@@ -22,10 +22,10 @@
          $_SESSION['clickPais']=0;
         }
         if ($_POST['cbbClick']=="cbbPais") {
+            $_SESSION['ciaFiltro']=[900];
             $_SESSION['clickCia']=0;
             $_SESSION['clickPais']=1;
         }
     }
-    
     header("Location: /".$_SESSION['DEV']."LovablePHP/PRG/ZFA/ZLO0007P.php");
 ?>

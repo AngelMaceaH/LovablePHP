@@ -55,7 +55,6 @@
             var ordenFab = '<?php echo $ordenFiltro4; ?>';   
             var urlFab='http://172.16.15.20/API.LovablePHP/ZLO0002P/ListFabrica/?orden='+ordenFab+'&otros='+otrosProd+'';
             var responseFab= ajaxRequest(urlFab);
-            console.log(responseFab.data);
           if (responsePOV.code==200) {
             var cantidadInv=0; var docenas=0; var decimales=0;
             var ciaArray=[]; var invArray=[];

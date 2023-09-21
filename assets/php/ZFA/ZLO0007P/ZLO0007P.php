@@ -6,26 +6,40 @@
             zIndex: 10,
             plugins: ["RangePlugin"]});
             $( document ).ready(function() {
-            
-              var compfiltro = "<?php echo $ciaFiltro;?>";
+              $('#cbbCia').select2({closeOnSelect: false});
+              var compfiltro = ("<?php echo $arrayConversion;?>").split(",")
+                                                                  .filter(item => item) 
+                                                                  .map(item => Number(item));
+              if (compfiltro.length==0) {
+                compfiltro.push(999);
+              }
+              if (compfiltro.length > 1) {
+                  let index = compfiltro.indexOf(999);
+                  if (index !== -1) { 
+                    compfiltro.splice(index, 1); 
+                  }
+              }
               var paisfiltro = "<?php echo $paisFiltro; ?>";
-              $("#cbbCia").val(compfiltro);
+              $("#cbbCia").val(compfiltro).trigger('change');
               $("#cbbPais").val(paisfiltro);
             $("#cbbCia, #cbbPais").on( "change", function() {
+             
               var selectId = event.target.id;
-              if (selectId === "cbbCia") {
-               $("#cbbClick").val("cbbCia");
-              } else if (selectId === "cbbPais") {
-                $("#cbbClick").val("cbbPais");
+              if (selectId === "cbbPais") {
+               $("#cbbClick").val("cbbPais");
+              } else{
+                $("#cbbClick").val("cbbCia");
               }
-                $("#formFiltros").submit();
-            });
+                // $("#formFiltros").submit();
+              });
+            
+           
 
             if (<?php echo $validator1;?>) {
               $("#grafica1").addClass("d-none");
             }
             var labelActual="";
-        if (<?php echo isset($_SESSION['clickCia'])? $_SESSION['clickCia']:0;?>==1) {
+        /*if (<?php echo isset($_SESSION['clickCia'])? $_SESSION['clickCia']:0;?>==1) {
             if ($("#cbbCia").val()==999) {
                 labelActual=$('#cbbCia').find(":selected").text()+' '+$('#cbbPais').find(":selected").text()+'';
             }else{
@@ -34,9 +48,9 @@
           
         }
         if (<?php echo isset($_SESSION['clickPais'])? $_SESSION['clickPais']:0;?>==1) {
-            labelActual=$('#cbbCia').find(":selected").text()+' '+$('#cbbPais').find(":selected").text()+'';
+            labelActual=$('#cbbCia').find(":selected").text()+'     '+$('#cbbPais').find(":selected").text()+'';
         }
-        $("#lblRadial").text(labelActual);
+        $("#lblRadial").text(labelActual);*/
 
             $("#myTableVendedorVentas").DataTable( {
            
@@ -151,7 +165,7 @@
 
           //GRAFICA PIE
           
-          if (<?php echo $ciaFiltro; ?>==999 && <?php echo $paisFiltro; ?>==1) {
+          if (compfiltro[0]==999 && <?php echo $paisFiltro; ?>==1) {
             Highcharts.chart('container4', {
     lang: {      
           viewFullscreen:"Ver en pantalla completa",
@@ -160,7 +174,7 @@
           downloadPDF:"Descargar en PDF",
       },
       chart: {
-        height: (<?php echo $ciaFiltro;?>==999 && <?php echo $paisFiltro;?>==1)? 1000:600,
+        height: (compfiltro[0]==999 && <?php echo $paisFiltro;?>==1)? 1000:800,
           type: 'bar'
       },
       title: {
@@ -232,8 +246,8 @@
           },
            enabled: true,
             filename: 'Reporte de ventas - Vendedores',
-            sourceWidth: (<?php echo $ciaFiltro;?>==999 && <?php echo $paisFiltro;?>==1)? 800:1600,
-            sourceHeight:(<?php echo $ciaFiltro;?>==999 && <?php echo $paisFiltro;?>==1)? 2500:900,
+            sourceWidth: (compfiltro[0]==999 && <?php echo $paisFiltro;?>==1)? 800:1600,
+            sourceHeight:(compfiltro[0]==999 && <?php echo $paisFiltro;?>==1)? 2500:900,
             chartOptions: {
             
               title: {
@@ -298,7 +312,7 @@
                   downloadPDF:"Descargar en PDF",
               },
     chart: {
-      height: (<?php echo $ciaFiltro;?>==999 && <?php echo $paisFiltro;?>==1)? 1000:600,
+      height: (compfiltro[0]==999 && <?php echo $paisFiltro;?>==1)? 1000:600,
         type: 'pie',
        /* options3d: {
             enabled: true,
@@ -370,8 +384,8 @@
           },
            enabled: true,
             filename: 'Reporte de ventas - Vendedores',
-            sourceWidth: (<?php echo $ciaFiltro;?>==999 && <?php echo $paisFiltro;?>==1)? 3000:1600,
-            sourceHeight:(<?php echo $ciaFiltro;?>==999 && <?php echo $paisFiltro;?>==1)? 3000:900,
+            sourceWidth: (compfiltro[0]==999 && <?php echo $paisFiltro;?>==1)? 3000:1600,
+            sourceHeight:(compfiltro[0]==999 && <?php echo $paisFiltro;?>==1)? 3000:900,
             chartOptions: {
             
               title: {
@@ -426,7 +440,7 @@
           }
           
      //GRAFICA DE DONA
-    if (<?php echo $ciaFiltro; ?>==999 && <?php echo $paisFiltro; ?>==1) {
+    if (compfiltro[0]==999 && <?php echo $paisFiltro; ?>==1) {
       
         Highcharts.chart('container3', {
     lang: {      
@@ -436,7 +450,7 @@
           downloadPDF:"Descargar en PDF",
       },
       chart: {
-        height: (<?php echo $ciaFiltro;?>==999 && <?php echo $paisFiltro;?>==1)? 1000:600,
+        height: (compfiltro[0]==999 && <?php echo $paisFiltro;?>==1)? 1000:800,
           type: 'bar'
       },
       title: {
@@ -508,8 +522,8 @@
           },
            enabled: true,
             filename: 'Reporte de unidades - Vendedores',
-            sourceWidth: (<?php echo $ciaFiltro;?>==999 && <?php echo $paisFiltro;?>==1)? 800:1600,
-            sourceHeight:(<?php echo $ciaFiltro;?>==999 && <?php echo $paisFiltro;?>==1)? 2500:900,
+            sourceWidth: (compfiltro[0]==999 && <?php echo $paisFiltro;?>==1)? 800:1600,
+            sourceHeight:(compfiltro[0]==999 && <?php echo $paisFiltro;?>==1)? 2500:900,
             chartOptions: {
             
               title: {
@@ -574,7 +588,7 @@
                   downloadPDF:"Descargar en PDF",
               },
               chart: {
-                height: (<?php echo $ciaFiltro;?>==999 && <?php echo $paisFiltro;?>==1)? 1000:600,
+                height: (compfiltro[0]==999 && <?php echo $paisFiltro;?>==1)? 1000:600,
                   type: 'pie',
                  /* options3d: {
                       enabled: true,
@@ -638,8 +652,8 @@
           },
            enabled: true,
             filename: 'Reporte de transacciones - Vendedores',
-            sourceWidth: (<?php echo $ciaFiltro;?>==999 && <?php echo $paisFiltro;?>==1)? 800:1600,
-            sourceHeight:(<?php echo $ciaFiltro;?>==999 && <?php echo $paisFiltro;?>==1)? 2500:900,
+            sourceWidth: (compfiltro[0]==999 && <?php echo $paisFiltro;?>==1)? 800:1600,
+            sourceHeight:(compfiltro[0]==999 && <?php echo $paisFiltro;?>==1)? 2500:900,
             chartOptions: {
             
               title: {
@@ -707,7 +721,7 @@
           downloadPDF:"Descargar en PDF",
       },
       chart: {
-        height: (<?php echo $ciaFiltro;?>==999 && <?php echo $paisFiltro;?>==1)? 1000:600,
+        height: (compfiltro[0]==999 && <?php echo $paisFiltro;?>==1)? 1000:800,
           type: 'bar'
       },
       title: {
@@ -779,8 +793,8 @@
           },
            enabled: true,
             filename: 'Reporte de transacciones - Vendedores',
-            sourceWidth: (<?php echo $ciaFiltro;?>==999 && <?php echo $paisFiltro;?>==1)? 800:1600,
-            sourceHeight:(<?php echo $ciaFiltro;?>==999 && <?php echo $paisFiltro;?>==1)? 2500:900,
+            sourceWidth: (compfiltro[0]==999 && <?php echo $paisFiltro;?>==1)? 800:1600,
+            sourceHeight:(compfiltro[0]==999 && <?php echo $paisFiltro;?>==1)? 2500:900,
             chartOptions: {
             
               title: {
@@ -850,7 +864,7 @@
           downloadPDF:"Descargar en PDF",
       },
       chart: {
-        height: (<?php echo $ciaFiltro;?>==999 && <?php echo $paisFiltro;?>==1)? 1000:600,
+        height: (compfiltro[0]==999 && <?php echo $paisFiltro;?>==1)? 1000:800,
           type: 'bar'
       },
       title: {
@@ -956,8 +970,8 @@
           },
            enabled: true,
             filename: 'Reporte de ventas - Vendedores',
-            sourceWidth: (<?php echo $ciaFiltro;?>==999 && <?php echo $paisFiltro;?>==1)? 800:1600,
-            sourceHeight:(<?php echo $ciaFiltro;?>==999 && <?php echo $paisFiltro;?>==1)? 2500:900,
+            sourceWidth: (compfiltro[0]==999 && <?php echo $paisFiltro;?>==1)? 800:1600,
+            sourceHeight:(compfiltro[0]==999 && <?php echo $paisFiltro;?>==1)? 2500:900,
             chartOptions: {
             
               title: {
@@ -1140,6 +1154,8 @@
     }
     ?>
 
-
+function searchF() {
+               $("#formFiltros").submit();
+            }
 
       </script>

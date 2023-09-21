@@ -9,10 +9,6 @@
   </style>
 </head>
 <body>
-<div class="spinner-wrapper">
-    <div class="spinner-border text-danger" role="status">
-    </div>
-  </div>
 <?php
       include '../layout-prg.php';
       $_SESSION['tab'] = isset($_COOKIE['tabselected']) ? $_COOKIE['tabselected'] : "1";
@@ -27,7 +23,7 @@
            $cia="";
            switch ($paisfiltro) {
             case 1:
-              $cia="CODCIA IN (35,47,50,52,56,57,59,63,64,65,68,70,72,73,74,75,76,78,82,85)";
+              $cia="CODCIA IN (35,47,50,52,56,57,59,63,64,65,68,70,72,73,74,75,76,78,82,85,88)";
               break;
               case 2:
                 $cia="CODCIA IN (20,22)";
@@ -117,7 +113,7 @@
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb my-0 ms-2">
               <li class="breadcrumb-item">
-                <!-- if breadcrumb is single--><span>Producto Terminado</span>
+              <span>Producto Terminado / Meses de inventarios</span>
               </li>
               <li class="breadcrumb-item active"><span>ZLO0008P</span></li>
             </ol>

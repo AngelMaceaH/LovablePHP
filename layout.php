@@ -19,30 +19,52 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@500&display=swap" rel="stylesheet">
-  <style>
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6,
-    p,
-    span,
-    td,
-    th,
-    a,
-    button,
-    label,
-    b,
-    li,
-    ul {
+  <style> 
+  
+    h1,h2,h3,h4,h5,h6,p,span,td,th,a,button,label,b,li,ul {
       font-family: 'Rubik', sans-serif;
+    }
+    .loader {
+      position: relative;
+      background: #0000;
+      width: 40px;
+      height: 60px;
+      animation: heartBeat 1.2s infinite cubic-bezier(0.215, 0.61, 0.355, 1);
+    }
+
+    .loader:before,
+    .loader:after {
+      content: "";
+      background: #FF0000 ;
+      width: 40px;
+      height: 60px;
+      border-radius: 50px 50px 0 0;
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      transform: rotate(45deg);
+      transform-origin: 50% 68%;
+      box-shadow: 5px 4px 5px #0004 inset;
+    }
+    .loader:after {
+      transform: rotate(-45deg);
+    }
+    @keyframes heartBeat {
+      0% { transform: scale(0.95) }
+      5% { transform: scale(1.1) }
+      39% { transform: scale(0.85) }
+      45% { transform: scale(1) }
+      60% { transform: scale(0.95) }
+      100% { transform: scale(0.9) }
     }
   </style>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
-
 <body>
+<div class="spinner-wrapper">
+      <img src="assets/img/lovableLoader.png" alt="loader" style="width:250px;">
+      <span class="loader p-0 mb-5 me-4 "></span>
+  </div>
   <?php
   date_default_timezone_set('America/Tegucigalpa');
   session_set_cookie_params(86400);
@@ -66,13 +88,13 @@
       const spinnerWrapperEl = document.querySelector('.spinner-wrapper');
       setTimeout(() => {
         spinnerWrapperEl.style.display = 'none';
-      }, 500);
+      }, 1000);
       //MODULOS
       var urlModulos = 'http://172.16.15.20/API.LovablePHP/Access/LayoutM/?user=' + usuario + '';
       var responseModulos = ajaxRequest(urlModulos);
       if (responseModulos.code == 200) {
         for (let i = 0; i < responseModulos.data.length; i++) {
-          $("#menu-display").append(`<li class="nav-group mt-2"><a class="nav-link nav-group-toggle" href="#">` + responseModulos.data[i]['APLDES'] + `</a>
+          $("#menu-display").append(`<li class="nav-group  me-2 ms-2 mt-1"><a class="nav-link nav-group-toggle" style="word-wrap: break-word; white-space: normal;" href="#">` + responseModulos.data[i]['APLDES'] + `</a>
                                           <ul class="nav-group-items">
                                             <div id="` + responseModulos.data[i]['DETC91'] + `">
                                           </div>
@@ -89,9 +111,9 @@
           for (let i = 0; i < responseSM.data.length; i++) {
            for (let j = 0; j < responseSMCount.data.length; j++) {
               if (responseSM.data[i]['CATSE1']==responseSMCount.data[j]['CATSEC']) {
-                  $("#"+responseSMCount.data[j]['DETC91']+"").append(`<li class="nav-group mt-2" aria-expanded="false">
-                                      <a class="nav-link nav-group-toggle" href="#">` + responseSM.data[i]['CATDES'] + `</a>
-                                          <ul class="nav-group-items">
+                  $("#"+responseSMCount.data[j]['DETC91']+"").append(`<li class="nav-group" aria-expanded="false">
+                                      <a class="nav-link nav-group-toggle" style="word-wrap: break-word; white-space: normal;" href="#">` + responseSM.data[i]['CATDES'] + `</a>
+                                          <ul class="nav-group-items ">
                                             <div id="`+responseSMCount.data[j]['DETC91']+"-"+responseSM.data[i]['CATSE1'] + `">
                                               <li class="nav-item" id="hiddenli"><a class="nav-link" href="#"><span class="nav-icon"></span></a></li>
                                           </div>
@@ -120,7 +142,7 @@
           }
         for (let i = 0; i < responsePRG.data.length; i++) {
           $("#"+responsePRG.data[i]['DETC91']+"-"+responsePRG.data[i]['CATSEC']+"").append(`<li class="nav-item">
-                                                                    <a class="nav-link" href="/`+isDev+`LovablePHP/PRG/`+responsePRG.data[i]['DETC91']+`/`+responsePRG.data[i]['CATNOM']+`.php">
+                                                                    <a class="nav-link" style="word-wrap: break-word; white-space: normal;" href="/`+isDev+`LovablePHP/PRG/`+responsePRG.data[i]['DETC91']+`/`+responsePRG.data[i]['CATNOM']+`.php">
                                                                     <span class="nav-icon"></span>`+descripcionPrograma(responsePRG.data[i]['CATDE1'])+`
                                                                     </a>
                                                                 </li>`);
@@ -153,6 +175,44 @@
           $("#"+responseProgramas.data[i]['DETC91']+" #hiddenli").remove();
           }
         }*/
+
+        var anoing = "<?php echo isset($_SESSION['ANOING'])? $_SESSION['ANOING']: ''; ?>";
+        var numemp = "<?php echo isset($_SESSION['NUMEMP'])? $_SESSION['NUMEMP']: ''; ?>";
+        var getArea="http://172.16.15.20/API.LovablePHP/ZLO0016P/FindArea/?anoing="+anoing+"&numemp="+numemp+"";
+            var responseArea = ajaxRequest(getArea);
+            if (responseArea.code==200){
+                $("#descripArea").text(responseArea.data['SECDES']);
+            }
+        if (anoing == 0 && numemp == 0) {
+          anoing=1;
+          numemp=1;
+        }else{
+          var getArea="http://172.16.15.20/API.LovablePHP/ZLO0016P/FindArea/?anoing="+anoing+"&numemp="+numemp+"";
+            var responseArea = ajaxRequest(getArea);
+            console.log(responseArea);
+            var areaDesc='';
+            var areaId='';
+            var seccionId='';
+            if (responseArea.code==200){
+              areaDesc=responseArea.data['SECDES'];
+              areaId=responseArea.data['SECDEP'];
+              seccionId=responseArea.data['SECCOD'];
+            }
+          $("#hasNumber").append(`<div class="col-12">
+                                        <span class="text-end" style="font-size: 14px;">ID: `+combineNumbers(anoing, numemp)+`</span>
+                                    </div>`);
+          $("#isEmpleado").append(`<div class="col-12">
+                                        <span class="text-end" style="font-size: 14px;">Depto: (`+areaId+`) `+areaDesc+`</span>&nbsp;&nbsp;
+                                    </div>
+                                    <div class="col-12">
+                                        <span class="text-end" style="font-size: 14px;">Sección: `+seccionId+`</span>
+                                    </div>`);
+        }
+        var urlCia="http://172.16.15.20/API.LovablePHP/Access/GetCia/?anoing="+anoing+"&numemp="+numemp+"";
+        var responseCia=ajaxRequest(urlCia);
+        if(responseCia.code==200){
+          $("#userCia").text(responseCia.data[0]['COMDES']);
+        }
     });
   </script>
 
@@ -162,7 +222,7 @@
         <img src="assets/img/lovableLogoDark.jpg" class="img-fluid" alt="Lovable Logo"></a>
     </div>
     <ul class="sidebar-nav bg-blck2 mt-3" data-coreui="navigation" data-simplebar="">
-      <li class="nav-item mt-3"><a class="nav-link" href="<?php echo $_SESSION['INDEX']; ?>">
+      <li class="nav-item mt-3"><a class="nav-link active" href="<?php echo $_SESSION['INDEX']; ?>">
           <svg class="nav-icon">
             <use xlink:href="assets/vendors/@coreui/icons/svg/free.svg#cil-home"></use>
           </svg>
@@ -187,16 +247,33 @@
         </a>
         <ul class="header-nav d-none d-md-flex">
         </ul>
-        <ul class="header-nav ms-auto mt-2">
-          <div class="mt-2 me-4">
-            <h6><?php echo isset($_SESSION["NOMUSU"]) ? $_SESSION["NOMUSU"] : ""; ?></h6>
-          </div>
-          <button type="button" class="btn btn-light" onclick="logOut()">
-            <svg class="icon me-2">
-              <use xlink:href="assets/vendors/@coreui/icons/svg/free.svg#cil-account-logout"></use>
-            </svg>
-          </button>
-        </ul>
+        <ul class="header-nav ms-auto mt-3">
+                    <div class="row">
+                        <div class="col-12 text-end">
+                          <span id="userCia" class=" me-lg-5 pe-lg-4"></span>
+                        </div>
+                        <div class="col-12">
+                            <div class="mt-2 me-4 d-flex justify-content-end" style="width: 100%;">
+                                <div class="row me-3">
+                                    <div class="col-12">
+                                        <span class="text-end"
+                                            style="font-size: 15px;">Usuario: <?php echo isset($_SESSION["NOMUSU"]) ? $_SESSION["NOMUSU"] : ""; ?></span>&nbsp;&nbsp;
+                                    </div>
+                                    <div id="hasNumber">
+                                    </div>
+                                </div>
+                                <div class="row" id="isEmpleado">     
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="button" class="btn btn-light" onclick="logOut()">
+                        <svg class="icon me-2">
+                            <use xlink:href="assets/vendors/@coreui/icons/svg/free.svg#cil-account-logout"></use>
+                        </svg>
+                    </button>
+                </ul>
 
       </div>
       <div class="header-divider"></div>
@@ -258,6 +335,15 @@
         function logOut() {
           window.location.assign('/<?php echo $_SESSION['DEV'] ?>LovablePHP/index.php?logout=1');
         }
+
+        function combineNumbers(num1, num2) {
+          let combined = num1 + num2;
+          while (combined.length < 6) {
+              num1 += "0";
+              combined = num1 + num2;
+          }
+          return parseInt(combined);
+      }
       </script>
 
 </body>

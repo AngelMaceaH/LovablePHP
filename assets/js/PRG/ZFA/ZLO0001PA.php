@@ -18,8 +18,6 @@
         var usuario='<?php echo $_SESSION["CODUSU"];?>';
         var urlComarc='http://172.16.15.20/API.LovablePHP/ZLO0001P/ListComarc/?usuario='+usuario+'';
         var responseComarc = ajaxRequest(urlComarc);
-
-
             //LLENADO DE COMARC
             if (responseComarc.code==200) { 
               for (let i = 0; i < responseComarc.data.length; i++) {
@@ -27,7 +25,6 @@
                $("#comppro2").append(' <option value='+responseComarc.data[i]['COMCOD']+' selected>'+responseComarc.data[i]['COMDES']+'</option>');
               }
             }
-
             var productosCk1=<?php echo $ckProductos1;  ?>;
             var productosCk2=<?php echo $ckProductos2;  ?>;
         $('#productosCk1').prop('checked', <?php echo  $ckProductos1 ?>);
@@ -66,11 +63,9 @@
                         let day = fecha.substring(6, 8);
                         return year + "-" + month + "-" + day;
                         }
-           
                         $(function() {
                             var tabs = $('.tablist__tab'),
                                 tabPanels = $('.tablist__panel');
-                    
                             tabs.on('click', function() {
                                 var thisTab = $(this),
                                     thisTabPanelId = thisTab.attr('aria-controls'),
@@ -105,12 +100,13 @@
             }
 
             var urlFactura='http://172.16.15.20/API.LovablePHP/ZLO0001P/ListFacturas/?fechaFiltro='+fechafiltro+'&compFiltro='+compfiltro+'&ck1='+ck1+'&noFiltro='+nofiltro+'';
+           console.log(urlFactura);
             var responseFactura = ajaxRequest(urlFactura);
             var Facto2Tot=0; var Facsu3Tot=0; var Facim1Tot=0; var Facto3Tot=0;
             if (responseFactura.code==200) { 
                 let mon='';
               for (let i = 0; i < responseFactura.data.length; i++) {
-                mon=responseFactura.data[i]['FACTI3'];
+                mon=responseFactura.data[0]['FACTI3'];
                 mon=mon.substr(0,1)+'.';
                 if (mon=="U" && responseFactura.data[i]['FACCO4']==1) {
                                 mon="L.";

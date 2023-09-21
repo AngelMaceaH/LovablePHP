@@ -5,11 +5,6 @@
   <link rel="icon" type="image/x-icon" href="../../assets/img/favicon.ico">
 </head>
 <body>
-<div class="spinner-wrapper">
-<div class="spinner-border text-danger" role="status">
-    
-</div>
-</div> 
   <?php
       include '../layout-prg.php';
       $fecha_actual = date("Ymd");
@@ -32,7 +27,7 @@
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb my-0 ms-2">
               <li class="breadcrumb-item">
-              <span>Modulo de facturación</span>
+              <span>Módulo de facturación / Consultas</span>
               </li>
               <li class="breadcrumb-item active"><span>ZLO0001P</span></li>
             </ol>
@@ -89,7 +84,7 @@
                    
                     <?php
                    
-                    $label1="";$label2="";$label3="";$label4="";
+                    $label1="";$label2="";$label3="";$label4=""; $label5="";$label6="";
                           switch ($_SESSION['filtro']) {
                             case 1:
                               $label1="Unidades día"; $label2="Unidades mes";
@@ -102,6 +97,7 @@
                             default:
                                  $label1="Ventas día"; $label2="Ventas mes";
                                  $label3="Venta Anual"; $label4="Venta Año Comparación";
+                                 $label5="Comparativo mes anterior";$label6="Comparativo mes actual ".($_SESSION['AnoFiltro']-1);
                               break;
                           }                    
                        print ' <thead>';
@@ -111,6 +107,10 @@
                        print '             <th class="text-start responsive-font-example" width="20%">Punto de venta</th>';
                        print '             <th id="thdia1" class="text-end responsive-font-example">'. $label1.'</th>';
                        print '             <th id="thdia2" class="text-end responsive-font-example">'. $label2.'</th>';
+                       if ($_SESSION['filtro']!=1 && $_SESSION['filtro']!=2) {
+                        print '             <th id="thdia3" class="text-end responsive-font-example">'. $label5.'</th>';
+                        print '             <th id="thdia4" class="text-end responsive-font-example">'. $label6.'</th>';
+                       }
                        print '             <th id="thanual1" class="text-end responsive-font-example d-none">'.$label3.'</th>';
                        print '             <th id="thanual2" class="text-end responsive-font-example d-none">'.$label4.'</th>';
                        print '             <th id="thanual3" class="text-end responsive-font-example d-none">Variación</th>';

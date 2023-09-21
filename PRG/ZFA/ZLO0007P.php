@@ -4,15 +4,9 @@
   <meta charset="utf-8">
   <link rel="icon" type="image/x-icon" href="../../assets/img/favicon.ico">
   <link rel="stylesheet" href="../../assets/vendors/dayrangepicker/index.css">
-  <style>
-    
-  </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" integrity="sha512-nMNlpuaDPrqlEls3IX/Q56H36qvBASwb3ipuo3MxeWbsQB1881ox0cRv7UPTgBlriqoynt35KjEwgGUeUXIPnw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
-<div class="spinner-wrapper">
-    <div class="spinner-border text-danger" role="status">
-    </div>
-  </div>
 <?php
       include '../layout-prg.php';
       $_SESSION['tab'] = isset($_COOKIE['tabselected']) ? $_COOKIE['tabselected'] : "1";
@@ -28,40 +22,55 @@
 
 
       $ciaFiltro=isset($_SESSION['ciaFiltro'])? $_SESSION['ciaFiltro']:999;
+      
+      $arrayConversion="";
+      if ($ciaFiltro!=1 && $ciaFiltro!=999) {
+        $counter=count($ciaFiltro);
+        for ($i = 0; $i < $counter; $i++) { 
+          $arrayConversion .= $ciaFiltro[$i];
+          if ($i < $counter - 1) {  
+              $arrayConversion .= ',';
+          }
+      }
+      }
       $paisFiltro=isset($_SESSION['paisFiltro'])? $_SESSION['paisFiltro']:1;
-      $cia=" AND CODCIA IN(35,47,50,52,56,57,59,63,64,65,68,70,72,73,74,75,76,78,82,85)";
+      $cia=" AND CODCIA IN(35,47,50,52,56,57,59,63,64,65,68,70,72,73,74,75,76,78,82,85,88)";
 
       if (isset($_SESSION['clickPais']) && isset($_SESSION['clickCia'])) {
         if ($_SESSION['clickCia']==1) {
-          if ($ciaFiltro==1 ||$ciaFiltro==35 || $ciaFiltro==47 || $ciaFiltro==50 || $ciaFiltro==52 || $ciaFiltro==56 || $ciaFiltro==57 || $ciaFiltro==59
-          || $ciaFiltro==63 || $ciaFiltro==64 || $ciaFiltro==65 || $ciaFiltro==68 || $ciaFiltro==70 || $ciaFiltro==72 || $ciaFiltro==73
-          || $ciaFiltro==74 || $ciaFiltro==75 || $ciaFiltro==76 || $ciaFiltro==78 || $ciaFiltro==82 || $ciaFiltro==85) {
-            $paisFiltro=1;
-          }elseif ($ciaFiltro==20 || $ciaFiltro==21|| $ciaFiltro==22|| $ciaFiltro==23|| $ciaFiltro==24) {
-            $paisFiltro=2;
-          }elseif ($ciaFiltro==49 || $ciaFiltro==66 || $ciaFiltro==69 || $ciaFiltro==71 || $ciaFiltro==86) {
-            $paisFiltro=3;
-          }elseif ($ciaFiltro==48 || $ciaFiltro==53 || $ciaFiltro==61 || $ciaFiltro==62|| $ciaFiltro==77) {
-            $paisFiltro=4;
-          }elseif ($ciaFiltro==60 || $ciaFiltro==80 || $ciaFiltro==54) {
-            $paisFiltro=5;
-          }elseif ($ciaFiltro==83 || $ciaFiltro==87) {
-            $paisFiltro=6;
-          }elseif ($ciaFiltro==81) {
-            $paisFiltro=7;
-          }
-          
-          if ($ciaFiltro==999) {
-            $cia= " AND CODCIA IN(35,47,50,52,56,57,59,63,64,65,68,70,72,73,74,75,76,78,82,85)";
-            $paisFiltro=1;
-          }else{
-            $cia=" AND CODCIA IN(".$ciaFiltro.")";
-          }
+              if ($ciaFiltro!=1 && $ciaFiltro!=999) {
+                for ($i=0; $i <count($ciaFiltro) ; $i++) { 
+                if ($ciaFiltro[$i]==1 ||$ciaFiltro[$i]==35 || $ciaFiltro[$i]==47 || $ciaFiltro[$i]==50 || $ciaFiltro[$i]==52 || $ciaFiltro[$i]==56 || $ciaFiltro[$i]==57 || $ciaFiltro[$i]==59
+              || $ciaFiltro[$i]==63 || $ciaFiltro[$i]==64 || $ciaFiltro[$i]==65 || $ciaFiltro[$i]==68 || $ciaFiltro[$i]==70 || $ciaFiltro[$i]==72 || $ciaFiltro[$i]==73
+              || $ciaFiltro[$i]==74 || $ciaFiltro[$i]==75 || $ciaFiltro[$i]==76 || $ciaFiltro[$i]==78 || $ciaFiltro[$i]==82 || $ciaFiltro[$i]==85) {
+                $paisFiltro=1;
+              }elseif ($ciaFiltro[$i]==20 || $ciaFiltro[$i]==21|| $ciaFiltro[$i]==22|| $ciaFiltro[$i]==23|| $ciaFiltro[$i]==24) {
+                $paisFiltro=2;
+              }elseif ($ciaFiltro[$i]==49 || $ciaFiltro[$i]==66 || $ciaFiltro[$i]==69 || $ciaFiltro[$i]==71 || $ciaFiltro[$i]==86) {
+                $paisFiltro=3;
+              }elseif ($ciaFiltro[$i]==48 || $ciaFiltro[$i]==53 || $ciaFiltro[$i]==61 || $ciaFiltro[$i]==62|| $ciaFiltro[$i]==77) {
+                $paisFiltro=4;
+              }elseif ($ciaFiltro[$i]==60 || $ciaFiltro[$i]==80 || $ciaFiltro[$i]==54) {
+                $paisFiltro=5;
+              }elseif ($ciaFiltro[$i]==83 || $ciaFiltro[$i]==87) {
+                $paisFiltro=6;
+              }elseif ($ciaFiltro[$i]==81) {
+                $paisFiltro=7;
+              }
+              
+                $cia=" AND CODCIA IN($arrayConversion)";
+              }
+           }else{
+                $cia= " AND CODCIA IN(35,47,50,52,56,57,59,63,64,65,68,70,72,73,74,75,76,78,82,85,88)";
+                $paisFiltro=1;
+           }
+         
         }
         if ($_SESSION['clickPais']==1) {
-          $ciaFiltro=999;
+          $ciaFiltro=[999];
+          $_SESSION['ciaFiltro']=[999];
           if ($paisFiltro==1) {
-            $cia=" AND CODCIA IN(35,47,50,52,56,57,59,63,64,65,68,70,72,73,74,75,76,78,82,85)";
+            $cia=" AND CODCIA IN(35,47,50,52,56,57,59,63,64,65,68,70,72,73,74,75,76,78,82,85,88)";
           }elseif ($paisFiltro==2) {
             $cia=" AND CODCIA IN(20,22,21,23,24)";
           }elseif ($paisFiltro==3) {
@@ -77,7 +86,6 @@
           }
          
         }
-        
       }
      
       
@@ -112,7 +120,7 @@
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb my-0 ms-2">
               <li class="breadcrumb-item">
-                <span>Modulo de facturación</span>
+              <span>Módulo de facturación / Consultas</span>
               </li>
               <li class="breadcrumb-item active"><span>ZLO0007P</span></li>
             </ol>
@@ -130,17 +138,25 @@
                 <input class="d-none" id="cbbClick" name="cbbClick"/>
                 <div class="row mb-2">
                 <div class="col-sm-12 col-lg-4 mt-2">
-                        <label>Punto de Venta:</label>
-                        <select class="form-select  mt-1" id="cbbCia" name="cbbCia">
+                        <label class="mb-1">Punto de Venta:</label>
+                       <!-- <select class="form-select  mt-1" id="cbbCia" name="cbbCia">
                         <option value="999">Todos los puntos de ventas</option>
                           <?php
-                          while ($rowCOMARC = odbc_fetch_array($resultCOMARC)) {
+                         /* while ($rowCOMARC = odbc_fetch_array($resultCOMARC)) {
                             echo "<option value='" . $rowCOMARC['COMCOD'] . "'>" . rtrim(utf8_encode($rowCOMARC['COMDES'])) . "</option>";
-                          }
+                          }*/
+                          ?>
+                        </select>-->
+                        <select class="form-select  mt-1" id="cbbCia" name="cbbCia[]" name="states[]" multiple="multiple" style="width: 100%;">
+                          <option value="999">Todos los puntos de ventas</option>
+                          <?php
+                            while ($rowCOMARC = odbc_fetch_array($resultCOMARC)) {
+                              echo "<option value='" . $rowCOMARC['COMCOD'] . "'>" . rtrim(utf8_encode($rowCOMARC['COMDES'])) . "</option>";
+                            }
                           ?>
                         </select>
                       </div>
-                      <div class="col-sm-12 col-lg-4 mt-2">
+                      <div class="col-sm-12 col-lg-3 mt-2">
                         <label>País:</label>
                         <select class="form-select  mt-1" id="cbbPais" name="cbbPais">
                           <option value="1">Honduras (Lov. Ecommerce)</option>
@@ -152,7 +168,7 @@
                           <option value="7">Rep. Dominicana</option>
                         </select>
                       </div>
-                      <div class="col-sm-12 col-lg-4  mt-2">
+                      <div class="col-sm-12 col-lg-3  mt-2">
                       <label>Fecha:</label>
                         <div class="input-group mt-1">
                         <input class="form-control" id="datepicker2" name="datepicker2"/>
@@ -161,6 +177,17 @@
                         </svg></span>
                         </div>
                       </div>
+                      <div class="col-12 col-lg-2 mt-2">
+                                            <button type="button" class="btn btn-success mt-4 fw-bold text-white"
+                                                style="width:100%;" onclick="searchF()">
+                                                <span class="me-2">BUSCAR</span>
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
+                                                    fill="#fff" class="bi bi-search" viewBox="0 0 16 16">
+                                                    <path
+                                                        d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                                                </svg>
+                                            </button>
+                        </div>
                 </div>
               </form>
               </div>
@@ -327,6 +354,7 @@
       <p class="bggray responsive-font-example"><i>Lovable de Honduras S.A. de C.V</i></p>
       </div>
       <script>
+
         var mesFiltro1= "<?php echo $mesFiltro1; ?>";
         var anoFiltro1= "<?php echo $anoFiltro1; ?>";
         var diaFiltro1= "<?php echo $diaFiltro1; ?>";
@@ -337,6 +365,9 @@
         var Date1=diaFiltro1+'/'+mesFiltro1+'/'+anoFiltro1;
         var Date2=diaFiltro2+'/'+mesFiltro2+'/'+anoFiltro2;
        
+        function sendForm(){
+          $("#formFiltros").submit();
+        }
       </script>
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
       <script src="../../assets/vendors/dayrangepicker/index.umd.min.js"></script>
@@ -344,12 +375,11 @@
       <script src="https://code.highcharts.com/highcharts-3d.js"></script>
       <script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
       <script src="https://code.highcharts.com/stock/modules/accessibility.js"></script>
-
       <script src="https://cdn.jsdelivr.net/npm/chart.js@4.2.1"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
-  <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+      <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js" integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
      <?php include '../../assets/php/ZFA/ZLO0007P/ZLO0007P.php'; ?>
-    
 </body>
 </html>

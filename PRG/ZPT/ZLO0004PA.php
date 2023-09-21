@@ -9,10 +9,6 @@
   </style>
 </head>
 <body>
-<div class="spinner-wrapper">
-    <div class="spinner-border text-danger" role="status">
-    </div>
-  </div>
 <?php
       include '../layout-prg.php';
       $_SESSION['tab'] = isset($_COOKIE['tabselected']) ? $_COOKIE['tabselected'] : "1";
@@ -22,7 +18,7 @@
            $mesfiltro=isset($_SESSION['mesfiltro3'])? $_SESSION['mesfiltro3']: $mes_actual; 
            $anofiltro=isset($_SESSION['anofiltro2'])? $_SESSION['anofiltro2']: $ano_actual; 
            $paisfiltro=isset($_SESSION['paisfiltro9'])? $_SESSION['paisfiltro9']: 1; 
-           $cia1="CODCIA IN (35,47,50,52,56,57,59,63,64,65,68,70,72,73,74,75,76,78,82,85)";
+           $cia1="CODCIA IN (35,47,50,52,56,57,59,63,64,65,68,70,72,73,74,75,76,78,82,85,88)";
            $cia7="CODCIA IN (20,22)";
            $cia2="CODCIA IN (49,66,69,71,86)";
            $cia3="CODCIA IN (48,53,61,62)";
@@ -227,7 +223,7 @@
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb my-0 ms-2">
               <li class="breadcrumb-item">
-                <!-- if breadcrumb is single--><span>Producto Terminado</span>
+              <span>Producto Terminado / Meses de inventarios</span>
               </li>
               <li class="breadcrumb-item active"><span>ZLO0004PA</span></li>
             </ol>
