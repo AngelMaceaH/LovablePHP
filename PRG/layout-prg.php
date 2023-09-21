@@ -112,8 +112,35 @@
   //session_set_cookie_params(86400);
   $_SESSION['DEV'] = "";
   include '../../assets/php/conn.php';
-  if ($_SESSION["NOMUSU"] == "") {
+  if (isset($_SESSION["NOMUSU"]) == "" || isset($_SESSION['VALIDATE'])) {
+    $host= $_SERVER["HTTP_HOST"];
+    $url= $_SERVER["REQUEST_URI"];
+    
+   if(trim(substr($url,20,8))=='ZLO0015P'){
+    if (isset($_GET['user'])) {$codusu=$_GET['user'];}
+    $_SESSION['CODUSU']=$codusu;
+    $connIBM=conexionIBM();
+    $sqlValidate="select * from LBDESDAT/LO2294 where USUARI='".$codusu."' LIMIT 1";
+    $resultVal=odbc_exec($connIBM, $sqlValidate);
+    if (odbc_num_rows($resultVal)!=0) {
+        $sqlGet="select * from LBPRDDAT/lo2207 where CODUSU='".$codusu."'";
+        $result=odbc_exec($connIBM, $sqlGet); 
+        while ($row = odbc_fetch_array($result)) {
+            $_SESSION['VALIDATE']=1;
+            $_SESSION["NOMUSU"]=utf8_encode(trim($row['NOMUSU']));
+            $_SESSION["NIVEL"]=$row['NIVEL'];
+            $_SESSION["ANOING"]=$row['ANOING'];
+            $_SESSION["NUMEMP"]=$row['NUMEMP'];
+            $_SESSION["PERESP"]=$row['PERESP'];
+        }
+    }else{
+        header('Location: /' . $_SESSION['DEV'] . 'LovablePHP/login.php');
+    }
+
+   
+   }else {
     header('Location: /' . $_SESSION['DEV'] . 'LovablePHP/login.php');
+   }
   }
   if (isset($_GET['logout'])) {
     session_destroy();

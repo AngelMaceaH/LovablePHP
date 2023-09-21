@@ -8,9 +8,7 @@
     <link rel="stylesheet" href="../../assets/css/flexselect.css">
 </head>
 <body>
-    <?php
-      include '../layout-prg.php';
-    ?>
+    <?php include '../layout-prg.php'; ?>
     <div class="container-fluid">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb my-0 ms-2">
@@ -50,8 +48,7 @@
                                         </select>
                                         <input id="tipDocs" class="d-none"/>
                                     </div>
-                                    <div class="col-12" id="inputs">
-                                     
+                                    <div class="col-12" id="inputs">                   
                                     </div>
                                     <div class="col-12">
                                         <h6 class="mb-3 mt-4 text-start">Fecha de documento</h6>
@@ -68,16 +65,12 @@
                                     <div class="col-12">
                                         <h6 class="mb-3 mt-4 text-start">Descripcion</h6>
                                         <textarea id="descrpDoc" placeholder="Ingrese una descripcion del documento" class="form-control" rows="5" style="height:150px; resize: none;"></textarea>
-                                    </div>
-                                    
+                                    </div>  
                                 </div>
-                            </div>
-                           
+                            </div>      
                         </div>
                     </div>
                 </div>
-               
-               
             </div>
         </div>
     </div>
@@ -96,14 +89,24 @@
         var codusu; var anoing; var numemp; var codsec=0; var coddep=0;
         var codigo="";
         var comarcOptions="";
-    $(document).ready(function() {
+    $(document).ready(function(){
          codusu="<?php echo isset($_SESSION['CODUSU'])? $_SESSION['CODUSU']: ''; ?>";
          anoing="<?php echo isset($_SESSION['ANOING'])? $_SESSION['ANOING']: ''; ?>";
          numemp="<?php echo isset($_SESSION['NUMEMP'])? $_SESSION['NUMEMP']: ''; ?>";
+
+            const currentUrl = window.location.href;
+            var url = new URL(currentUrl);
+            var user= url.searchParams.get("user");
+            var cia= url.searchParams.get("cia");
+            var prv= url.searchParams.get("prv");
+            var tip= url.searchParams.get("tip");
+            var doc= url.searchParams.get("doc");
+            var apl= url.searchParams.get("apl");
+
+         console.log('user: '+user+' cia: '+cia+ ' prv: '+prv+' tip: '+tip+' doc: '+doc+' apl: '+apl);
          var usuario='<?php echo $_SESSION["CODUSU"];?>';
          var urlComarc='http://172.16.15.20/API.LovablePHP/ZLO0001P/ListComarc/?usuario='+usuario+'';
          var responseComarc = ajaxRequest(urlComarc);
-         console.log(responseComarc.data);
             if (responseComarc.code==200) {
                 for (let i = 0; i < responseComarc.data.length; i++) {
                    comarcOptions+='<option value="'+responseComarc.data[i].COMCOD+'">'+responseComarc.data[i].COMDES+'</option>';
@@ -179,6 +182,9 @@
                 
             }}
       });
+
+
+      $("#tiposDoc").val('R01').trigger('change');
     });
         function showProveedores() {
             $("#modalProveedores").modal('show');
@@ -221,7 +227,6 @@
                         var fileExtension = file.name.split('.').pop();
                         var campos = {"CAM0": "","CAM1": "", "CAM2": "","CAM3": "","CAM4": "","CAM5": "","CAM6": "","CAM7": "","CAM8": "","CAM9": ""};
                         const inputs=$(".inputsDoc");
-                        console.log(inputs);
                         var tipo=$("#tipDocs").val();
                         var length=inputs.length;
                         for (let i = 0; i < length; i++) {
@@ -292,6 +297,13 @@
                             uppy.cancelAll(); 
                             $("#tiposDoc").val(1).trigger('change');
                             $("#descrpDoc").val("").trigger('change');
+                            var isOut='<?php echo isset($_SESSION['VALIDATE'])? $_SESSION['VALIDATE']:"0"; ?>';
+                            if (isOut=='1') {
+                                <?php
+                                    $sql="DELETE from LBDESDAT/LO2294 where USUARI='".$_SESSION['CODUSU']."'";
+                                    $result=odbc_exec($connIBM, $sql);
+                                ?>
+                            }
                         }
                     });
                 })
@@ -320,6 +332,12 @@
         }
 }
 
+function closeWindow() {
+		let new_window =
+			open(location, '_self');
+		new_window.close();
+		return false;
+	}
 function blobToBase64(blob, callback) {
     const reader = new FileReader();
     reader.onload = function() {

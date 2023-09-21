@@ -230,10 +230,8 @@ Chart.defaults.plugins.tooltip.position = 'nearest';
 Chart.defaults.plugins.tooltip.external = coreui.ChartJS.customTooltips;
 Chart.defaults.defaultFontColor = '#646470';
 const random = (min, max) =>
-  // eslint-disable-next-line no-mixed-operators
   Math.floor(Math.random() * (max - min + 1) + min);
 
-// eslint-disable-next-line no-unused-vars
 const cardChart1 = new Chart(document.getElementById('card-chart1'), {
   type: 'line',
   data: {
@@ -570,6 +568,14 @@ exporting: {
   legend: {
     enabled:true
   },
+  plotOptions: {
+    series: {
+        stacking: 'normal',
+        dataLabels: {
+            enabled: true
+        }
+    }
+},
   credits: {
     enabled: false},
   series: [{
@@ -617,7 +623,7 @@ function chargeTableP(response) {
   div.empty();
       div.append(` <div class="col-12 rounded mb-2 p-1 ">
       <div class="table-responsive">
-          <table  id="tablePaises" class="table stripe table-hover " style="width:100%">
+          <table  id="tablePaises" class="table stripe table-hover " style="width:100%; height:650px;">
               <thead>
                   <tr>
                       <th class="text-start">Mes</th>     
@@ -1291,6 +1297,14 @@ exporting: {
   legend: {
     enabled:true
   },
+  plotOptions: {
+    series: {
+        stacking: 'normal',
+        dataLabels: {
+            enabled: true
+        }
+    }
+},
   credits: {
     enabled: false},
   series: [{
@@ -1309,7 +1323,7 @@ function chargeTableT(response) {
   div.empty();
       div.append(` <div class="col-12 rounded mb-2 p-1 ">
       <div class="table-responsive">
-          <table  id="tableTiendas" class="table stripe table-hover " style="width:100%">
+          <table  id="tableTiendas" class="table stripe table-hover " style="width:100%; height:650px;">
               <thead>
                   <tr>
                       <th class="text-start">Mes</th>     
@@ -1997,6 +2011,14 @@ exporting: {
   legend: {
     enabled:true
   },
+  plotOptions: {
+    series: {
+        stacking: 'normal',
+        dataLabels: {
+            enabled: true
+        }
+    }
+},
   credits: {
     enabled: false},
   series: [{

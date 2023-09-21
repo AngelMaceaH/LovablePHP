@@ -7,14 +7,13 @@
  $connIBM=conexionIBM();
  $name=$_POST['user']; 
  $ps=$_POST['password']; 
-
 $url = "http://172.16.15.20/API.LovablePHP/Access/GetAccess/?user=".$name."&ps=".$ps."";
 $ch = curl_init();
 $registros=array();
 curl_setopt($ch,CURLOPT_URL,$url);
 curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
 $reponse= curl_exec($ch);
-if ($e = curl_error($ch)) {
+if ($e = curl_error($ch)){
     echo $e;
 }else{                 
   $registros[0]=json_decode($reponse,true);                  

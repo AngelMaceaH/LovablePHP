@@ -224,11 +224,11 @@
                         <!--CARTAS-->
                         <div class="row mt-1">
                             <div class="col-12 rounded mb-2 p-1 text-white" style="background-color:#000;">
-                                <h3 class="ms-3">Datos generales</h3>
+                                <h3 class="ms-3">General</h3>
                             </div>
                             <div class="col-12 rounded mb-2 p-1 ">
                                 <div class="table-responsive">
-                                    <table  id="tableGenerales" class="table stripe table-hover " style="width:100%">
+                                    <table  id="tableGenerales" class="table stripe table-hover " style="width:100%; height:650px">
                                         <thead>
                                             <tr>
                                                 <th class="text-start">Mes</th>     
