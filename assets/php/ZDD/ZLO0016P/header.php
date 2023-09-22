@@ -37,7 +37,7 @@
 .styled-input label {
     font-family: 'Rubik', sans-serif !important;
   color: #9B9B9B;
-  font-size: 12px;
+  font-size: 10px;
   text-transform: uppercase;
   font-weight: bold;
   letter-spacing: 1.92px;
@@ -159,7 +159,7 @@
 .styled-input input#ln:valid ~ label, 
 .styled-input input#city[filled="true"]:valid ~ label, 
 .styled-input #select-state label {
-  font-size: 13px;
+  font-size: 8px;
   letter-spacing: 1.56px;
   color: rgba(140, 11, 11, 1);
   top: -12.8px;
@@ -199,7 +199,7 @@
   .styled-input input:focus ~ label.error, 
   .styled-input input.fn:valid ~ label.error,
   .styled-input input#ln:valid ~ label.error {
-    font-size: 13px;
+    font-size: 15px;
     top: 53px;
   }
   .search-area .form-area button.serach-btn {

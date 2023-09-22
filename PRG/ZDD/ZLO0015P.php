@@ -184,7 +184,7 @@
       });
 
 
-      $("#tiposDoc").val('R01').trigger('change');
+     // $("#tiposDoc").val('R01').trigger('change');
     });
         function showProveedores() {
             $("#modalProveedores").modal('show');
@@ -246,10 +246,13 @@
                             }   
                                
                         }
+
+                        var nameFile=file.name;
+                        nameFile = nameFile.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
                         var fecha=$("#fechaDoc").val();
                         var descrip=$("#descrpDoc").val();
                         var dataSave={
-                        "NOMDOC": file.name,
+                        "NOMDOC": nameFile,
                         "EXTDOC": fileExtension,
                         "ANOING": anoing,
                         "NUMEMP": numemp,

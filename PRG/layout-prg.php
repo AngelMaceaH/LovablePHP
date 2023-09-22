@@ -120,7 +120,7 @@
     if (isset($_GET['user'])) {$codusu=$_GET['user'];}
     $_SESSION['CODUSU']=$codusu;
     $connIBM=conexionIBM();
-    $sqlValidate="select * from LBDESDAT/LO2294 where USUARI='".$codusu."' LIMIT 1";
+    $sqlValidate="select * from LBPRDDAT/LO2294 where USUARI='".$codusu."' LIMIT 1";
     $resultVal=odbc_exec($connIBM, $sqlValidate);
     if (odbc_num_rows($resultVal)!=0) {
         $sqlGet="select * from LBPRDDAT/lo2207 where CODUSU='".$codusu."'";
@@ -347,6 +347,8 @@
             <script type="text/javascript" charset="utf8" src="../../assets/js/buttons.html5.js"> </script>
             <script type="text/javascript" charset="utf8"
                 src="https://cdn.datatables.net/buttons/2.3.4/js/buttons.print.min.js"> </script>
+                <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
             <!--<script src="../../js/table.js"></script>-->
             <script>
             function ajaxRequest(url, data = {}, method = "GET") {
