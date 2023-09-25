@@ -21,23 +21,23 @@
 }
 
 .styled-input.multi {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: stretch;
-      -ms-flex-align: stretch;
-          align-items: stretch;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-  padding: 12px 0;
-  height: auto;
+    display: flex;
+    flex-wrap: wrap; 
+    padding: 12px 0;
 }
+
+.wideInput{
+    flex: 1 0 25%; 
+}
+#filtrosDoc{
+  height: 140px;
+}
+
 
 .styled-input label {
     font-family: 'Rubik', sans-serif !important;
   color: #9B9B9B;
-  font-size: 10px;
+  font-size: 13px;
   text-transform: uppercase;
   font-weight: bold;
   letter-spacing: 1.92px;
@@ -159,7 +159,7 @@
 .styled-input input#ln:valid ~ label, 
 .styled-input input#city[filled="true"]:valid ~ label, 
 .styled-input #select-state label {
-  font-size: 8px;
+  font-size: 11px;
   letter-spacing: 1.56px;
   color: rgba(140, 11, 11, 1);
   top: -12.8px;

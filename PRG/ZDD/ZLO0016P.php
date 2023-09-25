@@ -20,6 +20,7 @@
     .imgWidth {
         width: 100%;
     }
+
     </style>
 </head>
 
@@ -54,18 +55,17 @@
                                 </div>
                                 <input type="text" class="form-control d-none" id="tipDocs">
                             </div>
-
                             <div class="col-12 mt-3 d-none" id="searchBoxes">
                                 <form action="#" id="header-search-people" class="form-area" novalidate="novalidate"
                                     autocomplete="off">
                                     <div class="row">
-                                        <div class="col-lg-10">
+                                        <div class="col-lg-12">
                                             <div class="styled-input wide multi" id="filtrosDoc">
 
 
                                             </div>
                                         </div>
-                                        <div class="col-lg-2">
+                                        <div class="col-lg-12">
                                             <button type="button" class="btn btn-success mt-3 fw-bold text-white"
                                                 style="width:100%;" onclick="searchF()">
                                                 <span class="me-2">BUSCAR</span>
@@ -128,12 +128,12 @@
         if (anoing == 0 & numemp == 0) {
             $("#isGerencia").append(`<div class="col-12 col-lg-6">
                                         <h6 class="mb-3 mt-2 text-start">Departamento y Sección</h6>
-                                        <select id="cbbDepartamentos" class="form-select" >   
+                                        <select id="cbbDepartamentos" class="form-select mt-1" >   
                                         </select>
                                         </div>
                                     <div class="col-12 col-lg-6"> 
                                         <h6 class="mb-3 text-start mt-2">Tipo de documento</h6>
-                                        <select class="form-select" id="tiposDoc">
+                                        <select class="form-select mt-1" id="tiposDoc">
                                            <option value="A" >TODOS LOS DOCUMENTOS</option>
                                         </select>
                                     </div>`);
@@ -154,7 +154,7 @@
         } else {
 
             $("#isGerencia").append(`<div class="col-12"> <h6 class="mb-3 text-start">Tipo de documento</h6>
-                                        <select class="form-select" id="tiposDoc">
+                                        <select class="form-select mt-1" id="tiposDoc">
                                            <option value="A">TODOS LOS DOCUMENTOS</option>
                                         </select>
                                     </div>`);
@@ -228,6 +228,7 @@
     });
 
     function tiposChange() {
+        var camposLength=0;
         var tipo = $("#tiposDoc").val();
         if (tipo != null) {
             setCookie("tipdoc", tipo, 1);
@@ -243,23 +244,24 @@
         var urlCampos = "http://172.16.15.20/API.LovablePHP/ZLO0015P/ListTiposFind/?tipo=" + selectedTipo;
         var responseCampos = ajaxRequest(urlCampos);
         if (responseCampos.code == 200) {
-            $("#tipDocs").val($("#tiposDocs").val());
+            $("#tipDocs").val($("#tiposDoc").val());
             camposDes = responseCampos.data[0].CAMPOS.split("/");
             var counter = camposDes.length;
             camposDes[counter] = 'Fecha de documento';
             camposDes[counter + 1] = 'Fecha de digitalización';
             camposDes[counter + 2] = 'Nombre de documento';
             var htmlAppend = "";
+            camposLength=camposDes.length;
             for (let i = 0; i < camposDes.length; i++) {
-                htmlAppend += '<div id="input-first-name">';
+                htmlAppend += '<div id="input-first-name" class="wideInput">';
                 if (camposDes[i].toLowerCase() == "proveedor") {
                     // htmlAppend+='<span onclick="showProveedores()"><input class="form-select inputsDoc fn" type="text" id="'+responseCampos.data[0]['TIPDOC']+i+'" required readonly /></span>';
                     htmlAppend +=
                         '<input class="inputsDoc fn" style="font-size:16px;"  type="text" autocomplete="off" data-placeholder-focus="false" required id="' +
                         responseCampos.data[0]['TIPDOC'] + i +
                         '" onclick="showProveedores()"  oninput="noTextInput(this)"/><button type="button" class="btn p-0 m-0 fs-5" onclick="vaciarInput()"><i class="fa-solid fa-xmark fs-6 "></i></button>';
-                    htmlAppend += '<input class="d-none" id="originalData" /> <input class="d-none" id="codigo" />'
-                } else if (camposDes[i].toLowerCase() == "tienda") {
+                    htmlAppend += '<input class="d-none" id="originalData" /> <input class="d-none" id="codigo" /> <input class="d-none" id="provId" value="'+responseCampos.data[0]['TIPDOC']+i+'" />'
+                } else if (camposDes[i].toLowerCase() == "tienda" || camposDes[i].toLowerCase() == "compañia") {
                     // htmlAppend+='<span onclick="showProveedores()"><input class="form-select inputsDoc fn" type="text" id="'+responseCampos.data[0]['TIPDOC']+i+'" required readonly /></span>';
                     htmlAppend +=
                         '<input class="inputsDoc fn" style="font-size:16px;"  type="text" autocomplete="off" data-placeholder-focus="false" required id="' +
@@ -330,6 +332,15 @@
                 inputs.append(htmlAppend);
                 htmlAppend = "";
             }
+            var numElements=camposLength/2;
+            var porcentajes=100/numElements;
+            var elements = document.querySelectorAll('.wideInput');
+            elements.forEach(function(element) {
+                element.style.flex = '1 0 '+porcentajes+'%'; 
+            });
+            
+
+            
 
         }
     }
@@ -425,8 +436,9 @@
     }
 
     function vaciarInput() {
-        $('#FAC0').val('');
-        $('#codigo').val('');
+        var idInput=$("#provId").val();
+        $('#'+idInput+'').val('');
+        codigo='';
     }
 
     function vaciarInput2() {
@@ -453,17 +465,17 @@
         $("#modalProveedores").modal('show');
     }
 
-    function sendProveedor(row) {
-        var tr = $(row).closest('tr');
-        var tds = tr.find('td');
-        var tipo = tds.eq(0).text();
-        var id = tds.eq(1).text();
-        var desc = tds.eq(2).text();
-        $("#codigo").val(tipo + '-' + id);
-        $("#FAC0").val(tipo + ' ' + id + ' ' + desc);
-        $("#originalData").val(tipo + ' ' + id + ' ' + desc);
-        $("#modalProveedores").modal('hide');
-    }
+    function sendProveedor(row){
+            var tr=$(row).closest('tr');
+            var tds=tr.find('td');
+            var tipo=tds.eq(0).text();
+            var id=tds.eq(1).text();
+            var desc=tds.eq(2).text();
+            codigo=tipo+'-'+id;
+            var idInput=$("#provId").val();
+            $("#"+idInput+"").val(tipo+' '+id+' '+desc);
+            $("#modalProveedores").modal('hide');
+        }
 
     function noTextInput(inputElement) {
         var originalData = $("#originalData").val();
@@ -486,7 +498,7 @@
     }
 
     function searchF() {
-
+        //$('#modalConsulta').modal('hide');
         var campos = {
             "CAM0": "",
             "CAM1": "",
@@ -501,13 +513,19 @@
         };
         inputs = $(".inputsDoc");
         var tipo = $("#tipDocs").val();
+        console.log('cambio');
+        console.log(tipo);
         for (let i = 0; i < (inputs.length - 3); i++) {
-            if (camposDes[i].toLowerCase() == "tienda") {
+            if (camposDes[i].toLowerCase() == "tienda" || camposDes[i].toLowerCase() == "compañia") {
                 campos["CAM" + i] = $("#codigoTienda").val();
-            } else {
+            }else if(camposDes[i].toLowerCase() == "proveedor"){
+                campos["CAM" + i] = codigo;
+            } 
+            else {
                 campos["CAM" + i] = $("#" + tipo + i + "").val();
             }
         }
+        console.log(campos);
         var tipProv = "";
         var idProv = "";
         if (tipo == 'FAC' && tipo != 'A') {
@@ -996,51 +1014,25 @@
             var cont = 0;
             var length = camposDes.length;
             for (let i = 0; i < length; i++) {
-                if (tipdoc == "FAC" && tipdoc != 'A') {
-                    if (cont == 0) {
-                        cont = cont + 1;
-                        var tipo = campos['cam0'];
-                        var prov = campos['cam1'];
-                        var urlFind = "http://172.16.15.20/API.LovablePHP/ZLO0015P/ProveedoresFind/?tipo=" + tipo +
-                            "&proveedor=" + prov + "";
-                        var responseFind = ajaxRequest(urlFind);
-                        var descripcionProveedor = " ";
-                        if (responseFind.code == 200) {
-                            descripcionProveedor = responseFind.data[0]['ARCNOM'];
-                        }
-                        inputs.append(`<div class="col-6 col-lg-2 d-flex">
-                                            <h6 class="mt-1">Tipo: </h6><span>&nbsp;&nbsp;` + tipo + `</span>&nbsp;&nbsp;
-                                            <h6 class="mt-1">` + camposDes[i] +
-                            `: </h6><h6  class="mt-1">&nbsp;&nbsp;` + prov + `</h6>
-                                        </div>
-                                        <div class="col-6 col-lg-4">
-                                        &nbsp;&nbsp;<span class="text-start">` + descripcionProveedor + `</span>
-                                        </div>`);
-                        length = length + 2;
-                        i = 2;
-                    } else {
-                        inputs.append(`<div class="col-6 col-lg-2">
-                                            <h6 class=" mt-1">` + camposDes[i - 2] + `:</h6>
-                                        </div>
-                                        <div class="col-6 col-lg-4">
-                                            <label class="text-start form-control">` + campos['cam' + (i - 1)] + `</label>
-                                        </div>`);
-                    }
-                } else {
                     var descripcion = "";
-                    if (camposDes[i].toLowerCase() == "tienda") {
+                    if (camposDes[i].toLowerCase() == "tienda"|| camposDes[i].toLowerCase() == "compañia") {
                         var urlDes = "http://172.16.15.20/API.LovablePHP/ZLO0001P/FindComarc/?compFiltro=" + campos[
                             'cam' + i] + "";
                         var responseDes = ajaxRequest(urlDes);
                         descripcion = (responseDes.code == 200) ? responseDes.data[0]['COMDES'] : "";
+                    }else if(camposDes[i].toLowerCase() == "proveedor"){
+                        var id=campos['cam' + i].split("-");
+                        var tipo = id[0]; var prov = id[1];
+                        var urlFind = "http://172.16.15.20/API.LovablePHP/ZLO0015P/ProveedoresFind/?tipo=" + tipo +"&proveedor=" + prov + "";
+                        var responseFind = ajaxRequest(urlFind);
+                        descripcion = (responseFind.code == 200) ? responseFind.data[0]['ARCNOM'] : "";
                     }
-                    inputs.append(`<div class="col-6 col-lg-2">
+                    inputs.append(`<div class="col-6 col-lg-2 mt-2">
                                 <h6 class=" mt-1">` + camposDes[i] + `:</h6></div>
-                                <div class="col-6 col-lg-4">
+                                <div class="col-6 col-lg-4 mt-2">
                                 <label class="text-start form-control">` + campos['cam' + i] + ` ` + descripcion
                         .toUpperCase() + `</label>
                                 </div>`);
-                }
             }
         }
 
@@ -1259,7 +1251,6 @@
             </div>
         </div>
     </div>
-
     <div class="modal fade" id="modalRangeGrabado" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">

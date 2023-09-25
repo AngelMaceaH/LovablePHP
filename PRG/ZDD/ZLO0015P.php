@@ -103,7 +103,7 @@
             var doc= url.searchParams.get("doc");
             var apl= url.searchParams.get("apl");
 
-         console.log('user: '+user+' cia: '+cia+ ' prv: '+prv+' tip: '+tip+' doc: '+doc+' apl: '+apl);
+
          var usuario='<?php echo $_SESSION["CODUSU"];?>';
          var urlComarc='http://172.16.15.20/API.LovablePHP/ZLO0001P/ListComarc/?usuario='+usuario+'';
          var responseComarc = ajaxRequest(urlComarc);
@@ -121,6 +121,13 @@
                 tipos.append(`<option value="`+responseTipos.data[i].TIPDOC+`">`+responseTipos.data[i].DESCRP+`</option>`);
             }
         }
+        var tipoUrl="http://172.16.15.20/API.LovablePHP/ZLO0015P/GetTipo/?apl="+apl+"&tip="+tip+"";
+         var responseTipo = ajaxRequest(tipoUrl);
+         var tipoWeb="";
+         if (responseTipo.code==200) {
+            tipoWeb=responseTipo.data[0].TIPWEB;
+         }
+        
         var currentDate = new Date().toISOString().split('T')[0];
         $('#fechaDigit').text(currentDate);
         $('#fechaDoc').val(currentDate);
@@ -169,22 +176,47 @@
             var camposDes=responseCampos.data[0].CAMPOS.split("/"); 
             for (let i = 0; i < camposDes.length; i++) {
                 if (camposDes[i].toLowerCase()=="proveedor") {
-                    var select='<span class="" onclick="showProveedores()"><input type="text" class="text-muted form-select inputsDoc" id="'+responseCampos.data[0]['TIPDOC']+i+'" placeholder="Selecciona un proveedor" readonly /></span>';
-                    inputs.append(`<label class=" text-start" style="width:100%; margin-top: 15px;">`+camposDes[i]+`: `+select+`</label>`);
+                    var select='<span class="" onclick="showProveedores()"><input type="text" class="text-muted form-select inputsDoc" id="'+responseCampos.data[0]['TIPDOC']+i+'" placeholder="Selecciona un proveedor" readonly /></span> <input class="d-none" id="provId" value="'+responseCampos.data[0]['TIPDOC']+i+'" />';
+                    inputs.append(`<label class=" text-start" id="lbl`+i+`" style="width:100%; margin-top: 15px;">`+camposDes[i]+`: `+select+`</label>`);
                     //$(".selectProveedores").flexselect();
                 }else if(camposDes[i].toLowerCase()=="tienda"){
-                    var select=`<label class=" text-start" style="width:100%; margin-top: 15px;">`+camposDes[i]+`:<select class="form-select inputsDoc" id="`+responseCampos.data[0]['TIPDOC']+i+`" placeholder="Selecciona un proveedor"  /></select></label>`;
+                    var select=`<label class=" text-start" id="lbl`+i+`" style="width:100%;   margin-top: 15px;">`+camposDes[i]+`:<select class="form-select inputsDoc" id="`+responseCampos.data[0]['TIPDOC']+i+`" placeholder="Selecciona un proveedor"  /></select></label>`;
+                    inputs.append(select);
+                    $("#"+responseCampos.data[0]['TIPDOC']+i).append(comarcOptions);
+                }else if(camposDes[i].toLowerCase()=="compañia"){
+                    var select=`<label class=" text-start"  id="lbl`+i+`" style="width:100%;  margin-top: 15px;">`+camposDes[i]+`:<select class="form-select inputsDoc" id="`+responseCampos.data[0]['TIPDOC']+i+`" placeholder="Selecciona un proveedor"  /></select></label>`;
                     inputs.append(select);
                     $("#"+responseCampos.data[0]['TIPDOC']+i).append(comarcOptions);
                 }else{
-                    inputs.append(`<label class=" text-start" style="width:100%; margin-top: 15px;">`+camposDes[i]+`: <input type="text" class="form-control inputsDoc" id="`+responseCampos.data[0]['TIPDOC']+i+`" /></label>`);   
+                    inputs.append(`<label class=" text-start" id="lbl`+i+`" style="width:100%;  margin-top: 15px;">`+camposDes[i]+`: <input type="text" class="form-control inputsDoc" id="`+responseCampos.data[0]['TIPDOC']+i+`" /></label>`);   
                 }
                 
             }}
       });
-
-
-     // $("#tiposDoc").val('R01').trigger('change');
+/*
+      if(tipoWeb!=''){
+           $("#tiposDoc").val(tipoWeb).trigger('change'); 
+           const inputs=$(".inputsDoc");
+           var length=inputs.length;
+           console.log('user: '+user+' cia: '+cia+ ' prv: '+prv+' tip: '+tip+' doc: '+doc+' apl: '+apl);
+           for (let i = 0; i < length; i++) {
+            console.log(tipoWeb+i);
+               if ($("#lbl"+i).text().toLowerCase().includes("proveedor:")) {
+                   $("#"+tipoWeb+i+"").val(prv);
+               }else if($("#lbl"+i).text().toLowerCase().includes("tienda:")){
+                   $("#"+tipoWeb+i+"").val(cia);
+               }else if($("#lbl"+i).text().toLowerCase().includes("compañia:")){
+                  $("#" + tipoWeb + i).val(cia).trigger('change');
+                   console.log('entro');
+               }else if($("#lbl"+i).text().toLowerCase().includes("fecha:")){
+                   $("#"+tipoWeb+i+"").val(doc);
+               }else if($("#lbl"+i).text().toLowerCase().includes("aplicacion:")){
+                   $("#"+tipoWeb+i+"").val(apl);
+               }else{
+                   $("#"+tipoWeb+i+"").val("");
+               }
+           }
+        }*/
     });
         function showProveedores() {
             $("#modalProveedores").modal('show');
@@ -197,7 +229,8 @@
             var id=tds.eq(1).text();
             var desc=tds.eq(2).text();
             codigo=tipo+'-'+id;
-            $("#FAC0").val(tipo+' '+id+' '+desc);
+            var idInput=$("#provId").val();
+            $("#"+idInput+"").val(tipo+' '+id+' '+desc);
             $("#modalProveedores").modal('hide');
         }
     function selectDepa() {
@@ -230,21 +263,11 @@
                         var tipo=$("#tipDocs").val();
                         var length=inputs.length;
                         for (let i = 0; i < length; i++) {
-                            if (tipo+"0"=="FAC0") {
-                                if (campos["CAM0"]=="" && campos["CAM1"]=="") {
-                                    var proveedor=codigo.split("-");
-                                    campos["CAM0"]=proveedor[0];
-                                    campos["CAM1"]=proveedor[1];
-                                    length=length+2;
-                                    i=2;
-                                }else{
-                                    campos["CAM"+(i-1)]=$("#"+tipo+(i-2)+"").val();
-                                }
-                                
+                            if ($("#lbl"+i).text().toLowerCase().includes("proveedor:")) {
+                                campos["CAM"+i]=codigo;
                             }else{
-                                campos["CAM"+i]=$("#"+tipo+i+"").val();
-                            }   
-                               
+                                campos["CAM"+i]=$("#"+tipo+i+"").val();        
+                            }
                         }
 
                         var nameFile=file.name;
@@ -283,8 +306,8 @@
                         } else {
                             reject(responseSave.code);
                         }
-                        /*console.log(dataSave);
-                        resolve(200);*/
+                        //console.log(dataSave);
+                        //resolve(200);
                     });
                     });
                     promises.push(promise);
