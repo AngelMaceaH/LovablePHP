@@ -30,7 +30,7 @@
     flex: 1 0 25%; 
 }
 #filtrosDoc{
-  height: 140px;
+  height: 170px;
 }
 
 

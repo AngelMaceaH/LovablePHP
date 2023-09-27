@@ -71,7 +71,7 @@
   session_start();
   $_SESSION['DEV'] = "";
   include 'assets/php/conn.php';
-  if (!isset($_SESSION["NOMUSU"]) || $_SESSION["NOMUSU"] == "") {
+  if (!isset($_SESSION["NOMUSU"]) || $_SESSION["NOMUSU"] == "" || isset($_SESSION['VALIDATE'])) {
     header('Location: /' . $_SESSION['DEV'] . 'LovablePHP/login.php');
   }
   if (isset($_GET['logout'])) {

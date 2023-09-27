@@ -97,19 +97,40 @@
             const currentUrl = window.location.href;
             var url = new URL(currentUrl);
             var user= url.searchParams.get("user");
-            var cia= url.searchParams.get("cia");
-            var prv= url.searchParams.get("prv");
-            var tip= url.searchParams.get("tip");
-            var doc= url.searchParams.get("doc");
-            var apl= url.searchParams.get("apl");
+            var cia=""; var prv=""; var tip=""; var doc=""; var apl=""; var docf=""; var fec=""; var tienda=""; var descrp="";   
+             cia= url.searchParams.get("cia");
+             prv= url.searchParams.get("prv");
+             tip= url.searchParams.get("tip");
+             doc= url.searchParams.get("doc");
+             apl= url.searchParams.get("apl");
+             docf= url.searchParams.get("docf");
+             fec= url.searchParams.get("fec");
+            if (cia==null) {
+                var cor= url.searchParams.get("cor");
+                var getParamsurl="http://172.16.15.20/API.LovablePHP/ZLO0015P/GetParams/?cod="+cor+"";
+                var responseParams = ajaxRequest(getParamsurl);
+            if (responseParams.code==200) {
+                cia=responseParams.data.CIA;                  
+                prv=responseParams.data.PRV;
+                tip=responseParams.data.TIPO;
+                tienda=responseParams.data.TIE;
+                docf=responseParams.data.DOCFIS;
+                doc=responseParams.data.DOCRE;
+                apl=responseParams.data.MODULO;
+                fec=responseParams.data.FECDOC;
+                descrp=responseParams.data.DESCRP;
+                } 
+            }
+            
+            console.log(cia + ' ' + prv + ' ' + tip + ' ' + tienda + ' ' + doc + ' ' + apl + ' ' + docf + ' ' + fec+ ' ' + descrp);
 
 
          var usuario='<?php echo $_SESSION["CODUSU"];?>';
-         var urlComarc='http://172.16.15.20/API.LovablePHP/ZLO0001P/ListComarc/?usuario='+usuario+'';
+         var urlComarc='http://172.16.15.20/API.LovablePHP/ZLO0015P/ListComarc/?user='+usuario+'';
          var responseComarc = ajaxRequest(urlComarc);
             if (responseComarc.code==200) {
                 for (let i = 0; i < responseComarc.data.length; i++) {
-                   comarcOptions+='<option value="'+responseComarc.data[i].COMCOD+'">'+responseComarc.data[i].COMDES+'</option>';
+                   comarcOptions+='<option value="'+responseComarc.data[i].COMCOD.padStart(2, '0')+'">'+responseComarc.data[i].COMDES+'</option>';
                 }
             }
 
@@ -136,8 +157,11 @@
         options="";
         if (responseProveedores.code==200) {
             for (let j = 0; j < responseProveedores.data.length; j++) {
-                options+='<tr onclick="sendProveedor(this)"><td style="width:10%;" class="TipProveedor">'+responseProveedores.data[j]['ARCCIU']+'</td><td style="width:10%;" class="IDProveedor">'+responseProveedores.data[j]['ARCCO1']+'</td><td class="descProveedor">'+responseProveedores.data[j]['ARCNOM']+'</td></tr>';
-            }
+                options += '<tr onclick="sendProveedor(this)"><td style="width:10%;" class="TipProveedor">' +
+                    responseProveedores.data[j]['ARCCIU'].padStart(2, '0') + '</td><td style="width:10%;" class="IDProveedor">' +
+                    responseProveedores.data[j]['ARCCO1'].padStart(4, '0') + '</td><td class="descProveedor">' +
+                    responseProveedores.data[j]['ARCNOM'] + '</td></tr>';
+                }
             $("#tbProveedoresBody").append(options);
             $('#tbProveedores thead th').each(function () {
             var title = $(this).text();
@@ -180,43 +204,53 @@
                     inputs.append(`<label class=" text-start" id="lbl`+i+`" style="width:100%; margin-top: 15px;">`+camposDes[i]+`: `+select+`</label>`);
                     //$(".selectProveedores").flexselect();
                 }else if(camposDes[i].toLowerCase()=="tienda"){
-                    var select=`<label class=" text-start" id="lbl`+i+`" style="width:100%;   margin-top: 15px;">`+camposDes[i]+`:<select class="form-select inputsDoc" id="`+responseCampos.data[0]['TIPDOC']+i+`" placeholder="Selecciona un proveedor"  /></select></label>`;
+                    var select=`<label class=" text-start" id="lbl`+i+`" style="width:100%;   margin-top: 15px;">`+camposDes[i]+`:<select class="form-select inputsDoc" id="`+responseCampos.data[0]['TIPDOC']+i+`" placeholder="Selecciona una tienda"  /></select></label>`;
                     inputs.append(select);
                     $("#"+responseCampos.data[0]['TIPDOC']+i).append(comarcOptions);
                 }else if(camposDes[i].toLowerCase()=="compañia"){
-                    var select=`<label class=" text-start"  id="lbl`+i+`" style="width:100%;  margin-top: 15px;">`+camposDes[i]+`:<select class="form-select inputsDoc" id="`+responseCampos.data[0]['TIPDOC']+i+`" placeholder="Selecciona un proveedor"  /></select></label>`;
+                    var select=`<label class=" text-start"  id="lbl`+i+`" style="width:100%;  margin-top: 15px;">`+camposDes[i]+`:<select class="form-select inputsDoc" id="`+responseCampos.data[0]['TIPDOC']+i+`" placeholder="Selecciona una compañía"  /></select></label>`;
                     inputs.append(select);
                     $("#"+responseCampos.data[0]['TIPDOC']+i).append(comarcOptions);
                 }else{
                     inputs.append(`<label class=" text-start" id="lbl`+i+`" style="width:100%;  margin-top: 15px;">`+camposDes[i]+`: <input type="text" class="form-control inputsDoc" id="`+responseCampos.data[0]['TIPDOC']+i+`" /></label>`);   
-                }
-                
+                }                
             }}
       });
-/*
       if(tipoWeb!=''){
            $("#tiposDoc").val(tipoWeb).trigger('change'); 
-           const inputs=$(".inputsDoc");
-           var length=inputs.length;
-           console.log('user: '+user+' cia: '+cia+ ' prv: '+prv+' tip: '+tip+' doc: '+doc+' apl: '+apl);
+          const inputs=$(".inputsDoc");
+          var length=inputs.length;
            for (let i = 0; i < length; i++) {
-            console.log(tipoWeb+i);
-               if ($("#lbl"+i).text().toLowerCase().includes("proveedor:")) {
-                   $("#"+tipoWeb+i+"").val(prv);
-               }else if($("#lbl"+i).text().toLowerCase().includes("tienda:")){
-                   $("#"+tipoWeb+i+"").val(cia);
+            if ($("#lbl"+i).text().toLowerCase().includes("proveedor:")) {
+                var id=prv.split("-");
+                var tipo = id[0]; var prov = id[1];
+                var urlFind = "http://172.16.15.20/API.LovablePHP/ZLO0015P/ProveedoresFind/?tipo=" + tipo +"&proveedor=" + prov + "";
+                var responseFind = ajaxRequest(urlFind);
+                var descripcion = (responseFind.code == 200) ? responseFind.data[0]['ARCNOM'] : "";
+                codigo=prv;
+                $("#"+tipoWeb+i+"").val(tipo+' '+prov+' '+descripcion);
                }else if($("#lbl"+i).text().toLowerCase().includes("compañia:")){
-                  $("#" + tipoWeb + i).val(cia).trigger('change');
-                   console.log('entro');
-               }else if($("#lbl"+i).text().toLowerCase().includes("fecha:")){
-                   $("#"+tipoWeb+i+"").val(doc);
-               }else if($("#lbl"+i).text().toLowerCase().includes("aplicacion:")){
-                   $("#"+tipoWeb+i+"").val(apl);
-               }else{
-                   $("#"+tipoWeb+i+"").val("");
-               }
-           }
-        }*/
+                    $("#"+tipoWeb+i+"").val(cia);
+                }else if($("#lbl"+i).text().toLowerCase().includes("tienda:")){
+                    $("#"+tipoWeb+i+"").val(tienda);
+                }else if($("#lbl"+i).text().toLowerCase().includes("tipo de documento:")){
+                    $("#"+tipoWeb+i+"").val(tip);
+                }else if($("#lbl"+i).text().toLowerCase().includes("numero doc. ref.:")){
+                    $("#"+tipoWeb+i+"").val(doc);
+                }else if($("#lbl"+i).text().toLowerCase().includes("numero doc. fiscal:")){
+                    $("#"+tipoWeb+i+"").val(docf);
+                }
+                $("#"+tipoWeb+i+"").prop('disabled', true);
+            }
+            $("#tiposDoc").prop('disabled', true);
+            $("#fechaDoc").prop('disabled', true);
+            $("#descrpDoc").prop('disabled', true);
+            var anio=fec.substring(0,4);
+            var mes=fec.substring(4,6);
+            var dia=fec.substring(6,8);
+            $("#fechaDoc").val(anio+'-'+mes+'-'+dia);
+            $("#descrpDoc").val(descrp);
+        }
     });
         function showProveedores() {
             $("#modalProveedores").modal('show');
@@ -225,9 +259,11 @@
         function sendProveedor(row){
             var tr=$(row).closest('tr');
             var tds=tr.find('td');
+            var desc=tds.eq(2).text();
             var tipo=tds.eq(0).text();
             var id=tds.eq(1).text();
-            var desc=tds.eq(2).text();
+            tipo = tipo.padStart(2, '0');
+            id = id.padStart(4, '0');
             codigo=tipo+'-'+id;
             var idInput=$("#provId").val();
             $("#"+idInput+"").val(tipo+' '+id+' '+desc);
@@ -325,10 +361,13 @@
                             $("#descrpDoc").val("").trigger('change');
                             var isOut='<?php echo isset($_SESSION['VALIDATE'])? $_SESSION['VALIDATE']:"0"; ?>';
                             if (isOut=='1') {
-                                <?php
-                                    $sql="DELETE from LBDESDAT/LO2294 where USUARI='".$_SESSION['CODUSU']."'";
-                                    $result=odbc_exec($connIBM, $sql);
-                                ?>
+                                console.log('ELIMINANDO');
+                                var usuario = '<?php echo $_SESSION['CODUSU']; ?>';
+                                var urlDelete='http://172.16.15.20/API.LovablePHP/ZLO0015P/DelUsuario/?user='+usuario+'';
+                                var responseDel = ajaxRequest(urlDelete);
+                                var cor= url.searchParams.get("cor");
+                                var inactivarUrl="http://172.16.15.20/API.LovablePHP/ZLO0015P/Inactivar2296/?cod="+cor+"";
+                                var responseParams = ajaxRequest(inactivarUrl);
                             }
                         }
                     });
@@ -349,8 +388,7 @@
                     departamentos.empty();
                     departamentos.append(`<option value="0"> </option>`);
                     for (let i = 0; i < responseDepas.data.length; i++) {
-                        departamentos.append(`<option value="`+responseDepas.data[i].SECDEP+`-`+responseDepas.data[i].SECCOD+`">`+responseDepas.data[i].SECDES+`</option>`);
-                        
+                        departamentos.append(`<option value="`+responseDepas.data[i].SECDEP+`-`+responseDepas.data[i].SECCOD+`">`+responseDepas.data[i].SECDES+`</option>`);    
                     }
                     $("#cbbDepartamentos").flexselect();
                 }

@@ -176,7 +176,7 @@
         var responseSMCount = ajaxRequest(urlSubModulosCount);
         var urlSubModulos = 'http://172.16.15.20/API.LovablePHP/Access/LayoutS/';
         var responseSM = ajaxRequest(urlSubModulos);
-        if (responseSM.code == 200) {
+        if (responseSM.code == 200 && responseSMCount.code == 200) {
             for (let i = 0; i < responseSM.data.length; i++) {
                 for (let j = 0; j < responseSMCount.data.length; j++) {
                     if (responseSM.data[i]['CATSE1'] == responseSMCount.data[j]['CATSEC']) {
@@ -268,12 +268,12 @@
     <div class="sidebar bg-blck sidebar-fixed" id="sidebar">
 
         <div class="sidebar-brand d-none d-md-flex p-4"><a
-                href="/<?php echo $_SESSION['DEV'] ?>LovablePHP/<?php echo $_SESSION['INDEX']; ?>">
+                href="/<?php echo $_SESSION['DEV'] ?>LovablePHP/<?php echo isset($_SESSION['INDEX'])? $_SESSION['INDEX']:''; ?>">
                 <img src="../../assets/img/lovableLogoDark.jpg" class="img-fluid" alt="Lovable Logo"></a>
         </div>
         <ul class="sidebar-nav bg-blck2 mt-3" data-coreui="navigation" data-simplebar="">
             <li class="nav-item mt-3"><a class="nav-link"
-                    href="/<?php echo $_SESSION['DEV'] ?>LovablePHP/<?php echo $_SESSION['INDEX']; ?>">
+                    href="/<?php echo $_SESSION['DEV'] ?>LovablePHP/<?php echo isset($_SESSION['INDEX'])? $_SESSION['INDEX']:''; ?>">
                     <svg class="nav-icon">
                         <use xlink:href="../../assets/vendors/@coreui/icons/svg/free.svg#cil-home"></use>
                     </svg>

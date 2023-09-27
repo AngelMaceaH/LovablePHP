@@ -55,15 +55,17 @@
                                 </div>
                                 <input type="text" class="form-control d-none" id="tipDocs">
                             </div>
-                            <div class="col-12 mt-3 d-none" id="searchBoxes">
+                            <div class="col-12 mt-3" id="searchBoxes">
                                 <form action="#" id="header-search-people" class="form-area" novalidate="novalidate"
                                     autocomplete="off">
                                     <div class="row">
                                         <div class="col-lg-12">
-                                            <div class="styled-input wide multi" id="filtrosDoc">
+                                           <div class="table-responsive">
+                                                <div class="styled-input wide multi" id="filtrosDoc">
 
 
-                                            </div>
+                                                </div>
+                                           </div>
                                         </div>
                                         <div class="col-lg-12">
                                             <button type="button" class="btn btn-success mt-3 fw-bold text-white"
@@ -85,7 +87,7 @@
                     </form>
                 </div>
 
-                <div class="table-responsive mt-2" style="width:100%; height:700px;" id="tableDocs">
+                <div class="mt-2" style="width:100%;" id="tableDocs">
 
                 </div>
 
@@ -165,8 +167,8 @@
         if (responseProveedores.code == 200) {
             for (let j = 0; j < responseProveedores.data.length; j++) {
                 options += '<tr onclick="sendProveedor(this)"><td style="width:10%;" class="TipProveedor">' +
-                    responseProveedores.data[j]['ARCCIU'] + '</td><td style="width:10%;" class="IDProveedor">' +
-                    responseProveedores.data[j]['ARCCO1'] + '</td><td class="descProveedor">' +
+                    responseProveedores.data[j]['ARCCIU'].padStart(2, '0') + '</td><td style="width:10%;" class="IDProveedor">' +
+                    responseProveedores.data[j]['ARCCO1'].padStart(4, '0') + '</td><td class="descProveedor">' +
                     responseProveedores.data[j]['ARCNOM'] + '</td></tr>';
             }
             $("#tbProveedoresBody").append(options);
@@ -210,21 +212,22 @@
             }
         }
         $("#cbbDepartamentos").on('change', function() {
-            if ($("#cbbDepartamentos").val() == '0-0' || $("#tiposDoc").val() == 'A') {
+            /*if ($("#cbbDepartamentos").val() == '0-0') {
                 $("#filtrosDoc").addClass('d-none');
             } else {
                 $("#filtrosDoc").removeClass('d-none');
-            }
+            }*/
             tiposChange();
         });
         $("#tiposDoc").on('change', function() {
-            if ($("#tiposDoc").val() == 'A') {
+           /* if ($("#tiposDoc").val() == 'A') {
                 $("#filtrosDoc").addClass('d-none');
             } else {
                 $("#filtrosDoc").removeClass('d-none');
-            }
+            }*/
             tiposChange();
         });
+        tiposChange();
     });
 
     function tiposChange() {
@@ -241,7 +244,8 @@
         if (selectedTipo == null) {
             selectedTipo = getCookie("tipdoc");
         }
-        var urlCampos = "http://172.16.15.20/API.LovablePHP/ZLO0015P/ListTiposFind/?tipo=" + selectedTipo;
+        var urlCampos = "http://172.16.15.20/API.LovablePHP/ZLO0015P/ListTiposFind2/?tipo=" + selectedTipo;
+        
         var responseCampos = ajaxRequest(urlCampos);
         if (responseCampos.code == 200) {
             $("#tipDocs").val($("#tiposDoc").val());
@@ -261,7 +265,7 @@
                         responseCampos.data[0]['TIPDOC'] + i +
                         '" onclick="showProveedores()"  oninput="noTextInput(this)"/><button type="button" class="btn p-0 m-0 fs-5" onclick="vaciarInput()"><i class="fa-solid fa-xmark fs-6 "></i></button>';
                     htmlAppend += '<input class="d-none" id="originalData" /> <input class="d-none" id="codigo" /> <input class="d-none" id="provId" value="'+responseCampos.data[0]['TIPDOC']+i+'" />'
-                } else if (camposDes[i].toLowerCase() == "tienda" || camposDes[i].toLowerCase() == "compañia") {
+                } else if (camposDes[i].toLowerCase() == "tienda" ) {
                     // htmlAppend+='<span onclick="showProveedores()"><input class="form-select inputsDoc fn" type="text" id="'+responseCampos.data[0]['TIPDOC']+i+'" required readonly /></span>';
                     htmlAppend +=
                         '<input class="inputsDoc fn" style="font-size:16px;"  type="text" autocomplete="off" data-placeholder-focus="false" required id="' +
@@ -271,6 +275,16 @@
                         '`)"  oninput="noTextInput3(this)"/><button type="button" class="btn p-0 m-0 fs-5" onclick="vaciarInput3()"><i class="fa-solid fa-xmark fs-6"></i></button>';
                     htmlAppend +=
                         '<input class="d-none" id="originalTienda" /> <input class="d-none" id="codigoTienda" />'
+                } else if (camposDes[i].toLowerCase() == "compañia") {
+                    // htmlAppend+='<span onclick="showProveedores()"><input class="form-select inputsDoc fn" type="text" id="'+responseCampos.data[0]['TIPDOC']+i+'" required readonly /></span>';
+                    htmlAppend +=
+                        '<input class="inputsDoc fn" style="font-size:16px;"  type="text" autocomplete="off" data-placeholder-focus="false" required id="' +
+                        responseCampos.data[0]['TIPDOC'] + i + '" onclick="showCompanias(`' + responseCampos.data[0][
+                            'TIPDOC'
+                        ] + i +
+                        '`)"  oninput="noTextInput5(this)"/><button type="button" class="btn p-0 m-0 fs-5" onclick="vaciarInput5()"><i class="fa-solid fa-xmark fs-6"></i></button>';
+                    htmlAppend +=
+                        '<input class="d-none" id="originalCompania" /> <input class="d-none" id="codigoCompania" />'
                 } else if (camposDes[i] == "Fecha de documento") {
                     htmlAppend +=
                         '<input class="inputsDoc fn" style="font-size:14px;"  type="text" autocomplete="off" data-placeholder-focus="false" required id="FechasDocs" onclick="showRange()"  oninput="noTextInput2(this)"/><button type="button" class="btn p-0 m-0 fs-5" onclick="vaciarInput2()"><i class="fa-solid fa-xmark fs-6"></i></button>';
@@ -353,7 +367,19 @@
         $("#tiendasSelect").append(comarcOptions);
         $("#modalTiendas").modal('show');
     }
-
+    function showCompanias(id) {
+        $("#inputIdCompania").val(id);
+        $("#CompaniaSelect").empty();
+        $("#CompaniaSelect").append(comarcOptions);
+        $("#modalCompania").modal('show');
+    }
+    function saveCompania() {
+        var id = $("#inputIdCompania").val();
+        $("#codigoCompania").val($("#CompaniaSelect").val());
+        $("#" + id).val($("#CompaniaSelect option:selected").text());
+        $("#originalCompania").val($("#CompaniaSelect option:selected").text());
+        $("#modalCompania").modal('hide');
+    }
     function saveTienda() {
         var id = $("#inputIdTiendas").val();
         $("#codigoTienda").val($("#tiendasSelect").val());
@@ -454,6 +480,12 @@
         $('#codigoTienda').val('');
         $('#' + id).val('');
     }
+    function vaciarInput5() {
+        var id = $("#inputIdCompania").val();
+        $('#originalCompania').val('');
+        $('#codigoCompania').val('');
+        $('#' + id).val('');
+    }
 
     function vaciarInput4() {
         $('#originalRangeGrabado').val('');
@@ -491,7 +523,10 @@
         var originalData2 = $("#originalTienda").val();
         inputElement.value = originalData2;
     }
-
+    function noTextInput5(inputElement) {
+        var originalData2 = $("#originalCompania").val();
+        inputElement.value = originalData2;
+    }
     function noTextInput2(inputElement) {
         var originalData2 = $("#originalRangeGrabado").val();
         inputElement.value = originalData2;
@@ -513,11 +548,18 @@
         };
         inputs = $(".inputsDoc");
         var tipo = $("#tipDocs").val();
-        console.log('cambio');
-        console.log(tipo);
         for (let i = 0; i < (inputs.length - 3); i++) {
-            if (camposDes[i].toLowerCase() == "tienda" || camposDes[i].toLowerCase() == "compañia") {
-                campos["CAM" + i] = $("#codigoTienda").val();
+            if (camposDes[i].toLowerCase() == "tienda" ) {
+                var tienda=$("#codigoTienda").val().padStart(2, '0');
+                if (tienda!='00') {
+                    campos["CAM" + i] = tienda;  
+                }
+            }else if(camposDes[i].toLowerCase() == "compañia"){
+                var cia=$("#codigoCompania").val().padStart(2, '0');
+                if (cia!='00') {
+                    campos["CAM" + i] = cia;  
+                }
+                
             }else if(camposDes[i].toLowerCase() == "proveedor"){
                 campos["CAM" + i] = codigo;
             } 
@@ -525,7 +567,6 @@
                 campos["CAM" + i] = $("#" + tipo + i + "").val();
             }
         }
-        console.log(campos);
         var tipProv = "";
         var idProv = "";
         if (tipo == 'FAC' && tipo != 'A') {
@@ -567,23 +608,32 @@
         }
         $("#tableDocs").empty();
         $("#tableDocs").append(
-            '<label class="ms-2 fw-bold text-black mt-3">**Presione clic sobre el documento para ver los detalles**</label>'
-            );
-        $("#tableDocs").append(`<table id="myTableInvDesc" class="table stripe " >
+            `<div class="row">
+                <div class="col-8">
+                    <label class="ms-2 fw-bold text-black text-start mt-3">**Presione clic sobre el documento para ver los detalles**</label>
+                </div>
+                <div class="col-4 text-end">
+                    <label class="ms-2 me-1 mt-3">Se encontraron <span class="fw-bold" id="numDocumentos">0</span> documentos</label>
+                </div>
+            </div>            
+            `);
+        $("#tableDocs").append(`
+        <div class="table-responsive">
+                     <table id="myTableInvDesc" class="table stripe " style="width:100%;">
                         <thead>
                             <tr>
                                 <th class="space-cards"></th>
                                 <th class="space-cards"></th>
                                 <th class="space-cards"></th>
                                 <th class="space-cards" id="col1"></th>
-                                <th class="space-cards" id="col2"></th>
                             </tr>
                         </thead>
                         <tbody id="myTableBody">
                             
                            
                         </tbody>
-                    </table>`);
+                    </table>
+                </div>`);
 
         let width = screen.width;
         var row = 5;
@@ -639,7 +689,7 @@
             'CAM9': getCookie("cam9"),
             'CAM10': getCookie("cam10")
         };
-        var baseUrl = "http://172.16.15.20/API.LovablePHP/ZLO0016P/List/";
+        var baseUrl = "http://172.16.15.20/API.LovablePHP/ZLO0016P/ListAsync/";
         var queryParams = [];
         if (anoing) queryParams.push("anoing=" + anoing);
         if (numemp) queryParams.push("numemp=" + numemp);
@@ -652,8 +702,6 @@
         if (fecha4) queryParams.push("fecha4=" + fecha4);
         if (nomdoc) queryParams.push("nomdoc=" + nomdoc);
         if (tipoFecha) queryParams.push("tipoFecha=" + tipoFecha);
-
-
         for (var key in campos) {
             if (campos[key]) {
                 queryParams.push(key + "=" + campos[key]);
@@ -661,263 +709,305 @@
         }
 
         var urlList = baseUrl + "?" + queryParams.join("&");
-        console.log(urlList);
+        //console.log(urlList);
         var response = ajaxRequest(urlList);
         const body = $("#myTableBody");
         if (response.code == 200) {
-            console.log(response.data);
             let tr;
             let limit = Math.min(response.data.length, 100);
-            for (let i = 0; i < limit; i++) {
-                if (i % row === 0) {
-                    tr = $('<tr></tr>');
-                    body.append(tr);
-                }
-                let td;
-                switch (response.data[i]['EXTDOC']) {
+            //let limit=response.data.length;
+            //$("#numDocumentos").text(limit);  
+            var dataTable = $("#myTableInvDesc").DataTable({
+                    language: {
+                        url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json',
+                    },
+                "processing": true,
+                "serverSide": true,
+                "ajax": {
+                    "url": urlList,
+                    "type": "POST",
+                    "dataSrc": function (json) {
+                        var newData=[];
+                        var columna1=[];var columna2=[];var columna3=[];var columna4=[];
+                        var data=json.data;
+                        for (let i = 0; i < data.length; i++) {
+                            switch (data[i]['COLUMNA']) {
+                                case 1:
+                                    columna1.push(data[i]);
+                                    break;
+                                    case 2:
+                                    columna2.push(data[i]);
+                                    break;
+                                    case 3:
+                                    columna3.push(data[i]);
+                                    break;
+                                    case 4:
+                                    columna4.push(data[i]);
+                                    break;
+                                default:
+                                    break;
+                            }
+                            
+                        }
+                        (columna1.length>0)? newData[0]=columna1: '';
+                        (columna2.length>0)? newData[1]=columna2: '';
+                        (columna3.length>0)? newData[2]=columna3: '';
+                        (columna4.length>0)? newData[3]=columna4: '';
+                        return newData;
+                    },
+                    "complete": function (xhr) {
+                        if (xhr.status == 200) {
+                            $("#numDocumentos").text(xhr.responseJSON.data[0]['TOTALROWS']);                            
+                        }
+                        },
+                        error: function (xhr, status, error) {
+                            console.log(error);
+                            requestError = true;
+                        }
+                },
+                "columns": [
+                    { "data": null,
+                      "render": function(data, type, row) {
+                            return renderCards(data[0]);    
+                      }
+                    },
+                    { "data": null,
+                      "render": function(data, type, row) {
+                            return renderCards(data[1]);  
+                      }
+                    },
+                    { "data": null,
+                      "render": function(data, type, row) {
+                            return renderCards(data[2]);  
+                      }
+                    },
+                    { "data": null,
+                      "render": function(data, type, row) {
+                            return renderCards(data[3]);  
+                      }
+                    },
+                ],
+                    searching: false,
+                    paging: true,
+                    processing: true,
+                    ordering: false,
+                    pageLength: 4,
+                    bInfo : false,
+                    lengthChange: false
+                });
+        } else {
+            body.append('<tr><td class="text-center p-3 fs-5" colspan="100%">No se encontraron documentos</td></tr>')
+        }
+        const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+        const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
+    }
+
+    var contador=1;
+    function renderCards(data) {
+        if (contador>4) {
+            contador=1;
+        }
+        contador++;
+        if (data) {
+        var extension=data['EXTDOC'];
+        switch (extension) {
                     case 'png':
                     case 'jpg':
                     case 'jpeg':
-                        td = $('<td></td>').append(`
-                                    <div class="card" onclick="showCard('` + response.data[i]['NOMDOC'] + `','` +
-                            response.data[i]['USUGRA'] + `','` + response.data[i]['FECGRA'] + `','` + response.data[
-                                i]['HORGRA'] + `','` + response.data[i]['EXTDOC'] + `','` + response.data[i][
+                        return `<div class="card" onclick="showCard('` + data['NOMDOC'] + `','` +
+                            data['USUGRA'] + `','` + data['FECGRA'] + `','` + data['HORGRA'] + `','` + data['EXTDOC'] + `','` + data[
                                 'URLDOC'
-                            ] + `','` + response.data[i]['TIPDOC'] + `','` + response.data[i]['DESCRP'] + `','` +
-                            response.data[i]['FECHA'] + `','` + response.data[i]['CAM1'] + `','` + response.data[i][
+                            ] + `','` + data['TIPDOC'] + `','` + data['DESCRP'] + `','` +
+                            data['FECHA'] + `','` + data['CAM1'] + `','` + data[
                                 'CAM2'
-                            ] + `','` + response.data[i]['CAM3'] + `','` + response.data[i]['CAM4'] + `','` +
-                            response.data[i]['CAM5'] + `','` + response.data[i]['CAM6'] + `','` + response.data[i][
+                            ] + `','` + data['CAM3'] + `','` + data['CAM4'] + `','` +
+                            data['CAM5'] + `','` + data['CAM6'] + `','` + data[
                                 'CAM7'
-                            ] + `','` + response.data[i]['CAM8'] + `','` + response.data[i]['CAM9'] + `','` +
-                            response.data[i]['CAM10'] + `','` + response.data[i]['CODDEP'] + `','` + response.data[
-                                i]['CODSEC'] + `')">
+                            ] + `','` + data['CAM8'] + `','` + data['CAM9'] + `','` +
+                            data['CAM10'] + `','` + data['CODDEP'] + `','` + data['CODSEC'] + `')">
                                         <div class="card-body text-center">
-                                            <img src="http://172.16.15.20` + response.data[i]['URLDOC'] +
+                                            <img src="http://172.16.15.20` + data['URLDOC'] +
                             `"
                                                 style="height:50px;" alt="">
-                                            <h6 class=" responsive-font-example mt-1" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="` + response.data[i]['NOMDOC'] + `">` +
-                            truncarTexto(response.data[i]['NOMDOC'].split('.').slice(0, -1).join('.')) + `</h6>
+                                            <h6 class=" responsive-font-example mt-1" style="font-size:12px;" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="` + data['NOMDOC'] + `">` +
+                            truncarTexto(data['NOMDOC'].split('.').slice(0, -1).join('.')) + `</h6>
                                         </div>
-                                    </div>`);
-                        tr.append(td);
+                                    </div>`;
                         break;
                     case 'xlsx':
-                        td = $('<td></td>').append(`
-                                    <div class="card" onclick="showCard('` + response.data[i]['NOMDOC'] + `','` +
-                            response.data[i]['USUGRA'] + `','` + response.data[i]['FECGRA'] + `','` + response.data[
-                                i]['HORGRA'] + `','` + response.data[i]['EXTDOC'] + `','` + response.data[i][
+                        return `
+                                    <div class="card" onclick="showCard('` + data['NOMDOC'] + `','` +
+                            data['USUGRA'] + `','` + data['FECGRA'] + `','` + data['HORGRA'] + `','` + data['EXTDOC'] + `','` + data[
                                 'URLDOC'
-                            ] + `','` + response.data[i]['TIPDOC'] + `','` + response.data[i]['DESCRP'] + `','` +
-                            response.data[i]['FECHA'] + `','` + response.data[i]['CAM1'] + `','` + response.data[i][
+                            ] + `','` + data['TIPDOC'] + `','` + data['DESCRP'] + `','` +
+                            data['FECHA'] + `','` + data['CAM1'] + `','` + data[
                                 'CAM2'
-                            ] + `','` + response.data[i]['CAM3'] + `','` + response.data[i]['CAM4'] + `','` +
-                            response.data[i]['CAM5'] + `','` + response.data[i]['CAM6'] + `','` + response.data[i][
+                            ] + `','` + data['CAM3'] + `','` + data['CAM4'] + `','` +
+                            data['CAM5'] + `','` + data['CAM6'] + `','` + data[
                                 'CAM7'
-                            ] + `','` + response.data[i]['CAM8'] + `','` + response.data[i]['CAM9'] + `','` +
-                            response.data[i]['CAM10'] + `','` + response.data[i]['CODDEP'] + `','` + response.data[
-                                i]['CODSEC'] +
+                            ] + `','` + data['CAM8'] + `','` + data['CAM9'] + `','` +
+                            data['CAM10'] + `','` + data['CODDEP'] + `','` + data['CODSEC'] +
                             `')">
                                         <div class="card-body text-center">
                                             <img src="../../assets/img/icons/excel.png"
                                                 width="50" alt="">
-                                            <h6 class=" responsive-font-example mt-1" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="` +
-                            response.data[i]['NOMDOC'] + `">` + truncarTexto(response.data[i]['NOMDOC']
+                                            <h6 class=" responsive-font-example mt-1" style="font-size:12px;" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="` +
+                            data['NOMDOC'] + `">` + truncarTexto(data['NOMDOC']
                                 .split('.').slice(0, -1).join('.')) + `</h6>
                                         </div>
-                                    </div>`);
-                        tr.append(td);
+                                    </div>`;
                         break;
                     case 'docx':
-                        td = $('<td></td>').append(`
-                                    <div class="card" onclick="showCard('` + response.data[i]['NOMDOC'] + `','` +
-                            response.data[i]['USUGRA'] + `','` + response.data[i]['FECGRA'] + `','` + response.data[
-                                i]['HORGRA'] + `','` + response.data[i]['EXTDOC'] + `','` + response.data[i][
+                        return `
+                                    <div class="card" onclick="showCard('` + data['NOMDOC'] + `','` +
+                            data['USUGRA'] + `','` + data['FECGRA'] + `','` + data['HORGRA'] + `','` + data['EXTDOC'] + `','` + data[
                                 'URLDOC'
-                            ] + `','` + response.data[i]['TIPDOC'] + `','` + response.data[i]['DESCRP'] + `','` +
-                            response.data[i]['FECHA'] + `','` + response.data[i]['CAM1'] + `','` + response.data[i][
+                            ] + `','` + data['TIPDOC'] + `','` + data['DESCRP'] + `','` +
+                            data['FECHA'] + `','` + data['CAM1'] + `','` + data[
                                 'CAM2'
-                            ] + `','` + response.data[i]['CAM3'] + `','` + response.data[i]['CAM4'] + `','` +
-                            response.data[i]['CAM5'] + `','` + response.data[i]['CAM6'] + `','` + response.data[i][
+                            ] + `','` + data['CAM3'] + `','` + data['CAM4'] + `','` +
+                            data['CAM5'] + `','` + data['CAM6'] + `','` + data[
                                 'CAM7'
-                            ] + `','` + response.data[i]['CAM8'] + `','` + response.data[i]['CAM9'] + `','` +
-                            response.data[i]['CAM10'] + `','` + response.data[i]['CODDEP'] + `','` + response.data[
-                                i]['CODSEC'] +
+                            ] + `','` + data['CAM8'] + `','` + data['CAM9'] + `','` +
+                            data['CAM10'] + `','` + data['CODDEP'] + `','` + data['CODSEC'] +
                             `')">
                                         <div class="card-body text-center">
                                             <img src="../../assets/img/icons/word.png"
                                                 width="50" alt="">
-                                            <h6 class=" responsive-font-example mt-1" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="` +
-                            response.data[i]['NOMDOC'] + `">` + truncarTexto(response.data[i]['NOMDOC']
+                                            <h6 class=" responsive-font-example mt-1" style="font-size:12px;" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="` +
+                            data['NOMDOC'] + `">` + truncarTexto(data['NOMDOC']
                                 .split('.').slice(0, -1).join('.')) + `</h6>
                                         </div>
-                                    </div>`);
-                        tr.append(td);
+                                    </div>`;
                         break;
                     case 'pdf':
-                        td = $('<td></td>').append(`
-                                    <div class="card" onclick="showCard('` + response.data[i]['NOMDOC'] + `','` +
-                            response.data[i]['USUGRA'] + `','` + response.data[i]['FECGRA'] + `','` + response.data[
-                                i]['HORGRA'] + `','` + response.data[i]['EXTDOC'] + `','` + response.data[i][
+                        return `
+                                    <div class="card" onclick="showCard('` + data['NOMDOC'] + `','` +
+                            data['USUGRA'] + `','` + data['FECGRA'] + `','` + data['HORGRA'] + `','` + data['EXTDOC'] + `','` + data[
                                 'URLDOC'
-                            ] + `','` + response.data[i]['TIPDOC'] + `','` + response.data[i]['DESCRP'] + `','` +
-                            response.data[i]['FECHA'] + `','` + response.data[i]['CAM1'] + `','` + response.data[i][
+                            ] + `','` + data['TIPDOC'] + `','` + data['DESCRP'] + `','` +
+                            data['FECHA'] + `','` + data['CAM1'] + `','` + data[
                                 'CAM2'
-                            ] + `','` + response.data[i]['CAM3'] + `','` + response.data[i]['CAM4'] + `','` +
-                            response.data[i]['CAM5'] + `','` + response.data[i]['CAM6'] + `','` + response.data[i][
+                            ] + `','` + data['CAM3'] + `','` + data['CAM4'] + `','` +
+                            data['CAM5'] + `','` + data['CAM6'] + `','` + data[
                                 'CAM7'
-                            ] + `','` + response.data[i]['CAM8'] + `','` + response.data[i]['CAM9'] + `','` +
-                            response.data[i]['CAM10'] + `','` + response.data[i]['CODDEP'] + `','` + response.data[
-                                i]['CODSEC'] +
+                            ] + `','` + data['CAM8'] + `','` + data['CAM9'] + `','` +
+                            data['CAM10'] + `','` + data['CODDEP'] + `','` + data['CODSEC'] +
                             `')">
                                         <div class="card-body text-center">
                                             <img src="../../assets/img/icons/pdf.png"
                                                 width="50" alt="">
-                                            <h6 class=" responsive-font-example mt-1" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="` +
-                            response.data[i]['NOMDOC'] + `">` + truncarTexto(response.data[i]['NOMDOC'].split('.')
+                                            <h6 class=" responsive-font-example mt-1" style="font-size:12px;" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="` +
+                            data['NOMDOC'] + `">` + truncarTexto(data['NOMDOC'].split('.')
                                 .slice(0, -1).join('.')) + `</h6>
                                         </div>
-                                    </div>`);
-                        tr.append(td);
+                                    </div>`;
                         break;
                     case 'txt':
-                        td = $('<td></td>').append(`
-                                    <div class="card" onclick="showCard('` + response.data[i]['NOMDOC'] + `','` +
-                            response.data[i]['USUGRA'] + `','` + response.data[i]['FECGRA'] + `','` + response.data[
-                                i]['HORGRA'] + `','` + response.data[i]['EXTDOC'] + `','` + response.data[i][
+                        return `
+                                    <div class="card" onclick="showCard('` + data['NOMDOC'] + `','` +
+                            data['USUGRA'] + `','` + data['FECGRA'] + `','` + data['HORGRA'] + `','` + data['EXTDOC'] + `','` + data[
                                 'URLDOC'
-                            ] + `','` + response.data[i]['TIPDOC'] + `','` + response.data[i]['DESCRP'] + `','` +
-                            response.data[i]['FECHA'] + `','` + response.data[i]['CAM1'] + `','` + response.data[i][
+                            ] + `','` + data['TIPDOC'] + `','` + data['DESCRP'] + `','` +
+                            data['FECHA'] + `','` + data['CAM1'] + `','` + data[
                                 'CAM2'
-                            ] + `','` + response.data[i]['CAM3'] + `','` + response.data[i]['CAM4'] + `','` +
-                            response.data[i]['CAM5'] + `','` + response.data[i]['CAM6'] + `','` + response.data[i][
+                            ] + `','` + data['CAM3'] + `','` + data['CAM4'] + `','` +
+                            data['CAM5'] + `','` + data['CAM6'] + `','` + data[
                                 'CAM7'
-                            ] + `','` + response.data[i]['CAM8'] + `','` + response.data[i]['CAM9'] + `','` +
-                            response.data[i]['CAM10'] + `','` + response.data[i]['CODDEP'] + `','` + response.data[
-                                i]['CODSEC'] +
+                            ] + `','` + data['CAM8'] + `','` + data['CAM9'] + `','` +
+                            data['CAM10'] + `','` + data['CODDEP'] + `','` + data['CODSEC'] +
                             `')">
                                         <div class="card-body text-center">
                                             <img src="../../assets/img/icons/txt.png"
                                                 width="50" alt="">
-                                            <h6 class=" responsive-font-example mt-1" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="` +
-                            response.data[i]['NOMDOC'] + `">` + truncarTexto(response.data[i]['NOMDOC']
+                                            <h6 class=" responsive-font-example mt-1" style="font-size:12px;" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="` +
+                            data['NOMDOC'] + `">` + truncarTexto(data['NOMDOC']
                                 .split('.').slice(0, -1).join('.')) + `</h6>
                                         </div>
-                                    </div>`);
-                        tr.append(td);
+                                    </div>`;
                         break;
                     case 'ppx':
-                        td = $('<td></td>').append(`
-                                    <div class="card" onclick="showCard('` + response.data[i]['NOMDOC'] + `','` +
-                            response.data[i]['USUGRA'] + `','` + response.data[i]['FECGRA'] + `','` + response.data[
-                                i]['HORGRA'] + `','` + response.data[i]['EXTDOC'] + `','` + response.data[i][
+                        return `
+                                    <div class="card" onclick="showCard('` + data['NOMDOC'] + `','` +
+                            data['USUGRA'] + `','` + data['FECGRA'] + `','` +data['HORGRA'] + `','` + data['EXTDOC'] + `','` + data[
                                 'URLDOC'
-                            ] + `','` + response.data[i]['TIPDOC'] + `','` + response.data[i]['DESCRP'] + `','` +
-                            response.data[i]['FECHA'] + `','` + response.data[i]['CAM1'] + `','` + response.data[i][
+                            ] + `','` + data['TIPDOC'] + `','` + data['DESCRP'] + `','` +
+                            data['FECHA'] + `','` + data['CAM1'] + `','` + data[
                                 'CAM2'
-                            ] + `','` + response.data[i]['CAM3'] + `','` + response.data[i]['CAM4'] + `','` +
-                            response.data[i]['CAM5'] + `','` + response.data[i]['CAM6'] + `','` + response.data[i][
+                            ] + `','` + data['CAM3'] + `','` + data['CAM4'] + `','` +
+                            data['CAM5'] + `','` + data['CAM6'] + `','` + data[
                                 'CAM7'
-                            ] + `','` + response.data[i]['CAM8'] + `','` + response.data[i]['CAM9'] + `','` +
-                            response.data[i]['CAM10'] + `','` + response.data[i]['CODDEP'] + `','` + response.data[
-                                i]['CODSEC'] +
+                            ] + `','` + data['CAM8'] + `','` + data['CAM9'] + `','` +
+                            data['CAM10'] + `','` + data['CODDEP'] + `','` + data['CODSEC'] +
                             `')">
                                         <div class="card-body text-center">
                                             <img src="../../assets/img/icons/pp.png"
                                                 width="50" alt="">
-                                            <h6 class=" responsive-font-example mt-1" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="` +
-                            response.data[i]['NOMDOC'] + `">` + truncarTexto(response.data[i]['NOMDOC']
+                                            <h6 class=" responsive-font-example mt-1" style="font-size:12px;" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="` +
+                            data['NOMDOC'] + `">` + truncarTexto(data['NOMDOC']
                                 .split('.').slice(0, -1).join('.')) + `</h6>
                                         </div>
-                                    </div>`);
-                        tr.append(td);
+                                    </div>`;
                         break;
                     case 'zip':
                     case 'rar':
-                        td = $('<td></td>').append(`
-                                    <div class="card" onclick="showCard('` + response.data[i]['NOMDOC'] + `','` +
-                            response.data[i]['USUGRA'] + `','` + response.data[i]['FECGRA'] + `','` + response.data[
-                                i]['HORGRA'] + `','` + response.data[i]['EXTDOC'] + `','` + response.data[i][
+                        return `
+                                    <div class="card" onclick="showCard('` + data['NOMDOC'] + `','` +
+                            data['USUGRA'] + `','` + data['FECGRA'] + `','` + data['HORGRA'] + `','` + data['EXTDOC'] + `','` + data[
                                 'URLDOC'
-                            ] + `','` + response.data[i]['TIPDOC'] + `','` + response.data[i]['DESCRP'] + `','` +
-                            response.data[i]['FECHA'] + `','` + response.data[i]['CAM1'] + `','` + response.data[i][
+                            ] + `','` + data['TIPDOC'] + `','` + data['DESCRP'] + `','` +
+                            data['FECHA'] + `','` + data['CAM1'] + `','` + data[
                                 'CAM2'
-                            ] + `','` + response.data[i]['CAM3'] + `','` + response.data[i]['CAM4'] + `','` +
-                            response.data[i]['CAM5'] + `','` + response.data[i]['CAM6'] + `','` + response.data[i][
+                            ] + `','` + data['CAM3'] + `','` + data['CAM4'] + `','` +
+                            data['CAM5'] + `','` + data['CAM6'] + `','` + data[
                                 'CAM7'
-                            ] + `','` + response.data[i]['CAM8'] + `','` + response.data[i]['CAM9'] + `','` +
-                            response.data[i]['CAM10'] + `','` + response.data[i]['CODDEP'] + `','` + response.data[
-                                i]['CODSEC'] +
+                            ] + `','` + data['CAM8'] + `','` + data['CAM9'] + `','` +
+                            data['CAM10'] + `','` + data['CODDEP'] + `','` + data['CODSEC'] +
                             `')">
                                         <div class="card-body text-center">
                                             <img src="../../assets/img/icons/folder.png"
                                                 width="50" alt="">
-                                            <h6 class=" responsive-font-example mt-1" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="` +
-                            response.data[i]['NOMDOC'] + `">` + truncarTexto(response.data[i]['NOMDOC']
+                                            <h6 class=" responsive-font-example mt-1" style="font-size:12px;" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="` +
+                            data['NOMDOC'] + `">` + truncarTexto(data['NOMDOC']
                                 .split('.').slice(0, -1).join('.')) + `</h6>
                                         </div>
-                                    </div>`);
-                        tr.append(td);
+                                    </div>`;
                         break;
                     default:
-                        td = $('<td></td>').append(`
-                                    <div class="card" onclick="showCard('` + response.data[i]['NOMDOC'] + `','` +
-                            response.data[i]['USUGRA'] + `','` + response.data[i]['FECGRA'] + `','` + response.data[
-                                i]['HORGRA'] + `','` + response.data[i]['EXTDOC'] + `','` + response.data[i][
+                        return `<div class="card" onclick="showCard('` + data['NOMDOC'] + `','` +
+                            data['USUGRA'] + `','` + data['FECGRA'] + `','` + data['HORGRA'] + `','` + data['EXTDOC'] + `','` + data[
                                 'URLDOC'
-                            ] + `','` + response.data[i]['TIPDOC'] + `','` + response.data[i]['DESCRP'] + `','` +
-                            response.data[i]['FECHA'] + `','` + response.data[i]['CAM1'] + `','` + response.data[i][
+                            ] + `','` + data['TIPDOC'] + `','` + data['DESCRP'] + `','` +
+                            data['FECHA'] + `','` + data['CAM1'] + `','` + data[
                                 'CAM2'
-                            ] + `','` + response.data[i]['CAM3'] + `','` + response.data[i]['CAM4'] + `','` +
-                            response.data[i]['CAM5'] + `','` + response.data[i]['CAM6'] + `','` + response.data[i][
+                            ] + `','` + data['CAM3'] + `','` + data['CAM4'] + `','` +
+                            data['CAM5'] + `','` + data['CAM6'] + `','` + data[
                                 'CAM7'
-                            ] + `','` + response.data[i]['CAM8'] + `','` + response.data[i]['CAM9'] + `','` +
-                            response.data[i]['CAM10'] + `','` + response.data[i]['CODDEP'] + `','` + response.data[
-                                i]['CODSEC'] +
+                            ] + `','` + data['CAM8'] + `','` + data['CAM9'] + `','` +
+                            data['CAM10'] + `','` + data['CODDEP'] + `','` + data['CODSEC'] +
                             `')">
                                         <div class="card-body text-center">
                                             <img src="../../assets/img/icons/file.png"
                                                 width="50" alt="">
-                                            <h6 class="responsive-font-example mt-1" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="` +
-                            response.data[i]['NOMDOC'] + `">` + truncarTexto(response.data[i]['NOMDOC']
+                                            <h6 class="responsive-font-example mt-1" style="font-size:12px;" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="` +
+                            data['NOMDOC'] + `">` + truncarTexto(data['NOMDOC']
                                 .split('.').slice(0, -1).join('.')) + `</h6>
                                         </div>
-                                    </div>`);
-                        tr.append(td);
+                                    </div>`;
                         break;
-                }
-
-            }
-
-            let lastRowCells = tr.children().length;
-            for (let j = lastRowCells; j < row; j++) {
-                tr.append($('<td></td>'));
-            }
-            const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
-            const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
-        } else {
-            body.append('<tr><td class="text-center p-3 fs-5" colspan="100%">No se encontraron documentos</td></tr>')
+        } 
+        }else{
+            return '';
         }
-
-        var dataTable = $("#myDataTable").DataTable({
-            language: {
-                url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json',
-            },
-            searching: false,
-            paging: false,
-            processing: true,
-            ordering: false,
-            pageLength: 100,
-        });
+        
     }
-
-
 
 
     function showCard(nomcard, usugra, fecgra, horgra, extdoc, urldoc, tipdoc, descrp, fecha, cam0, cam1, cam2, cam3,
         cam4, cam5, cam6, cam7, cam8, cam9, coddep, codsec) {
 
         $("#downloadFrame").empty();
+       
         switch (extdoc) {
             case 'png':
             case 'jpg':
@@ -949,7 +1039,8 @@
                 break;
         }
         $("#downloadCard").empty();
-        $("#downloadCard").append(
+        if (extdoc == 'pdf' || extdoc == 'png' || extdoc == 'jpg' || extdoc == 'jpeg') {
+            $("#downloadCard").append(
             `
             <div class="row m-3">
                 <div class="col-6">
@@ -962,6 +1053,17 @@
                 </div>
             </div>
             `);
+        }else{
+            $("#downloadCard").append(
+            `
+                <div class="col-12">
+                    <a class="btn btn-info fw-bold text-white" style="width:100%;" href="http://172.16.15.20` +
+            urldoc + `" download>Descargar <i class="fa-solid fa-download"></i></a>
+                </div>
+            </div>
+            `);
+        }
+       
 
         $("#trashDoc").empty();
         var permisos = "<?php echo isset($_SESSION['PERESP'])? $_SESSION['PERESP']: ''; ?>";
@@ -1040,10 +1142,11 @@
     }
 
     function truncarTexto(texto) {
-        if (texto.length <= 8) {
+        if (texto.length <= 11) {
             return texto;
         }
-        return texto.substring(0, 8) + "...";
+        return texto;
+        //return texto.substring(0, 11) + "...";
     }
 
     function deleteCard(nomcard, usugra, fecgra, horgra, extdoc, urldoc) {
@@ -1284,7 +1387,7 @@
                     <div class="row">
                         <div class="col-12">
                             <input type="text" class="d-none" id="inputIdTiendas">
-                            <label class="mb-3">Punto de venta: </label>
+                            <label class="mb-3">Tienda: </label>
                             <select id="tiendasSelect" class="form-select">
 
                             </select>
@@ -1293,6 +1396,31 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" onclick="saveTienda()">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modalCompania" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Selecciona un rango de fechas</h1>
+
+                    <button type="button" class="btn-close" onclick="$('#modalCompania').modal('hide')"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <input type="text" class="d-none" id="inputIdCompania">
+                            <label class="mb-3">Compañía: </label>
+                            <select id="CompaniaSelect" class="form-select">
+
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="saveCompania()">Aceptar</button>
                 </div>
             </div>
         </div>
