@@ -89,6 +89,7 @@
         var codusu; var anoing; var numemp; var codsec=0; var coddep=0;
         var codigo="";
         var comarcOptions="";
+        var tiendasOptions="";
     $(document).ready(function(){
          codusu="<?php echo isset($_SESSION['CODUSU'])? $_SESSION['CODUSU']: ''; ?>";
          anoing="<?php echo isset($_SESSION['ANOING'])? $_SESSION['ANOING']: ''; ?>";
@@ -108,6 +109,7 @@
             if (cia==null) {
                 var cor= url.searchParams.get("cor");
                 var getParamsurl="http://172.16.15.20/API.LovablePHP/ZLO0015P/GetParams/?cod="+cor+"";
+                console.log(getParamsurl);
                 var responseParams = ajaxRequest(getParamsurl);
             if (responseParams.code==200) {
                 cia=responseParams.data.CIA;                  
@@ -133,7 +135,14 @@
                    comarcOptions+='<option value="'+responseComarc.data[i].COMCOD.padStart(2, '0')+'">'+responseComarc.data[i].COMDES+'</option>';
                 }
             }
-
+            var urlTiendas='http://172.16.15.20/API.LovablePHP/ZLO0015P/ListTiendas/?user='+usuario+'';
+            var responseTiendas = ajaxRequest(urlTiendas);
+            if (responseTiendas.code == 200) {
+                for (let i = 0; i < responseTiendas.data.length; i++) {
+                    tiendasOptions += '<option value="' + responseTiendas.data[i].COMCOD.padStart(2, '0') + '">' + responseTiendas.data[
+                        i].COMDES + '</option>';
+                }
+            }
         var urlTipos="http://172.16.15.20/API.LovablePHP/ZLO0015P/ListTipos/";
         var responseTipos = ajaxRequest(urlTipos);
         if (responseTipos.code==200) {
@@ -206,7 +215,7 @@
                 }else if(camposDes[i].toLowerCase()=="tienda"){
                     var select=`<label class=" text-start" id="lbl`+i+`" style="width:100%;   margin-top: 15px;">`+camposDes[i]+`:<select class="form-select inputsDoc" id="`+responseCampos.data[0]['TIPDOC']+i+`" placeholder="Selecciona una tienda"  /></select></label>`;
                     inputs.append(select);
-                    $("#"+responseCampos.data[0]['TIPDOC']+i).append(comarcOptions);
+                    $("#"+responseCampos.data[0]['TIPDOC']+i).append(tiendasOptions);
                 }else if(camposDes[i].toLowerCase()=="compañia"){
                     var select=`<label class=" text-start"  id="lbl`+i+`" style="width:100%;  margin-top: 15px;">`+camposDes[i]+`:<select class="form-select inputsDoc" id="`+responseCampos.data[0]['TIPDOC']+i+`" placeholder="Selecciona una compañía"  /></select></label>`;
                     inputs.append(select);

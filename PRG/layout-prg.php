@@ -116,7 +116,7 @@
     $host= $_SERVER["HTTP_HOST"];
     $url= $_SERVER["REQUEST_URI"];
     
-   if(trim(substr($url,20,8))=='ZLO0015P'){
+   if(trim(substr($url,20,8))=='ZLO0015P' || trim(substr($url,20,8))=='ZLO0016P'){
     if (isset($_GET['user'])) {$codusu=$_GET['user'];}
     $_SESSION['CODUSU']=$codusu;
     $connIBM=conexionIBM();

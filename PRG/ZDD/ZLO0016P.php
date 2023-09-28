@@ -108,6 +108,7 @@
     });
     var codigo = "";
     var comarcOptions = "";
+    var tiendasOptions="";
     var camposDes = "";
     var inputs = "";
     $(document).ready(function() {
@@ -119,11 +120,19 @@
             document.cookie = "cam" + i + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/";
         }
 
-        var urlComarc = 'http://172.16.15.20/API.LovablePHP/ZLO0001P/ListComarc/?usuario=' + usuario + '';
+        var urlComarc='http://172.16.15.20/API.LovablePHP/ZLO0015P/ListComarc/?user='+usuario+'';
         var responseComarc = ajaxRequest(urlComarc);
         if (responseComarc.code == 200) {
             for (let i = 0; i < responseComarc.data.length; i++) {
-                comarcOptions += '<option value="' + responseComarc.data[i].COMCOD + '">' + responseComarc.data[
+                comarcOptions += '<option value="' + responseComarc.data[i].COMCOD.padStart(2, '0') + '">' + responseComarc.data[
+                    i].COMDES + '</option>';
+            }
+        }
+        var urlTiendas='http://172.16.15.20/API.LovablePHP/ZLO0015P/ListTiendas/?user='+usuario+'';
+        var responseTiendas = ajaxRequest(urlTiendas);
+        if (responseTiendas.code == 200) {
+            for (let i = 0; i < responseTiendas.data.length; i++) {
+                tiendasOptions += '<option value="' + responseTiendas.data[i].COMCOD.padStart(2, '0') + '">' + responseTiendas.data[
                     i].COMDES + '</option>';
             }
         }
@@ -364,7 +373,7 @@
     function showTiendas(id) {
         $("#inputIdTiendas").val(id);
         $("#tiendasSelect").empty();
-        $("#tiendasSelect").append(comarcOptions);
+        $("#tiendasSelect").append(tiendasOptions);
         $("#modalTiendas").modal('show');
     }
     function showCompanias(id) {
