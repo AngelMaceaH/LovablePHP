@@ -111,10 +111,31 @@
     var tiendasOptions="";
     var camposDes = "";
     var inputs = "";
+    var cor="";
+    var tipoWeb="";
     $(document).ready(function() {
         var anoing = "<?php echo isset($_SESSION['ANOING'])? $_SESSION['ANOING']: ''; ?>";
         var numemp = "<?php echo isset($_SESSION['NUMEMP'])? $_SESSION['NUMEMP']: ''; ?>";
         var usuario = '<?php echo $_SESSION["CODUSU"];?>';
+
+            const currentUrl = window.location.href;
+            var url = new URL(currentUrl);
+            var user= url.searchParams.get("user");
+            if (user) {
+                var cia=""; var prv=""; var tip=""; var doc=""; var apl=""; var docf=""; var fec=""; var tienda=""; var descrp="";   
+            var paramsLength=""; var paramsData=[];
+            cor=url.searchParams.get("cor");
+                var getParamsurl="http://172.16.15.20/API.LovablePHP/ZLO0016P/GetParams/?cod="+cor+"";
+                var responseParams = ajaxRequest(getParamsurl);
+            if (responseParams.code==200){
+                paramsData=responseParams.data;
+                paramsLength=paramsData['LENGTH'];
+                fec=paramsData['FECDOC'];
+                apl=paramsData['MODULO'];
+                tipoWeb=paramsData['TIPWEB'];
+                descrp=paramsData['DESCRP'];
+            } 
+            }
 
         for (let i = 0; i < 10; i++) {
             document.cookie = "cam" + i + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/";
@@ -136,6 +157,8 @@
                     i].COMDES + '</option>';
             }
         }
+        $("#tiendasSelect").append(tiendasOptions);
+        $("#CompaniaSelect").append(comarcOptions);
         if (anoing == 0 & numemp == 0) {
             $("#isGerencia").append(`<div class="col-12 col-lg-6">
                                         <h6 class="mb-3 mt-2 text-start">Departamento y Sección</h6>
@@ -205,7 +228,6 @@
                 }
             });
         }
-        chargeTable();
         var urlTipos = "http://172.16.15.20/API.LovablePHP/ZLO0015P/ListTipos/";
         var responseTipos = ajaxRequest(urlTipos);
         if (responseTipos.code == 200) {
@@ -221,22 +243,67 @@
             }
         }
         $("#cbbDepartamentos").on('change', function() {
-            /*if ($("#cbbDepartamentos").val() == '0-0') {
-                $("#filtrosDoc").addClass('d-none');
-            } else {
-                $("#filtrosDoc").removeClass('d-none');
-            }*/
             tiposChange();
         });
         $("#tiposDoc").on('change', function() {
-           /* if ($("#tiposDoc").val() == 'A') {
-                $("#filtrosDoc").addClass('d-none');
-            } else {
-                $("#filtrosDoc").removeClass('d-none');
-            }*/
             tiposChange();
         });
         tiposChange();
+        if (tipoWeb!='') {
+                $("#tiposDoc").val(tipoWeb).trigger('change');
+
+                var camposId=paramsLength-4;
+           for (let i = 0; i < camposId; i++) {
+            var data=paramsData['CAM'+(i+1)+''].split(':');
+            if (data[1].trim()!='CONSULTA') {
+                if (data[0]=='proveedor') {
+                var id=data[1].split("-");
+                var tipo = id[0]; var prov = id[1];
+                var urlFind = "http://172.16.15.20/API.LovablePHP/ZLO0015P/ProveedoresFind/?tipo=" + tipo +"&proveedor=" + prov + "";
+                var responseFind = ajaxRequest(urlFind);
+                var descripcion = (responseFind.code == 200) ? responseFind.data[0]['ARCNOM'] : "";
+                codigo=tipo+'-'+prov;
+                $("#"+tipoWeb+i+"").val(tipo+' '+prov+' '+descripcion);
+                } else if (data[0]=='compañia') {
+                    var companialbl=$("#CompaniaSelect option[value='" + data[1] + "']").text();
+                    $("#"+tipoWeb+i+"").val(companialbl);
+                    $("#codigoCompania").val(data[1]);
+                     $("#inputIdCompania").val(tipoWeb);
+                }else if (data[0]=='tienda') {
+                    var tiendalbl=$("#TiendasSelect option[value='" + data[1] + "']").text();
+                    $("#"+tipoWeb+i+"").val(tiendalbl);
+                    $("#codigoTienda").val(data[1]);
+                    $("#inputIdTienda").val(tipoWeb);
+                }
+                else{
+                    $("#"+tipoWeb+i+"").val(data[1]);
+                }
+                //$("#"+tipoWeb+i+"").prop('disabled', true);
+            }
+            }
+            searchF();
+        }
+        chargeTable();
+        
+    });
+    window.addEventListener('load', (event) => {
+        if (tipoWeb != '') {
+            let intentos = 0;
+            const maxIntentos = 20;
+            const intervalo = setInterval(() => {
+                let card1 = document.querySelector("#card1");
+                if (card1) {
+                    card1.click();
+                    console.log("click");
+                    clearInterval(intervalo); 
+                } else {
+                    intentos++;
+                    if (intentos >= maxIntentos) {
+                        clearInterval(intervalo); 
+                    }
+                }
+            }, 500);
+        }
     });
 
     function tiposChange() {
@@ -372,14 +439,10 @@
 
     function showTiendas(id) {
         $("#inputIdTiendas").val(id);
-        $("#tiendasSelect").empty();
-        $("#tiendasSelect").append(tiendasOptions);
         $("#modalTiendas").modal('show');
     }
     function showCompanias(id) {
         $("#inputIdCompania").val(id);
-        $("#CompaniaSelect").empty();
-        $("#CompaniaSelect").append(comarcOptions);
         $("#modalCompania").modal('show');
     }
     function saveCompania() {
@@ -718,7 +781,7 @@
         }
 
         var urlList = baseUrl + "?" + queryParams.join("&");
-        //console.log(urlList);
+        console.log(urlList);
         var response = ajaxRequest(urlList);
         const body = $("#myTableBody");
         if (response.code == 200) {
@@ -813,17 +876,13 @@
 
     var contador=1;
     function renderCards(data) {
-        if (contador>4) {
-            contador=1;
-        }
-        contador++;
         if (data) {
         var extension=data['EXTDOC'];
         switch (extension) {
                     case 'png':
                     case 'jpg':
                     case 'jpeg':
-                        return `<div class="card" onclick="showCard('` + data['NOMDOC'] + `','` +
+                        return `<div class="card" id="card`+contador+`" onclick="showCard('` + data['NOMDOC'] + `','` +
                             data['USUGRA'] + `','` + data['FECGRA'] + `','` + data['HORGRA'] + `','` + data['EXTDOC'] + `','` + data[
                                 'URLDOC'
                             ] + `','` + data['TIPDOC'] + `','` + data['DESCRP'] + `','` +
@@ -845,7 +904,7 @@
                         break;
                     case 'xlsx':
                         return `
-                                    <div class="card" onclick="showCard('` + data['NOMDOC'] + `','` +
+                                    <div class="card" id="card`+contador+`" onclick="showCard('` + data['NOMDOC'] + `','` +
                             data['USUGRA'] + `','` + data['FECGRA'] + `','` + data['HORGRA'] + `','` + data['EXTDOC'] + `','` + data[
                                 'URLDOC'
                             ] + `','` + data['TIPDOC'] + `','` + data['DESCRP'] + `','` +
@@ -868,7 +927,7 @@
                         break;
                     case 'docx':
                         return `
-                                    <div class="card" onclick="showCard('` + data['NOMDOC'] + `','` +
+                                    <div class="card" id="card`+contador+`" onclick="showCard('` + data['NOMDOC'] + `','` +
                             data['USUGRA'] + `','` + data['FECGRA'] + `','` + data['HORGRA'] + `','` + data['EXTDOC'] + `','` + data[
                                 'URLDOC'
                             ] + `','` + data['TIPDOC'] + `','` + data['DESCRP'] + `','` +
@@ -891,7 +950,7 @@
                         break;
                     case 'pdf':
                         return `
-                                    <div class="card" onclick="showCard('` + data['NOMDOC'] + `','` +
+                                    <div class="card" id="card`+contador+`" onclick="showCard('` + data['NOMDOC'] + `','` +
                             data['USUGRA'] + `','` + data['FECGRA'] + `','` + data['HORGRA'] + `','` + data['EXTDOC'] + `','` + data[
                                 'URLDOC'
                             ] + `','` + data['TIPDOC'] + `','` + data['DESCRP'] + `','` +
@@ -914,7 +973,7 @@
                         break;
                     case 'txt':
                         return `
-                                    <div class="card" onclick="showCard('` + data['NOMDOC'] + `','` +
+                                    <div class="card" id="card`+contador+`" onclick="showCard('` + data['NOMDOC'] + `','` +
                             data['USUGRA'] + `','` + data['FECGRA'] + `','` + data['HORGRA'] + `','` + data['EXTDOC'] + `','` + data[
                                 'URLDOC'
                             ] + `','` + data['TIPDOC'] + `','` + data['DESCRP'] + `','` +
@@ -937,7 +996,7 @@
                         break;
                     case 'ppx':
                         return `
-                                    <div class="card" onclick="showCard('` + data['NOMDOC'] + `','` +
+                                    <div class="card" id="card`+contador+`" onclick="showCard('` + data['NOMDOC'] + `','` +
                             data['USUGRA'] + `','` + data['FECGRA'] + `','` +data['HORGRA'] + `','` + data['EXTDOC'] + `','` + data[
                                 'URLDOC'
                             ] + `','` + data['TIPDOC'] + `','` + data['DESCRP'] + `','` +
@@ -961,7 +1020,7 @@
                     case 'zip':
                     case 'rar':
                         return `
-                                    <div class="card" onclick="showCard('` + data['NOMDOC'] + `','` +
+                                    <div class="card" id="card`+contador+`" onclick="showCard('` + data['NOMDOC'] + `','` +
                             data['USUGRA'] + `','` + data['FECGRA'] + `','` + data['HORGRA'] + `','` + data['EXTDOC'] + `','` + data[
                                 'URLDOC'
                             ] + `','` + data['TIPDOC'] + `','` + data['DESCRP'] + `','` +
@@ -983,7 +1042,7 @@
                                     </div>`;
                         break;
                     default:
-                        return `<div class="card" onclick="showCard('` + data['NOMDOC'] + `','` +
+                        return `<div class="card" id="card`+contador+`" onclick="showCard('` + data['NOMDOC'] + `','` +
                             data['USUGRA'] + `','` + data['FECGRA'] + `','` + data['HORGRA'] + `','` + data['EXTDOC'] + `','` + data[
                                 'URLDOC'
                             ] + `','` + data['TIPDOC'] + `','` + data['DESCRP'] + `','` +
@@ -1008,7 +1067,7 @@
         }else{
             return '';
         }
-        
+        contador++;
     }
 
 
@@ -1093,6 +1152,9 @@
         }
         $("#tipDoc").text(textoSelect);
         $("#fechaDoc").text(formatFecha(fecha));
+        if (descrp=='S-N') {
+            descrp='';
+        }
         $("#descrpDoc").text(descrp);
         var depaUrl = "http://172.16.15.20/API.LovablePHP/ZLO0016P/GetDepa/?coddep=" + coddep + "&secdep=" + codsec +
         "";
@@ -1119,11 +1181,14 @@
         var urlCampos = "http://172.16.15.20/API.LovablePHP/ZLO0015P/ListTiposFind/?tipo=" + tipdoc;
         var responseCampos = ajaxRequest(urlCampos);
         if (responseCampos.code == 200) {
+           
             const inputs = $("#extraInfo");
             inputs.empty();
             var camposDes = responseCampos.data[0].CAMPOS.split("/");
             var cont = 0;
             var length = camposDes.length;
+            console.log(camposDes);
+            console.log(campos);
             for (let i = 0; i < length; i++) {
                     var descripcion = "";
                     if (camposDes[i].toLowerCase() == "tienda"|| camposDes[i].toLowerCase() == "compañia") {
@@ -1137,7 +1202,13 @@
                         var urlFind = "http://172.16.15.20/API.LovablePHP/ZLO0015P/ProveedoresFind/?tipo=" + tipo +"&proveedor=" + prov + "";
                         var responseFind = ajaxRequest(urlFind);
                         descripcion = (responseFind.code == 200) ? responseFind.data[0]['ARCNOM'] : "";
+                    }else if(camposDes[i].toLowerCase() == "numero doc. fiscal"){
+
+                        if (campos['cam' + i]=='99999999999999999999') {
+                            campos['cam' + i]='';
+                        }
                     }
+                    
                     inputs.append(`<div class="col-6 col-lg-2 mt-2">
                                 <h6 class=" mt-1">` + camposDes[i] + `:</h6></div>
                                 <div class="col-6 col-lg-4 mt-2">

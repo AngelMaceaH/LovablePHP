@@ -90,6 +90,8 @@
         var codigo="";
         var comarcOptions="";
         var tiendasOptions="";
+        var cor="";
+        var tipoWeb="";
     $(document).ready(function(){
          codusu="<?php echo isset($_SESSION['CODUSU'])? $_SESSION['CODUSU']: ''; ?>";
          anoing="<?php echo isset($_SESSION['ANOING'])? $_SESSION['ANOING']: ''; ?>";
@@ -98,35 +100,23 @@
             const currentUrl = window.location.href;
             var url = new URL(currentUrl);
             var user= url.searchParams.get("user");
+           if (user) {
             var cia=""; var prv=""; var tip=""; var doc=""; var apl=""; var docf=""; var fec=""; var tienda=""; var descrp="";   
-             cia= url.searchParams.get("cia");
-             prv= url.searchParams.get("prv");
-             tip= url.searchParams.get("tip");
-             doc= url.searchParams.get("doc");
-             apl= url.searchParams.get("apl");
-             docf= url.searchParams.get("docf");
-             fec= url.searchParams.get("fec");
-            if (cia==null) {
-                var cor= url.searchParams.get("cor");
-                var getParamsurl="http://172.16.15.20/API.LovablePHP/ZLO0015P/GetParams/?cod="+cor+"";
-                console.log(getParamsurl);
+             var paramsLength=""; var paramsData=[];
+            cor=url.searchParams.get("cor");
+                var getParamsurl="http://172.16.15.20/API.LovablePHP/ZLO0015P/GetParams2/?cod="+cor+"";
                 var responseParams = ajaxRequest(getParamsurl);
-            if (responseParams.code==200) {
-                cia=responseParams.data.CIA;                  
-                prv=responseParams.data.PRV;
-                tip=responseParams.data.TIPO;
-                tienda=responseParams.data.TIE;
-                docf=responseParams.data.DOCFIS;
-                doc=responseParams.data.DOCRE;
-                apl=responseParams.data.MODULO;
-                fec=responseParams.data.FECDOC;
-                descrp=responseParams.data.DESCRP;
-                } 
-            }
-            
-            console.log(cia + ' ' + prv + ' ' + tip + ' ' + tienda + ' ' + doc + ' ' + apl + ' ' + docf + ' ' + fec+ ' ' + descrp);
-
-
+                console.log(getParamsurl);
+                console.log(responseParams);
+            if (responseParams.code==200){
+                paramsData=responseParams.data;
+                paramsLength=paramsData['LENGTH'];
+                fec=paramsData['FECDOC'];
+                apl=paramsData['MODULO'];
+                tipoWeb=paramsData['TIPWEB'];
+                descrp=paramsData['DESCRP'];
+            } 
+           }
          var usuario='<?php echo $_SESSION["CODUSU"];?>';
          var urlComarc='http://172.16.15.20/API.LovablePHP/ZLO0015P/ListComarc/?user='+usuario+'';
          var responseComarc = ajaxRequest(urlComarc);
@@ -151,12 +141,6 @@
                 tipos.append(`<option value="`+responseTipos.data[i].TIPDOC+`">`+responseTipos.data[i].DESCRP+`</option>`);
             }
         }
-        var tipoUrl="http://172.16.15.20/API.LovablePHP/ZLO0015P/GetTipo/?apl="+apl+"&tip="+tip+"";
-         var responseTipo = ajaxRequest(tipoUrl);
-         var tipoWeb="";
-         if (responseTipo.code==200) {
-            tipoWeb=responseTipo.data[0].TIPWEB;
-         }
         
         var currentDate = new Date().toISOString().split('T')[0];
         $('#fechaDigit').text(currentDate);
@@ -227,27 +211,22 @@
       });
       if(tipoWeb!=''){
            $("#tiposDoc").val(tipoWeb).trigger('change'); 
-          const inputs=$(".inputsDoc");
-          var length=inputs.length;
-           for (let i = 0; i < length; i++) {
-            if ($("#lbl"+i).text().toLowerCase().includes("proveedor:")) {
-                var id=prv.split("-");
+            const inputs=$(".inputsDoc");
+            var length=inputs.length;
+            var camposId=paramsLength-5;
+           for (let i = 0; i < camposId; i++) {
+                var data=paramsData['CAM'+(i+1)+''].split(':');
+                if (data[0]=='proveedor') {
+                var id=data[1].split("-");
                 var tipo = id[0]; var prov = id[1];
                 var urlFind = "http://172.16.15.20/API.LovablePHP/ZLO0015P/ProveedoresFind/?tipo=" + tipo +"&proveedor=" + prov + "";
                 var responseFind = ajaxRequest(urlFind);
                 var descripcion = (responseFind.code == 200) ? responseFind.data[0]['ARCNOM'] : "";
+                prv=tipo+'-'+prov;
                 codigo=prv;
                 $("#"+tipoWeb+i+"").val(tipo+' '+prov+' '+descripcion);
-               }else if($("#lbl"+i).text().toLowerCase().includes("compañia:")){
-                    $("#"+tipoWeb+i+"").val(cia);
-                }else if($("#lbl"+i).text().toLowerCase().includes("tienda:")){
-                    $("#"+tipoWeb+i+"").val(tienda);
-                }else if($("#lbl"+i).text().toLowerCase().includes("tipo de documento:")){
-                    $("#"+tipoWeb+i+"").val(tip);
-                }else if($("#lbl"+i).text().toLowerCase().includes("numero doc. ref.:")){
-                    $("#"+tipoWeb+i+"").val(doc);
-                }else if($("#lbl"+i).text().toLowerCase().includes("numero doc. fiscal:")){
-                    $("#"+tipoWeb+i+"").val(docf);
+                }else{
+                    $("#"+tipoWeb+i+"").val(data[1]);
                 }
                 $("#"+tipoWeb+i+"").prop('disabled', true);
             }
@@ -257,7 +236,11 @@
             var anio=fec.substring(0,4);
             var mes=fec.substring(4,6);
             var dia=fec.substring(6,8);
+          
             $("#fechaDoc").val(anio+'-'+mes+'-'+dia);
+            if (descrp=='S-N') {
+                descrp='';   
+            }
             $("#descrpDoc").val(descrp);
         }
     });
@@ -374,7 +357,6 @@
                                 var usuario = '<?php echo $_SESSION['CODUSU']; ?>';
                                 var urlDelete='http://172.16.15.20/API.LovablePHP/ZLO0015P/DelUsuario/?user='+usuario+'';
                                 var responseDel = ajaxRequest(urlDelete);
-                                var cor= url.searchParams.get("cor");
                                 var inactivarUrl="http://172.16.15.20/API.LovablePHP/ZLO0015P/Inactivar2296/?cod="+cor+"";
                                 var responseParams = ajaxRequest(inactivarUrl);
                             }
