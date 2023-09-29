@@ -435,7 +435,7 @@
                 var visibleColumn2=true;
             }
         
-            console.log("http://172.16.15.20/API.LovablePHP/ZLO0013P/List/?marca="+marca+"&plan="+plan+"&estado="+estado+"&btnor="+btnOrder+"&inventarios="+inventarios+"&clasificacion="+clasificacion+"&orden="+orden+"&filtro="+filtro+"&repro="+repro+"&formato="+formato+"&searchVal="+searchBox+"");
+            console.log("http://172.16.15.20/API.LovablePHP/ZLO0013P/List2/?marca="+marca+"&plan="+plan+"&estado="+estado+"&btnor="+btnOrder+"&inventarios="+inventarios+"&clasificacion="+clasificacion+"&orden="+orden+"&filtro="+filtro+"&repro="+repro+"&formato="+formato+"&searchVal="+searchBox+"");
             var requestError = false;
             $.fn.dataTable.ext.search.push(function(settings, searchData, index, rowData, counter) {
                     var searchVal = $('#myTablePlaneacion').DataTable().search(); 
@@ -453,7 +453,7 @@
                 "processing":true,
                 
                 "ajax": {
-                    "url": "http://172.16.15.20/API.LovablePHP/ZLO0013P/List/?marca="+marca+"&plan="+plan+"&estado="+estado+"&btnor="+btnOrder+"&inventarios="+inventarios+"&clasificacion="+clasificacion+"&orden="+orden+"&filtro="+filtro+"&repro="+repro+"&formato="+formato+"&searchVal="+searchBox+"",
+                    "url": "http://172.16.15.20/API.LovablePHP/ZLO0013P/List2/?marca="+marca+"&plan="+plan+"&estado="+estado+"&btnor="+btnOrder+"&inventarios="+inventarios+"&clasificacion="+clasificacion+"&orden="+orden+"&filtro="+filtro+"&repro="+repro+"&formato="+formato+"&searchVal="+searchBox+"",
                     "type": "POST",
                     "beforeSend": function () {
                         $("#planeacionContainer").addClass("loading");
