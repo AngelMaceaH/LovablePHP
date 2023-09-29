@@ -1,2 +1,2 @@
-# DEVLovablePHP
- Ambiente Desarrollo Proyecto PHP para Lovable Honduras
+# LovablePHP
+ Ambiente Produccion Proyecto WEB ADMINISTRATIVA para Lovable Honduras
