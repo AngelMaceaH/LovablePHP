@@ -1,11 +1,10 @@
 <?php
  session_start();
-    if (isset($_POST['boole'])) {
-        $booleano=intval($_POST['boole']);
-        if ($booleano==2) {
+    if(isset($_POST['btncols'])){
+        $marca=$_POST['btncols'];
+    }else{
+        if (isset($_POST['cbbMarca'])) {
             $marca=$_POST['cbbMarca'];
-        }else{
-            $marca=$_POST['btncols'];
         }
     }
     $plan=$_POST['cbbPlan'];
@@ -15,8 +14,6 @@
     $orden=$_POST['rbOrden'];
     $filtro=$_POST['rbFiltro'];
     $repro=$_POST['rbRepro'];
-    $formato=$_POST['cbbFormato'];
-    $_SESSION['formato']=$formato;
     $_SESSION['marca']=$marca;
     $_SESSION['plan']=$plan;
     $_SESSION['estado']=$estado;
@@ -25,14 +22,6 @@
     $_SESSION['orden']=$orden;
     $_SESSION['filtro']=$filtro;
     $_SESSION['repro']=$repro;
-
-    if(isset($_POST['btnOrderValue']) && $_SESSION['estado']!=0){
-        $btnOrderValue=$_POST['btnOrderValue'];
-        $_SESSION['btnOrderValue']=$btnOrderValue;
-    }else{
-        $_SESSION['btnOrderValue']=0;
-    }
-    echo $_SESSION['formato'];
-   header("Location: /".$_SESSION['DEV']."LovablePHP/PRG/ZFA/ZLO0013P.php");
+    header("Location: /".$_SESSION['DEV']."LovablePHP/PRG/ZAI/ZLO0013PA.php");
  
 ?>

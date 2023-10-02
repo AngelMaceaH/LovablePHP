@@ -8,7 +8,7 @@
 <body>
     <?php
     include '../layout-prg.php';
-    include '../../assets/php/ZFA/ZLO0013P/header.php';
+    include '../../assets/php/ZAI/ZLO0013P/header.php';
     $marca=isset($_SESSION['marca'])?$_SESSION['marca']:"900";
     $plan=isset($_SESSION['plan'])?$_SESSION['plan']:"4";
     $inventarios=isset($_SESSION['inventarios'])?$_SESSION['inventarios']:"1";
@@ -48,7 +48,7 @@
                         </div>
                     </div>
                    <div class="card-body" id="menuMarcas">
-                   <form class="" id="formFiltros" action="../../assets/php/ZFA/ZLO0013P/filtrosLogica.php" action="#" method="POST">
+                   <form class="" id="formFiltros" action="../../assets/php/ZAI/ZLO0013P/filtrosLogica.php" action="#" method="POST">
                         <div class="row mb-2">
                             <div class="col-12 ">
                                 <input type="text" class="d-none" id="boole" name="boole">
@@ -476,7 +476,7 @@
                     }
                 });
 
-                $('#myTablePlaneacion').on('click', '.clickable-row', function () {
+                $('#myTablePlaneacion').on('dblclick', '.clickable-row', function () {
                     var marcaValue = $(this).data('marca'); 
                     var estiloValue = $(this).data('estilo'); 
                     var registrosFiltrados = registrosMismoEstilo.filter(function (registro) {
@@ -912,7 +912,7 @@ $('#myTablePlaneacion').on('search.dt', function () {
                 animateMenu();
             }
 
-            $("#myTablePlaneacion").append('<caption style="caption-side: top" class="fw-bold text-black"><label class="ms-2 fw-bold">**Presione clic sobre el estilo para ver sus Ventas**</label></caption>');
+            $("#myTablePlaneacion").append('<caption style="caption-side: top" class="fw-bold text-black"><label class="ms-2 fw-bold">**Presione doble clic sobre el estilo para ver sus Ventas**</label></caption>');
          });
         
          function openModalVentas(estilo,data) {
