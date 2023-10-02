@@ -296,14 +296,14 @@
                     </form>
                    </div>
                 </div>
-                
-                <div class="table-container mt-3" id="planeacionContainer" style="width:100%;">
+                <div class="fixed-scrollbar">
+                <div class="table-container mt-3 " id="planeacionContainer" style="width:100%;">
                     <table id="myTablePlaneacion" class="table stripe table-hover "style="width:100%">
                         <thead>
                             <tr >
                                 <th colspan="33" id="thProcessing" style="height:100px;"></th>
                             </tr>
-                            <tr class="sticky-top bg-white">
+                            <tr class="sticky-top bg-white" style="font-size:12px;">
                                 <th class="d-none">rownum</th>
                                 <th class="text-black text-start">MARCA</th>
                                 <th class="text-black text-start">ESTILO</th>
@@ -323,6 +323,7 @@
                                 <th class="text-black text-end">INVENTARIO PROCESO</th>
                                 <th class="text-black text-end">INVENTARIO CORTADO</th>
                                 <th class="text-black text-end">CORTE</th>
+                                <th class="text-black text-end" >MESES INV ANTES MTP</th>
                                 <th class="text-black text-end">INV. MTP</th>
                                 <th class="text-black text-end" >MESES INV</th>
                                 <th class="text-black text-end">PROGRAMA</th>
@@ -344,11 +345,13 @@
                                 <th class="text-black text-end">MAT. PRIMA EN ALMACEN</th>
                             </tr>
                         </thead>
-                        <tbody id="myTablePlaneacionBody">
+                        <tbody id="myTablePlaneacionBody" style="font-size: 12px;">
 
                         </tbody>
                     </table>
                 </div>
+                </div>
+               
             </div>
         </div>
     </div>
@@ -422,20 +425,20 @@
             $("#rbRep"+repro).prop("checked",true);
             var columnasExcel;
             if (formato==0) {
-                var columnasExcel=[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32]; 
+                var columnasExcel=[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33]; 
                 var visibleColumn=true;
                 var visibleColumn2=false;
             }else if (formato==10) {
-                var columnasExcel=[1,2,3,4,5,14,15,16,17,18,19,20,21,22,23,24,25]; 
+                var columnasExcel=[1,2,3,4,5,14,15,16,17,18,19,20,21,22,23,24,25,26]; 
                 var visibleColumn=false;
                 var visibleColumn2=false;
             }else if(formato==20){
-                var columnasExcel=[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37]; 
+                var columnasExcel=[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38]; 
                 var visibleColumn=true;
                 var visibleColumn2=true;
             }
         
-            console.log("http://172.16.15.20/API.LovablePHP/ZLO0013P/List2/?marca="+marca+"&plan="+plan+"&estado="+estado+"&btnor="+btnOrder+"&inventarios="+inventarios+"&clasificacion="+clasificacion+"&orden="+orden+"&filtro="+filtro+"&repro="+repro+"&formato="+formato+"&searchVal="+searchBox+"");
+            console.log("http://172.16.15.20/API.LovablePHP/ZLO0013P/List/?marca="+marca+"&plan="+plan+"&estado="+estado+"&btnor="+btnOrder+"&inventarios="+inventarios+"&clasificacion="+clasificacion+"&orden="+orden+"&filtro="+filtro+"&repro="+repro+"&formato="+formato+"&searchVal="+searchBox+"");
             var requestError = false;
             $.fn.dataTable.ext.search.push(function(settings, searchData, index, rowData, counter) {
                     var searchVal = $('#myTablePlaneacion').DataTable().search(); 
@@ -449,11 +452,11 @@
                     language: {
                     url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json',
                 },
-                "pageLength": 100,
+                "pageLength": 1000,
                 "processing":true,
                 
                 "ajax": {
-                    "url": "http://172.16.15.20/API.LovablePHP/ZLO0013P/List2/?marca="+marca+"&plan="+plan+"&estado="+estado+"&btnor="+btnOrder+"&inventarios="+inventarios+"&clasificacion="+clasificacion+"&orden="+orden+"&filtro="+filtro+"&repro="+repro+"&formato="+formato+"&searchVal="+searchBox+"",
+                    "url": "http://172.16.15.20/API.LovablePHP/ZLO0013P/List/?marca="+marca+"&plan="+plan+"&estado="+estado+"&btnor="+btnOrder+"&inventarios="+inventarios+"&clasificacion="+clasificacion+"&orden="+orden+"&filtro="+filtro+"&repro="+repro+"&formato="+formato+"&searchVal="+searchBox+"",
                     "type": "POST",
                     "beforeSend": function () {
                         $("#planeacionContainer").addClass("loading");
@@ -475,7 +478,7 @@
                         registrosMismoEstilo.push(data);
                     }
                 });
-
+               
                 $('#myTablePlaneacion').on('dblclick', '.clickable-row', function () {
                     var marcaValue = $(this).data('marca'); 
                     var estiloValue = $(this).data('estilo'); 
@@ -508,9 +511,9 @@
                     {data:"TIPINV",
                         className:"text-start",orderable: false },
                     {data:"UNIVAA",
-                        className:"text-primary text-end",
+                        className:"text-info text-end",
                         render: function(data) {
-        return (isNaN(parseFloat(data))? 0:parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+        return (isNaN(parseFloat(data))? '&#160;':parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
     } },
                     {data:"VALVAA",
                         className:"text-end", render: function(data) {
@@ -519,8 +522,8 @@
         return  valor.toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     } },
                     {data:"UPRMAC",
-                       className:"text-primary text-end", render: function(data) {
-        return (isNaN(parseFloat(data))? ' ':parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+                       className:"text-info text-end", render: function(data) {
+        return (isNaN(parseFloat(data))? '&#160;':parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
     } },
                     {data:"NUMMES",
                         className:"text-end", render: function(data) {
@@ -528,51 +531,55 @@
     },orderable: false },
                     {data:"DOCVAL",
                          className:"text-brown text-end", render: function(data) {
-       return (isNaN(parseFloat(data))? ' ':parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+       return (isNaN(parseFloat(data))? '&#160;':parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
     } },
                     {data:"UVENRE",
                        className:"text-darkblue text-end", render: function(data) {
-       return (isNaN(parseFloat(data))? ' ':parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+       return (isNaN(parseFloat(data))? '&#160;':parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
     } },
                     {data:"UVNRPR",
                         className:"text-danger text-end", render: function(data) {
-       return (isNaN(parseFloat(data))? ' ':parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+       return (isNaN(parseFloat(data))? '&#160;':parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
     } },
                     {data:"INVAPA",
-                       className:"text-info text-end",  render: function(data) {
-       return (isNaN(parseFloat(data))? ' ':parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+                       className:"text-violet text-end",  render: function(data) {
+       return (isNaN(parseFloat(data))? '&#160;':parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
     } },
                     {data:"APAVXC",
-                        className:"text-end", render: function(data) {
-       return (isNaN(parseFloat(data))? ' ':parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+                        className:"text-violet text-end", render: function(data) {
+       return (isNaN(parseFloat(data))? '&#160;':parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
     } },
                     {data:"INVPTE",
                        className:"text-success text-end", render: function(data) {
-       return (isNaN(parseFloat(data))? ' ':parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+       return (isNaN(parseFloat(data))? '&#160;':parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
     } },
                     {data:"INVPRO",
-                        className:"text-end", render: function(data) {
-       return (isNaN(parseFloat(data))? ' ':parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+                        className:"text-lightGreen text-end", render: function(data) {
+       return (isNaN(parseFloat(data))? '&#160;':parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
     } },
                 {data:"INVPR1",
-                        className:"text-end", render: function(data) {
-       return (isNaN(parseFloat(data))? ' ':parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+                        className:"text-lightGreen text-end", render: function(data) {
+       return (isNaN(parseFloat(data))? '&#160;':parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
     } },
                     {data:"INVCOR",
-                        className:"text-end", render: function(data) {
-       return (isNaN(parseFloat(data))? ' ':parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+                        className:"text-orange text-end", render: function(data) {
+       return (isNaN(parseFloat(data))? '&#160;':parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
     } },
-                    {data:"INVMTP",
+                {data:"WUNIINV2",
                         className:"text-end", render: function(data) {
-       return (isNaN(parseFloat(data))? ' ':parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+                            return (isNaN(parseFloat(data))? '&#160;':parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+    }},
+                    {data:"INVMTP",
+                        className:"text-orange text-end", render: function(data) {
+       return (isNaN(parseFloat(data))? '&#160;':parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
     } },
                     {data:"WUNIINV",
                         className:"text-end", render: function(data) {
-                            return (isNaN(parseFloat(data))? 0:parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+                            return (isNaN(parseFloat(data))? '&#160;':parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
     }},
                     {data:"INVPGR",
-                        className:"text-end", render: function(data) {
-        return (isNaN(parseFloat(data))? ' ':parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+                        className:"text-orange text-end", render: function(data) {
+        return (isNaN(parseFloat(data))? '&#160;':parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
     } },
                     {data:"LEATIE",
                         className:"text-success text-end", render: function(data) {
@@ -581,30 +588,30 @@
                    
                     {data:"MESINV",
                        className:"text-darkblue text-end", render: function(data) {
-       return (isNaN(parseFloat(data))? 0:parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+       return (isNaN(parseFloat(data))? '&#160;':parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
     } },
                     {data:"UPRM1A",
                        className:"text-danger text-end", render: function(data) {
-                        return (isNaN(parseFloat(data))? ' ':parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+                        return (isNaN(parseFloat(data))? '&#160;':parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
     } },
                     {data:"NUMME1",
                         className:"text-end"},
                     {data:"MESIN6",
                         className:"text-darkblue text-end"},
                     {data:"UPRM6A",className:"text-danger text-end", render: function(data) {
-                        return (isNaN(parseFloat(data))? ' ':parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+                        return (isNaN(parseFloat(data))? '&#160;':parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
     } },
                     {data:"NUMME6",
                         className:"text-end"},
                     {data:"UPRMAV",
                         className:"text-info text-end", render: function(data) {
-         return (isNaN(parseFloat(data))? 0:parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+         return (isNaN(parseFloat(data))? '&#160;':parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
     } },
                     {data:"NUMMEV",
                         className:"text-end"},
                     {data:"DOCANT",
                         className:"text-info text-end", render: function(data) {
-                            return (isNaN(parseFloat(data))? ' ':parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+                            return (isNaN(parseFloat(data))? '&#160;':parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
     }},
                     {data:"VALANT",
                         className:"text-end", render: function(data) {
@@ -657,29 +664,30 @@
                 {"targets": [12], "visible": visibleColumn, "searchable": false,},
                 {"targets": [13], "visible": visibleColumn, "searchable": false,},
                 {"targets": [14], "searchable": false, },
-                    {"targets": [15], "searchable": false, },
-                    {"targets": [16], "searchable": false, },
-                    {"targets": [17], "searchable": false, }, 
-                    {"targets": [18], "searchable": false, },
-                    {"targets": [19], "searchable": false, },
-                    {"targets": [20], "searchable": false, },
-                    {"targets": [21], "searchable": false, }, 
-                    {"targets": [22], "searchable": false, },
-                    {"targets": [23], "searchable": false, },
-                    {"targets": [24], "searchable": false, },
-                    {"targets": [25], "searchable": false, }, 
-                {"targets": [26], "visible": visibleColumn, "searchable": false,},
-                {"targets": [27], "visible": visibleColumn,"searchable": false, },
+                {"targets": [15], "searchable": false, },
+                {"targets": [16], "searchable": false, },
+                {"targets": [17], "searchable": false, }, 
+                {"targets": [18], "searchable": false, },
+                {"targets": [19], "searchable": false, },
+                {"targets": [20], "searchable": false, },
+                {"targets": [21], "searchable": false, },
+                {"targets": [22], "searchable": false, }, 
+                {"targets": [23], "searchable": false, },
+                {"targets": [24], "searchable": false, },
+                {"targets": [25], "searchable": false, },
+                {"targets": [26], "searchable": false, }, 
+                {"targets": [27], "visible": visibleColumn, "searchable": false,},
                 {"targets": [28], "visible": visibleColumn,"searchable": false, },
                 {"targets": [29], "visible": visibleColumn,"searchable": false, },
                 {"targets": [30], "visible": visibleColumn,"searchable": false, },
                 {"targets": [31], "visible": visibleColumn,"searchable": false, },
                 {"targets": [32], "visible": visibleColumn,"searchable": false, },
-                {"targets": [33],"visible": visibleColumn2, "searchable": false, },  
+                {"targets": [33], "visible": visibleColumn,"searchable": false, },
                 {"targets": [34],"visible": visibleColumn2, "searchable": false, },  
                 {"targets": [35],"visible": visibleColumn2, "searchable": false, },  
                 {"targets": [36],"visible": visibleColumn2, "searchable": false, },  
                 {"targets": [37],"visible": visibleColumn2, "searchable": false, },  
+                {"targets": [38],"visible": visibleColumn2, "searchable": false, },  
                 ],
                 ordering: false,
                 dom: 'Bfrtip',
@@ -842,7 +850,7 @@
                         return;
                     }
                     var row = $(this);
-                    $('c[r^="R"], c[r^="S"], c[r^="U"]', row).attr('s', textNaranja);
+                    $('c[r^="R"], c[r^="T"], c[r^="V"]', row).attr('s', textNaranja);
                     });
 
                     //TOTALES
@@ -853,7 +861,7 @@
                     var row = $(this);
                     var cellE = $('c[r^="E"]', row);
                     if (cellE.text() === "TOTAL" || cellE.text() === "TOTALM") {
-                        $('c[r^="A"], c[r^="B"], c[r^="C"], c[r^="D"], c[r^="E"], c[r^="F"], c[r^="G"], c[r^="H"], c[r^="I"], c[r^="J"], c[r^="K"], c[r^="L"], c[r^="M"], c[r^="N"], c[r^="O"], c[r^="P"], c[r^="Q"], c[r^="R"], c[r^="S"], c[r^="T"], c[r^="U"], c[r^="V"], c[r^="W"], c[r^="X"], c[r^="Y"], c[r^="Z"], c[r^="AA"], c[r^="AB"], c[r^="AC"], c[r^="AD"], c[r^="AE"], c[r^="AF"]', row).attr('s', 7);
+                        $('c[r^="A"], c[r^="B"], c[r^="C"], c[r^="D"], c[r^="E"], c[r^="F"], c[r^="G"], c[r^="H"], c[r^="I"], c[r^="J"], c[r^="K"], c[r^="L"], c[r^="M"], c[r^="N"], c[r^="O"], c[r^="P"], c[r^="Q"], c[r^="R"], c[r^="S"], c[r^="T"], c[r^="U"], c[r^="V"], c[r^="W"], c[r^="X"], c[r^="Y"], c[r^="Z"], c[r^="AA"], c[r^="AB"], c[r^="AC"], c[r^="AD"], c[r^="AE"], c[r^="AF"], c[r^="AG"]', row).attr('s', 7);
                         $('c[r^="A"], c[r^="B"], c[r^="C"], c[r^="D"], c[r^="E"]', row).text('s', ' ');
                     }
                     });
@@ -1022,6 +1030,80 @@ $('#myTablePlaneacion').on('search.dt', function () {
                 });
             }
 
+            $(function($){
+    var scrollbar = $('<div id="fixed-scrollbar"><div></div></div>').appendTo($(document.body));
+    scrollbar.hide().css({
+        overflowX:'auto',
+        position:'fixed',
+        width:'100%',
+        bottom:0
+    });
+    var fakecontent = scrollbar.find('div');
+    
+    function top(e) {
+        return e.offset().top;
+    }
+
+    function bottom(e) {
+        return e.offset().top + e.height();
+    }
+    
+    var active = $([]);
+    function find_active() {
+        scrollbar.show();
+        var active = $([]);
+        $('.fixed-scrollbar').each(function() {
+            if (top($(this)) < top(scrollbar) && bottom($(this)) > bottom(scrollbar)) {
+                fakecontent.width($(this).get(0).scrollWidth);
+                fakecontent.height(1);
+                active = $(this);
+            }
+        });
+        fit(active);
+        return active;
+    }
+    
+    function fit(active) {
+        if (!active.length) return scrollbar.hide();
+        scrollbar.css({left: active.offset().left, width:active.width()});
+        fakecontent.width($(this).get(0).scrollWidth);
+        fakecontent.height(1);
+        delete lastScroll;
+    }
+    
+    function onscroll(){
+        var oldactive = active;
+        active = find_active();
+        if (oldactive.not(active).length) {
+            oldactive.unbind('scroll', update);
+        }
+        if (active.not(oldactive).length) {
+            active.scroll(update);
+        }
+        update();
+    }
+    
+    var lastScroll;
+    function scroll() {
+        if (!active.length) return;
+        if (scrollbar.scrollLeft() === lastScroll) return;
+        lastScroll = scrollbar.scrollLeft();
+        active.scrollLeft(lastScroll);
+    }
+    
+    function update() {
+        if (!active.length) return;
+        if (active.scrollLeft() === lastScroll) return;
+        lastScroll = active.scrollLeft();
+        scrollbar.scrollLeft(lastScroll);
+    }
+    
+    scrollbar.scroll(scroll);
+    
+    onscroll();
+    $(window).scroll(onscroll);
+    $(window).resize(onscroll);
+});
     </script>
 </body>
 <!-- Modal -->

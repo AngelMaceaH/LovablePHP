@@ -40,25 +40,33 @@
             display: none;
         }
     }
-    .table-responsive {
+   /* .table-responsive {
         overflow-x: auto;
     }
     
     .table-container {
         width: 100%;
         overflow-x: auto;
-        max-height: 750px;
+
         position: relative;
         z-index: 1;
         top: 0;
-    }
+    }*/
     .text-brown {
         color: #5B2503;
     }
     .text-darkblue {
         color: #03225B;
     }
-
+    .text-violet {
+        color: #C18BFF;
+    }
+    .text-lightGreen {
+        color: #00D30A;
+    }
+    .text-orange{
+        color: #E8B000;
+    }
 .btn.btn-success,
 .btn.btn-primary {
     display: inline-flex;
@@ -75,6 +83,9 @@
     line-height: normal;
     justify-content: center;
 }
+.fixed-scrollbar {
+    overflow:auto;
+    }
 </style>
 </head>
 <body>

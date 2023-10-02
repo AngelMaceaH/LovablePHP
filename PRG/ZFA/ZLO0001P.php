@@ -49,7 +49,7 @@
                   </select>
               </div>
               <div class="col-sm-12 col-lg-6 mt-2">
-              <label>Fecha:</label>
+              <label>Hasta la fecha:</label>
                <input type="date" class="form-control" name="fechapro" id="fechapro" data-date-format="dd/mm/yyyy" onfocus="(this.type='date')" onkeydown="return false;">
               </div>
               <div class="btn-group mt-3 d-flex justify-content-center justify-content-md-start" role="group" aria-label="Basic radio toggle button group">
