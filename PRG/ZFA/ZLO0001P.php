@@ -3,6 +3,11 @@
   <head>
   <meta charset="utf-8">
   <link rel="icon" type="image/x-icon" href="../../assets/img/favicon.ico">
+  <style>
+    .bg-secondary2{
+      background-color: #E7E7E7!important;
+    }
+  </style>
 </head>
 <body>
   <?php
@@ -65,7 +70,6 @@
                 <input type="radio" class="btn-check" name="btnradio4" id="btnradio4" autocomplete="off" >
                 <label class="btn btn-outline-secondary responsive-font-example  pt-3 pb-3" for="btnradio4"><b>Moneda Nacional</b></label>
             </div>
-
           </div>
           </form>
           <hr>   

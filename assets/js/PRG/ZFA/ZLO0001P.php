@@ -11,18 +11,18 @@ var usuario='<?php echo $_SESSION["CODUSU"];?>';
   
   switch (case1) {
     case 1:
-      var url1='http://172.16.15.20/API.LovablePHP/ZLO0001P/ListUnidades1/?fechaFiltro='+fechafiltro+'&compFiltro='+compfiltro+'&usuario='+usuario+'&case='+case1+'';
-      var url2='http://172.16.15.20/API.LovablePHP/ZLO0001P/ListUnidades2/?fechaFiltro='+fechafiltro+'&compFiltro='+compfiltro+'&usuario='+usuario+'&case='+case1+'';
-      var url3='http://172.16.15.20/API.LovablePHP/ZLO0001P/ListUnidades3/?fechaFiltro='+fechafiltro+'&compFiltro='+compfiltro+'&usuario='+usuario+'&case='+case1+'';
+      var url1='http://172.16.15.20/API.LovablePHP/ZLO0001P/ListUnidades1/?fechaFiltro='+fechafiltro+'&compFiltro='+compfiltro+'&usuario='+usuario+'&case='+case1+'&vend=1';
+      var url2='http://172.16.15.20/API.LovablePHP/ZLO0001P/ListUnidades2/?fechaFiltro='+fechafiltro+'&compFiltro='+compfiltro+'&usuario='+usuario+'&case='+case1+'&vend=1';
+      var url3='http://172.16.15.20/API.LovablePHP/ZLO0001P/ListUnidades3/?fechaFiltro='+fechafiltro+'&compFiltro='+compfiltro+'&usuario='+usuario+'&case='+case1+'&vend=1';
       break;
       case 2:
       var url1='http://172.16.15.20/API.LovablePHP/ZLO0001P/ListTransacciones1/?fechaFiltro='+fechafiltro+'&compFiltro='+compfiltro+'&usuario='+usuario+'&case='+case1+'';
       var url2='http://172.16.15.20/API.LovablePHP/ZLO0001P/ListTransacciones2/?fechaFiltro='+fechafiltro+'&compFiltro='+compfiltro+'&usuario='+usuario+'&case='+case1+'';
       break;
     default:
-      var url1='http://172.16.15.20/API.LovablePHP/ZLO0001P/ListValores1/?fechaFiltro='+fechafiltro+'&compFiltro='+compfiltro+'&usuario='+usuario+'&case='+case1+'';
-      var url2='http://172.16.15.20/API.LovablePHP/ZLO0001P/ListValores2/?fechaFiltro='+fechafiltro+'&compFiltro='+compfiltro+'&usuario='+usuario+'&case='+case1+'';
-      var url3='http://172.16.15.20/API.LovablePHP/ZLO0001P/ListValores3/?fechaFiltro='+fechafiltro+'&compFiltro='+compfiltro+'&usuario='+usuario+'&case='+case1+'';
+      var url1='http://172.16.15.20/API.LovablePHP/ZLO0001P/ListValores1/?fechaFiltro='+fechafiltro+'&compFiltro='+compfiltro+'&usuario='+usuario+'&case='+case1+'&vend=1';
+      var url2='http://172.16.15.20/API.LovablePHP/ZLO0001P/ListValores2/?fechaFiltro='+fechafiltro+'&compFiltro='+compfiltro+'&usuario='+usuario+'&case='+case1+'&vend=1';
+      var url3='http://172.16.15.20/API.LovablePHP/ZLO0001P/ListValores3/?fechaFiltro='+fechafiltro+'&compFiltro='+compfiltro+'&usuario='+usuario+'&case='+case1+'&vend=1';
       break;
   }
   console.log(url1);
@@ -60,8 +60,12 @@ var usuario='<?php echo $_SESSION["CODUSU"];?>';
                 (responsePromedios.data[i]['PROANO2']!=0)?  creciPromedio=(((responsePromedios.data[i]['PROANO']/responsePromedios.data[i]['PROANO2'])-1)*100): creciPromedio=0;
                  varPromedios=(responsePromedios.data[i]['PROANO']-responsePromedios.data[i]['PROANO2']);
                 }
-
+                if (responseDiayMes.data[i]['VENDEDOR']=='1' || responseDiayMes.data[i]['VENDEDOR']=='2') {
+                  $("#myTableBody").append(`<tr class="bg-secondary2" id="tr${i}" ondblclick="location.href=\'/<?php echo $_SESSION['DEV']; ?>LovablePHP/PRG/ZFA/ZLO0001PA.php?id=${responseDiayMes.data[i]['ID']}&dat=<?php echo $_SESSION['FechaFiltro'];?>\';">`);
+                }else{
                 $("#myTableBody").append(`<tr id="tr${i}" ondblclick="location.href=\'/<?php echo $_SESSION['DEV']; ?>LovablePHP/PRG/ZFA/ZLO0001PA.php?id=${responseDiayMes.data[i]['ID']}&dat=<?php echo $_SESSION['FechaFiltro'];?>\';">`);
+                }
+
                 let vendias="";let venmes="";let venmes2="";let venmes3="";let tdAnual="";let tdCreciAnual="";
                   if(parseFloat(responseDiayMes.data[i]['SUBDIA'])<=0){
                     vendias="<td class='text-end responsive-font-example text-danger' id='tddia1'><b>"+mon+responseDiayMes.data[i]['SUBDIA'].toLocaleString('es-419', {minimumFractionDigits: 2,maximumFractionDigits: 2})+"</b></td>";}else{

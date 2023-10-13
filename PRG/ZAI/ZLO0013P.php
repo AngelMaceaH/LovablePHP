@@ -367,7 +367,7 @@
     <script src="https://code.highcharts.com/modules/accessibility.js"></script>
     <script>
          
-         var totalUNIVAA = 0;
+        var totalUNIVAA = 0;
         var totalVALVAA = 0;
     $( document ).ready(function() {
         $("#btn100,#btn200,#btn210,#btn250,#btn450,#btn500,#btn550,#btn600,#btn650,#btn700,#btn800,#btn900,#btn360,#btn930,#btn940,#btn950,#btn230,#btnall").on("click",function(){
@@ -489,8 +489,7 @@
                     });       
                     openModalVentas(estiloValue, registrosFiltrados);
                 });
-                        
-                                        
+                
                     },
                     error: function (xhr, status, error) {
                         console.log(error);
