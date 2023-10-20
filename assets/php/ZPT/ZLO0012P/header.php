@@ -25,6 +25,14 @@
     .gray-letters{
         color: transparent !important;
     }
+    .breakMargin{
+        margin-top: 0px;
+    }
+    @media screen and (min-width: 1650px) {
+        .breakMargin{
+             margin-top: 100px;
+        }
+    }
   </style>
 </head>
 <body>

@@ -20,13 +20,13 @@
       $_SESSION['AnoFiltro'] = isset($_SESSION['anopro']) && !empty($_SESSION['anopro']) ? $_SESSION['anopro'] : $ano_actual;
       $_SESSION['CompFiltro'] = isset($_SESSION['comppro']) && !empty($_SESSION['comppro']) ? "AND T1.CODCIA = ".$_SESSION['comppro'] : "AND T1.CODCIA > "."0";
       //VALIDACIONES JS
-        $ckProductos = isset($_SESSION['productosCk']) ? $_SESSION['productosCk'] : "";
-        $fechafiltro = isset($_SESSION['FechaFiltro']) ? $_SESSION['FechaFiltro'] : "";
-        $compfiltro = isset($_SESSION['comppro']) && !empty($_SESSION['comppro']) ? $_SESSION['comppro'] : 0;
-        $_SESSION['filtro'] = isset($_GET['fil']) ? $_GET['fil'] : "3";
-        $_SESSION['opcion'] = isset($_GET['opc']) ? $_GET['opc'] : "1";
-        $tablaDIA="";$tablaMES="";
-       $sqlquery_zlo0001p = isset($_SESSION['logicSql']) ? $_SESSION['logicSql'] : " ";  
+      $ckProductos = isset($_SESSION['productosCk']) ? $_SESSION['productosCk'] : "";
+      $fechafiltro = isset($_SESSION['FechaFiltro']) ? $_SESSION['FechaFiltro'] : "";
+      $compfiltro = isset($_SESSION['comppro']) && !empty($_SESSION['comppro']) ? $_SESSION['comppro'] : 0;
+      $_SESSION['filtro'] = isset($_GET['fil']) ? $_GET['fil'] : "3";
+      $_SESSION['opcion'] = isset($_GET['opc']) ? $_GET['opc'] : "1";
+      $tablaDIA="";$tablaMES="";
+      $sqlquery_zlo0001p = isset($_SESSION['logicSql']) ? $_SESSION['logicSql'] : " ";  
     ?> 
      <div class="container-fluid">
           <nav aria-label="breadcrumb">

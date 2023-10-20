@@ -40,18 +40,28 @@
             display: none;
         }
     }
-   /* .table-responsive {
+   .table-responsive {
         overflow-x: auto;
     }
     
     .table-container {
         width: 100%;
+        height:450px;
         overflow-x: auto;
-
         position: relative;
         z-index: 1;
         top: 0;
-    }*/
+    }
+    @media screen and (min-width: 1650px) {
+        .table-container {
+        width: 100%;
+        height:700px;
+        overflow-x: auto;
+        position: relative;
+        z-index: 1;
+        top: 0;
+    } 
+    }
     .text-brown {
         color: #5B2503;
     }
@@ -86,6 +96,13 @@
 .fixed-scrollbar {
     overflow:auto;
     }
+    .dataTables_filter {
+display: none;
+}
+
+.text-transparent{
+    color: transparent !important;
+}
 </style>
 </head>
 <body>

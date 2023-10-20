@@ -101,24 +101,24 @@
                                 <th colspan="20" id="thProcessing" style="height:100px;"></th>
                             </tr>
                             <tr class="sticky-top bg-white">
-                                    <th  class="responsive-font-example text-start">Estilo</th>
-                                    <th  class="responsive-font-example text-end">Und. Vtas. Totales</th>
-                                    <th  class="responsive-font-example text-end">Und. Vtas. Mes Proceso</th>
-                                    <th  class="responsive-font-example text-end">Und. Vtas. Ult. 12 Meses</th>
-                                    <th  class="responsive-font-example text-end">Prom. Mensual</th>
-                                    <th  class="responsive-font-example text-end">Existencia Actual</th>
-                                    <th  class="responsive-font-example text-end">Rot. Inv</th>
-                                    <th  class="responsive-font-example text-end">Meses Inventario</th>
-                                    <th  class="responsive-font-example text-end">% Descuento</th>
-                                    <th  class="responsive-font-example text-end">Fecha Ingreso</th>
-                                    <th  class="responsive-font-example text-end">Fecha Ult/Compra</th>
-                                    <th  class="responsive-font-example text-end">Fecha Ult/Venta</th>
-                                    <th  class="responsive-font-example text-end">Días antigüedad </th>
-                                    <th  class="responsive-font-example text-end">Días Ant. Ult/Compra</th>
-                                    <th  class="responsive-font-example text-end">Días Ant. Ult/Venta</th>
-                                    <th  class="responsive-font-example text-end">Tipo Inventario</th>
-                                    <th  class="responsive-font-example text-start">Marca</th>
-                                    <th  class="responsive-font-example text-start">Genero</th>
+                                    <th  class="responsive-font-example text-center">Estilo</th>
+                                    <th  class="responsive-font-example text-center">Und. Vtas.<br>Totales</th>
+                                    <th  class="responsive-font-example text-center">Und. Vtas.<br>Mes Proceso</th>
+                                    <th  class="responsive-font-example text-center">Und. Vtas.<br>Ult. 12 Meses</th>
+                                    <th  class="responsive-font-example text-center">Prom.<br>Mensual</th>
+                                    <th  class="responsive-font-example text-center">Existencia<br>Actual</th>
+                                    <th  class="responsive-font-example text-center">Rot. Inv</th>
+                                    <th  class="responsive-font-example text-center">Meses<br>Inventario</th>
+                                    <th  class="responsive-font-example text-center">%<br>Descuento</th>
+                                    <th  class="responsive-font-example text-center">Fecha Ingreso</th>
+                                    <th  class="responsive-font-example text-center">Fecha<br>Ult/Compra</th>
+                                    <th  class="responsive-font-example text-center">Fecha<br>Ult/Venta</th>
+                                    <th  class="responsive-font-example text-center">Días<br>antigüedad </th>
+                                    <th  class="responsive-font-example text-center">Días Ant.<br>Ult/Compra</th>
+                                    <th  class="responsive-font-example text-center">Días Ant.<br>Ult/Venta</th>
+                                    <th  class="responsive-font-example text-center">Tipo<br>Inventario</th>
+                                    <th  class="responsive-font-example text-center">Marca</th>
+                                    <th  class="responsive-font-example text-center">Genero</th>
                                     
                                 </tr>
                             </thead>
@@ -188,7 +188,7 @@
                     "type": "POST",
                     "complete": function (xhr) {
                       $("#thProcessing").addClass('d-none');
-                        //console.log(xhr.responseJSON);
+                        console.log(xhr.responseJSON);
                         var registrosMismoEstilo = [];
                         var table = $('#myTableSeguimiento').DataTable();
                             table.rows().every(function (rowIdx, tableLoop, rowLoop) {
@@ -200,7 +200,7 @@
                                   registrosMismoEstilo.push(data);
                                 }
                             });
-                        $('#myTableSeguimiento').on('click', '.clickable-row', function () {
+                        $('#myTableSeguimiento').on('dblclick', '.clickable-row', function () {
                                 var estiloValue = $(this).data('estilo'); 
                                 var registrosFiltrados = registrosMismoEstilo.filter(function (registro) {
                                     if (registro.ESTILO == estiloValue) {
@@ -304,7 +304,7 @@
                 ]
 
             });
-            $("#myTableSeguimiento").append('<caption style="caption-side: top" class="fw-bold text-black"><label class="ms-2 fw-bold">**Presione clic para ver detalles por estilo color y talla**</label></caption>'); 
+            $("#myTableSeguimiento").append('<caption style="caption-side: top" class="fw-bold text-black"><label class="ms-2 fw-bold">**Presione doble clic para ver detalles por estilo color y talla**</label></caption>'); 
 
             table.on('draw.dt', function() {
                   $('.ladda-button').each(function() {
@@ -333,25 +333,73 @@
                 });
         });
         function openModalDetalles(estilo){ 
+          $("#tableAppend").empty();
+          $("#tableAppend").append(`<table id="myTableDetalles" class="table stripe"style="width:100%;">
+                        <thead>
+                            <tr class="sticky-top bg-white">
+                                <th class="text-black text-center">ESTILO</th>
+                                <th class="text-black text-center">COLOR</th>
+                                <th class="text-black text-center">TALLA</th>
+                                <th class="text-black text-center">UNIDADES VTAS<br>TOTALES</th>
+                                <th class="text-black text-center">UNIDADES VTAS <br>MES PROCESO</th>
+                                <th class="text-black text-center">UNIDADES VTAS <br>ULT 12 MESES</th>
+                                <th class="text-black text-center">PROMEDIO<br>MENSUAL</th>
+                                <th class="text-black text-center">EXISTENCIA<br>ACTUAL</th>
+                                <th class="text-black text-center">ROT. INV.</th>
+                                <th class="text-black text-center">MESES<br>INVENTARIO</th>
+                                <th class="text-black text-center">%<br>DESCUENTO</th>
+                                <th class="text-black text-center">FECHA INGRESO</th>
+                                <th class="text-black text-center">FECHA<br>ULT/COMPRA</th>
+                                <th class="text-black text-center">FECHA<br>ULT/VENTA</th>
+                                <th class="text-black text-center">DIAS<br>ANTIGUEDAD</th>
+                                <th class="text-black text-center">DIAS ANT.<br>ULT/COMPRA</th>
+                                <th class="text-black text-center">DIAS ANT.<br>ULT/VENTA</th>
+                                <th class="text-black text-center">TIPO<br>INVENTARIO</th>
+                                <th class="text-black text-center">MARCA</th>
+                                <th class="text-black text-center">GENERO</th>
+                                <th class=" d-none text-black text-center">ISTOT</th>
+                            </tr>
+                        </thead>
+                        <tbody id="myTableDetallesBody">
+                                
+                        </tbody>
+                    </table>`)
+          
           var agrup=$("#cbbAgrupacion").val();
           var urlDeta="http://172.16.15.20/API.LOVABLEPHP/ZLO0012P/GetDeta/?agrup="+agrup+"&estilo="+estilo+"";
           var responseDeta=ajaxRequest(urlDeta);
+          console.log(responseDeta.data);
+          var lastcolor=null; var color=' '; var count=0;
           if (responseDeta.code==200) {
             var tableDetalles= $('#myTableDetallesBody');
                 tableDetalles.empty();
                 var options="";
                 for (let i = 0; i < responseDeta.data.length; i++) {
-                  if (responseDeta.data[i]['ISTOT']=='TOTAL') {
+                  color=responseDeta.data[i]['COLOR'];
+                  if (lastcolor==null) {
+                    lastcolor=color;
+                    count++;
+                  }else if(lastcolor==color){
+                    if (responseDeta.data[i]['ISTOT']=='TOTALC') {
+                      responseDeta.data[i]['ROTINV']=responseDeta.data[i]['ROTINV']/count;
+                    }
+                    count++;
+                  }else{
+                    count=1;
+                    lastcolor=color;
+                  }
+                  if (responseDeta.data[i]['ISTOT']=='TOTAL' || responseDeta.data[i]['ISTOT']=='TOTALC') {
                     options+="<tr class='total-row'>";
                   }else{
                     options+="<tr>";
                   }
                   options+="<td class='text-start'>"+responseDeta.data[i]['ESTILO']+"</td>";
-                  options+="<td class='text-start'>"+responseDeta.data[i]['COLOR']+"</td>";
-                  options+="<td class='text-start'>"+responseDeta.data[i]['TALLA']+"</td>";
+                  options+="<td class='text-start'>"+returnBlank(responseDeta.data[i]['COLOR'])+"</td>";
+                  options+="<td class='text-start'>"+returnBlank(responseDeta.data[i]['TALLA'])+"</td>";
                   options+="<td class='text-end'>"+ returnBlank(responseDeta.data[i]['UNITOT'])+"</td>";
                   options+="<td class='text-end text-primary'>"+ returnBlank(responseDeta.data[i]['VTAMES'])+"</td>";
                   options+="<td class='text-end text-primary'>"+ returnBlank(responseDeta.data[i]['UNIVEN'])+"</td>";
+                  options+="<td class='text-end text-primary'>"+ returnBlank(responseDeta.data[i]['PROMEN'])+"</td>";
                   options+="<td class='text-end text-success'>"+ returnBlank(responseDeta.data[i]['EXIACT'])+"</td>";
                   options+="<td class='text-end'>"+ returnBlank(responseDeta.data[i]['ROTINV'])+"</td>";
                   options+="<td class='text-end text-danger'>"+ returnBlank(responseDeta.data[i]['MESINV'])+"</td>";
@@ -362,27 +410,114 @@
                   options+="<td class='text-end'>"+ returnBlank(responseDeta.data[i]['DIAANT'])+"</td>";
                   options+="<td class='text-end'>"+ returnBlank(responseDeta.data[i]['DIAANC'])+"</td>";
                   options+="<td class='text-end'>"+ returnBlank(responseDeta.data[i]['DIAANV'])+"</td>";
-                  options+="<td class='text-end'>"+responseDeta.data[i]['TIPINV']+"</td>";
-                  options+="<td class='text-start'>"+responseDeta.data[i]['MARCA']+"</td>";
-                  options+="<td class='text-start'>"+responseDeta.data[i]['GENERO']+"</td>";
+                  options+="<td class='text-end'>"+returnBlank(responseDeta.data[i]['TIPINV'])+"</td>";
+                  options+="<td class='text-start'>"+returnBlank(responseDeta.data[i]['MARCA'])+"</td>";
+                  options+="<td class='text-start'>"+returnBlank(responseDeta.data[i]['GENERO'])+"</td>";
+                  options+="<td class=' d-none text-start'>"+returnBlank(responseDeta.data[i]['ISTOT'])+"</td>";
                   options+="</tr>";
                 }
-                
                 tableDetalles.append(options);
+                $("#myTableDetalles").DataTable( {
+                language: {
+                    url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json',
+                },
+                "ordering": false,
+                "responsive": true,
+                "pageLength": 100,
+                
+                dom: 'Bfrtip',
+    buttons: [
+        {
+            extend: 'excelHtml5',
+            text: '<i class="fa-solid fa-file-excel"></i> <b >Enviar a Excel</b>',
+            className: "btn btn-success text-light mt-2 fs-6 ",
+            exportOptions: {
+              columns: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20],
+            },
+            title: 'Analisis-MovimientoInventario-'+estilo+'',
+            messageTop:' ',                                                                                                                                                                                                               
+            customize: function (xlsx) {
+                var sheet = xlsx.xl.worksheets['sheet1.xml'];
+                var sSh = xlsx.xl['styles.xml'];
+                var lastXfIndex = $('cellXfs xf', sSh).length - 1;
+                var lastFontIndex = $('fonts font', sSh).length - 1;
+                var i; var y;
+                var f1 = '<font>'+
+                 '<sz val="11" />'+
+                 '<name val="Calibri" />'+
+                 '<color rgb="FF0000" />'+ 
+               '</font>';
+               var f2 = '<font>'+
+                 '<sz val="11" />'+
+                 '<name val="Calibri" />'+
+                 '<color rgb="007800" />'+ 
+               '</font>';
+                 
+                var n1 = '<numFmt formatCode="##0%"   numFmtId="300"/>';
+                var n2 = '<numFmt formatCode="#,##0.00"   numFmtId="200" />';
+                var s1 = '<xf numFmtId="300" fontId="0" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyNumberFormat="1"/>';
+                var s2 = '<xf numFmtId="0" fontId="2" fillId="2" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
+                            '<alignment horizontal="center"/></xf>';
+                var s3 = '<xf numFmtId="4" fontId="2" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyNumberFormat="1"/>'
+                var s4 = '<xf numFmtId="0" fontId="2" fillId="2" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
+                            '<alignment horizontal="center" wrapText="1"/></xf>'
+                var s5 = '<xf  numFmtId="200" fontId="'+(lastFontIndex+1)+'" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
+                 '<alignment horizontal="right"/></xf>';  
+                 var s6 = '<xf  numFmtId="200" fontId="'+(lastFontIndex+2)+'" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
+                 '<alignment horizontal="right"/></xf>';  
+                 var s7 = '<xf  numFmtId="300" fontId="'+(lastFontIndex+1)+'" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
+                 '<alignment horizontal="right"/></xf>';  
+                 var s8 = '<xf  numFmtId="300" fontId="'+(lastFontIndex+2)+'" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
+                 '<alignment horizontal="right"/></xf>';
+                sSh.childNodes[0].childNodes[0].innerHTML += n1 + n2;
+                sSh.childNodes[0].childNodes[1].innerHTML += f1 + f2;
+                sSh.childNodes[0].childNodes[5].innerHTML += s1 + s2 + s3 + s4 + s5 + s6 + s7 + s8; 
+                 
+                var fourDecPlaces    = lastXfIndex + 1;
+                var greyBoldCentered = lastXfIndex + 2;
+                var twoDecPlacesBold = lastXfIndex + 3;
+                var greyBoldWrapText = lastXfIndex + 4;
+                var textred1 = lastXfIndex + 5;
+                var textgreen1 = lastXfIndex + 6;
+                var textred2 = lastXfIndex + 7;
+                var textgreen2 = lastXfIndex + 8;
+                
+               
+                $('c[r=A1] t', sheet).text( 'REPORTE DE ANALISIS DE MOVIMIENTO DE INVENTARIO  ESTILO: '+estilo.toUpperCase()+'');
+                $('row:eq(0) c', sheet).attr( 's', greyBoldCentered );
+                $('row:eq(1) c', sheet).attr( 's', 7 );
+              
+                $('c[r=U3] t', sheet).text(' ');
+               $('row c[r*="U"]', sheet).each(function () {
+                    if ($('is t', this).text() === 'TOTALC' || $('is t', this).text() === 'TOTAL') {
+                        var rowIndex = $(this).parent().index();
+                        $('row:eq(' + rowIndex + ') c', sheet).attr('s', '7');
+                        $('is t', this).text(' ');
+                    }
+                });
+                var tagName = sSh.getElementsByTagName('sz');
+                for (i = 0; i < tagName.length; i++) {
+                  tagName[i].setAttribute("val", "13");
+                }
+              }  
+        }
+    ],
+        
+      });
             $('#detallesModal').modal('show');
           }
         }
         function returnBlank(value){
-          if (value=="" || value==null) {
-            return "";
+          if (value==" " || value==null) {
+            return "&nbsp;";
           }else{
             return value.toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
           }
         }
 
         function formatFecha(fechaOriginal){
-          if (fechaOriginal=="" || fechaOriginal==0) {
-               return ""; 
+          if (fechaOriginal==" "  || fechaOriginal==0) {
+               return "&nbsp;"; 
              }else{
               const year = fechaOriginal.slice(0, 4);
               const month = fechaOriginal.slice(4, 6);
@@ -394,7 +529,7 @@
       </script>
 
 <div class="modal fade" id="detallesModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-xl">
+  <div class="modal-dialog modal-fullscreen">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="btn-close" onclick="$('#detallesModal').modal('hide')"></button>
@@ -405,38 +540,12 @@
 
             </div>
             <div class="card-body">
-                    <h5 class="text-center">Estilo, color y talla</h5>
-                    <div class="overflow-auto mt-3  rounded" style="width:100%; height: 400px;">
-                    <table id="myTableDetalles" class="table stripe"style="width:100%">
-                        <thead>
-                            <tr class="sticky-top bg-white">
-                                <th class="d-none">rownum</th>
-                                <th class="text-black text-start">ESTILO</th>
-                                <th class="text-black text-start">COLOR</th>
-                                <th class="text-black text-start">TALLA</th>
-                                <th class="text-black text-start">UNIDADES VTAS TOTALES</th>
-                                <th class="text-black text-end">UNIDADES VTAS MES PROCESO</th>
-                                <th class="text-black text-end">PROMEDIO MENSUAL</th>
-                                <th class="text-black text-end">EXISTENCIA ACTUAL</th>
-                                <th class="text-black text-end">ROT. INV.</th>
-                                <th class="text-black text-end">MESES INVENTARIO</th>
-                                <th class="text-black text-end">% DESCUENTO</th>
-                                <th class="text-black text-end">FECHA INGRESO</th>
-                                <th class="text-black text-end">FECHA ULT/COMPRA</th>
-                                <th class="text-black text-end">FECHA ULT/VENTA</th>
-                                <th class="text-black text-end">DIAS ANTIGUEDAD</th>
-                                <th class="text-black text-end">DIAS ANT. ULT/COMPRA</th>
-                                <th class="text-black text-end">DIAS ANT. ULT/VENTA</th>
-                                <th class="text-black text-end">TIPO INVENTARIO</th>
-                                <th class="text-black text-end">MARCA</th>
-                                <th class="text-black text-end">GENERO</th>
-                            </tr>
-                        </thead>
-                        <tbody id="myTableDetallesBody">
-                                
-                        </tbody>
-                    </table>
-                        </div>
+                    <h5 class="text-center breakMargin">Estilo, color y talla</h5>
+                    <div class="overflow-auto mt-3  rounded" style="width:100%; height:600px;">
+                    <div id="tableAppend">
+
+                    </div>
+                  </div>
             </div>
         </div>
       </div>

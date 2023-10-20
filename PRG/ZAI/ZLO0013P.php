@@ -297,52 +297,52 @@
                    </div>
                 </div>
                 <div class="fixed-scrollbar">
-                <div class="table-container mt-3 " id="planeacionContainer" style="width:100%;">
+                <div class="table-container mt-3 " id="planeacionContainer">
                     <table id="myTablePlaneacion" class="table stripe table-hover "style="width:100%">
                         <thead>
                             <tr >
                                 <th colspan="33" id="thProcessing" style="height:100px;"></th>
                             </tr>
                             <tr class="sticky-top bg-white" style="font-size:12px;">
-                                <th class="d-none">rownum</th>
-                                <th class="text-black text-start">MARCA</th>
-                                <th class="text-black text-start">ESTILO</th>
-                                <th class="text-black text-start">COLOR</th>
-                                <th class="text-black text-start">TALLA</th>
-                                <th class="text-black text-start">T/INV</th>
-                                <th class="text-black text-end">DOC. VEN. AÑO/ACT</th>
-                                <th class="text-black text-end">VAL. VEN. AÑO/ACT</th>
-                                <th class="text-black text-end">PROM. MES</th>
-                                <th class="text-black text-end"># MESES</th>
-                                <th class="text-black text-end">UND VTAS. MES/ANT</th>
-                                <th class="text-black text-end">PERDIDA. VTAS</th>
-                                <th class="text-black text-end">PROM. PERDIDA VTAS</th>
-                                <th class="text-black text-end">APARTADO VEND</th>
-                                <th class="text-black text-end">APARTADO VENTA X CATALOGO</th>
-                                <th class="text-black text-end">INVENTARIO DISPONBLE</th>
-                                <th class="text-black text-end">INVENTARIO PROCESO</th>
-                                <th class="text-black text-end">INVENTARIO CORTADO</th>
-                                <th class="text-black text-end">CORTE</th>
-                                <th class="text-black text-end" >MESES INV ANTES MTP</th>
-                                <th class="text-black text-end">INV. MTP</th>
-                                <th class="text-black text-end" >MESES INV</th>
-                                <th class="text-black text-end">PROGRAMA</th>
-                                <th class="text-black text-end">LEAD TIME</th>
-                                <th class="text-black text-end">MESES PRG 12M</th>
-                                <th class="text-black text-end">PROM. MEN. 12M</th>
-                                <th class="text-black text-end"># MESES 12M</th>
-                                <th class="text-black text-end">MESES INV. 6M</th>
-                                <th class="text-black text-end">PROM. MEN. 6M</th>
-                                <th class="text-black text-end"># MESES 6M</th>
-                                <th class="text-black text-end">PROM X MES AÑO/ANT</th>
-                                <th class="text-black text-end"># MESES AÑO/ANT</th>
-                                <th class="text-black text-end">DOC. VEND. AÑO/ANT.</th>
-                                <th class="text-black text-end">VALOR VENDIDO AÑO/ANT</th>
-                                <th class="text-black text-end">IMPORTADO</th>
-                                <th class="text-black text-end">DOC. TOTALES</th>
-                                <th class="text-black text-end">NUEVO INV.</th>
-                                <th class="text-black text-end">NUEVO BALANCE</th>
-                                <th class="text-black text-end">MAT. PRIMA EN ALMACEN</th>
+                                <th class="text-white bg-white">N.</th>
+                                <th class="text-black text-center bg-white">MARCA</th>
+                                <th class="text-black text-center bg-white">ESTILO</th>
+                                <th class="text-black text-center bg-white">COLOR</th>
+                                <th class="text-black text-center bg-white">TALLA</th>
+                                <th class="text-black text-center">&nbsp; &nbsp; &nbsp; T/INV</th>
+                                <th class="text-black text-center">DOC. VEN.<br>AÑO/ACT</th>
+                                <th class="text-black text-center">VAL. VEN.<br>AÑO/ACT</th>
+                                <th class="text-black text-center">PROM. MES</th>
+                                <th class="text-black text-center">#<br>MESES</th>
+                                <th class="text-black text-center">UND VTAS.<br>MES/ANT</th>
+                                <th class="text-black text-center">PERDIDA.<br>VTAS</th>
+                                <th class="text-black text-center">PROM.<br>PERDIDA VTAS</th>
+                                <th class="text-black text-center">APARTADO<br>VENDIDO</th>
+                                <th class="text-black text-center">APARTADO<br>VENTA X CATALOGO</th>
+                                <th class="text-black text-center">INVENTARIO<br>DISPONBLE</th>
+                                <th class="text-black text-center">INVENTARIO<br>PROCESO</th>
+                                <th class="text-black text-center">INVENTARIO<br>CORTADO</th>
+                                <th class="text-black text-center">CORTE</th>
+                                <th class="text-black text-center" >MESES INV ANTES MTP</th>
+                                <th class="text-black text-center">INV. MTP</th>
+                                <th class="text-black text-center" >MESES INV</th>
+                                <th class="text-black text-center">PROGRAMA</th>
+                                <th class="text-black text-center">LEAD TIME</th>
+                                <th class="text-black text-center">MESES<br>PRG 12M</th>
+                                <th class="text-black text-center">PROM.MEN.<br>12M</th>
+                                <th class="text-black text-center">#<br>MESES 12M</th>
+                                <th class="text-black text-center">MESES<br>INV. 6M</th>
+                                <th class="text-black text-center">PROM.<br>MEN. 6M</th>
+                                <th class="text-black text-center">#<br>MESES 6M</th>
+                                <th class="text-black text-center">PROM X MES<br>AÑO/ANT</th>
+                                <th class="text-black text-center">#<br>MESES AÑO/ANT</th>
+                                <th class="text-black text-center">DOC. VEND.<br>AÑO/ANT.</th>
+                                <th class="text-black text-center">VALOR VENDIDO<br>AÑO/ANT</th>
+                                <th class="text-black text-center">IMPORTADO</th>
+                                <th class="text-black text-center">DOC.<br>TOTALES</th>
+                                <th class="text-black text-center">NUEVO INV.</th>
+                                <th class="text-black text-center">NUEVO<br>BALANCE</th>
+                                <th class="text-black text-center">MAT. PRIMA<br>EN ALMACEN</th>
                             </tr>
                         </thead>
                         <tbody id="myTablePlaneacionBody" style="font-size: 12px;">
@@ -365,6 +365,7 @@
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
     <script src="https://code.highcharts.com/modules/export-data.js"></script>
     <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+    <script src="https://cdn.datatables.net/fixedcolumns/4.3.0/js/dataTables.fixedColumns.min.js"></script>
     <script>
          
         var totalUNIVAA = 0;
@@ -452,6 +453,9 @@
                     language: {
                     url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json',
                 },
+                fixedColumns: {
+                    left: 5,},
+                scrollCollapse: true,
                 "pageLength": 1000,
                 "processing":true,
                 
@@ -498,17 +502,17 @@
                 },
                 "columns": [
                     {data:"ROWNUM",
-                        className:"d-none",orderable: false, },
+                        className:"bg-white text-transparent",orderable: false, },
                     {data:"MARCA",
-                        className:"text-end",orderable: false },
+                        className:"text-end bg-white",orderable: false },
                     {data:"ESTILO",
-                        className:"text-start",orderable: false },
+                        className:"text-start  bg-white",orderable: false },
                     {data:"COLOR",
-                        className:"text-start",orderable: false },
+                        className:"text-start  bg-white",orderable: false },
                     {data:"TALLA",
-                        className:"text-start",orderable: false },
+                        className:"text-start  bg-white",orderable: false },
                     {data:"TIPINV",
-                        className:"text-start",orderable: false },
+                        className:"text-center  bg-white",orderable: false },
                     {data:"UNIVAA",
                         className:"text-info text-end",
                         render: function(data) {
@@ -911,9 +915,6 @@ $('#myTablePlaneacion').on('search.dt', function () {
             }
         }, 1500);
     });
-
-
-
             var toggleMarca=getCookie("marcasToggle");
             if (toggleMarca!=null) {
                 animateMenu();
@@ -959,22 +960,67 @@ $('#myTablePlaneacion').on('search.dt', function () {
           }else{
             tableResumenBody.append('<tr><td colspan="4" class="text-center">No se encontraron registros</td></tr>');
           }
+          $("#divTable").empty();
+          $("#divTable").append(`
+          <table id="myTableDetalles" class="table stripe table-hover "style="width:100%">
+                        <thead>
+                            <tr class="sticky-top bg-white" style="font-size:12px;">
+                               
+                                <th class="text-black text-center bg-white" style="width:35px;">MARCA</th>
+                                <th class="text-black text-center bg-white" style="width:35px;">ESTILO</th>
+                                <th class="text-black text-center bg-white" style="width:35px;">COLOR</th>
+                                <th class="text-black text-center bg-white" style="width:35px;">TALLA</th>
+                                <th class="text-black text-center bg-white" style="width:35px;">T/INV</th>
+                                <th class="text-black text-center">DOC.VEN.<br>AÑO/ACT</th>
+                                <th class="text-black text-center">VAL.VEN.<br>AÑO/ACT</th>
+                                <th class="text-black text-center">PROM. MES</th>
+                                <th class="text-black text-center">#<br>MESES</th>
+                                <th class="text-black text-center">UND VTAS.<br>MES/ANT</th>
+                                <th class="text-black text-center">PERDIDA.<br>VTAS</th>
+                                <th class="text-black text-center">PROM.<br>PERDIDA VTAS</th>
+                                <th class="text-black text-center">APARTADO<br>VEND</th>
+                                <th class="text-black text-center">APARTADO<br>VENTA X CATALOGO</th>
+                                <th class="text-black text-center">INVENTARIO<br>DISPONBLE</th>
+                                <th class="text-black text-center">INVENTARIO<br>PROCESO</th>
+                                <th class="text-black text-center">INVENTARIO<br>CORTADO</th>
+                                <th class="text-black text-center">CORTE</th>
+                                <th class="text-black text-center">INV. MTP</th>
+                                <th class="text-black text-center" >MESES INV</th>
+                                <th class="text-black text-center">PROGRAMA</th>
+                                <th class="text-black text-center">LEAD TIME</th>
+                                <th class="text-black text-center">MESES<br>PRG 12M</th>
+                                <th class="text-black text-center">PROM.<br>MEN. 12M</th>
+                                <th class="text-black text-center">#<br>MESES 12M</th>
+                                <th class="text-black text-center">MESES<br>INV. 6M</th>
+                                <th class="text-black text-center">PROM.<br>MEN. 6M</th>
+                                <th class="text-black text-center">#<br>MESES 6M</th>
+                                <th class="text-black text-center">PROM X MES<br>AÑO/ANT</th>
+                                <th class="text-black text-center">#<br>MESES AÑO/ANT</th>
+                                <th class="text-black text-center">DOC. VEND.<br>AÑO/ANT.</th>
+                                <th class="text-black text-center">VALOR VENDIDO<br>AÑO/ANT</th>
+                            </tr>
+                        </thead>
+                        <tbody id="myTableDetallesBody">
+
+                        </tbody>
+                    </table>`);
+
           const myTableDetallesBody=$("#myTableDetallesBody");
           options="";
           myTableDetallesBody.empty();
           for (let i = 0; i < data.length; i++) {
             if (data[i]['TIPINV']=='TOTAL') {
-                options+="<tr class='total-row'>";
-                options+="<td class='gray-letters'>"+data[i]['MARCA']+"</td>";
-                options+="<td class='gray-letters'>"+data[i]['ESTILO']+"</td>";
+                options+="<tr class='total-row'  style='font-size:12px;'>";
+                options+="<td class='gray-letters bg-white' style='width:35px;'>"+data[i]['MARCA']+"</td>";
+                options+="<td class='gray-letters bg-white' style='width:35px;'>"+data[i]['ESTILO']+"</td>";
             }else{
-                options+="<tr>";
-                options+="<td>"+data[i]['MARCA']+"</td>";
-                options+="<td>"+data[i]['ESTILO']+"</td>";
+                options+="<tr style='font-size:12px;'>";
+                options+="<td class='bg-white' style='width:35px;'>"+data[i]['MARCA']+"</td>";
+                options+="<td class='bg-white' style='width:35px;'>"+data[i]['ESTILO']+"</td>";
             }
-            options+="<td>"+data[i]['COLOR']+"</td>";
-            options+="<td>"+data[i]['TALLA']+"</td>";
-            options+="<td>"+data[i]['TIPINV']+"</td>";
+            options+="<td class='bg-white' style='width:35px;'>"+data[i]['COLOR']+"</td>";
+            options+="<td class='bg-white' style='width:35px;'>"+data[i]['TALLA']+"</td>";
+            options+="<td class='bg-white'>"+data[i]['TIPINV']+"</td>";
             options+="<td>"+data[i]['UNIVAA'].toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 })+"</td>";
             options+="<td>"+data[i]['VALVAA'].toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 })+"</td>";
             options+="<td>"+data[i]['UPRMAC'].toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 })+"</td>";
@@ -1005,7 +1051,17 @@ $('#myTablePlaneacion').on('search.dt', function () {
             options+="</tr>";
           }
           myTableDetallesBody.append(options);
-
+          $("#myTableDetalles").DataTable(
+            {
+                language: {
+                    url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json',
+                },
+                fixedColumns: {left: 4,},
+                "pageLength": 1000,
+                "paging": false,
+                "ordering": false,
+            }
+          );
           $("#ventasModal").modal("show");  
          }
          function closeModal() {
@@ -1107,7 +1163,7 @@ $('#myTablePlaneacion').on('search.dt', function () {
 </body>
 <!-- Modal -->
 <div class="modal fade" id="ventasModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-xl">
+  <div class="modal-dialog modal-fullscreen">
     <div class="modal-content">
       <div class="modal-header">
         <h1 class="modal-title fs-5" id="exampleModalLabel">Detalle de ventas</h1>
@@ -1153,49 +1209,8 @@ $('#myTablePlaneacion').on('search.dt', function () {
                     <div class="col-12">
                     <hr>
                     <h5><u>Detalle del año</u>  <span id="currentYear"></span></h5>
-                    <div class="overflow-auto mt-3  rounded" style="width:100%; height: 400px;">
-                    <table id="myTableDetalles" class="table stripe table-hover "style="width:100%">
-                        <thead>
-                            <tr class="sticky-top bg-white">
-                                <th class="d-none">rownum</th>
-                                <th class="text-black text-start">MARCA</th>
-                                <th class="text-black text-start">ESTILO</th>
-                                <th class="text-black text-start">COLOR</th>
-                                <th class="text-black text-start">TALLA</th>
-                                <th class="text-black text-start">T/INV</th>
-                                <th class="text-black text-end">DOC. VEN. AÑO/ACT</th>
-                                <th class="text-black text-end">VAL. VEN. AÑO/ACT</th>
-                                <th class="text-black text-end">PROM. MES</th>
-                                <th class="text-black text-end"># MESES</th>
-                                <th class="text-black text-end">UND VTAS. MES/ANT</th>
-                                <th class="text-black text-end">PERDIDA. VTAS</th>
-                                <th class="text-black text-end">PROM. PERDIDA VTAS</th>
-                                <th class="text-black text-end">APARTADO VEND</th>
-                                <th class="text-black text-end">APARTADO VENTA X CATALOGO</th>
-                                <th class="text-black text-end">INVENTARIO DISPONBLE</th>
-                                <th class="text-black text-end">INVENTARIO PROCESO</th>
-                                <th class="text-black text-end">INVENTARIO CORTADO</th>
-                                <th class="text-black text-end">CORTE</th>
-                                <th class="text-black text-end">INV. MTP</th>
-                                <th class="text-black text-end" >MESES INV</th>
-                                <th class="text-black text-end">PROGRAMA</th>
-                                <th class="text-black text-end">LEAD TIME</th>
-                                <th class="text-black text-end">MESES PRG 12M</th>
-                                <th class="text-black text-end">PROM. MEN. 12M</th>
-                                <th class="text-black text-end"># MESES 12M</th>
-                                <th class="text-black text-end">MESES INV. 6M</th>
-                                <th class="text-black text-end">PROM. MEN. 6M</th>
-                                <th class="text-black text-end"># MESES 6M</th>
-                                <th class="text-black text-end">PROM X MES AÑO/ANT</th>
-                                <th class="text-black text-end"># MESES AÑO/ANT</th>
-                                <th class="text-black text-end">DOC. VEND. AÑO/ANT.</th>
-                                <th class="text-black text-end">VALOR VENDIDO AÑO/ANT</th>
-                            </tr>
-                        </thead>
-                        <tbody id="myTableDetallesBody">
-
-                        </tbody>
-                    </table>
+                    <div id="divTable" class="table-responsive">
+                    
                         </div>
                     </div>
                 </div>
