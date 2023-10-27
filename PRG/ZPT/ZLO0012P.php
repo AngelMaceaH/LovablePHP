@@ -176,6 +176,8 @@
               $("#formFiltros").submit();
             });
             $("input[name=radioFiltro][value=" + filtroP + "]").prop('checked', true);
+
+        
          var table= $('#myTableSeguimiento').DataTable({
             language: {
             url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json',
@@ -188,7 +190,6 @@
                     "type": "POST",
                     "complete": function (xhr) {
                       $("#thProcessing").addClass('d-none');
-                        console.log(xhr.responseJSON);
                         var registrosMismoEstilo = [];
                         var table = $('#myTableSeguimiento').DataTable();
                             table.rows().every(function (rowIdx, tableLoop, rowLoop) {
@@ -305,7 +306,11 @@
 
             });
             $("#myTableSeguimiento").append('<caption style="caption-side: top" class="fw-bold text-black"><label class="ms-2 fw-bold">**Presione doble clic para ver detalles por estilo color y talla**</label></caption>'); 
-
+            table.on('search.dt', function() {
+                var searchTerm = table.search();
+                $('#myTableSeguimiento_filter input').val(searchTerm.toUpperCase())
+            });
+            
             table.on('draw.dt', function() {
                   $('.ladda-button').each(function() {
                     var l = Ladda.create(this);

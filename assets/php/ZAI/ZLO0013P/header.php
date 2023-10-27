@@ -96,9 +96,7 @@
 .fixed-scrollbar {
     overflow:auto;
     }
-    .dataTables_filter {
-display: none;
-}
+  
 
 .text-transparent{
     color: transparent !important;

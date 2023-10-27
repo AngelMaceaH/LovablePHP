@@ -34,16 +34,13 @@
     </div>
     </header>
     <div id="body-div" class="body flex-grow-1">
-        <div class="card mb-5">
-            <div class="card-header">
-                <h1 class="fs-4 mb-1 mt-2 text-center">Planeación agregada de operaciones y ventas</h1>
-            </div>
-            <div class="card-body">
+        <div class="card">
+            <div class="card-body p-0 m-0">
                 <div class="card">
                     <div class="card-header">
                         <div class="row">
                             <div class="col-12 text-end">
-                                <button type="button" class="btn btn-secondary pe-3 ps-3" onclick="animateMenu()"> <i id="iconArrow" class="fa-solid fa-angles-up text-white"></i></button>
+                                <button type="button" class="btn btn-secondary" style="width:100px;" onclick="animateMenu()"> <i id="iconArrow" class="fa-solid fa-angles-up text-white"></i></button>
                             </div>
                         </div>
                     </div>
@@ -356,11 +353,7 @@
         </div>
     </div>
     </div>
-    </div>
-
-    <div class="footer bg-blck flex-grow-1 d-flex justify-content-center">
-        <p class="bggray responsive-font-example"><i>Lovable de Honduras S.A. de C.V</i></p>
-    </div>
+    </div> 
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
     <script src="https://code.highcharts.com/modules/export-data.js"></script>
@@ -699,7 +692,7 @@
                     {
                     extend: 'excelHtml5',
                     text: '<i class="fa-solid fa-file-excel me-1"></i><b>Enviar a Excel</b>',
-                    className: "btn btn-success text-light fs-6 mb-2 text-center",
+                    className: "btn btn-success text-light fs-6 mb-2 ms-3 text-center",
                     title: 'ReportePlaneacion',
                     messageTop:($("#cbbFormato").val()!=0)?'Formato: '+$("#cbbFormato option:selected").text():'Formato: Todos', 
                     exportOptions: {
@@ -895,9 +888,10 @@ var previousSearch = "";
 
 $('#myTablePlaneacion').on('search.dt', function () {
     var searchBox = $('#myTablePlaneacion').closest('.dataTables_wrapper').find('input[type="search"]');
+    var searchText = searchBox.val();
+    searchBox.val(searchText.toUpperCase());
     clearTimeout(searchTimer);
     searchTimer = setTimeout(function() {
-        var searchText = searchBox.val();
         if (searchText != previousSearch) {
             setCookie("searchVal", searchText, 1);
             previousSearch = searchText;
@@ -913,7 +907,7 @@ $('#myTablePlaneacion').on('search.dt', function () {
                     location.reload();
                 }
             }
-        }, 1500);
+        }, 2500);
     });
             var toggleMarca=getCookie("marcasToggle");
             if (toggleMarca!=null) {
