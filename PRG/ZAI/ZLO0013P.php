@@ -434,14 +434,6 @@
         
             console.log("http://172.16.15.20/API.LovablePHP/ZLO0013P/List/?marca="+marca+"&plan="+plan+"&estado="+estado+"&btnor="+btnOrder+"&inventarios="+inventarios+"&clasificacion="+clasificacion+"&orden="+orden+"&filtro="+filtro+"&repro="+repro+"&formato="+formato+"&searchVal="+searchBox+"");
             var requestError = false;
-            $.fn.dataTable.ext.search.push(function(settings, searchData, index, rowData, counter) {
-                    var searchVal = $('#myTablePlaneacion').DataTable().search(); 
-                    var columnValue = searchData[2]; 
-                    if (!searchVal) {
-                        return true;
-                    }
-                    return columnValue.includes(searchVal);
-                });
                 var table= $('#myTablePlaneacion').DataTable( {
                     language: {
                     url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json',
@@ -686,8 +678,18 @@
                 {"targets": [38],"visible": visibleColumn2, "searchable": false, },  
                 ],
                 ordering: false,
-                dom: 'Bfrtip',
-                
+                dom: 'Bftip',
+                initComplete: function() {
+                    var btn = $('<input type="text"  placeholder="Buscar un estilo..." id="searchEstiloInput" oninput="this.value = this.value.toUpperCase()"> <button class="btn btn-danger ms-3 me-3 text-white fw-bold" style="width:100px;" onclick="searchEstilo()"/>').append('<i class="fa-solid fa-magnifying-glass"></i> Buscar');
+                    $('.dataTables_filter').append(btn);
+                    $('.dataTables_filter label').contents().filter(function() {
+                        return this.nodeType === 3;
+                    }).remove();
+                    if (searchBox!='0') {
+                        $('#myTablePlaneacion').closest('.dataTables_wrapper').find('input[type="search"]').val(searchBox);
+                    }
+                    
+                },
                 buttons: [
                     {
                     extend: 'excelHtml5',
@@ -883,40 +885,24 @@
         }
         }
             });
-            var searchTimer;
-var previousSearch = ""; 
-
-$('#myTablePlaneacion').on('search.dt', function () {
-    var searchBox = $('#myTablePlaneacion').closest('.dataTables_wrapper').find('input[type="search"]');
-    var searchText = searchBox.val();
-    searchBox.val(searchText.toUpperCase());
-    clearTimeout(searchTimer);
-    searchTimer = setTimeout(function() {
-        if (searchText != previousSearch) {
-            setCookie("searchVal", searchText, 1);
-            previousSearch = searchText;
-            var tableData = $('#myTablePlaneacion').DataTable().column(2).data();
-            var found = false;
-            tableData.each(function (value, index) {
-                    if (value==searchText) {
-                        found = true;
-                        return false;
-                    }
-                });
-                if (!found) {
-                    location.reload();
-                }
-            }
-        }, 2500);
-    });
             var toggleMarca=getCookie("marcasToggle");
             if (toggleMarca!=null) {
                 animateMenu();
             }
-
             $("#myTablePlaneacion").append('<caption style="caption-side: top" class="fw-bold text-black"><label class="ms-2 fw-bold">**Presione doble clic sobre el estilo para ver sus Ventas**</label></caption>');
-         });
-        
+        });
+        var previousSearch = ""; 
+        function searchEstilo() {
+            var searchBox = $("#searchEstiloInput");
+            var searchText = searchBox.val();
+            if (searchText!='') {
+                setCookie("searchVal", searchText, 1);
+            }else{
+                setCookie("searchVal", '0', 1);
+            }
+            location.reload();
+        }
+
          function openModalVentas(estilo,data) {
         var anoActual=new Date().getFullYear();
           $("#lblEstilo").text(estilo);

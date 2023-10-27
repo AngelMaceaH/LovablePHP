@@ -40,6 +40,10 @@
             display: none;
         }
     }
+    #myTablePlaneacion_filter input[type="search"] {
+        display: none;
+    }
+    
    .table-responsive {
         overflow-x: auto;
     }
