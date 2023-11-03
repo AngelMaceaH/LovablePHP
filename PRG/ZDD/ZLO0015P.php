@@ -162,32 +162,48 @@
         var currentDate = new Date().toISOString().split('T')[0];
         $('#fechaDigit').text(currentDate);
         $('#fechaDoc').val(currentDate);
-        var urlProveedores = "http://172.16.15.20/API.LovablePHP/ZLO0015P/ListProveedores/";
-        var responseProveedores = ajaxRequest(urlProveedores);
-        options = "";
-        if (responseProveedores.code == 200) {
-            for (let j = 0; j < responseProveedores.data.length; j++) {
-                options += '<tr onclick="sendProveedor(this)"><td style="width:10%;" class="TipProveedor">' +
-                    responseProveedores.data[j]['ARCCIU'].padStart(2, '0') +
-                    '</td><td style="width:10%;" class="IDProveedor">' +
-                    responseProveedores.data[j]['ARCCO1'].padStart(4, '0') + '</td><td class="descProveedor">' +
-                    responseProveedores.data[j]['ARCNOM'] + '</td></tr>';
-            }
-            $("#tbProveedoresBody").append(options);
+
             $('#tbProveedores thead th').each(function() {
                 var title = $(this).text();
-                $(this).html(title + '<br /><input type="text" class="form-control mt-2"/>');
+                $(this).html(title + '<br /><input type="text"  oninput="this.value = this.value.toUpperCase()" class="form-control mt-2"/>');
             });
             var table = $('#tbProveedores').DataTable({
                 language: {
                     url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json',
                 },
                 "pageLength": 10,
+                "processing": true,
+                "serverSide": true,
+                "ajax": {
+                    "url": "http://172.16.15.20/API.LovablePHP/ZLO0015P/ListProveedoresAsync/",
+                    "type": "POST",
+                    "complete": function (xhr) {
+                            //console.log(xhr.responseJSON);
+                        },
+                        error: function (xhr, status, error) {
+                            console.log(error);
+                            requestError = true;
+                        }
+                },
                 "ordering": false,
                 "dom": 'rtip',
-
+                "columns": [
+                    { "data": "ARCCIU",
+                        render: function(data) {
+                          return data.padStart(2, '0');
+                      } },
+                    { "data": "ARCCO1",
+                        render: function(data) {
+                          return data.padStart(4, '0');
+                      }  },
+                    { "data": "ARCNOM" },
+                ],
+                "drawCallback": function() {
+                    $('#tbProveedores tbody tr').on('click', function() {
+                        sendProveedor(this);
+                    });
+                }
             });
-
             $('#tbProveedores thead input').on('keyup', function() {
                 var columnIndex = $(this).parent().index();
                 var inputValue = $(this).val().trim();
@@ -199,7 +215,7 @@
                         .draw();
                 }
             });
-        }
+        
         $("#tiposDoc").on('change', function() {
             const inputs = $("#inputs");
             inputs.empty();
@@ -530,7 +546,7 @@
     </div>
 
     <div class="modal fade" id="modalProveedores" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="exampleModalLabel"></h1>

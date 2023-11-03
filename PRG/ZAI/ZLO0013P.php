@@ -40,7 +40,7 @@
                     <div class="card-header">
                         <div class="row">
                             <div class="col-12 text-end">
-                                <button type="button" class="btn btn-secondary" style="width:100px;" onclick="animateMenu()"> <i id="iconArrow" class="fa-solid fa-angles-up text-white"></i></button>
+                                <button type="button" class="btn btn-secondary" style="width:100px; margin-right:15px;" onclick="animateMenu()"> <i id="iconArrow" class="fa-solid fa-angles-up text-white"></i></button>
                             </div>
                         </div>
                     </div>
@@ -104,10 +104,7 @@
                                 <input type="radio" class="btn-check" name="btncols" value="all" id="btnall" autocomplete="off" >
                                 <label class="btn btn-outline-secondary responsive-font-example  text-black menuMarca"style="padding-top: 30px;"  for="btnall" ><b style="font-size:12px" >TODOS</b></label>
                                 </div>
-                           <!-- <div class="btn-group flex-wrap d-flex justify-content-center justify-content-lg-start mb-2 mt-2" role="group" aria-label="Basic radio toggle button group">
-                               
-                            </div>-->
-                                
+
                                 </div> 
                                 <div id="isPhone">
                                     <div class="row">
@@ -295,10 +292,18 @@
                 </div>
                 <div class="fixed-scrollbar">
                 <div class="table-container mt-3 " id="planeacionContainer">
+                <div id="planeacionLoader" class="d-none">
+                    <div class="position-absolute top-50 start-50 translate-middle">
+                    <button class="btn btn-danger mt-5" type="button" disabled>
+                        <span class="spinner-border text-white" style="width: 1.5rem; height: 1.5rem;" aria-hidden="true"></span>
+                        <span role="status" class="ms-2 text-white fs-4">Cargando...</span>
+                        </button>
+                    </div>
+                </div>
                     <table id="myTablePlaneacion" class="table stripe table-hover "style="width:100%">
                         <thead>
                             <tr >
-                                <th colspan="33" id="thProcessing" style="height:100px;"></th>
+                                <th colspan="33" id="thProcessing" style="height:1px;"></th>
                             </tr>
                             <tr class="sticky-top bg-white" style="font-size:12px;">
                                 <th class="text-white bg-white">N.</th>
@@ -348,7 +353,6 @@
                     </table>
                 </div>
                 </div>
-               
             </div>
         </div>
     </div>
@@ -360,7 +364,6 @@
     <script src="https://code.highcharts.com/modules/accessibility.js"></script>
     <script src="https://cdn.datatables.net/fixedcolumns/4.3.0/js/dataTables.fixedColumns.min.js"></script>
     <script>
-         
         var totalUNIVAA = 0;
         var totalVALVAA = 0;
     $( document ).ready(function() {
@@ -449,9 +452,11 @@
                     "type": "POST",
                     "beforeSend": function () {
                         $("#planeacionContainer").addClass("loading");
+                        $("#planeacionLoader").removeClass("d-none");
                     },
                     "complete": function (xhr) {
                         $("#planeacionContainer").removeClass("loading");
+                        $("#planeacionLoader").addClass("d-none");
                         $("#thProcessing").addClass('d-none');
                         console.log(xhr.responseJSON);
                         var registrosMismoEstilo = [];

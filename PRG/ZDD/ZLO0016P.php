@@ -20,7 +20,6 @@
     .imgWidth {
         width: 100%;
     }
-
     </style>
 </head>
 
@@ -60,12 +59,12 @@
                                     autocomplete="off">
                                     <div class="row">
                                         <div class="col-lg-12">
-                                           <div class="table-responsive">
+                                            <div class="table-responsive">
                                                 <div class="styled-input wide multi" id="filtrosDoc">
 
 
                                                 </div>
-                                           </div>
+                                            </div>
                                         </div>
                                         <div class="col-lg-12">
                                             <button type="button" class="btn btn-success mt-3 fw-bold text-white"
@@ -108,53 +107,64 @@
     });
     var codigo = "";
     var comarcOptions = "";
-    var tiendasOptions="";
+    var tiendasOptions = "";
     var camposDes = "";
     var inputs = "";
-    var cor="";
-    var tipoWeb="";
+    var cor = "";
+    var tipoWeb = "";
     $(document).ready(function() {
         var anoing = "<?php echo isset($_SESSION['ANOING'])? $_SESSION['ANOING']: ''; ?>";
         var numemp = "<?php echo isset($_SESSION['NUMEMP'])? $_SESSION['NUMEMP']: ''; ?>";
         var usuario = '<?php echo $_SESSION["CODUSU"];?>';
 
-            const currentUrl = window.location.href;
-            var url = new URL(currentUrl);
-            var user= url.searchParams.get("user");
-            if (user) {
-                var cia=""; var prv=""; var tip=""; var doc=""; var apl=""; var docf=""; var fec=""; var tienda=""; var descrp="";   
-            var paramsLength=""; var paramsData=[];
-            cor=url.searchParams.get("cor");
-                var getParamsurl="http://172.16.15.20/API.LovablePHP/ZLO0016P/GetParams/?cod="+cor+"";
-                var responseParams = ajaxRequest(getParamsurl);
-            if (responseParams.code==200){
-                paramsData=responseParams.data;
-                paramsLength=paramsData['LENGTH'];
-                fec=paramsData['FECDOC'];
-                apl=paramsData['MODULO'];
-                tipoWeb=paramsData['TIPWEB'];
-                descrp=paramsData['DESCRP'];
-            } 
+        const currentUrl = window.location.href;
+        var url = new URL(currentUrl);
+        var user = url.searchParams.get("user");
+        if (user) {
+            var cia = "";
+            var prv = "";
+            var tip = "";
+            var doc = "";
+            var apl = "";
+            var docf = "";
+            var fec = "";
+            var tienda = "";
+            var descrp = "";
+            var paramsLength = "";
+            var paramsData = [];
+            cor = url.searchParams.get("cor");
+            var getParamsurl = "http://172.16.15.20/API.LovablePHP/ZLO0016P/GetParams/?cod=" + cor + "";
+            var responseParams = ajaxRequest(getParamsurl);
+            if (responseParams.code == 200) {
+                paramsData = responseParams.data;
+                paramsLength = paramsData['LENGTH'];
+                fec = paramsData['FECDOC'];
+                apl = paramsData['MODULO'];
+                tipoWeb = paramsData['TIPWEB'];
+                descrp = paramsData['DESCRP'];
             }
+        }
 
         for (let i = 0; i < 10; i++) {
             document.cookie = "cam" + i + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/";
         }
 
-        var urlComarc='http://172.16.15.20/API.LovablePHP/ZLO0015P/ListComarc/?user='+usuario+'';
+        var urlComarc = 'http://172.16.15.20/API.LovablePHP/ZLO0015P/ListComarc/?user=' + usuario + '';
         var responseComarc = ajaxRequest(urlComarc);
         if (responseComarc.code == 200) {
             for (let i = 0; i < responseComarc.data.length; i++) {
-                comarcOptions += '<option value="' + responseComarc.data[i].COMCOD.padStart(2, '0') + '">' + responseComarc.data[
-                    i].COMDES + '</option>';
+                comarcOptions += '<option value="' + responseComarc.data[i].COMCOD.padStart(2, '0') + '">' +
+                    responseComarc.data[
+                        i].COMDES + '</option>';
             }
         }
-        var urlTiendas='http://172.16.15.20/API.LovablePHP/ZLO0015P/ListTiendas/?user='+usuario+'';
+        var urlTiendas = 'http://172.16.15.20/API.LovablePHP/ZLO0015P/ListTiendas/?user=' + usuario + '';
         var responseTiendas = ajaxRequest(urlTiendas);
         if (responseTiendas.code == 200) {
             for (let i = 0; i < responseTiendas.data.length; i++) {
-                tiendasOptions += '<option value="' + responseTiendas.data[i].COMCOD.padStart(2, '0') + '">' + responseTiendas.data[
-                    i].COMDES + '</option>';
+                tiendasOptions += '<option value="' + responseTiendas.data[i].COMCOD.padStart(2, '0') + '">' +
+                    responseTiendas.data[
+                        i].COMDES + '</option>';
             }
         }
         $("#tiendasSelect").append(tiendasOptions);
@@ -193,41 +203,65 @@
                                         </select>
                                     </div>`);
         }
-        var urlProveedores = "http://172.16.15.20/API.LovablePHP/ZLO0015P/ListProveedores/";
-        var responseProveedores = ajaxRequest(urlProveedores);
-        options = "";
-        if (responseProveedores.code == 200) {
-            for (let j = 0; j < responseProveedores.data.length; j++) {
-                options += '<tr onclick="sendProveedor(this)"><td style="width:10%;" class="TipProveedor">' +
-                    responseProveedores.data[j]['ARCCIU'].padStart(2, '0') + '</td><td style="width:10%;" class="IDProveedor">' +
-                    responseProveedores.data[j]['ARCCO1'].padStart(4, '0') + '</td><td class="descProveedor">' +
-                    responseProveedores.data[j]['ARCNOM'] + '</td></tr>';
-            }
-            $("#tbProveedoresBody").append(options);
-            $('#tbProveedores thead th').each(function() {
-                var title = $(this).text();
-                $(this).html(title + '<br /><input type="text" class="form-control mt-2"/>');
-            });
-            var table = $('#tbProveedores').DataTable({
-                language: {
-                    url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json',
+        $('#tbProveedores thead th').each(function() {
+            var title = $(this).text();
+            $(this).html(title +
+                '<br /><input type="text"  oninput="this.value = this.value.toUpperCase()" class="form-control mt-2"/>'
+                );
+        });
+        var table = $('#tbProveedores').DataTable({
+            language: {
+                url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json',
+            },
+            "pageLength": 10,
+            "processing": true,
+            "serverSide": true,
+            "ajax": {
+                "url": "http://172.16.15.20/API.LovablePHP/ZLO0015P/ListProveedoresAsync/",
+                "type": "POST",
+                "complete": function(xhr) {
+                    //console.log(xhr.responseJSON);
                 },
-                "pageLength": 10,
-                "ordering": false,
-                "dom": 'rtip',
-            });
-            $('#tbProveedores thead input').on('keyup', function() {
-                var columnIndex = $(this).parent().index();
-                var inputValue = $(this).val().trim();
-
-                if (table.column(columnIndex).search() !== inputValue) {
-                    table
-                        .column(columnIndex)
-                        .search(inputValue)
-                        .draw();
+                error: function(xhr, status, error) {
+                    console.log(error);
+                    requestError = true;
                 }
-            });
-        }
+            },
+            "ordering": false,
+            "dom": 'rtip',
+            "columns": [{
+                    "data": "ARCCIU",
+                    render: function(data) {
+                        return data.padStart(2, '0');
+                    }
+                },
+                {
+                    "data": "ARCCO1",
+                    render: function(data) {
+                        return data.padStart(4, '0');
+                    }
+                },
+                {
+                    "data": "ARCNOM"
+                },
+            ],
+            "drawCallback": function() {
+                $('#tbProveedores tbody tr').on('click', function() {
+                    sendProveedor(this);
+                });
+            }
+        });
+        $('#tbProveedores thead input').on('keyup', function() {
+            var columnIndex = $(this).parent().index();
+            var inputValue = $(this).val().trim();
+
+            if (table.column(columnIndex).search() !== inputValue) {
+                table
+                    .column(columnIndex)
+                    .search(inputValue)
+                    .draw();
+            }
+        });
         var urlTipos = "http://172.16.15.20/API.LovablePHP/ZLO0015P/ListTipos/";
         var responseTipos = ajaxRequest(urlTipos);
         if (responseTipos.code == 200) {
@@ -249,42 +283,43 @@
             tiposChange();
         });
         tiposChange();
-        if (tipoWeb!='') {
-                $("#tiposDoc").val(tipoWeb).trigger('change');
+        if (tipoWeb != '') {
+            $("#tiposDoc").val(tipoWeb).trigger('change');
 
-                var camposId=paramsLength-4;
-           for (let i = 0; i < camposId; i++) {
-            var data=paramsData['CAM'+(i+1)+''].split(':');
-            if (data[1].trim()!='CONSULTA') {
-                if (data[0]=='proveedor') {
-                var id=data[1].split("-");
-                var tipo = id[0]; var prov = id[1];
-                var urlFind = "http://172.16.15.20/API.LovablePHP/ZLO0015P/ProveedoresFind/?tipo=" + tipo +"&proveedor=" + prov + "";
-                var responseFind = ajaxRequest(urlFind);
-                var descripcion = (responseFind.code == 200) ? responseFind.data[0]['ARCNOM'] : "";
-                codigo=tipo+'-'+prov;
-                $("#"+tipoWeb+i+"").val(tipo+' '+prov+' '+descripcion);
-                } else if (data[0]=='compañia') {
-                    var companialbl=$("#CompaniaSelect option[value='" + data[1] + "']").text();
-                    $("#"+tipoWeb+i+"").val(companialbl);
-                    $("#codigoCompania").val(data[1]);
-                     $("#inputIdCompania").val(tipoWeb);
-                }else if (data[0]=='tienda') {
-                    var tiendalbl=$("#TiendasSelect option[value='" + data[1] + "']").text();
-                    $("#"+tipoWeb+i+"").val(tiendalbl);
-                    $("#codigoTienda").val(data[1]);
-                    $("#inputIdTienda").val(tipoWeb);
+            var camposId = paramsLength - 4;
+            for (let i = 0; i < camposId; i++) {
+                var data = paramsData['CAM' + (i + 1) + ''].split(':');
+                if (data[1].trim() != 'CONSULTA') {
+                    if (data[0] == 'proveedor') {
+                        var id = data[1].split("-");
+                        var tipo = id[0];
+                        var prov = id[1];
+                        var urlFind = "http://172.16.15.20/API.LovablePHP/ZLO0015P/ProveedoresFind/?tipo=" +
+                            tipo + "&proveedor=" + prov + "";
+                        var responseFind = ajaxRequest(urlFind);
+                        var descripcion = (responseFind.code == 200) ? responseFind.data[0]['ARCNOM'] : "";
+                        codigo = tipo + '-' + prov;
+                        $("#" + tipoWeb + i + "").val(tipo + ' ' + prov + ' ' + descripcion);
+                    } else if (data[0] == 'compañia') {
+                        var companialbl = $("#CompaniaSelect option[value='" + data[1] + "']").text();
+                        $("#" + tipoWeb + i + "").val(companialbl);
+                        $("#codigoCompania").val(data[1]);
+                        $("#inputIdCompania").val(tipoWeb);
+                    } else if (data[0] == 'tienda') {
+                        var tiendalbl = $("#TiendasSelect option[value='" + data[1] + "']").text();
+                        $("#" + tipoWeb + i + "").val(tiendalbl);
+                        $("#codigoTienda").val(data[1]);
+                        $("#inputIdTienda").val(tipoWeb);
+                    } else {
+                        $("#" + tipoWeb + i + "").val(data[1]);
+                    }
+                    //$("#"+tipoWeb+i+"").prop('disabled', true);
                 }
-                else{
-                    $("#"+tipoWeb+i+"").val(data[1]);
-                }
-                //$("#"+tipoWeb+i+"").prop('disabled', true);
-            }
             }
             searchF();
         }
         chargeTable();
-        
+
     });
     window.addEventListener('load', (event) => {
         if (tipoWeb != '') {
@@ -295,11 +330,11 @@
                 if (card1) {
                     card1.click();
                     console.log("click");
-                    clearInterval(intervalo); 
+                    clearInterval(intervalo);
                 } else {
                     intentos++;
                     if (intentos >= maxIntentos) {
-                        clearInterval(intervalo); 
+                        clearInterval(intervalo);
                     }
                 }
             }, 500);
@@ -307,7 +342,7 @@
     });
 
     function tiposChange() {
-        var camposLength=0;
+        var camposLength = 0;
         var tipo = $("#tiposDoc").val();
         if (tipo != null) {
             setCookie("tipdoc", tipo, 1);
@@ -321,7 +356,7 @@
             selectedTipo = getCookie("tipdoc");
         }
         var urlCampos = "http://172.16.15.20/API.LovablePHP/ZLO0015P/ListTiposFind2/?tipo=" + selectedTipo;
-        
+
         var responseCampos = ajaxRequest(urlCampos);
         if (responseCampos.code == 200) {
             $("#tipDocs").val($("#tiposDoc").val());
@@ -331,7 +366,7 @@
             camposDes[counter + 1] = 'Fecha de digitalización';
             camposDes[counter + 2] = 'Nombre de documento';
             var htmlAppend = "";
-            camposLength=camposDes.length;
+            camposLength = camposDes.length;
             for (let i = 0; i < camposDes.length; i++) {
                 htmlAppend += '<div id="input-first-name" class="wideInput">';
                 if (camposDes[i].toLowerCase() == "proveedor") {
@@ -340,8 +375,10 @@
                         '<input class="inputsDoc fn" style="font-size:16px;"  type="text" autocomplete="off" data-placeholder-focus="false" required id="' +
                         responseCampos.data[0]['TIPDOC'] + i +
                         '" onclick="showProveedores()"  oninput="noTextInput(this)"/><button type="button" class="btn p-0 m-0 fs-5" onclick="vaciarInput()"><i class="fa-solid fa-xmark fs-6 "></i></button>';
-                    htmlAppend += '<input class="d-none" id="originalData" /> <input class="d-none" id="codigo" /> <input class="d-none" id="provId" value="'+responseCampos.data[0]['TIPDOC']+i+'" />'
-                } else if (camposDes[i].toLowerCase() == "tienda" ) {
+                    htmlAppend +=
+                        '<input class="d-none" id="originalData" /> <input class="d-none" id="codigo" /> <input class="d-none" id="provId" value="' +
+                        responseCampos.data[0]['TIPDOC'] + i + '" />'
+                } else if (camposDes[i].toLowerCase() == "tienda") {
                     // htmlAppend+='<span onclick="showProveedores()"><input class="form-select inputsDoc fn" type="text" id="'+responseCampos.data[0]['TIPDOC']+i+'" required readonly /></span>';
                     htmlAppend +=
                         '<input class="inputsDoc fn" style="font-size:16px;"  type="text" autocomplete="off" data-placeholder-focus="false" required id="' +
@@ -355,10 +392,8 @@
                     // htmlAppend+='<span onclick="showProveedores()"><input class="form-select inputsDoc fn" type="text" id="'+responseCampos.data[0]['TIPDOC']+i+'" required readonly /></span>';
                     htmlAppend +=
                         '<input class="inputsDoc fn" style="font-size:16px;"  type="text" autocomplete="off" data-placeholder-focus="false" required id="' +
-                        responseCampos.data[0]['TIPDOC'] + i + '" onclick="showCompanias(`' + responseCampos.data[0][
-                            'TIPDOC'
-                        ] + i +
-                        '`)"  oninput="noTextInput5(this)"/><button type="button" class="btn p-0 m-0 fs-5" onclick="vaciarInput5()"><i class="fa-solid fa-xmark fs-6"></i></button>';
+                        responseCampos.data[0]['TIPDOC'] + i + '" onclick="showCompanias(`' + responseCampos.data[0]['TIPDOC'] + i +
+                    '`)"  oninput="noTextInput5(this)"/><button type="button" class="btn p-0 m-0 fs-5" onclick="vaciarInput5()"><i class="fa-solid fa-xmark fs-6"></i></button>';
                     htmlAppend +=
                         '<input class="d-none" id="originalCompania" /> <input class="d-none" id="codigoCompania" />'
                 } else if (camposDes[i] == "Fecha de documento") {
@@ -422,15 +457,15 @@
                 inputs.append(htmlAppend);
                 htmlAppend = "";
             }
-            var numElements=camposLength/2;
-            var porcentajes=100/numElements;
+            var numElements = camposLength / 2;
+            var porcentajes = 100 / numElements;
             var elements = document.querySelectorAll('.wideInput');
             elements.forEach(function(element) {
-                element.style.flex = '1 0 '+porcentajes+'%'; 
+                element.style.flex = '1 0 ' + porcentajes + '%';
             });
-            
 
-            
+
+
 
         }
     }
@@ -441,10 +476,12 @@
         $("#inputIdTiendas").val(id);
         $("#modalTiendas").modal('show');
     }
+
     function showCompanias(id) {
         $("#inputIdCompania").val(id);
         $("#modalCompania").modal('show');
     }
+
     function saveCompania() {
         var id = $("#inputIdCompania").val();
         $("#codigoCompania").val($("#CompaniaSelect").val());
@@ -452,6 +489,7 @@
         $("#originalCompania").val($("#CompaniaSelect option:selected").text());
         $("#modalCompania").modal('hide');
     }
+
     function saveTienda() {
         var id = $("#inputIdTiendas").val();
         $("#codigoTienda").val($("#tiendasSelect").val());
@@ -534,9 +572,9 @@
     }
 
     function vaciarInput() {
-        var idInput=$("#provId").val();
-        $('#'+idInput+'').val('');
-        codigo='';
+        var idInput = $("#provId").val();
+        $('#' + idInput + '').val('');
+        codigo = '';
     }
 
     function vaciarInput2() {
@@ -552,6 +590,7 @@
         $('#codigoTienda').val('');
         $('#' + id).val('');
     }
+
     function vaciarInput5() {
         var id = $("#inputIdCompania").val();
         $('#originalCompania').val('');
@@ -569,17 +608,17 @@
         $("#modalProveedores").modal('show');
     }
 
-    function sendProveedor(row){
-            var tr=$(row).closest('tr');
-            var tds=tr.find('td');
-            var tipo=tds.eq(0).text();
-            var id=tds.eq(1).text();
-            var desc=tds.eq(2).text();
-            codigo=tipo+'-'+id;
-            var idInput=$("#provId").val();
-            $("#"+idInput+"").val(tipo+' '+id+' '+desc);
-            $("#modalProveedores").modal('hide');
-        }
+    function sendProveedor(row) {
+        var tr = $(row).closest('tr');
+        var tds = tr.find('td');
+        var tipo = tds.eq(0).text();
+        var id = tds.eq(1).text();
+        var desc = tds.eq(2).text();
+        codigo = tipo + '-' + id;
+        var idInput = $("#provId").val();
+        $("#" + idInput + "").val(tipo + ' ' + id + ' ' + desc);
+        $("#modalProveedores").modal('hide');
+    }
 
     function noTextInput(inputElement) {
         var originalData = $("#originalData").val();
@@ -595,10 +634,12 @@
         var originalData2 = $("#originalTienda").val();
         inputElement.value = originalData2;
     }
+
     function noTextInput5(inputElement) {
         var originalData2 = $("#originalCompania").val();
         inputElement.value = originalData2;
     }
+
     function noTextInput2(inputElement) {
         var originalData2 = $("#originalRangeGrabado").val();
         inputElement.value = originalData2;
@@ -621,21 +662,20 @@
         inputs = $(".inputsDoc");
         var tipo = $("#tipDocs").val();
         for (let i = 0; i < (inputs.length - 3); i++) {
-            if (camposDes[i].toLowerCase() == "tienda" ) {
-                var tienda=$("#codigoTienda").val().padStart(2, '0');
-                if (tienda!='00') {
-                    campos["CAM" + i] = tienda;  
+            if (camposDes[i].toLowerCase() == "tienda") {
+                var tienda = $("#codigoTienda").val().padStart(2, '0');
+                if (tienda != '00') {
+                    campos["CAM" + i] = tienda;
                 }
-            }else if(camposDes[i].toLowerCase() == "compañia"){
-                var cia=$("#codigoCompania").val().padStart(2, '0');
-                if (cia!='00') {
-                    campos["CAM" + i] = cia;  
+            } else if (camposDes[i].toLowerCase() == "compañia") {
+                var cia = $("#codigoCompania").val().padStart(2, '0');
+                if (cia != '00') {
+                    campos["CAM" + i] = cia;
                 }
-                
-            }else if(camposDes[i].toLowerCase() == "proveedor"){
+
+            } else if (camposDes[i].toLowerCase() == "proveedor") {
                 campos["CAM" + i] = codigo;
-            } 
-            else {
+            } else {
                 campos["CAM" + i] = $("#" + tipo + i + "").val();
             }
         }
@@ -690,8 +730,8 @@
             </div>            
             `);
         $("#tableDocs").append(`
-        <div class="table-responsive">
-                     <table id="myTableInvDesc" class="table stripe " style="width:100%;">
+        <div class="table-responsive" style="height:580px;">
+                     <table id="myTableInvDesc" class="table stripe mt-5" style="width:100%;">
                         <thead>
                             <tr>
                                 <th class="space-cards"></th>
@@ -790,83 +830,90 @@
             //let limit=response.data.length;
             //$("#numDocumentos").text(limit);  
             var dataTable = $("#myTableInvDesc").DataTable({
-                    language: {
-                        url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json',
-                    },
+                language: {
+                    url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json',
+                },
                 "processing": true,
                 "serverSide": true,
                 "ajax": {
                     "url": urlList,
                     "type": "POST",
-                    "dataSrc": function (json) {
-                        var newData=[];
-                        var columna1=[];var columna2=[];var columna3=[];var columna4=[];
-                        var data=json.data;
+                    "dataSrc": function(json) {
+                        var newData = [];
+                        var columna1 = [];
+                        var columna2 = [];
+                        var columna3 = [];
+                        var columna4 = [];
+                        var data = json.data;
                         for (let i = 0; i < data.length; i++) {
                             switch (data[i]['COLUMNA']) {
                                 case 1:
                                     columna1.push(data[i]);
                                     break;
-                                    case 2:
+                                case 2:
                                     columna2.push(data[i]);
                                     break;
-                                    case 3:
+                                case 3:
                                     columna3.push(data[i]);
                                     break;
-                                    case 4:
+                                case 4:
                                     columna4.push(data[i]);
                                     break;
                                 default:
                                     break;
                             }
-                            
+
                         }
-                        (columna1.length>0)? newData[0]=columna1: '';
-                        (columna2.length>0)? newData[1]=columna2: '';
-                        (columna3.length>0)? newData[2]=columna3: '';
-                        (columna4.length>0)? newData[3]=columna4: '';
+                        (columna1.length > 0) ? newData[0] = columna1: '';
+                        (columna2.length > 0) ? newData[1] = columna2: '';
+                        (columna3.length > 0) ? newData[2] = columna3: '';
+                        (columna4.length > 0) ? newData[3] = columna4: '';
                         return newData;
                     },
-                    "complete": function (xhr) {
+                    "complete": function(xhr) {
                         if (xhr.status == 200) {
-                            $("#numDocumentos").text(xhr.responseJSON.data[0]['TOTALROWS']);                            
+                            $("#numDocumentos").text(xhr.responseJSON.data[0]['TOTALROWS']);
+                            $("#myTableInvDesc").removeClass('mt-5');
                         }
-                        },
-                        error: function (xhr, status, error) {
-                            console.log(error);
-                            requestError = true;
-                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.log(error);
+                        requestError = true;
+                    }
                 },
-                "columns": [
-                    { "data": null,
-                      "render": function(data, type, row) {
-                            return renderCards(data[0]);    
-                      }
+                "columns": [{
+                        "data": null,
+                        "render": function(data, type, row) {
+                            return renderCards(data[0]);
+                        }
                     },
-                    { "data": null,
-                      "render": function(data, type, row) {
-                            return renderCards(data[1]);  
-                      }
+                    {
+                        "data": null,
+                        "render": function(data, type, row) {
+                            return renderCards(data[1]);
+                        }
                     },
-                    { "data": null,
-                      "render": function(data, type, row) {
-                            return renderCards(data[2]);  
-                      }
+                    {
+                        "data": null,
+                        "render": function(data, type, row) {
+                            return renderCards(data[2]);
+                        }
                     },
-                    { "data": null,
-                      "render": function(data, type, row) {
-                            return renderCards(data[3]);  
-                      }
+                    {
+                        "data": null,
+                        "render": function(data, type, row) {
+                            return renderCards(data[3]);
+                        }
                     },
                 ],
-                    searching: false,
-                    paging: true,
-                    processing: true,
-                    ordering: false,
-                    pageLength: 4,
-                    bInfo : false,
-                    lengthChange: false
-                });
+                searching: false,
+                paging: true,
+                processing: true,
+                ordering: false,
+                pageLength: 4,
+                bInfo: false,
+                lengthChange: false
+            });
         } else {
             body.append('<tr><td class="text-center p-3 fs-5" colspan="100%">No se encontraron documentos</td></tr>')
         }
@@ -874,197 +921,213 @@
         const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
     }
 
-    var contador=1;
+    var contador = 1;
+
     function renderCards(data) {
         if (data) {
-        var extension=data['EXTDOC'];
-        switch (extension) {
-                    case 'png':
-                    case 'jpg':
-                    case 'jpeg':
-                        return `<div class="card" id="card`+contador+`" onclick="showCard('` + data['NOMDOC'] + `','` +
-                            data['USUGRA'] + `','` + data['FECGRA'] + `','` + data['HORGRA'] + `','` + data['EXTDOC'] + `','` + data[
-                                'URLDOC'
-                            ] + `','` + data['TIPDOC'] + `','` + data['DESCRP'] + `','` +
-                            data['FECHA'] + `','` + data['CAM1'] + `','` + data[
-                                'CAM2'
-                            ] + `','` + data['CAM3'] + `','` + data['CAM4'] + `','` +
-                            data['CAM5'] + `','` + data['CAM6'] + `','` + data[
-                                'CAM7'
-                            ] + `','` + data['CAM8'] + `','` + data['CAM9'] + `','` +
-                            data['CAM10'] + `','` + data['CODDEP'] + `','` + data['CODSEC'] + `')">
+            var extension = data['EXTDOC'];
+            switch (extension) {
+                case 'png':
+                case 'jpg':
+                case 'jpeg':
+                    return `<div class="card" id="card` + contador + `" onclick="showCard('` + data['NOMDOC'] + `','` +
+                        data['USUGRA'] + `','` + data['FECGRA'] + `','` + data['HORGRA'] + `','` + data['EXTDOC'] +
+                        `','` + data[
+                            'URLDOC'
+                        ] + `','` + data['TIPDOC'] + `','` + data['DESCRP'] + `','` +
+                        data['FECHA'] + `','` + data['CAM1'] + `','` + data[
+                            'CAM2'
+                        ] + `','` + data['CAM3'] + `','` + data['CAM4'] + `','` +
+                        data['CAM5'] + `','` + data['CAM6'] + `','` + data[
+                            'CAM7'
+                        ] + `','` + data['CAM8'] + `','` + data['CAM9'] + `','` +
+                        data['CAM10'] + `','` + data['CODDEP'] + `','` + data['CODSEC'] + `')">
                                         <div class="card-body text-center">
                                             <img src="http://172.16.15.20` + data['URLDOC'] +
-                            `"
+                        `"
                                                 style="height:50px;" alt="">
-                                            <h6 class=" responsive-font-example mt-1" style="font-size:12px;" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="` + data['NOMDOC'] + `">` +
-                            truncarTexto(data['NOMDOC'].split('.').slice(0, -1).join('.')) + `</h6>
+                                            <h6 class=" responsive-font-example mt-1" style="font-size:12px;" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="` +
+                        data['NOMDOC'] + `">` +
+                        truncarTexto(data['NOMDOC'].split('.').slice(0, -1).join('.')) + `</h6>
                                         </div>
                                     </div>`;
-                        break;
-                    case 'xlsx':
-                        return `
-                                    <div class="card" id="card`+contador+`" onclick="showCard('` + data['NOMDOC'] + `','` +
-                            data['USUGRA'] + `','` + data['FECGRA'] + `','` + data['HORGRA'] + `','` + data['EXTDOC'] + `','` + data[
-                                'URLDOC'
-                            ] + `','` + data['TIPDOC'] + `','` + data['DESCRP'] + `','` +
-                            data['FECHA'] + `','` + data['CAM1'] + `','` + data[
-                                'CAM2'
-                            ] + `','` + data['CAM3'] + `','` + data['CAM4'] + `','` +
-                            data['CAM5'] + `','` + data['CAM6'] + `','` + data[
-                                'CAM7'
-                            ] + `','` + data['CAM8'] + `','` + data['CAM9'] + `','` +
-                            data['CAM10'] + `','` + data['CODDEP'] + `','` + data['CODSEC'] +
-                            `')">
+                    break;
+                case 'xlsx':
+                    return `
+                                    <div class="card" id="card` + contador + `" onclick="showCard('` + data['NOMDOC'] +
+                        `','` +
+                        data['USUGRA'] + `','` + data['FECGRA'] + `','` + data['HORGRA'] + `','` + data['EXTDOC'] +
+                        `','` + data[
+                            'URLDOC'
+                        ] + `','` + data['TIPDOC'] + `','` + data['DESCRP'] + `','` +
+                        data['FECHA'] + `','` + data['CAM1'] + `','` + data[
+                            'CAM2'
+                        ] + `','` + data['CAM3'] + `','` + data['CAM4'] + `','` +
+                        data['CAM5'] + `','` + data['CAM6'] + `','` + data[
+                            'CAM7'
+                        ] + `','` + data['CAM8'] + `','` + data['CAM9'] + `','` +
+                        data['CAM10'] + `','` + data['CODDEP'] + `','` + data['CODSEC'] +
+                        `')">
                                         <div class="card-body text-center">
                                             <img src="../../assets/img/icons/excel.png"
                                                 width="50" alt="">
                                             <h6 class=" responsive-font-example mt-1" style="font-size:12px;" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="` +
-                            data['NOMDOC'] + `">` + truncarTexto(data['NOMDOC']
-                                .split('.').slice(0, -1).join('.')) + `</h6>
+                        data['NOMDOC'] + `">` + truncarTexto(data['NOMDOC']
+                            .split('.').slice(0, -1).join('.')) + `</h6>
                                         </div>
                                     </div>`;
-                        break;
-                    case 'docx':
-                        return `
-                                    <div class="card" id="card`+contador+`" onclick="showCard('` + data['NOMDOC'] + `','` +
-                            data['USUGRA'] + `','` + data['FECGRA'] + `','` + data['HORGRA'] + `','` + data['EXTDOC'] + `','` + data[
-                                'URLDOC'
-                            ] + `','` + data['TIPDOC'] + `','` + data['DESCRP'] + `','` +
-                            data['FECHA'] + `','` + data['CAM1'] + `','` + data[
-                                'CAM2'
-                            ] + `','` + data['CAM3'] + `','` + data['CAM4'] + `','` +
-                            data['CAM5'] + `','` + data['CAM6'] + `','` + data[
-                                'CAM7'
-                            ] + `','` + data['CAM8'] + `','` + data['CAM9'] + `','` +
-                            data['CAM10'] + `','` + data['CODDEP'] + `','` + data['CODSEC'] +
-                            `')">
+                    break;
+                case 'docx':
+                    return `
+                                    <div class="card" id="card` + contador + `" onclick="showCard('` + data['NOMDOC'] +
+                        `','` +
+                        data['USUGRA'] + `','` + data['FECGRA'] + `','` + data['HORGRA'] + `','` + data['EXTDOC'] +
+                        `','` + data[
+                            'URLDOC'
+                        ] + `','` + data['TIPDOC'] + `','` + data['DESCRP'] + `','` +
+                        data['FECHA'] + `','` + data['CAM1'] + `','` + data[
+                            'CAM2'
+                        ] + `','` + data['CAM3'] + `','` + data['CAM4'] + `','` +
+                        data['CAM5'] + `','` + data['CAM6'] + `','` + data[
+                            'CAM7'
+                        ] + `','` + data['CAM8'] + `','` + data['CAM9'] + `','` +
+                        data['CAM10'] + `','` + data['CODDEP'] + `','` + data['CODSEC'] +
+                        `')">
                                         <div class="card-body text-center">
                                             <img src="../../assets/img/icons/word.png"
                                                 width="50" alt="">
                                             <h6 class=" responsive-font-example mt-1" style="font-size:12px;" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="` +
-                            data['NOMDOC'] + `">` + truncarTexto(data['NOMDOC']
-                                .split('.').slice(0, -1).join('.')) + `</h6>
+                        data['NOMDOC'] + `">` + truncarTexto(data['NOMDOC']
+                            .split('.').slice(0, -1).join('.')) + `</h6>
                                         </div>
                                     </div>`;
-                        break;
-                    case 'pdf':
-                        return `
-                                    <div class="card" id="card`+contador+`" onclick="showCard('` + data['NOMDOC'] + `','` +
-                            data['USUGRA'] + `','` + data['FECGRA'] + `','` + data['HORGRA'] + `','` + data['EXTDOC'] + `','` + data[
-                                'URLDOC'
-                            ] + `','` + data['TIPDOC'] + `','` + data['DESCRP'] + `','` +
-                            data['FECHA'] + `','` + data['CAM1'] + `','` + data[
-                                'CAM2'
-                            ] + `','` + data['CAM3'] + `','` + data['CAM4'] + `','` +
-                            data['CAM5'] + `','` + data['CAM6'] + `','` + data[
-                                'CAM7'
-                            ] + `','` + data['CAM8'] + `','` + data['CAM9'] + `','` +
-                            data['CAM10'] + `','` + data['CODDEP'] + `','` + data['CODSEC'] +
-                            `')">
+                    break;
+                case 'pdf':
+                    return `
+                                    <div class="card" id="card` + contador + `" onclick="showCard('` + data['NOMDOC'] +
+                        `','` +
+                        data['USUGRA'] + `','` + data['FECGRA'] + `','` + data['HORGRA'] + `','` + data['EXTDOC'] +
+                        `','` + data[
+                            'URLDOC'
+                        ] + `','` + data['TIPDOC'] + `','` + data['DESCRP'] + `','` +
+                        data['FECHA'] + `','` + data['CAM1'] + `','` + data[
+                            'CAM2'
+                        ] + `','` + data['CAM3'] + `','` + data['CAM4'] + `','` +
+                        data['CAM5'] + `','` + data['CAM6'] + `','` + data[
+                            'CAM7'
+                        ] + `','` + data['CAM8'] + `','` + data['CAM9'] + `','` +
+                        data['CAM10'] + `','` + data['CODDEP'] + `','` + data['CODSEC'] +
+                        `')">
                                         <div class="card-body text-center">
                                             <img src="../../assets/img/icons/pdf.png"
                                                 width="50" alt="">
                                             <h6 class=" responsive-font-example mt-1" style="font-size:12px;" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="` +
-                            data['NOMDOC'] + `">` + truncarTexto(data['NOMDOC'].split('.')
-                                .slice(0, -1).join('.')) + `</h6>
+                        data['NOMDOC'] + `">` + truncarTexto(data['NOMDOC'].split('.')
+                            .slice(0, -1).join('.')) + `</h6>
                                         </div>
                                     </div>`;
-                        break;
-                    case 'txt':
-                        return `
-                                    <div class="card" id="card`+contador+`" onclick="showCard('` + data['NOMDOC'] + `','` +
-                            data['USUGRA'] + `','` + data['FECGRA'] + `','` + data['HORGRA'] + `','` + data['EXTDOC'] + `','` + data[
-                                'URLDOC'
-                            ] + `','` + data['TIPDOC'] + `','` + data['DESCRP'] + `','` +
-                            data['FECHA'] + `','` + data['CAM1'] + `','` + data[
-                                'CAM2'
-                            ] + `','` + data['CAM3'] + `','` + data['CAM4'] + `','` +
-                            data['CAM5'] + `','` + data['CAM6'] + `','` + data[
-                                'CAM7'
-                            ] + `','` + data['CAM8'] + `','` + data['CAM9'] + `','` +
-                            data['CAM10'] + `','` + data['CODDEP'] + `','` + data['CODSEC'] +
-                            `')">
+                    break;
+                case 'txt':
+                    return `
+                                    <div class="card" id="card` + contador + `" onclick="showCard('` + data['NOMDOC'] +
+                        `','` +
+                        data['USUGRA'] + `','` + data['FECGRA'] + `','` + data['HORGRA'] + `','` + data['EXTDOC'] +
+                        `','` + data[
+                            'URLDOC'
+                        ] + `','` + data['TIPDOC'] + `','` + data['DESCRP'] + `','` +
+                        data['FECHA'] + `','` + data['CAM1'] + `','` + data[
+                            'CAM2'
+                        ] + `','` + data['CAM3'] + `','` + data['CAM4'] + `','` +
+                        data['CAM5'] + `','` + data['CAM6'] + `','` + data[
+                            'CAM7'
+                        ] + `','` + data['CAM8'] + `','` + data['CAM9'] + `','` +
+                        data['CAM10'] + `','` + data['CODDEP'] + `','` + data['CODSEC'] +
+                        `')">
                                         <div class="card-body text-center">
                                             <img src="../../assets/img/icons/txt.png"
                                                 width="50" alt="">
                                             <h6 class=" responsive-font-example mt-1" style="font-size:12px;" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="` +
-                            data['NOMDOC'] + `">` + truncarTexto(data['NOMDOC']
-                                .split('.').slice(0, -1).join('.')) + `</h6>
+                        data['NOMDOC'] + `">` + truncarTexto(data['NOMDOC']
+                            .split('.').slice(0, -1).join('.')) + `</h6>
                                         </div>
                                     </div>`;
-                        break;
-                    case 'ppx':
-                        return `
-                                    <div class="card" id="card`+contador+`" onclick="showCard('` + data['NOMDOC'] + `','` +
-                            data['USUGRA'] + `','` + data['FECGRA'] + `','` +data['HORGRA'] + `','` + data['EXTDOC'] + `','` + data[
-                                'URLDOC'
-                            ] + `','` + data['TIPDOC'] + `','` + data['DESCRP'] + `','` +
-                            data['FECHA'] + `','` + data['CAM1'] + `','` + data[
-                                'CAM2'
-                            ] + `','` + data['CAM3'] + `','` + data['CAM4'] + `','` +
-                            data['CAM5'] + `','` + data['CAM6'] + `','` + data[
-                                'CAM7'
-                            ] + `','` + data['CAM8'] + `','` + data['CAM9'] + `','` +
-                            data['CAM10'] + `','` + data['CODDEP'] + `','` + data['CODSEC'] +
-                            `')">
+                    break;
+                case 'ppx':
+                    return `
+                                    <div class="card" id="card` + contador + `" onclick="showCard('` + data['NOMDOC'] +
+                        `','` +
+                        data['USUGRA'] + `','` + data['FECGRA'] + `','` + data['HORGRA'] + `','` + data['EXTDOC'] +
+                        `','` + data[
+                            'URLDOC'
+                        ] + `','` + data['TIPDOC'] + `','` + data['DESCRP'] + `','` +
+                        data['FECHA'] + `','` + data['CAM1'] + `','` + data[
+                            'CAM2'
+                        ] + `','` + data['CAM3'] + `','` + data['CAM4'] + `','` +
+                        data['CAM5'] + `','` + data['CAM6'] + `','` + data[
+                            'CAM7'
+                        ] + `','` + data['CAM8'] + `','` + data['CAM9'] + `','` +
+                        data['CAM10'] + `','` + data['CODDEP'] + `','` + data['CODSEC'] +
+                        `')">
                                         <div class="card-body text-center">
                                             <img src="../../assets/img/icons/pp.png"
                                                 width="50" alt="">
                                             <h6 class=" responsive-font-example mt-1" style="font-size:12px;" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="` +
-                            data['NOMDOC'] + `">` + truncarTexto(data['NOMDOC']
-                                .split('.').slice(0, -1).join('.')) + `</h6>
+                        data['NOMDOC'] + `">` + truncarTexto(data['NOMDOC']
+                            .split('.').slice(0, -1).join('.')) + `</h6>
                                         </div>
                                     </div>`;
-                        break;
-                    case 'zip':
-                    case 'rar':
-                        return `
-                                    <div class="card" id="card`+contador+`" onclick="showCard('` + data['NOMDOC'] + `','` +
-                            data['USUGRA'] + `','` + data['FECGRA'] + `','` + data['HORGRA'] + `','` + data['EXTDOC'] + `','` + data[
-                                'URLDOC'
-                            ] + `','` + data['TIPDOC'] + `','` + data['DESCRP'] + `','` +
-                            data['FECHA'] + `','` + data['CAM1'] + `','` + data[
-                                'CAM2'
-                            ] + `','` + data['CAM3'] + `','` + data['CAM4'] + `','` +
-                            data['CAM5'] + `','` + data['CAM6'] + `','` + data[
-                                'CAM7'
-                            ] + `','` + data['CAM8'] + `','` + data['CAM9'] + `','` +
-                            data['CAM10'] + `','` + data['CODDEP'] + `','` + data['CODSEC'] +
-                            `')">
+                    break;
+                case 'zip':
+                case 'rar':
+                    return `
+                                    <div class="card" id="card` + contador + `" onclick="showCard('` + data['NOMDOC'] +
+                        `','` +
+                        data['USUGRA'] + `','` + data['FECGRA'] + `','` + data['HORGRA'] + `','` + data['EXTDOC'] +
+                        `','` + data[
+                            'URLDOC'
+                        ] + `','` + data['TIPDOC'] + `','` + data['DESCRP'] + `','` +
+                        data['FECHA'] + `','` + data['CAM1'] + `','` + data[
+                            'CAM2'
+                        ] + `','` + data['CAM3'] + `','` + data['CAM4'] + `','` +
+                        data['CAM5'] + `','` + data['CAM6'] + `','` + data[
+                            'CAM7'
+                        ] + `','` + data['CAM8'] + `','` + data['CAM9'] + `','` +
+                        data['CAM10'] + `','` + data['CODDEP'] + `','` + data['CODSEC'] +
+                        `')">
                                         <div class="card-body text-center">
                                             <img src="../../assets/img/icons/folder.png"
                                                 width="50" alt="">
                                             <h6 class=" responsive-font-example mt-1" style="font-size:12px;" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="` +
-                            data['NOMDOC'] + `">` + truncarTexto(data['NOMDOC']
-                                .split('.').slice(0, -1).join('.')) + `</h6>
+                        data['NOMDOC'] + `">` + truncarTexto(data['NOMDOC']
+                            .split('.').slice(0, -1).join('.')) + `</h6>
                                         </div>
                                     </div>`;
-                        break;
-                    default:
-                        return `<div class="card" id="card`+contador+`" onclick="showCard('` + data['NOMDOC'] + `','` +
-                            data['USUGRA'] + `','` + data['FECGRA'] + `','` + data['HORGRA'] + `','` + data['EXTDOC'] + `','` + data[
-                                'URLDOC'
-                            ] + `','` + data['TIPDOC'] + `','` + data['DESCRP'] + `','` +
-                            data['FECHA'] + `','` + data['CAM1'] + `','` + data[
-                                'CAM2'
-                            ] + `','` + data['CAM3'] + `','` + data['CAM4'] + `','` +
-                            data['CAM5'] + `','` + data['CAM6'] + `','` + data[
-                                'CAM7'
-                            ] + `','` + data['CAM8'] + `','` + data['CAM9'] + `','` +
-                            data['CAM10'] + `','` + data['CODDEP'] + `','` + data['CODSEC'] +
-                            `')">
+                    break;
+                default:
+                    return `<div class="card" id="card` + contador + `" onclick="showCard('` + data['NOMDOC'] + `','` +
+                        data['USUGRA'] + `','` + data['FECGRA'] + `','` + data['HORGRA'] + `','` + data['EXTDOC'] +
+                        `','` + data[
+                            'URLDOC'
+                        ] + `','` + data['TIPDOC'] + `','` + data['DESCRP'] + `','` +
+                        data['FECHA'] + `','` + data['CAM1'] + `','` + data[
+                            'CAM2'
+                        ] + `','` + data['CAM3'] + `','` + data['CAM4'] + `','` +
+                        data['CAM5'] + `','` + data['CAM6'] + `','` + data[
+                            'CAM7'
+                        ] + `','` + data['CAM8'] + `','` + data['CAM9'] + `','` +
+                        data['CAM10'] + `','` + data['CODDEP'] + `','` + data['CODSEC'] +
+                        `')">
                                         <div class="card-body text-center">
                                             <img src="../../assets/img/icons/file.png"
                                                 width="50" alt="">
                                             <h6 class="responsive-font-example mt-1" style="font-size:12px;" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="` +
-                            data['NOMDOC'] + `">` + truncarTexto(data['NOMDOC']
-                                .split('.').slice(0, -1).join('.')) + `</h6>
+                        data['NOMDOC'] + `">` + truncarTexto(data['NOMDOC']
+                            .split('.').slice(0, -1).join('.')) + `</h6>
                                         </div>
                                     </div>`;
-                        break;
-        } 
-        }else{
+                    break;
+            }
+        } else {
             return '';
         }
         contador++;
@@ -1075,12 +1138,12 @@
         cam4, cam5, cam6, cam7, cam8, cam9, coddep, codsec) {
 
         $("#downloadFrame").empty();
-       
+
         switch (extdoc) {
             case 'png':
             case 'jpg':
             case 'jpeg':
-                $("#downloadFrame").append('<img src="http://172.16.15.20' + urldoc + '" class="imgWidth" alt="">');
+                $("#downloadFrame").append('<img src="http://172.16.15.20' + urldoc + '"  style="width:200px;" alt="">');
                 break;
             case 'xlsx':
                 $("#downloadFrame").append('<img src="../../assets/img/icons/excel.png" style="width:150px;" alt="">');
@@ -1109,29 +1172,30 @@
         $("#downloadCard").empty();
         if (extdoc == 'pdf' || extdoc == 'png' || extdoc == 'jpg' || extdoc == 'jpeg') {
             $("#downloadCard").append(
-            `
+                `
             <div class="row m-3">
                 <div class="col-6">
-                <a class="btn btn-warning fw-bold text-white" style="width:100%;" target="_blank" href="http://172.16.15.20` + urldoc + `" >Visualizar documento <i class="fa-solid fa-eye"></i></a>
+                <a class="btn btn-warning fw-bold text-white" style="width:100%;" target="_blank" href="http://172.16.15.20` +
+                urldoc + `" >Visualizar documento <i class="fa-solid fa-eye"></i></a>
                 
                 </div>
                 <div class="col-6">
                     <a class="btn btn-info fw-bold text-white" style="width:100%;" href="http://172.16.15.20` +
-            urldoc + `" download>Descargar <i class="fa-solid fa-download"></i></a>
+                urldoc + `" download>Descargar <i class="fa-solid fa-download"></i></a>
                 </div>
             </div>
             `);
-        }else{
+        } else {
             $("#downloadCard").append(
-            `
+                `
                 <div class="col-12">
                     <a class="btn btn-info fw-bold text-white" style="width:100%;" href="http://172.16.15.20` +
-            urldoc + `" download>Descargar <i class="fa-solid fa-download"></i></a>
+                urldoc + `" download>Descargar <i class="fa-solid fa-download"></i></a>
                 </div>
             </div>
             `);
         }
-       
+
 
         $("#trashDoc").empty();
         var permisos = "<?php echo isset($_SESSION['PERESP'])? $_SESSION['PERESP']: ''; ?>";
@@ -1152,12 +1216,12 @@
         }
         $("#tipDoc").text(textoSelect);
         $("#fechaDoc").text(formatFecha(fecha));
-        if (descrp=='S-N') {
-            descrp='';
+        if (descrp == 'S-N') {
+            descrp = '';
         }
         $("#descrpDoc").text(descrp);
         var depaUrl = "http://172.16.15.20/API.LovablePHP/ZLO0016P/GetDepa/?coddep=" + coddep + "&secdep=" + codsec +
-        "";
+            "";
         var responseDepa = ajaxRequest(depaUrl);
         var depa = '';
         if (responseDepa.code == 200) {
@@ -1181,7 +1245,7 @@
         var urlCampos = "http://172.16.15.20/API.LovablePHP/ZLO0015P/ListTiposFind/?tipo=" + tipdoc;
         var responseCampos = ajaxRequest(urlCampos);
         if (responseCampos.code == 200) {
-           
+
             const inputs = $("#extraInfo");
             inputs.empty();
             var camposDes = responseCampos.data[0].CAMPOS.split("/");
@@ -1190,30 +1254,32 @@
             console.log(camposDes);
             console.log(campos);
             for (let i = 0; i < length; i++) {
-                    var descripcion = "";
-                    if (camposDes[i].toLowerCase() == "tienda"|| camposDes[i].toLowerCase() == "compañia") {
-                        var urlDes = "http://172.16.15.20/API.LovablePHP/ZLO0001P/FindComarc/?compFiltro=" + campos[
-                            'cam' + i] + "";
-                        var responseDes = ajaxRequest(urlDes);
-                        descripcion = (responseDes.code == 200) ? responseDes.data[0]['COMDES'] : "";
-                    }else if(camposDes[i].toLowerCase() == "proveedor"){
-                        var id=campos['cam' + i].split("-");
-                        var tipo = id[0]; var prov = id[1];
-                        var urlFind = "http://172.16.15.20/API.LovablePHP/ZLO0015P/ProveedoresFind/?tipo=" + tipo +"&proveedor=" + prov + "";
-                        var responseFind = ajaxRequest(urlFind);
-                        descripcion = (responseFind.code == 200) ? responseFind.data[0]['ARCNOM'] : "";
-                    }else if(camposDes[i].toLowerCase() == "numero doc. fiscal"){
+                var descripcion = "";
+                if (camposDes[i].toLowerCase() == "tienda" || camposDes[i].toLowerCase() == "compañia") {
+                    var urlDes = "http://172.16.15.20/API.LovablePHP/ZLO0001P/FindComarc/?compFiltro=" + campos[
+                        'cam' + i] + "";
+                    var responseDes = ajaxRequest(urlDes);
+                    descripcion = (responseDes.code == 200) ? responseDes.data[0]['COMDES'] : "";
+                } else if (camposDes[i].toLowerCase() == "proveedor") {
+                    var id = campos['cam' + i].split("-");
+                    var tipo = id[0];
+                    var prov = id[1];
+                    var urlFind = "http://172.16.15.20/API.LovablePHP/ZLO0015P/ProveedoresFind/?tipo=" + tipo +
+                        "&proveedor=" + prov + "";
+                    var responseFind = ajaxRequest(urlFind);
+                    descripcion = (responseFind.code == 200) ? responseFind.data[0]['ARCNOM'] : "";
+                } else if (camposDes[i].toLowerCase() == "numero doc. fiscal") {
 
-                        if (campos['cam' + i]=='99999999999999999999') {
-                            campos['cam' + i]='';
-                        }
+                    if (campos['cam' + i] == '99999999999999999999') {
+                        campos['cam' + i] = '';
                     }
-                    
-                    inputs.append(`<div class="col-6 col-lg-2 mt-2">
+                }
+
+                inputs.append(`<div class="col-6 col-lg-2 mt-2">
                                 <h6 class=" mt-1">` + camposDes[i] + `:</h6></div>
                                 <div class="col-6 col-lg-4 mt-2">
                                 <label class="text-start form-control">` + campos['cam' + i] + ` ` + descripcion
-                        .toUpperCase() + `</label>
+                    .toUpperCase() + `</label>
                                 </div>`);
             }
         }
@@ -1387,11 +1453,10 @@
         </div>
     </div>
     <div class="modal fade" id="modalProveedores" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="exampleModalLabel"></h1>
-
                     <button type="button" class="btn-close" onclick="$('#modalProveedores').modal('hide')"></button>
                 </div>
                 <div class="modal-body">
@@ -1405,7 +1470,6 @@
                                 </tr>
                             </thead>
                             <tbody id="tbProveedoresBody">
-
                             </tbody>
                         </table>
                     </div>
@@ -1454,12 +1518,11 @@
             </div>
         </div>
     </div>
-
     <div class="modal fade" id="modalTiendas" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Selecciona un rango de fechas</h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Selecciona una tienda</h1>
 
                     <button type="button" class="btn-close" onclick="$('#modalTiendas').modal('hide')"></button>
                 </div>
@@ -1484,7 +1547,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Selecciona un rango de fechas</h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Selecciona una compañía</h1>
 
                     <button type="button" class="btn-close" onclick="$('#modalCompania').modal('hide')"></button>
                 </div>
