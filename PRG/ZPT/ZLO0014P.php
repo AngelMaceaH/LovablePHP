@@ -51,7 +51,7 @@
                             <tr >
                                 <th colspan="20" id="thProcessing" style="height:100px;"></th>
                             </tr>
-                                <tr class="sticky-top bg-white">
+                                <tr class="sticky-top bg-white" style="font-size: 14px;">
                                     <th  class="responsive-font-example text-start text-black">Marca</th>
                                     <th  class="responsive-font-example text-end text-black">Estilo</th>
                                     <th  class="responsive-font-example text-end text-black">Color</th>
@@ -74,7 +74,7 @@
                                     <th  class="responsive-font-example text-start text-black">Genero</th>
                                 </tr>
                             </thead>
-                            <tbody id="myTableSeguimientoBody">
+                            <tbody id="myTableSeguimientoBody" style="font-size: 13px;">
                               
                               </tbody>
                           </table>
@@ -92,6 +92,7 @@
       <script src="https://code.highcharts.com/modules/exporting.js"></script>
       <script src="https://code.highcharts.com/modules/export-data.js"></script>
       <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+      <script src="https://cdn.datatables.net/fixedcolumns/4.3.0/js/dataTables.fixedColumns.min.js"></script>
       <script>
         var agrupSelect="";
         var filtroP="";
@@ -133,6 +134,8 @@
             language: {
             url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json',
         },
+        fixedColumns: {
+                    left: 5,},
         "pageLength": 50,
                 "processing": true,
                 "serverSide": true,

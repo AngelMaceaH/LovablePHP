@@ -267,7 +267,7 @@
                     <div class="table-responsive mt-3" style="width:100%">
                           <table id="myTableVendedorVentas" class="table stripe table-hover " style="width:100%">
                             <thead>
-                                <tr>
+                                <tr style="font-size:14px;">
                                     <th class=" text-start">Vendedor</th>
                                     <th  class=" text-end" >Transacciones</th>
                                     <th  class=" text-end" >Unidades</th>
@@ -309,7 +309,7 @@
                                       $crecimiento2 = round((($rowVen['VALOR1']/$rowVen['VALOR3'])-1)*100);
                                     }
                                     
-                                    print '<tr>';
+                                    print '<tr style="font-size:13px;">';
                                     print '<td  class=" text-start fw-bold">'.rtrim(utf8_encode($rowVen['MAENO3'])).'</td>';
                                     print '<td  class=" text-end">'.number_format($rowVen['CANTRA'],0).'</td>';
                                     print '<td  class=" text-end">'.$cantidad.'</td>';

@@ -118,7 +118,7 @@
                   <th colspan="2"> </th>
                   <th colspan="4" class="text-center fs-4" id="Enca" >Honduras</th>
                 </tr>
-                  <tr>
+                <tr class="sticky-top bg-white" style="font-size:14px;">
                     <th>ID</th>
                     <th class="text-start responsive-font-example">Marcas</th>
                     <th id="honth1" class="text-start responsive-font-example">Unidades</th>
@@ -221,7 +221,7 @@
                   }
 
                   foreach($registrosMarcas as $rowMarcas){                
-                    print '<tr>';
+                    print '<tr style="font-size:13px;">';
                     print '<td>'.$rowMarcas['HISM38'].'</td>';
                     print '<td class="text-darkblue fw-bold responsive-font-example">'.$rowMarcas['DESDES'].'</td>';
                     //HONDURAS

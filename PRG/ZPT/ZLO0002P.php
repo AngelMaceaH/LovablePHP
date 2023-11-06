@@ -117,7 +117,7 @@
                       <tr>
                           <th class="d-none">ID</th>
                           <th >Punto de Venta</th>
-                          <th >Total</th>
+                          <th >Total en docenas</th>
                       </tr>
                   </thead>
                   <tbody id="myTableInventarioBody">
@@ -171,7 +171,7 @@
                       <tr>
                           <th class="d-none">ID</th>
                           <th >Pais</th>
-                          <th>Total</th>
+                          <th>Total en docenas</th>
                       </tr>
                   </thead>
                   <tbody id="myTableInventarioPaisesBody">
@@ -219,7 +219,7 @@
                       <tr>
                           <th class="d-none">ID</th>
                           <th >Fabrica</th>
-                          <th>Total</th>
+                          <th>Total en docenas</th>
                       </tr>
                   </thead>
                   <tbody id="myTableInventarioFabBody">

@@ -6,7 +6,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Ladda/1.0.6/ladda-themeless.min.css" integrity="sha512-EOY99TUZ7AClCNvbnvrhtMXDuWzxUBXV7SFovruHvYf2dbvRB5ya+jgDPk5bOyTtZDbqFH3PTuTWl/D7+7MGsA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Ladda/1.0.0/spin.min.js" integrity="sha512-fgSmjQtBho/dzDJ+79r/yKH01H/35//QPPvA2LR8hnBTA5bTODFncYfSRuMal78C08vUa93q3jyxPa273cWzqA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Ladda/1.0.0/ladda.min.js" integrity="sha512-hZL8cWjOAFfWZza/p0uD0juwMeIuyLhAd5QDodiK4sBp1sG7BIeE1TbMGIbnUcUgwm3lVSWJzBK6KxqYTiDGkg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  
+  <link rel="stylesheet" href="https://cdn.datatables.net/fixedcolumns/4.3.0/css/fixedColumns.dataTables.min.css">
 </head>
 <body>
   <?php
@@ -100,7 +100,7 @@
                             <tr >
                                 <th colspan="20" id="thProcessing" style="height:100px;"></th>
                             </tr>
-                            <tr class="sticky-top bg-white">
+                            <tr class="sticky-top bg-white" style="font-size: 14px;">
                                     <th  class="responsive-font-example text-center">Estilo</th>
                                     <th  class="responsive-font-example text-center">Und. Vtas.<br>Totales</th>
                                     <th  class="responsive-font-example text-center">Und. Vtas.<br>Mes Proceso</th>
@@ -122,7 +122,7 @@
                                     
                                 </tr>
                             </thead>
-                            <tbody id="myTableSeguimientoBody">
+                            <tbody id="myTableSeguimientoBody" style="font-size: 13px;">
                               
                               </tbody>
                           </table>
@@ -140,6 +140,7 @@
       <script src="https://code.highcharts.com/modules/exporting.js"></script>
       <script src="https://code.highcharts.com/modules/export-data.js"></script>
       <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+      <script src="https://cdn.datatables.net/fixedcolumns/4.3.0/js/dataTables.fixedColumns.min.js"></script>
       <script>
         var agrupSelect="";
         var filtroP="";
@@ -182,6 +183,8 @@
             language: {
             url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json',
         },
+        fixedColumns: {
+                    left: 1,},
         "pageLength": 20,
                 "processing": true,
                 "serverSide": true,

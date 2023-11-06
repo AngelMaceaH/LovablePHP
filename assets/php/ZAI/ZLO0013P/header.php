@@ -70,7 +70,7 @@
         color: #5B2503;
     }
     .text-darkblue {
-        color: #03225B;
+        color: #003C97;
     }
     .text-violet {
         color: #C18BFF;

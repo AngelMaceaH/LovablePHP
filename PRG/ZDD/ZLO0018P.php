@@ -30,7 +30,7 @@
             </div>
             <div class="card-body ">
                 <div class="row">
-                    <div class="col-3">
+                    <div class="col-12 col-lg-3">
                         <div class="card overflow-auto maxbox">
                             <div class="card-header bg-light sticky-top">
                                 <div class="text-end">
@@ -39,12 +39,14 @@
                             </div>
                             <div class="card-body background-primary" style="height:100%;">
                                 <div class="row" id="containerRequest">
-
+                                </div>
+                                <div class="position-absolute top-50 start-50 translate-middle d-none" id="NoRequest">
+                                    <p class="text-secondary textInfo fs-6">No hay solicitudes</p>  
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-9">
+                    <div class="col-12 col-lg-9">
                         <div class="card ">
                             <div class="card-body m-0 p-0" id="containerVisual">
                             </div>
@@ -165,17 +167,16 @@
         if (responseList.code==200) {
             $("#countRequest").text(responseList.data.length);
             const data=responseList.data;
-            console.log(data);
             for (let i = 0; i < data.length; i++) {
-                var urlFind = "http://172.16.15.20/API.LovablePHP/ZLO0015P/ProveedoresFind/?tipo=" +
-                data[i]['PROVE1'] + "&proveedor=" + data[i]['PROVE2'] + "";
+                $("#NoRequest").addClass('d-none');
+                var urlFind = "http://172.16.15.20/API.LovablePHP/ZLO0015P/ProveedoresFind/?tipo=" +data[i]['PROVE1'] + "&proveedor=" + data[i]['PROVE2'] + "";
                 var responseFind = ajaxRequest(urlFind);
                 var descripcion = (responseFind.code == 200) ? responseFind.data[0]['ARCNOM'] : "";
                 containerRequest.append(`<a href="#"><div class="col-12 " onclick="showCard('card`+i+`','` + data[i]['NOMDOC'] + `','` +data[i]['USUGRA'] + `','` + data[i]['FECGRA'] + `','` + data[i]['HORGRA'] + `','` + data[i]['EXTDOC'] +`','` + data[i]['URLDOC'] + `','` + data[i]['TIPDOC'] + `','` + data[i]['DESCRP'] + `','` +data[i]['FECHA'] + `','` + data[i]['CAM1'] + `','` + data[i]['CAM2'] + `','` + data[i]['CAM3'] + `','` + data[i]['CAM4'] + `','` +data[i]['CAM5'] + `','` + data[i]['CAM6'] + `','` + data[i]['CAM7'] + `','` + data[i]['CAM8'] + `','` + data[i]['CAM9'] + `','` +data[i]['CAM10'] + `','` + data[i]['CODDEP'] + `','` + data[i]['CODSEC'] + `')">
                                     <div id="card`+i+`" class="card mt-2" style="height:120px;">
                                         <div class="card-header p-2 d-flex justify-content-between textInfo  fw-bold ">
                                             <div>
-                                            ` + truncarTexto(descripcion)+ `
+                                            ` + truncarEnca(descripcion)+ `
                                             </div>
                                             <div>
                                             ` + data[i]['PROVE1'].padStart(2, '0') + ` ` + data[i]['PROVE2'].padStart(4, '0') + `
@@ -194,6 +195,8 @@
                                         </div>
                                     </div></a>`);
             }
+        }else{
+            $("#NoRequest").removeClass('d-none');
         }
         $("#containerVisual").empty();
         $("#containerVisual").append(` <div class="card overflow-auto maxbox">
@@ -484,14 +487,19 @@ $("#spinnerStart").addClass('d-none');
                 chargeRequest(); 
             }
         }
-       
     }
 
-    function truncarTexto(texto) {
-        if (texto.length <= 18) {
+    function truncarEnca(texto) {
+        if (texto.length <= 19) {
             return texto;
         }
-        return texto.substring(0, 18) + "...";
+        return texto.substring(0, 19) + "...";
+    }
+    function truncarTexto(texto) {
+        if (texto.length <= 22) {
+            return texto;
+        }
+        return texto.substring(0, 22) + "...";
     }
 
     function formatFecha(inputDate) {

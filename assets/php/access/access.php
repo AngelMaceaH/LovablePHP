@@ -37,12 +37,15 @@ if ($name!='' && $ps!='') {
     <script>
       var prove1= "<?php echo isset($_SESSION['PROVE1'])? $_SESSION['PROVE1']: ''; ?>";
       var prove2= "<?php echo isset($_SESSION['PROVE2'])? $_SESSION['PROVE2']: ''; ?>";
+      var user= "<?php echo isset($_SESSION['CODUSU'])? $_SESSION['CODUSU']: ''; ?>";
       var fechaExpiracion = new Date();
       fechaExpiracion.setTime(fechaExpiracion.getTime() + 1 * 24 * 60 * 60 * 1000);
       var cookie1 = "prove1" + "=" + encodeURIComponent(prove1) + ";expires=" + fechaExpiracion.toUTCString() + ";path=/";
       document.cookie = cookie1;
       var cookie2 = "prove2" + "=" + encodeURIComponent(prove2) + ";expires=" + fechaExpiracion.toUTCString() + ";path=/";
       document.cookie = cookie2;
+      var cookie3 = "user" + "=" + encodeURIComponent(user) + ";expires=" + fechaExpiracion.toUTCString() + ";path=/";
+      document.cookie = cookie3;
       location.href ="http://172.16.15.20/Lovablehn.proveedores/";
      </script>
     <?php
