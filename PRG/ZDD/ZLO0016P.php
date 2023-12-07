@@ -329,7 +329,6 @@
                 let card1 = document.querySelector("#card1");
                 if (card1) {
                     card1.click();
-                    console.log("click");
                     clearInterval(intervalo);
                 } else {
                     intentos++;
@@ -342,6 +341,7 @@
     });
 
     function tiposChange() {
+        codigo="";
         var camposLength = 0;
         var tipo = $("#tiposDoc").val();
         if (tipo != null) {
@@ -356,7 +356,6 @@
             selectedTipo = getCookie("tipdoc");
         }
         var urlCampos = "http://172.16.15.20/API.LovablePHP/ZLO0015P/ListTiposFind2/?tipo=" + selectedTipo;
-
         var responseCampos = ajaxRequest(urlCampos);
         if (responseCampos.code == 200) {
             $("#tipDocs").val($("#tiposDoc").val());
@@ -406,6 +405,7 @@
                         '<input class="inputsDoc fn" style="font-size:14px;"  type="text" autocomplete="off" data-placeholder-focus="false" required id="FechasGrabs" onclick="showRange2()"  oninput="noTextInput4(this)"/><button type="button" class="btn p-0 m-0 fs-5" onclick="vaciarInput4()"><i class="fa-solid fa-xmark fs-6"></i></button>';
                     htmlAppend += '<input class="d-none" id="originalRangeGrabado" /> <input class="d-none" />'
                 } else {
+                  
                     htmlAppend +=
                         '<input class="inputsDoc fn"  type="text" autocomplete="off" data-placeholder-focus="false" required id="' +
                         responseCampos.data[0]['TIPDOC'] + i + '"  />'
@@ -463,11 +463,8 @@
             elements.forEach(function(element) {
                 element.style.flex = '1 0 ' + porcentajes + '%';
             });
-
-
-
-
         }
+       
     }
     var Date1;
     var Date2;
@@ -801,6 +798,7 @@
             'CAM9': getCookie("cam9"),
             'CAM10': getCookie("cam10")
         };
+        
         var baseUrl = "http://172.16.15.20/API.LovablePHP/ZLO0016P/ListAsync/";
         var queryParams = [];
         if (anoing) queryParams.push("anoing=" + anoing);
@@ -1251,8 +1249,6 @@
             var camposDes = responseCampos.data[0].CAMPOS.split("/");
             var cont = 0;
             var length = camposDes.length;
-            console.log(camposDes);
-            console.log(campos);
             for (let i = 0; i < length; i++) {
                 var descripcion = "";
                 if (camposDes[i].toLowerCase() == "tienda" || camposDes[i].toLowerCase() == "compañia") {

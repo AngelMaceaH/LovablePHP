@@ -32,7 +32,7 @@
     #isPhone {
         display: none;
     }
-    @media only screen and (max-width: 1200px) {
+    @media only screen and (max-width: 1450px) {
         #isPhone {
             display: block;
         }
@@ -56,15 +56,31 @@
         z-index: 1;
         top: 0;
     }
-    @media screen and (min-width: 1650px) {
-        .table-container {
+    .table-container2 {
         width: 100%;
-        height:700px;
+        height:350px;
         overflow-x: auto;
         position: relative;
         z-index: 1;
         top: 0;
-    } 
+    }
+    @media screen and (min-width: 1650px) {
+        .table-container {
+            width: 100%;
+            height:700px;
+            overflow-x: auto;
+            position: relative;
+            z-index: 1;
+            top: 0;
+        } 
+        .table-container2{
+            width: 100%;
+            height:500px;
+            overflow-x: auto;
+            position: relative;
+            z-index: 1;
+            top: 0; 
+        }
     }
     .text-brown {
         color: #5B2503;
@@ -80,6 +96,12 @@
     }
     .text-orange{
         color: #E8B000;
+    }
+    .bg-pink{
+        background-color: rgba(238, 183, 255,0.6)!important;
+    }
+    .bg-yellow{
+        background-color: rgba(243, 249, 69,0.4) !important;
     }
 .btn.btn-success,
 .btn.btn-primary {
@@ -105,6 +127,85 @@
 .text-transparent{
     color: transparent !important;
 }
+
+div.selectBox {
+    position:relative;
+    display:inline-block;
+    cursor:default;
+    text-align:left;
+    width: 100%;
+    line-height:35px;
+    clear:both;
+    color:rgba(0,0,0,0.6);
+}
+span.selected {
+    width:100%;
+    text-indent:20px;
+    border:1px solid #ccc;
+//    border-right:none;
+    border-radius:5px;
+    background:#fff;
+    overflow:hidden;
+}
+span.selectArrow {
+    width:30px;
+    border:1px solid color:rgba(0,0,0,0.6);
+    border-top-right-radius:5px;
+    border-bottom-right-radius:5px;
+    text-align:center;
+    font-size:10px;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+    background:#fff;
+}
+ 
+span.selectArrow,span.selected {
+    position:relative;
+    float:left;
+    height:37px;
+    z-index:1;
+}
+div.selectOptions {
+    position:absolute;
+    top:35px;
+    left:0;
+    width:100%;
+    border:1px solid #ccc;
+    border-bottom-right-radius:5px;
+    border-bottom-left-radius:5px;
+    overflow:hidden;
+    background:#fff;
+    padding-top:2px;
+    display:none;
+}
+     
+span.selectOption {
+    display:block;
+    width:100%;
+    line-height:20px;
+    padding:5px 4%;
+}
+.dataTables_wrapper .dataTable thead th {
+    background-color: white !important;
+}
+.sorting_disabled {
+    z-index: 9999 !important;
+    background-color: white !important;
+}
+.detaHead{
+    z-index: 9999 !important;
+}
+.dtfc-fixed-left{
+    width: 40px !important;
+}
+span.selectOption:hover {
+    color:#f6f6f6;
+    background:#000; 
+/*     opacity:0.5; */
+}       
 </style>
 </head>
 <body>

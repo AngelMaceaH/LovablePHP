@@ -6,6 +6,7 @@
     <link rel="icon" type="image/x-icon" href="../../assets/img/favicon.ico">
     <link href="../../assets/vendors/uppyjs/uppy.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../../assets/css/flexselect.css">
+    <link rel="stylesheet" href="../../assets/vendors/dayrangepicker/index.css">
 </head>
 
 <body>
@@ -26,9 +27,27 @@
     <div id="body-div" class="body flex-grow-1">
         <div class="card ">
             <div class="card-header">
-                <h1 class="fs-4 mb-1 mt-2 text-center">Revisión de solicitudes</h1>
+                <div class="row">
+                    <div class="col-6 col-lg-4" id="searchDiv">
+                        <div class="input-group">
+                            <span class="input-group-text bg-white"><i class="fa fa-search"></i></span>
+                            <label type="text" class="form-control" id="searchInput" onclick="showProveedores()">Buscar...</label>
+                            <button type="button" class="search-btn-clear" onclick="vaciarInput()">
+                                <i class="fa-solid fa-xmark search-icon-clear"></i>
+                            </button>
+                            <input class="d-none" id="originalData" /> <input class="d-none" id="codigo" />
+                            <input class="d-none" id="originalValue" /> <input class="d-none" id="valueTipo" value="0" />
+                            <button class="input-group-text btn btn-light border" onclick="showRange()" type="button">
+                                <i class="fa-solid fa-calendar-day"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-8 text-center">
+                        <h1 class="fs-4 mb-1 mt-2">Revisión de solicitudes</h1>
+                    </div>
+                </div>
             </div>
-            <div class="card-body ">
+            <div class="card-body card-index">
                 <div class="row">
                     <div class="col-12 col-lg-3">
                         <div class="card overflow-auto maxbox">
@@ -66,6 +85,7 @@
     <script src="../../assets/js/jquery.flexselect.js"></script>
     <script src="../../assets/js/liquidmetal.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../../assets/vendors/dayrangepicker/index.umd.min.js"></script>
     <script>
     var codigo = "";
     var comarcOptions = "";
@@ -75,7 +95,18 @@
     var cor = "";
     var countInputs = "";
     var boolIsChange=0;
+    var searchval=0; var proveedorval=0;
     $(document).ready(function() {
+
+    $("#toggle-menu-btn").on('click', function() {
+        $('#my-dropdown-menu').toggleClass('show');
+    });
+
+    $("#searchInput").on('click', function() {
+        searchval=1;
+        proveedorval=0;
+    });
+
         chargeRequest();
         var urlComarc = 'http://172.16.15.20/API.LovablePHP/ZLO0015P/ListComarc/?user=' + 'MARVIN' + '';
         var responseComarc = ajaxRequest(urlComarc);
@@ -140,7 +171,12 @@
             ],
             "drawCallback": function() {
                 $('#tbProveedores tbody tr').on('click', function() {
+                   if (proveedorval==1 && searchval==0) {
                     sendProveedor(this);
+                   }else{
+                    sendProveedor2(this);
+                   }
+                    
                 });
             }
         });
@@ -159,7 +195,17 @@
 
     function chargeRequest(){
         $("#spinnerStart").removeClass('d-none');
+        if ($("#valueTipo").val()==1) {
+        var prov= $("#codigo").val();
+        var urlList="http://172.16.15.20/API.LovablePHP/ZLO0018P/List/?prov1="+prov+"";
+        }else if($("#valueTipo").val()==2){ 
+         var fechas=  $("#searchInput").text().split(" - ");
+         var fecha1=formatFechaSent(fechas[0].replace(/\//g, ''));
+         var fecha2=formatFechaSent(fechas[1].replace(/\//g, ''));
+         var urlList="http://172.16.15.20/API.LovablePHP/ZLO0018P/List/?fech1="+fecha1+"&fech2="+fecha2+"";
+        }else{
         var urlList="http://172.16.15.20/API.LovablePHP/ZLO0018P/List/";
+        }
         var responseList=ajaxRequest(urlList);
         $("#countRequest").text('0');
         const containerRequest = $("#containerRequest");
@@ -172,8 +218,14 @@
                 var urlFind = "http://172.16.15.20/API.LovablePHP/ZLO0015P/ProveedoresFind/?tipo=" +data[i]['PROVE1'] + "&proveedor=" + data[i]['PROVE2'] + "";
                 var responseFind = ajaxRequest(urlFind);
                 var descripcion = (responseFind.code == 200) ? responseFind.data[0]['ARCNOM'] : "";
+                var urlCampos = "http://172.16.15.20/API.LovablePHP/ZLO0015P/ListTiposFind/?tipo=" + data[i]['TIPDOC'];
+                var responseCampos = ajaxRequest(urlCampos);
+                var desTipo="";
+                if (responseCampos.code==200) {
+                    desTipo=responseCampos.data[0]['DESCRP'];
+                }
                 containerRequest.append(`<a href="#"><div class="col-12 " onclick="showCard('card`+i+`','` + data[i]['NOMDOC'] + `','` +data[i]['USUGRA'] + `','` + data[i]['FECGRA'] + `','` + data[i]['HORGRA'] + `','` + data[i]['EXTDOC'] +`','` + data[i]['URLDOC'] + `','` + data[i]['TIPDOC'] + `','` + data[i]['DESCRP'] + `','` +data[i]['FECHA'] + `','` + data[i]['CAM1'] + `','` + data[i]['CAM2'] + `','` + data[i]['CAM3'] + `','` + data[i]['CAM4'] + `','` +data[i]['CAM5'] + `','` + data[i]['CAM6'] + `','` + data[i]['CAM7'] + `','` + data[i]['CAM8'] + `','` + data[i]['CAM9'] + `','` +data[i]['CAM10'] + `','` + data[i]['CODDEP'] + `','` + data[i]['CODSEC'] + `')">
-                                    <div id="card`+i+`" class="card mt-2" style="height:120px;">
+                                    <div id="card`+i+`" class="card mt-2" style="height:140px;">
                                         <div class="card-header p-2 d-flex justify-content-between textInfo  fw-bold ">
                                             <div>
                                             ` + truncarEnca(descripcion)+ `
@@ -189,8 +241,13 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="card-footer m-0 p-0">
-                                            <p class="m-2 text-end text-secondary textDate"> ` + formatFecha(data[i]['FECGRA']) + ` - ` + formatTime(data[i]['HORGRA']) + `</p>
+                                            <div class="card-footer m-0 p-0 row">
+                                                <div class="col-8">
+                                                    <p class="mt-2 text-start text-secondary textDate">`+desTipo+`</p>
+                                                </div>
+                                                <div class="col-4">
+                                                    <p class="mt-2 text-end text-secondary textDate"> ` + formatFecha(data[i]['FECGRA']) + ` ` + formatTime(data[i]['HORGRA']) + `</p>
+                                                </div>
                                             </div>
                                         </div>
                                     </div></a>`);
@@ -210,6 +267,8 @@
         setTimeout(() => {
             $("#spinnerStart").addClass('d-none');  
         }, 300);
+      
+
         
     }
 
@@ -327,11 +386,19 @@
                                         <div class="d-flex ">
                                             <div class="flex-fill">
                                                 <button onclick="changeState('R','`+nomcard+`','`+urldoc+`','`+extdoc+`','`+usugra+`','`+fecgra+`','`+horgra+`')" class="btn btn-danger btn-sm fw-bold text-white border bgred"
-                                                    style="width:100%;"><i class="fa-solid fa-xmark fs-5"></i></button>
+                                                    style="width:100%;">
+                                                    RECHAZAR
+                                                    &nbsp;&nbsp;&nbsp;  
+                                                    <i class="fa-solid fa-xmark"></i>
+                                                    </button>
                                             </div>
                                             <div class="flex-fill">
                                                 <button onclick="changeState('A','`+nomcard+`','`+urldoc+`','`+extdoc+`','`+usugra+`','`+fecgra+`','`+horgra+`')"  class="btn btn-success btn-sm fw-bold text-white border bggreen"
-                                                    style="width:100%;"><i class="fa-solid fa-check fs-5"></i></button>
+                                                    style="width:100%;">
+                                                    ACEPTAR
+                                                    &nbsp;&nbsp;&nbsp;
+                                                    <i class="fa-solid fa-check"></i>
+                                                    </button>
                                             </div>
                                         </div>
                                     </div>
@@ -510,7 +577,14 @@ $("#spinnerStart").addClass('d-none');
 
         return formattedDate;
     }
+    function formatFechaSent(inputDate) {
+        var year = inputDate.substring(4, 8);
+        var month = inputDate.substring(2, 4);
+        var day = inputDate.substring(0, 2);
+        var formattedDate = year + "" + month + "" + day;
 
+        return formattedDate;
+    }
     function formatFechaInput(inputDate) {
         var year = inputDate.substring(0, 4);
         var month = inputDate.substring(4, 6);
@@ -643,6 +717,10 @@ if (responseCampos.code == 200) {
                         <input id="CAM`+i+`" class="d-none" value="" />
                         </div>`);
              }
+            $("#proveedor").on('click', function() {
+                searchval=0;
+                proveedorval=1;
+            });
         } else if (camposDes[i].toLowerCase() == "numero doc. fiscal") {
             if (campos['cam' + i]!=undefined) {
             if (campos['cam' + i] == '99999999999999999999') {
@@ -721,65 +799,70 @@ if (responseCampos.code == 200) {
         var desc = tds.eq(2).text();
         codigo = tipo + '-' + id;
         var input=$("#inputIdProveedores").val();
-        $("#CAM"+input).val(codigo);
+        $("#codigo").val(codigo);
         $("#proveedor").text(tipo + '-' + id + ' ' + desc);
         $("#modalProveedores").modal('hide');
     }
+  
+    function showRange() {
+        $("#dayRange").empty();
+        var currentDate = new Date().toISOString().split('T')[0];
+        Date1 = currentDate.substr(0, 10);
+        Date2 = currentDate.substr(13, 10);
+        var fechasActual = $("#searchInput").text();
+        if (fechasActual != "") {
+
+            Date1 = fechasActual.substr(0, 10);
+            Date2 = fechasActual.substr(13, 10);
+        }
+        $("#dayRange").append(`<div class="input-group mt-1">
+                                        <input class="form-control" id="datepicker2" name="datepicker2"/>
+                                        <span class="input-group-text" id="basic-addon2"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar" viewBox="0 0 16 16">
+                                        <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
+                                        </svg></span>
+                                        </div>`);
+        const picker2 = new easepick.create({
+            element: "#datepicker2",
+            css: ["../../assets/vendors/dayrangepicker/index.css"],
+            zIndex: 10,
+            plugins: ["RangePlugin"]
+        });
+
+        $("#modalRangeDocumento").modal('show');
+    }
+    function sendForm() {
+        var rangeDocumento = $('#datepicker2').val();
+        $("#originalvalue").val(rangeDocumento);
+        $("#valueTipo").val(2);
+        $("#searchInput").text(rangeDocumento);
+        $("#modalRangeDocumento").modal('hide');
+        chargeRequest();
+    }
+    function sendProveedor2(row) {
+        var tr = $(row).closest('tr');
+        var tds = tr.find('td');
+        var tipo = tds.eq(0).text();
+        var id = tds.eq(1).text();
+        var desc = tds.eq(2).text();
+        codigo = tipo + '-' + id;
+        var input=$("#inputIdProveedores").val();
+        $("#codigo").val(codigo);
+        $("#searchInput").text(tipo + '-' + id + ' ' + desc);
+        $("#modalProveedores").modal('hide');
+        $("#valueTipo").val(1);
+        chargeRequest();
+    }
+    function vaciarInput() {
+        $('#searchInput').text('Buscar...');
+        $("#valueTipo").val(0);
+        $("#originalvalue").val('');
+        $("#codigo").val('');
+        chargeRequest();
+    }
+
     </script>
 
-    
-<div class="modal fade" id="modalTiendas" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Selecciona una tienda</h1>
-
-                    <button type="button" class="btn-close" onclick="$('#modalTiendas').modal('hide')"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-12">
-                            <input type="text" class="d-none" id="inputIdTiendas">
-                            <label class="mb-3">Tienda: </label>
-                            <select id="tiendasSelect" class="form-select">
-
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" onclick="saveTienda()">Aceptar</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" id="modalCompania" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Selecciona una compañía</h1>
-
-                    <button type="button" class="btn-close" onclick="$('#modalCompania').modal('hide')"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-12">
-                            <input type="text" class="d-none" id="inputIdCompania">
-                            <label class="mb-3">Compañía: </label>
-                            <select id="CompaniaSelect" class="form-select">
-
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" onclick="saveCompania()">Aceptar</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="modalProveedores" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="modalProveedores" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -788,7 +871,6 @@ if (responseCampos.code == 200) {
                 </div>
                 <div class="modal-body">
                     <div class="table-container mt-3" style="width:100%;">
-                    <input type="text" class="d-none" id="inputIdProveedores">
                         <table id="tbProveedores" class="table stripe table-hover " style="width:100%">
                             <thead>
                                 <tr>
@@ -801,6 +883,27 @@ if (responseCampos.code == 200) {
                             </tbody>
                         </table>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modalRangeDocumento" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Selecciona un rango de fechas</h1>
+
+                    <button type="button" class="btn-close" onclick="$('#modalRangeDocumento').modal('hide')"></button>
+                </div>
+                <div class="modal-body">
+                    <label class="me-3">Fecha de documento</label>
+                    <div id="dayRange">
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="sendForm()">Aceptar</button>
                 </div>
             </div>
         </div>

@@ -60,6 +60,42 @@ a{
 .bgClick{
     background-color: rgba(0, 0, 0, 0.2) !important;
 }
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 40px;
+    left: 0;
+    right: 0;
+    z-index: 1050;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    border: 1px solid #ddd;
+}
+
+.dropdown-menu.show {
+    display: block;
+}
+.card-index{
+    z-index: 1000;
+}
+@media screen and (max-width: 990px) {
+    #searchDiv{
+        display: none;
+    }
+}
+
+
+.search-btn-clear {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translate(-180%, -45%);
+    border: none;
+    background-color: #fff;
+    z-index: 10;
+}
+
+
 
     </style>
 </head>

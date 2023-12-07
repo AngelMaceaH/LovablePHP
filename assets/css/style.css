@@ -4098,9 +4098,9 @@ html:not([dir=rtl]) .dropstart .dropdown-toggle:empty::after {
   background-color: var(--cui-dropdown-link-hover-bg);
 }
 .dropdown-item.active, .dropdown-item:active {
-  color: var(--cui-dropdown-link-active-color);
+  color: white !important;
   text-decoration: none;
-  background-color: var(--cui-dropdown-link-active-bg);
+  background-color: rgba(160, 0, 0, 0.5) !important;
 }
 .dropdown-item.disabled, .dropdown-item:disabled {
   color: var(--cui-dropdown-link-disabled-color);

@@ -33,6 +33,15 @@
              margin-top: 100px;
         }
     }
+    .text-cyan{
+        color: rgba(0, 133, 195,0.8);
+    }
+    .text-green{
+        color: rgba(0, 194, 29,0.8);
+    }
+    .text-yellow{
+        color: rgba(195, 183, 0,1);
+    }
   </style>
 </head>
 <body>

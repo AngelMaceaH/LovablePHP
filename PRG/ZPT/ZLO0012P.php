@@ -30,7 +30,7 @@
       <div id="body-div" class="body flex-grow-1">
         <div class="card mb-5">
             <div class="card-header">
-              <h1 class="fs-4 mb-1 mt-2 text-center">Análisis de movimiento de inventario</h1>
+              <h1 class="fs-4 mb-1 mt-2 text-center">Análisis de movimiento de estilos</h1>
             </div>
           <div class="card-body">
           <div class="position-relative">
@@ -81,44 +81,41 @@
                         </div>
                       </div>
                       <div>
-                     <!-- <div class="col-sm-12 col-md-6 mt-3">
-                                <input class="me-2" type="checkbox" value="1" id="productosCk1" name="productosCk1">
-                                <label class="form-check-label fs-5" for="productosCk1">
-                                Mostrar todos los productos
-                                </label>
-                      </div>-->
                 </div>
               </form>
               </div>
               <hr>
-              <!--<button class="btn btn-success text-light fs-6 mb-2 ladda-button" data-style="expand-left">
-                <i class="fa-solid fa-file-excel"></i> <b >Enviar a Excel</span></b>
-              </button>-->
-              <div class="table-container mt-3" style="width:100%;">
+              <div class="table-container mt-3 position-relative" style="width:100%;">
+              <div id="loaderTable" class="d-none">
+                <button class="btn btn-success position-absolute top-50 start-50 translate-middle p-4" style="z-index: 9999;" type="button" disabled>
+                    <i class="fa-solid fa-file-excel fa-flip text-white" style="font-size:70px;"></i>
+                </button>
+                <div class="position-absolute top-0 start-0 w-100 h-100 bg-secondary bg-opacity-50 rounded" style="z-index: 9998;"></div>
+              </div>
+              <div>
+                 <label class="ms-2 fw-bold  mb-3">**Presione doble clic para ver detalles por estilo color y talla**</label>
                           <table id="myTableSeguimiento" class="table stripe table-hover " style="width:100%">
                             <thead>
-                            <tr >
-                                <th colspan="20" id="thProcessing" style="height:100px;"></th>
-                            </tr>
                             <tr class="sticky-top bg-white" style="font-size: 14px;">
-                                    <th  class="responsive-font-example text-center">Estilo</th>
-                                    <th  class="responsive-font-example text-center">Und. Vtas.<br>Totales</th>
-                                    <th  class="responsive-font-example text-center">Und. Vtas.<br>Mes Proceso</th>
-                                    <th  class="responsive-font-example text-center">Und. Vtas.<br>Ult. 12 Meses</th>
-                                    <th  class="responsive-font-example text-center">Prom.<br>Mensual</th>
-                                    <th  class="responsive-font-example text-center">Existencia<br>Actual</th>
-                                    <th  class="responsive-font-example text-center">Rot. Inv</th>
-                                    <th  class="responsive-font-example text-center">Meses<br>Inventario</th>
-                                    <th  class="responsive-font-example text-center">%<br>Descuento</th>
-                                    <th  class="responsive-font-example text-center">Fecha Ingreso</th>
-                                    <th  class="responsive-font-example text-center">Fecha<br>Ult/Compra</th>
-                                    <th  class="responsive-font-example text-center">Fecha<br>Ult/Venta</th>
-                                    <th  class="responsive-font-example text-center">Días<br>antigüedad </th>
-                                    <th  class="responsive-font-example text-center">Días Ant.<br>Ult/Compra</th>
-                                    <th  class="responsive-font-example text-center">Días Ant.<br>Ult/Venta</th>
-                                    <th  class="responsive-font-example text-center">Tipo<br>Inventario</th>
-                                    <th  class="responsive-font-example text-center">Marca</th>
-                                    <th  class="responsive-font-example text-center">Genero</th>
+                            <th  class="responsive-font-example text-center d-none"></th>
+                                    <th  class="responsive-font-example text-center text-black">Estilo</th>
+                                    <th  class="responsive-font-example text-center text-black">Und. Vtas.<br>Totales</th>
+                                    <th  class="responsive-font-example text-center text-black">Und. Vtas.<br>Mes Proceso</th>
+                                    <th  class="responsive-font-example text-center text-black">Und. Vtas.<br>Ult. 12 Meses</th>
+                                    <th  class="responsive-font-example text-center text-black">Prom.<br>Mensual</th>
+                                    <th  class="responsive-font-example text-center text-black">Existencia<br>Actual</th>
+                                    <th  class="responsive-font-example text-center text-black">Rot. Inv</th>
+                                    <th  class="responsive-font-example text-center text-black">Meses<br>Inventario</th>
+                                    <th  class="responsive-font-example text-center text-black">%<br>Descuento</th>
+                                    <th  class="responsive-font-example text-center text-black">Fecha Ingreso</th>
+                                    <th  class="responsive-font-example text-center text-black">Fecha<br>Ult/Compra</th>
+                                    <th  class="responsive-font-example text-center text-black">Fecha<br>Ult/Venta</th>
+                                    <th  class="responsive-font-example text-center text-black">Días<br>antigüedad </th>
+                                    <th  class="responsive-font-example text-center text-black">Días Ant.<br>Ult/Compra</th>
+                                    <th  class="responsive-font-example text-center text-black">Días Ant.<br>Ult/Venta</th>
+                                    <th  class="responsive-font-example text-center text-black">Tipo<br>Inventario</th>
+                                    <th  class="responsive-font-example text-center text-black">Marca</th>
+                                    <th  class="responsive-font-example text-center text-black">Genero</th>
                                     
                                 </tr>
                             </thead>
@@ -126,9 +123,10 @@
                               
                               </tbody>
                           </table>
+              </div>
                       </div>
                     </div>
-          </div> 
+                </div> 
         </div>
       </div>
     </div>
@@ -144,52 +142,53 @@
       <script>
         var agrupSelect="";
         var filtroP="";
-        $( document ).ready(function() {
-          var urlAgrupaciones="http://172.16.15.20/API.LOVABLEPHP/ZLO0012P/ListAgrupacion/";
+          document.addEventListener('DOMContentLoaded', function() {
+            var urlAgrupaciones="http://172.16.15.20/API.LOVABLEPHP/ZLO0012P/ListAgrupacion/";
           var responseAgrupaciones=ajaxRequest(urlAgrupaciones);
-          if (responseAgrupaciones.code==200) {
-            var options="";
-            for (let i = 0; i < responseAgrupaciones.data.length; i++) {
-              options+="<option value='"+responseAgrupaciones.data[i]['CODIGO']+"'>"+responseAgrupaciones.data[i]['DESCRI']+"</option>";
-            }
-            $("#cbbAgrupacion").append(options);
-          }
-          agrupSelect='<?php echo $agrup; ?>';
-          $("#cbbAgrupacion").val(agrupSelect);
-         
-          $("#cbbAgrupacion").on("change",function() {
-            $("#formFiltros").submit();
-          });
-            var productosCk1=<?php echo $ckProductos1;  ?>;
-           $('#productosCk1').prop('checked', <?php echo  $ckProductos1 ?>);
+        if (responseAgrupaciones && responseAgrupaciones.code == 200) {
+            var options = "";
+            responseAgrupaciones.data.forEach(item => {
+                options += "<option value='" + item['CODIGO'] + "'>" + item['DESCRI'] + "</option>";
+            });
+            document.getElementById('cbbAgrupacion').innerHTML += options;
+        }
 
-            $("#productosCk1").change(function() {
+        var agrupSelect = '<?php echo $agrup; ?>';
+        document.getElementById('cbbAgrupacion').value = agrupSelect;
+
+        document.getElementById('cbbAgrupacion').addEventListener('change', function() {
+            document.getElementById('formFiltros').submit();
+        });
+
+
+    var productosCk1 = <?php echo $ckProductos1; ?>;
+    $('#productosCk1').prop('checked', productosCk1);
+
+    $("#productosCk1").change(function() {
               $("#formFiltros").submit();
             });
-            var cond="";
-            if (productosCk1==true) {
-              cond="1";
-            }else{
-              cond="0";
-            }
-            filtroP='<?php echo $filtro; ?>';
-            $("#check4, #check3, #check2, #check1").on("change",function() {
-              $("#formFiltros").submit();
-            });
-            $("input[name=radioFiltro][value=" + filtroP + "]").prop('checked', true);
-
-        
+    var cond = productosCk1 ? "1" : "0";
+    var filtroP = '<?php echo $filtro; ?>';
+    ['check4', 'check3', 'check2', 'check1'].forEach(checkId => {
+        document.getElementById(checkId).addEventListener('change', function() {
+            document.getElementById('formFiltros').submit();
+        });
+    });
+    $("input[name=radioFiltro][value=" + filtroP + "]").prop('checked', true);
+        console.log("http://172.16.15.20/API.LOVABLEPHP/ZLO0012P/List/?agrup="+agrupSelect+"&cond=1&filtro="+filtroP+"");
          var table= $('#myTableSeguimiento').DataTable({
             language: {
             url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json',
+            loadingRecords:`<button class="btn btn-danger " type="button" disabled>
+                                    <span class="spinner-border text-white" style="width: 1.5rem; height: 1.5rem;"
+                                        aria-hidden="true"></span>
+                                    <span role="status" class="ms-2 text-white fs-4">Cargando...</span>
+                                </button>`
         },
-        fixedColumns: {
-                    left: 1,},
+        fixedColumns: { left: 2,},
         "pageLength": 20,
-                "processing": true,
-                "serverSide": true,
                 "ajax": {
-                    "url": "http://172.16.15.20/API.LOVABLEPHP/ZLO0012P/List3/?agrup="+agrupSelect+"&cond=1&filtro="+filtroP+"",
+                    "url": "http://172.16.15.20/API.LOVABLEPHP/ZLO0012P/List/?agrup="+agrupSelect+"&cond=1&filtro="+filtroP+"",
                     "type": "POST",
                     "complete": function (xhr) {
                       $("#thProcessing").addClass('d-none');
@@ -220,36 +219,37 @@
                         }
                 },
                 "columns": [
+                  { "data": "ROWNUM" ,className:"text-start d-none"},
                     { "data": "ESTILO" ,className:"text-start"},
-                    { "data": "TTOT"   ,className:"text-end"},
-                    { "data": "MESTOT" ,className:"text-end"},
-                    { "data": "UNIVEN" ,className:"text-end", render: function(data) {
+                    { "data": "TTOT"   ,className:"text-end","searchable": false},
+                    { "data": "MESTOT" ,className:"text-end","searchable": false},
+                    { "data": "UNIVEN" ,className:"text-end text-cyan","searchable": false, render: function(data) {
                             var valor=parseFloat(data);
                             if (isNaN(valor)) {valor='';}                       
         return  valor.toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     }},
-                    { "data": "PROMEN" ,className:"text-end", render: function(data) {
+                    { "data": "PROMEN" ,className:"text-end text-cyan","searchable": false, render: function(data) {
                             var valor=parseFloat(data);
                             if (isNaN(valor)) {valor='';}                       
         return  valor.toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     }},
-                    { "data": "EXIACT" ,className:"text-end", render: function(data) {
+                    { "data": "EXIACT" ,className:"text-end text-green","searchable": false, render: function(data) {
                             var valor=parseFloat(data);
                             if (isNaN(valor)) {valor='';}                       
         return  valor.toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     }},
-                    { "data": "ROTINV" ,className:"text-end", render: function(data) {
+                    { "data": "ROTINV" ,className:"text-end","searchable": false, render: function(data) {
                             var valor=parseFloat(data);
                             if (isNaN(valor)) {valor='';}                       
         return  valor.toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     }},
-                    { "data": "MESINV" ,className:"text-end", render: function(data) {
+                    { "data": "MESINV" ,className:"text-end text-warning","searchable": false, render: function(data) {
                             var valor=parseFloat(data);
                             if (isNaN(valor)) {valor='';}                       
         return  valor.toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     }},
-                    { "data": "PORDES" ,className:"text-end"},
-                    { "data": "FECING",
+                    { "data": "PORDES" ,"searchable": false,className:"text-end"},
+                    { "data": "FECING","searchable": false,
                       render: function (data, type, row) {
               const fechaOriginal = data;
              if (fechaOriginal=="") {
@@ -262,7 +262,7 @@
               return fechaConvertida;
              }
             } ,className:"text-end"},
-                    { "data": "FECCOM",
+                    { "data": "FECCOM","searchable": false,
                       render: function (data, type, row) {
               const fechaOriginal = data;
               if (fechaOriginal=="") {
@@ -275,7 +275,7 @@
               return fechaConvertida;
              }
             } ,className:"text-end"},
-                    { "data": "FECVEN",
+                    { "data": "FECVEN","searchable": false,
                       render: function (data, type, row) {
               const fechaOriginal = data;
               if (fechaOriginal=="") {
@@ -288,63 +288,210 @@
               return fechaConvertida;
              }
             } ,className:"text-end"},
-                    { "data": "DIAANT" ,className:"text-end"},
-                    { "data": "DIAANC" ,className:"text-end"},
-                    { "data": "DIAANV" ,className:"text-end"},
-                    { "data": "TIPINV" ,className:"text-end"},
-                    { "data": "MARCA"  ,className:"text-start"},
-                    { "data": "GENERO" ,className:"text-start"}
+                    { "data": "DIAANT" ,"searchable": false,className:"text-end"},
+                    { "data": "DIAANC" ,"searchable": false,className:"text-end"},
+                    { "data": "DIAANV" ,"searchable": false,className:"text-end"},
+                    {  "data": "TIPINV",
+                        "searchable": false,
+                        "render": function (data, type, row) {
+                          switch (data) {
+                            case "L":
+                              return '<span class="text-success">' + data + '</span>';
+                              break;
+                              case "O":
+                              return '<span class="text-danger">' + data + '</span>';
+                              break;
+                              case "ND":
+                                case "D":
+                              return '<span class="text-warning">' + data + '</span>';
+                              break;
+                            default:
+                            return data;
+                              break;
+                          }
+                        },
+                        "className": "text-end"
+                    },
+                    { "data": "MARCA"  ,"searchable": false,className:"text-start"},
+                    { "data": "GENERO" ,"searchable": false,className:"text-start"}
                 ],
                 ordering: true,
                 dom: 'Bfrtip',
                 buttons: [
-                  {
-                    text: '<i class="fa-solid fa-file-excel me-1"></i><b>Enviar a Excel</b>',
-                    className: "btn btn-success text-light fs-6 mb-2 ladda-button",
-                    action: function ( e, dt, node, config ) {
-                    
+            {
+                extend: 'excelHtml5',
+                text: '<i class="fa-solid fa-file-excel"></i> <b >Enviar a Excel</b>',
+                className: "btn btn-success text-light fs-6 ",
+                action: function (e, dt, button, config) {
+                      document.getElementById('loaderTable').classList.remove('d-none');
+                      setTimeout(() => {
+                          $.fn.dataTable.ext.buttons.excelHtml5.action.call(this, e, dt, button, config);
+                          document.getElementById('loaderTable').classList.add('d-none');
+                      }, 100);
+                  },
+                exportOptions: {
+                    columns: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18]
+                },
+                title: 'Analis-MovimientoEstilos',
+                customize: function (xlsx) {
+                    var sheet = xlsx.xl.worksheets['sheet1.xml'];
+                    var sSh = xlsx.xl['styles.xml'];
+                    var lastXfIndex = $('cellXfs xf', sSh).length - 1;
+                    var lastFontIndex = $('fonts font', sSh).length - 1;
+                    var i; var y;
+                    var f1 = '<font>' +
+                            '<sz val="11" />' +
+                            '<name val="Calibri" />' +
+                            '<color rgb="FF0000" />' + // color rojo en la fuente
+                            '</font>';
+                        var f2 = '<font>' +
+                            '<sz val="11" />' +
+                            '<name val="Calibri" />' +
+                            '<color rgb="007800" />' + // color verde en la fuente
+                            '</font>';
+                        var f3 = '<font>' +
+                            '<sz val="11" />' +
+                            '<name val="Calibri" />' +
+                            '<color rgb="00BBCD" />' + // color cyan de la fuente
+                            '</font>';
+                        var f4 = '<font>' +
+                            '<sz val="11" />' +
+                            '<name val="Calibri" />' +
+                            '<color rgb="7E5006" />' + // color cyan de la fuente
+                            '</font>';
+                        var f5 = '<font>' +
+                            '<sz val="11" />' +
+                            '<name val="Calibri" />' +
+                            '<color rgb="2A81F1" />' + // color azul oscuro de la fuente
+                            '</font>';
+                        var f6 = '<font>' +
+                            '<sz val="11" />' +
+                            '<name val="Calibri" />' +
+                            '<color rgb="0F8900" />' + // color verde oscuro de la fuente
+                            '</font>';
+                        var f7 = '<font>' +
+                            '<sz val="11" />' +
+                            '<name val="Calibri" />' +
+                            '<color rgb="C1C100" />' + // color amarillo de la fuente
+                            '</font>';
+                        var f8 = '<font>' +
+                            '<sz val="11" />' +
+                            '<name val="Calibri" />' +
+                            '<color rgb="FFB202" />' + // color naranja de la fuente
+                            '</font>';
+                        var n1 = '<numFmt formatCode="##0%"   numFmtId="300"/>';
+                        var n2 = '<numFmt formatCode="#,##0.00"   numFmtId="200" />';
+                        var s1 =
+                            '<xf numFmtId="300" fontId="0" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyNumberFormat="1"/>';
+                        var s2 =
+                            '<xf numFmtId="0" fontId="2" fillId="2" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">' +
+                            '<alignment horizontal="center"/></xf>';
+                        var s3 =
+                            '<xf numFmtId="4" fontId="2" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyNumberFormat="1"/>'
+                        var s4 =
+                            '<xf numFmtId="0" fontId="2" fillId="2" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">' +
+                            '<alignment horizontal="center" wrapText="1"/></xf>'
+                        var s5 = '<xf  numFmtId="200" fontId="' + (lastFontIndex + 1) +
+                            '" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">' +
+                            '<alignment horizontal="right"/></xf>';
+                        var s6 = '<xf  numFmtId="200" fontId="' + (lastFontIndex + 2) +
+                            '" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">' +
+                            '<alignment horizontal="right"/></xf>';
+                        var s7 = '<xf  numFmtId="300" fontId="' + (lastFontIndex + 1) +
+                            '" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">' +
+                            '<alignment horizontal="right"/></xf>';
+                        var s8 = '<xf  numFmtId="300" fontId="' + (lastFontIndex + 2) +
+                            '" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">' +
+                            '<alignment horizontal="right"/></xf>';
+                        var s9 = '<xf numFmtId="0" fontId="' + (lastFontIndex + 3) +
+                            '" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">' +
+                            '<alignment horizontal="right"/></xf>';
+                        var s10 = '<xf numFmtId="0" fontId="' + (lastFontIndex + 4) +
+                            '" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">' +
+                            '<alignment horizontal="right"/></xf>';
+                        var s11 = '<xf numFmtId="0" fontId="' + (lastFontIndex + 5) +
+                            '" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">' +
+                            '<alignment horizontal="right"/></xf>';
+                        var s12 = '<xf numFmtId="0" fontId="' + (lastFontIndex + 6) +
+                            '" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">' +
+                            '<alignment horizontal="right"/></xf>';
+                        var s13 = '<xf numFmtId="0" fontId="' + (lastFontIndex + 7) +
+                            '" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">' +
+                            '<alignment horizontal="right"/></xf>';
+                        var s14 = '<xf numFmtId="0" fontId="' + (lastFontIndex + 8) +
+                            '" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">' +
+                            '<alignment horizontal="right"/></xf>';
+                        sSh.childNodes[0].childNodes[0].innerHTML += n1 + n2;
+                        sSh.childNodes[0].childNodes[1].innerHTML += f1 + f2 + f3 + f4 + f5 +
+                            f6 + f7 + f8;
+                        sSh.childNodes[0].childNodes[5].innerHTML += s1 + s2 + s3 + s4 + s5 +
+                            s6 + s7 + s8 + s9 + s10 + s11 + s12 + s13 + s14;
+                        var fourDecPlaces = lastXfIndex + 1;
+                        var greyBoldCentered = lastXfIndex + 2;
+                        var twoDecPlacesBold = lastXfIndex + 3;
+                        var greyBoldWrapText = lastXfIndex + 4;
+                        var textred1 = lastXfIndex + 5;
+                        var textgreen1 = lastXfIndex + 6;
+                        var textred2 = lastXfIndex + 7;
+                        var textgreen2 = lastXfIndex + 8;
+                        var textCyan = lastXfIndex + 9;
+                        var textBrown = lastXfIndex + 10;
+                        var textDarkblue = lastXfIndex + 11;
+                        var textDarkGreen = lastXfIndex + 12;
+                        var textYellow = lastXfIndex + 13;
+                        var textNaranja = lastXfIndex + 14;
+                    $('c[r=A1] t', sheet).text( 'REPORTE DE ANALISIS DE MOVIMIENTO DE ESTILOS '+($("#cbbAgrupacion option:selected").text()).toUpperCase() );
+                    $('row:eq(0) c', sheet).attr( 's', greyBoldCentered );
+                    $('row:eq(1) c', sheet).attr( 's', 7 );
+                        $('row', sheet).each(function() {
+                            var row = $(this);
+                            if (row.index() < 2) {
+                                return;
+                            }
+                            $('c[r^="D"], c[r^="E"]', row).attr('s', textCyan);
+                            $('c[r^="F"]', row).attr('s', textgreen1);
+                            $('c[r^="H"]', row).attr('s', textYellow);
+                            var cellE = $('c[r^="P"]', row);
+                            switch (cellE.text()) {
+                            case "L":
+                                $('c[r^="P"]', row).attr('s', textgreen1);
+                              break;
+                              case "O":
+                                $('c[r^="P"]', row).attr('s', textred1);
+                              break;
+                              case "ND":
+                                case "D":
+                                  $('c[r^="P"]', row).attr('s', textYellow);
+                              break;
+                            default:
+                                $('c[r^="P"]', row).attr('s', 52);
+                              break;
+                          }
+                            if (cellE.text() === "TOTAL" || cellE.text() === "TOTALM") {
+                                $('c[r^="A"], c[r^="B"], c[r^="C"], c[r^="D"], c[r^="E"], c[r^="F"], c[r^="G"], c[r^="H"], c[r^="I"], c[r^="J"], c[r^="K"], c[r^="L"], c[r^="M"], c[r^="N"], c[r^="O"], c[r^="P"], c[r^="Q"], c[r^="R"], c[r^="S"], c[r^="T"], c[r^="U"], c[r^="V"], c[r^="W"], c[r^="X"], c[r^="Y"], c[r^="Z"], c[r^="AA"], c[r^="AB"], c[r^="AC"], c[r^="AD"], c[r^="AE"], c[r^="AF"], c[r^="AG"]',
+                                    row).attr('s', 7);
+                                $('c[r^="A"], c[r^="B"], c[r^="C"], c[r^="D"], c[r^="E"]',
+                                    row).text('s', ' ');
+                            }
+                        });
+                    var tagName = sSh.getElementsByTagName('sz');
+                    for (i = 0; i < tagName.length; i++) {
+                      tagName[i].setAttribute("val", "13")
                     }
                   }
-                ]
-
+            }
+        ]
             });
-            $("#myTableSeguimiento").append('<caption style="caption-side: top" class="fw-bold text-black"><label class="ms-2 fw-bold">**Presione doble clic para ver detalles por estilo color y talla**</label></caption>'); 
-            table.on('search.dt', function() {
+           table.on('search.dt', function() {
                 var searchTerm = table.search();
                 $('#myTableSeguimiento_filter input').val(searchTerm.toUpperCase())
             });
-            
-            table.on('draw.dt', function() {
-                  $('.ladda-button').each(function() {
-                    var l = Ladda.create(this);
-                    $(this).on('click', function() {
-                      l.start();
-                      var urlExcel = "http://172.16.15.20/API.LOVABLEPHP/ZLO0012P/ExportAll/?agrup="+agrupSelect+"&cond=1&filtro="+filtroP+"&title="+($("#cbbAgrupacion option:selected").text()).toUpperCase()+"";
-                     window.location.href = urlExcel;
-                      var xhr = new XMLHttpRequest();
-                      xhr.open('HEAD', urlExcel);
-                      xhr.onreadystatechange = function() {
-                        if (xhr.readyState === 4) {
-                          if (xhr.status === 200) {
-                            var procesosTerminados = xhr.getResponseHeader('X-Procesos-Terminados');
-                            if (procesosTerminados) {
-                            } else {
-                              l.stop();
-                            }
-                          } else {
-                          }
-                        }
-                      };
-                      xhr.send();
-                    });
-                  });
-                });
         });
         function openModalDetalles(estilo){ 
           $("#tableAppend").empty();
           $("#tableAppend").append(`<table id="myTableDetalles" class="table stripe"style="width:100%;">
                         <thead>
-                            <tr class="sticky-top bg-white">
+                            <tr class="sticky-top bg-white" style="font-size: 14px;">
                                 <th class="text-black text-center">ESTILO</th>
                                 <th class="text-black text-center">COLOR</th>
                                 <th class="text-black text-center">TALLA</th>
@@ -368,7 +515,7 @@
                                 <th class=" d-none text-black text-center">ISTOT</th>
                             </tr>
                         </thead>
-                        <tbody id="myTableDetallesBody">
+                        <tbody id="myTableDetallesBody" style="font-size: 13px;">
                                 
                         </tbody>
                     </table>`)
@@ -376,7 +523,6 @@
           var agrup=$("#cbbAgrupacion").val();
           var urlDeta="http://172.16.15.20/API.LOVABLEPHP/ZLO0012P/GetDeta/?agrup="+agrup+"&estilo="+estilo+"";
           var responseDeta=ajaxRequest(urlDeta);
-          console.log(responseDeta.data);
           var lastcolor=null; var color=' '; var count=0;
           if (responseDeta.code==200) {
             var tableDetalles= $('#myTableDetallesBody');
@@ -405,12 +551,12 @@
                   options+="<td class='text-start'>"+returnBlank(responseDeta.data[i]['COLOR'])+"</td>";
                   options+="<td class='text-start'>"+returnBlank(responseDeta.data[i]['TALLA'])+"</td>";
                   options+="<td class='text-end'>"+ returnBlank(responseDeta.data[i]['UNITOT'])+"</td>";
-                  options+="<td class='text-end text-primary'>"+ returnBlank(responseDeta.data[i]['VTAMES'])+"</td>";
-                  options+="<td class='text-end text-primary'>"+ returnBlank(responseDeta.data[i]['UNIVEN'])+"</td>";
-                  options+="<td class='text-end text-primary'>"+ returnBlank(responseDeta.data[i]['PROMEN'])+"</td>";
-                  options+="<td class='text-end text-success'>"+ returnBlank(responseDeta.data[i]['EXIACT'])+"</td>";
+                  options+="<td class='text-end '>"+ returnBlank(responseDeta.data[i]['VTAMES'])+"</td>";
+                  options+="<td class='text-end text-cyan'>"+ returnBlank(responseDeta.data[i]['UNIVEN'])+"</td>";
+                  options+="<td class='text-end  text-cyan'>"+ returnBlank(responseDeta.data[i]['PROMEN'])+"</td>";
+                  options+="<td class='text-end text-success text-success'>"+ returnBlank(responseDeta.data[i]['EXIACT'])+"</td>";
                   options+="<td class='text-end'>"+ returnBlank(responseDeta.data[i]['ROTINV'])+"</td>";
-                  options+="<td class='text-end text-danger'>"+ returnBlank(responseDeta.data[i]['MESINV'])+"</td>";
+                  options+="<td class='text-end text-warning'>"+ returnBlank(responseDeta.data[i]['MESINV'])+"</td>";
                   options+="<td class='text-end'>"+ returnBlank(responseDeta.data[i]['PORDES'])+"</td>";
                   options+="<td class='text-end'>"+formatFecha(responseDeta.data[i]['FECING'])+"</td>";
                   options+="<td class='text-end'>"+formatFecha(responseDeta.data[i]['FECCOM'])+"</td>";
@@ -418,7 +564,22 @@
                   options+="<td class='text-end'>"+ returnBlank(responseDeta.data[i]['DIAANT'])+"</td>";
                   options+="<td class='text-end'>"+ returnBlank(responseDeta.data[i]['DIAANC'])+"</td>";
                   options+="<td class='text-end'>"+ returnBlank(responseDeta.data[i]['DIAANV'])+"</td>";
-                  options+="<td class='text-end'>"+returnBlank(responseDeta.data[i]['TIPINV'])+"</td>";
+                  switch (responseDeta.data[i]['TIPINV']) {
+                            case "L":
+                              options+="<td class='text-end text-success'>"+returnBlank(responseDeta.data[i]['TIPINV'])+"</td>";
+                              break;
+                              case "O":
+                                options+="<td class='text-end text-danger'>"+returnBlank(responseDeta.data[i]['TIPINV'])+"</td>";
+                              break;
+                              case "ND":
+                                case "D":
+                                  options+="<td class='text-end text-warning'>"+returnBlank(responseDeta.data[i]['TIPINV'])+"</td>";
+                              break;
+                            default:
+                            options+="<td class='text-end'>"+returnBlank(responseDeta.data[i]['TIPINV'])+"</td>";
+                       break;
+                          }
+                  
                   options+="<td class='text-start'>"+returnBlank(responseDeta.data[i]['MARCA'])+"</td>";
                   options+="<td class='text-start'>"+returnBlank(responseDeta.data[i]['GENERO'])+"</td>";
                   options+="<td class=' d-none text-start'>"+returnBlank(responseDeta.data[i]['ISTOT'])+"</td>";
@@ -432,7 +593,7 @@
                 "ordering": false,
                 "responsive": true,
                 "pageLength": 100,
-                
+                fixedColumns: { left: 1,},
                 dom: 'Bfrtip',
     buttons: [
         {
@@ -442,72 +603,155 @@
             exportOptions: {
               columns: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20],
             },
-            title: 'Analisis-MovimientoInventario-'+estilo+'',
-            messageTop:' ',                                                                                                                                                                                                               
-            customize: function (xlsx) {
-                var sheet = xlsx.xl.worksheets['sheet1.xml'];
-                var sSh = xlsx.xl['styles.xml'];
-                var lastXfIndex = $('cellXfs xf', sSh).length - 1;
-                var lastFontIndex = $('fonts font', sSh).length - 1;
-                var i; var y;
-                var f1 = '<font>'+
-                 '<sz val="11" />'+
-                 '<name val="Calibri" />'+
-                 '<color rgb="FF0000" />'+ 
-               '</font>';
-               var f2 = '<font>'+
-                 '<sz val="11" />'+
-                 '<name val="Calibri" />'+
-                 '<color rgb="007800" />'+ 
-               '</font>';
-                 
-                var n1 = '<numFmt formatCode="##0%"   numFmtId="300"/>';
-                var n2 = '<numFmt formatCode="#,##0.00"   numFmtId="200" />';
-                var s1 = '<xf numFmtId="300" fontId="0" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyNumberFormat="1"/>';
-                var s2 = '<xf numFmtId="0" fontId="2" fillId="2" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
+            title: 'Analisis-MovimientoEstilos-'+estilo+'',
+                customize: function (xlsx) {
+                    var sheet = xlsx.xl.worksheets['sheet1.xml'];
+                    var sSh = xlsx.xl['styles.xml'];
+                    var lastXfIndex = $('cellXfs xf', sSh).length - 1;
+                    var lastFontIndex = $('fonts font', sSh).length - 1;
+                    var i; var y;
+                    var f1 = '<font>' +
+                            '<sz val="11" />' +
+                            '<name val="Calibri" />' +
+                            '<color rgb="FF0000" />' + // color rojo en la fuente
+                            '</font>';
+                        var f2 = '<font>' +
+                            '<sz val="11" />' +
+                            '<name val="Calibri" />' +
+                            '<color rgb="007800" />' + // color verde en la fuente
+                            '</font>';
+                        var f3 = '<font>' +
+                            '<sz val="11" />' +
+                            '<name val="Calibri" />' +
+                            '<color rgb="00BBCD" />' + // color cyan de la fuente
+                            '</font>';
+                        var f4 = '<font>' +
+                            '<sz val="11" />' +
+                            '<name val="Calibri" />' +
+                            '<color rgb="7E5006" />' + // color cyan de la fuente
+                            '</font>';
+                        var f5 = '<font>' +
+                            '<sz val="11" />' +
+                            '<name val="Calibri" />' +
+                            '<color rgb="2A81F1" />' + // color azul oscuro de la fuente
+                            '</font>';
+                        var f6 = '<font>' +
+                            '<sz val="11" />' +
+                            '<name val="Calibri" />' +
+                            '<color rgb="0F8900" />' + // color verde oscuro de la fuente
+                            '</font>';
+                        var f7 = '<font>' +
+                            '<sz val="11" />' +
+                            '<name val="Calibri" />' +
+                            '<color rgb="C1C100" />' + // color amarillo de la fuente
+                            '</font>';
+                        var f8 = '<font>' +
+                            '<sz val="11" />' +
+                            '<name val="Calibri" />' +
+                            '<color rgb="FFB202" />' + // color naranja de la fuente
+                            '</font>';
+                        var n1 = '<numFmt formatCode="##0%"   numFmtId="300"/>';
+                        var n2 = '<numFmt formatCode="#,##0.00"   numFmtId="200" />';
+                        var s1 =
+                            '<xf numFmtId="300" fontId="0" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyNumberFormat="1"/>';
+                        var s2 =
+                            '<xf numFmtId="0" fontId="2" fillId="2" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">' +
                             '<alignment horizontal="center"/></xf>';
-                var s3 = '<xf numFmtId="4" fontId="2" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyNumberFormat="1"/>'
-                var s4 = '<xf numFmtId="0" fontId="2" fillId="2" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
+                        var s3 =
+                            '<xf numFmtId="4" fontId="2" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyNumberFormat="1"/>'
+                        var s4 =
+                            '<xf numFmtId="0" fontId="2" fillId="2" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">' +
                             '<alignment horizontal="center" wrapText="1"/></xf>'
-                var s5 = '<xf  numFmtId="200" fontId="'+(lastFontIndex+1)+'" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
-                 '<alignment horizontal="right"/></xf>';  
-                 var s6 = '<xf  numFmtId="200" fontId="'+(lastFontIndex+2)+'" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
-                 '<alignment horizontal="right"/></xf>';  
-                 var s7 = '<xf  numFmtId="300" fontId="'+(lastFontIndex+1)+'" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
-                 '<alignment horizontal="right"/></xf>';  
-                 var s8 = '<xf  numFmtId="300" fontId="'+(lastFontIndex+2)+'" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
-                 '<alignment horizontal="right"/></xf>';
-                sSh.childNodes[0].childNodes[0].innerHTML += n1 + n2;
-                sSh.childNodes[0].childNodes[1].innerHTML += f1 + f2;
-                sSh.childNodes[0].childNodes[5].innerHTML += s1 + s2 + s3 + s4 + s5 + s6 + s7 + s8; 
-                 
-                var fourDecPlaces    = lastXfIndex + 1;
-                var greyBoldCentered = lastXfIndex + 2;
-                var twoDecPlacesBold = lastXfIndex + 3;
-                var greyBoldWrapText = lastXfIndex + 4;
-                var textred1 = lastXfIndex + 5;
-                var textgreen1 = lastXfIndex + 6;
-                var textred2 = lastXfIndex + 7;
-                var textgreen2 = lastXfIndex + 8;
-                
-               
-                $('c[r=A1] t', sheet).text( 'REPORTE DE ANALISIS DE MOVIMIENTO DE INVENTARIO  ESTILO: '+estilo.toUpperCase()+'');
-                $('row:eq(0) c', sheet).attr( 's', greyBoldCentered );
-                $('row:eq(1) c', sheet).attr( 's', 7 );
-              
-                $('c[r=U3] t', sheet).text(' ');
-               $('row c[r*="U"]', sheet).each(function () {
-                    if ($('is t', this).text() === 'TOTALC' || $('is t', this).text() === 'TOTAL') {
-                        var rowIndex = $(this).parent().index();
-                        $('row:eq(' + rowIndex + ') c', sheet).attr('s', '7');
-                        $('is t', this).text(' ');
+                        var s5 = '<xf  numFmtId="200" fontId="' + (lastFontIndex + 1) +
+                            '" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">' +
+                            '<alignment horizontal="right"/></xf>';
+                        var s6 = '<xf  numFmtId="200" fontId="' + (lastFontIndex + 2) +
+                            '" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">' +
+                            '<alignment horizontal="right"/></xf>';
+                        var s7 = '<xf  numFmtId="300" fontId="' + (lastFontIndex + 1) +
+                            '" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">' +
+                            '<alignment horizontal="right"/></xf>';
+                        var s8 = '<xf  numFmtId="300" fontId="' + (lastFontIndex + 2) +
+                            '" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">' +
+                            '<alignment horizontal="right"/></xf>';
+                        var s9 = '<xf numFmtId="0" fontId="' + (lastFontIndex + 3) +
+                            '" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">' +
+                            '<alignment horizontal="right"/></xf>';
+                        var s10 = '<xf numFmtId="0" fontId="' + (lastFontIndex + 4) +
+                            '" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">' +
+                            '<alignment horizontal="right"/></xf>';
+                        var s11 = '<xf numFmtId="0" fontId="' + (lastFontIndex + 5) +
+                            '" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">' +
+                            '<alignment horizontal="right"/></xf>';
+                        var s12 = '<xf numFmtId="0" fontId="' + (lastFontIndex + 6) +
+                            '" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">' +
+                            '<alignment horizontal="right"/></xf>';
+                        var s13 = '<xf numFmtId="0" fontId="' + (lastFontIndex + 7) +
+                            '" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">' +
+                            '<alignment horizontal="right"/></xf>';
+                        var s14 = '<xf numFmtId="0" fontId="' + (lastFontIndex + 8) +
+                            '" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">' +
+                            '<alignment horizontal="right"/></xf>';
+                        sSh.childNodes[0].childNodes[0].innerHTML += n1 + n2;
+                        sSh.childNodes[0].childNodes[1].innerHTML += f1 + f2 + f3 + f4 + f5 +
+                            f6 + f7 + f8;
+                        sSh.childNodes[0].childNodes[5].innerHTML += s1 + s2 + s3 + s4 + s5 +
+                            s6 + s7 + s8 + s9 + s10 + s11 + s12 + s13 + s14;
+                        var fourDecPlaces = lastXfIndex + 1;
+                        var greyBoldCentered = lastXfIndex + 2;
+                        var twoDecPlacesBold = lastXfIndex + 3;
+                        var greyBoldWrapText = lastXfIndex + 4;
+                        var textred1 = lastXfIndex + 5;
+                        var textgreen1 = lastXfIndex + 6;
+                        var textred2 = lastXfIndex + 7;
+                        var textgreen2 = lastXfIndex + 8;
+                        var textCyan = lastXfIndex + 9;
+                        var textBrown = lastXfIndex + 10;
+                        var textDarkblue = lastXfIndex + 11;
+                        var textDarkGreen = lastXfIndex + 12;
+                        var textYellow = lastXfIndex + 13;
+                        var textNaranja = lastXfIndex + 14;
+                    $('c[r=A1] t', sheet).text( 'REPORTE DE ANALISIS DE MOVIMIENTO DE ESTILOS '+estilo.toString().toUpperCase() );
+                    $('row:eq(0) c', sheet).attr( 's', greyBoldCentered );
+                    $('row:eq(1) c', sheet).attr( 's', 7 );
+                        $('row', sheet).each(function() {
+                            var row = $(this);
+                            if (row.index() < 2) {
+                                return;
+                            }
+                            $('c[r^="F"], c[r^="G"]', row).attr('s', textCyan);
+                            $('c[r^="H"]', row).attr('s', textgreen1);
+                            $('c[r^="J"]', row).attr('s', textYellow);
+                            var cellE = $('c[r^="R"]', row);
+                            switch (cellE.text()) {
+                            case "L":
+                                $('c[r^="R"]', row).attr('s', textgreen1);
+                              break;
+                              case "O":
+                                $('c[r^="R"]', row).attr('s', textred1);
+                              break;
+                              case "ND":
+                                case "D":
+                                  $('c[r^="R"]', row).attr('s', textYellow);
+                              break;
+                            default:
+                                $('c[r^="R"]', row).attr('s', 52);
+                              break;
+                          }
+                        });
+                        $('c[r=U3] t', sheet).text(' ');
+                        $('row c[r*="U"]', sheet).each(function () {
+                              if ($('is t', this).text() === 'TOTALC' || $('is t', this).text() === 'TOTAL') {
+                                  var rowIndex = $(this).parent().index();
+                                  $('row:eq(' + rowIndex + ') c', sheet).attr('s', '7');
+                                  $('is t', this).text(' ');
+                              }
+                          });
+                    var tagName = sSh.getElementsByTagName('sz');
+                    for (i = 0; i < tagName.length; i++) {
+                      tagName[i].setAttribute("val", "13")
                     }
-                });
-                var tagName = sSh.getElementsByTagName('sz');
-                for (i = 0; i < tagName.length; i++) {
-                  tagName[i].setAttribute("val", "13");
-                }
-              }  
+                  }
         }
     ],
         
@@ -539,8 +783,10 @@
 <div class="modal fade" id="detallesModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-fullscreen">
     <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="btn-close" onclick="$('#detallesModal').modal('hide')"></button>
+      <div class="modal-header d-flex justify-content-end">
+        <div class="">
+          <button type="button" class="btn btn-dark text-white fw-bold" onclick="$('#detallesModal').modal('hide')">Regresar</button>
+        </div>
       </div>
       <div class="modal-body">
         <div class="card">

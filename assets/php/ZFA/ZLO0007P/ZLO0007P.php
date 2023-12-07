@@ -57,8 +57,49 @@
         language: {
             url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json',
         },
-        "ordering": false,
+        "ordering": true,
         "pageLength": 100,
+        "columnDefs": [{
+                    "targets": [0],
+                    "type": "string"
+                },
+                {
+                    "targets": [1],
+                    "type": "num-fmt"
+                },
+                {
+                    "targets": [2],
+                    "type": "num-fmt"
+                },
+                {
+                    "targets": [3],
+                    "type": "num-fmt"
+                },
+                {
+                    "targets": [4],
+                    "type": "num-fmt"
+                },
+                {
+                    "targets": [5],
+                    "type": "num-fmt"
+                },
+                {
+                    "targets": [6],
+                    "type": "num-fmt"
+                },
+                {
+                    "targets": [7],
+                    "type": "num-fmt"
+                },
+                {
+                    "targets": [8],
+                    "type": "num-fmt"
+                },
+                {
+                    "targets": [9],
+                    "type": "num-fmt"
+                },
+              ],
         dom: 'Bfrtip',
         buttons: [
             {

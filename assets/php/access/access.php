@@ -44,7 +44,7 @@ if ($name!='' && $ps!='') {
       document.cookie = cookie1;
       var cookie2 = "prove2" + "=" + encodeURIComponent(prove2) + ";expires=" + fechaExpiracion.toUTCString() + ";path=/";
       document.cookie = cookie2;
-      var cookie3 = "user" + "=" + encodeURIComponent(user) + ";expires=" + fechaExpiracion.toUTCString() + ";path=/";
+      var cookie3 = "codusu" + "=" + encodeURIComponent(user) + ";expires=" + fechaExpiracion.toUTCString() + ";path=/";
       document.cookie = cookie3;
       location.href ="http://172.16.15.20/Lovablehn.proveedores/";
      </script>
