@@ -99,6 +99,10 @@
                     "targets": [9],
                     "type": "num-fmt"
                 },
+                {
+                    "targets": [10],
+                    "type": "num-fmt"
+                },
               ],
         dom: 'Bfrtip',
         buttons: [

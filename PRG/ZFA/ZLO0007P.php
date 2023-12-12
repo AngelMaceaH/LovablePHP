@@ -84,7 +84,6 @@
           }elseif ($paisFiltro==7) {
             $cia=" AND CODCIA IN(81)";
           }
-         
         }
       }
      

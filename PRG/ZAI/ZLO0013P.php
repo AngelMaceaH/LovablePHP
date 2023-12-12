@@ -399,7 +399,7 @@
                 <div class="fixed-scrollbar">
                     <div class="table-container mt-3 " id="planeacionContainer">
                         <div id="planeacionLoader" class="d-none">
-                            <div class="position-absolute top-50 start-50 translate-middle">
+                            <div class="position-absolute top-0 start-50 translate-middle">
                                 <button class="btn btn-danger mt-5" type="button" disabled>
                                     <span class="spinner-border text-white" style="width: 1.5rem; height: 1.5rem;"
                                         aria-hidden="true"></span>
@@ -437,7 +437,7 @@
                                         <th class="text-black text-center bg-white">ESTILO</th>
                                         <th class="text-black text-center bg-white">COLOR</th>
                                         <th class="text-black text-center bg-white">TALLA</th>
-                                        <th class="text-black text-center bg-white">&nbsp; &nbsp; &nbsp; T/INV</th>
+                                        <th class="text-black text-center bg-white">&nbsp; T/INV</th>
                                         <th class="text-black text-center">DOC. VEN.<br>AÑO/ACT</th>
                                         <th class="text-black text-center">VAL. VEN.<br>AÑO/ACT</th>
                                         <th class="text-black text-center">PROM. MES</th>
@@ -659,7 +659,6 @@
                 a.onclick = function() {
                     toggleItem('item-' + columnasExcel[i]);
                 };
-
                 li.appendChild(a);
                 hiddenColumns.appendChild(li);
             }
@@ -707,9 +706,7 @@
                     $("#planeacionContainer").removeClass("loading");
                     $("#planeacionLoader").addClass("d-none");
                     $("#thProcessing").addClass('d-none');
-                    //console.log(xhr.responseJSON);
                     var registrosMismoEstilo = [];
-
                     var table = $('#myTablePlaneacion').DataTable();
                     table.rows().every(function(rowIdx, tableLoop, rowLoop) {
                         var data = this.data();
@@ -721,7 +718,6 @@
                             registrosMismoEstilo.push(data);
                         }
                     });
-
                     document.getElementById('myTablePlaneacion').addEventListener('dblclick',
                         function(event) {
                             document.getElementById('loaderTable').classList.remove('d-none');
@@ -824,10 +820,12 @@
                     data: "NUMMES",
                     className: "text-end",
                     render: function(data) {
-                        return data.toLocaleString('es-419', {
-                            minimumFractionDigits: 2,
-                            maximumFractionDigits: 2
-                        });
+                        return ((isNaN(parseFloat(data)) || parseFloat(data) == 0) ? '‎' :
+                            parseFloat(data).toLocaleString('es-419', {
+                                minimumFractionDigits: 0,
+                                maximumFractionDigits: 0
+                            }));
+                
                     },
                     orderable: false
                 },
@@ -1015,10 +1013,11 @@
                     data: "LEATIE",
                     className: "text-success text-end",
                     render: function(data) {
-                        return data.toLocaleString('es-419', {
-                            minimumFractionDigits: 2,
-                            maximumFractionDigits: 2
-                        });
+                        return ((isNaN(parseFloat(data)) || parseFloat(data) == 0) ? '‎' :
+                            parseFloat(data).toLocaleString('es-419', {
+                                minimumFractionDigits: 0,
+                                maximumFractionDigits: 0
+                            }));
                     }
                 },
 
@@ -1026,12 +1025,8 @@
                     data: "MESINV",
                     className: "text-darkblue text-end",
                     render: function(data) {
-                        return ((isNaN(parseFloat(data)) || parseFloat(data) == 0) ? (0)
-                            .toFixed(2) :
-                            parseFloat(data).toLocaleString('es-419', {
-                                minimumFractionDigits: 2,
-                                maximumFractionDigits: 2
-                            }));
+                        return ((isNaN(parseFloat(data)) || parseFloat(data) == 0) ? '‎' :
+                            parseFloat(data).toFixed(2));
                     }
                 },
                 {
@@ -1048,11 +1043,22 @@
                 },
                 {
                     data: "NUMME1",
-                    className: "text-end"
+                    className: "text-end",
+                    render: function(data) {
+                        return ((isNaN(parseFloat(data)) || parseFloat(data) == 0) ? '‎' :
+                            parseFloat(data).toLocaleString('es-419', {
+                                minimumFractionDigits: 0,
+                                maximumFractionDigits: 0
+                            }));
+                    }
                 },
                 {
                     data: "MESIN6",
-                    className: "text-darkblue text-end"
+                    className: "text-darkblue text-end",
+                    render: function(data) {
+                        return ((isNaN(parseFloat(data)) || parseFloat(data) == 0) ? '‎' :
+                            parseFloat(data).toFixed(2));
+                    }
                 },
                 {
                     data: "UPRM6A",
@@ -1068,7 +1074,14 @@
                 },
                 {
                     data: "NUMME6",
-                    className: "text-end"
+                    className: "text-end",
+                    render: function(data) {
+                        return ((isNaN(parseFloat(data)) || parseFloat(data) == 0) ? '‎' :
+                            parseFloat(data).toLocaleString('es-419', {
+                                minimumFractionDigits: 0,
+                                maximumFractionDigits: 0
+                            }));
+                    }
                 },
                 {
                     data: "UPRMAV",
@@ -1084,7 +1097,14 @@
                 },
                 {
                     data: "NUMMEV",
-                    className: "text-end"
+                    className: "text-end",
+                    render: function(data) {
+                        return ((isNaN(parseFloat(data)) || parseFloat(data) == 0) ? '‎' :
+                            parseFloat(data).toLocaleString('es-419', {
+                                minimumFractionDigits: 0,
+                                maximumFractionDigits: 0
+                            }));
+                    }
                 },
                 {
                     data: "DOCANT",
@@ -1465,6 +1485,7 @@
                         var sSh = xlsx.xl['styles.xml'];
                         var lastXfIndex = $('cellXfs xf', sSh).length - 1;
                         var lastFontIndex = $('fonts font', sSh).length - 1;
+                        var lastFillIndex = $('fills fill', sSh).length - 1;
                         var i;
                         var y;
                         var f1 = '<font>' +
@@ -1512,6 +1533,9 @@
                             '<name val="Calibri" />' +
                             '<color rgb="9F6CFF" />' + // color morada de la fuente
                             '</font>';
+                        var fillRosa = '<fill><patternFill patternType="solid"><fgColor rgb="FFFFE1F1"/></patternFill></fill>';
+                        var fillAmarillo = '<fill><patternFill patternType="solid"><fgColor rgb="FFFFFF99"/></patternFill></fill>';
+                        
                         var n1 = '<numFmt formatCode="##0%"   numFmtId="300"/>';
                         var n2 = '<numFmt formatCode="#,##0.00"   numFmtId="200" />';
                         var s1 =
@@ -1557,12 +1581,90 @@
                         var s15 = '<xf numFmtId="0" fontId="' + (lastFontIndex + 9) +
                             '" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">' +
                             '<alignment horizontal="right"/></xf>';
+
+                        //MISMAS FUENTES FONDO ROSA
+                        var s16 = '<xf  numFmtId="200" fontId="' + (lastFontIndex + 1) +
+                            '" fillId="' + (lastFillIndex + 1) + '" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">' +
+                            '<alignment horizontal="right"/></xf>';
+                        var s17 = '<xf  numFmtId="200" fontId="' + (lastFontIndex + 2) +
+                            '" fillId="' + (lastFillIndex + 1) + '" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">' +
+                            '<alignment horizontal="right"/></xf>';
+                        var s18 = '<xf  numFmtId="300" fontId="' + (lastFontIndex + 1) +
+                            '" fillId="' + (lastFillIndex + 1) + '" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">' +
+                            '<alignment horizontal="right"/></xf>';
+                        var s19 = '<xf  numFmtId="300" fontId="' + (lastFontIndex + 2) +
+                            '" fillId="' + (lastFillIndex + 1) + '" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">' +
+                            '<alignment horizontal="right"/></xf>';
+                        var s20 = '<xf numFmtId="0" fontId="' + (lastFontIndex + 3) +
+                            '" fillId="' + (lastFillIndex + 1) + '" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">' +
+                            '<alignment horizontal="right"/></xf>';
+                        var s21 = '<xf numFmtId="0" fontId="' + (lastFontIndex + 4) +
+                            '" fillId="' + (lastFillIndex + 1) + '" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">' +
+                            '<alignment horizontal="right"/></xf>';
+                        var s22 = '<xf numFmtId="0" fontId="' + (lastFontIndex + 5) +
+                            '" fillId="' + (lastFillIndex + 1) + '" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">' +
+                            '<alignment horizontal="right"/></xf>';
+                        var s23 = '<xf numFmtId="0" fontId="' + (lastFontIndex + 6) +
+                            '" fillId="' + (lastFillIndex + 1) + '" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">' +
+                            '<alignment horizontal="right"/></xf>';
+                        var s24 = '<xf numFmtId="0" fontId="' + (lastFontIndex + 7) +
+                            '" fillId="' + (lastFillIndex + 1) + '" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">' +
+                            '<alignment horizontal="right"/></xf>';
+                        var s25 = '<xf numFmtId="0" fontId="' + (lastFontIndex + 8) +
+                            '" fillId="' + (lastFillIndex + 1) + '" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">' +
+                            '<alignment horizontal="right"/></xf>';
+                        var s26 = '<xf numFmtId="0" fontId="' + (lastFontIndex + 9) +
+                            '" fillId="' + (lastFillIndex + 1) + '" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">' +
+                            '<alignment horizontal="right"/></xf>';
+                        //MISMAS FUENTES FONDO AMARILLO
+                        var s29 = '<xf  numFmtId="200" fontId="' + (lastFontIndex + 1) +
+                            '" fillId="' + (lastFillIndex + 2) + '" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">' +
+                            '<alignment horizontal="right"/></xf>';
+                        var s30 = '<xf  numFmtId="200" fontId="' + (lastFontIndex + 2) +
+                            '" fillId="' + (lastFillIndex + 2) + '" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">' +
+                            '<alignment horizontal="right"/></xf>';
+                        var s31 = '<xf  numFmtId="300" fontId="' + (lastFontIndex + 1) +
+                            '" fillId="' + (lastFillIndex + 2) + '" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">' +
+                            '<alignment horizontal="right"/></xf>';
+                        var s32 = '<xf  numFmtId="300" fontId="' + (lastFontIndex + 2) +
+                            '" fillId="' + (lastFillIndex + 2) + '" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">' +
+                            '<alignment horizontal="right"/></xf>';
+                        var s33 = '<xf numFmtId="0" fontId="' + (lastFontIndex + 3) +
+                            '" fillId="' + (lastFillIndex + 2) + '" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">' +
+                            '<alignment horizontal="right"/></xf>';
+                        var s34 = '<xf numFmtId="0" fontId="' + (lastFontIndex + 4) +
+                            '" fillId="' + (lastFillIndex + 2) + '" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">' +
+                            '<alignment horizontal="right"/></xf>';
+                        var s35 = '<xf numFmtId="0" fontId="' + (lastFontIndex + 5) +
+                            '" fillId="' + (lastFillIndex + 2) + '" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">' +
+                            '<alignment horizontal="right"/></xf>';
+                        var s36 = '<xf numFmtId="0" fontId="' + (lastFontIndex + 6) +
+                            '" fillId="' + (lastFillIndex + 2) + '" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">' +
+                            '<alignment horizontal="right"/></xf>';
+                        var s37 = '<xf numFmtId="0" fontId="' + (lastFontIndex + 7) +
+                            '" fillId="' + (lastFillIndex + 2) + '" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">' +
+                            '<alignment horizontal="right"/></xf>';
+                        var s38 = '<xf numFmtId="0" fontId="' + (lastFontIndex + 8) +
+                            '" fillId="' + (lastFillIndex + 2) + '" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">' +
+                            '<alignment horizontal="right"/></xf>';
+                        var s39 = '<xf numFmtId="0" fontId="' + (lastFontIndex + 9) +
+                            '" fillId="' + (lastFillIndex + 2) + '" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">' +
+                            '<alignment horizontal="right"/></xf>';
+
+                        var xfRosa = '<xf numFmtId="0" fontId="0" fillId="' + (lastFillIndex + 1) + '" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1"><alignment horizontal="right"/></xf>';
+                        var xfAmarillo = '<xf numFmtId="0" fontId="0" fillId="' + (lastFillIndex + 2) + '" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1"><alignment horizontal="right"/></xf>';
+
                         sSh.childNodes[0].childNodes[0].innerHTML += n1 + n2;
-                        sSh.childNodes[0].childNodes[1].innerHTML += f1 + f2 + f3 + f4 + f5 +
-                            f6 + f7 + f8 + f9;
+                        sSh.childNodes[0].childNodes[1].innerHTML += f1 + f2 + f3 + f4 + f5 +f6 + f7 + f8 + f9;
+                        sSh.childNodes[0].childNodes[2].innerHTML += fillRosa + fillAmarillo;
                         sSh.childNodes[0].childNodes[5].innerHTML += s1 + s2 + s3 + s4 + s5 +
                             s6 + s7 + s8 + s9 + s10 + s11 + s12 + s13 + s14 + s15;
-
+                        //AGREGANDO FONDO ROSA
+                        sSh.childNodes[0].childNodes[5].innerHTML += s16 + s17 + s18 + s19 + s20 +
+                            s21 + s22 + s23 + s24 + s25 + s26+ xfRosa;
+                        //AGREGANDO FONDO AMARILLO
+                        sSh.childNodes[0].childNodes[5].innerHTML += s29 + s30 + s31 + s32 + s33 +
+                            s34 + s35 + s36 + s37 + s38 + s39+ xfAmarillo ;
                         var fourDecPlaces = lastXfIndex + 1;
                         var greyBoldCentered = lastXfIndex + 2;
                         var twoDecPlacesBold = lastXfIndex + 3;
@@ -1578,6 +1680,34 @@
                         var textYellow = lastXfIndex + 13;
                         var textNaranja = lastXfIndex + 14;
                         var textpurple = lastXfIndex + 15;
+                        //MISMAS FUENTES FONDO ROSA
+                        var textred1Rosa = lastXfIndex + 16;
+                        var textgreen1Rosa = lastXfIndex + 17;
+                        var textred2Rosa = lastXfIndex + 18;
+                        var textgreen2Rosa = lastXfIndex + 19;
+                        var textCyanRosa = lastXfIndex + 20;
+                        var textBrownRosa = lastXfIndex + 21;
+                        var textDarkblueRosa = lastXfIndex + 22;
+                        var textDarkGreenRosa = lastXfIndex + 23;
+                        var textYellowRosa = lastXfIndex + 24;
+                        var textNaranjaRosa = lastXfIndex + 25;
+                        var textpurpleRosa = lastXfIndex + 26;
+                        var bgPink = lastXfIndex + 27;
+                         //MISMAS FUENTES FONDO AMARILLO
+                        var textred1Amarillo = lastXfIndex + 28;
+                        var textgreen1Amarillo = lastXfIndex + 29;
+                        var textred2Amarillo = lastXfIndex + 30;
+                        var textgreen2Amarillo = lastXfIndex + 31;
+                        var textCyanAmarillo = lastXfIndex + 32;
+                        var textBrownAmarillo = lastXfIndex + 33;
+                        var textDarkblueAmarillo = lastXfIndex + 34;
+                        var textDarkGreenAmarillo = lastXfIndex + 35;
+                        var textYellowAmarillo = lastXfIndex + 36;
+                        var textNaranjaAmarillo = lastXfIndex + 37;
+                        var textpurpleAmarillo = lastXfIndex + 38;
+                        var bgYellow = lastXfIndex + 39;
+
+
                         $('c[r=A1] t', sheet).text(
                             'REPORTE DE PLANEACION AGREGADA DE OPERACIONES Y VENTAS');
                         $('row:eq(0) c', sheet).attr('s', greyBoldCentered);
@@ -1587,40 +1717,80 @@
                             var row = $(this);
                             var cellA = $('c[r^="A"]', row);
                             var cellE = $('c[r^="E"]', row);
-
                             if (row.index() < 3) {
                                 return;
                             }
                             if (cellE.text().toString() == 'NULL') {
                                 row.remove();
                             }
-                            $('c[r^="F"], c[r^="H"], c[r^="AF"], c[r^="AH"]', row).attr(
-                                's', textCyan);
-                            $('c[r^="L"], c[r^="AA"], c[r^="AD"]', row).attr('s',
-                                textred1);
+                            /*$('c[r^="A"], c[r^="B"], c[r^="C"], c[r^="D"], c[r^="E"], c[r^="F"], c[r^="G"], c[r^="H"], c[r^="I"], c[r^="J"], c[r^="K"], c[r^="L"], c[r^="M"], c[r^="N"], c[r^="O"], c[r^="P"], c[r^="Q"], c[r^="R"], c[r^="S"], c[r^="T"], c[r^="U"], c[r^="V"], c[r^="W"], c[r^="X"], c[r^="Y"], c[r^="Z"], c[r^="AA"], c[r^="AB"], c[r^="AC"], c[r^="AD"], c[r^="AE"], c[r^="AF"], c[r^="AG"]', sheet).each(function() {
+                                var value = $(this).find('v').text();
+                                if (value == '0' || value == '&#160;'|| value == ' ' || value == ''|| value == '0.00') {
+                                    $(this).find('v').text(' ');
+                                }
+                            });*/
+                            $('c[r^="F"], c[r^="H"], c[r^="AF"], c[r^="AH"]', row).attr('s', textCyan);
+                            $('c[r^="L"], c[r^="AA"], c[r^="AD"]', row).attr('s', textred1);
                             $('c[r^="J"]', row).attr('s', textBrown);
                             $('c[r^="Y"]', row).attr('s', textgreen1);
-                            $('c[r^="K"], c[r^="M"], c[r^="N"], c[r^="Z"]', row).attr(
-                                's', textDarkblue);
+                            $('c[r^="K"], c[r^="M"], c[r^="N"], c[r^="Z"]', row).attr('s', textDarkblue);
                             $('c[r^="M"], c[r^="N"]', row).attr('s', textpurple);
                             $('c[r^="O"]', row).attr('s', textDarkGreen);
-                            $('c[r^="P"], c[r^="Q"], c[r^="V"]', row).attr('s',
-                                textYellow);
-                            $('c[r^="R"], c[r^="T"], c[r^="V"], c[r^="W"], c[r^="X"]',
-                                row).attr('s', textNaranja);
+                            $('c[r^="P"], c[r^="Q"], c[r^="V"]', row).attr('s',textYellow);
+                            $('c[r^="R"], c[r^="T"], c[r^="V"], c[r^="W"], c[r^="X"]',row).attr('s', textNaranja);
                             //TOTALES
-
                             if (cellE.text() === "TOTAL" || cellE.text() === "TOTALM") {
                                 $('c[r^="A"], c[r^="B"], c[r^="C"], c[r^="D"], c[r^="E"], c[r^="F"], c[r^="G"], c[r^="H"], c[r^="I"], c[r^="J"], c[r^="K"], c[r^="L"], c[r^="M"], c[r^="N"], c[r^="O"], c[r^="P"], c[r^="Q"], c[r^="R"], c[r^="S"], c[r^="T"], c[r^="U"], c[r^="V"], c[r^="W"], c[r^="X"], c[r^="Y"], c[r^="Z"], c[r^="AA"], c[r^="AB"], c[r^="AC"], c[r^="AD"], c[r^="AE"], c[r^="AF"], c[r^="AG"]',
                                     row).attr('s', 7);
                                 $('c[r^="A"], c[r^="B"], c[r^="C"], c[r^="D"], c[r^="E"]',
                                     row).text('s', ' ');
                             }
+                            if (cellE.text() === "L") {
+                                if (parseFloat($('c[r^="Z"]', row).text()) <= parseFloat($('c[r^="Y"]', row).text()) || 
+                                    parseFloat($('c[r^="AC"]', row).text()) <= parseFloat($('c[r^="Y"]', row).text())
+                                    || isNaN(parseFloat($('c[r^="AC"]', row).text())) || isNaN(parseFloat($('c[r^="Z"]', row).text()))) {
+                                        $('c[r^="F"], c[r^="H"], c[r^="AF"], c[r^="AH"]', row).attr('s', textCyanRosa);
+                                        $('c[r^="L"], c[r^="AA"], c[r^="AD"]', row).attr('s', textred1Rosa);
+                                        $('c[r^="J"]', row).attr('s', textBrownRosa);
+                                        $('c[r^="Y"]', row).attr('s', textgreen1Rosa);
+                                        $('c[r^="K"], c[r^="M"], c[r^="N"], c[r^="Z"]', row).attr('s', textDarkblueRosa);
+                                        $('c[r^="M"], c[r^="N"]', row).attr('s', textpurpleRosa);
+                                        $('c[r^="O"]', row).attr('s', textDarkGreenRosa);
+                                        $('c[r^="P"], c[r^="Q"], c[r^="V"]', row).attr('s',textYellowRosa);
+                                        $('c[r^="R"], c[r^="T"], c[r^="V"], c[r^="W"], c[r^="X"]',row).attr('s', textNaranjaRosa);
+                                        $('c[r^="A"], c[r^="B"], c[r^="C"], c[r^="D"], c[r^="E"], c[r^="G"], c[r^="I"], c[r^="S"], c[r^="U"], c[r^="AB"], c[r^="AC"], c[r^="AE"], c[r^="AG"], c[r^="AI"]',row).attr('s', bgPink);
+                                } else {
+                                    if (parseFloat($('c[r^="Z"]', row).text()) <= (parseFloat($('c[r^="Y"]', row).text()) + 1) ||
+                                        parseFloat($('c[r^="AC"]', row).text()) <= (parseFloat($('c[r^="Y"]', row).text()) + 1)) {
+                                        $('c[r^="Y"]', row).attr('s', textgreen1Amarillo);
+                                        $('c[r^="L"], c[r^="AA"], c[r^="AD"]', row).attr('s', textred1Amarillo);
+                                        $('c[r^="F"], c[r^="H"], c[r^="AF"], c[r^="AH"]', row).attr('s', textCyanAmarillo);
+                                        $('c[r^="J"]', row).attr('s', textBrownAmarillo);
+                                        $('c[r^="K"], c[r^="M"], c[r^="N"], c[r^="Z"]', row).attr('s', textDarkblueAmarillo);
+                                        $('c[r^="M"], c[r^="N"]', row).attr('s', textpurpleAmarillo);
+                                        $('c[r^="O"]', row).attr('s', textDarkGreenAmarillo);
+                                        $('c[r^="P"], c[r^="Q"], c[r^="V"]', row).attr('s',textYellowAmarillo);
+                                        $('c[r^="R"], c[r^="T"], c[r^="V"], c[r^="W"], c[r^="X"]',row).attr('s', textNaranjaAmarillo);
+                                        $('c[r^="A"], c[r^="B"], c[r^="C"], c[r^="D"], c[r^="E"], c[r^="G"], c[r^="I"], c[r^="S"], c[r^="U"], c[r^="AB"], c[r^="AC"], c[r^="AE"], c[r^="AG"], c[r^="AI"]',row).attr('s', bgYellow);
+                                        }
+                                }
+                            }
                         });
                         var tagName = sSh.getElementsByTagName('sz');
                         for (i = 0; i < tagName.length; i++) {
                             tagName[i].setAttribute("val", "13");
                         }
+                        var table = $('#myTablePlaneacion').DataTable(); 
+                        var col = $('col', sheet);
+                        table.columns().every(function(index) {
+                            var column = this;
+                            if (!column.visible()) {
+                                if (index < 36 && index > 0) {
+                                    $(col[index-1]).attr('width', 0);
+                                }
+                            }
+                        });
+                       
                     }
                 },
 
@@ -1702,7 +1872,6 @@
                     column.visible(!column.visible());
                     document.getElementById('loaderTable').classList.add('d-none');
                 }, 200);
-
             });
         });
         var toggleMarca = getCookie("marcasToggle");
@@ -1752,7 +1921,6 @@
 
         var urlResumen = "http://172.16.15.20/API.LovablePHP/ZLO0013P/ListResumen/?ano=" + anoActual + "&estilo=" +
             estilo + "";
-        console.log(urlResumen);
         var responseResumen = ajaxRequest(urlResumen);
         const tableResumenBody = $("#tableResumenBody");
         tableResumenBody.empty();
@@ -1897,7 +2065,6 @@
             "&clasificacion=" + clasificacion + "&orden=" + orden + "&filtro=" + filtro +
             "&repro=" + repro + "&formato=" + formato + "&searchVal=" + estilo + "&ano=" + numano + "";
         var responseDeta = ajaxRequest(urldeta);
-        console.log(urldeta);
         const myTableDetallesBody = $("#myTableDetallesBody");
         myTableDetallesBody.empty();
         var options = "";
