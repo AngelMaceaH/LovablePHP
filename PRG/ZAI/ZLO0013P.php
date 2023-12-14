@@ -1653,7 +1653,8 @@
 
                         var xfRosa = '<xf numFmtId="0" fontId="0" fillId="' + (lastFillIndex + 1) + '" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1"><alignment horizontal="right"/></xf>';
                         var xfAmarillo = '<xf numFmtId="0" fontId="0" fillId="' + (lastFillIndex + 2) + '" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1"><alignment horizontal="right"/></xf>';
-
+                        var xfRosaChar = '<xf numFmtId="0" fontId="0" fillId="' + (lastFillIndex + 1) + '" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1"><alignment horizontal="left"/></xf>';
+                        var xfAmarilloChar = '<xf numFmtId="0" fontId="0" fillId="' + (lastFillIndex + 2) + '" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1"><alignment horizontal="left"/></xf>';
                         sSh.childNodes[0].childNodes[0].innerHTML += n1 + n2;
                         sSh.childNodes[0].childNodes[1].innerHTML += f1 + f2 + f3 + f4 + f5 +f6 + f7 + f8 + f9;
                         sSh.childNodes[0].childNodes[2].innerHTML += fillRosa + fillAmarillo;
@@ -1665,6 +1666,8 @@
                         //AGREGANDO FONDO AMARILLO
                         sSh.childNodes[0].childNodes[5].innerHTML += s29 + s30 + s31 + s32 + s33 +
                             s34 + s35 + s36 + s37 + s38 + s39+ xfAmarillo ;
+                        //AGREGANDO FONDO ROSA A CARACTERES
+                        sSh.childNodes[0].childNodes[5].innerHTML += xfRosaChar + xfAmarilloChar;
                         var fourDecPlaces = lastXfIndex + 1;
                         var greyBoldCentered = lastXfIndex + 2;
                         var twoDecPlacesBold = lastXfIndex + 3;
@@ -1707,6 +1710,8 @@
                         var textpurpleAmarillo = lastXfIndex + 38;
                         var bgYellow = lastXfIndex + 39;
 
+                        var bgPinkChar= lastXfIndex + 40;
+                        var bgYellowChar= lastXfIndex + 41;
 
                         $('c[r=A1] t', sheet).text(
                             'REPORTE DE PLANEACION AGREGADA DE OPERACIONES Y VENTAS');
@@ -1758,8 +1763,9 @@
                                         $('c[r^="O"]', row).attr('s', textDarkGreenRosa);
                                         $('c[r^="P"], c[r^="Q"], c[r^="V"]', row).attr('s',textYellowRosa);
                                         $('c[r^="R"], c[r^="T"], c[r^="V"], c[r^="W"], c[r^="X"]',row).attr('s', textNaranjaRosa);
-                                        $('c[r^="A"], c[r^="B"], c[r^="C"], c[r^="D"], c[r^="E"], c[r^="G"], c[r^="I"], c[r^="S"], c[r^="U"], c[r^="AB"], c[r^="AC"], c[r^="AE"], c[r^="AG"], c[r^="AI"]',row).attr('s', bgPink);
-                                } else {
+                                        $('c[r^="A"], c[r^="B"], c[r^="E"], c[r^="G"], c[r^="I"], c[r^="S"], c[r^="U"], c[r^="AB"], c[r^="AC"], c[r^="AE"], c[r^="AG"], c[r^="AI"]',row).attr('s', bgPink);
+                                        $('c[r^="C"], c[r^="D"]', row).attr('s', bgPinkChar);
+                                    } else {
                                     if (parseFloat($('c[r^="Z"]', row).text()) <= (parseFloat($('c[r^="Y"]', row).text()) + 1) ||
                                         parseFloat($('c[r^="AC"]', row).text()) <= (parseFloat($('c[r^="Y"]', row).text()) + 1)) {
                                         $('c[r^="Y"]', row).attr('s', textgreen1Amarillo);
@@ -1771,8 +1777,9 @@
                                         $('c[r^="O"]', row).attr('s', textDarkGreenAmarillo);
                                         $('c[r^="P"], c[r^="Q"], c[r^="V"]', row).attr('s',textYellowAmarillo);
                                         $('c[r^="R"], c[r^="T"], c[r^="V"], c[r^="W"], c[r^="X"]',row).attr('s', textNaranjaAmarillo);
-                                        $('c[r^="A"], c[r^="B"], c[r^="C"], c[r^="D"], c[r^="E"], c[r^="G"], c[r^="I"], c[r^="S"], c[r^="U"], c[r^="AB"], c[r^="AC"], c[r^="AE"], c[r^="AG"], c[r^="AI"]',row).attr('s', bgYellow);
-                                        }
+                                        $('c[r^="A"], c[r^="B"], c[r^="E"], c[r^="G"], c[r^="I"], c[r^="S"], c[r^="U"], c[r^="AB"], c[r^="AC"], c[r^="AE"], c[r^="AG"], c[r^="AI"]',row).attr('s', bgYellow);
+                                        $('c[r^="C"], c[r^="D"]', row).attr('s', bgYellowChar);    
+                                    }          
                                 }
                             }
                         });
