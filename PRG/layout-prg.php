@@ -136,8 +136,6 @@
     }else{
         header('Location: /' . $_SESSION['DEV'] . 'LovablePHP/login.php');
     }
-
-   
    }else {
     header('Location: /' . $_SESSION['DEV'] . 'LovablePHP/login.php');
    }
@@ -156,25 +154,34 @@
         }, 1000);
         var usuario = '<?php echo $_SESSION['CODUSU']; ?>';
         var isDev = '<?php echo $_SESSION['DEV']; ?>';
+        if (usuario=='MARVIN') {
+            $("#dropdown-admin").append(`<div class="dropdown-menu dropdown-menu-end pt-0" style="position: absolute; inset: 0px 0px auto auto; margin: 0px; transform: translate(0px, 42px);" data-popper-placement="bottom-end">
+                                                <div class="dropdown-header bg-light py-2">
+                                                <div class="fw-semibold">Opciones de administrador</div></div>
+                                                <a class="dropdown-item p-2" href="/<?php echo $_SESSION['DEV'] ?>LovablePHP/PRG/Admin/Usuarios.php"><i class="fa-solid fa-user me-2"></i>Usuarios</a>
+                                                <a class="dropdown-item p-2" href="/<?php echo $_SESSION['DEV'] ?>LovablePHP/PRG/Admin/Opciones.php"><i class="fa-solid fa-bars me-2"></i>Menú</a>`);
+            
+        }
         //MODULOS
-        var urlModulos = 'http://172.16.15.20/API.LovablePHP/Access/LayoutM/?user=' + usuario + '';
+        var urlModulos = 'http://172.16.15.20/API.LovablePHP/Opc/LayoutM/?code=' + usuario + '';
         var responseModulos = ajaxRequest(urlModulos);
         if (responseModulos.code == 200) {
             for (let i = 0; i < responseModulos.data.length; i++) {
                 $("#menu-display").append(
-                    `<li class="nav-group  me-2 ms-2 mt-1"><a class="nav-link nav-group-toggle" style="word-wrap: break-word; white-space: normal;" href="#">` +
-                    responseModulos.data[i]['APLDES'] + `</a>
-                                          <ul class="nav-group-items">
-                                            <div id="` + responseModulos.data[i]['DETC91'] + `">
-                                          </div>
-                                        </ul>
-                                      </li>`);
+                    `<li class="nav-group  me-2 ms-2 mt-1"><a class="nav-link nav-group-toggle"
+                            style="font-size:13px; word-wrap: break-word; white-space: normal;" href="#"><i class="fa-solid fa-folder me-2 ms-2"></i> `+
+                            responseModulos.data[i]['APLDES'] + `</a>
+                        <ul class="nav-group-items">
+                            <div id="` + responseModulos.data[i]['DETC91'] + `">
+                            </div>
+                        </ul>
+                    </li>`);
             }
         }
         //SUBMODULOS
-        var urlSubModulosCount = 'http://172.16.15.20/API.LovablePHP/Access/LayoutSCount/?user=' + usuario + '';
+        var urlSubModulosCount = 'http://172.16.15.20/API.LovablePHP/Opc/LayoutSCount/?code=' + usuario + '';
         var responseSMCount = ajaxRequest(urlSubModulosCount);
-        var urlSubModulos = 'http://172.16.15.20/API.LovablePHP/Access/LayoutS/';
+        var urlSubModulos = 'http://172.16.15.20/API.LovablePHP/Opc/LayoutS/';
         var responseSM = ajaxRequest(urlSubModulos);
         if (responseSM.code == 200 && responseSMCount.code == 200) {
             for (let i = 0; i < responseSM.data.length; i++) {
@@ -182,9 +189,9 @@
                     if (responseSM.data[i]['CATSE1'] == responseSMCount.data[j]['CATSEC']) {
                         $("#" + responseSMCount.data[j]['DETC91'] + "").append(
                             `<li class="nav-group" aria-expanded="false">
-                                      <a class="nav-link nav-group-toggle" style="word-wrap: break-word; white-space: normal;" href="#">` + responseSM.data[i][
+                                      <a class="nav-link nav-group-toggle" style="font-size:13px; word-wrap: break-word; white-space: normal;" href="#"><i class="fa-solid fa-folder me-2 ms-2"></i> ` + responseSM.data[i][
                                 'CATDES'
-                            ] + `</a>
+                            ].toUpperCase() + `</a>
                                           <ul class="nav-group-items ">
                                             <div id="` + responseSMCount.data[j]['DETC91'] + "-" + responseSM.data[i][
                                 'CATSE1'
@@ -200,7 +207,7 @@
         }
 
         //PROGRAMAS
-        var urlProgramas = 'http://172.16.15.20/API.LovablePHP/Access/LayoutP2/?user=' + usuario + '';
+        var urlProgramas = 'http://172.16.15.20/API.LovablePHP/Opc/LayoutP/?code=' + usuario + '';
         var responsePRG = ajaxRequest(urlProgramas);
         if (responsePRG.code == 200) {
             function descripcionPrograma(row) {
@@ -217,15 +224,42 @@
             }
             for (let i = 0; i < responsePRG.data.length; i++) {
                 $("#" + responsePRG.data[i]['DETC91'] + "-" + responsePRG.data[i]['CATSEC'] + "").append(
-                    `<li class="nav-item"><a class="nav-link" style="word-wrap: break-word; white-space: normal;" href="/` + isDev + `LovablePHP/PRG/` + responsePRG.data[i][
-                        'DETC91'
-                    ] + `/` + responsePRG.data[i]['CATNOM'] + `.php">
-                                                                    <span class="nav-icon"></span>` +
-                    descripcionPrograma(responsePRG.data[i]['CATDE1']) + `
-                                                                    </a>
-                                                                </li>`);
+                    `<li class="nav-item">
+                      <a class="nav-link" style="font-size:13px; word-wrap: break-word; white-space: normal;" href="/` + isDev + `LovablePHP/PRG/` + responsePRG.data[i]['DETC91'] + `/` + responsePRG.data[i]['CATNOM'] + `.php">
+                       <span class="nav-icon"></span><i class="fa-solid fa-circle me-2 ms-2" style="font-size:8px;"></i>` +
+                    descripcionPrograma(responsePRG.data[i]['CATDE1']).toUpperCase() + ` </a> </li>`);
             }
         }
+
+        document.querySelectorAll('.nav-group').forEach(function(navGroup) {
+            setTimeout(() => {
+                if(navGroup.classList.contains('show')){
+                    var icon = navGroup.querySelector('.fa-folder, .fa-folder-open');
+                    if (icon.classList.contains('fa-folder')) {
+                                icon.classList.remove('fa-folder');
+                                icon.classList.add('fa-folder-open');
+                    } else {
+                                icon.classList.remove('fa-folder-open');
+                                icon.classList.add('fa-folder');
+                    }
+                }       
+            }, 2000);
+            navGroup.addEventListener('click', function() {
+                setTimeout(() => {
+                    document.querySelectorAll('.nav-group').forEach(function(navGroup) {
+                        var icon = navGroup.querySelector('.fa-folder, .fa-folder-open');
+                        icon.classList.remove('fa-folder-open');
+                        icon.classList.add('fa-folder');
+                    });
+                }, 10);
+                setTimeout(() => {
+                var icon = this.querySelector('.fa-folder, .fa-folder-open');
+                    icon.classList.remove('fa-folder');
+                    icon.classList.add('fa-folder-open');
+                }, 100);
+            });
+        });
+
         var anoing = "<?php echo isset($_SESSION['ANOING'])? $_SESSION['ANOING']: ''; ?>";
         var numemp = "<?php echo isset($_SESSION['NUMEMP'])? $_SESSION['NUMEMP']: ''; ?>";
         var getArea="http://172.16.15.20/API.LovablePHP/ZLO0016P/FindArea/?anoing="+anoing+"&numemp="+numemp+"";
@@ -309,8 +343,15 @@
                             <div class="mt-2 me-4 d-flex justify-content-end" style="width: 100%;">
                                 <div class="row me-3">
                                     <div class="col-12">
-                                        <span class="text-end"
-                                            style="font-size: 15px;">Usuario: <?php echo isset($_SESSION["NOMUSU"]) ? $_SESSION["NOMUSU"] : ""; ?></span>&nbsp;&nbsp;
+                                    <ul class="header-nav ms-3">
+                                        <li class="nav-item dropdown">
+                                          <a class="nav-link py-0" data-coreui-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="true">
+                                            <span class="text-end" style="font-size: 15px;">Usuario: <?php echo isset($_SESSION["NOMUSU"]) ? $_SESSION["NOMUSU"] : ""; ?></span>&nbsp;&nbsp;</a>
+                                            <div id="dropdown-admin">
+                                               
+                                            </div>
+                                        </li>
+                                      </ul> 
                                     </div>
                                     <div id="hasNumber">
                                     </div>
