@@ -197,7 +197,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-12 col-lg-4 ">
+                                <div class="col-12 col-lg-6 ">
                                     <label class="mb-2 mt-2">Formato de reportes:</label>
                                     <div class='selectBox mt-1 mb-3 mb-lg-0'>
                                         <span class='selected d-flex justify-content-between'></span>
@@ -206,15 +206,14 @@
                                                 value="0">Todos</span>
                                             <span class="selectOption d-flex justify-content-between" value="10"
                                                 data-bs-toggle="tooltip" data-bs-placement="right"
-                                                data-bs-title="No contiene: <br>-Marcas: 450,960,970,995<br>-Totales por estilo<br>-Estilos fuera de programa<br>-Estilos nuevos en programa<br>-MESES PRG 12M<br>Solamente desde 0 hasta 12 meses">Análisis
-                                                de compras </span>
+                                                data-bs-title="No contiene: <br>-Marcas: 450,960,970,995<br>-Totales por estilo<br>-Estilos fuera de programa<br>-Estilos nuevos en programa<br>-MESES PRG 12M<br>Solamente desde 0 hasta 12 meses">Análisis de compras </span>
                                             <span class="selectOption d-flex justify-content-between"
                                                 value="20">Análisis de inventario </span>
                                         </div>
                                         <input type="text" class="d-none" id="cbbFormato" name="cbbFormato" value="0">
                                     </div>
                                 </div>
-                                <div class="col-12 col-lg-4 ">
+                                <div class="col-12 col-lg-6 ">
                                     <label class="mb-2 mt-2">Planeación Agregada:</label>
                                     <select class="form-select  mt-1 mb-3 mb-lg-0" id="cbbPlan" name="cbbPlan">
                                         <option value="1">Plan 30 días</option>
@@ -223,7 +222,7 @@
                                         <option value="4" selected>Todos</option>
                                     </select>
                                 </div>
-                                <div class="col-12 col-lg-4">
+                                <div class="col-12 col-lg-4 d-none">
                                     <div class="row">
                                         <div class="col-9">
                                             <label class="mb-2 mt-2">Análisis estadístico</label>
@@ -437,19 +436,19 @@
                                         <th class="text-black text-center bg-white">ESTILO</th>
                                         <th class="text-black text-center bg-white">COLOR</th>
                                         <th class="text-black text-center bg-white">TALLA</th>
-                                        <th class="text-black text-center bg-white">&nbsp; T/INV</th>
-                                        <th class="text-black text-center">DOC. VEN.<br>AÑO/ACT</th>
-                                        <th class="text-black text-center">VAL. VEN.<br>AÑO/ACT</th>
+                                        <th class="text-black text-center bg-white">T/INV</th>
+                                        <th class="text-black text-center">DOC. VEN. <br>AÑO/ACT</th>
+                                        <th class="text-black text-center">VAL. VEN. <br>AÑO/ACT</th>
                                         <th class="text-black text-center">PROM. MES</th>
-                                        <th class="text-black text-center">#<br>MESES</th>
-                                        <th class="text-black text-center">UND VTAS.<br>MES/ANT</th>
-                                        <th class="text-black text-center">PERDIDA.<br>VTAS</th>
-                                        <th class="text-black text-center">PROM.<br>PERDIDA VTAS</th>
-                                        <th class="text-black text-center">APARTADO<br>VENDIDO</th>
-                                        <th class="text-black text-center">APARTADO<br>VENTA X CATALOGO</th>
-                                        <th class="text-black text-center">INVENTARIO<br>DISPONBLE</th>
-                                        <th class="text-black text-center">INVENTARIO<br>PROCESO</th>
-                                        <th class="text-black text-center">INVENTARIO<br>CORTADO</th>
+                                        <th class="text-black text-center"># <br>MESES</th>
+                                        <th class="text-black text-center">UND VTAS. <br>MES/ANT</th>
+                                        <th class="text-black text-center">PERDIDA. <br>VTAS</th>
+                                        <th class="text-black text-center">PROM. <br>PERDIDA VTAS</th>
+                                        <th class="text-black text-center">APARTADO <br>VENDEDOR</th>
+                                        <th class="text-black text-center">APARTADO <br>VENTA X CATALOGO</th>
+                                        <th class="text-black text-center">INVENTARIO <br>DISPONBLE</th>
+                                        <th class="text-black text-center">INVENTARIO <br>PROCESO</th>
+                                        <th class="text-black text-center">INVENTARIO <br>CORTADO</th>
                                         <th class="text-black text-center">CORTE</th>
                                         <th class="text-black text-center">MESES INV ANTES MTP</th>
                                         <th class="text-black text-center">INV. MTP</th>
@@ -458,21 +457,21 @@
                                         <th class="text-black text-center">PROGRAMA 1</th>
                                         <th class="text-black text-center">PROGRAMA 2</th>
                                         <th class="text-black text-center">LEAD TIME</th>
-                                        <th class="text-black text-center">MESES<br>PRG 12M</th>
-                                        <th class="text-black text-center">PROM.MEN.<br>12M</th>
-                                        <th class="text-black text-center">#<br>MESES 12M</th>
-                                        <th class="text-black text-center">MESES<br>INV. 6M</th>
-                                        <th class="text-black text-center">PROM.<br>MEN. 6M</th>
-                                        <th class="text-black text-center">#<br>MESES 6M</th>
-                                        <th class="text-black text-center">PROM X MES<br>AÑO/ANT</th>
-                                        <th class="text-black text-center">#<br>MESES AÑO/ANT</th>
-                                        <th class="text-black text-center">DOC. VEND.<br>AÑO/ANT.</th>
-                                        <th class="text-black text-center">VALOR VENDIDO<br>AÑO/ANT</th>
+                                        <th class="text-black text-center">MESES <br>PRG 12M</th>
+                                        <th class="text-black text-center">PROM.MEN. <br>12M</th>
+                                        <th class="text-black text-center"># <br>MESES 12M</th>
+                                        <th class="text-black text-center">MESES <br>INV. 6M</th>
+                                        <th class="text-black text-center">PROM. <br>MEN. 6M</th>
+                                        <th class="text-black text-center"># <br>MESES 6M</th>
+                                        <th class="text-black text-center">PROM X MES <br>AÑO/ANT</th>
+                                        <th class="text-black text-center"># <br>MESES AÑO/ANT</th>
+                                        <th class="text-black text-center">DOC. VEND. <br>AÑO/ANT.</th>
+                                        <th class="text-black text-center">VALOR VENDIDO <br>AÑO/ANT</th>
                                         <th class="text-black text-center">IMPORTADO</th>
-                                        <th class="text-black text-center">DOC.<br>TOTALES</th>
+                                        <th class="text-black text-center">DOC. <br>TOTALES</th>
                                         <th class="text-black text-center">NUEVO INV.</th>
-                                        <th class="text-black text-center">NUEVO<br>BALANCE</th>
-                                        <th class="text-black text-center">MAT. PRIMA<br>EN ALMACEN</th>
+                                        <th class="text-black text-center">NUEVO <br>BALANCE</th>
+                                        <th class="text-black text-center">MAT. PRIMA <br>EN ALMACEN</th>
                                     </tr>
                                 </thead>
                                 <tbody id="myTablePlaneacionBody" style="font-size: 12px;">
@@ -552,7 +551,27 @@
     var btnOrder = '<?php echo $btnOrder; ?>';
     var formato = '<?php echo $formato; ?>';
     var searchBox = "";
+    var visibleColumn = true;
+    var visibleColumn2 = true;
+    var columnasExcel=[];
+    var columnsFixed=0;
+    var columnsNoVisible=[];
+    const columnDataValues = ["ROWNUM", "MARCA", "ESTILO", "COLOR", "TALLA", "TIPINV", "UNIVAA", "VALVAA", "UPRMAC", "NUMMES", "DOCVAL", "UVENRE", "UVNRPR", "INVAPA", "APAVXC", "INVPTE", "INVPRO", "INVPR1", "INVCOR", "WUNIINV2", "INVMTP", "WUNIINV", "INVPGR", "INVPG1", "INVPG2", "LEATIE", "MESINV", "UPRM1A", "NUMME1", "MESIN6", "UPRM6A", "NUMME6", "UPRMAV", "NUMMEV", "DOCANT", "VALANT", "IMPORT", "DOZTOT", "NUEINV", "BALANCE", "MATPRIMA"];
+    var columnsConfig=[];
+    const encabezados = ["N.", "MARCA", "ESTILO", "COLOR", "TALLA", "T/INV", "DOC. VEN. AÑO/ACT",
+            "VAL. VEN. AÑO/ACT", "PROM. MES", "# MESES", "UND VTAS. MES/ANT", "PERDIDA. VTAS",
+            "PROM. PERDIDA VTAS", "APARTADO VENDEDOR", "APARTADO VENTA X CATALOGO", "INVENTARIO DISPONBLE",
+            "INVENTARIO PROCESO", "INVENTARIO CORTADO", "CORTE", "MESES INV ANTES MTP", "INV. MTP",
+            "MESES INV", "PROGRAMA", "PROGRAMA 1", "PROGRAMA 2", "LEAD TIME", "MESES PRG 12M",
+            "PROM.MEN. 12M", "# MESES 12M", "MESES INV. 6M", "PROM. MEN. 6M", "# MESES 6M",
+            "PROM X MES AÑO/ANT", "# MESES AÑO/ANT", "DOC. VEND. AÑO/ANT.", "VALOR VENDIDO AÑO/ANT",
+            "IMPORTADO", "DOC. TOTALES", "NUEVO INV.", "NUEVO BALANCE", "MAT. PRIMA EN ALMACEN"
+        ];
     document.addEventListener('DOMContentLoaded', function() {
+        var columnsNoV=getCookie("columnsVisible");
+        if(columnsNoV){
+            columnsNoVisible=columnsNoV.split(',');
+        }
         var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
         var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
             return new bootstrap.Tooltip(tooltipTriggerEl, {
@@ -631,24 +650,26 @@
         document.getElementById("cbbPlan").value = plan;
         document.getElementById("cbbFormato").value = formato;
         document.getElementById("cbbEstad").value = estado;
-
-        var columnasExcel;
-        const encabezados = ["N.", "MARCA", "ESTILO", "COLOR", "TALLA", "T/INV", "DOC. VEN. AÑO/ACT",
-            "VAL. VEN. AÑO/ACT", "PROM. MES", "# MESES", "UND VTAS. MES/ANT", "PERDIDA. VTAS",
-            "PROM. PERDIDA VTAS", "APARTADO VENDIDO", "APARTADO VENTA X CATALOGO", "INVENTARIO DISPONBLE",
-            "INVENTARIO PROCESO", "INVENTARIO CORTADO", "CORTE", "MESES INV ANTES MTP", "INV. MTP",
-            "MESES INV", "PROGRAMA", "PROGRAMA 1", "PROGRAMA 2", "LEAD TIME", "MESES PRG 12M",
-            "PROM.MEN. 12M", "# MESES 12M", "MESES INV. 6M", "PROM. MEN. 6M", "# MESES 6M",
-            "PROM X MES AÑO/ANT", "# MESES AÑO/ANT", "DOC. VEND. AÑO/ANT.", "VALOR VENDIDO AÑO/ANT",
-            "IMPORTADO", "DOC. TOTALES", "NUEVO INV.", "NUEVO BALANCE", "MAT. PRIMA EN ALMACEN"
-        ];
+        
         if (formato == 0) {
-            var columnasExcel = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22,
+             columnasExcel = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22,
                 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35
             ];
-            var hiddenColumns = document.getElementById('hiddenColumns');
-
-            for (let i = 0; i < columnasExcel.length; i++) {
+            var visibleColumn = true;
+            var visibleColumn2 = false;
+        } else if (formato == 10) {
+             columnasExcel = [1, 2, 3, 4, 5, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28,29, 30, 31, 32, 33, 34, 35];
+            var visibleColumn = false;
+            var visibleColumn2 = false;
+        } else if (formato == 20) {
+             columnasExcel = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22,
+                23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40
+            ];
+            var visibleColumn = true;
+            var visibleColumn2 = true;
+        }
+        var hiddenColumns = document.getElementById('hiddenColumns');
+            for (let i = 5; i < columnasExcel.length; i++) {
                 var li = document.createElement('li');
                 var a = document.createElement('a');
                 a.className = 'toggle-vis dropdown-item';
@@ -662,38 +683,235 @@
                 li.appendChild(a);
                 hiddenColumns.appendChild(li);
             }
-            var visibleColumn = true;
-            var visibleColumn2 = false;
-        } else if (formato == 10) {
-            var columnasExcel = [1, 2, 3, 4, 5, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28];
-            var visibleColumn = false;
-            var visibleColumn2 = false;
-        } else if (formato == 20) {
-            var columnasExcel = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22,
-                23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40
-            ];
-            var visibleColumn = true;
-            var visibleColumn2 = true;
-        }
-
-        console.log("http://172.16.15.20/API.LovablePHP/ZLO0013P/List/?marca=" + marca + "&plan=" + plan +
-            "&estado=" + estado + "&btnor=" + btnOrder + "&inventarios=" + inventarios + "&clasificacion=" +
-            clasificacion + "&orden=" + orden + "&filtro=" + filtro + "&repro=" + repro + "&formato=" +
-            formato + "&searchVal=" + searchBox + "");
+        console.log("http://172.16.15.20/API.LovablePHP/ZLO0013P/List2/?marca=" + marca + "&plan=" + plan + "&estado=" + estado + "&btnor=" + btnOrder + "&inventarios=" + inventarios + "&clasificacion=" + clasificacion + "&orden=" + orden + "&filtro=" + filtro + "&repro=" + repro + "&formato=" + formato + "&searchVal=" + searchBox + "");
         var requestError = false;
-        var table = $('#myTablePlaneacion').DataTable({
+        columnsFixed=5;
+        for (let i = 0; i < columnDataValues.length; i++) {
+            switch (columnDataValues[i]) {
+                case "ROWNUM":
+                    columnsConfig.push({data: columnDataValues[i], className: "bg-white text-transparent", orderable: false});
+                    break;
+                case "MARCA":
+                case "ESTILO":
+                    columnsConfig.push({data: columnDataValues[i], className:  "text-start bg-white", orderable: false});
+                    break;
+                case "TIPINV":
+                    columnsConfig.push({data: columnDataValues[i], className:  "text-center bg-white", orderable: false});
+                    break;
+                case "COLOR":
+                case "TALLA":
+                    columnsConfig.push({data: columnDataValues[i], className:  "text-end bg-white", orderable: false});
+                    break;
+                case "WUNIINV2":
+                case "WUNIINV":
+                case "VALANT":
+                        //SIN COLOR
+                    columnsConfig.push({data: columnDataValues[i],type: "num-fmt", className: "text-end", render: function(data) { return ((isNaN(parseFloat(data)) || parseFloat(data) == 0) ? (0).toFixed(2) : parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 })); }}); 
+                    break;
+                case "NUMME1":
+                case "NUMME6":
+                case "NUMMEV":
+                        //SIN COLOR
+                    columnsConfig.push({data: columnDataValues[i],type: "num-fmt", className: "text-end", orderable: false, render: function(data) { return ((isNaN(parseFloat(data)) || parseFloat(data) == 0) ? '‎' : parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 0, maximumFractionDigits: 0 })); }}); 
+                    break;
+                case "UPRMAV":
+                case "DOCANT":
+                        //COLOR CYAN
+                    columnsConfig.push({data: columnDataValues[i],type: "num-fmt", className: "text-info text-end", render: function(data) { return ((isNaN(parseFloat(data)) || parseFloat(data) == 0) ? (0).toFixed(2) : parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 })); }}); 
+                    break;
+                case "UPRMAV":
+                case "DOCANT":
+                        //COLOR CYAN
+                    columnsConfig.push({data: columnDataValues[i],type: "num-fmt", className: "text-info text-end", render: function(data) { return ((isNaN(parseFloat(data)) || parseFloat(data) == 0) ? (0).toFixed(2) : parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 })); }}); 
+                    break;
+                case "MESINV":
+                case "MESIN6":
+                        //COLOR AZUL OSCURO
+                    columnsConfig.push({data: columnDataValues[i],type: "num-fmt", className: "text-darkblue text-end", render: function(data) { return ((isNaN(parseFloat(data)) || parseFloat(data) == 0) ? (0).toFixed(2) : parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 })); }}); 
+                    break;
+                case "UPRM1A":
+                case "UPRM6A":
+                        //COLOR ROJO
+                    columnsConfig.push({data: columnDataValues[i],type: "num-fmt", className: "text-danger text-end", render: function(data) { return ((isNaN(parseFloat(data)) || parseFloat(data) == 0) ? (0).toFixed(2) : parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 })); }}); 
+                    break;
+                case "APAVXC":
+                        //COLOR MORADO
+                    columnsConfig.push({data: columnDataValues[i],type: "num-fmt", className: "text-violet text-end", render: function(data) { return ((isNaN(parseFloat(data)) || parseFloat(data) == 0) ? (0).toFixed(2) : parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 })); }}); 
+                    break;
+                case "INVPTE":
+                    columnsConfig.push({data: columnDataValues[i],type: "num-fmt", className: "text-success text-end", render: function(data) { return ((isNaN(parseFloat(data)) || parseFloat(data) == 0) ? (0).toFixed(2) : parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 })); }}); 
+                    break;
+                case "LEATIE":
+                        //COLOR VERDE
+                    columnsConfig.push({data: columnDataValues[i],type: "num-fmt", className: "text-success text-end", render: function(data) { return ((isNaN(parseFloat(data)) || parseFloat(data) == 0) ? (0).toFixed(2) : parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 0, maximumFractionDigits: 0 })); }}); 
+                break;
+                case "INVPRO":
+                case "INVPR1":
+                        //COLOR VERDE CLARO
+                    columnsConfig.push({data: columnDataValues[i],type: "num-fmt", className: "text-violet text-end", render: function(data) { return ((isNaN(parseFloat(data)) || parseFloat(data) == 0) ? (0).toFixed(2) : parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 })); }}); 
+                    break;
+                case "INVCOR":
+                case "INVMTP":
+                case "INVPGR":
+                case "INVPG1":
+                case "INVPG2":
+                        //COLOR NARANJA
+                    columnsConfig.push({data: columnDataValues[i],type: "num-fmt", className: "text-orange text-end", render: function(data) { return ((isNaN(parseFloat(data)) || parseFloat(data) == 0) ? (0).toFixed(2) : parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 })); }}); 
+                    break;
+                //VISIBLE COLUMN 1:
+                case "UNIVAA":
+                case "UPRMAC":
+                    columnsConfig.push({data: columnDataValues[i],type: "num-fmt", visible: visibleColumn, className: "text-info text-end", render: function(data) { return ((isNaN(parseFloat(data)) || parseFloat(data) == 0) ? (0).toFixed(2) : parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 })); }}); 
+                break;
+                case "VALVAA":
+                    columnsConfig.push({data: columnDataValues[i],type: "num-fmt", visible: visibleColumn, className: "text-end", render: function(data) { return ((isNaN(parseFloat(data)) || parseFloat(data) == 0) ? (0).toFixed(2) : parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 })); }}); 
+                    break;
+                case "NUMMES":
+                    columnsConfig.push({data: columnDataValues[i],type: "num-fmt", orderable: false, visible: visibleColumn, className: "text-end", render: function(data) { return ((isNaN(parseFloat(data)) || parseFloat(data) == 0) ? '‎' : parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 0, maximumFractionDigits: 0 })); }});
+                    break;
+                case "DOCVAL":
+                    columnsConfig.push({data: columnDataValues[i],type: "num-fmt", visible: visibleColumn,className: "text-brown text-end", render: function(data) { return ((isNaN(parseFloat(data)) || parseFloat(data) == 0) ? (0).toFixed(2) : parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 })); }}); 
+                    break;
+                case "INVAPA":
+                    columnsConfig.push({data: columnDataValues[i],type: "num-fmt", visible: visibleColumn, className: "text-violet text-end", render: function(data) { return ((isNaN(parseFloat(data)) || parseFloat(data) == 0) ? (0).toFixed(2) : parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 })); }}); 
+                    break;
+                case "UVENRE":
+                    columnsConfig.push({data: columnDataValues[i],type: "num-fmt", visible: visibleColumn, className: "text-darkblue text-end", render: function(data) { return ((isNaN(parseFloat(data)) || parseFloat(data) == 0) ? (0).toFixed(2) : parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 })); }}); 
+                    break;
+                case "UVNRPR":
+                    columnsConfig.push({data: columnDataValues[i],type: "num-fmt", visible: visibleColumn, className: "text-danger text-end", render: function(data) { return ((isNaN(parseFloat(data)) || parseFloat(data) == 0) ? (0).toFixed(2) : parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 })); }}); 
+                    break;
+                //VISIBLE COLUMN 2:
+                case "IMPORT":
+                    columnsConfig.push({data: columnDataValues[i], visible: visibleColumn2, className:  "text-start"});
+                    break;
+                case "DOZTOT":
+                case "NUEINV":
+                case "BALANCE":
+                case "MATPRIMA":
+                    columnsConfig.push({data: columnDataValues[i],type: "num-fmt", visible: visibleColumn2, className: "text-end", render: function(data) { return ((isNaN(parseFloat(data)) || parseFloat(data) == 0) ? (0).toFixed(2) : parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 })); }}); 
+                    break;
+                default:
+                    break;
+            }
+       }
+        var table= initTable();
+        var isInitialized = false;
+        table.on('init.dt', function() {
+            isInitialized = true;
+        });
+        $('#myTablePlaneacion thead').on('click', 'th', function(e) {
+            e.preventDefault();
+           var enca=$(this).text();
+           if(enca!='MARCA' && enca!='ESTILO' && enca!='COLOR' && enca!='TALLA' && enca!='T/INV' && enca!='# MESES' && enca!='# MESES 12M' && enca!='# MESES 6M' && enca!='# MESES AÑO/ANT')
+           {
+            var colIndex = $(this).index();
+            document.getElementById('loaderTable').classList.remove('d-none');
+            setTimeout(() => {
+                setCookie("boolOrder", "2", 1);
+                table.rows().every(function() {
+                    var data = this.data();
+                    var rowNode = this.node();
+                    if (data.TIPINV == 'TOTAL' || data.TIPINV == 'TOTALM') {
+                        rowNode.classList.add('d-none');
+                    }
+                });
+                encabezados.forEach(function(item,index){
+                    if(item==enca){
+                        colIndex=index-1;
+                    }
+                  });
+                var orderDir = table.order()[0][1];
+                document.getElementById('loaderTable').classList.add('d-none');
+                table.order([colIndex + 1, orderDir]).draw();
+                var dataTablesFilter = document.querySelector('.dataTables_filter');
+                var existingButton = document.getElementById('refreshOrderButton');
+                if (existingButton) {
+                    dataTablesFilter.removeChild(existingButton);
+                }
+                var button2 = document.createElement('button');
+                button2.id = 'refreshOrderButton';
+                button2.className = 'btn btn-light ms-3 me-3 fw-bold';
+                button2.style.width = '200px';
+                button2.onclick = function() {
+                    restartOrder();
+                };
+                button2.innerHTML = '<i class="fa-solid fa-rotate-left"></i> Refrescar orden';
+                var firstChild = dataTablesFilter.firstChild;
+                dataTablesFilter.insertBefore(button2, firstChild);
+            }, 200);
+           }
+            
+        });
+
+        document.querySelectorAll('a.toggle-vis').forEach((el) => {
+            el.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.getElementById('loaderTable').classList.remove('d-none');
+                setTimeout(() => {
+                    let columnIdx = e.target.getAttribute('data-column');
+                    let column = table.column(columnIdx);
+                    column.visible(!column.visible());
+                    let headerText = $(this).text().split(' - ')[1];
+                    let headerText2=$(this).text();
+                    const index = columnsNoVisible.indexOf(columnIdx);
+                    if (!column.visible() && index == -1) {
+                        if (!columnsNoVisible.includes(columnIdx)) {
+                            if(headerText=='MARCA'||headerText=='ESTILO'||headerText=='COLOR'||headerText=='TALLA'||headerText=='T/INV'){
+                                columnsFixed--;
+                            }
+                            columnsNoVisible.push(columnIdx);
+                        }
+                    }else{
+                        const index = columnsNoVisible.indexOf(columnIdx);
+                        if (index > -1) {
+                            if(headerText2=='MARCA'||headerText2=='ESTILO'||headerText2=='COLOR'||headerText2=='TALLA'||headerText2=='T/INV'){
+                                columnsFixed++;
+                            }
+                            columnsNoVisible.splice(index, 1);
+                        }
+                    }
+                    setCookie("columnsVisible",columnsNoVisible,1);
+                    document.getElementById('loaderTable').classList.add('d-none');
+                }, 200);
+            });
+        });
+        var toggleMarca = getCookie("marcasToggle");
+        if (toggleMarca != null) {
+            animateMenu();
+        }
+        
+        ocultandoColumnas(table,columnsNoVisible);
+    });
+    function ocultandoColumnas(table,columnsNoVisible){
+        if(columnsNoVisible.length>0){
+            for (let i = 0; i < columnsNoVisible.length; i++) {
+             toggleItem('item-' + columnsNoVisible[i]);
+            }
+            table.columns().every(function(index) {
+                let columnIndexString = index.toString();
+                if (columnsNoVisible.includes(columnIndexString)) {
+                    this.visible(false);
+                }
+            });
+        }
+    }
+    var previousSearch = "";
+
+        function initTable(){
+            var table = $('#myTablePlaneacion').DataTable({
             language: {
                 url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json',
                 loadingRecords: `Cargando datos...`
             },
             fixedColumns: {
-                left: 5,
+                left: columnsFixed,
             },
             scrollCollapse: true,
             "pageLength": 1000,
             "processing": true,
             "ajax": {
-                "url": "http://172.16.15.20/API.LovablePHP/ZLO0013P/List/?marca=" + marca + "&plan=" +
+                "url": "http://172.16.15.20/API.LovablePHP/ZLO0013P/List2/?marca=" + marca + "&plan=" +
                     plan + "&estado=" + estado + "&btnor=" + btnOrder + "&inventarios=" + inventarios +
                     "&clasificacion=" + clasificacion + "&orden=" + orden + "&filtro=" + filtro +
                     "&repro=" + repro + "&formato=" + formato + "&searchVal=" + searchBox + "",
@@ -745,655 +963,7 @@
                     requestError = true;
                 }
             },
-            "columns": [{
-                    data: "ROWNUM",
-                    className: "bg-white text-transparent",
-                    orderable: false,
-                },
-                {
-                    data: "MARCA",
-                    className: "text-end bg-white",
-                    orderable: false,
-
-                },
-                {
-                    data: "ESTILO",
-                    className: "text-end  bg-white",
-                    orderable: false,
-
-                },
-                {
-                    data: "COLOR",
-                    className: "text-start  bg-white",
-                    orderable: false,
-
-                },
-                {
-                    data: "TALLA",
-                    className: "text-start  bg-white",
-                    orderable: false,
-
-                },
-                {
-                    data: "TIPINV",
-                    className: "text-center  bg-white",
-                    orderable: false,
-
-                },
-                {
-                    data: "UNIVAA",
-                    className: "text-info text-end",
-                    render: function(data) {
-                        return ((isNaN(parseFloat(data)) || parseFloat(data) == 0) ? (0)
-                            .toFixed(2) :
-                            parseFloat(data).toLocaleString('es-419', {
-                                minimumFractionDigits: 2,
-                                maximumFractionDigits: 2
-                            }));
-                    }
-                },
-                {
-                    data: "VALVAA",
-                    className: "text-end",
-                    render: function(data) {
-                        return ((isNaN(parseFloat(data)) || parseFloat(data) == 0) ? (0)
-                            .toFixed(2) :
-                            parseFloat(data).toLocaleString('es-419', {
-                                minimumFractionDigits: 2,
-                                maximumFractionDigits: 2
-                            }));
-                    }
-                },
-                {
-                    data: "UPRMAC",
-                    className: "text-info text-end",
-                    render: function(data) {
-                        return ((isNaN(parseFloat(data)) || parseFloat(data) == 0) ? (0)
-                            .toFixed(2) :
-                            parseFloat(data).toLocaleString('es-419', {
-                                minimumFractionDigits: 2,
-                                maximumFractionDigits: 2
-                            }));
-                    }
-                },
-                {
-                    data: "NUMMES",
-                    className: "text-end",
-                    render: function(data) {
-                        return ((isNaN(parseFloat(data)) || parseFloat(data) == 0) ? '‎' :
-                            parseFloat(data).toLocaleString('es-419', {
-                                minimumFractionDigits: 0,
-                                maximumFractionDigits: 0
-                            }));
-                
-                    },
-                    orderable: false
-                },
-                {
-                    data: "DOCVAL",
-                    className: "text-brown text-end",
-                    render: function(data) {
-                        return ((isNaN(parseFloat(data)) || parseFloat(data) == 0) ? (0)
-                            .toFixed(2) :
-                            parseFloat(data).toLocaleString('es-419', {
-                                minimumFractionDigits: 2,
-                                maximumFractionDigits: 2
-                            }));
-                    }
-                },
-                {
-                    data: "UVENRE",
-                    className: "text-darkblue text-end",
-                    render: function(data) {
-                        return ((isNaN(parseFloat(data)) || parseFloat(data) == 0) ? (0)
-                            .toFixed(2) :
-                            parseFloat(data).toLocaleString('es-419', {
-                                minimumFractionDigits: 2,
-                                maximumFractionDigits: 2
-                            }));
-                    }
-                },
-                {
-                    data: "UVNRPR",
-                    className: "text-danger text-end",
-                    render: function(data) {
-                        return ((isNaN(parseFloat(data)) || parseFloat(data) == 0) ? (0)
-                            .toFixed(2) :
-                            parseFloat(data).toLocaleString('es-419', {
-                                minimumFractionDigits: 2,
-                                maximumFractionDigits: 2
-                            }));
-                    }
-                },
-                {
-                    data: "INVAPA",
-                    className: "text-violet text-end",
-                    render: function(data) {
-                        return ((isNaN(parseFloat(data)) || parseFloat(data) == 0) ? (0)
-                            .toFixed(2) :
-                            parseFloat(data).toLocaleString('es-419', {
-                                minimumFractionDigits: 2,
-                                maximumFractionDigits: 2
-                            }));
-                    }
-                },
-                {
-                    data: "APAVXC",
-                    className: "text-violet text-end",
-                    render: function(data) {
-                        return ((isNaN(parseFloat(data)) || parseFloat(data) == 0) ? (0)
-                            .toFixed(2) :
-                            parseFloat(data).toLocaleString('es-419', {
-                                minimumFractionDigits: 2,
-                                maximumFractionDigits: 2
-                            }));
-                    }
-                },
-                {
-                    data: "INVPTE",
-                    className: "text-success text-end",
-                    render: function(data) {
-                        return ((isNaN(parseFloat(data)) || parseFloat(data) == 0) ? (0)
-                            .toFixed(2) :
-                            parseFloat(data).toLocaleString('es-419', {
-                                minimumFractionDigits: 2,
-                                maximumFractionDigits: 2
-                            }));
-                    }
-                },
-                {
-                    data: "INVPRO",
-                    className: "text-lightGreen text-end",
-                    render: function(data) {
-                        return ((isNaN(parseFloat(data)) || parseFloat(data) == 0) ? (0)
-                            .toFixed(2) :
-                            parseFloat(data).toLocaleString('es-419', {
-                                minimumFractionDigits: 2,
-                                maximumFractionDigits: 2
-                            }));
-                    }
-                },
-                {
-                    data: "INVPR1",
-                    className: "text-lightGreen text-end",
-                    render: function(data) {
-                        return ((isNaN(parseFloat(data)) || parseFloat(data) == 0) ? (0)
-                            .toFixed(2) :
-                            parseFloat(data).toLocaleString('es-419', {
-                                minimumFractionDigits: 2,
-                                maximumFractionDigits: 2
-                            }));
-                    }
-                },
-                {
-                    data: "INVCOR",
-                    className: "text-orange text-end",
-                    render: function(data) {
-                        return ((isNaN(parseFloat(data)) || parseFloat(data) == 0) ? (0)
-                            .toFixed(2) :
-                            parseFloat(data).toLocaleString('es-419', {
-                                minimumFractionDigits: 2,
-                                maximumFractionDigits: 2
-                            }));
-                    }
-                },
-                {
-                    data: "WUNIINV2",
-                    className: "text-end",
-                    render: function(data) {
-                        return ((isNaN(parseFloat(data)) || parseFloat(data) == 0) ? (0)
-                            .toFixed(2) :
-                            parseFloat(data).toLocaleString('es-419', {
-                                minimumFractionDigits: 2,
-                                maximumFractionDigits: 2
-                            }));
-                    }
-                },
-                {
-                    data: "INVMTP",
-                    className: "text-orange text-end",
-                    render: function(data) {
-                        return ((isNaN(parseFloat(data)) || parseFloat(data) == 0) ? (0)
-                            .toFixed(2) :
-                            parseFloat(data).toLocaleString('es-419', {
-                                minimumFractionDigits: 2,
-                                maximumFractionDigits: 2
-                            }));
-                    }
-                },
-                {
-                    data: "WUNIINV",
-                    className: "text-end",
-                    render: function(data) {
-                        return ((isNaN(parseFloat(data)) || parseFloat(data) == 0) ? (0)
-                            .toFixed(2) :
-                            parseFloat(data).toLocaleString('es-419', {
-                                minimumFractionDigits: 2,
-                                maximumFractionDigits: 2
-                            }));
-                    }
-                },
-                {
-                    data: "INVPGR",
-                    className: "text-orange text-end",
-                    render: function(data) {
-                        return ((isNaN(parseFloat(data)) || parseFloat(data) == 0) ? (0)
-                            .toFixed(2) :
-                            parseFloat(data).toLocaleString('es-419', {
-                                minimumFractionDigits: 2,
-                                maximumFractionDigits: 2
-                            }));
-                    }
-                },
-                {
-                    data: "INVPG1",
-                    className: "text-orange text-end",
-                    render: function(data) {
-                        return ((isNaN(parseFloat(data)) || parseFloat(data) == 0) ? (0)
-                            .toFixed(2) :
-                            parseFloat(data).toLocaleString('es-419', {
-                                minimumFractionDigits: 2,
-                                maximumFractionDigits: 2
-                            }));
-                    }
-                },
-                {
-                    data: "INVPG2",
-                    className: "text-orange text-end",
-                    render: function(data) {
-                        return ((isNaN(parseFloat(data)) || parseFloat(data) == 0) ? (0)
-                            .toFixed(2) :
-                            parseFloat(data).toLocaleString('es-419', {
-                                minimumFractionDigits: 2,
-                                maximumFractionDigits: 2
-                            }));
-                    }
-                },
-                {
-                    data: "LEATIE",
-                    className: "text-success text-end",
-                    render: function(data) {
-                        return ((isNaN(parseFloat(data)) || parseFloat(data) == 0) ? '‎' :
-                            parseFloat(data).toLocaleString('es-419', {
-                                minimumFractionDigits: 0,
-                                maximumFractionDigits: 0
-                            }));
-                    }
-                },
-
-                {
-                    data: "MESINV",
-                    className: "text-darkblue text-end",
-                    render: function(data) {
-                        return ((isNaN(parseFloat(data)) || parseFloat(data) == 0) ? '‎' :
-                            parseFloat(data).toFixed(2));
-                    }
-                },
-                {
-                    data: "UPRM1A",
-                    className: "text-danger text-end",
-                    render: function(data) {
-                        return ((isNaN(parseFloat(data)) || parseFloat(data) == 0) ? (0)
-                            .toFixed(2) :
-                            parseFloat(data).toLocaleString('es-419', {
-                                minimumFractionDigits: 2,
-                                maximumFractionDigits: 2
-                            }));
-                    }
-                },
-                {
-                    data: "NUMME1",
-                    className: "text-end",
-                    render: function(data) {
-                        return ((isNaN(parseFloat(data)) || parseFloat(data) == 0) ? '‎' :
-                            parseFloat(data).toLocaleString('es-419', {
-                                minimumFractionDigits: 0,
-                                maximumFractionDigits: 0
-                            }));
-                    }
-                },
-                {
-                    data: "MESIN6",
-                    className: "text-darkblue text-end",
-                    render: function(data) {
-                        return ((isNaN(parseFloat(data)) || parseFloat(data) == 0) ? '‎' :
-                            parseFloat(data).toFixed(2));
-                    }
-                },
-                {
-                    data: "UPRM6A",
-                    className: "text-danger text-end",
-                    render: function(data) {
-                        return ((isNaN(parseFloat(data)) || parseFloat(data) == 0) ? (0)
-                            .toFixed(2) :
-                            parseFloat(data).toLocaleString('es-419', {
-                                minimumFractionDigits: 2,
-                                maximumFractionDigits: 2
-                            }));
-                    }
-                },
-                {
-                    data: "NUMME6",
-                    className: "text-end",
-                    render: function(data) {
-                        return ((isNaN(parseFloat(data)) || parseFloat(data) == 0) ? '‎' :
-                            parseFloat(data).toLocaleString('es-419', {
-                                minimumFractionDigits: 0,
-                                maximumFractionDigits: 0
-                            }));
-                    }
-                },
-                {
-                    data: "UPRMAV",
-                    className: "text-info text-end",
-                    render: function(data) {
-                        return ((isNaN(parseFloat(data)) || parseFloat(data) == 0) ? (0)
-                            .toFixed(2) :
-                            parseFloat(data).toLocaleString('es-419', {
-                                minimumFractionDigits: 2,
-                                maximumFractionDigits: 2
-                            }));
-                    }
-                },
-                {
-                    data: "NUMMEV",
-                    className: "text-end",
-                    render: function(data) {
-                        return ((isNaN(parseFloat(data)) || parseFloat(data) == 0) ? '‎' :
-                            parseFloat(data).toLocaleString('es-419', {
-                                minimumFractionDigits: 0,
-                                maximumFractionDigits: 0
-                            }));
-                    }
-                },
-                {
-                    data: "DOCANT",
-                    className: "text-info text-end",
-                    render: function(data) {
-                        return ((isNaN(parseFloat(data)) || parseFloat(data) == 0) ? (0)
-                            .toFixed(2) :
-                            parseFloat(data).toLocaleString('es-419', {
-                                minimumFractionDigits: 2,
-                                maximumFractionDigits: 2
-                            }));
-                    }
-                },
-                {
-                    data: "VALANT",
-                    className: "text-end",
-                    render: function(data) {
-                        var valor = parseFloat(data);
-                        if (isNaN(valor)) {
-                            valor = 0;
-                        }
-                        return valor.toLocaleString('es-419', {
-                            minimumFractionDigits: 2,
-                            maximumFractionDigits: 2
-                        });
-                    }
-                },
-                {
-                    data: "IMPORT",
-                    className: "text-start"
-                },
-                {
-                    data: "DOZTOT",
-                    className: "text-end",
-                    render: function(data) {
-                        if (data == '') {
-                            return (0).toFixed(2);
-                        } else {
-                            return parseFloat(data);
-                        }
-                    }
-                },
-                {
-                    data: "NUEINV",
-                    className: "text-end",
-                    render: function(data) {
-                        if (data != '&#160;') {
-                            return parseFloat(data);
-                        } else {
-                            return (0).toFixed(2);
-                        }
-
-                    }
-                }, {
-                    data: "BALANCE",
-                    className: "text-end",
-                    render: function(data) {
-                        if (data != '&#160;') {
-                            return parseFloat(data);
-                        } else {
-                            return (0).toFixed(2);
-                        }
-                    }
-                },
-                {
-                    data: "MATPRIMA",
-                    className: "text-end",
-                    render: function(data) {
-                        if (data != '&#160;') {
-                            return parseFloat(data);
-                        } else {
-                            return (0).toFixed(2);
-                        }
-                    }
-                },
-            ],
-            "columnDefs": [{
-                    "targets": [0],
-                    "searchable": false,
-                    "type": "num-fmt"
-                },
-                {
-                    "targets": [3],
-                    "searchable": false,
-                },
-                {
-                    "targets": [4],
-                    "searchable": false,
-                },
-                {
-                    "targets": [5],
-                    "searchable": false,
-                },
-                {
-                    "targets": [6],
-                    "visible": visibleColumn,
-                    "searchable": false,
-                    "type": "num-fmt"
-                },
-                {
-                    "targets": [7],
-                    "visible": visibleColumn,
-                    "searchable": false,
-                    "type": "num-fmt"
-                },
-                {
-                    "targets": [8],
-                    "visible": visibleColumn,
-                    "searchable": false,
-                    "type": "num-fmt"
-                },
-                {
-                    "targets": [9],
-                    "visible": visibleColumn,
-                    "searchable": false,
-                    "type": "num-fmt"
-                },
-                {
-                    "targets": [10],
-                    "visible": visibleColumn,
-                    "searchable": false,
-                    "type": "num-fmt"
-                },
-                {
-                    "targets": [11],
-                    "visible": visibleColumn,
-                    "searchable": false,
-                    "type": "num-fmt"
-                },
-                {
-                    "targets": [12],
-                    "visible": visibleColumn,
-                    "searchable": false,
-                    "type": "num-fmt"
-                },
-                {
-                    "targets": [13],
-                    "visible": visibleColumn,
-                    "searchable": false,
-                    "type": "num-fmt"
-                },
-                {
-                    "targets": [14],
-                    "searchable": false,
-                    "type": "num-fmt"
-                },
-                {
-                    "targets": [15],
-                    "searchable": false,
-                    "type": "num-fmt"
-                },
-                {
-                    "targets": [16],
-                    "searchable": false,
-                    "type": "num-fmt"
-                },
-                {
-                    "targets": [17],
-                    "searchable": false,
-                    "type": "num-fmt"
-                },
-                {
-                    "targets": [18],
-                    "searchable": false,
-                    "type": "num-fmt"
-                },
-                {
-                    "targets": [19],
-                    "searchable": false,
-                    "type": "num-fmt"
-                },
-                {
-                    "targets": [20],
-                    "searchable": false,
-                    "type": "num-fmt"
-                },
-                {
-                    "targets": [21],
-                    "searchable": false,
-                    "type": "num-fmt"
-                },
-                {
-                    "targets": [22],
-                    "searchable": false,
-                    "type": "num-fmt"
-                },
-                {
-                    "targets": [23],
-                    "searchable": false,
-                    "type": "num-fmt"
-                },
-                {
-                    "targets": [24],
-                    "searchable": false,
-                    "type": "num-fmt"
-                },
-                {
-                    "targets": [25],
-                    "searchable": false,
-                    "type": "num-fmt"
-                },
-                {
-                    "targets": [26],
-                    "searchable": false,
-                    "type": "num-fmt"
-                },
-                {
-                    "targets": [27],
-                    "searchable": false,
-                    "type": "num-fmt"
-                },
-                {
-                    "targets": [28],
-                    "searchable": false,
-                    "type": "num-fmt"
-                },
-                {
-                    "targets": [29],
-                    "visible": visibleColumn,
-                    "searchable": false,
-                    "type": "num-fmt"
-                },
-                {
-                    "targets": [30],
-                    "visible": visibleColumn,
-                    "searchable": false,
-                    "type": "num-fmt"
-                },
-                {
-                    "targets": [31],
-                    "visible": visibleColumn,
-                    "searchable": false,
-                    "type": "num-fmt"
-                },
-                {
-                    "targets": [32],
-                    "visible": visibleColumn,
-                    "searchable": false,
-                    "type": "num-fmt"
-                },
-                {
-                    "targets": [33],
-                    "visible": visibleColumn,
-                    "searchable": false,
-                    "type": "num-fmt"
-                },
-                {
-                    "targets": [34],
-                    "visible": visibleColumn,
-                    "searchable": false,
-                    "type": "num-fmt"
-                },
-                {
-                    "targets": [35],
-                    "visible": visibleColumn,
-                    "searchable": false,
-                    "type": "num-fmt"
-                },
-                {
-                    "targets": [36],
-                    "visible": visibleColumn2,
-                    "searchable": false,
-                    "type": "num-fmt"
-                },
-                {
-                    "targets": [37],
-                    "visible": visibleColumn2,
-                    "searchable": false,
-                    "type": "num-fmt"
-                },
-                {
-                    "targets": [38],
-                    "visible": visibleColumn2,
-                    "searchable": false,
-                    "type": "num-fmt"
-                },
-                {
-                    "targets": [39],
-                    "visible": visibleColumn2,
-                    "searchable": false,
-                    "type": "num-fmt"
-                },
-                {
-                    "targets": [40],
-                    "visible": visibleColumn2,
-                    "searchable": false,
-                    "type": "num-fmt"
-                },
-            ],
+            "columns": columnsConfig,   
             ordering: true,
             dom: 'Bftip',
             initComplete: function() {
@@ -1450,8 +1020,7 @@
                                 'd-none');
                         }, 200);
                     },
-                    messageTop: ($("#cbbFormato").val() != 0) ? 'Formato: ' + $(
-                        "#cbbFormato option:selected").text() : 'Formato: Todos',
+                    messageTop: ($("#cbbFormato").val() != 0) ? 'Formato: ' + $(".selected").text() : 'Formato: Todos',
                     exportOptions: {
                         modifier: {
                             search: 'applied',
@@ -1728,13 +1297,49 @@
                             if (cellE.text().toString() == 'NULL') {
                                 row.remove();
                             }
-                            /*$('c[r^="A"], c[r^="B"], c[r^="C"], c[r^="D"], c[r^="E"], c[r^="F"], c[r^="G"], c[r^="H"], c[r^="I"], c[r^="J"], c[r^="K"], c[r^="L"], c[r^="M"], c[r^="N"], c[r^="O"], c[r^="P"], c[r^="Q"], c[r^="R"], c[r^="S"], c[r^="T"], c[r^="U"], c[r^="V"], c[r^="W"], c[r^="X"], c[r^="Y"], c[r^="Z"], c[r^="AA"], c[r^="AB"], c[r^="AC"], c[r^="AD"], c[r^="AE"], c[r^="AF"], c[r^="AG"]', sheet).each(function() {
-                                var value = $(this).find('v').text();
-                                if (value == '0' || value == '&#160;'|| value == ' ' || value == ''|| value == '0.00') {
-                                    $(this).find('v').text(' ');
+                            if(formato == 10){
+                                $('c[r^="F"], c[r^="R"]', row).attr('s', textDarkblue);
+                                $('c[r^="G"]', row).attr('s', textDarkGreen);
+                                $('c[r^="H"], c[r^="I"]', row).attr('s',textYellow);
+                                $('c[r^="J"], c[r^="L"], c[r^="N"], c[r^="O"], c[r^="P"]',row).attr('s', textNaranja);
+                                $('c[r^="Q"]', row).attr('s', textgreen1);
+                                $('c[r^="S"], c[r^="V"]', row).attr('s', textred1);
+                                $('c[r^="X"], c[r^="Z"]', row).attr('s', textCyan);
+                            
+                            if (cellE.text() === "L") {
+                                if (parseFloat($('c[r^="R"]', row).text()) <= parseFloat($('c[r^="Q"]', row).text()) || 
+                                    parseFloat($('c[r^="U"]', row).text()) <= parseFloat($('c[r^="Q"]', row).text())
+                                    || isNaN(parseFloat($('c[r^="U"]', row).text())) || isNaN(parseFloat($('c[r^="R"]', row).text()))) {
+                                        if(parseFloat($('c[r^="U"]', row).text())!=0){
+                                        $('c[r^="F"], c[r^="R"]', row).attr('s', textDarkblueRosa);
+                                        $('c[r^="G"]', row).attr('s', textDarkGreenRosa);
+                                        $('c[r^="H"], c[r^="I"]', row).attr('s',textYellowRosa);
+                                        $('c[r^="J"], c[r^="L"], c[r^="N"], c[r^="O"], c[r^="P"]',row).attr('s', textNaranjaRosa);
+                                        $('c[r^="Q"]', row).attr('s', textgreen1Rosa);
+                                        $('c[r^="S"], c[r^="V"]', row).attr('s', textred1Rosa);
+                                        $('c[r^="X"], c[r^="Z"]', row).attr('s', textCyanRosa);
+
+                                        $('c[r^="A"],c[r^="K"], c[r^="M"], c[r^="T"], c[r^="U"], c[r^="W"], c[r^="Y"], c[r^="AA"]',row).attr('s', bgPink);
+                                        $('c[r^="B"],c[r^="C"], c[r^="D"], c[r^="E"]', row).attr('s', bgPinkChar);
+                                    }
+                                    } else {
+                                    if (parseFloat($('c[r^="R"]', row).text()) <= (parseFloat($('c[r^="Q"]', row).text()) + 1) ||
+                                        parseFloat($('c[r^="U"]', row).text()) <= (parseFloat($('c[r^="Q"]', row).text()) + 1)) {
+                                        $('c[r^="F"], c[r^="R"]', row).attr('s', textDarkblueAmarillo);
+                                        $('c[r^="G"]', row).attr('s', textDarkGreenAmarillo);
+                                        $('c[r^="H"], c[r^="I"]', row).attr('s',textYellowAmarillo);
+                                        $('c[r^="J"], c[r^="L"], c[r^="N"], c[r^="O"], c[r^="P"]',row).attr('s', textNaranjaAmarillo);
+                                        $('c[r^="Q"]', row).attr('s', textgreen1Amarillo);
+                                        $('c[r^="S"], c[r^="V"]', row).attr('s', textred1Amarillo);
+                                        $('c[r^="X"], c[r^="Z"]', row).attr('s', textCyanAmarillo); 
+
+                                        $('c[r^="A"],c[r^="K"], c[r^="M"], c[r^="T"], c[r^="U"], c[r^="W"], c[r^="Y"], c[r^="AA"]',row).attr('s', bgYellow);
+                                        $(' c[r^="B"],c[r^="C"], c[r^="D"], c[r^="E"]', row).attr('s', bgYellowChar);    
+                                    }          
                                 }
-                            });*/
-                            $('c[r^="F"], c[r^="H"], c[r^="AF"], c[r^="AH"]', row).attr('s', textCyan);
+                            }
+                            }else{
+                                $('c[r^="F"], c[r^="H"], c[r^="AF"], c[r^="AH"]', row).attr('s', textCyan);
                             $('c[r^="L"], c[r^="AA"], c[r^="AD"]', row).attr('s', textred1);
                             $('c[r^="J"]', row).attr('s', textBrown);
                             $('c[r^="Y"]', row).attr('s', textgreen1);
@@ -1743,28 +1348,24 @@
                             $('c[r^="O"]', row).attr('s', textDarkGreen);
                             $('c[r^="P"], c[r^="Q"], c[r^="V"]', row).attr('s',textYellow);
                             $('c[r^="R"], c[r^="T"], c[r^="V"], c[r^="W"], c[r^="X"]',row).attr('s', textNaranja);
-                            //TOTALES
-                            if (cellE.text() === "TOTAL" || cellE.text() === "TOTALM") {
-                                $('c[r^="A"], c[r^="B"], c[r^="C"], c[r^="D"], c[r^="E"], c[r^="F"], c[r^="G"], c[r^="H"], c[r^="I"], c[r^="J"], c[r^="K"], c[r^="L"], c[r^="M"], c[r^="N"], c[r^="O"], c[r^="P"], c[r^="Q"], c[r^="R"], c[r^="S"], c[r^="T"], c[r^="U"], c[r^="V"], c[r^="W"], c[r^="X"], c[r^="Y"], c[r^="Z"], c[r^="AA"], c[r^="AB"], c[r^="AC"], c[r^="AD"], c[r^="AE"], c[r^="AF"], c[r^="AG"]',
-                                    row).attr('s', 7);
-                                $('c[r^="A"], c[r^="B"], c[r^="C"], c[r^="D"], c[r^="E"]',
-                                    row).text('s', ' ');
-                            }
                             if (cellE.text() === "L") {
                                 if (parseFloat($('c[r^="Z"]', row).text()) <= parseFloat($('c[r^="Y"]', row).text()) || 
                                     parseFloat($('c[r^="AC"]', row).text()) <= parseFloat($('c[r^="Y"]', row).text())
                                     || isNaN(parseFloat($('c[r^="AC"]', row).text())) || isNaN(parseFloat($('c[r^="Z"]', row).text()))) {
-                                        $('c[r^="F"], c[r^="H"], c[r^="AF"], c[r^="AH"]', row).attr('s', textCyanRosa);
-                                        $('c[r^="L"], c[r^="AA"], c[r^="AD"]', row).attr('s', textred1Rosa);
-                                        $('c[r^="J"]', row).attr('s', textBrownRosa);
-                                        $('c[r^="Y"]', row).attr('s', textgreen1Rosa);
-                                        $('c[r^="K"], c[r^="M"], c[r^="N"], c[r^="Z"]', row).attr('s', textDarkblueRosa);
-                                        $('c[r^="M"], c[r^="N"]', row).attr('s', textpurpleRosa);
-                                        $('c[r^="O"]', row).attr('s', textDarkGreenRosa);
-                                        $('c[r^="P"], c[r^="Q"], c[r^="V"]', row).attr('s',textYellowRosa);
-                                        $('c[r^="R"], c[r^="T"], c[r^="V"], c[r^="W"], c[r^="X"]',row).attr('s', textNaranjaRosa);
-                                        $('c[r^="A"], c[r^="B"], c[r^="E"], c[r^="G"], c[r^="I"], c[r^="S"], c[r^="U"], c[r^="AB"], c[r^="AC"], c[r^="AE"], c[r^="AG"], c[r^="AI"]',row).attr('s', bgPink);
-                                        $('c[r^="C"], c[r^="D"]', row).attr('s', bgPinkChar);
+                                        if(parseFloat($('c[r^="Z"]', row).text())!=0){
+                                            $('c[r^="F"], c[r^="H"], c[r^="AF"], c[r^="AH"]', row).attr('s', textCyanRosa);
+                                            $('c[r^="L"], c[r^="AA"], c[r^="AD"]', row).attr('s', textred1Rosa);
+                                            $('c[r^="J"]', row).attr('s', textBrownRosa);
+                                            $('c[r^="Y"]', row).attr('s', textgreen1Rosa);
+                                            $('c[r^="K"], c[r^="M"], c[r^="N"], c[r^="Z"]', row).attr('s', textDarkblueRosa);
+                                            $('c[r^="M"], c[r^="N"]', row).attr('s', textpurpleRosa);
+                                            $('c[r^="O"]', row).attr('s', textDarkGreenRosa);
+                                            $('c[r^="P"], c[r^="Q"], c[r^="V"]', row).attr('s',textYellowRosa);
+                                            $('c[r^="R"], c[r^="T"], c[r^="V"], c[r^="W"], c[r^="X"]',row).attr('s', textNaranjaRosa);
+                                            
+                                            $('c[r^="A"], c[r^="G"], c[r^="I"], c[r^="S"], c[r^="U"], c[r^="AB"], c[r^="AC"], c[r^="AE"], c[r^="AG"], c[r^="AI"]',row).attr('s', bgPink);
+                                            $('c[r^="B"],c[r^="C"], c[r^="D"], c[r^="E"], c[r^="AJ"]', row).attr('s', bgPinkChar);
+                                        } 
                                     } else {
                                     if (parseFloat($('c[r^="Z"]', row).text()) <= (parseFloat($('c[r^="Y"]', row).text()) + 1) ||
                                         parseFloat($('c[r^="AC"]', row).text()) <= (parseFloat($('c[r^="Y"]', row).text()) + 1)) {
@@ -1777,26 +1378,56 @@
                                         $('c[r^="O"]', row).attr('s', textDarkGreenAmarillo);
                                         $('c[r^="P"], c[r^="Q"], c[r^="V"]', row).attr('s',textYellowAmarillo);
                                         $('c[r^="R"], c[r^="T"], c[r^="V"], c[r^="W"], c[r^="X"]',row).attr('s', textNaranjaAmarillo);
+                                        
                                         $('c[r^="A"], c[r^="B"], c[r^="E"], c[r^="G"], c[r^="I"], c[r^="S"], c[r^="U"], c[r^="AB"], c[r^="AC"], c[r^="AE"], c[r^="AG"], c[r^="AI"]',row).attr('s', bgYellow);
-                                        $('c[r^="C"], c[r^="D"]', row).attr('s', bgYellowChar);    
+                                        $('c[r^="B"],c[r^="C"], c[r^="D"], c[r^="E"], c[r^="AJ"]', row).attr('s', bgYellowChar);    
                                     }          
                                 }
                             }
+                            }
+                            //TOTALES
+                            if (cellE.text() === "TOTAL" || cellE.text() === "TOTALM") {
+                                $('c[r^="A"], c[r^="B"], c[r^="C"], c[r^="D"], c[r^="E"], c[r^="F"], c[r^="G"], c[r^="H"], c[r^="I"], c[r^="J"], c[r^="K"], c[r^="L"], c[r^="M"], c[r^="N"], c[r^="O"], c[r^="P"], c[r^="Q"], c[r^="R"], c[r^="S"], c[r^="T"], c[r^="U"], c[r^="V"], c[r^="W"], c[r^="X"], c[r^="Y"], c[r^="Z"], c[r^="AA"], c[r^="AB"], c[r^="AC"], c[r^="AD"], c[r^="AE"], c[r^="AF"], c[r^="AG"]',
+                                    row).attr('s', 7);
+                                $('c[r^="A"], c[r^="B"], c[r^="C"], c[r^="D"], c[r^="E"]',
+                                    row).text('s', ' ');
+                            }
+                            
                         });
                         var tagName = sSh.getElementsByTagName('sz');
                         for (i = 0; i < tagName.length; i++) {
                             tagName[i].setAttribute("val", "13");
                         }
-                        var table = $('#myTablePlaneacion').DataTable(); 
-                        var col = $('col', sheet);
-                        table.columns().every(function(index) {
+                        if(formato == 10){
+                            var table = $('#myTablePlaneacion').DataTable(); 
+                            var col = $('col', sheet);
+                            table.columns().every(function(index) {
                             var column = this;
                             if (!column.visible()) {
-                                if (index < 36 && index > 0) {
-                                    $(col[index-1]).attr('width', 0);
+                                var headerText = $(column.header()).text();
+                                if (index >13 && index<36 ) {
+                                    var colIndex=0;
+                                 encabezados.forEach(function(item,index){
+                                        if(item==headerText){
+                                            colIndex=index;
+                                        }
+                                    });
+                                    $(col[colIndex-9]).attr('width', 0);
                                 }
                             }
                         });
+                        }else{
+                            var table = $('#myTablePlaneacion').DataTable(); 
+                            var col = $('col', sheet);
+                            table.columns().every(function(index) {
+                                var column = this;
+                                if (!column.visible()) {
+                                    if (index < 36 && index > 0) {
+                                        $(col[index-1]).attr('width', 0);
+                                    }
+                                }
+                            });
+                        }
                        
                     }
                 },
@@ -1814,11 +1445,15 @@
                         if (parseFloat(data.MESINV) <= parseFloat(data.LEATIE) || parseFloat(data
                                 .MESIN6) <= parseFloat(data.LEATIE) || isNaN(parseFloat(data
                                 .MESIN6)) || isNaN(parseFloat(data.MESINV))) {
-                            row.classList.add('bg-pink');
+                                    if(!isNaN(parseFloat(data.MESINV))){
+                                       row.classList.add('bg-pink');
+                                }      
                         } else {
                             if (parseFloat(data.MESINV) <= (parseFloat(data.LEATIE) + 1) ||
                                 parseFloat(data.MESIN6) <= (parseFloat(data.LEATIE) + 1)) {
-                                row.classList.add('bg-yellow');
+                                    if(!isNaN(parseFloat(data.MESINV))){
+                                        row.classList.add('bg-yellow');
+                                }
                             }
                         }
                     }
@@ -1831,62 +1466,8 @@
                 }
             }
         });
-        var isInitialized = false;
-        table.on('init.dt', function() {
-            isInitialized = true;
-        });
-        $('#myTablePlaneacion thead').on('click', 'th', function(e) {
-            e.preventDefault();
-            var colIndex = $(this).index();
-            document.getElementById('loaderTable').classList.remove('d-none');
-            setTimeout(() => {
-                setCookie("boolOrder", "2", 1);
-                table.rows().every(function() {
-                    var data = this.data();
-                    var rowNode = this.node();
-                    if (data.TIPINV == 'TOTAL' || data.TIPINV == 'TOTALM') {
-                        rowNode.classList.add('d-none');
-                    }
-                });
-                var orderDir = table.order()[0][1];
-                document.getElementById('loaderTable').classList.add('d-none');
-                table.order([colIndex + 1, orderDir]).draw();
-                var dataTablesFilter = document.querySelector('.dataTables_filter');
-                var existingButton = document.getElementById('refreshOrderButton');
-                if (existingButton) {
-                    dataTablesFilter.removeChild(existingButton);
-                }
-                var button2 = document.createElement('button');
-                button2.id = 'refreshOrderButton';
-                button2.className = 'btn btn-light ms-3 me-3 fw-bold';
-                button2.style.width = '200px';
-                button2.onclick = function() {
-                    restartOrder();
-                };
-                button2.innerHTML = '<i class="fa-solid fa-rotate-left"></i> Refrescar orden';
-                var firstChild = dataTablesFilter.firstChild;
-                dataTablesFilter.insertBefore(button2, firstChild);
-            }, 200);
-        });
-
-        document.querySelectorAll('a.toggle-vis').forEach((el) => {
-            el.addEventListener('click', function(e) {
-                e.preventDefault();
-                document.getElementById('loaderTable').classList.remove('d-none');
-                setTimeout(() => {
-                    let columnIdx = e.target.getAttribute('data-column');
-                    let column = table.column(columnIdx);
-                    column.visible(!column.visible());
-                    document.getElementById('loaderTable').classList.add('d-none');
-                }, 200);
-            });
-        });
-        var toggleMarca = getCookie("marcasToggle");
-        if (toggleMarca != null) {
-            animateMenu();
+        return table;
         }
-    });
-    var previousSearch = "";
 
     function restartOrder() {
         setCookie("boolOrder", "1", 1);
@@ -1908,7 +1489,6 @@
             document.getElementById('loaderTable').classList.add('d-none');
         }, 100);
     }
-
     function searchEstilo() {
         var searchBox = document.getElementById("searchEstiloInput");
         var searchText = searchBox.value;
@@ -1919,8 +1499,6 @@
         }
         location.reload();
     }
-
-
     function openModalVentas(estilo, data) {
         var anoActual = new Date().getFullYear();
         $("#lblEstilo").text(estilo);
@@ -1979,11 +1557,9 @@
         chargeDetalles(anoActual, estilo);
         $("#ventasModal").modal("show");
     }
-
     function closeModal() {
         $("#ventasModal").modal("hide");
     }
-
     function animateMenu() {
         let icon = $("#iconArrow");
 
@@ -2001,7 +1577,6 @@
             height: 'toggle'
         });
     }
-
     function changeResumen(numano, estilo) {
         document.getElementById('loaderTable2').classList.remove('d-none');
         setTimeout(() => {
@@ -2009,7 +1584,6 @@
             document.getElementById('loaderTable2').classList.add('d-none');
         }, 400);
     }
-
     function chargeDetalles(numano, estilo) {
         $("#currentYear").text(numano);
         $("#divTable").empty();
@@ -2517,7 +2091,6 @@
             }
         });
     }
-
     $(function($) {
         var scrollbar = $('<div id="fixed-scrollbar"><div></div></div>').appendTo($(document.body));
         scrollbar.hide().css({

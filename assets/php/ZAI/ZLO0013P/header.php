@@ -197,9 +197,10 @@ span.selectOption {
 }
 .detaHead{
     z-index: 9999 !important;
+    background-color: white !important;
 }
 .dtfc-fixed-left{
-    width: 40px !important;
+    width: 38px !important;
 }
 span.selectOption:hover {
     color:#f6f6f6;
