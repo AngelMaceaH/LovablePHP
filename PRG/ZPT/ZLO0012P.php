@@ -97,8 +97,8 @@
                           <table id="myTableSeguimiento" class="table stripe table-hover " style="width:100%">
                             <thead>
                             <tr class="sticky-top bg-white" style="font-size: 14px;">
-                            <th  class="responsive-font-example text-center d-none"></th>
                                     <th  class="responsive-font-example text-center text-black">Estilo</th>
+                                    <th  class="responsive-font-example text-center">N.</th>
                                     <th  class="responsive-font-example text-center text-black">Und. Vtas.<br>Totales</th>
                                     <th  class="responsive-font-example text-center text-black">Und. Vtas.<br>Mes Proceso</th>
                                     <th  class="responsive-font-example text-center text-black">Und. Vtas.<br>Ult. 12 Meses</th>
@@ -185,7 +185,7 @@
                                     <span role="status" class="ms-2 text-white fs-4">Cargando...</span>
                                 </button>`
         },
-        fixedColumns: { left: 2,},
+        fixedColumns: { left: 1,},
         "pageLength": 20,
                 "ajax": {
                     "url": "http://172.16.15.20/API.LOVABLEPHP/ZLO0012P/List/?agrup="+agrupSelect+"&cond=1&filtro="+filtroP+"",
@@ -219,8 +219,8 @@
                         }
                 },
                 "columns": [
-                  { "data": "ROWNUM" ,className:"text-start d-none"},
                     { "data": "ESTILO" ,className:"text-start"},
+                    { "data": "ROWNUM" ,className:"text-start", visible: false,"searchable": false},
                     { "data": "TTOT"   ,className:"text-end","searchable": false},
                     { "data": "MESTOT" ,className:"text-end","searchable": false},
                     { "data": "UNIVEN" ,className:"text-end text-cyan","searchable": false, render: function(data) {
@@ -316,6 +316,7 @@
                     { "data": "GENERO" ,"searchable": false,className:"text-start"}
                 ],
                 ordering: true,
+                order: [[1, 'asc']],
                 dom: 'Bfrtip',
                 buttons: [
             {

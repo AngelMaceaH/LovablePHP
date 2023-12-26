@@ -86,10 +86,6 @@
           }
         }
       }
-     
-      
-      
-
   //VENTAS
     $sqlVentas="SELECT T1.CODVEN, T1.MAENO3, T1.CANTRA, T1.CANTID, T1.VALOR VALOR1, T2.VALOR VALOR2, T3.VALOR VALOR3 FROM                   
     (SELECT CODVEN, MAENO3, SUM(CANTRA) CANTRA,SUM(CANTID)              
@@ -276,7 +272,7 @@
                                     <th  class=" text-end">Variación</th>
                                     <th  class=" text-end">Crecimiento</th>
                                     <th  class=" text-end">Venta 2 Años Antes</th>
-                                    <th  class=" text-end">Variación2</th>
+                                    <th  class=" text-end">Variación</th>
                                     <th  class=" text-end">Crecimiento</th>
                                 </tr>
                             </thead>
@@ -316,10 +312,20 @@
                                     print '<td  class=" text-end fw-bold">'.number_format($promVen,2).'</td>';
                                     print '<td  class=" text-end fw-bold">'.(($rowVen['VALOR2']!=0)? number_format($rowVen['VALOR2'],2):' ').'</td>';
                                     print ($variacion1<0)? '<td  class=" text-end text-danger">'.(($variacion1!=0)? number_format($variacion1,2):' ').'</td>':'<td  class=" text-end text-success">'.(($variacion1!=0)? number_format($variacion1,2):' ').'</td>';
-                                    print ($crecimiento1<0)? '<td  class=" text-end text-danger">'.number_format($crecimiento1,0).'%'.'</td>': ($crecimiento1>0)? '<td  class=" text-end text-success">'.number_format($crecimiento1,0).'%'.'</td>':'<td  class=" text-end">'.number_format($crecimiento1,0).'%'.'</td>';
+                                    if (intval($crecimiento1)<=0) {
+                                      print '<td  class=" text-end text-danger">'.number_format($crecimiento1,0).'%'.'</td>';
+                                    }else{
+                                      print '<td  class=" text-end text-success">'.number_format($crecimiento1,0).'%'.'</td>';
+                                    }
+                                    //print ()? : (intval($crecimiento1)>0)? '<td  class=" text-end text-success">'.number_format($crecimiento1,0).'%'.'</td>':'<td  class=" text-end">'.number_format($crecimiento1,0).'%'.'</td>';
                                     print '<td  class=" text-end fw-bold">'.(($rowVen['VALOR3']!=0)? number_format($rowVen['VALOR3'],2):' ').'</td>';
                                     print ($variacion2<0)? '<td  class=" text-end text-danger">'.(($variacion2!=0)? number_format($variacion2,2):' ').'</td>':'<td  class=" text-end text-success">'.(($variacion2!=0)? number_format($variacion2,2):' ').'</td>';
-                                    print ($crecimiento2<0)? '<td  class=" text-end text-danger">'.number_format($crecimiento2,0).'%'.'</td>': ($crecimiento2>0)? '<td  class=" text-end text-success">'.number_format($crecimiento2,0).'%'.'</td>':'<td  class=" text-end">'.number_format($crecimiento2,0).'%'.'</td>';
+                                    if (intval($crecimiento2)<=0) {
+                                      print '<td  class=" text-end text-danger">'.number_format($crecimiento2,0).'%'.'</td>';
+                                    }else{
+                                      print '<td  class=" text-end text-success">'.number_format($crecimiento2,0).'%'.'</td>';
+                                    }
+                                    //print (intval($crecimiento2)<0)? '<td  class=" text-end text-danger">'.number_format($crecimiento2,0).'%'.'</td>': (intval($crecimiento2)>0)? '<td  class=" text-end text-success">'.number_format($crecimiento2,0).'%'.'</td>':'<td  class=" text-end">'.number_format($crecimiento2,0).'%'.'</td>';
                                     print '</tr>';
                                     $vendedoresLabel[$cont]=rtrim(utf8_encode($rowVen['MAENO3']));
                                     $v1[$cont]=floatval(($rowVen['VALOR1']!=0)? number_format($rowVen['VALOR1'],2, '.', ''):0);

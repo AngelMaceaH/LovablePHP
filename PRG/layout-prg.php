@@ -253,7 +253,6 @@
                     });
                 }, 10);
                 setTimeout(() => {
-                    console.log(this);
                     if (this.classList.contains('show')) {
                         var icon = this.querySelector('.fa-folder, .fa-folder-open');
                             icon.classList.remove('fa-folder');

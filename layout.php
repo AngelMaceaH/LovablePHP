@@ -231,7 +231,6 @@
                     });
                 }, 10);
                 setTimeout(() => {
-                    console.log(this);
                     if (this.classList.contains('show')) {
                         var icon = this.querySelector('.fa-folder, .fa-folder-open');
                             icon.classList.remove('fa-folder');
@@ -257,7 +256,6 @@
             var getArea = "http://172.16.15.20/API.LovablePHP/ZLO0016P/FindArea/?anoing=" + anoing +
                 "&numemp=" + numemp + "";
             var responseArea = ajaxRequest(getArea);
-            console.log(responseArea);
             var areaDesc = '';
             var areaId = '';
             var seccionId = '';
