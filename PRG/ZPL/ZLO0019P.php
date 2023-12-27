@@ -299,7 +299,9 @@
                         rowtd+='<tr class="border border-dark" style="background-color: '+backgroundColor[k]+'; height:50px;">';
                         rowtd += '<td class="text-center align-middle fontS border border-dark sticky-col" style="background-color: '+backgroundColor[k]+'">' + arrayRegistros[k] + '</td>';
                         for (let i = 0; i < 12; i++) {
-                            rowtd += '<td class="text-end fontM border border-dark"> </td>';
+                            for (let j = 0; j < tiendasArray.length; j++) {
+                                rowtd += '<td class="text-end fontM border border-dark"> </td>';
+                            }
                         }
                         rowtd += '<td class="text-end fontM border border-dark"> </td>';
                         rowtd += '</tr>';
@@ -446,8 +448,10 @@
                     rowtd+='<tr class="border border-dark" style="background-color: '+backgroundColor[k]+'; height:50px;">';
                     rowtd += '<td class="text-center align-middle fontS border border-dark sticky-col" style="background-color: '+backgroundColor[k]+'">' + arrayTransacciones[k] + '</td>';
                     for (let i = 0; i < 12; i++) {
-                        rowtd += '<td class="text-end fontM border border-dark"> </td>';
-                    }
+                            for (let j = 0; j < tiendasArray.length; j++) {
+                                rowtd += '<td class="text-end fontM border border-dark"> </td>';
+                            }
+                        }
                     rowtd += '<td class="text-end fontM border border-dark"> </td>';
                     rowtd += '</tr>';
                 }
@@ -560,8 +564,10 @@
                     rowtd+='<tr class="border border-dark" style="background-color: '+backgroundColor[k]+'; height:50px;">';
                     rowtd += '<td class="text-center align-middle fontS border border-dark sticky-col" style="background-color: '+backgroundColor[k]+'">' + arrayPorTransacciones[k] + '</td>';
                     for (let i = 0; i < 12; i++) {
-                        rowtd += '<td class="text-end fontM border border-dark"> </td>';
-                    }
+                            for (let j = 0; j < tiendasArray.length; j++) {
+                                rowtd += '<td class="text-end fontM border border-dark"> </td>';
+                            }
+                        }
                     rowtd += '<td class="text-end fontM border border-dark"> </td>';
                     rowtd += '</tr>';
                 }
@@ -698,8 +704,10 @@
                     rowtd+='<tr class="border border-dark" style="background-color: '+backgroundColor[k]+'; height:50px;">';
                     rowtd += '<td class="text-center align-middle fontS border border-dark sticky-col" style="background-color: '+backgroundColor[k]+'">' + arrayDesglose[k] + '</td>';
                     for (let i = 0; i < 12; i++) {
-                        rowtd += '<td class="text-end fontM border border-dark"> </td>';
-                    }
+                            for (let j = 0; j < tiendasArray.length; j++) {
+                                rowtd += '<td class="text-end fontM border border-dark"> </td>';
+                            }
+                        }
                     rowtd += '<td class="text-end fontM border border-dark"> </td>';
                     rowtd += '</tr>';
                 }
@@ -782,8 +790,10 @@
                     rowtd+='<tr class="border border-dark" style="background-color: '+backgroundColor[k]+'; height:50px;">';
                     rowtd += '<td class="text-center align-middle fontS border border-dark sticky-col" style="background-color: '+backgroundColor[k]+'">' + arrayTicket[k] + '</td>';
                     for (let i = 0; i < 12; i++) {
-                        rowtd += '<td class="text-end fontM border border-dark"> </td>';
-                    }
+                            for (let j = 0; j < tiendasArray.length; j++) {
+                                rowtd += '<td class="text-end fontM border border-dark"> </td>';
+                            }
+                        }
                     rowtd += '<td class="text-end fontM border border-dark"> </td>';
                     rowtd += '</tr>';
                 }

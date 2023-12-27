@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="utf-8">
     <link rel="icon" type="image/x-icon" href="../../assets/img/favicon.ico">
@@ -14,7 +13,6 @@
         integrity="sha512-hZL8cWjOAFfWZza/p0uD0juwMeIuyLhAd5QDodiK4sBp1sG7BIeE1TbMGIbnUcUgwm3lVSWJzBK6KxqYTiDGkg=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
-
 <body>
     <?php
       include '../layout-prg.php';
@@ -46,7 +44,7 @@
     <div id="body-div" class="body ">
         <div class="card m-0 p-0">
             <div class="card-body  m-0 p-0 overflow-auto table-container">
-            <table  id="tableMetricas" class="table stripe table-hover " style="width:8200px;">
+            <table  id="tableMetricas" class="table stripe table-hover " style="width:7800px;">
                             <thead class="sticky-top bg-white ">
                                 <tr >
                                     <th class="text-center sticky-col" style="width:5%;" colspan="1"></th>
@@ -69,14 +67,11 @@
                                 <tr>
                             </thead>
                             <tbody id="tbody">
-                            
                             </tbody>
                     </table>
             </div>
         </div>
     </div>
-       
-
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="../../assets/vendors/@coreui/chartjs/js/coreui-chartjs.js"></script>
     <script src="../../assets/vendors/@coreui/utils/js/coreui-utils.js"></script>
