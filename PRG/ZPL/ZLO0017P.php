@@ -24,27 +24,29 @@
         var usuario = '<?php echo $_SESSION["CODUSU"];?>';
     </script>
     <div class="container-fluid">
-        <nav aria-label="breadcrumb" style="width:100%" class="d-flex justify-content-between">
-            <div style="width:69%">
-                <ol class="breadcrumb my-0 ms-2 mt-3">
-                    <li class="breadcrumb-item">
-                        <span>Programa Lealtad / Estádistica</span>
-                    </li>
-                    <li class="breadcrumb-item active"><span>ZLO0017P</span></li>
-                </ol>
-            </div>
-            <div style="width:31%" class="d-flex justify-content-between me-5">
-                <label class="form-control border border-0">Mostrando valores del año:</label>
-                <select id="setYear" class="form-select fw-bold">
-                </select>
-            </div>
+        <nav aria-label="breadcrumb" style="width:100%" >
+        <div class="row">
+                    <div class="col-10">
+                        <ol class="breadcrumb my-0 ms-2 mt-3">
+                            <li class="breadcrumb-item">
+                                <span>Programa Lealtad / Estádistica</span>
+                            </li>
+                            <li class="breadcrumb-item active"><span>ZLO0017P</span></li>
+                        </ol>
+                    </div>
+                    <div class="col-2 d-flex">
+                        <label class="form-control border border-0"  style="width: 30%;">Año:</label>
+                        <select id="setYear" class="form-select fw-bold"  style="width: 70%;">
+                        </select>
+                    </div>
+                </div>
         </nav>
     </div>
     </header>
     <div id="body-div" class="body ">
         <div class="card m-0 p-0">
             <div class="card-body  m-0 p-0 overflow-auto table-container">
-            <table  id="tableMetricas" class="table stripe table-hover " style="width:7200px;">
+            <table  id="tableMetricas" class="table stripe table-hover " style="width:8200px;">
                             <thead class="sticky-top bg-white ">
                                 <tr >
                                     <th class="text-center sticky-col" style="width:5%;" colspan="1"></th>
