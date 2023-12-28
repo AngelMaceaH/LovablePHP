@@ -407,7 +407,7 @@
                             <td colspan="73" class="bg-dark"></td>
                           </tr>
                           <tr><td colspan='74'></td></tr>`);
-                          var backgroundColor = ['#F8FF33', '#F9FF66', '#FAFF99', '#FBFFCC', '#FCFFDF'];
+                          var backgroundColor = ['#FCFFDF', '#FBFFCC', '#FAFF99', '#F9FF66','#F8FF33'];
             if (responsePTransacciones.code==200) {
                 let data=responsePTransacciones.data;
                 let datosRow1 = {}; let datosRow2 = {}; let datosRow3 = {}; let datosRow4 = {}; let datosRow5 = {};
