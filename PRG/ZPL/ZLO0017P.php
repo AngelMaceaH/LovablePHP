@@ -124,7 +124,7 @@
                           'TOTAL NUEVOS CLIENTES REGISTRADOS Y/O EMIGRADOS AL PROGRAMA DE LEALTAD',
                           'TOTAL DE CLIENTES REGISTRADOS AL  PROGRAMA DE LEALTAD',
                           'CLIENTES QUE AUN ESTÁN EN STATUS VIP',
-                        'CLIENTES NO INSCRITOS'];
+                        'CLIENTES NORMALES'];
                           
          
             var rowtd="";
@@ -365,10 +365,14 @@
                         rowtd += '<td class="text-end fontM border border-dark">0</td>';
                             break;
                     }
-                    rowtd += '<td class="text-end fontM border border-dark">' + totalRow.toLocaleString('es-419', {
-                                minimumFractionDigits: 0,
-                                maximumFractionDigits: 0
-                            }) + '</td>';
+                    if (k==6 || k==7) {
+                        rowtd += '<td class="text-end fontM border border-dark"></td>';
+                    }else{
+                        rowtd += '<td class="text-end fontM border border-dark">' + totalRow.toLocaleString('es-419', {
+                                    minimumFractionDigits: 0,
+                                    maximumFractionDigits: 0
+                                }) + '</td>';
+                    }
                     rowtd += '</tr>';
                     rowIndex++;
                 }
@@ -480,10 +484,7 @@
                         rowtd += '<td class="text-end fontM border border-dark">0</td>';
                             break;
                     }
-                    rowtd += '<td class="text-end fontM border border-dark">' + totalRow.toLocaleString('es-419', {
-                                minimumFractionDigits: 0,
-                                maximumFractionDigits: 0
-                            }) + '</td>';
+                    rowtd += '<td class="text-end fontM border border-dark"></td>';
                     rowtd += '</tr>';
                     rowIndex++;
                 }
@@ -617,10 +618,14 @@
                         rowtd += '<td class="text-end fontM border border-dark">0</td>';
                             break;
                     }
-                    rowtd += '<td class="text-end fontM border border-dark">' + totalRow.toLocaleString('es-419', {
-                                minimumFractionDigits: 0,
-                                maximumFractionDigits: 0
-                            }) + '</td>';
+                    if (k==2 || k==4 || k==6) {
+                        rowtd += '<td class="text-end fontM border border-dark"></td>';
+                    }else{
+                        rowtd += '<td class="text-end fontM border border-dark">' + totalRow.toLocaleString('es-419', {
+                                    minimumFractionDigits: 0,
+                                    maximumFractionDigits: 0
+                                }) + '</td>';
+                    }
                     rowtd += '</tr>';
                     rowIndex++;
                 }
