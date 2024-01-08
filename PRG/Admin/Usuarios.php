@@ -497,14 +497,19 @@
         var codusu = $("#txtUser").val();
         var contra = $("#txtPass").val();
         var nomusu = $("#txtName").val();
-        if (codusu == "" || contra == "" || nomusu == "" || programasAsignados.length==0) {
+        if (codusu == "" || contra == "" || nomusu == "" ) {
             $("#lblError").text("Debe llenar todos los campos");
             return;   
         }else{
+            var cia = $("#companiaId").val();
+            if(programasAsignados.length==0 && cia=="0"){
+                $("#lblError").text("Debe una compañia o programas al usuario...");
+                return;
+            }
             $("#lblError").text(" ");
             var anoing = empleId.split("-")[0];
             var numemp = empleId.split("-")[1];
-            var cia = $("#companiaId").val();
+           
             var nivel = $("#nivel").val();
             var prov1 = proveId.split("-")[0];
             var prov2 = proveId.split("-")[1];

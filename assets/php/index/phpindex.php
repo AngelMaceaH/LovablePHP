@@ -118,6 +118,7 @@
       var responseComp2 = ajaxRequest(urlComp2);
       //VENTAS ANUAL
       var urlAnual="http://172.16.15.20/API.LovablePHP/Index/compAnual/?mesGraficas1="+Mes1Num+"&anoGraficas1="+Anio1+"&compFiltro="+compFiltro+"&anoGraficas2="+Anio2+"&dck="+dolaresck+"";
+            console.log(urlAnual);
       var responseAnual = ajaxRequest(urlAnual);
       //PROMEDIO
       var urlPromedios="http://172.16.15.20/API.LovablePHP/Index/promedios/?fechaGraficas="+fechasGraficas+"&compFiltro="+compFiltro+"&dck="+dolaresck+"&mesGraficas1="+Mes1Num+"&anoGraficas1="+Anio1+"&mesGraficas2="+Mes2Num+"&anoGraficas2="+Anio2+"";
@@ -303,6 +304,7 @@
 
           var ano1Comp3=0;var ano2Comp3=0;
           if (responseAnual.code==200) {
+            console.log(responseAnual);
             for (let i = 0; i < responseAnual.data.length; i++) { 
               var valAno1=parseFloat(responseAnual.data[i]['ANO1']);
                 if (isNaN(valAno1)) {

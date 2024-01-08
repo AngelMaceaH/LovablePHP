@@ -24,13 +24,18 @@
     <div class="container-fluid">
         <nav aria-label="breadcrumb" style="width:100%" >
         <div class="row">
-                    <div class="col-10">
+                    <div class="col-8">
                         <ol class="breadcrumb my-0 ms-2 mt-3">
                             <li class="breadcrumb-item">
                                 <span>Programa Lealtad / Estádistica</span>
                             </li>
                             <li class="breadcrumb-item active"><span>ZLO0017P</span></li>
                         </ol>
+                    </div>
+                    <div class="col-2 mt-1">
+                        <button type="button" id="exportExcel" class="btn btn-success text-light fs-6 text-center" style="width:100%;">
+                            <i class="fa-solid fa-file-excel me-1"></i><b>Enviar a Excel</b>
+                        </button>
                     </div>
                     <div class="col-2 d-flex">
                         <label class="form-control border border-0"  style="width: 30%;">Año:</label>
@@ -44,6 +49,14 @@
     <div id="body-div" class="body ">
         <div class="card m-0 p-0">
             <div class="card-body  m-0 p-0 overflow-auto table-container">
+            <div id="loaderExcel" class="d-none">
+                                        <button class="btn btn-success position-absolute top-50 start-50 translate-middle p-4"
+                                            style="z-index: 9999;" type="button" disabled>
+                                            <i class="fa-solid fa-file-excel fa-flip text-white" style="font-size:70px;"></i>
+                                        </button>
+                                        <div class="position-absolute top-0 start-0 w-100  bg-secondary bg-opacity-50 rounded"
+                                            style="z-index: 9998; height:1950px !important; width:7800px !important;"></div>
+                                    </div>
             <table  id="tableMetricas" class="table stripe table-hover " style="width:7800px;">
                             <thead class="sticky-top bg-white ">
                                 <tr >
@@ -63,7 +76,7 @@
                                     <th class="text-center fs-3  border border-dark bg-secondary" colspan="1">Totales</th>
                                 </tr>
                                 <tr style="font-size:14px;" id="headerPaises">
-                                
+
                                 <tr>
                             </thead>
                             <tbody id="tbody">
@@ -103,6 +116,29 @@
                 setCookie('year', this.value, 1);
                 location.reload();
             });
+            $("#exportExcel").on('click', function() {
+            document.getElementById('loaderExcel').classList.remove('d-none');
+            var url="http://172.16.15.20/API.LovablePHP/ZLO0017P/Export/?anio="+yearSelected+"";
+            console.log(url);
+            fetch(url)
+                .then(response => response.blob())
+                .then(blob => {
+                    var tempUrl = window.URL.createObjectURL(blob);
+                    var a = document.createElement('a');
+                    a.href = tempUrl;
+                    a.download =
+                    'ProgramaLealtad-Paises.xlsx'; // Puedes personalizar el nombre del archivo
+                    document.body.appendChild(a);
+                    a.click();
+                    window.URL.revokeObjectURL(tempUrl);
+                    a.remove();
+                    document.getElementById('loaderExcel').classList.add(
+                        'd-none');
+                })
+                .catch(error => {
+                    console.error('Hubo un problema con la petición Fetch:', error);
+                });
+        });
             //HEADER----------------------------------------------------------------------------------------------------------------------
            const header=$("#headerPaises");
            header.append('<th></th>');
@@ -115,7 +151,7 @@
                                 <th class="text-center border border-dark bg-light"  width="100px">NICARAGUA</th>
                                 <th class="text-center border border-dark bg-light"  width="100px">REP. DOMINICANA</th>
                                `);
-           } 
+           }
            header.append(`<th class="text-start responsive-font-example"></th>`);
            const tbody=$("#tbody");
            //REGISTROS----------------------------------------------------------------------------------------------------------------------
@@ -125,8 +161,8 @@
                           'TOTAL DE CLIENTES REGISTRADOS AL  PROGRAMA DE LEALTAD',
                           'CLIENTES QUE AUN ESTÁN EN STATUS VIP',
                         'CLIENTES NORMALES'];
-                          
-         
+
+
             var rowtd="";
             var urlRegistros="http://172.16.15.20/API.LovablePHP/ZLO0017P/PaisesR/?anio="+yearSelected+"";
             var responseRegistros=ajaxRequest(urlRegistros);
@@ -151,13 +187,13 @@
                 }
                 data.forEach(dato => {
                     //ROW1
-                    datosRow1[dato.MESPRO][dato.CODPAI] = parseInt(dato.CLIVIE);
+                    datosRow1[dato.MESPRO][dato.CODPAI] = parseInt(dato.CLINUE);
                     //ROW2
-                    datosRow2[dato.MESPRO][dato.CODPAI] = parseInt(dato.CLINUE);
+                    datosRow2[dato.MESPRO][dato.CODPAI] = parseInt(dato.CLIVIE);
                     //ROW3
                     datosRow3[dato.MESPRO][dato.CODPAI] = parseInt(dato.TOTCLI);
                     //ROW4
-                    datosRow4[dato.MESPRO][dato.CODPAI] = parseInt(dato.CLILEA); 
+                    datosRow4[dato.MESPRO][dato.CODPAI] = parseInt(dato.CLILEA);
                     //ROW5
                     datosRow5[dato.MESPRO][dato.CODPAI] = parseInt(dato.CLIVIP);
                     //ROW6
@@ -225,7 +261,7 @@
                     rowtd += '</tr>';
                     rowIndex++;
                 }
-                
+
             }else{
                     for (let k = 0; k < arrayRegistros.length; k++) {
                         rowtd+='<tr class="border border-dark" style="background-color: '+backgroundColor[k]+'; height:50px;">';
@@ -281,7 +317,7 @@
                     //ROW3
                     datosRow3[dato.MESPRO][dato.CODPAI] = parseInt(dato.TRANSA);
                     //ROW4
-                    datosRow4[dato.MESPRO][dato.CODPAI] = parseInt(dato.TOTLEA); 
+                    datosRow4[dato.MESPRO][dato.CODPAI] = parseInt(dato.TOTLEA);
                     //ROW5
                     datosRow5[dato.MESPRO][dato.CODPAI] = parseInt(dato.TOTNOR);
                     //ROW6
@@ -376,7 +412,7 @@
                     rowtd += '</tr>';
                     rowIndex++;
                 }
-              
+
             }else{
                 for (let k = 0; k < arrayTransacciones.length; k++) {
                     rowtd+='<tr class="border border-dark" style="background-color: '+backgroundColor[k]+'; height:50px;">';
@@ -389,7 +425,7 @@
                 }
             }
             tbody.append(rowtd);
-            
+
              //PORCENTAJE TRANSACCIONES----------------------------------------------------------------------------------------------------------------------
              var arrayPorTransacciones=[
                           '% DE TRANSACCIONES CON NUEVOS REGISTROS VS TOTAL DE TRANSACCIONES',
@@ -429,7 +465,7 @@
                     //ROW3
                     datosRow3[dato.MESPRO][dato.CODPAI] = parseFloat(dato.PORCE8);
                     //ROW4
-                    datosRow4[dato.MESPRO][dato.CODPAI] = parseFloat(dato.PORCE9); 
+                    datosRow4[dato.MESPRO][dato.CODPAI] = parseFloat(dato.PORCE9);
                     //ROW5
                     datosRow5[dato.MESPRO][dato.CODPAI] = parseFloat(dato.PORCE0);
                 });
@@ -504,8 +540,8 @@
              //DESGLOSE DEL TIPO DE INFORMACION----------------------------------------------------------------------------------------------------------------------
              var arrayDesglose=[
                           'TOTAL QUE INGRESARON O MODIFICARON DATOS EN EL MES',
-                          'CANTIDAD DE CLIENTES QUE BRINDARON AMBOS:  TELEFONO Y CORREO',    
-                          '% DE CLIENTES QUE BRINDARON AMBOS: TELEFONO Y CORREO',           
+                          'CANTIDAD DE CLIENTES QUE BRINDARON AMBOS:  TELEFONO Y CORREO',
+                          '% DE CLIENTES QUE BRINDARON AMBOS: TELEFONO Y CORREO',
                           'CANTIDAD DE CLIENTES QUE BRINDARON TELEFONO',
                           '% DE CLIENTES QUE BRINDARON TELEFONO',
                           'CANTIDAD DE CLIENTES QUE BRINDARON CORREO',
@@ -544,7 +580,7 @@
                     //ROW3
                     datosRow3[dato.MESPRO][dato.CODPAI] = parseFloat(dato.PORCE3);
                     //ROW4
-                    datosRow4[dato.MESPRO][dato.CODPAI] = parseFloat(dato.TELEFO); 
+                    datosRow4[dato.MESPRO][dato.CODPAI] = parseFloat(dato.TELEFO);
                     //ROW5
                     datosRow5[dato.MESPRO][dato.CODPAI] = parseFloat(dato.PORCE5);
                     //ROW6
@@ -740,7 +776,7 @@
                         </tr>`);
             tbody.append("<tr><td colspan='74'></td></tr>");
             var rowtd="";
-           
+
             for (let i=(arrayTiendas.length-1); i >= 0 ; i--) {
                 var row="";
                  for (let j = 1; j <= 12; j++) {
@@ -756,9 +792,9 @@
             tbody.append(rowtd);
 
             }
-           
+
         });
-       
+
     </script>
    <!-- <script src="../../assets/js/PRG/ZPL/ZLO0017P.js"></script>-->
 </body>
