@@ -33,10 +33,10 @@
         <nav aria-label="breadcrumb" style="width:100%" class="p-0">
             <div class="row" style="width:100%">
                 <div class="col-2 mt-1">
-                    <button type="button" id="exportExcel" class="btn btn-success text-light fs-6 text-center mt-4"
+                   <!-- <button type="button" id="exportExcel" class="btn btn-success text-light fs-6 text-center mt-4"
                         style="width:100%;">
                         <i class="fa-solid fa-file-excel me-1"></i><b>Enviar a Excel</b>
-                    </button>
+                    </button>-->
                 </div>
                 <div class="col-2">
                     <label class="form-control border border-0">Año:</label>
@@ -107,7 +107,7 @@
         }
         var select = document.getElementById('setYear');
         var currentYear = new Date().getFullYear();
-        for (var year = 2022; year <= currentYear; year++) {
+        for (var year = 2023; year <= currentYear; year++) {
             var option = document.createElement('option');
             option.value = year;
             option.textContent = year;
@@ -237,13 +237,15 @@
         header.append(`<th class="text-start responsive-font-example"></th>`);
         const tbody = $("#tbody");
         //REGISTROS----------------------------------------------------------------------------------------------------------------------
-        var arrayRegistros = ['NUEVOS CLIENTES REGISTRADOS AL PROGRAMA DE LEALTAD',
-            'CLIENTES QUE ACTUALIZARON DATOS DE VIP A PROGRAMA DE LEALTAD',
-            'TOTAL NUEVOS CLIENTES REGISTRADOS Y/O EMIGRADOS AL PROGRAMA DE LEALTAD',
-            'TOTAL DE CLIENTES REGISTRADOS AL  PROGRAMA DE LEALTAD',
-            'CLIENTES QUE AUN ESTÁN EN STATUS VIP',
-            'CLIENTES NORMALES'
-        ];
+        var arrayRegistros =['PROGRAMAS LEALTAD NUEVOS',
+                          'ACTUALIZADOS A PROGRAMA LEALTAD',
+                          'TOTAL DE CLIENTES EN EL PROGRAMA DE LEALTAD',
+                          'CLIENTES VIP',
+                          'CLIENTES NORMALES',
+                          'TOTAL REGISTROS DEL MES',
+                          'ACUMULADOS PROGRAMA LEALTAD',
+                          'ACUMULADOS VIP',
+                          'ACUMULADOS NORMALES'];
 
 
         var rowtd = "";
@@ -255,7 +257,7 @@
                             <td colspan="1" class="bg-dark text-white fw-bold text-center sticky-col">REGISTROS</td>
                             <td colspan="99" class="bg-dark"></td>
                         </tr>`);
-        var backgroundColor = ['#F4E8FF', '#EED4FF', '#E8C1FF', '#D2A8FF', '#CDB4FF', '#C0A1FF'];
+        var backgroundColor = ['#F4E8FF','#F4E8FF','#F4E8FF', '#EED4FF','#EED4FF','#EED4FF', '#E8C1FF','#E8C1FF', '#E8C1FF'];
         if (responseRegistros.code == 200) {
             let data = responseRegistros.data;
             let datosRow1 = {};
@@ -264,6 +266,9 @@
             let datosRow4 = {};
             let datosRow5 = {};
             let datosRow6 = {};
+            let datosRow7 = {};
+            let datosRow8 = {};
+            let datosRow9 = {};
             for (let mes = 1; mes <= 12; mes++) {
                 datosRow1[mes] = {};
                 datosRow2[mes] = {};
@@ -271,6 +276,9 @@
                 datosRow4[mes] = {};
                 datosRow5[mes] = {};
                 datosRow6[mes] = {};
+                datosRow7[mes] = {};
+                datosRow8[mes] = {};
+                datosRow9[mes] = {};
                 ciasSelected.forEach(codcia => {
                     datosRow1[mes][codcia] = 0;
                     datosRow2[mes][codcia] = 0;
@@ -278,8 +286,12 @@
                     datosRow4[mes][codcia] = 0;
                     datosRow5[mes][codcia] = 0;
                     datosRow6[mes][codcia] = 0;
+                    datosRow7[mes][codcia] = 0;
+                    datosRow8[mes][codcia] = 0;
+                    datosRow9[mes][codcia] = 0;
                 });
             }
+            console.log(data);
             data.forEach(dato => {
                 //ROW1
                 datosRow1[dato.MESPRO][dato.CODCIA] = parseInt(dato.CLINUE);
@@ -288,12 +300,19 @@
                 //ROW3
                 datosRow3[dato.MESPRO][dato.CODCIA] = parseInt(dato.TOTCLI);
                 //ROW4
-                datosRow4[dato.MESPRO][dato.CODCIA] = parseInt(dato.CLILEA);
+                datosRow4[dato.MESPRO][dato.CODCIA] = parseInt(dato.CLIVIP);
                 //ROW5
-                datosRow5[dato.MESPRO][dato.CODCIA] = parseInt(dato.CLIVIP);
+                datosRow5[dato.MESPRO][dato.CODCIA] = parseInt(dato.CLINOR);
                 //ROW6
-                datosRow6[dato.MESPRO][dato.CODCIA] = parseInt(dato.CLINOR);
+                datosRow6[dato.MESPRO][dato.CODCIA] = parseInt(dato.TOTMES);
+                //ROW7
+                datosRow7[dato.MESPRO][dato.CODCIA] = parseInt(dato.ACULEA);
+                //ROW8
+                datosRow8[dato.MESPRO][dato.CODCIA] = parseInt(dato.ACUVIP);
+                //ROW9
+                datosRow9[dato.MESPRO][dato.CODCIA] = parseInt(dato.ACUNOR);
             });
+            console.log(datosRow8);
             var rowIndex = 1;
             for (let k = 0; k < arrayRegistros.length; k++) {
                 rowtd += '<tr class="border border-dark" style="background-color: ' + backgroundColor[k] +
@@ -303,6 +322,7 @@
                     backgroundColor[k] + '">' + arrayRegistros[k] + '</td>';
                 var totalRow = 0;
                 var totalMes = 0;
+                var acum=0;
                 switch (rowIndex) {
                     case 1:
                         Object.keys(datosRow1).forEach(mes => {
@@ -451,7 +471,7 @@
                         });
                         break;
                     case 6:
-                        Object.keys(datosRow5).forEach(mes => {
+                        Object.keys(datosRow6).forEach(mes => {
                             ciasSelected.forEach(codcia => {
                                 if (codcia == 0) {
                                     if (totalMes == 0) {
@@ -479,14 +499,105 @@
                             });
                         });
                         break;
+                    case 7:
+                        Object.keys(datosRow7).forEach(mes => {
+                            ciasSelected.forEach(codcia => {
+                                if (codcia == 0) {
+                                    if (totalMes == 0) {
+                                        rowtd +=
+                                            '<td class="text-end fontM border border-dark"> </td>';
+                                    } else {
+                                        rowtd +=
+                                            '<td class="text-end fontM border border-dark">' +
+                                            totalMes.toLocaleString('es-419', {
+                                                minimumFractionDigits: 0,
+                                                maximumFractionDigits: 0
+                                            }) + '</td>';
+                                    }
+                                    totalMes = 0;
+                                } else {
+                                    rowtd += '<td class="text-end fontM border border-dark">' +
+                                        (datosRow7[mes][codcia] != 0 ? datosRow7[mes][codcia]
+                                            .toLocaleString('es-419', {
+                                                minimumFractionDigits: 0,
+                                                maximumFractionDigits: 0
+                                            }) : '‎') + '</td>';
+                                    totalMes += parseInt(datosRow7[mes][codcia] || '0');
+                                    acum = parseInt(datosRow7[mes][codcia] || '0');
+                                }
+                            });
+                        });
+                        break;
+                        case 8:
+                        Object.keys(datosRow8).forEach(mes => {
+                            ciasSelected.forEach(codcia => {
+                                if (codcia == 0) {
+                                    if (totalMes == 0) {
+                                        rowtd +=
+                                            '<td class="text-end fontM border border-dark"> </td>';
+                                    } else {
+                                        rowtd +=
+                                            '<td class="text-end fontM border border-dark">' +
+                                            totalMes.toLocaleString('es-419', {
+                                                minimumFractionDigits: 0,
+                                                maximumFractionDigits: 0
+                                            }) + '</td>';
+                                    }
+                                    totalMes = 0;
+                                } else {
+                                    rowtd += '<td class="text-end fontM border border-dark">' +
+                                        (datosRow8[mes][codcia] != 0 ? datosRow8[mes][codcia]
+                                            .toLocaleString('es-419', {
+                                                minimumFractionDigits: 0,
+                                                maximumFractionDigits: 0
+                                            }) : '‎') + '</td>';
+                                    totalMes += parseInt(datosRow8[mes][codcia] || '0');
+                                    acum= parseInt(datosRow8[mes][codcia] || '0');
+                                }
+                            });
+                        });
+                        break;
+                        case 9:
+                        Object.keys(datosRow9).forEach(mes => {
+                            ciasSelected.forEach(codcia => {
+                                if (codcia == 0) {
+                                    if (totalMes == 0) {
+                                        rowtd +=
+                                            '<td class="text-end fontM border border-dark"> </td>';
+                                    } else {
+                                        rowtd +=
+                                            '<td class="text-end fontM border border-dark">' +
+                                            totalMes.toLocaleString('es-419', {
+                                                minimumFractionDigits: 0,
+                                                maximumFractionDigits: 0
+                                            }) + '</td>';
+                                    }
+                                    totalMes = 0;
+                                } else {
+                                    rowtd += '<td class="text-end fontM border border-dark">' +
+                                        (datosRow9[mes][codcia] != 0 ? datosRow9[mes][codcia]
+                                            .toLocaleString('es-419', {
+                                                minimumFractionDigits: 0,
+                                                maximumFractionDigits: 0
+                                            }) : '‎') + '</td>';
+                                    totalMes += parseInt(datosRow9[mes][codcia] || '0');
+                                    acum = parseInt(datosRow9[mes][codcia] || '0');
+                                }
+                            });
+                        });
+                        break;
                     default:
                         rowtd += '<td class="text-end fontM border border-dark">0</td>';
                         break;
                 }
-                rowtd += '<td class="text-end fontM border border-dark">' + totalRow.toLocaleString('es-419', {
-                    minimumFractionDigits: 0,
-                    maximumFractionDigits: 0
-                }) + '</td>';
+                if (rowIndex!=7 && rowIndex!=8 && rowIndex!=9) {
+                    rowtd += '<td class="text-end fontM border border-dark">' + totalRow.toLocaleString('es-419', {
+                        minimumFractionDigits: 0,
+                        maximumFractionDigits: 0
+                    }) + '</td>';
+                }else{
+                    rowtd += '<td class="text-end fontM border border-dark"> </td>';
+                }
                 rowtd += '</tr>';
                 rowIndex++;
             }

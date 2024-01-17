@@ -115,7 +115,7 @@
   if (isset($_SESSION["NOMUSU"]) == "" || isset($_SESSION['VALIDATE'])) {
     $host= $_SERVER["HTTP_HOST"];
     $url= $_SERVER["REQUEST_URI"];
-    
+
    if(trim(substr($url,20,8))=='ZLO0015P' || trim(substr($url,20,8))=='ZLO0016P'){
     if (isset($_GET['user'])) {$codusu=$_GET['user'];}
     $_SESSION['CODUSU']=$codusu;
@@ -124,7 +124,7 @@
     $resultVal=odbc_exec($connIBM, $sqlValidate);
     if (odbc_num_rows($resultVal)!=0) {
         $sqlGet="select * from LBPRDDAT/lo2207 where CODUSU='".$codusu."'";
-        $result=odbc_exec($connIBM, $sqlGet); 
+        $result=odbc_exec($connIBM, $sqlGet);
         while ($row = odbc_fetch_array($result)) {
             $_SESSION['VALIDATE']=1;
             $_SESSION["NOMUSU"]=utf8_encode(trim($row['NOMUSU']));
@@ -160,7 +160,7 @@
                                                 <div class="fw-semibold">Opciones de administrador</div></div>
                                                 <a class="dropdown-item p-2" href="/<?php echo $_SESSION['DEV'] ?>LovablePHP/PRG/Admin/Usuarios.php"><i class="fa-solid fa-user me-2"></i>Usuarios</a>
                                                 <a class="dropdown-item p-2" href="/<?php echo $_SESSION['DEV'] ?>LovablePHP/PRG/Admin/Opciones.php"><i class="fa-solid fa-bars me-2"></i>Menú</a>`);
-            
+
         }
         //MODULOS
         var urlModulos = 'http://172.16.15.20/API.LovablePHP/Opc/LayoutM/?code=' + usuario + '';
@@ -209,6 +209,17 @@
         //PROGRAMAS
         var urlProgramas = 'http://172.16.15.20/API.LovablePHP/Opc/LayoutP/?code=' + usuario + '';
         var responsePRG = ajaxRequest(urlProgramas);
+        var arrayOrder=responsePRG.data;
+        arrayOrder.sort((a, b) => {
+            if (a.CATDE1 < b.CATDE1) {
+                return -1;
+            }
+            if (a.CATDE1 > b.CATDE1) {
+                return 1;
+            }
+            return 0;
+        });
+
         if (responsePRG.code == 200) {
             function descripcionPrograma(row) {
                 let programa = row.trim().replace(/\s+/g, ' ').split(' ');
@@ -222,12 +233,12 @@
                 }
                 return programaDescripcion;
             }
-            for (let i = 0; i < responsePRG.data.length; i++) {
-                $("#" + responsePRG.data[i]['DETC91'] + "-" + responsePRG.data[i]['CATSEC'] + "").append(
+            for (let i = 0; i < arrayOrder.length; i++) {
+                $("#" + arrayOrder[i]['DETC91'] + "-" + arrayOrder[i]['CATSEC'] + "").append(
                     `<li class="nav-item">
-                      <a class="nav-link" style="font-size:13px; word-wrap: break-word; white-space: normal;" href="/` + isDev + `LovablePHP/PRG/` + responsePRG.data[i]['DETC91'] + `/` + responsePRG.data[i]['CATNOM'] + `.php">
+                      <a class="nav-link" style="font-size:13px; word-wrap: break-word; white-space: normal;" href="/` + isDev + `LovablePHP/PRG/` + arrayOrder[i]['DETC91'] + `/` + arrayOrder[i]['CATNOM'] + `.php">
                        <span class="nav-icon"></span><i class="fa-solid fa-circle me-2 ms-2" style="font-size:8px;"></i>` +
-                    descripcionPrograma(responsePRG.data[i]['CATDE1']).toUpperCase() + ` </a> </li>`);
+                    descripcionPrograma(arrayOrder[i]['CATDE1']).toUpperCase() + ` </a> </li>`);
             }
         }
 
@@ -242,7 +253,7 @@
                                 icon.classList.remove('fa-folder-open');
                                 icon.classList.add('fa-folder');
                     }
-                }       
+                }
             }, 2000);
             navGroup.addEventListener('click', function() {
                 setTimeout(() => {
@@ -256,7 +267,7 @@
                     if (this.classList.contains('show')) {
                         var icon = this.querySelector('.fa-folder, .fa-folder-open');
                             icon.classList.remove('fa-folder');
-                            icon.classList.add('fa-folder-open');   
+                            icon.classList.add('fa-folder-open');
                     }
                 }, 300);
             });
@@ -350,15 +361,15 @@
                                           <a class="nav-link py-0" data-coreui-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="true">
                                             <span class="text-end" style="font-size: 15px;">Usuario: <?php echo isset($_SESSION["NOMUSU"]) ? $_SESSION["NOMUSU"] : ""; ?></span>&nbsp;&nbsp;</a>
                                             <div id="dropdown-admin">
-                                               
+
                                             </div>
                                         </li>
-                                      </ul> 
+                                      </ul>
                                     </div>
                                     <div id="hasNumber">
                                     </div>
                                 </div>
-                                <div class="row" id="isEmpleado">     
+                                <div class="row" id="isEmpleado">
                                 </div>
                             </div>
                         </div>
@@ -419,7 +430,7 @@
                         HTTPError.code = jqXHR.status;
                         HTTPError.data = jqXHR;
                         HTTPError.message += "Request http Error: " + url + ", Exception: ";
-                        // http errors 
+                        // http errors
                         if (jqXHR.status === 0) {
                             HTTPError.message += 'Not connect.\n Verify Network.';
                         } else if (jqXHR.status == 404) {
@@ -510,9 +521,6 @@
     }
     return parseInt(combined);
 }
-
-
-
             </script>
 </body>
 

@@ -137,7 +137,7 @@
                                                     <a class="dropdown-item p-2"
                                                         href="/<?php echo $_SESSION['DEV'] ?>LovablePHP/PRG/Admin/Opciones.php"><i
                                                             class="fa-solid fa-bars me-2"></i>Menú</a>`);
-            
+
         }
         //MODULOS
         var urlModulos = 'http://172.16.15.20/API.LovablePHP/Opc/LayoutM/?code=' + usuario + '';
@@ -186,6 +186,17 @@
         //PROGRAMAS
         var urlProgramas = 'http://172.16.15.20/API.LovablePHP/Opc/LayoutP/?code=' + usuario + '';
         var responsePRG = ajaxRequest(urlProgramas);
+        var arrayOrder=responsePRG.data;
+        arrayOrder.sort((a, b) => {
+            if (a.CATDE1 < b.CATDE1) {
+                return -1;
+            }
+            if (a.CATDE1 > b.CATDE1) {
+                return 1;
+            }
+            return 0;
+        });
+
         if (responsePRG.code == 200) {
             function descripcionPrograma(row) {
                 let programa = row.trim().replace(/\s+/g, ' ').split(' ');
@@ -199,13 +210,13 @@
                 }
                 return programaDescripcion;
             }
-            for (let i = 0; i < responsePRG.data.length; i++) {
-                $("#" + responsePRG.data[i]['DETC91'] + "-" + responsePRG.data[i]['CATSEC'] + "").append(
+            for (let i = 0; i < arrayOrder.length; i++) {
+                $("#" + arrayOrder[i]['DETC91'] + "-" + arrayOrder[i]['CATSEC'] + "").append(
                     `<li class="nav-item">
-                      <a class="nav-link" style="font-size:13px; word-wrap: break-word; white-space: normal;" href="/` + isDev + `LovablePHP/PRG/` + responsePRG.data[i]['DETC91'] + `/` + responsePRG.data[i]['CATNOM'] + `.php">
+                      <a class="nav-link" style="font-size:13px; word-wrap: break-word; white-space: normal;" href="/` + isDev + `LovablePHP/PRG/` + arrayOrder[i]['DETC91'] + `/` + arrayOrder[i]['CATNOM'] + `.php">
                        <span class="nav-icon"></span><i class="fa-solid fa-circle me-2 ms-2" style="font-size:8px;"></i>` +
-                    descripcionPrograma(responsePRG.data[i]['CATDE1']).toUpperCase() + ` </a> </li>`);
-                $("#" + responsePRG.data[i]['DETC91'] + "-" + responsePRG.data[i]['CATSEC'] + " #hiddenli")
+                    descripcionPrograma(arrayOrder[i]['CATDE1']).toUpperCase() + ` </a> </li>`);
+                $("#" + arrayOrder[i]['DETC91'] + "-" + arrayOrder[i]['CATSEC'] + " #hiddenli")
                     .remove();
             }
         }
@@ -220,7 +231,7 @@
                                 icon.classList.remove('fa-folder-open');
                                 icon.classList.add('fa-folder');
                     }
-                }       
+                }
             }, 2000);
             navGroup.addEventListener('click', function() {
                 setTimeout(() => {
@@ -234,12 +245,12 @@
                     if (this.classList.contains('show')) {
                         var icon = this.querySelector('.fa-folder, .fa-folder-open');
                             icon.classList.remove('fa-folder');
-                            icon.classList.add('fa-folder-open');   
+                            icon.classList.add('fa-folder-open');
                     }
                 }, 300);
             });
-        }); 
-          
+        });
+
 
         var anoing = "<?php echo isset($_SESSION['ANOING'])? $_SESSION['ANOING']: ''; ?>";
         var numemp = "<?php echo isset($_SESSION['NUMEMP'])? $_SESSION['NUMEMP']: ''; ?>";
@@ -389,7 +400,7 @@
                         HTTPError.code = jqXHR.status;
                         HTTPError.data = jqXHR;
                         HTTPError.message += "Request http Error: " + url + ", Exception: ";
-                        // http errors 
+                        // http errors
                         if (jqXHR.status === 0) {
                             HTTPError.message += 'Not connect.\n Verify Network.';
                         } else if (jqXHR.status == 404) {

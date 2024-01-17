@@ -650,7 +650,7 @@
         document.getElementById("cbbPlan").value = plan;
         document.getElementById("cbbFormato").value = formato;
         document.getElementById("cbbEstad").value = estado;
-        
+
         if (formato == 0) {
              columnasExcel = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22,
                 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35
@@ -706,49 +706,49 @@
                 case "WUNIINV":
                 case "VALANT":
                         //SIN COLOR
-                    columnsConfig.push({data: columnDataValues[i],type: "num-fmt", className: "text-end", render: function(data) { return ((isNaN(parseFloat(data)) || parseFloat(data) == 0) ? (0).toFixed(2) : parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 })); }}); 
+                    columnsConfig.push({data: columnDataValues[i],type: "num-fmt", className: "text-end", render: function(data) { return ((isNaN(parseFloat(data)) || parseFloat(data) == 0) ? (0).toFixed(2) : parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 })); }});
                     break;
                 case "NUMME1":
                 case "NUMME6":
                 case "NUMMEV":
                         //SIN COLOR
-                    columnsConfig.push({data: columnDataValues[i],type: "num-fmt", className: "text-end", orderable: false, render: function(data) { return ((isNaN(parseFloat(data)) || parseFloat(data) == 0) ? '‎' : parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 0, maximumFractionDigits: 0 })); }}); 
+                    columnsConfig.push({data: columnDataValues[i],type: "num-fmt", className: "text-end", orderable: false, render: function(data) { return ((isNaN(parseFloat(data)) || parseFloat(data) == 0) ? '‎' : parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 0, maximumFractionDigits: 0 })); }});
                     break;
                 case "UPRMAV":
                 case "DOCANT":
                         //COLOR CYAN
-                    columnsConfig.push({data: columnDataValues[i],type: "num-fmt", className: "text-info text-end", render: function(data) { return ((isNaN(parseFloat(data)) || parseFloat(data) == 0) ? (0).toFixed(2) : parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 })); }}); 
+                    columnsConfig.push({data: columnDataValues[i],type: "num-fmt", className: "text-info text-end", render: function(data) { return ((isNaN(parseFloat(data)) || parseFloat(data) == 0) ? (0).toFixed(2) : parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 })); }});
                     break;
                 case "UPRMAV":
                 case "DOCANT":
                         //COLOR CYAN
-                    columnsConfig.push({data: columnDataValues[i],type: "num-fmt", className: "text-info text-end", render: function(data) { return ((isNaN(parseFloat(data)) || parseFloat(data) == 0) ? (0).toFixed(2) : parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 })); }}); 
+                    columnsConfig.push({data: columnDataValues[i],type: "num-fmt", className: "text-info text-end", render: function(data) { return ((isNaN(parseFloat(data)) || parseFloat(data) == 0) ? (0).toFixed(2) : parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 })); }});
                     break;
                 case "MESINV":
                 case "MESIN6":
                         //COLOR AZUL OSCURO
-                    columnsConfig.push({data: columnDataValues[i],type: "num-fmt", className: "text-darkblue text-end", render: function(data) { return ((isNaN(parseFloat(data)) || parseFloat(data) == 0) ? (0).toFixed(2) : parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 })); }}); 
+                    columnsConfig.push({data: columnDataValues[i],type: "num-fmt", className: "text-darkblue text-end", render: function(data) { return ((isNaN(parseFloat(data)) || parseFloat(data) == 0) ? (0).toFixed(2) : parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 })); }});
                     break;
                 case "UPRM1A":
                 case "UPRM6A":
                         //COLOR ROJO
-                    columnsConfig.push({data: columnDataValues[i],type: "num-fmt", className: "text-danger text-end", render: function(data) { return ((isNaN(parseFloat(data)) || parseFloat(data) == 0) ? (0).toFixed(2) : parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 })); }}); 
+                    columnsConfig.push({data: columnDataValues[i],type: "num-fmt", className: "text-danger text-end", render: function(data) { return ((isNaN(parseFloat(data)) || parseFloat(data) == 0) ? (0).toFixed(2) : parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 })); }});
                     break;
                 case "APAVXC":
                         //COLOR MORADO
-                    columnsConfig.push({data: columnDataValues[i],type: "num-fmt", className: "text-violet text-end", render: function(data) { return ((isNaN(parseFloat(data)) || parseFloat(data) == 0) ? (0).toFixed(2) : parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 })); }}); 
+                    columnsConfig.push({data: columnDataValues[i],type: "num-fmt", className: "text-violet text-end", render: function(data) { return ((isNaN(parseFloat(data)) || parseFloat(data) == 0) ? (0).toFixed(2) : parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 })); }});
                     break;
                 case "INVPTE":
-                    columnsConfig.push({data: columnDataValues[i],type: "num-fmt", className: "text-success text-end", render: function(data) { return ((isNaN(parseFloat(data)) || parseFloat(data) == 0) ? (0).toFixed(2) : parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 })); }}); 
+                    columnsConfig.push({data: columnDataValues[i],type: "num-fmt", className: "text-success text-end", render: function(data) { return ((isNaN(parseFloat(data)) || parseFloat(data) == 0) ? (0).toFixed(2) : parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 })); }});
                     break;
                 case "LEATIE":
                         //COLOR VERDE
-                    columnsConfig.push({data: columnDataValues[i],type: "num-fmt", className: "text-success text-end", render: function(data) { return ((isNaN(parseFloat(data)) || parseFloat(data) == 0) ? (0).toFixed(2) : parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 0, maximumFractionDigits: 0 })); }}); 
+                    columnsConfig.push({data: columnDataValues[i],type: "num-fmt", className: "text-success text-end", render: function(data) { return ((isNaN(parseFloat(data)) || parseFloat(data) == 0) ? (0).toFixed(2) : parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 0, maximumFractionDigits: 0 })); }});
                 break;
                 case "INVPRO":
                 case "INVPR1":
                         //COLOR VERDE CLARO
-                    columnsConfig.push({data: columnDataValues[i],type: "num-fmt", className: "text-violet text-end", render: function(data) { return ((isNaN(parseFloat(data)) || parseFloat(data) == 0) ? (0).toFixed(2) : parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 })); }}); 
+                    columnsConfig.push({data: columnDataValues[i],type: "num-fmt", className: "text-violet text-end", render: function(data) { return ((isNaN(parseFloat(data)) || parseFloat(data) == 0) ? (0).toFixed(2) : parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 })); }});
                     break;
                 case "INVCOR":
                 case "INVMTP":
@@ -756,30 +756,30 @@
                 case "INVPG1":
                 case "INVPG2":
                         //COLOR NARANJA
-                    columnsConfig.push({data: columnDataValues[i],type: "num-fmt", className: "text-orange text-end", render: function(data) { return ((isNaN(parseFloat(data)) || parseFloat(data) == 0) ? (0).toFixed(2) : parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 })); }}); 
+                    columnsConfig.push({data: columnDataValues[i],type: "num-fmt", className: "text-orange text-end", render: function(data) { return ((isNaN(parseFloat(data)) || parseFloat(data) == 0) ? (0).toFixed(2) : parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 })); }});
                     break;
                 //VISIBLE COLUMN 1:
                 case "UNIVAA":
                 case "UPRMAC":
-                    columnsConfig.push({data: columnDataValues[i],type: "num-fmt", visible: visibleColumn, className: "text-info text-end", render: function(data) { return ((isNaN(parseFloat(data)) || parseFloat(data) == 0) ? (0).toFixed(2) : parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 })); }}); 
+                    columnsConfig.push({data: columnDataValues[i],type: "num-fmt", visible: visibleColumn, className: "text-info text-end", render: function(data) { return ((isNaN(parseFloat(data)) || parseFloat(data) == 0) ? (0).toFixed(2) : parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 })); }});
                 break;
                 case "VALVAA":
-                    columnsConfig.push({data: columnDataValues[i],type: "num-fmt", visible: visibleColumn, className: "text-end", render: function(data) { return ((isNaN(parseFloat(data)) || parseFloat(data) == 0) ? (0).toFixed(2) : parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 })); }}); 
+                    columnsConfig.push({data: columnDataValues[i],type: "num-fmt", visible: visibleColumn, className: "text-end", render: function(data) { return ((isNaN(parseFloat(data)) || parseFloat(data) == 0) ? (0).toFixed(2) : parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 })); }});
                     break;
                 case "NUMMES":
                     columnsConfig.push({data: columnDataValues[i],type: "num-fmt", orderable: false, visible: visibleColumn, className: "text-end", render: function(data) { return ((isNaN(parseFloat(data)) || parseFloat(data) == 0) ? '‎' : parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 0, maximumFractionDigits: 0 })); }});
                     break;
                 case "DOCVAL":
-                    columnsConfig.push({data: columnDataValues[i],type: "num-fmt", visible: visibleColumn,className: "text-brown text-end", render: function(data) { return ((isNaN(parseFloat(data)) || parseFloat(data) == 0) ? (0).toFixed(2) : parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 })); }}); 
+                    columnsConfig.push({data: columnDataValues[i],type: "num-fmt", visible: visibleColumn,className: "text-brown text-end", render: function(data) { return ((isNaN(parseFloat(data)) || parseFloat(data) == 0) ? (0).toFixed(2) : parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 })); }});
                     break;
                 case "INVAPA":
-                    columnsConfig.push({data: columnDataValues[i],type: "num-fmt", visible: visibleColumn, className: "text-violet text-end", render: function(data) { return ((isNaN(parseFloat(data)) || parseFloat(data) == 0) ? (0).toFixed(2) : parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 })); }}); 
+                    columnsConfig.push({data: columnDataValues[i],type: "num-fmt", visible: visibleColumn, className: "text-violet text-end", render: function(data) { return ((isNaN(parseFloat(data)) || parseFloat(data) == 0) ? (0).toFixed(2) : parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 })); }});
                     break;
                 case "UVENRE":
-                    columnsConfig.push({data: columnDataValues[i],type: "num-fmt", visible: visibleColumn, className: "text-darkblue text-end", render: function(data) { return ((isNaN(parseFloat(data)) || parseFloat(data) == 0) ? (0).toFixed(2) : parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 })); }}); 
+                    columnsConfig.push({data: columnDataValues[i],type: "num-fmt", visible: visibleColumn, className: "text-darkblue text-end", render: function(data) { return ((isNaN(parseFloat(data)) || parseFloat(data) == 0) ? (0).toFixed(2) : parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 })); }});
                     break;
                 case "UVNRPR":
-                    columnsConfig.push({data: columnDataValues[i],type: "num-fmt", visible: visibleColumn, className: "text-danger text-end", render: function(data) { return ((isNaN(parseFloat(data)) || parseFloat(data) == 0) ? (0).toFixed(2) : parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 })); }}); 
+                    columnsConfig.push({data: columnDataValues[i],type: "num-fmt", visible: visibleColumn, className: "text-danger text-end", render: function(data) { return ((isNaN(parseFloat(data)) || parseFloat(data) == 0) ? (0).toFixed(2) : parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 })); }});
                     break;
                 //VISIBLE COLUMN 2:
                 case "IMPORT":
@@ -789,13 +789,12 @@
                 case "NUEINV":
                 case "BALANCE":
                 case "MATPRIMA":
-                    columnsConfig.push({data: columnDataValues[i],type: "num-fmt", visible: visibleColumn2, className: "text-end", render: function(data) { return ((isNaN(parseFloat(data)) || parseFloat(data) == 0) ? (0).toFixed(2) : parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 })); }}); 
+                    columnsConfig.push({data: columnDataValues[i],type: "num-fmt", visible: visibleColumn2, className: "text-end", render: function(data) { return ((isNaN(parseFloat(data)) || parseFloat(data) == 0) ? (0).toFixed(2) : parseFloat(data).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 })); }});
                     break;
                 default:
                     break;
             }
        }
-       console.log(columnsConfig);
         var table= initTable();
         var isInitialized = false;
         table.on('init.dt', function() {
@@ -842,7 +841,7 @@
                 dataTablesFilter.insertBefore(button2, firstChild);
             }, 200);
            }
-            
+
         });
 
         document.querySelectorAll('a.toggle-vis').forEach((el) => {
@@ -881,7 +880,6 @@
         if (toggleMarca != null) {
             animateMenu();
         }
-        
         ocultandoColumnas(table,columnsNoVisible);
     });
     function ocultandoColumnas(table,columnsNoVisible){
@@ -964,7 +962,7 @@
                     requestError = true;
                 }
             },
-            "columns": columnsConfig,   
+            "columns": columnsConfig,
             ordering: true,
             dom: 'Bftip',
             initComplete: function() {
@@ -1105,7 +1103,7 @@
                             '</font>';
                         var fillRosa = '<fill><patternFill patternType="solid"><fgColor rgb="FFFFE1F1"/></patternFill></fill>';
                         var fillAmarillo = '<fill><patternFill patternType="solid"><fgColor rgb="FFFFFF99"/></patternFill></fill>';
-                        
+
                         var n1 = '<numFmt formatCode="##0%"   numFmtId="300"/>';
                         var n2 = '<numFmt formatCode="#,##0.00"   numFmtId="200" />';
                         var s1 =
@@ -1306,9 +1304,9 @@
                                 $('c[r^="Q"]', row).attr('s', textgreen1);
                                 $('c[r^="S"], c[r^="V"]', row).attr('s', textred1);
                                 $('c[r^="X"], c[r^="Z"]', row).attr('s', textCyan);
-                            
+
                             if (cellE.text() === "L") {
-                                if (parseFloat($('c[r^="R"]', row).text()) <= parseFloat($('c[r^="Q"]', row).text()) || 
+                                if (parseFloat($('c[r^="R"]', row).text()) <= parseFloat($('c[r^="Q"]', row).text()) ||
                                     parseFloat($('c[r^="U"]', row).text()) <= parseFloat($('c[r^="Q"]', row).text())
                                     || isNaN(parseFloat($('c[r^="U"]', row).text())) || isNaN(parseFloat($('c[r^="R"]', row).text()))) {
                                         if(parseFloat($('c[r^="U"]', row).text())!=0){
@@ -1332,11 +1330,11 @@
                                         $('c[r^="J"], c[r^="L"], c[r^="N"], c[r^="O"], c[r^="P"]',row).attr('s', textNaranjaAmarillo);
                                         $('c[r^="Q"]', row).attr('s', textgreen1Amarillo);
                                         $('c[r^="S"], c[r^="V"]', row).attr('s', textred1Amarillo);
-                                        $('c[r^="X"], c[r^="Z"]', row).attr('s', textCyanAmarillo); 
+                                        $('c[r^="X"], c[r^="Z"]', row).attr('s', textCyanAmarillo);
 
                                         $('c[r^="A"],c[r^="K"], c[r^="M"], c[r^="T"], c[r^="U"], c[r^="W"], c[r^="Y"], c[r^="AA"]',row).attr('s', bgYellow);
-                                        $(' c[r^="B"],c[r^="C"], c[r^="D"], c[r^="E"]', row).attr('s', bgYellowChar);    
-                                    }          
+                                        $(' c[r^="B"],c[r^="C"], c[r^="D"], c[r^="E"]', row).attr('s', bgYellowChar);
+                                    }
                                 }
                             }
                             }else{
@@ -1350,7 +1348,7 @@
                             $('c[r^="P"], c[r^="Q"], c[r^="V"]', row).attr('s',textYellow);
                             $('c[r^="R"], c[r^="T"], c[r^="V"], c[r^="W"], c[r^="X"]',row).attr('s', textNaranja);
                             if (cellE.text() === "L") {
-                                if (parseFloat($('c[r^="Z"]', row).text()) <= parseFloat($('c[r^="Y"]', row).text()) || 
+                                if (parseFloat($('c[r^="Z"]', row).text()) <= parseFloat($('c[r^="Y"]', row).text()) ||
                                     parseFloat($('c[r^="AC"]', row).text()) <= parseFloat($('c[r^="Y"]', row).text())
                                     || isNaN(parseFloat($('c[r^="AC"]', row).text())) || isNaN(parseFloat($('c[r^="Z"]', row).text()))) {
                                         if(parseFloat($('c[r^="Z"]', row).text())!=0){
@@ -1363,10 +1361,10 @@
                                             $('c[r^="O"]', row).attr('s', textDarkGreenRosa);
                                             $('c[r^="P"], c[r^="Q"], c[r^="V"]', row).attr('s',textYellowRosa);
                                             $('c[r^="R"], c[r^="T"], c[r^="V"], c[r^="W"], c[r^="X"]',row).attr('s', textNaranjaRosa);
-                                            
+
                                             $('c[r^="A"], c[r^="G"], c[r^="I"], c[r^="S"], c[r^="U"], c[r^="AB"], c[r^="AC"], c[r^="AE"], c[r^="AG"], c[r^="AI"]',row).attr('s', bgPink);
                                             $('c[r^="B"],c[r^="C"], c[r^="D"], c[r^="E"], c[r^="AJ"]', row).attr('s', bgPinkChar);
-                                        } 
+                                        }
                                     } else {
                                     if (parseFloat($('c[r^="Z"]', row).text()) <= (parseFloat($('c[r^="Y"]', row).text()) + 1) ||
                                         parseFloat($('c[r^="AC"]', row).text()) <= (parseFloat($('c[r^="Y"]', row).text()) + 1)) {
@@ -1379,10 +1377,10 @@
                                         $('c[r^="O"]', row).attr('s', textDarkGreenAmarillo);
                                         $('c[r^="P"], c[r^="Q"], c[r^="V"]', row).attr('s',textYellowAmarillo);
                                         $('c[r^="R"], c[r^="T"], c[r^="V"], c[r^="W"], c[r^="X"]',row).attr('s', textNaranjaAmarillo);
-                                        
+
                                         $('c[r^="A"], c[r^="B"], c[r^="E"], c[r^="G"], c[r^="I"], c[r^="S"], c[r^="U"], c[r^="AB"], c[r^="AC"], c[r^="AE"], c[r^="AG"], c[r^="AI"]',row).attr('s', bgYellow);
-                                        $('c[r^="B"],c[r^="C"], c[r^="D"], c[r^="E"], c[r^="AJ"]', row).attr('s', bgYellowChar);    
-                                    }          
+                                        $('c[r^="B"],c[r^="C"], c[r^="D"], c[r^="E"], c[r^="AJ"]', row).attr('s', bgYellowChar);
+                                    }
                                 }
                             }
                             }
@@ -1393,14 +1391,14 @@
                                 $('c[r^="A"], c[r^="B"], c[r^="C"], c[r^="D"], c[r^="E"]',
                                     row).text('s', ' ');
                             }
-                            
+
                         });
                         var tagName = sSh.getElementsByTagName('sz');
                         for (i = 0; i < tagName.length; i++) {
                             tagName[i].setAttribute("val", "13");
                         }
                         if(formato == 10){
-                            var table = $('#myTablePlaneacion').DataTable(); 
+                            var table = $('#myTablePlaneacion').DataTable();
                             var col = $('col', sheet);
                             table.columns().every(function(index) {
                             var column = this;
@@ -1418,7 +1416,7 @@
                             }
                         });
                         }else{
-                            var table = $('#myTablePlaneacion').DataTable(); 
+                            var table = $('#myTablePlaneacion').DataTable();
                             var col = $('col', sheet);
                             table.columns().every(function(index) {
                                 var column = this;
@@ -1429,7 +1427,7 @@
                                 }
                             });
                         }
-                       
+
                     }
                 },
 
@@ -1448,7 +1446,7 @@
                                 .MESIN6)) || isNaN(parseFloat(data.MESINV))) {
                                     if(!isNaN(parseFloat(data.MESINV))){
                                        row.classList.add('bg-pink');
-                                }      
+                                }
                         } else {
                             if (parseFloat(data.MESINV) <= (parseFloat(data.LEATIE) + 1) ||
                                 parseFloat(data.MESIN6) <= (parseFloat(data.LEATIE) + 1)) {
@@ -1503,8 +1501,6 @@
     function openModalVentas(estilo, data) {
         var anoActual = new Date().getFullYear();
         $("#lblEstilo").text(estilo);
-        //$("#currentYear").text(anoActual);
-
         var urlResumen = "http://172.16.15.20/API.LovablePHP/ZLO0013P/ListResumen/?ano=" + anoActual + "&estilo=" +
             estilo + "";
         var responseResumen = ajaxRequest(urlResumen);

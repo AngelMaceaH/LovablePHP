@@ -35,6 +35,7 @@ switch (case1) {
             '&compFiltro=' + compfiltro + '&usuario=' + usuario + '&case=' + case1 + '&vend=1';
         break;
 }
+console.log(url2);
 var responseDiayMes = ajaxRequest(url1);
 var responseAnual = ajaxRequest(url2);
 if (case1 != 2) {
@@ -67,9 +68,7 @@ $(document).ready(function() {
             var creciPromedio = 0,
                 varPromedios = 0;
             if (case1 != 2) {
-                (responsePromedios.data[i]['PROANO2'] != 0) ? creciPromedio = (((responsePromedios.data[i][
-                    'PROANO'
-                ] / responsePromedios.data[i]['PROANO2']) - 1) * 100): creciPromedio = 0;
+                (responsePromedios.data[i]['PROANO2'] != 0) ? creciPromedio = (((responsePromedios.data[i]['PROANO'] / responsePromedios.data[i]['PROANO2']) - 1) * 100): creciPromedio = 0;
                 varPromedios = (responsePromedios.data[i]['PROANO'] - responsePromedios.data[i]['PROANO2']);
             }
             if (responseDiayMes.data[i]['VENDEDOR'] == '1' || responseDiayMes.data[i]['VENDEDOR'] == '2') {
@@ -354,15 +353,14 @@ $(document).ready(function() {
                           case 4:
                             $title="(MONEDA NACIONAL)";
                             break;
-                    
+
                     default:
                       # code...
                       break;
                   }
-                
+
                 ?>
-                $('c[r=A1] t', sheet).text(
-                    'REPORTE DE VENTAS RESUMIDAS POR COMPAÑÍA <?php echo $title; ?> ');
+                $('c[r=A1] t', sheet).text('REPORTE DE VENTAS RESUMIDAS POR COMPAÑÍA <?php echo $title; ?> ');
                 $('row:eq(0) c', sheet).attr('s', greyBoldCentered);
                 $('row:eq(1) c', sheet).attr('s', 7);
 
@@ -414,7 +412,7 @@ $(document).ready(function() {
                         $('row:eq(' + index + ') c[r^="L"]', sheet).attr('s',
                             textgreen1); //VERDE
                     }
-                    <?php  
+                    <?php
                     }else{
                   ?>
                     if (parseFloat(($('row:eq(' + index + ') c[r^="B"]', sheet).text())
@@ -446,7 +444,7 @@ $(document).ready(function() {
                         $('row:eq(' + index + ') c[r^="L"]', sheet).attr('s',
                             textgreen1); //VERDE
                     }
-                    <?php     
+                    <?php
                     }
                   ?>
 

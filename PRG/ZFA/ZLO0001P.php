@@ -26,8 +26,8 @@
       $_SESSION['filtro'] = isset($_GET['fil']) ? $_GET['fil'] : "3";
       $_SESSION['opcion'] = isset($_GET['opc']) ? $_GET['opc'] : "1";
       $tablaDIA="";$tablaMES="";
-      $sqlquery_zlo0001p = isset($_SESSION['logicSql']) ? $_SESSION['logicSql'] : " ";  
-    ?> 
+      $sqlquery_zlo0001p = isset($_SESSION['logicSql']) ? $_SESSION['logicSql'] : " ";
+    ?>
      <div class="container-fluid">
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb my-0 ms-2">
@@ -42,7 +42,7 @@
       <div id="body-div" class="body flex-grow-1">
         <div class="card mb-5">
           <div class="card-header">
-          <h1 class="fs-4 mb-1 mt-2 text-center">Consulta de ventas resumidas</h1>
+          <h1 class="fs-4 mb-1 mt-2 text-center">Consulta de ventas resumidas - Tiendas</h1>
           </div>
           <div class="card-body">
             <form id="formFiltros" action="../../assets/php/ZFA/ZLO0001P/logic.php" method="POST">
@@ -72,7 +72,7 @@
             </div>
           </div>
           </form>
-          <hr>   
+          <hr>
           <div class="demo">
                 <ul class="tablist" role="tablist">
                     <li id="tab1" class="tablist__tab text-center p-3 is-active" aria-controls="panel1" aria-selected="true" role="tab" tabindex="0">Día y Mes</li>
@@ -80,14 +80,14 @@
                     <li id="tab3" class="tablist__tab text-center p-3 " aria-controls="panel1" aria-selected="true" role="tab" tabindex="0">Promedio por Transacción</li>
                 </ul>
                 <div id="panel1" class="tablist__panel p-2" aria-labelledby="tab1" aria-hidden="false" role="tabpanel">
-                 
-                  
+
+
                   <div class="table-responsive">
-                    
+
                     <table id="myTable" class="table stripe table-hover mt-2" style="width:100%" >
-                   
+
                     <?php
-                   
+
                     $label1="";$label2="";$label3="";$label4=""; $label5="";$label6="";
                           switch ($_SESSION['filtro']) {
                             case 1:
@@ -103,7 +103,7 @@
                                  $label3="Venta Anual"; $label4="Venta Año Comparación";
                                  $label5="Comparativo mes anterior";$label6="Comparativo mes actual ".($_SESSION['AnoFiltro']-1);
                               break;
-                          }                    
+                          }
                        print ' <thead>';
                        print '         <tr>';
                        print '             <th class="text-start responsive-font-example d-none"></th>';
@@ -133,12 +133,12 @@
                         </table>
                         </div>
                     </div>
-                  </div>   
+                  </div>
               </div>
         </div>
       </div>
     </div>
-   
+
       <div class="footer bg-blck flex-grow-1 d-flex justify-content-center">
       <p class="bggray responsive-font-example"><i>Lovable de Honduras S.A. de C.V</i></p>
       </div>

@@ -7,7 +7,7 @@
   <link rel="icon" type="image/x-icon" href="../../assets/img/favicon.ico">
   <style>
     .positionRel{
-      position: relative; 
+      position: relative;
       left: 50%;
       transform: translateX(-50%);
     }
@@ -20,7 +20,7 @@
       }
       .graficasMovil {
         display: flex;
-        
+
       }
     }
     @media (min-width: 1200px) {
@@ -52,7 +52,7 @@
       <div id="body-div" class="body flex-grow-3">
           <div class="card mb-5">
             <div class="card-header">
-              
+
             </div>
             <div class="card-body">
             <div class="demo">
@@ -111,7 +111,7 @@
                       <canvas id="miGrafica4"></canvas>
                   </div>
                   <hr class="mt-4 mb-4">
-                   
+
                 <table id="myTableInventario" class="table stripe table-hover " style="width:100%">
                   <thead>
                       <tr>
@@ -234,7 +234,7 @@
         </div>
         </div>
       </div>
-      
+
     </div>
     <div class="footer bg-blck flex-grow-1 d-flex justify-content-center">
       <p class="bggray responsive-font-example"><i>Lovable de Honduras S.A. de C.V</i></p>
@@ -250,5 +250,5 @@
       <?php include '../../assets/js/PRG/ZPT/ZLO0002P.php'; ?>
 
 </body>
-      
+
 </html>
