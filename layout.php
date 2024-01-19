@@ -275,17 +275,15 @@
                 areaId = responseArea.data['SECDEP'];
                 seccionId = responseArea.data['SECCOD'];
             }
-            $("#hasNumber").append(`<div class="col-12">
+            /*$("#hasNumber").append(`<div class="col-12">
                                         <span class="text-end" style="font-size: 14px;">ID: ` + combineNumbers(anoing,
                 numemp) + `</span>
-                                    </div>`);
+                                    </div>`);*/
             $("#isEmpleado").append(`<div class="col-12">
                                         <span class="text-end" style="font-size: 14px;">Depto: (` + areaId + `) ` +
                 areaDesc + `</span>&nbsp;&nbsp;
                                     </div>
-                                    <div class="col-12">
-                                        <span class="text-end" style="font-size: 14px;">Sección: ` + seccionId + `</span>
-                                    </div>`);
+                                   `);
         }
         var urlCia = "http://172.16.15.20/API.LovablePHP/Access/GetCia/?anoing=" + anoing + "&numemp=" +
             numemp + "";
@@ -353,7 +351,7 @@
                                     <div id="hasNumber">
                                     </div>
                                 </div>
-                                <div class="row" id="isEmpleado">
+                                <div class="row me-5" id="isEmpleado">
                                 </div>
                             </div>
                         </div>

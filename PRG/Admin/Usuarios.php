@@ -64,95 +64,103 @@
     var programasAsignadosEdit=[];
     var empleIdEdit="";
     var proveIdEdit="";
+
+    var departamentosUsuario=[0];
+    var departamentosUsuarioEdit=[0];
+    var tiposDocs=[];
+    var tiposDocsEdit=[];
+    var tableEmpleado=null;
+    var tableProveedor=null;
+    var tableEmpleadoEdit=null;
+    var tableProveedorEdit=null;
     $(document).ready(function() {
-        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-        var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
-            return new bootstrap.Tooltip(tooltipTriggerEl, {
-                html: true
-            })
-        });
-        var table = $('#tbUsers').DataTable({
-            language: {
-                url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json',
-                loadingRecords: `Cargando datos...`
-            },
-            "ajax": {
-                "url": "http://172.16.15.20/API.LovablePHP/Users/GET/",
-                "type": "POST",
-            },
-            "columns": [
-                {
-                    data: "CODUSU",
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+            var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl, {
+                    html: true
+                })
+            });
+            var table = $('#tbUsers').DataTable({
+                language: {
+                    url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json',
+                    loadingRecords: `Cargando datos...`
                 },
-                {
-                    data: "NOMUSU",
+                "ajax": {
+                    "url": "http://172.16.15.20/API.LovablePHP/Users/GET/",
+                    "type": "POST",
                 },
-                {
-                    data: "CONTRA",
-                    render: function(data) {
-                        return `<div class="input-group">
-                                        <input type="password" class="form-control" value="` + data + `">
-                                        <button type="button" class="btn btn-light input-group-text" onclick="togglePass(this)">
-                                            <i class="fa-solid fa-eye"></i>
-                                        </button>
-                                    </div>
-                                    `;
-                    }
-                },
-                {
-                    data: "NULL",
-                    render: function(data, type, row) {
-                        return `<button type="button" class="btn btn-warning" onclick="edit('${row.CODUSU}')"><i class="fas fa-edit text-white"></i></button>
-                                <button type="button" class="btn btn-danger" onclick="confirmDel('${row.CODUSU}')"><i class="fas fa-trash-alt text-white"></i></button>`;
-                    }
-                },
-            ],
-        });
+                "columns": [
+                    {
+                        data: "CODUSU",
+                    },
+                    {
+                        data: "NOMUSU",
+                    },
+                    {
+                        data: "CONTRA",
+                        render: function(data) {
+                            return `<div class="input-group">
+                                            <input type="password" class="form-control" value="` + data + `">
+                                            <button type="button" class="btn btn-light input-group-text" onclick="togglePass(this)">
+                                                <i class="fa-solid fa-eye"></i>
+                                            </button>
+                                        </div>
+                                        `;
+                        }
+                    },
+                    {
+                        data: "NULL",
+                        render: function(data, type, row) {
+                            return `<button type="button" class="btn btn-warning" onclick="edit('${row.CODUSU}')"><i class="fas fa-edit text-white"></i></button>
+                                    <button type="button" class="btn btn-danger" onclick="confirmDel('${row.CODUSU}')"><i class="fas fa-trash-alt text-white"></i></button>`;
+                        }
+                    },
+                ],
+            });
 
-        var urlModulos = "http://172.16.15.20/API.LovablePHP/Opc/ListMod/";
-        var response = ajaxRequest(urlModulos);
-        var opcMod = "";
-        if (response.code == 200) {
-            var opcMod = "<option value='0'>Seleccione un módulo</option>";
-            for (let index = 0; index < response.data.length; index++) {
-                opcMod +=`<option value="${response.data[index]['CODIGO']}">${response.data[index]['DESCRP']}</option>`;
-            }
-        }
-        document.getElementById("txtModulo").innerHTML = opcMod;
-        document.getElementById("txtModuloEdit").innerHTML = opcMod;
-
-        $("#txtModulo").change(function(){
-            $("#divProgramas").empty();
-            var modulo = $("#txtModulo").val().split("-")[0];
-            var urlModulos = "http://172.16.15.20/API.LovablePHP/Opc/ListOpc/?modulo=" + modulo + "";
+            var urlModulos = "http://172.16.15.20/API.LovablePHP/Opc/ListMod/";
             var response = ajaxRequest(urlModulos);
-            var opcOpc = `<option value="0">Seleccione una opción</option>`;
+            var opcMod = "";
             if (response.code == 200) {
-
+                var opcMod = "<option value='0'>Seleccione un módulo</option>";
                 for (let index = 0; index < response.data.length; index++) {
-                    opcOpc +=
-                        `<option value="${response.data[index]['CODIGO']}">${response.data[index]['DESCRP']}</option>`;
+                    opcMod +=`<option value="${response.data[index]['CODIGO']}">${response.data[index]['DESCRP']}</option>`;
                 }
             }
-            $("#txtOpcion").empty();
-            $("#txtOpcion").append(opcOpc);
-        });
-        $("#txtModuloEdit").change(function(){
-            $("#divProgramasEdit").empty();
-            var modulo = $("#txtModuloEdit").val().split("-")[0];
-            var urlModulos = "http://172.16.15.20/API.LovablePHP/Opc/ListOpc/?modulo=" + modulo + "";
-            var response = ajaxRequest(urlModulos);
-            var opcOpc = `<option value="0">Seleccione una opción</option>`;
-            if (response.code == 200) {
+            document.getElementById("txtModulo").innerHTML = opcMod;
+            document.getElementById("txtModuloEdit").innerHTML = opcMod;
 
-                for (let index = 0; index < response.data.length; index++) {
-                    opcOpc +=
-                        `<option value="${response.data[index]['CODIGO']}">${response.data[index]['DESCRP']}</option>`;
+            $("#txtModulo").change(function(){
+                $("#divProgramas").empty();
+                var modulo = $("#txtModulo").val().split("-")[0];
+                var urlModulos = "http://172.16.15.20/API.LovablePHP/Opc/ListOpc/?modulo=" + modulo + "";
+                var response = ajaxRequest(urlModulos);
+                var opcOpc = `<option value="0">Seleccione una opción</option>`;
+                if (response.code == 200) {
+
+                    for (let index = 0; index < response.data.length; index++) {
+                        opcOpc +=
+                            `<option value="${response.data[index]['CODIGO']}">${response.data[index]['DESCRP']}</option>`;
+                    }
                 }
-            }
-            $("#txtOpcionEdit").empty();
-            $("#txtOpcionEdit").append(opcOpc);
-         });
+                $("#txtOpcion").empty();
+                $("#txtOpcion").append(opcOpc);
+            });
+            $("#txtModuloEdit").change(function(){
+                $("#divProgramasEdit").empty();
+                var modulo = $("#txtModuloEdit").val().split("-")[0];
+                var urlModulos = "http://172.16.15.20/API.LovablePHP/Opc/ListOpc/?modulo=" + modulo + "";
+                var response = ajaxRequest(urlModulos);
+                var opcOpc = `<option value="0">Seleccione una opción</option>`;
+                if (response.code == 200) {
+                    for (let index = 0; index < response.data.length; index++) {
+                        opcOpc +=
+                            `<option value="${response.data[index]['CODIGO']}">${response.data[index]['DESCRP']}</option>`;
+                    }
+                }
+                $("#txtOpcionEdit").empty();
+                $("#txtOpcionEdit").append(opcOpc);
+            });
             $("#txtOpcion").change(function(){
                 var modulo = $("#txtModulo").val();
                 var opcion = $("#txtOpcion").val();
@@ -172,7 +180,7 @@
                                             </tr>
                                         </thead>
                                         <tbody id="tbDetalles">
-                                            
+
                                         </tbody>
                                     </table>
                                 </div>`);
@@ -181,7 +189,7 @@
                                 row+=`<tr>
                                     <td>`+response.data[i]['DESCRP']+`</td>
                                     <td class="text-center">`+response.data[i]['CODIGO']+`</td>
-                                    <td class="text-center"> 
+                                    <td class="text-center">
                                     <input type="text" class="codInput d-none" value="`+response.data[i]['CODIGO']+`" />
                                     <input type="checkbox" class="form-check-input checkId" checked onclick="asignarPrg(this)" id="`+response.data[i]['CODIGO']+`">
                                     </td>
@@ -190,13 +198,13 @@
                                 row+=`<tr>
                                     <td>`+response.data[i]['DESCRP']+`</td>
                                     <td class="text-center">`+response.data[i]['CODIGO']+`</td>
-                                    <td class="text-center"> 
+                                    <td class="text-center">
                                     <input type="text" class="codInput d-none" value="`+response.data[i]['CODIGO']+`" />
                                     <input type="checkbox" class="form-check-input checkId" onclick="asignarPrg(this)" id="`+response.data[i]['CODIGO']+`">
                                     </td>
                                 </tr>`;
                             }
-                        
+
                     }
                     $("#tbDetalles").append(row);
                 }
@@ -206,7 +214,7 @@
                 var title = $(this).text();
                 $(this).html(title + '<br /><input type="text" oninput="this.value = this.value.toUpperCase()" class="form-control mt-2"/>');
             });
-            var tableProveedor = $('#tbProveedores').DataTable({
+             tableProveedor = $('#tbProveedores').DataTable({
                 language: {
                     url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json',
                 },
@@ -246,7 +254,7 @@
             $('#tbProveedores thead input').on('keyup', function() {
                 var columnIndex = $(this).parent().index();
                 var inputValue = $(this).val().trim();
-                if (tableProveedor.column(columnIndex).search() !== inputValue) {
+                if (tableProveedor.column(columnIndex).search() !== inputValue){
                     tableProveedor
                         .column(columnIndex)
                         .search(inputValue)
@@ -258,7 +266,7 @@
                 var title = $(this).text();
                 $(this).html(title + '<br /><input type="text"  oninput="this.value = this.value.toUpperCase()" class="form-control mt-2"/>');
             });
-            var tableEmpleado = $('#tbEmpleados').DataTable({
+            tableEmpleado = $('#tbEmpleados').DataTable({
                 language: {
                     url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json',
                 },
@@ -279,15 +287,33 @@
                 "ordering": false,
                 "dom": 'rtip',
                 "columns": [
-                    { "data": "MAEAOI",
+                    {
+                        "data": "MAEAOI",
                         render: function(data) {
                           return data.padStart(2, '0');
-                      } },
-                    { "data": "MAENUM",
-                        render: function(data) {
-                          return data.padStart(4, '0');
-                      }  },
-                    { "data": "MAENO1" },
+                      }
+                    },
+                    {
+                        "data": "NULL",
+                        "render": function(data, type, row) {
+                            return '<span style="float: left;">' + row.MAENUM.padStart(4, '0') + '</span>' +
+                                '<span style="float: right;">' + ' (' + row.NOMCIA + ')' + '</span>';
+                        },
+
+                    },
+                    {
+                        "data": "NULL",
+                        render: function(data, type, row) {
+                            return row.MAENO1;
+                        },
+                    },
+                    {
+                        "data": "NULL",
+                        render: function(data, type, row) {
+                            return row.MAEC01+'-'+row.MAEC02;
+                        },
+                        className: "d-none"
+                    }
                 ],
                 "drawCallback": function() {
                     $('#tbEmpleados tbody tr').on('click', function() {
@@ -310,7 +336,7 @@
                 var title = $(this).text();
                 $(this).html(title + '<br /><input type="text" oninput="this.value = this.value.toUpperCase()" class="form-control mt-2"/>');
             });
-            var tableProveedorEdit = $('#tbProveedoresEdit').DataTable({
+             tableProveedorEdit = $('#tbProveedoresEdit').DataTable({
                 language: {
                     url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json',
                 },
@@ -357,12 +383,12 @@
                         .draw();
                 }
             });
-            //EMPLEADOS EDUTAR
+            //EMPLEADOS EDITAR
             $('#tbEmpleadosEdit thead th').each(function() {
                 var title = $(this).text();
                 $(this).html(title + '<br /><input type="text"  oninput="this.value = this.value.toUpperCase()" class="form-control mt-2"/>');
             });
-            var tableEmpleadoEdit = $('#tbEmpleadosEdit').DataTable({
+             tableEmpleadoEdit = $('#tbEmpleadosEdit').DataTable({
                 language: {
                     url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json',
                 },
@@ -383,15 +409,33 @@
                 "ordering": false,
                 "dom": 'rtip',
                 "columns": [
-                    { "data": "MAEAOI",
+                    {
+                        "data": "MAEAOI",
                         render: function(data) {
                           return data.padStart(2, '0');
-                      } },
-                    { "data": "MAENUM",
-                        render: function(data) {
-                          return data.padStart(4, '0');
-                      }  },
-                    { "data": "MAENO1" },
+                      }
+                    },
+                    {
+                        "data": "NULL",
+                        "render": function(data, type, row) {
+                            return '<span style="float: left;">' + row.MAENUM.padStart(4, '0') + '</span>' +
+                                '<span style="float: right;">' + ' (' + row.NOMCIA + ')' + '</span>';
+                        },
+
+                    },
+                    {
+                        "data": "NULL",
+                        render: function(data, type, row) {
+                            return row.MAENO1;
+                        },
+                    },
+                    {
+                        "data": "NULL",
+                        render: function(data, type, row) {
+                            return row.MAEC01+'-'+row.MAEC02;
+                        },
+                        className: "d-none"
+                    }
                 ],
                 "drawCallback": function() {
                     $('#tbEmpleadosEdit tbody tr').on('click', function() {
@@ -421,9 +465,181 @@
                 companiaId.innerHTML = comarcOptions;
                 companiaIdEdit.innerHTML = comarcOptions;
             }
-
-
+            var urlDepas = "http://172.16.15.20/API.LOVABLEPHP/ZLO0015P/ListDepas/";
+            var responseDepas = ajaxRequest(urlDepas);
+            if (responseDepas.code == 200) {
+                const departamentos = $("#cbbDepartamentos");
+                const departamentosEdit = $("#cbbDepartamentosEdit");
+                departamentos.empty();
+                departamentos.append(`<option value="0-0" class="text-muted" selected>Agrega un departamento al usuario</option>`);
+                for (let i = 0; i < responseDepas.data.length; i++) {
+                    departamentos.append(`<option value="` + responseDepas.data[i].SECDEP + `-` + responseDepas.data[i].SECCOD +`">` + responseDepas.data[i].SECDES + `</option>`);
+                }
+                departamentosEdit.empty();
+                departamentosEdit.append(`<option value="0-0" class="text-muted" selected>Agrega un departamento al usuario</option>`);
+                for (let i = 0; i < responseDepas.data.length; i++) {
+                    departamentosEdit.append(`<option value="` + responseDepas.data[i].SECDEP + `-` + responseDepas.data[i].SECCOD +`">` + responseDepas.data[i].SECDES + `</option>`);
+                }
+            }
+            var urlTipos = "http://172.16.15.20/API.LovablePHP/ZLO0015P/ListTipos/";
+            var responseTipos = ajaxRequest(urlTipos);
+            if (responseTipos.code == 200) {
+                const tipos = $("#tiposDoc");
+                const tiposEdit = $("#tiposDocEdit");
+                tipos.empty();
+                tiposEdit.empty();
+                tipos.append(`<option value="0" class="text-muted" selected>Agrega un tipo de documento al usuario</option>`);
+                tiposEdit.append(`<option value="0" class="text-muted" selected>Agrega un tipo de documento al usuario</option>`);
+                for (let i = 0; i < responseTipos.data.length; i++) {
+                    tipos.append(`<option value="` + responseTipos.data[i].TIPDOC + `">` + responseTipos.data[i].DESCRP + `</option>`);
+                    tiposEdit.append(`<option value="` + responseTipos.data[i].TIPDOC + `">` + responseTipos.data[i].DESCRP + `</option>`);
+                }
+            }
     });
+    function addRow() {
+        const departamentos = $("#cbbDepartamentos");
+        if (departamentos.val() == "0-0" || departamentos.val() == null) {
+            $("#lblCbbError").text("Debe seleccionar un departamento");
+        }else{
+            $("#lblCbbError").text("");
+            var splitDepa=departamentos.val().split("-");
+            var depa = splitDepa[0];
+            var cod = splitDepa[1];
+            if (!departamentosUsuario.includes(depa + "-" + cod)) {
+                departamentosUsuario.push(depa + "-" + cod);
+                var row = `<tr>
+                                <td class="p-0 p-1 m-0">` + $("#cbbDepartamentos option:selected").text() + `</td>
+                                <td class="text-center p-0 p-1 m-0">
+                                    <input type="text" class="d-none" value="` + depa +'-'+ cod + `" />
+                                    <button type="button" class="btn btn-danger" onclick="delRow(this)"><i class="fas fa-trash-alt text-white"></i></button>
+                                </td>
+                            </tr>`;
+                $("#tableDepartamentos").append(row);
+                $("#divDepartamentos").removeClass("d-none");
+                $("#cbbDepartamentos").val("0-0");
+            }else{
+                $("#lblCbbError").text("El departamento ya fue agregado");
+            }
+        }
+    }
+    function delRow(button) {
+        var container = button.closest('tr');
+        var input = $(button).siblings('input');
+        var inputVal = input.val().split("-");
+        var depa = inputVal[0];
+        var cod = inputVal[1];
+        departamentosUsuario.splice(departamentosUsuario.indexOf(depa + "-" + cod),1);
+        container.remove();
+        if (departamentosUsuario.length==1 && $("#depaFixed").text()=="") {
+            $("#divDepartamentos").addClass("d-none");
+        }
+    }
+    function addRowEdit() {
+        const departamentos = $("#cbbDepartamentosEdit");
+        if (departamentos.val() == "0-0" || departamentos.val() == null) {
+            $("#lblCbbErrorEdit").text("Debe seleccionar un departamento");
+        }else{
+            $("#lblCbbErrorEdit").text("");
+            var splitDepa=departamentos.val().split("-");
+            var depa = splitDepa[0];
+            var cod = splitDepa[1];
+            if (!departamentosUsuarioEdit.includes(depa + "-" + cod)){
+                departamentosUsuarioEdit.push(depa + "-" + cod);
+                var row = `<tr>
+                                <td class="p-0 p-1 m-0">` + $("#cbbDepartamentosEdit option:selected").text() + `</td>
+                                <td class="text-center p-0 p-1 m-0">
+                                    <input type="text" class="d-none" value="` + depa +'-'+ cod + `" />
+                                    <button type="button" class="btn btn-danger" onclick="delRowEdit(this)"><i class="fas fa-trash-alt text-white"></i></button>
+                                </td>
+                            </tr>`;
+                $("#tableDepartamentosEdit").append(row);
+                $("#divDepartamentosEdit").removeClass("d-none");
+                $("#cbbDepartamentosEdit").val("0-0");
+            }else{
+                $("#lblCbbErrorEdit").text("El departamento ya fue agregado");
+            }
+        }
+    }
+    function delRowEdit(button) {
+        var container = button.closest('tr');
+        var input = $(button).siblings('input');
+        var inputVal = input.val().split("-");
+        var depa = inputVal[0];
+        var cod = inputVal[1];
+        departamentosUsuarioEdit.splice(departamentosUsuarioEdit.indexOf(depa + "-" + cod),1);
+        container.remove();
+        if (departamentosUsuarioEdit.length==1 && $("#depaFixedEdit").text()=="") {
+            $("#divDepartamentosEdit").addClass("d-none");
+        }
+    }
+    function addRowTipos() {
+        const tiposDoc = $("#tiposDoc");
+        if (tiposDoc.val() == "0" ) {
+            $("#lblTiposError").text("Debe seleccionar un tipo de documento");
+        }else{
+            $("#lblTiposError").text("");
+            var tipo=tiposDoc.val();
+            if (!tiposDocs.includes(tipo)) {
+                tiposDocs.push(tipo);
+                var row = `<tr>
+                                <td class="p-0 p-1 m-0">` + $("#tiposDoc option:selected").text() + `</td>
+                                <td class="text-center p-0 p-1 m-0">
+                                    <input type="text" class="d-none" value="` +tipo+ `" />
+                                    <button type="button" class="btn btn-danger" onclick="delRowTipos(this)"><i class="fas fa-trash-alt text-white"></i></button>
+                                </td>
+                            </tr>`;
+                $("#tableTiposDoc").append(row);
+                $("#divTiposDoc").removeClass("d-none");
+                $("#tiposDoc").val("0");
+            }else{
+                $("#lblTiposError").text("El tipo de documento ya fue agregado");
+            }
+        }
+    }
+    function delRowTipos(button) {
+        var container = button.closest('tr');
+        var input = $(button).siblings('input');
+        var inputVal = input.val();
+        tiposDocs.splice(tiposDocs.indexOf(inputVal),1);
+        container.remove();
+        if (tiposDocs.length==0) {
+            $("#divTiposDoc").addClass("d-none");
+        }
+    }
+    function addRowTiposEdit() {
+        const tiposDoc = $("#tiposDocEdit");
+        if (tiposDoc.val() == "0" ) {
+            $("#lblTiposErrorEdit").text("Debe seleccionar un tipo de documento");
+        }else{
+            $("#lblTiposErrorEdit").text("");
+            var tipo=tiposDoc.val();
+            if (!tiposDocsEdit.includes(tipo)) {
+                tiposDocsEdit.push(tipo);
+                var row = `<tr>
+                                <td class="p-0 p-1 m-0">` + $("#tiposDocEdit option:selected").text() + `</td>
+                                <td class="text-center p-0 p-1 m-0">
+                                    <input type="text" class="d-none" value="` +tipo+ `" />
+                                    <button type="button" class="btn btn-danger" onclick="delRowTiposEdit(this)"><i class="fas fa-trash-alt text-white"></i></button>
+                                </td>
+                            </tr>`;
+                $("#tableTiposDocEdit").append(row);
+                $("#divTiposDocEdit").removeClass("d-none");
+                $("#tiposDocEdit").val("0");
+            }else{
+                $("#lblTiposErrorEdit").text("El tipo de documento ya fue agregado");
+            }
+        }
+    }
+    function delRowTiposEdit(button) {
+        var container = button.closest('tr');
+        var input = $(button).siblings('input');
+        var inputVal = input.val();
+        tiposDocsEdit.splice(tiposDocs.indexOf(inputVal),1);
+        container.remove();
+        if (tiposDocsEdit.length==0) {
+            $("#divTiposDocEdit").addClass("d-none");
+        }
+    }
     function asignarPrg(check) {
         var codigo = $(check).closest("td").find(".codInput").val();
         if (check.checked) {
@@ -449,10 +665,33 @@
         }
     }
     function create() {
+        $("#txtUser").val("");
+                $("#txtPass").val("");
+                $("#txtName").val("");
+                $("#empleadoId").val("Selecciona un empleado");
+                $("#companiaId").val("0");
+                $("#nivel").val("0");
+                $("#proveedorId").val("Selecciona un proveedor");
+                $("#permisosEsp1").prop("checked",false);
+                $("#permisosEsp2").prop("checked",false);
+                $("#txtModulo").val("0");
+                $("#txtOpcion").val("0");
+                $("#divProgramas").empty();
+                $("#lblError").text(" ");
+        $("#tbDetallesDepa").empty();
+        $("#tbDetallesDepa").append(`<tr>
+                                                        <td class="p-0 p-2 m-0" colspan="2">
+                                                            <span id="depaFixed"></span>
+                                                        </td>
+                                                    </tr>`);
+        $("#divDepartamentos").addClass("d-none");
+        departamentosUsuario=[0];
         $('#modal').modal('show');
+
     }
     function showProveedores() {
         $('#modal').modal('hide');
+        $('#tbProveedores thead input').val('').keyup();
         $("#modalProveedores").modal('show');
     }
     function sendProveedor(row) {
@@ -468,12 +707,17 @@
         $("#modalProveedores").modal('hide');
         $("#modal").modal('show');
     }
+    function cleanProveedores() {
+        $("#proveedorId").val('Selecciona un proveedor');
+        proveId ="";
+    }
     function closeProveedor() {
         $('#modalProveedores').modal('hide');
         $("#modal").modal('show');
     }
     function showEmpleados() {
             $('#modal').modal('hide');
+            $('#tbEmpleados thead input').val('').keyup();
             $("#modalEmpleados").modal('show');
     }
     function sendEmpleados(row) {
@@ -486,8 +730,23 @@
             id = id.padStart(4, '0');
             empleId = tipo + '-' + id;
             $("#empleadoId").val(empleId + "   " + desc);
+            var dep=tds.eq(3).text();
+            var splitDepa=dep.split("-");
+            var depa = splitDepa[0];
+            var cod = splitDepa[1];
+            var desc= $("#cbbDepartamentos option[value='"+depa+"-"+cod+"']").text();
+            departamentosUsuario[0]=depa + "-" + cod;
+            $("#depaFixed").text(desc);
+            $("#divDepartamentos").removeClass("d-none");
             $("#modalEmpleados").modal('hide');
             $("#modal").modal('show');
+    }
+    function cleanEmpleados() {
+        $("#empleadoId").val('Selecciona un empleado');
+        $("#depaFixed").text('');
+        $("#divDepartamentos").addClass("d-none");
+        empleId ="";
+        departamentosUsuario=[0];
     }
     function closeEmpleados() {
         $('#modalEmpleados').modal('hide');
@@ -498,41 +757,54 @@
         var contra = $("#txtPass").val();
         var nomusu = $("#txtName").val();
         if (codusu == "" || contra == "" || nomusu == "" ) {
-            $("#lblError").text("Debe llenar todos los campos");
-            return;   
+            $("#lblError").text("**Debe llenar todos los campos**");
+            return;
         }else{
             var cia = $("#companiaId").val();
             if(programasAsignados.length==0 && cia=="0"){
-                $("#lblError").text("Debe una compañia o programas al usuario...");
+                $("#lblError").text("Debe agregar una compañia o programas al usuario...");
                 return;
             }
             $("#lblError").text(" ");
             var anoing = empleId.split("-")[0];
             var numemp = empleId.split("-")[1];
-           
+
             var nivel = $("#nivel").val();
             var prov1 = proveId.split("-")[0];
             var prov2 = proveId.split("-")[1];
-            var peresp = $("#permisosEsp").is(":checked") ? "S" : "N";
+            var peresp = [];
+            if ($("#permisosEsp1").is(":checked") || $("#permisosEsp2").is(":checked")) {
+                if ($("#permisosEsp1").is(":checked")) {
+                peresp.push("S-E");
+                }
+                if ($("#permisosEsp2").is(":checked")) {
+                    peresp.push("S-A");
+                }
+            }else{
+                peresp[0]='N';
+            }
             var usugra = '<?php echo $_SESSION["CODUSU"];?>';
             var fecgra = ('<?php echo date("Y-m-d");?>').replace(/-/g, "");
-            var programas= programasAsignados;
             var data = {
                 'CODUSU': codusu,
                 'CONTRA': contra,
                 'NOMUSU': nomusu,
                 'ANOING': (anoing=="")?"0":anoing,
-                'NUMEMP': (numemp==undefined)?"0":numemp,
+                'NUMEMP': (numemp==undefined)?"0":numemp.substring(0,4),
                 'CIA': cia,
                 'NIVEL': nivel,
                 'PROV1': (prov1=="")?"0":prov1,
                 'PROV2': (prov2==undefined)?"0":prov2,
                 'PERESP': peresp,
-                'PROGRAMAS': programas,
+                'PROGRAMAS': programasAsignados,
                 'USUGRA': usugra,
-                'FECGRA': fecgra
+                'FECGRA': fecgra,
+                'AREAS': departamentosUsuario,
+                'TIPOSDOC': tiposDocs
             };
+            console.log(data);
             var urlSave ="http://172.16.15.20/API.LovablePHP/Users/CREATE/";
+            console.log(urlSave);
             var responseSave = ajaxRequest(urlSave, data, "POST");
             if (responseSave.code==200) {
                 programasAsignados=[];
@@ -545,11 +817,11 @@
                 $("#companiaId").val("0");
                 $("#nivel").val("0");
                 $("#proveedorId").val("Selecciona un proveedor");
-                $("#permisosEsp").prop("checked",false);
+                $("#permisosEsp1").prop("checked",false);
+                $("#permisosEsp2").prop("checked",false);
                 $("#txtModulo").val("0");
                 $("#txtOpcion").val("0");
                 $("#divProgramas").empty();
-
                 $("#lblError").text(" ");
                 $("#modal").modal('hide');
                 $("#tbUsers").DataTable().ajax.reload();
@@ -574,24 +846,26 @@
             $("#modalDelete").modal('hide');
             $("#tbUsers").DataTable().ajax.reload();
         }
-       
+
     }
     function edit(codusu) {
         var urlFind="http://172.16.15.20/API.LovablePHP/Users/FIND/?codusu="+codusu;
         var responseFind = ajaxRequest(urlFind);
-        if (responseFind.code==200) {
+        $("#permisosEsp1Edit").prop("checked",false);
+        $("#permisosEsp2Edit").prop("checked",false);
+        if (responseFind.code==200){
             $("#txtUserEdit").text(responseFind.data[0]['CODUSU']);
             $("#txtPassEdit").val(responseFind.data[0]['CONTRA']);
             $("#txtNameEdit").val(responseFind.data[0]['NOMUSU']);
-            if ((parseInt(responseFind.data[0]['ANOING'])!=0 && parseInt(responseFind.data[0]['NUMEMP'])!=0) && 
+            if ((parseInt(responseFind.data[0]['ANOING'])!=0 && parseInt(responseFind.data[0]['NUMEMP'])!=0) &&
                 (responseFind.data[0]['ANOING']!=undefined && responseFind.data[0]['NUMEMP']!=undefined)) {
                     var anoing = responseFind.data[0]['ANOING'];
                     var numemp = responseFind.data[0]['NUMEMP'];
                     var urlFindEmp="http://172.16.15.20/API.LovablePHP/ZLO0015P/ListEmpleadosFind/?tipo="+anoing+"&proveedor="+numemp.padStart(2, '0')+""
-                    console.log(urlFind)
                     var responseFindEmp = ajaxRequest(urlFindEmp);
                     if (responseFindEmp.code==200) {
                         $("#empleadoIdEdit").val(anoing+"-"+numemp+"   "+responseFindEmp.data[0]['MAENO1']);
+                        $("#empleadoId2").val(anoing+"-"+numemp+"");
                     }else{
                         $("#empleadoIdEdit").val("Selecciona un empleado");
                     }
@@ -603,9 +877,8 @@
             }else{
                 $("#companiaIdEdit").val(0);
             }
-           
             $("#nivelEdit").val(responseFind.data[0]['NIVEL']);
-            if ((responseFind.data[0]['PROVE1']!=undefined && responseFind.data[0]['PROVE2']!=undefined) && 
+            if ((responseFind.data[0]['PROVE1']!=undefined && responseFind.data[0]['PROVE2']!=undefined) &&
                 (parseInt(responseFind.data[0]['PROVE1'])!=0 && parseInt(responseFind.data[0]['PROVE2'])!=0)) {
                     //AGREGAR UNA CONSULTA DE NOMBRE DE PROVEEDORES Y PANTALLA PARA ASIGNAR USUARIOS APENAS CREADO UN PROGRAMA NUEVO
                     var prov1 = responseFind.data[0]['PROVE1'];
@@ -618,13 +891,63 @@
                     }else{
                         $("#proveedorIdEdit").val("Selecciona un proveedor");
                     }
-               
+
             }else{
                 $("#proveedorIdEdit").val("Selecciona un proveedor");
             }
-            $("#permisosEspEdit").prop("checked",(responseFind.data[0]['PERESP']=="S")?true:false);
+            var permisos=responseFind.data[0]['PERESP'];
+            if (permisos.includes("E")) {
+                $("#permisosEsp1Edit").prop("checked",true);
+            }
+            if (permisos.includes("A")) {
+                $("#permisosEsp2Edit").prop("checked",true);
+            }
             programasAsignadosEdit=responseFind.data[0]['PROGRAMAS'];
-
+            departamentosUsuarioEdit=responseFind.data[0]['AREAS'];
+            $("#tbDetallesDepaEdit").empty();
+            $("#tbDetallesDepaEdit").append(`<tr><td class="p-0 p-2 m-0" colspan="2"><span id="depaFixedEdit"></span></td></tr>`);
+            if (departamentosUsuarioEdit.length>0) {
+                var splitDepa=departamentosUsuarioEdit[0].split("-");
+                var depa = splitDepa[0];
+                var cod = splitDepa[1];
+                var desc=$("#cbbDepartamentosEdit option[value='"+depa+"-"+cod+"']").text();
+                $("#depaFixedEdit").text(desc);
+                if (departamentosUsuarioEdit.length>1) {
+                    $("#divDepartamentosEdit").removeClass("d-none");
+                    for (let i = 1; i < departamentosUsuarioEdit.length; i++) {
+                        var splitDepa=departamentosUsuarioEdit[i].split("-");
+                        var depa = splitDepa[0];
+                        var cod = splitDepa[1];
+                        var desc=$("#cbbDepartamentosEdit option[value='"+depa+"-"+cod+"']").text();
+                        var row = `<tr>
+                                <td class="p-0 p-2 m-0">` + desc + `</td>
+                                <td class="text-center p-0 p-2 m-0">
+                                    <input type="text" class="d-none" value="` + depa +'-'+ cod + `" />
+                                    <button type="button" class="btn btn-danger" onclick="delRowEdit(this)"><i class="fas fa-trash-alt text-white"></i></button>
+                                </td>
+                            </tr>`;
+                    $("#tableDepartamentosEdit").append(row);
+                    }
+                }
+            }
+            tiposDocsEdit=responseFind.data[0]['TIPOSDOC'];
+            $("#tbTiposDetallesEdit").empty();
+            $("#divTiposDocEdit").addClass("d-none");
+            if (tiposDocsEdit.length>0) {
+                    $("#divTiposDocEdit").removeClass("d-none");
+                    for (let i = 0; i < tiposDocsEdit.length; i++) {
+                        var valTipoDoc=tiposDocsEdit[i];
+                        var desc=$("#tiposDocEdit option[value='"+valTipoDoc+"']").text();
+                        var row = `<tr>
+                                <td class="p-0 p-2 m-0">` + desc + `</td>
+                                <td class="text-center p-0 p-2 m-0">
+                                    <input type="text" class="d-none" value="` +valTipoDoc+ `" />
+                                    <button type="button" class="btn btn-danger" onclick="delRowTiposEdit(this)"><i class="fas fa-trash-alt text-white"></i></button>
+                                </td>
+                            </tr>`;
+                    $("#tableTiposDocEdit").append(row);
+                    }
+            }
             $("#txtOpcionEdit").change(function(){
                 var modulo = $("#txtModuloEdit").val();
                 var opcion = $("#txtOpcionEdit").val();
@@ -644,32 +967,32 @@
                                             </tr>
                                         </thead>
                                         <tbody id="tbDetallesEdit">
-                                            
+
                                         </tbody>
                                     </table>
                                 </div>`);
-                    for (let i = 0; i < response.data.length; i++) {
-                            if (programasAsignadosEdit.includes(response.data[i]['CODIGO'])) {
-                                row+=`<tr>
-                                    <td>`+response.data[i]['DESCRP']+`</td>
-                                    <td class="text-center">`+response.data[i]['CODIGO']+`</td>
-                                    <td class="text-center"> 
-                                    <input type="text" class="codInputEdit d-none" value="`+response.data[i]['CODIGO']+`" />
-                                    <input type="checkbox" class="form-check-input checkId" checked onclick="asignarPrgEdit(this)" id="`+response.data[i]['CODIGO']+`">
-                                    </td>
-                                </tr>`;
-                            }else{
-                                row+=`<tr>
-                                    <td>`+response.data[i]['DESCRP']+`</td>
-                                    <td class="text-center">`+response.data[i]['CODIGO']+`</td>
-                                    <td class="text-center"> 
-                                    <input type="text" class="codInputEdit d-none" value="`+response.data[i]['CODIGO']+`" />
-                                    <input type="checkbox" class="form-check-input checkId" onclick="asignarPrgEdit(this)" id="`+response.data[i]['CODIGO']+`">
-                                    </td>
-                                </tr>`;
-                            }
-                        
-                    }
+                        for (let i = 0; i < response.data.length; i++) {
+                                if (programasAsignadosEdit.includes(response.data[i]['CODIGO'])) {
+                                    row+=`<tr>
+                                        <td>`+response.data[i]['DESCRP']+`</td>
+                                        <td class="text-center">`+response.data[i]['CODIGO']+`</td>
+                                        <td class="text-center">
+                                        <input type="text" class="codInputEdit d-none" value="`+response.data[i]['CODIGO']+`" />
+                                        <input type="checkbox" class="form-check-input checkId" checked onclick="asignarPrgEdit(this)" id="`+response.data[i]['CODIGO']+`">
+                                        </td>
+                                    </tr>`;
+                                }else{
+                                    row+=`<tr>
+                                        <td>`+response.data[i]['DESCRP']+`</td>
+                                        <td class="text-center">`+response.data[i]['CODIGO']+`</td>
+                                        <td class="text-center">
+                                        <input type="text" class="codInputEdit d-none" value="`+response.data[i]['CODIGO']+`" />
+                                        <input type="checkbox" class="form-check-input checkId" onclick="asignarPrgEdit(this)" id="`+response.data[i]['CODIGO']+`">
+                                        </td>
+                                    </tr>`;
+                                }
+
+                        }
                     $("#tbDetallesEdit").append(row);
                 }
             });
@@ -694,9 +1017,10 @@
         var codusu = $("#txtUserEdit").text();
         var contra = $("#txtPassEdit").val();
         var nomusu = $("#txtNameEdit").val();
-        if (codusu == "" || contra == "" || nomusu == "" || programasAsignadosEdit.length==0) {
-            $("#lblErrorEdit").text("Debe llenar todos los campos");
-            return;   
+        var empleIdEdit = $("#empleadoId2").val();
+        if (codusu == "" || contra == "" || nomusu == "") {
+            $("#lblErrorEdit").text("**Debe llenar todos los campos**");
+            return;
         }else{
             $("#lblErrorEdit").text(" ");
             var anoing = empleIdEdit.split("-")[0];
@@ -705,28 +1029,38 @@
             var nivel = $("#nivelEdit").val();
             var prov1 = proveIdEdit.split("-")[0];
             var prov2 = proveIdEdit.split("-")[1];
-            var peresp = $("#permisosEspEdit").is(":checked") ? "S" : "N";
+            var peresp = [];
+            if ($("#permisosEsp1Edit").is(":checked") || $("#permisosEsp2Edit").is(":checked")) {
+                if ($("#permisosEsp1Edit").is(":checked")) {
+                peresp.push("S-E");
+                }
+                if ($("#permisosEsp2Edit").is(":checked")) {
+                    peresp.push("S-A");
+                }
+            }else{
+                peresp[0]='N';
+            }
             var usugra = '<?php echo $_SESSION["CODUSU"];?>';
             var fecgra = ('<?php echo date("Y-m-d");?>').replace(/-/g, "");
-            var programas= programasAsignadosEdit;
             var data = {
                 'CODUSU': codusu,
                 'CONTRA': contra,
                 'NOMUSU': nomusu,
                 'ANOING': (anoing=="")?"0":anoing,
-                'NUMEMP': (numemp==undefined)?"0":numemp,
+                'NUMEMP': (numemp==undefined)?"0":numemp.substring(0,4),
                 'CIA': cia,
                 'NIVEL': nivel,
                 'PROV1': (prov1=="")?"0":prov1,
                 'PROV2': (prov2==undefined)?"0":prov2,
                 'PERESP': peresp,
-                'PROGRAMAS': programas,
+                'PROGRAMAS': programasAsignadosEdit,
                 'USUGRA': usugra,
-                'FECGRA': fecgra
+                'FECGRA': fecgra,
+                'AREAS': departamentosUsuarioEdit,
+                'TIPOSDOC': tiposDocsEdit
             };
-            console.log(data);
             var urlSave ="http://172.16.15.20/API.LovablePHP/Users/EDIT/";
-            var responseSave = ajaxRequest(urlSave, data, "POST");
+           var responseSave = ajaxRequest(urlSave, data, "POST");
             if (responseSave.code==200) {
                 programasAsignadosEdit=[];
                 empleIdEdit="";
@@ -743,9 +1077,21 @@
             }
         }
     }
+    function cleanProveedoresEdit() {
+        $("#proveedorIdEdit").val('Selecciona un proveedor');
+        proveIdEdit ="";
+    }
+    function cleanEmpleadosEdit() {
+        $("#empleadoIdEdit").val('Selecciona un empleado');
+        $("#depaFixedEdit").text('');
+        $("#divDepartamentosEdit").addClass("d-none");
+        empleIdEdit ="";
+        departamentosUsuarioEdit=[0];
+    }
     //PROVEEDORES EDIT
     function showProveedoresEdit() {
         $('#modalEdit').modal('hide');
+        $('#tbProveedoresEdit thead input').val('').keyup();
         $("#modalProveedoresEdit").modal('show');
     }
     function sendProveedorEdit(row) {
@@ -768,6 +1114,7 @@
     //EMPLEADOS EDIT
     function showEmpleadosEdit() {
             $('#modalEdit').modal('hide');
+            $('#tbEmpleadosEdit thead input').val('').keyup();
             $("#modalEmpleadosEdit").modal('show');
     }
     function sendEmpleadosEdit(row) {
@@ -779,7 +1126,18 @@
             tipo = tipo.padStart(2, '0');
             id = id.padStart(4, '0');
             empleIdEdit = tipo + '-' + id;
+
+            var dep=tds.eq(3).text();
+            var splitDepa=dep.split("-");
+            var depa = splitDepa[0];
+            var cod = splitDepa[1];
+            var descDepa= $("#cbbDepartamentosEdit option[value='"+depa+"-"+cod+"']").text();
+            departamentosUsuarioEdit[0]=depa + "-" + cod;
+            $("#depaFixedEdit").text(descDepa);
+            $("#divDepartamentosEdit").removeClass("d-none");
+
             $("#empleadoIdEdit").val(empleIdEdit + "   " + desc);
+            $("#empleadoId2").val(empleIdEdit);
             $("#modalEmpleadosEdit").modal('hide');
             $("#modalEdit").modal('show');
     }
@@ -800,6 +1158,9 @@
                 <div class="modal-body ">
                     <div class="container">
                     <div class="row">
+                        <div class="col-12 p-1">
+                            <label class="form-label text-danger fs-6" id="lblError"></label>
+                        </div>
                         <div class="col-12 col-lg-6">
                             <label for="txtUser" class="form-label">Usuario del sistema<span class="text-danger">*</span></label>
                             <input type="text" class="form-control" oninput="this.value = this.value.toUpperCase()" id="txtUser" placeholder="Ingrese un usuario">
@@ -814,37 +1175,118 @@
                         </div>
                         <div class="col-12">
                             <label for="txtPass" class="form-label mt-3">Empleado</label>
-                            <span class="" onclick="showEmpleados()">
-                                <input type="text" class="text-muted form-select" id="empleadoId" placeholder="Selecciona un empleado" readonly />
-                            </span> 
+                            <div class="row">
+                                <div class="col-11">
+                                    <span class="" onclick="showEmpleados()">
+                                        <input type="text" class="text-muted form-select" id="empleadoId" placeholder="Selecciona un empleado" readonly />
+                                    </span>
+                                </div>
+                                <div class="col-1 m-0 p-0">
+                                    <button class="btn btn-secondary text-white" onclick="cleanEmpleados()" style="width:100%;"><i class="fa-solid fa-x"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <label  class="form-label mt-3">Departamento y Sección</label>
+                            <div class="row">
+                                <div class="col-10">
+                                    <select id="cbbDepartamentos" class="form-select mt-1" >
+                                    </select>
+                                    <label class="form-label text-danger mt-2 mb-2" id="lblCbbError"></label>
+                                </div>
+                                <div class="col-2 mt-1">
+                                 <button type="button" class="btn btn-success" style="width:100%"
+                                                onclick="addRow()">
+                                                <i class="fa-solid fa-square-plus text-white"></i> </button>
+                                </div>
+                                <div class="col-12 d-none" id="divDepartamentos">
+                                    <div class="table-responsive mt-3" >
+                                        <table class="table table-bordered stripe table-hover" id="tableDepartamentos" style="width:100%">
+                                            <thead>
+                                                <tr class="bg-dark">
+                                                    <th class="text-left text-white" style="width:80%;">Departamento</th>
+                                                    <th class="text-center text-white"style="width:20%;"></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="tbDetallesDepa">
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="col-9">
-                            <label class="form-label mt-3">Compañia</label>
+                            <label class="form-label mt-2">Compañia</label>
                             <select id="companiaId" class="form-select">
-                               
+
                             </select>
                         </div>
                         <div class="col-3">
-                            <label class="form-label mt-3">Nivel de usuario</label>
+                            <label class="form-label mt-2">Nivel de usuario</label>
                             <input type="text" value="0" id="nivel"  oninput="this.value =(parseInt(this.value)>3)?'3':this.value" maxlength="1" class="form-control"  data-bs-toggle="tooltip" data-bs-placement="top"
                             data-bs-title="0=(SIN ACCESO A LAS GRAFICAS)<br>1=(ACCESO TODAS LAS GRAFICAS)<br>2=(GRAFICAS DE VENTAS DE TIENDAS)<br>3=(GRAFICAS DE INVENTARIOS TIENDAS)">
                         </div>
                         <div class="col-12">
                             <label for="txtPass" class="form-label mt-3">Proveedor</label>
-                            <span class="" onclick="showProveedores()">
-                                <input type="text" class="text-muted form-select" id="proveedorId" placeholder="Selecciona un proveedor" readonly />
-                            </span> 
-                        </div>
-                        <div class="col-12">
-                            <div class="form-control d-flex mt-4">
-                                <label class="form-check-label mt-2 me-3">Permiso para eliminar documentos digitales: </label>
-                                <div class="form-check form-switch fs-5 mt-1">
-                                    <input class="form-check-input" id="permisosEsp" type="checkbox" role="switch">
+                            <div class="row">
+                                <div class="col-11">
+                                    <span class="" onclick="showProveedores()">
+                                        <input type="text" class="text-muted form-select" id="proveedorId" placeholder="Selecciona un proveedor" readonly />
+                                    </span>
+                                </div>
+                                <div class="col-1 m-0 p-0">
+                                    <button class="btn btn-secondary text-white" onclick="cleanProveedores()" style="width:100%;"><i class="fa-solid fa-x"></i></button>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-12 col-lg-6">
-                            <label class="form-label text-danger mt-2 mb-2" id="lblError"></label>
+                        <div class="col-12 text-center">
+                            <label class="form-control bg-dark text-white mt-2">Digitalización de documentos</label>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-control border border-danger d-flex mt-4">
+                                <label class="form-check-label mt-2 me-3">Permiso para <span class="text-danger fw-bold">eliminar</span> documentos digitales: </label>
+                                <div class="form-check form-switch fs-5 mt-1">
+                                    <input class="form-check-input mt-3 text-danger" id="permisosEsp1" type="checkbox" role="switch">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-control border border-success d-flex mt-4">
+                                <label class="form-check-label mt-2 me-3">Permiso para <span class="text-success fw-bold">autorizar</span> documentos digitales: </label>
+                                <div class="form-check form-switch fs-5 mt-1">
+                                    <input class="form-check-input mt-3 text-success" id="permisosEsp2" type="checkbox" role="switch">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 mb-1">
+                            <label class="form-check-label mt-3 me-3">Tipos de documentos a visualizar</label>
+                            <div class="row">
+                                <div class="col-10">
+                                    <select id="tiposDoc" class="form-select mt-2" >
+                                    </select>
+                                    <label class="form-label text-danger mt-2 mb-2" id="lbltiposError"></label>
+                                </div>
+                                <div class="col-2 mt-1">
+                                 <button type="button" class="btn btn-success" style="width:100%"
+                                                onclick="addRowTipos()">
+                                                <i class="fa-solid fa-square-plus text-white"></i> </button>
+                                </div>
+                                <div class="col-12 d-none" id="divTiposDoc">
+                                    <div class="table-responsive mt-3" >
+                                        <table class="table table-bordered stripe table-hover" id="tableTiposDoc" style="width:100%">
+                                            <thead>
+                                                <tr class="bg-dark">
+                                                    <th class="text-left text-white" style="width:80%;">Tipo de documento</th>
+                                                    <th class="text-center text-white"style="width:20%;"></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="tbTiposDetalles">
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="col-12 text-center">
                             <label class="form-control bg-dark text-white mt-2">Accesos del sistema</label>
@@ -862,7 +1304,7 @@
                             </select>
                         </div>
                         <div class="col-12" id="divProgramas">
-                           
+
                         </div>
                     </div>
                     </div>
@@ -886,6 +1328,9 @@
                 <div class="modal-body ">
                     <div class="container">
                     <div class="row">
+                        <div class="col-12 p-1">
+                            <label class="form-label text-danger fs-6" id="lblErrorEdit"></label>
+                        </div>
                         <div class="col-12 col-lg-6">
                             <label  class="form-label">Usuario del sistema<span class="text-danger">*</span></label>
                             <label class="form-control" id="txtUserEdit"></label>
@@ -899,15 +1344,53 @@
                             <input type="text" class="form-control" id="txtNameEdit" placeholder="Ingrese un nombre de usuario">
                         </div>
                         <div class="col-12">
-                            <label  class="form-label mt-3">Empleado</label>
-                            <span class="" onclick="showEmpleadosEdit()">
-                                <input type="text" class="text-muted form-select" id="empleadoIdEdit" placeholder="Selecciona un empleado" readonly />
-                            </span> 
+                            <label class="form-label mt-3">Empleado</label>
+                            <div class="row">
+                                <div class="col-11">
+                                    <span class="" onclick="showEmpleadosEdit()">
+                                        <input type="text" class="text-muted form-select" id="empleadoIdEdit" placeholder="Selecciona un empleado" readonly />
+                                        <input type="text" class="d-none" id="empleadoId2">
+                                    </span>
+                                </div>
+                                <div class="col-1 m-0 p-0">
+                                    <button class="btn btn-secondary text-white" onclick="cleanEmpleadosEdit()" style="width:100%;"><i class="fa-solid fa-x"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <label  class="form-label mt-3">Departamento y Sección</label>
+                            <div class="row">
+                                <div class="col-10">
+                                    <select id="cbbDepartamentosEdit" class="form-select mt-1" >
+                                    </select>
+                                    <label class="form-label text-danger mt-2 mb-2" id="lblCbbErrorEdit"></label>
+                                </div>
+                                <div class="col-2 mt-1">
+                                 <button type="button" class="btn btn-success" style="width:100%"
+                                                onclick="addRowEdit()">
+                                                <i class="fa-solid fa-square-plus text-white"></i> </button>
+                                </div>
+                                <div class="col-12 d-none" id="divDepartamentosEdit">
+                                    <div class="table-responsive mt-3" >
+                                        <table class="table table-bordered stripe table-hover" id="tableDepartamentosEdit" style="width:100%">
+                                            <thead>
+                                                <tr class="bg-dark">
+                                                    <th class="text-left text-white" style="width:80%;">Departamento</th>
+                                                    <th class="text-center text-white"style="width:20%;"></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="tbDetallesDepaEdit">
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="col-9">
                             <label class="form-label mt-3">Compañia</label>
                             <select id="companiaIdEdit" class="form-select">
-                               
+
                             </select>
                         </div>
                         <div class="col-3">
@@ -917,20 +1400,66 @@
                         </div>
                         <div class="col-12">
                             <label  class="form-label mt-3">Proveedor</label>
-                            <span class="" onclick="showProveedoresEdit()">
-                                <input type="text" class="text-muted form-select" id="proveedorIdEdit" placeholder="Selecciona un proveedor" readonly />
-                            </span> 
+                            <div class="row">
+                                <div class="col-11">
+                                    <span class="" onclick="showProveedoresEdit()">
+                                        <input type="text" class="text-muted form-select" id="proveedorIdEdit" placeholder="Selecciona un proveedor" readonly />
+                                    </span>
+                                </div>
+                                <div class="col-1 m-0 p-0">
+                                    <button class="btn btn-secondary text-white" onclick="cleanProveedoresEdit()" style="width:100%;"><i class="fa-solid fa-x"></i></button>
+                                </div>
+                            </div>
+
                         </div>
-                        <div class="col-12">
-                            <div class="form-control d-flex mt-4">
-                                <label class="form-check-label mt-2 me-3">Permiso para eliminar documentos digitales: </label>
+                        <div class="col-12 text-center">
+                            <label class="form-control bg-dark text-white mt-2">Digitalización de documentos</label>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-control border border-danger d-flex mt-4">
+                                <label class="form-check-label mt-2 me-3">Permiso para <span class="text-danger fw-bold">eliminar</span> documentos digitales: </label>
                                 <div class="form-check form-switch fs-5 mt-1">
-                                    <input class="form-check-input" id="permisosEspEdit" type="checkbox" role="switch">
+                                    <input class="form-check-input mt-3 text-danger" id="permisosEsp1Edit" type="checkbox" role="switch">
                                 </div>
                             </div>
                         </div>
-                        <div class="col-12 col-lg-6">
-                            <label class="form-label text-danger mt-2 mb-2" id="lblErrorEdit"></label>
+                        <div class="col-6">
+                            <div class="form-control border border-success d-flex mt-4">
+                                <label class="form-check-label mt-2 me-3">Permiso para <span class="text-success fw-bold">autorizar</span> documentos digitales: </label>
+                                <div class="form-check form-switch fs-5 mt-1">
+                                    <input class="form-check-input mt-3 text-success" id="permisosEsp2Edit" type="checkbox" role="switch">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 mb-1">
+                            <label class="form-check-label mt-3 me-3">Tipos de documentos a visualizar</label>
+                            <div class="row">
+                                <div class="col-10">
+                                    <select id="tiposDocEdit" class="form-select mt-2" >
+                                    </select>
+                                    <label class="form-label text-danger mt-2 mb-2" id="lbltiposErrorEdit"></label>
+                                </div>
+                                <div class="col-2 mt-1">
+                                 <button type="button" class="btn btn-success" style="width:100%"
+                                                onclick="addRowTiposEdit()">
+                                                <i class="fa-solid fa-square-plus text-white"></i> </button>
+                                </div>
+                                <div class="col-12 d-none" id="divTiposDocEdit">
+                                    <div class="table-responsive mt-3" >
+                                        <table class="table table-bordered stripe table-hover" id="tableTiposDocEdit" style="width:100%">
+                                            <thead>
+                                                <tr class="bg-dark">
+                                                    <th class="text-left text-white" style="width:80%;">Tipo de documento</th>
+                                                    <th class="text-center text-white"style="width:20%;"></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="tbTiposDetallesEdit">
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="col-12 text-center">
                             <label class="form-control bg-dark text-white mt-2">Accesos del sistema</label>
@@ -948,7 +1477,7 @@
                             </select>
                         </div>
                         <div class="col-12" id="divProgramasEdit">
-                           
+
                         </div>
                     </div>
                     </div>
@@ -968,11 +1497,11 @@
                 <div class="modal-body" id="contentModal">
                     <div class="row">
                         <div class="col-12 text-center">
-                            <i class="fa-solid fa-triangle-exclamation fa-shake text-warning" style="font-size: 200px;"></i>
-                            <h1 class="fs-3 mt-2">¿Está seguro de eliminar el usuario?</h1>
+                            <i class="fa-solid fa-triangle-exclamation fa-shake text-warning" style="font-size: 100px;"></i>
+                            <h1 class="fs-2 mt-2">¿Está seguro de eliminar el usuario?</h1>
                         </div>
                         <div class="col-12 text-center">
-                            <h6 class="text-danger fs-6">Esto tambien eliminará los accesos del sistema</h6>
+                            <h6 class="text-danger fs-4">Esto tambien eliminará los accesos del sistema</h6>
                             <input type="text" id="delUsuario" class="d-none">
                         </div>
                     </div>
@@ -1031,6 +1560,7 @@
                                     <th colspan="10%" class="text-black text-start">Año ingreso</th>
                                     <th colspan="10%" class="text-black text-start">Numero empleado</th>
                                     <th colspan="10%" class="text-black text-start">Nombre completo</th>
+                                    <th class="text-black text-start d-none">Departamento</th>
                                 </tr>
                             </thead>
                             <tbody id="tbEmpleadosBody">
@@ -1088,6 +1618,7 @@
                                     <th colspan="10%" class="text-black text-start">Año ingreso</th>
                                     <th colspan="10%" class="text-black text-start">Numero empleado</th>
                                     <th colspan="10%" class="text-black text-start">Nombre completo</th>
+                                    <th class="text-black text-start d-none">Departamento</th>
                                 </tr>
                             </thead>
                             <tbody id="tbEmpleadosBodyEdit">

@@ -60,7 +60,7 @@
                                 <div class="row" id="containerRequest">
                                 </div>
                                 <div class="position-absolute top-50 start-50 translate-middle d-none" id="NoRequest">
-                                    <p class="text-secondary textInfo fs-6">No hay solicitudes</p>  
+                                    <p class="text-secondary textInfo fs-6">No hay solicitudes</p>
                                 </div>
                             </div>
                         </div>
@@ -176,7 +176,7 @@
                    }else{
                     sendProveedor2(this);
                    }
-                    
+
                 });
             }
         });
@@ -198,7 +198,7 @@
         if ($("#valueTipo").val()==1) {
         var prov= $("#codigo").val();
         var urlList="http://172.16.15.20/API.LovablePHP/ZLO0018P/List/?prov1="+prov+"";
-        }else if($("#valueTipo").val()==2){ 
+        }else if($("#valueTipo").val()==2){
          var fechas=  $("#searchInput").text().split(" - ");
          var fecha1=formatFechaSent(fechas[0].replace(/\//g, ''));
          var fecha2=formatFechaSent(fechas[1].replace(/\//g, ''));
@@ -265,11 +265,11 @@
                                     </div>
                                 </div>`);
         setTimeout(() => {
-            $("#spinnerStart").addClass('d-none');  
+            $("#spinnerStart").addClass('d-none');
         }, 300);
-      
 
-        
+
+
     }
 
     var lastid="card";
@@ -283,11 +283,11 @@
         containerVisual.empty();
         containerVisual.append(` <div id="visual" class="card overflow-auto maxbox" >
                                     <div class="card-body" style="height:100%;" id="cardbody">
-                                
+
                                     </div>
                                 </div>`);
         const cardbody = $("#cardbody");
-        setTimeout(() => {  
+        setTimeout(() => {
             cardbody.append(`<div class="card">
                                             <div class="row">
                                                 <div class="col-12 col-lg-1">
@@ -326,7 +326,7 @@
                                                                     <div class="col-6 col-lg-4">
                                                                         <input type="date" class="form-control"
                                                                             id="fechaDoc">
-                                                                        
+
                                                                     </div>
                                                                     <div class="col-12 col-lg-2 mt-2">
                                                                         <h6 class=" mt-1">Descripcion:</h6>
@@ -343,7 +343,7 @@
                                                                             id="depaDoc"></label>
                                                                     </div>
                                                                 </div>
-                                                        
+
                                                             </div>
                                                             <div class="row">
                                                                 <div class="col-12">
@@ -388,7 +388,7 @@
                                                 <button onclick="changeState('R','`+nomcard+`','`+urldoc+`','`+extdoc+`','`+usugra+`','`+fecgra+`','`+horgra+`')" class="btn btn-danger btn-sm fw-bold text-white border bgred"
                                                     style="width:100%;">
                                                     RECHAZAR
-                                                    &nbsp;&nbsp;&nbsp;  
+                                                    &nbsp;&nbsp;&nbsp;
                                                     <i class="fa-solid fa-xmark"></i>
                                                     </button>
                                             </div>
@@ -403,7 +403,8 @@
                                         </div>
                                     </div>
                                 </div>`);
-                var urlTipos = "http://172.16.15.20/API.LovablePHP/ZLO0015P/ListTipos/";
+                //var urlTipos = "http://172.16.15.20/API.LovablePHP/ZLO0015P/ListTipos/";
+                var urlTipos = "http://172.16.15.20/API.LovablePHP/ZLO0015P/ListTipos2/?user=" + usuario + "";
                 var responseTipos = ajaxRequest(urlTipos);
                 if (responseTipos.code == 200) {
                     const tipos = $("#tiposDoc");
@@ -458,7 +459,7 @@ if (extdoc == 'pdf' || extdoc == 'png' || extdoc == 'jpg' || extdoc == 'jpeg') {
         <div class="col-6">
         <a class="btn btn-warning fw-bold text-white" style="width:100%;" target="_blank" href="http://172.16.15.20` +
         urldoc + `" >Visualizar documento <i class="fa-solid fa-eye"></i></a>
-        
+
         </div>
         <div class="col-6">
             <a class="btn btn-info fw-bold text-white" style="width:100%;" href="http://172.16.15.20` +
@@ -500,7 +501,7 @@ $("#horaGra").text(formatFecha(fecgra) + ' ' + formatTime(horgra));
 
 chargeCampos(tipdoc,cam0, cam1, cam2, cam3,
         cam4, cam5, cam6, cam7, cam8, cam9);
-$("#spinnerStart").addClass('d-none');      
+$("#spinnerStart").addClass('d-none');
         }, 200);
     }
 
@@ -510,7 +511,7 @@ $("#spinnerStart").addClass('d-none');
         for (let i = 0; i < countInputs; i++) {
            if($("#CAM"+i).val()==''){
             isBlank=1;
-           } 
+           }
         }
         if (state=='A') {
             if (isBlank==0) {
@@ -542,7 +543,7 @@ $("#spinnerStart").addClass('d-none');
                         var urlChange="http://172.16.15.20/API.LovablePHP/ZLO0018P/ChangeState/?nomdoc="+nomdoc+"&urldoc="+urldoc+"&estado="+state+"";
                         var responseChange=ajaxRequest(urlChange);
                         if (responseChange.code==200) {
-                            chargeRequest(); 
+                            chargeRequest();
                         }
             }else{
                 $("#lblError").removeClass('d-none');
@@ -551,7 +552,7 @@ $("#spinnerStart").addClass('d-none');
             var urlChange="http://172.16.15.20/API.LovablePHP/ZLO0018P/ChangeState/?nomdoc="+nomdoc+"&urldoc="+urldoc+"&estado="+state+"";
             var responseChange=ajaxRequest(urlChange);
             if (responseChange.code==200) {
-                chargeRequest(); 
+                chargeRequest();
             }
         }
     }
@@ -642,7 +643,7 @@ $("#spinnerStart").addClass('d-none');
                         "CAM9": " "
                     };
         }
- 
+
 var urlCampos = "http://172.16.15.20/API.LovablePHP/ZLO0015P/ListTiposFind/?tipo=" + tipdoc;
 var responseCampos = ajaxRequest(urlCampos);
 if (responseCampos.code == 200) {
@@ -673,7 +674,7 @@ if (responseCampos.code == 200) {
                             <input id="CAM`+i+`" class="d-none" value="" />
                             </div>`);
             }
-            
+
         } else if(camposDes[i].toLowerCase() == "compañia"){
             if (campos['cam' + i]!=undefined) {
             var urlDes = "http://172.16.15.20/API.LovablePHP/ZLO0001P/FindComarc/?compFiltro=" + campos[
@@ -750,11 +751,11 @@ if (responseCampos.code == 200) {
                         <h6 class=" mt-1">` + camposDes[i] + `:</h6></div>
                         <div class="col-6 col-lg-4 mt-2">
                         <input id="CAM`+i+`" class="form-control" type="text" value=""></label>
-                        </div>`); 
+                        </div>`);
             }
         }
 
-    
+
     }
 }
     }
@@ -803,7 +804,7 @@ if (responseCampos.code == 200) {
         $("#proveedor").text(tipo + '-' + id + ' ' + desc);
         $("#modalProveedores").modal('hide');
     }
-  
+
     function showRange() {
         $("#dayRange").empty();
         var currentDate = new Date().toISOString().split('T')[0];

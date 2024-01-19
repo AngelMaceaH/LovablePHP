@@ -76,7 +76,7 @@
                             <div class="col-12 col-lg-5 text-center mt-2 mb-2">
                                 <label class="mb-2">Opción</label>
                                 <select class="form-select" id="srcOpcion">
-                                    
+
                                 </select>
                             </div>
                             <div class="col-12 col-lg-2 mt-2 mb-2">
@@ -139,7 +139,7 @@
             $("#srcOpcion").append(opcOpc);
         });
       });
-        
+
      /* var i=1;
             $('#tbUsuarios thead th').each(function(){
                 var title = $(this).text();
@@ -283,7 +283,7 @@
                 },
             ],
         });
-        //<button type="button" class="btn btn-secondary" onclick=""><i class="fa-solid fa-circle-info text-white"></i></button> 
+        //<button type="button" class="btn btn-secondary" onclick=""><i class="fa-solid fa-circle-info text-white"></i></button>
     }
     function stateModules(check) {
         var modulo = $(check).closest("td").find(".codInput").val();
@@ -499,7 +499,7 @@
         var response = ajaxRequest(urlModulos);
         var opcMod = "";
         if (response.code == 200) {
-            
+
             for (let index = 0; index < response.data.length; index++) {
                 opcMod +=
                 `<option value="${response.data[index]['CODIGO']}">${response.data[index]['DESCRP']}</option>`;
@@ -578,7 +578,7 @@
         var response = ajaxRequest(urlModulos);
         var opcMod = "";
         if (response.code == 200) {
-            
+
             for (let index = 0; index < response.data.length; index++) {
                 opcMod +=
                 `<option value="${response.data[index]['CODIGO']}">${response.data[index]['DESCRP']}</option>`;
@@ -780,7 +780,7 @@
                         <div class="col-12 col-lg-6" id="divOpcion">
                         <label class="form-label">Opción</label>
                                                 <select class="form-select" id="txtOpcion">
-                                                
+
                                                 </select>
                         </div>
                         <div class="col-12 col-lg-4 d-none">
@@ -868,7 +868,7 @@
         var response = ajaxRequest(urlModulos);
         var opcMod = "";
         if (response.code == 200) {
-            
+
             for (let index = 0; index < response.data.length; index++) {
                 opcMod +=
                 `<option value="${response.data[index]['CODIGO']}">${response.data[index]['DESCRP']}</option>`;
@@ -889,7 +889,7 @@
                         <div class="col-12 col-lg-6" id="divOpcionEdit">
                         <label class="form-label">Opción</label>
                                                 <select class="form-select" id="txtOpcionEdit">
-                                                
+
                                                 </select>
                         </div>
                         <div class="col-12 col-lg-4 d-none">
@@ -974,7 +974,7 @@
         }
     }
     function asignarPrograma(code) {
-        var urlFind="http://172.16.15.20/API.LovablePHP/Opc/FindUsua/?code="+code+"";  
+        var urlFind="http://172.16.15.20/API.LovablePHP/Opc/FindUsua/?code="+code+"";
         var responseFind = ajaxRequest(urlFind);
         usuarios=[];
         var row="";
@@ -1015,7 +1015,7 @@
                 $("#tableUsuariosBody").append(`<tr>
                         <td colspan="2">No hay usuarios asignados</td>
                     </tr>`);
-                
+
             }else{
                 for (let i = 0; i < usuarios.length; i++) {
                     row+=`<tr>
@@ -1024,7 +1024,7 @@
                         </tr>`;
                 }
                 $("#tableUsuariosBody").append(row);
-            }   
+            }
         }
     }
     function showUsuarios() {
@@ -1052,7 +1052,7 @@
                 $("#tableUsuariosBody").append(`<tr>
                         <td colspan="2">No hay usuarios asignados</td>
                     </tr>`);
-                
+
             }else{
                 for (let i = 0; i < usuarios.length; i++) {
                     row+=`<tr>
@@ -1061,7 +1061,7 @@
                         </tr>`;
                 }
                 $("#tableUsuariosBody").append(row);
-            }   
+            }
         $("#modalUsuarios").modal('hide');
         $("#modalPrograma").modal('show');
     }
@@ -1100,7 +1100,7 @@
                             <label  class="form-label mt-3">Usuarios</label>
                             <span class="" onclick="showUsuarios()">
                                 <input type="text" class="text-muted form-select" id="usuarioId" placeholder="Agrega un usuario" readonly />
-                            </span> 
+                            </span>
                         <hr>
                     </div>
                         <div class="col-12 ">
@@ -1140,9 +1140,8 @@
                             <thead>
                             <tr>
                                 <th class="text-black text-start sorting_disabled" rowspan="1" colspan="1" style="width: 0px;">Usuario<br>
-                                <input type="text" id="inputSearch1" class="form-control mt-2"></th>
-                                <th class="text-black text-start sorting_disabled" rowspan="1" colspan="1" style="width: 0px;">Nombre<br>
-                                <input type="text" id="inputSearch2" class="form-control mt-2"></th>
+                                <input type="text" id="inputSearch1" class="form-control mt-2" style="witdh:300px;"></th>
+                                <th class="text-black text-start sorting_disabled mb-3" rowspan="1" colspan="1" style="width: 0px;">Nombre<br>
                             </tr>
                             </thead>
                             <tbody id="tbUsuariosBody">

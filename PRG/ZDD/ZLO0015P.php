@@ -149,7 +149,8 @@
                         i].COMDES + '</option>';
             }
         }
-        var urlTipos = "http://172.16.15.20/API.LovablePHP/ZLO0015P/ListTipos/";
+        //var urlTipos = "http://172.16.15.20/API.LovablePHP/ZLO0015P/ListTipos/";
+        var urlTipos = "http://172.16.15.20/API.LovablePHP/ZLO0015P/ListTipos2/?user=" + usuario + "";
         var responseTipos = ajaxRequest(urlTipos);
         if (responseTipos.code == 200) {
             const tipos = $("#tiposDoc");
@@ -215,7 +216,7 @@
                         .draw();
                 }
             });
-        
+
         $("#tiposDoc").on('change', function() {
             const inputs = $("#inputs");
             inputs.empty();

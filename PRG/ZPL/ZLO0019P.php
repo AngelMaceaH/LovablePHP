@@ -33,7 +33,7 @@
         <nav aria-label="breadcrumb" style="width:100%" class="p-0">
             <div class="row" style="width:100%">
                 <div class="col-2 mt-1">
-                   <!-- <button type="button" id="exportExcel" class="btn btn-success text-light fs-6 text-center mt-4"
+                    <!--<button type="button" id="exportExcel" class="btn btn-success text-light fs-6 text-center mt-4"
                         style="width:100%;">
                         <i class="fa-solid fa-file-excel me-1"></i><b>Enviar a Excel</b>
                     </button>-->
@@ -156,9 +156,8 @@
         }
         $("#exportExcel").on('click', function() {
             document.getElementById('loaderExcel').classList.remove('d-none');
-            var url = "http://172.16.15.20/API.LovablePHP/ZLO0019P/Export/?anio=" + yearSelected +
+            var url = "http://172.16.15.20/API.LovablePHP/ZLO0019P/Export2/?anio=" + yearSelected +
                 "&tiendas=" + ciasSelected + "";
-            console.log(url);
             fetch(url)
                 .then(response => response.blob())
                 .then(blob => {
@@ -246,10 +245,8 @@
                           'ACUMULADOS PROGRAMA LEALTAD',
                           'ACUMULADOS VIP',
                           'ACUMULADOS NORMALES'];
-
-
         var rowtd = "";
-        var urlRegistros = "http://172.16.15.20/API.LovablePHP/ZLO0019P/TiendasR/?anio=" + yearSelected +
+        var urlRegistros = "http://172.16.15.20/API.LovablePHP/ZLO0019P/TiendasR2/?anio=" + yearSelected +
             "&tiendas=" + ciasSelected + "";
         console.log(urlRegistros);
         var responseRegistros = ajaxRequest(urlRegistros);
@@ -620,17 +617,22 @@
         }
         tbody.append(rowtd);
         //TRANSACCIONES----------------------------------------------------------------------------------------------------------------------
-        var arrayTransacciones = ['TRANSACCIONES CON NUEVO REGISTRO A PROGRAMA DE LEALTAD',
-            'TRANSACCIONES CON ACTUALIZACIÓN DE DATOS A PROGRAMA DE LEALTAD',
-            'TRANSACCIONES CON STATUS YA REGISTRADO Y/O CON DATOS ACTUALIZADOS',
-            'TOTAL DE TRANSACCIONES DE CLIENTES EN EL PROGRAMA DE LEALTAD',
-            'TOTAL DE TRANSACCIONES DE CLIENTES NO INSCRITOS',
-            'TOTAL DE TRANSACCIONES',
-            'PROMEDIO DE TRANSACCIONES DE CLIENTES EN EL PROGRAMA DE LEALTAD',
-            'PROMEDIO DE TRANSACCIONES DE CLIENTES NO INSCRITOS'
+        var arrayTransacciones = [
+            'PROGRAMAS LEALTAD NUEVOS',
+            'ACTUALIZADOS A PROGRAMA LEALTAD',
+            'TOTAL DE TRANSACCIONES DE PROGRAMA LEALTAD',
+            'TOTAL DE TRANSACCIONES DE CLIENTES VIP',
+            'TOTAL DE TRANSACCIONES DE CLIENTES NORMALES',
+            'TOTAL DE TRANSACCIONES DEL MES',
+            'PROMEDIO DE TRANSACCIONES DE PROGRAMA LEALTAD',
+            'PROMEDIO DE TRANSACCIONES DE CLIENTES VIP',
+            'PROMEDIO DE TRANSACCIONES DE CLIENTES NORMALES',
+            'ACUMULADOS PROGRAMA LEALTAD',
+            'ACUMULADOS VIP',
+            'ACUMULADOS NORMALES'
         ];
         var rowtd = "";
-        var urlTransacciones = " http://172.16.15.20/API.LovablePHP/ZLO0019P/TiendasT/?anio=" + yearSelected +
+        var urlTransacciones = " http://172.16.15.20/API.LovablePHP/ZLO0019P/TiendasT2/?anio=" + yearSelected +
             "&tiendas=" + ciasSelected + "";
         var responseTransacciones = ajaxRequest(urlTransacciones);
         tbody.append(`<tr><td colspan='14'></td></tr>
@@ -639,9 +641,9 @@
                             <td colspan="99" class="bg-dark"></td>
                           </tr>
                           <tr><td colspan='14'></td></tr>`);
-        var backgroundColor = ['#DAEFFB', '#D1EEF2', '#C8EDF9', '#BFECE0', '#B6EBC7', '#ADEAAE', '#A4E995',
-            '#9BE88C'
-        ];
+
+        //var backgroundColor = ['#DAEFFB', '#D1EEF2', '#C8EDF9', '#BFECE0', '#B6EBC7', '#ADEAAE', '#A4E995','#9BE88C'];
+        var backgroundColor = ['#DAEFFB', '#DAEFFB','#DAEFFB', '#BFECE0', '#BFECE0', '#BFECE0','#BFECE0','#ADEAAE','#ADEAAE','#9BE88C','#9BE88C','#9BE88C'];
         if (responseTransacciones.code == 200) {
             let data = responseTransacciones.data;
             let datosRow1 = {};
@@ -652,6 +654,10 @@
             let datosRow6 = {};
             let datosRow7 = {};
             let datosRow8 = {};
+            let datosRow9 = {};
+            let datosRow10 = {};
+            let datosRow11 = {};
+            let datosRow12 = {};
             for (let mes = 1; mes <= 12; mes++) {
                 datosRow1[mes] = {};
                 datosRow2[mes] = {};
@@ -661,6 +667,10 @@
                 datosRow6[mes] = {};
                 datosRow7[mes] = {};
                 datosRow8[mes] = {};
+                datosRow9[mes] = {};
+                datosRow10[mes] = {};
+                datosRow11[mes] = {};
+                datosRow12[mes] = {};
                 ciasSelected.forEach(codcia => {
                     datosRow1[mes][codcia] = 0;
                     datosRow2[mes][codcia] = 0;
@@ -670,6 +680,10 @@
                     datosRow6[mes][codcia] = 0;
                     datosRow7[mes][codcia] = 0;
                     datosRow8[mes][codcia] = 0;
+                    datosRow9[mes][codcia] = 0;
+                    datosRow10[mes][codcia] = 0;
+                    datosRow11[mes][codcia] = 0;
+                    datosRow12[mes][codcia] = 0;
                 });
             }
             data.forEach(dato => {
@@ -678,17 +692,25 @@
                 //ROW2
                 datosRow2[dato.MESPRO][dato.CODCIA] = parseInt(dato.TRAVIE);
                 //ROW3
-                datosRow3[dato.MESPRO][dato.CODCIA] = parseInt(dato.TRANSA);
+                datosRow3[dato.MESPRO][dato.CODCIA] = parseInt(dato.TOTLEA);
                 //ROW4
-                datosRow4[dato.MESPRO][dato.CODCIA] = parseInt(dato.TOTLEA);
+                datosRow4[dato.MESPRO][dato.CODCIA] = parseInt(dato.TRAVIP);
                 //ROW5
-                datosRow5[dato.MESPRO][dato.CODCIA] = parseInt(dato.TOTNOR);
+                datosRow5[dato.MESPRO][dato.CODCIA] = parseInt(dato.TRANOR);
                 //ROW6
-                datosRow6[dato.MESPRO][dato.CODCIA] = parseInt(dato.TOTTR2);
+                datosRow6[dato.MESPRO][dato.CODCIA] = parseInt(dato.TOTTRA);
                 //ROW7
                 datosRow7[dato.MESPRO][dato.CODCIA] = parseFloat(dato.PORLEA);
                 //ROW8
-                datosRow8[dato.MESPRO][dato.CODCIA] = parseFloat(dato.PORNOR);
+                datosRow8[dato.MESPRO][dato.CODCIA] = parseFloat(dato.PORVIP);
+                //ROW9
+                datosRow9[dato.MESPRO][dato.CODCIA] = parseFloat(dato.PORNOR);
+                //ROW10
+                datosRow10[dato.MESPRO][dato.CODCIA] = parseFloat(dato.TACULE);
+                //ROW11
+                datosRow11[dato.MESPRO][dato.CODCIA] = parseFloat(dato.TACUVI);
+                //ROW12
+                datosRow12[dato.MESPRO][dato.CODCIA] = parseFloat(dato.TACUNO);
             });
 
             var rowIndex = 1;
@@ -874,7 +896,7 @@
                                 }
                             });
                         });
-                        break;
+                    break;
                     case 7:
                         Object.keys(datosRow7).forEach(mes => {
                             ciasSelected.forEach(codcia => {
@@ -887,7 +909,7 @@
                                 totalRow += parseInt(datosRow7[mes][codcia] || '0');
                             });
                         });
-                        break;
+                    break;
                     case 8:
                         Object.keys(datosRow8).forEach(mes => {
                             ciasSelected.forEach(codcia => {
@@ -900,7 +922,107 @@
                                 totalRow += parseInt(datosRow8[mes][codcia] || '0');
                             });
                         });
-                        break;
+                    break;
+                    case 9:
+                        Object.keys(datosRow9).forEach(mes => {
+                            ciasSelected.forEach(codcia => {
+                                rowtd += '<td class="text-end fontM border border-dark">' + (
+                                    datosRow9[mes][codcia] != 0 ? datosRow9[mes][codcia]
+                                    .toLocaleString('es-419', {
+                                        minimumFractionDigits: 2,
+                                        maximumFractionDigits: 2
+                                    }) + '%' : '‎') + '</td>';
+                                totalRow += parseInt(datosRow9[mes][codcia] || '0');
+                            });
+                        });
+                    break;
+                    case 10:
+                        Object.keys(datosRow10).forEach(mes => {
+                            ciasSelected.forEach(codcia => {
+                                if (codcia == 0) {
+                                    if (totalMes == 0) {
+                                        rowtd +=
+                                            '<td class="text-end fontM border border-dark"> </td>';
+                                    } else {
+                                        rowtd +=
+                                            '<td class="text-end fontM border border-dark">' +
+                                            totalMes.toLocaleString('es-419', {
+                                                minimumFractionDigits: 0,
+                                                maximumFractionDigits: 0
+                                            }) + '</td>';
+                                    }
+                                    totalMes = 0;
+                                } else {
+                                    rowtd += '<td class="text-end fontM border border-dark">' +
+                                        (datosRow10[mes][codcia] != 0 ? datosRow10[mes][codcia]
+                                            .toLocaleString('es-419', {
+                                                minimumFractionDigits: 0,
+                                                maximumFractionDigits: 0
+                                            }) : '‎') + '</td>';
+                                    totalMes += parseInt(datosRow10[mes][codcia] || '0');
+                                    totalRow += parseInt(datosRow10[mes][codcia] || '0');
+                                }
+                            });
+                        });
+                    break;
+                    case 11:
+                        Object.keys(datosRow11).forEach(mes => {
+                            ciasSelected.forEach(codcia => {
+                                if (codcia == 0) {
+                                    if (totalMes == 0) {
+                                        rowtd +=
+                                            '<td class="text-end fontM border border-dark"> </td>';
+                                    } else {
+                                        rowtd +=
+                                            '<td class="text-end fontM border border-dark">' +
+                                            totalMes.toLocaleString('es-419', {
+                                                minimumFractionDigits: 0,
+                                                maximumFractionDigits: 0
+                                            }) + '</td>';
+                                    }
+                                    totalMes = 0;
+                                } else {
+                                    rowtd += '<td class="text-end fontM border border-dark">' +
+                                        (datosRow11[mes][codcia] != 0 ? datosRow11[mes][codcia]
+                                            .toLocaleString('es-419', {
+                                                minimumFractionDigits: 0,
+                                                maximumFractionDigits: 0
+                                            }) : '‎') + '</td>';
+                                    totalMes += parseInt(datosRow11[mes][codcia] || '0');
+                                    totalRow += parseInt(datosRow11[mes][codcia] || '0');
+                                }
+                            });
+                        });
+                    break;
+                    case 12:
+                        Object.keys(datosRow12).forEach(mes => {
+                            ciasSelected.forEach(codcia => {
+                                if (codcia == 0) {
+                                    if (totalMes == 0) {
+                                        rowtd +=
+                                            '<td class="text-end fontM border border-dark"> </td>';
+                                    } else {
+                                        rowtd +=
+                                            '<td class="text-end fontM border border-dark">' +
+                                            totalMes.toLocaleString('es-419', {
+                                                minimumFractionDigits: 0,
+                                                maximumFractionDigits: 0
+                                            }) + '</td>';
+                                    }
+                                    totalMes = 0;
+                                } else {
+                                    rowtd += '<td class="text-end fontM border border-dark">' +
+                                        (datosRow12[mes][codcia] != 0 ? datosRow12[mes][codcia]
+                                            .toLocaleString('es-419', {
+                                                minimumFractionDigits: 0,
+                                                maximumFractionDigits: 0
+                                            }) : '‎') + '</td>';
+                                    totalMes += parseInt(datosRow12[mes][codcia] || '0');
+                                    totalRow += parseInt(datosRow12[mes][codcia] || '0');
+                                }
+                            });
+                        });
+                    break;
                     default:
                         rowtd += '<td class="text-end fontM border border-dark">0</td>';
                         break;
@@ -945,7 +1067,7 @@
             '% DE TRANSACCIONES DE CLIENTE NO INSCRITO VS TRANSACCIONES TOTALES'
         ];
         var rowtd = "";
-        var urlPTransacciones = " http://172.16.15.20/API.LovablePHP/ZLO0019P/TiendasPT/?anio=" + yearSelected +
+        var urlPTransacciones = " http://172.16.15.20/API.LovablePHP/ZLO0019P/TiendasPT2/?anio=" + yearSelected +
             "&tiendas=" + ciasSelected + "";
         var responsePTransacciones = ajaxRequest(urlPTransacciones);
         tbody.append(`<tr><td colspan='14'></td></tr>
@@ -1100,7 +1222,7 @@
             '% DE CLIENTES QUE BRINDARON CORREO'
         ];
         var rowtd = "";
-        var urlDesglose = "http://172.16.15.20/API.LovablePHP/ZLO0019P/TiendasD/?anio=" + yearSelected +
+        var urlDesglose = "http://172.16.15.20/API.LovablePHP/ZLO0019P/TiendasD2/?anio=" + yearSelected +
             "&tiendas=" + ciasSelected + "";
         var responseDesglose = ajaxRequest(urlDesglose);
         tbody.append(`<tr><td colspan='14'></td></tr>
@@ -1354,12 +1476,13 @@
         tbody.append(rowtd);
         //TICKET PROMEDIO----------------------------------------------------------------------------------------------------------------------
         var arrayTicket = [
-            'TICKET PROMEDIO DE TRANSACCIONES DE CLIENTES EN PROGRAMA DE LEALTAD',
-            'TICKET PROMEDIO DE TRANSACCIONES DE CLIENTES NO INSCRITOS',
+            'TICKET PROMEDIO DE TRANSACCIONES DE PROGRAMA DE LEALTAD',
+            'TICKET PROMEDIO DE TRANSACCIONES DE CLIENTES VIP',
+            'TICKET PROMEDIO DE TRANSACCIONES DE CLIENTES NORMALES',
             'TICKET PROMEDIO  GENERAL'
         ];
         var rowtd = "";
-        var urlTicket = "http://172.16.15.20/API.LovablePHP/ZLO0019P/TiendasTC/?anio=" + yearSelected +
+        var urlTicket = "http://172.16.15.20/API.LovablePHP/ZLO0019P/TiendasTC2/?anio=" + yearSelected +
             "&tiendas=" + ciasSelected + "";
         var responseTicket = ajaxRequest(urlTicket);
         tbody.append(`<tr><td colspan='14'></td></tr>
@@ -1368,29 +1491,34 @@
                             <td colspan="99" class="bg-dark"></td>
                           </tr>
                           <tr><td colspan='14'></td></tr>`);
-        var backgroundColor = ['#FFE0CC', '#FFD199', '#FFC266'];
+        var backgroundColor = ['#FFE0CC', '#FFD199','#FFD199', '#FFC266'];
         if (responseTicket.code == 200) {
             let data = responseTicket.data;
             let datosRow1 = {};
             let datosRow2 = {};
             let datosRow3 = {};
+            let datosRow4 = {};
             for (let mes = 1; mes <= 12; mes++) {
                 datosRow1[mes] = {};
                 datosRow2[mes] = {};
                 datosRow3[mes] = {};
+                datosRow4[mes] = {};
                 ciasSelected.forEach(codcia => {
                     datosRow1[mes][codcia] = 0;
                     datosRow2[mes][codcia] = 0;
                     datosRow3[mes][codcia] = 0;
+                    datosRow4[mes][codcia] = 0;
                 });
             }
             data.forEach(dato => {
                 //ROW1
                 datosRow1[dato.MESPRO][dato.CODCIA] = parseFloat(dato.PORVLE);
                 //ROW2
-                datosRow2[dato.MESPRO][dato.CODCIA] = parseFloat(dato.PORVNO);
+                datosRow2[dato.MESPRO][dato.CODCIA] = parseFloat(dato.PORVVI);
                 //ROW3
-                datosRow3[dato.MESPRO][dato.CODCIA] = parseFloat(dato.PORVTO);
+                datosRow3[dato.MESPRO][dato.CODCIA] = parseFloat(dato.PORVNO);
+                //ROW3
+                datosRow4[dato.MESPRO][dato.CODCIA] = parseFloat(dato.PORVTO);
             });
             var rowIndex = 1;
             for (let k = 0; k < arrayTicket.length; k++) {
@@ -1405,7 +1533,7 @@
                         Object.keys(datosRow1).forEach(mes => {
                             ciasSelected.forEach(codcia => {
                                 rowtd += '<td class="text-end fontM border border-dark">' + (
-                                    datosRow1[mes][codcia] != 0 ? datosRow1[mes][codcia]
+                                    datosRow1[mes][codcia] != 0 ? 'D.'+datosRow1[mes][codcia]
                                     .toLocaleString('es-419', {
                                         minimumFractionDigits: 2,
                                         maximumFractionDigits: 2
@@ -1418,7 +1546,7 @@
                         Object.keys(datosRow2).forEach(mes => {
                             ciasSelected.forEach(codcia => {
                                 rowtd += '<td class="text-end fontM border border-dark">' + (
-                                    datosRow2[mes][codcia] != 0 ? datosRow2[mes][codcia]
+                                    datosRow2[mes][codcia] != 0 ? 'D.'+datosRow2[mes][codcia]
                                     .toLocaleString('es-419', {
                                         minimumFractionDigits: 2,
                                         maximumFractionDigits: 2
@@ -1431,12 +1559,25 @@
                         Object.keys(datosRow3).forEach(mes => {
                             ciasSelected.forEach(codcia => {
                                 rowtd += '<td class="text-end fontM border border-dark">' + (
-                                    datosRow3[mes][codcia] != 0 ? datosRow3[mes][codcia]
+                                    datosRow3[mes][codcia] != 0 ? 'D.'+datosRow3[mes][codcia]
                                     .toLocaleString('es-419', {
                                         minimumFractionDigits: 2,
                                         maximumFractionDigits: 2
                                     }) : '‎') + '</td>';
                                 totalRow += parseInt(datosRow3[mes][codcia] || '0');
+                            });
+                        });
+                        break;
+                    case 4:
+                        Object.keys(datosRow4).forEach(mes => {
+                            ciasSelected.forEach(codcia => {
+                                rowtd += '<td class="text-end fontM border border-dark">' + (
+                                    datosRow4[mes][codcia] != 0 ? 'D.'+datosRow4[mes][codcia]
+                                    .toLocaleString('es-419', {
+                                        minimumFractionDigits: 2,
+                                        maximumFractionDigits: 2
+                                    }) : '‎') + '</td>';
+                                totalRow += parseInt(datosRow4[mes][codcia] || '0');
                             });
                         });
                         break;

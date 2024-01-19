@@ -112,10 +112,11 @@
     var inputs = "";
     var cor = "";
     var tipoWeb = "";
+    var usuario ="";
     $(document).ready(function() {
         var anoing = "<?php echo isset($_SESSION['ANOING'])? $_SESSION['ANOING']: ''; ?>";
         var numemp = "<?php echo isset($_SESSION['NUMEMP'])? $_SESSION['NUMEMP']: ''; ?>";
-        var usuario = '<?php echo $_SESSION["CODUSU"];?>';
+        usuario = '<?php echo $_SESSION["CODUSU"];?>';
 
         const currentUrl = window.location.href;
         var url = new URL(currentUrl);
@@ -172,10 +173,10 @@
         if (anoing == 0 & numemp == 0) {
             $("#isGerencia").append(`<div class="col-12 col-lg-6">
                                         <h6 class="mb-3 mt-2 text-start">Departamento y Sección</h6>
-                                        <select id="cbbDepartamentos" class="form-select mt-1" >   
+                                        <select id="cbbDepartamentos" class="form-select mt-1" >
                                         </select>
                                         </div>
-                                    <div class="col-12 col-lg-6"> 
+                                    <div class="col-12 col-lg-6">
                                         <h6 class="mb-3 text-start mt-2">Tipo de documento</h6>
                                         <select class="form-select mt-1" id="tiposDoc">
                                            <option value="A" >TODOS LOS DOCUMENTOS</option>
@@ -191,17 +192,36 @@
                 for (let i = 0; i < responseDepas.data.length; i++) {
                     departamentos.append(`<option value="` + responseDepas.data[i].SECDEP + `-` + responseDepas
                         .data[i].SECCOD + `">` + responseDepas.data[i].SECDES + `</option>`);
-
                 }
             }
-
         } else {
-
-            $("#isGerencia").append(`<div class="col-12"> <h6 class="mb-3 text-start">Tipo de documento</h6>
+            var urlDepas = 'http://172.16.15.20/API.LOVABLEPHP/ZLO0015P/ListDepasUsers/?user=' + usuario + '';
+            var responseDepas = ajaxRequest(urlDepas);
+            if (responseDepas.code == 200 && responseDepas.data.length > 1) {
+                $("#isGerencia").append(`<div class="col-12 col-lg-6">
+                                        <h6 class="mb-3 mt-2 text-start">Departamento y Sección</h6>
+                                        <select id="cbbDepartamentos" class="form-select mt-1" >
+                                        </select>
+                                        </div>
+                                    <div class="col-12 col-lg-6">
+                                        <h6 class="mb-3 text-start mt-2">Tipo de documento</h6>
                                         <select class="form-select mt-1" id="tiposDoc">
                                            <option value="A">TODOS LOS DOCUMENTOS</option>
                                         </select>
                                     </div>`);
+                const departamentos = $("#cbbDepartamentos");
+                departamentos.empty();
+                for (let i = 0; i < responseDepas.data.length; i++) {
+                    departamentos.append(`<option value="` + responseDepas.data[i].SECDEP + `-` + responseDepas
+                        .data[i].SECCOD + `">` + responseDepas.data[i].SECDES + `</option>`);
+                }
+            }else{
+                $("#isGerencia").append(`<div class="col-12"> <h6 class="mb-3 text-start">Tipo de documento</h6>
+                                        <select class="form-select mt-1" id="tiposDoc">
+                                           <option value="A">TODOS LOS DOCUMENTOS</option>
+                                        </select>
+                                    </div>`);
+            }
         }
         $('#tbProveedores thead th').each(function() {
             var title = $(this).text();
@@ -262,7 +282,8 @@
                     .draw();
             }
         });
-        var urlTipos = "http://172.16.15.20/API.LovablePHP/ZLO0015P/ListTipos/";
+        //var urlTipos = "http://172.16.15.20/API.LovablePHP/ZLO0015P/ListTipos/";
+        var urlTipos = "http://172.16.15.20/API.LovablePHP/ZLO0015P/ListTipos2/?user=" + usuario + "";
         var responseTipos = ajaxRequest(urlTipos);
         if (responseTipos.code == 200) {
             const tipos = $("#tiposDoc");
@@ -285,7 +306,6 @@
         tiposChange();
         if (tipoWeb != '') {
             $("#tiposDoc").val(tipoWeb).trigger('change');
-
             var camposId = paramsLength - 4;
             for (let i = 0; i < camposId; i++) {
                 var data = paramsData['CAM' + (i + 1) + ''].split(':');
@@ -405,7 +425,7 @@
                         '<input class="inputsDoc fn" style="font-size:14px;"  type="text" autocomplete="off" data-placeholder-focus="false" required id="FechasGrabs" onclick="showRange2()"  oninput="noTextInput4(this)"/><button type="button" class="btn p-0 m-0 fs-5" onclick="vaciarInput4()"><i class="fa-solid fa-xmark fs-6"></i></button>';
                     htmlAppend += '<input class="d-none" id="originalRangeGrabado" /> <input class="d-none" />'
                 } else {
-                  
+
                     htmlAppend +=
                         '<input class="inputsDoc fn"  type="text" autocomplete="off" data-placeholder-focus="false" required id="' +
                         responseCampos.data[0]['TIPDOC'] + i + '"  />'
@@ -464,7 +484,7 @@
                 element.style.flex = '1 0 ' + porcentajes + '%';
             });
         }
-       
+
     }
     var Date1;
     var Date2;
@@ -724,7 +744,7 @@
                 <div class="col-4 text-end">
                     <label class="ms-2 me-1 mt-3">Se encontraron <span class="fw-bold" id="numDocumentos">0</span> documentos</label>
                 </div>
-            </div>            
+            </div>
             `);
         $("#tableDocs").append(`
         <div class="table-responsive" style="height:580px;">
@@ -738,8 +758,8 @@
                             </tr>
                         </thead>
                         <tbody id="myTableBody">
-                            
-                           
+
+
                         </tbody>
                     </table>
                 </div>`);
@@ -798,9 +818,9 @@
             'CAM9': getCookie("cam9"),
             'CAM10': getCookie("cam10")
         };
-        
         var baseUrl = "http://172.16.15.20/API.LovablePHP/ZLO0016P/ListAsync/";
         var queryParams = [];
+        queryParams.push("user=" + usuario);
         if (anoing) queryParams.push("anoing=" + anoing);
         if (numemp) queryParams.push("numemp=" + numemp);
         if (tipo) queryParams.push("tipdoc=" + tipo);
@@ -817,16 +837,16 @@
                 queryParams.push(key + "=" + campos[key]);
             }
         }
-
         var urlList = baseUrl + "?" + queryParams.join("&");
         console.log(urlList);
         var response = ajaxRequest(urlList);
         const body = $("#myTableBody");
         if (response.code == 200) {
+            $("#cbbDepartamentos").val(response.data[0]['CODDEP'] + '-' + response.data[0]['CODSEC']);
             let tr;
             let limit = Math.min(response.data.length, 100);
             //let limit=response.data.length;
-            //$("#numDocumentos").text(limit);  
+            //$("#numDocumentos").text(limit);
             var dataTable = $("#myTableInvDesc").DataTable({
                 language: {
                     url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json',
@@ -1175,7 +1195,7 @@
                 <div class="col-6">
                 <a class="btn btn-warning fw-bold text-white" style="width:100%;" target="_blank" href="http://172.16.15.20` +
                 urldoc + `" >Visualizar documento <i class="fa-solid fa-eye"></i></a>
-                
+
                 </div>
                 <div class="col-6">
                     <a class="btn btn-info fw-bold text-white" style="width:100%;" href="http://172.16.15.20` +
@@ -1196,13 +1216,43 @@
 
 
         $("#trashDoc").empty();
+        $("#AuthDoc").empty();
         var permisos = "<?php echo isset($_SESSION['PERESP'])? $_SESSION['PERESP']: ''; ?>";
         if (permisos === 'S') {
-            $("#trashDoc").append(
-                ` <button type="button" class="btn btn-danger m-0 mt-2  text-white" onclick="deleteCard('` +
-                nomcard +
-                `','` + usugra + `','` + fecgra + `','` + horgra + `','` + extdoc + `','` + urldoc +
-                `')" ><i class="fa-solid fa-trash-can"></i></button>`);
+            var urlPermisos="http://172.16.15.20/API.LovablePHP/ZLO0015P/GetPermiso/?user="+ usuario +"";
+            console.log(urlPermisos);
+            var responsePermisos = ajaxRequest(urlPermisos);
+            if (responsePermisos.code==200) {
+                var data=responsePermisos.data;
+                for (let i = 0; i < data.length; i++) {
+                   if (data[i]['ACCION']=='E') {
+                    $("#trashDoc").append(
+                        ` <button type="button" class="btn btn-danger m-0 mt-2 me-3  text-white" onclick="deleteCard('` +
+                        nomcard +
+                        `','` + usugra + `','` + fecgra + `','` + horgra + `','` + extdoc + `','` + urldoc +
+                        `')" ><i class="fa-solid fa-trash-can fw-bold"></i></button>`);
+                   }else{
+                    if (data[i]['ACCION']=='A') {
+                        var urlAuth = "http://172.16.15.20/API.LovablePHP/ZLO0016P/ISAuth/?nomdoc=" + nomcard + "&urldoc=" + urldoc+"";
+                        var responseAuth=ajaxRequest(urlAuth);
+                        if (responseAuth.code==200) {
+                                $("#AuthDiv").removeClass('d-none');
+                                $("#userAuth").text(responseAuth.data[0]['USUREV']);
+                                $("#fechaAuth").text(formatFecha(responseAuth.data[0]['FECGRA']));
+                                $("#horaAuth").text(formatTime(responseAuth.data[0]['HORGRA']));
+                        }else{
+                            $("#AuthDiv").addClass('d-none');
+                            $("#AuthDoc").append(
+                            ` <button type="button" class="btn btn-success text-white mt-1 fw-bold" style="width:100%;"  onclick="authCard('` +nomcard +
+                            `','` + usugra + `','` + fecgra + `','` + horgra + `','` + extdoc + `','` + urldoc +
+                            `')">
+                            <i class="fa-solid fa-clipboard-check fw-bold fs-5"></i> Autorizar documento </button>`);
+                        }
+                    }
+                   }
+                }
+            }
+
         }
 
         $("#titleDoc").text(nomcard);
@@ -1300,7 +1350,34 @@
         }
         $("#docInfo").modal('hide');
     }
+    function authCard(nomcard, usugra, fecgra, horgra, extdoc, urldoc) {
+        fecgra=currentDate();
+        horgra=currentTime();
+        var urlAuth = "http://172.16.15.20/API.LovablePHP/ZLO0016P/Auth/?nomdoc=" + nomcard + "&urldoc=" + urldoc + "&user="+ usugra +"&fecgra="+ fecgra +"&horgra="+ horgra+"";
+        var response = ajaxRequest(urlAuth);
+        if (response.code == 200) {
+            chargeTable();
+        }
+        $("#docInfo").modal('hide');
+    }
 
+    function currentTime() {
+        const fecha = new Date();
+        const horas = fecha.getHours().toString().padStart(2, "0");
+        const minutos = fecha.getMinutes().toString().padStart(2, "0");
+        const segundos = fecha.getSeconds().toString().padStart(2, "0");
+        const horaActual = horas + minutos + segundos;
+        return horaActual;
+    }
+
+    function currentDate() {
+        const fecha = new Date();
+        const año = fecha.getFullYear();
+        const mes = (fecha.getMonth() + 1).toString().padStart(2, "0");
+        const dia = fecha.getDate().toString().padStart(2, "0");
+        const fechaActual = año.toString() + mes + dia;
+        return fechaActual;
+    }
     function formatFecha(inputDate) {
         var year = inputDate.substring(0, 4);
         var month = inputDate.substring(4, 6);
@@ -1309,7 +1386,6 @@
 
         return formattedDate;
     }
-
     function formatFechaInput(inputDate) {
         var year = inputDate.substring(10, 6);
         var month = inputDate.substring(3, 5);
@@ -1318,7 +1394,6 @@
 
         return formattedDate;
     }
-
     function formatTime(inputTime) {
         inputTime = (inputTime.length < 6 ? "0" + inputTime : inputTime);
         var hour = inputTime.substring(0, 2);
@@ -1359,7 +1434,7 @@
                                 <div class="card-body text-center p-3" id="downloadFrame">
                                 </div>
                             </div>
-                            <div class="col-2 col-lg-1 p-0" id="trashDoc">
+                            <div class="col-2 col-lg-1 p-0 text-end" id="trashDoc">
 
                             </div>
                         </div>
@@ -1371,7 +1446,29 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-12 text-center">
-                                    <h5 class="text-center  mt-2 mb-2" id="titleDoc"></h5>
+                                    <h5 class="mt-2 mb-2" id="titleDoc"></h5>
+                                </div>
+                                <div class="col-12" id="AuthDoc">
+
+                                </div>
+                                <div id="AuthDiv" class="col-12 rounded mt-2 bg-success d-none">
+                                      <div class="row p-2 text-center text-white">
+                                        <div class="col-12">
+                                             <h5 class="mt-2 mb-3 fw-bold">Documento autorizado</h5>
+                                        </div>
+                                        <div class="col-4">
+                                             <label>Autorizado por:</label>
+                                             <span id="userAuth"></span>
+                                             </div>
+                                             <div class="col-4">
+                                           <label>Fecha:</label>
+                                             <span id="fechaAuth"></span>
+                                            </div>
+                                         <div class="col-4">
+                                            <label>Hora:</label>
+                                             <span  id="horaAuth"></span>
+                                       </div>
+                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <hr>
