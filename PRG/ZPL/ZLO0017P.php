@@ -33,9 +33,9 @@
                         </ol>
                     </div>
                     <div class="col-2 mt-1">
-                      <!--<button type="button" id="exportExcel" class="btn btn-success text-light fs-6 text-center" style="width:100%;">
+                      <button type="button" id="exportExcel" class="btn btn-success text-light fs-6 text-center" style="width:100%;">
                             <i class="fa-solid fa-file-excel me-1"></i><b>Enviar a Excel</b>
-                        </button>-->
+                        </button>
                     </div>
                     <div class="col-2 d-flex">
                         <label class="form-control border border-0"  style="width: 30%;">Año:</label>
@@ -119,7 +119,7 @@
             $("#exportExcel").on('click', function() {
             document.getElementById('loaderExcel').classList.remove('d-none');
             var url="http://172.16.15.20/API.LovablePHP/ZLO0017P/Export/?anio="+yearSelected+"";
-            console.log(url);
+
             fetch(url)
                 .then(response => response.blob())
                 .then(blob => {
@@ -167,7 +167,7 @@
 
 
             var rowtd="";
-            var urlRegistros="http://172.16.15.20/API.LovablePHP/ZLO0017P/PaisesR2/?anio="+yearSelected+"";
+            var urlRegistros="http://172.16.15.20/API.LovablePHP/ZLO0017P/PaisesR/?anio="+yearSelected+"";
             console.log(urlRegistros);
             var responseRegistros=ajaxRequest(urlRegistros);
             tbody.append(`<tr class="border border-dark">
@@ -335,7 +335,7 @@
             'ACUMULADOS NORMALES'
         ];
             var rowtd="";
-            var urlTransacciones="http://172.16.15.20/API.LovablePHP/ZLO0017P/PaisesT2/?anio="+yearSelected+"";
+            var urlTransacciones="http://172.16.15.20/API.LovablePHP/ZLO0017P/PaisesT/?anio="+yearSelected+"";
             var responseTransacciones=ajaxRequest(urlTransacciones);
             tbody.append(`<tr><td colspan='74'></td></tr>
                           <tr class="border border-dark">
@@ -530,7 +530,7 @@
                           '% DE TRANSACCIONES DE CLIENTE NO INSCRITO VS TRANSACCIONES TOTALES'
                         ];
             var rowtd="";
-            var urlPTransacciones=" http://172.16.15.20/API.LovablePHP/ZLO0017P/PaisesPT2/?anio="+yearSelected+"";
+            var urlPTransacciones=" http://172.16.15.20/API.LovablePHP/ZLO0017P/PaisesPT/?anio="+yearSelected+"";
             var responsePTransacciones=ajaxRequest(urlPTransacciones);
             tbody.append(`<tr><td colspan='74'></td></tr>
                           <tr class="border border-dark">
@@ -643,7 +643,7 @@
                           '% DE CLIENTES QUE BRINDARON CORREO'
                         ];
             var rowtd="";
-            var urlDesglose="http://172.16.15.20/API.LovablePHP/ZLO0017P/PaisesD2/?anio="+yearSelected+"";
+            var urlDesglose="http://172.16.15.20/API.LovablePHP/ZLO0017P/PaisesD/?anio="+yearSelected+"";
             var responseDesglose=ajaxRequest(urlDesglose);
             tbody.append(`<tr><td colspan='74'></td></tr>
                           <tr class="border border-dark">
@@ -781,7 +781,7 @@
             'TICKET PROMEDIO  GENERAL'
             ];
             var rowtd="";
-            var urlTicket="http://172.16.15.20/API.LovablePHP/ZLO0017P/PaisesTC2/?anio="+yearSelected+"";
+            var urlTicket="http://172.16.15.20/API.LovablePHP/ZLO0017P/PaisesTC/?anio="+yearSelected+"";
             var responseTicket=ajaxRequest(urlTicket);
             tbody.append(`<tr><td colspan='74'></td></tr>
                           <tr class="border border-dark">

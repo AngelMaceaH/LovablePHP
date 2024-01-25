@@ -387,8 +387,7 @@ $(document).ready(function() {
                         $('row:eq(' + index + ') c[r^="B"]', sheet).attr('s',
                             textred1); //ROJO
                     }
-                    if (parseFloat($('row:eq(' + index + ') c[r^="F"]', sheet).text()) <
-                        0) {
+                    if (parseFloat($('row:eq(' + index + ') c[r^="F"]', sheet).text()) < 0) {
                         $('row:eq(' + index + ') c[r^="F"]', sheet).attr('s',
                             textred1); //ROJO
                     } else {

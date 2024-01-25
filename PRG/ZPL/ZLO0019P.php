@@ -22,7 +22,7 @@
       //COMBOBOX
         $sqlCOMARC = "SELECT T2.CODSEC,LO0705.CODCIA COMCOD, LO0705.NOMCIA COMDES
         FROM LBPRDDAT/LO0705
-        INNER JOIN LBPRDDAT/LO0686 AS T2 ON T2.CODCIA = LO0705.CODCIA AND T2.CODCIA NOT IN(1,35,20,21,22,23,24)
+        INNER JOIN LBPRDDAT/LO0686 AS T2 ON T2.CODCIA = LO0705.CODCIA AND T2.CODCIA NOT IN(1,35,20,21,22,23,24,50)
         ORDER BY T2.CODSEC";
         $resultCOMARC=odbc_exec($connIBM,$sqlCOMARC);
     ?>
@@ -49,7 +49,7 @@
                         <select class="form-select" id="cbbCia" name="cbbCia[]" name="states[]" multiple="multiple"
                             style="width: 100%;">
                             <?php
-                                while ($rowCOMARC = odbc_fetch_array($resultCOMARC)) {
+                                while($rowCOMARC = odbc_fetch_array($resultCOMARC)) {
                                 echo "<option value='" . $rowCOMARC['COMCOD'] . "'>" . rtrim(utf8_encode($rowCOMARC['COMDES'])) . "</option>";
                                 }
                             ?>

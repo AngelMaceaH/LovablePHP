@@ -1244,7 +1244,7 @@
                             $("#AuthDiv").addClass('d-none');
                             $("#AuthDoc").append(
                             ` <button type="button" class="btn btn-success text-white mt-1 fw-bold" style="width:100%;"  onclick="authCard('` +nomcard +
-                            `','` + usugra + `','` + fecgra + `','` + horgra + `','` + extdoc + `','` + urldoc +
+                            `','` + usuario + `','` + fecgra + `','` + horgra + `','` + extdoc + `','` + urldoc +
                             `')">
                             <i class="fa-solid fa-clipboard-check fw-bold fs-5"></i> Autorizar documento </button>`);
                         }
