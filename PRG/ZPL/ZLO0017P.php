@@ -33,7 +33,7 @@
                         </ol>
                     </div>
                     <div class="col-2 mt-1">
-                      <button type="button" id="exportExcel" class="btn btn-success text-light fs-6 text-center" style="width:100%;">
+                     <button type="button" id="exportExcel" class="btn btn-success text-light fs-6 text-center" style="width:100%;">
                             <i class="fa-solid fa-file-excel me-1"></i><b>Enviar a Excel</b>
                         </button>
                     </div>
@@ -55,7 +55,7 @@
                                             <i class="fa-solid fa-file-excel fa-flip text-white" style="font-size:70px;"></i>
                                         </button>
                                         <div class="position-absolute top-0 start-0 w-100  bg-secondary bg-opacity-50 rounded"
-                                            style="z-index: 9998; height:1950px !important; width:7800px !important;"></div>
+                                            style="z-index: 9998; height:2350px !important; width:7800px !important;"></div>
                                     </div>
             <table  id="tableMetricas" class="table stripe table-hover " style="width:7800px;">
                             <thead class="sticky-top bg-white ">
@@ -101,6 +101,23 @@
     <script src="https://cdn.datatables.net/fixedcolumns/4.3.0/js/dataTables.fixedColumns.min.js"></script>
     <script>
         var yearSelected=0;
+         //PROMEDIOS TRANSACCIONES
+            var prolea=0;
+            var provip=0;
+            var pronor=0;
+
+            var tralea=0;
+            var travip=0;
+            var tranor=0;
+        //TRANSACCIONES
+            var totaltransacciones=0;
+            var tranue=0;
+            var travie=0;
+        //CONTACTO
+            var contotal=0;
+            var conmailte=0;
+            var contelefono=0;
+            var conemail=0;
         $(document).ready(function() {
             yearSelected=getCookie('year') || 2023;
             var select = document.getElementById('setYear');
@@ -168,7 +185,6 @@
 
             var rowtd="";
             var urlRegistros="http://172.16.15.20/API.LovablePHP/ZLO0017P/PaisesR/?anio="+yearSelected+"";
-            console.log(urlRegistros);
             var responseRegistros=ajaxRequest(urlRegistros);
             tbody.append(`<tr class="border border-dark">
                             <td colspan="1" class="bg-dark text-white fw-bold text-center sticky-col">REGISTROS</td>
@@ -240,6 +256,7 @@
                             [1, 3, 4, 5, 6, 19].forEach(codpai => {
                                 rowtd += '<td class="text-end fontM border border-dark">' + (datosRow3[mes][codpai]!=0 ? datosRow3[mes][codpai].toLocaleString('es-419', {minimumFractionDigits: 0, maximumFractionDigits: 0}) : '‎') + '</td>';
                                 totalRow += parseInt(datosRow3[mes][codpai] || '0');
+                                prolea+= parseInt(datosRow3[mes][codpai] || '0');
                                 });
                             });
                             break;
@@ -248,6 +265,7 @@
                             [1, 3, 4, 5, 6, 19].forEach(codpai => {
                                 rowtd += '<td class="text-end fontM border border-dark">' + (datosRow4[mes][codpai]!=0 ? datosRow4[mes][codpai].toLocaleString('es-419', {minimumFractionDigits: 0, maximumFractionDigits: 0}) : '‎') + '</td>';
                                 totalRow += parseInt(datosRow4[mes][codpai] || '0');
+                                provip += parseInt(datosRow4[mes][codpai] || '0');
                                 });
                             });
                             break;
@@ -256,6 +274,7 @@
                             [1, 3, 4, 5, 6, 19].forEach(codpai => {
                                 rowtd += '<td class="text-end fontM border border-dark">' + (datosRow5[mes][codpai]!=0 ? datosRow5[mes][codpai].toLocaleString('es-419', {minimumFractionDigits: 0, maximumFractionDigits: 0}) : '‎') + '</td>';
                                 totalRow += parseInt(datosRow5[mes][codpai] || '0');
+                                pronor+= parseInt(datosRow5[mes][codpai] || '0');
                                 });
                             });
                             break;
@@ -271,7 +290,9 @@
                         Object.keys(datosRow7).forEach(mes => {
                             [1, 3, 4, 5, 6, 19].forEach(codpai => {
                                 rowtd += '<td class="text-end fontM border border-dark">' + (datosRow7[mes][codpai]!=0 ? datosRow7[mes][codpai].toLocaleString('es-419', {minimumFractionDigits: 0, maximumFractionDigits: 0}) : '‎') + '</td>';
-                                totalRow += parseInt(datosRow7[mes][codpai] || '0');
+                                if (datosRow7[mes][1]!=0 ) {
+                                    totalRow = parseFloat(datosRow7[mes][1])+parseFloat(datosRow7[mes][3])+parseFloat(datosRow7[mes][4])+parseFloat(datosRow7[mes][5])+parseFloat(datosRow7[mes][6])+parseFloat(datosRow7[mes][19]);
+                                }
                                 });
                             });
                             break;
@@ -279,7 +300,9 @@
                         Object.keys(datosRow8).forEach(mes => {
                             [1, 3, 4, 5, 6, 19].forEach(codpai => {
                                 rowtd += '<td class="text-end fontM border border-dark">' + (datosRow8[mes][codpai]!=0 ? datosRow8[mes][codpai].toLocaleString('es-419', {minimumFractionDigits: 0, maximumFractionDigits: 0}) : '‎') + '</td>';
-                                totalRow += parseInt(datosRow8[mes][codpai] || '0');
+                                if (datosRow8[mes][1]!=0 ) {
+                                    totalRow = parseFloat(datosRow8[mes][1])+parseFloat(datosRow8[mes][3])+parseFloat(datosRow8[mes][4])+parseFloat(datosRow8[mes][5])+parseFloat(datosRow8[mes][6])+parseFloat(datosRow8[mes][19]);
+                                }
                                 });
                             });
                             break;
@@ -287,7 +310,9 @@
                         Object.keys(datosRow9).forEach(mes => {
                             [1, 3, 4, 5, 6, 19].forEach(codpai => {
                                 rowtd += '<td class="text-end fontM border border-dark">' + (datosRow9[mes][codpai]!=0 ? datosRow9[mes][codpai].toLocaleString('es-419', {minimumFractionDigits: 0, maximumFractionDigits: 0}) : '‎') + '</td>';
-                                totalRow += parseInt(datosRow9[mes][codpai] || '0');
+                                if (datosRow9[mes][1]!=0 ) {
+                                    totalRow = parseFloat(datosRow9[mes][1])+parseFloat(datosRow9[mes][3])+parseFloat(datosRow9[mes][4])+parseFloat(datosRow9[mes][5])+parseFloat(datosRow9[mes][6])+parseFloat(datosRow9[mes][19]);
+                                }
                                 });
                             });
                             break;
@@ -295,7 +320,7 @@
                         rowtd += '<td class="text-end fontM border border-dark">0</td>';
                             break;
                     }
-                    if (rowIndex!=7 && rowIndex!=8 && rowIndex!=9) {
+                    if (totalRow!=0) {
                         rowtd += '<td class="text-end fontM border border-dark">' + totalRow.toLocaleString('es-419', {
                                     minimumFractionDigits: 0,
                                     maximumFractionDigits: 0
@@ -401,6 +426,7 @@
                         [1, 3, 4, 5, 6, 19].forEach(codpai => {
                             rowtd += '<td class="text-end fontM border border-dark">' + (datosRow1[mes][codpai]!=0 ? datosRow1[mes][codpai].toLocaleString('es-419', {minimumFractionDigits: 0, maximumFractionDigits: 0}) : '‎') + '</td>';
                             totalRow += parseInt(datosRow1[mes][codpai] || '0');
+                            tranue+= parseInt(datosRow1[mes][codpai] || '0');
                             });
                         });
                             break;
@@ -409,6 +435,7 @@
                             [1, 3, 4, 5, 6, 19].forEach(codpai => {
                                 rowtd += '<td class="text-end fontM border border-dark">' + (datosRow2[mes][codpai]!=0 ? datosRow2[mes][codpai].toLocaleString('es-419', {minimumFractionDigits: 0, maximumFractionDigits: 0}) : '‎') + '</td>';
                                 totalRow += parseInt(datosRow2[mes][codpai] || '0');
+                                travie+= parseInt(datosRow2[mes][codpai] || '0');
                                 });
                             });
                             break;
@@ -417,6 +444,7 @@
                             [1, 3, 4, 5, 6, 19].forEach(codpai => {
                                 rowtd += '<td class="text-end fontM border border-dark">' + (datosRow3[mes][codpai]!=0 ? datosRow3[mes][codpai].toLocaleString('es-419', {minimumFractionDigits: 0, maximumFractionDigits: 0}) : '‎') + '</td>';
                                 totalRow += parseInt(datosRow3[mes][codpai] || '0');
+                                tralea+= parseInt(datosRow3[mes][codpai] || '0');
                                 });
                             });
                             break;
@@ -425,6 +453,7 @@
                             [1, 3, 4, 5, 6, 19].forEach(codpai => {
                                 rowtd += '<td class="text-end fontM border border-dark">' + (datosRow4[mes][codpai]!=0 ? datosRow4[mes][codpai].toLocaleString('es-419', {minimumFractionDigits: 0, maximumFractionDigits: 0}) : '‎') + '</td>';
                                 totalRow += parseInt(datosRow4[mes][codpai] || '0');
+                                travip+= parseInt(datosRow4[mes][codpai] || '0');
                                 });
                             });
                             break;
@@ -433,6 +462,7 @@
                             [1, 3, 4, 5, 6, 19].forEach(codpai => {
                                 rowtd += '<td class="text-end fontM border border-dark">' + (datosRow5[mes][codpai]!=0 ? datosRow5[mes][codpai].toLocaleString('es-419', {minimumFractionDigits: 0, maximumFractionDigits: 0}) : '‎') + '</td>';
                                 totalRow += parseInt(datosRow5[mes][codpai] || '0');
+                                tranor+= parseInt(datosRow5[mes][codpai] || '0');
                                 });
                             });
                             break;
@@ -441,6 +471,7 @@
                             [1, 3, 4, 5, 6, 19].forEach(codpai => {
                                 rowtd += '<td class="text-end fontM border border-dark">' + (datosRow6[mes][codpai]!=0 ? datosRow6[mes][codpai].toLocaleString('es-419', {minimumFractionDigits: 0, maximumFractionDigits: 0}) : '‎') + '</td>';
                                 totalRow += parseInt(datosRow6[mes][codpai] || '0');
+                                totaltransacciones+= parseInt(datosRow6[mes][codpai] || '0');
                                 });
                             });
                             break;
@@ -448,7 +479,10 @@
                         Object.keys(datosRow7).forEach(mes => {
                             [1, 3, 4, 5, 6, 19].forEach(codpai => {
                                 rowtd += '<td class="text-end fontM border border-dark">' + (datosRow7[mes][codpai]!=0 ? datosRow7[mes][codpai].toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})+'%' : '‎') + '</td>';
-                                totalRow += parseFloat(datosRow7[mes][codpai] || '0');
+                                totalRow=0;
+                                    if (prolea!=0) {
+                                        totalRow=tralea/prolea;
+                                    }
                                 });
                             });
                             break;
@@ -456,7 +490,10 @@
                         Object.keys(datosRow8).forEach(mes => {
                             [1, 3, 4, 5, 6, 19].forEach(codpai => {
                                 rowtd += '<td class="text-end fontM border border-dark">' + (datosRow8[mes][codpai]!=0 ? datosRow8[mes][codpai].toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})+'%' : '‎') + '</td>';
-                                totalRow += parseFloat(datosRow8[mes][codpai] || '0');
+                                totalRow=0;
+                                    if (provip!=0) {
+                                        totalRow=travip/provip;
+                                    }
                                 });
                             });
                             break;
@@ -464,7 +501,10 @@
                         Object.keys(datosRow9).forEach(mes => {
                             [1, 3, 4, 5, 6, 19].forEach(codpai => {
                                 rowtd += '<td class="text-end fontM border border-dark">' + (datosRow9[mes][codpai]!=0 ? datosRow9[mes][codpai].toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})+'%' : '‎') + '</td>';
-                                totalRow += parseFloat(datosRow9[mes][codpai] || '0');
+                                totalRow=0;
+                                    if (pronor!=0) {
+                                        totalRow=tranor/pronor;
+                                    }
                                 });
                             });
                             break;
@@ -472,7 +512,9 @@
                         Object.keys(datosRow10).forEach(mes => {
                             [1, 3, 4, 5, 6, 19].forEach(codpai => {
                                 rowtd += '<td class="text-end fontM border border-dark">' + (datosRow10[mes][codpai]!=0 ? datosRow10[mes][codpai].toLocaleString('es-419', {minimumFractionDigits: 0, maximumFractionDigits: 0}) : '‎') + '</td>';
-                                totalRow += parseInt(datosRow10[mes][codpai] || '0');
+                                if (datosRow10[mes][1]!=0 ) {
+                                    totalRow = parseFloat(datosRow10[mes][1])+parseFloat(datosRow10[mes][3])+parseFloat(datosRow10[mes][4])+parseFloat(datosRow10[mes][5])+parseFloat(datosRow10[mes][6])+parseFloat(datosRow10[mes][19]);
+                                }
                                 });
                             });
                             break;
@@ -480,7 +522,9 @@
                         Object.keys(datosRow11).forEach(mes => {
                             [1, 3, 4, 5, 6, 19].forEach(codpai => {
                                 rowtd += '<td class="text-end fontM border border-dark">' + (datosRow11[mes][codpai]!=0 ? datosRow11[mes][codpai].toLocaleString('es-419', {minimumFractionDigits: 0, maximumFractionDigits: 0}) : '‎') + '</td>';
-                                totalRow += parseInt(datosRow11[mes][codpai] || '0');
+                                if (datosRow11[mes][1]!=0 ) {
+                                    totalRow = parseFloat(datosRow11[mes][1])+parseFloat(datosRow11[mes][3])+parseFloat(datosRow11[mes][4])+parseFloat(datosRow11[mes][5])+parseFloat(datosRow11[mes][6])+parseFloat(datosRow11[mes][19]);
+                                }
                                 });
                             });
                             break;
@@ -488,7 +532,9 @@
                         Object.keys(datosRow12).forEach(mes => {
                             [1, 3, 4, 5, 6, 19].forEach(codpai => {
                                 rowtd += '<td class="text-end fontM border border-dark">' + (datosRow12[mes][codpai]!=0 ? datosRow12[mes][codpai].toLocaleString('es-419', {minimumFractionDigits: 0, maximumFractionDigits: 0}) : '‎') + '</td>';
-                                totalRow += parseInt(datosRow12[mes][codpai] || '0');
+                                if (datosRow12[mes][1]!=0 ) {
+                                    totalRow = parseFloat(datosRow12[mes][1])+parseFloat(datosRow12[mes][3])+parseFloat(datosRow12[mes][4])+parseFloat(datosRow12[mes][5])+parseFloat(datosRow12[mes][6])+parseFloat(datosRow12[mes][19]);
+                                }
                                 });
                             });
                             break;
@@ -496,13 +542,22 @@
                         rowtd += '<td class="text-end fontM border border-dark">0</td>';
                             break;
                     }
-                    if (k==6 || k==7 || k==8 || k==9 || k==10 || k==11) {
+                    if (totalRow==0) {
                         rowtd += '<td class="text-end fontM border border-dark"></td>';
                     }else{
-                        rowtd += '<td class="text-end fontM border border-dark">' + totalRow.toLocaleString('es-419', {
+                        if (rowIndex==7 || rowIndex==8 || rowIndex==9) {
+                            rowtd += '<td class="text-end fontM border border-dark">' + totalRow.toLocaleString('es-419', {
+                                    minimumFractionDigits: 2,
+                                    maximumFractionDigits: 2
+                                }) + '%</td>';
+
+                        }else{
+                            rowtd += '<td class="text-end fontM border border-dark">' + totalRow.toLocaleString('es-419', {
                                     minimumFractionDigits: 0,
                                     maximumFractionDigits: 0
                                 }) + '</td>';
+                        }
+
                     }
                     rowtd += '</tr>';
                     rowIndex++;
@@ -526,7 +581,6 @@
                           '% DE TRANSACCIONES CON NUEVOS REGISTROS VS TOTAL DE TRANSACCIONES',
                           '% DE TRANSACCIONES CON ACTUALIZACION  DE DATOS VS TOTAL DE TRANSACCIONES',
                           '% DE TRANSACCIONES CON STATUS REGISTRADO Y/O ACTUALIZADO VS TOTAL DE TRANSACCIONES',
-                          '% DE TRANSACCIONES DE CLIENTES INSCRITOS EN PDL VS TRANSACCIONES TOTALES',
                           '% DE TRANSACCIONES DE CLIENTE NO INSCRITO VS TRANSACCIONES TOTALES'
                         ];
             var rowtd="";
@@ -538,18 +592,17 @@
                             <td colspan="73" class="bg-dark"></td>
                           </tr>
                           <tr><td colspan='74'></td></tr>`);
-                          var backgroundColor = ['#FCFFDF', '#FBFFCC', '#FAFF99', '#F9FF66','#F8FF33'];
+                          var backgroundColor = [ '#FBFFCC', '#FAFF99', '#F9FF66','#F8FF33'];
             if (responsePTransacciones.code==200) {
                 let data=responsePTransacciones.data;
-                let datosRow1 = {}; let datosRow2 = {}; let datosRow3 = {}; let datosRow4 = {}; let datosRow5 = {};
+                let datosRow1 = {}; let datosRow2 = {}; let datosRow3 = {}; let datosRow4 = {};
                 for (let mes = 1; mes <= 12; mes++) {
-                    datosRow1[mes] = {}; datosRow2[mes] = {}; datosRow3[mes] = {}; datosRow4[mes] = {}; datosRow5[mes] = {};
+                    datosRow1[mes] = {}; datosRow2[mes] = {}; datosRow3[mes] = {}; datosRow4[mes] = {};
                     [1, 3, 4, 5, 6, 19].forEach(codpai => {
                         datosRow1[mes][codpai] = 0;
                         datosRow2[mes][codpai] = 0;
                         datosRow3[mes][codpai] = 0;
                         datosRow4[mes][codpai] = 0;
-                        datosRow5[mes][codpai] = 0;
                     });
                 }
                 data.forEach(dato => {
@@ -560,9 +613,7 @@
                     //ROW3
                     datosRow3[dato.MESPRO][dato.CODPAI] = parseFloat(dato.PORCE8);
                     //ROW4
-                    datosRow4[dato.MESPRO][dato.CODPAI] = parseFloat(dato.PORCE9);
-                    //ROW5
-                    datosRow5[dato.MESPRO][dato.CODPAI] = parseFloat(dato.PORCE0);
+                    datosRow4[dato.MESPRO][dato.CODPAI] = parseFloat(dato.PORCE0);
                 });
 
                 var rowIndex=1;
@@ -575,7 +626,10 @@
                             Object.keys(datosRow1).forEach(mes => {
                         [1, 3, 4, 5, 6, 19].forEach(codpai => {
                             rowtd += '<td class="text-end fontM border border-dark">' + (datosRow1[mes][codpai]!=0 ? datosRow1[mes][codpai].toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})+'%' : '‎') + '</td>';
-                            totalRow += parseInt(datosRow1[mes][codpai] || '0');
+                            totalRow=0;
+                                if (totaltransacciones!=0) {
+                                        totalRow=(tranue/totaltransacciones)*100;
+                                }
                             });
                         });
                             break;
@@ -583,7 +637,10 @@
                         Object.keys(datosRow2).forEach(mes => {
                             [1, 3, 4, 5, 6, 19].forEach(codpai => {
                                 rowtd += '<td class="text-end fontM border border-dark">' + (datosRow2[mes][codpai]!=0 ? datosRow2[mes][codpai].toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})+'%' : '‎') + '</td>';
-                                totalRow += parseInt(datosRow2[mes][codpai] || '0');
+                                totalRow=0;
+                                if (totaltransacciones!=0) {
+                                        totalRow=(travie/totaltransacciones)*100;
+                                }
                                 });
                             });
                             break;
@@ -591,7 +648,10 @@
                         Object.keys(datosRow3).forEach(mes => {
                             [1, 3, 4, 5, 6, 19].forEach(codpai => {
                                 rowtd += '<td class="text-end fontM border border-dark">' + (datosRow3[mes][codpai]!=0 ? datosRow3[mes][codpai].toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})+'%' : '‎') + '</td>';
-                                totalRow += parseInt(datosRow3[mes][codpai] || '0');
+                                totalRow=0;
+                                if (totaltransacciones!=0) {
+                                        totalRow=(tralea/totaltransacciones)*100;
+                                }
                                 });
                             });
                             break;
@@ -599,15 +659,11 @@
                         Object.keys(datosRow4).forEach(mes => {
                             [1, 3, 4, 5, 6, 19].forEach(codpai => {
                                 rowtd += '<td class="text-end fontM border border-dark">' + (datosRow4[mes][codpai]!=0 ? datosRow4[mes][codpai].toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})+'%' : '‎') + '</td>';
-                                totalRow += parseInt(datosRow4[mes][codpai] || '0');
-                                });
-                            });
-                            break;
-                        case 5:
-                        Object.keys(datosRow5).forEach(mes => {
-                            [1, 3, 4, 5, 6, 19].forEach(codpai => {
-                                rowtd += '<td class="text-end fontM border border-dark">' + (datosRow5[mes][codpai]!=0 ? datosRow5[mes][codpai].toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})+'%' : '‎') + '</td>';
-                                totalRow += parseInt(datosRow5[mes][codpai] || '0');
+                                    totalRow=0;
+                                    if (totaltransacciones!=0) {
+                                        var suma=travip+tranor;
+                                             totalRow=(suma/totaltransacciones)*100;
+                                    }
                                 });
                             });
                             break;
@@ -615,7 +671,14 @@
                         rowtd += '<td class="text-end fontM border border-dark">0</td>';
                             break;
                     }
-                    rowtd += '<td class="text-end fontM border border-dark"></td>';
+                    if (totalRow==0) {
+                        rowtd += '<td class="text-end fontM border border-dark"></td>';
+                    }else{
+                        rowtd += '<td class="text-end fontM border border-dark">' + totalRow.toLocaleString('es-419', {
+                                    minimumFractionDigits: 2,
+                                    maximumFractionDigits: 2
+                         }) + '%</td>';
+                    }
                     rowtd += '</tr>';
                     rowIndex++;
                 }
@@ -693,7 +756,8 @@
                             Object.keys(datosRow1).forEach(mes => {
                         [1, 3, 4, 5, 6, 19].forEach(codpai => {
                             rowtd += '<td class="text-end fontM border border-dark">' + (datosRow1[mes][codpai]!=0 ? datosRow1[mes][codpai].toLocaleString('es-419', {minimumFractionDigits: 0, maximumFractionDigits: 0}) : '‎') + '</td>';
-                            totalRow += parseInt(datosRow1[mes][codpai] || '0');
+                                totalRow += parseInt(datosRow1[mes][codpai] || '0');
+                                contotal+= parseInt(datosRow1[mes][codpai] || '0');
                             });
                         });
                             break;
@@ -702,6 +766,8 @@
                             [1, 3, 4, 5, 6, 19].forEach(codpai => {
                                 rowtd += '<td class="text-end fontM border border-dark">' + (datosRow2[mes][codpai]!=0 ? datosRow2[mes][codpai].toLocaleString('es-419', {minimumFractionDigits: 0, maximumFractionDigits: 0}) : '‎') + '</td>';
                                 totalRow += parseInt(datosRow2[mes][codpai] || '0');
+                                conmailte+= parseInt(datosRow2[mes][codpai] || '0');
+
                                 });
                             });
                             break;
@@ -709,7 +775,10 @@
                         Object.keys(datosRow3).forEach(mes => {
                             [1, 3, 4, 5, 6, 19].forEach(codpai => {
                                 rowtd += '<td class="text-end fontM border border-dark">' + (datosRow3[mes][codpai]!=0 ? datosRow3[mes][codpai].toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})+'%' : '‎') + '</td>';
-                                totalRow += parseInt(datosRow3[mes][codpai] || '0');
+                                totalRow=0;
+                                if (contotal!=0) {
+                                        totalRow=(conmailte/contotal)*100;
+                                }
                                 });
                             });
                             break;
@@ -718,6 +787,8 @@
                             [1, 3, 4, 5, 6, 19].forEach(codpai => {
                                 rowtd += '<td class="text-end fontM border border-dark">' + (datosRow4[mes][codpai]!=0 ? datosRow4[mes][codpai].toLocaleString('es-419', {minimumFractionDigits: 0, maximumFractionDigits: 0}) : '‎') + '</td>';
                                 totalRow += parseInt(datosRow4[mes][codpai] || '0');
+                                contelefono+= parseInt(datosRow4[mes][codpai] || '0');
+
                                 });
                             });
                             break;
@@ -725,7 +796,10 @@
                         Object.keys(datosRow5).forEach(mes => {
                             [1, 3, 4, 5, 6, 19].forEach(codpai => {
                                 rowtd += '<td class="text-end fontM border border-dark">' + (datosRow5[mes][codpai]!=0 ? datosRow5[mes][codpai].toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})+'%' : '‎') + '</td>';
-                                totalRow += parseInt(datosRow5[mes][codpai] || '0');
+                                totalRow=0;
+                                if (contotal!=0) {
+                                        totalRow=(contelefono/contotal)*100;
+                                }
                                 });
                             });
                             break;
@@ -734,6 +808,8 @@
                             [1, 3, 4, 5, 6, 19].forEach(codpai => {
                                 rowtd += '<td class="text-end fontM border border-dark">' + (datosRow6[mes][codpai]!=0 ? datosRow6[mes][codpai].toLocaleString('es-419', {minimumFractionDigits: 0, maximumFractionDigits: 0}) : '‎') + '</td>';
                                 totalRow += parseInt(datosRow6[mes][codpai] || '0');
+                                conemail+= parseInt(datosRow6[mes][codpai] || '0');
+
                                 });
                             });
                             break;
@@ -741,7 +817,10 @@
                         Object.keys(datosRow7).forEach(mes => {
                             [1, 3, 4, 5, 6, 19].forEach(codpai => {
                                 rowtd += '<td class="text-end fontM border border-dark">' + (datosRow7[mes][codpai]!=0 ? datosRow7[mes][codpai].toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})+'%' : '‎') + '</td>';
-                                totalRow += parseFloat(datosRow7[mes][codpai] || '0');
+                                totalRow=0;
+                                if (contotal!=0) {
+                                    totalRow=(conemail/contotal)*100;
+                                }
                                 });
                             });
                             break;
@@ -749,13 +828,20 @@
                         rowtd += '<td class="text-end fontM border border-dark">0</td>';
                             break;
                     }
-                    if (k==2 || k==4 || k==6) {
+                    if (totalRow==0) {
                         rowtd += '<td class="text-end fontM border border-dark"></td>';
                     }else{
+                        if (k==2 || k==4 || k==6) {
                         rowtd += '<td class="text-end fontM border border-dark">' + totalRow.toLocaleString('es-419', {
+                                    minimumFractionDigits: 2,
+                                    maximumFractionDigits: 2
+                         }) + '%</td>';
+                        }else{
+                            rowtd += '<td class="text-end fontM border border-dark">' + totalRow.toLocaleString('es-419', {
                                     minimumFractionDigits: 0,
                                     maximumFractionDigits: 0
                                 }) + '</td>';
+                        }
                     }
                     rowtd += '</tr>';
                     rowIndex++;
@@ -796,13 +882,22 @@
                 let datosRow2 = {};
                 let datosRow3 = {};
                 let datosRow4 = {};
+                let datosVallea = {};
+                let datosValvip = {};
+                let datosValnor = {};
+                let datosValtot = {};
                 for (let mes = 1; mes <= 12; mes++) {
                     datosRow1[mes] = {}; datosRow2[mes] = {}; datosRow3[mes] = {};datosRow4[mes] = {};
+                    datosVallea[mes] = {}; datosValvip[mes] = {}; datosValnor[mes] = {};datosValtot[mes] = {};
                     [1, 3, 4, 5, 6, 19].forEach(codpai => {
                         datosRow1[mes][codpai] = 0;
                         datosRow2[mes][codpai] = 0;
                         datosRow3[mes][codpai] = 0;
                         datosRow4[mes][codpai] = 0;
+                        datosVallea[mes][codpai] = 0;
+                        datosValvip[mes][codpai] = 0;
+                        datosValnor[mes][codpai] = 0;
+                        datosValtot[mes][codpai] = 0;
                     });
                 }
                 data.forEach(dato => {
@@ -814,18 +909,26 @@
                     datosRow3[dato.MESPRO][dato.CODPAI] = parseFloat(dato.PORVNO);
                     //ROW3
                     datosRow4[dato.MESPRO][dato.CODPAI] = parseFloat(dato.PORVTO);
+
+                    datosVallea[dato.MESPRO][dato.CODPAI] = parseFloat(dato.VALLEA);
+                datosValvip[dato.MESPRO][dato.CODPAI] = parseFloat(dato.VALVIP);
+                datosValnor[dato.MESPRO][dato.CODPAI] = parseFloat(dato.VALNOR);
+                datosValtot[dato.MESPRO][dato.CODPAI] = parseFloat(dato.VALTOT);
                 });
                 var rowIndex=1;
                 for (let k = 0; k < arrayTicket.length; k++) {
                     rowtd+='<tr class="border border-dark" style="background-color: '+backgroundColor[k]+'; height:50px;">';
                     rowtd += '<td class="text-center align-middle fontS border border-dark sticky-col" style="background-color: '+backgroundColor[k]+'">' + arrayTicket[k] + '</td>';
-                    var totalRow = 0;
+                    var totalRowVal = 0;
+                    var totalMes = 0;
                     switch (rowIndex) {
                         case 1:
                             Object.keys(datosRow1).forEach(mes => {
                         [1, 3, 4, 5, 6, 19].forEach(codpai => {
                             rowtd += '<td class="text-end fontM border border-dark">' + (datosRow1[mes][codpai]!=0 ? 'D.'+datosRow1[mes][codpai].toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2}) : '‎') + '</td>';
                             totalRow += parseInt(datosRow1[mes][codpai] || '0');
+                            totalRowVal += parseInt(datosVallea[mes][codpai] || '0');
+                            totalRowTra=tralea;
                             });
                         });
                             break;
@@ -834,6 +937,8 @@
                             [1, 3, 4, 5, 6, 19].forEach(codpai => {
                                 rowtd += '<td class="text-end fontM border border-dark">' + (datosRow2[mes][codpai]!=0 ? 'D.'+datosRow2[mes][codpai].toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2}) : '‎') + '</td>';
                                 totalRow += parseInt(datosRow2[mes][codpai] || '0');
+                                totalRowVal += parseInt(datosValvip[mes][codpai] || '0');
+                                totalRowTra=travip;
                                 });
                             });
                             break;
@@ -842,6 +947,8 @@
                             [1, 3, 4, 5, 6, 19].forEach(codpai => {
                                 rowtd += '<td class="text-end fontM border border-dark">' + (datosRow3[mes][codpai]!=0 ? 'D.'+datosRow3[mes][codpai].toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2}) : '‎') + '</td>';
                                 totalRow += parseInt(datosRow3[mes][codpai] || '0');
+                                totalRowVal += parseInt(datosValnor[mes][codpai] || '0');
+                                totalRowTra=tranor;
                                 });
                             });
                             break;
@@ -850,6 +957,8 @@
                             [1, 3, 4, 5, 6, 19].forEach(codpai => {
                                 rowtd += '<td class="text-end fontM border border-dark">' + (datosRow4[mes][codpai]!=0 ? 'D.'+datosRow4[mes][codpai].toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2}) : '‎') + '</td>';
                                 totalRow += parseInt(datosRow4[mes][codpai] || '0');
+                                totalRowVal += parseInt(datosValtot[mes][codpai] || '0');
+                                totalRowTra=tralea+travip+tranor;
                                 });
                             });
                             break;
@@ -857,7 +966,18 @@
                         rowtd += '<td class="text-end fontM border border-dark">0</td>';
                             break;
                     }
-                    rowtd += '<td class="text-end fontM border border-dark"> </td>';
+                    if (totalRowVal==0) {
+                        rowtd += '<td class="text-end fontM border border-dark"></td>';
+                    } else {
+                        var promedio=0;
+                        if (totalRowTra!=0) {
+                            promedio=totalRowVal/totalRowTra;
+                        }
+                        rowtd += '<td class="text-end fontM border border-dark"> D.' + promedio.toLocaleString('es-419', {
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2
+                        }) + '</td>';
+                    }
                     rowtd += '</tr>';
                     rowIndex++;
                 }
@@ -887,7 +1007,7 @@
                         </tr>`);
             tbody.append("<tr><td colspan='74'></td></tr>");
             var rowtd="";
-
+            var suma=parseInt(data[0]['COUNT'])+parseInt(data[1]['COUNT'])+parseInt(data[2]['COUNT'])+parseInt(data[3]['COUNT'])+parseInt(data[4]['COUNT'])+parseInt(data[5]['COUNT']);
             for (let i = arrayTiendas.length - 1; i >= 0; i--) {
                 let row = "";
                 for (let j = 1; j <= 12; j++) {
@@ -895,7 +1015,7 @@
                         row += `<td class="text-end fontM border border-dark">${data[k]['COUNT']}</td>`;
                     }
                 }
-                rowtd += `<tr class="border border-dark bg-secondary" style="height:50px;"><td class="text-center align-middle fontS border border-dark sticky-col bg-secondary">${arrayTiendas[i]}</td>${row}<td class="text-end fontM border border-dark"> </td></tr>`;
+                rowtd += `<tr class="border border-dark bg-secondary" style="height:50px;"><td class="text-center align-middle fontS border border-dark sticky-col bg-secondary">${arrayTiendas[i]}</td>${row}<td class="text-end fontM border border-dark">${suma}</td></tr>`;
             }
             tbody.append(rowtd);
 

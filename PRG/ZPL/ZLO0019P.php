@@ -14,7 +14,6 @@
         integrity="sha512-hZL8cWjOAFfWZza/p0uD0juwMeIuyLhAd5QDodiK4sBp1sG7BIeE1TbMGIbnUcUgwm3lVSWJzBK6KxqYTiDGkg=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
-
 <body>
     <?php
       include '../layout-prg.php';
@@ -46,13 +45,13 @@
                 <div class="col-6">
                     <label class="form-control border border-0">Tiendas:</label>
                     <div class="overflow-auto">
-                        <select class="form-select" id="cbbCia" name="cbbCia[]" name="states[]" multiple="multiple"
-                            style="width: 100%;">
-                            <?php
-                                while($rowCOMARC = odbc_fetch_array($resultCOMARC)) {
-                                echo "<option value='" . $rowCOMARC['COMCOD'] . "'>" . rtrim(utf8_encode($rowCOMARC['COMDES'])) . "</option>";
-                                }
-                            ?>
+                        <select class="form-select fw-bold" id="cbbCia" name="cbbCia[]" style="width: 100%;">
+                            <option class="fw-bold" value="47,50,52,56,57,59,63,64,65,68,70,72,73,74,75,76,78,82,85,88">Tiendas Honduras</option>
+                            <option class="fw-bold" value="49,66,69,71,86">Tiendas Guatemala</option>
+                            <option class="fw-bold" value="48,53,61,62">Tiendas El Salvador</option>
+                            <option class="fw-bold" value="83,87">Tiendas Nicaragua</option>
+                            <option class="fw-bold" value="60,80">Tiendas Costa Rica</option>
+                            <option class="fw-bold" value="81">Tiendas Republica Dominicana</option>
                         </select>
                     </div>
                     <label class="text-danger mt-2 d-none " id="lblError">Debe de seleccionar una o mas tiendas</label>
@@ -80,8 +79,6 @@
             </div>
         </div>
     </div>
-
-
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="../../assets/vendors/@coreui/chartjs/js/coreui-chartjs.js"></script>
     <script src="../../assets/vendors/@coreui/utils/js/coreui-utils.js"></script>
@@ -89,22 +86,60 @@
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
     <script src="https://code.highcharts.com/modules/export-data.js"></script>
     <script src="https://code.highcharts.com/modules/accessibility.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js"
-        integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa" crossorigin="anonymous">
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js" integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa" crossorigin="anonymous"></script>
     <script src="https://cdn.datatables.net/fixedcolumns/4.3.0/js/dataTables.fixedColumns.min.js"></script>
-    <script src="../../assets/js/select2.min.js"></script>
     <script>
     var yearSelected = 0;
     var ciasSelected = [];
+    //PROMEDIOS TRANSACCIONES
+    var prolea=[];
+    var tottralea=[];
+    var prototlea=0;
+    var tratprolea=0;
+
+    var provip=[];
+    var tottravip=[];
+    var prototvip=0;
+    var tratprovip=0;
+
+    var pronor=[];
+    var tottranor=[];
+    var prototnor=0;
+    var tratpronor=0;
+
+    //PROMEDIOS PORCENTAJES
+    var tottransacciones=[];
+    var tottratransacciones=[];
+
+    var porcelea=[];
+    var porcetotlea=0;
+
+    var porceact=[];
+    var porcetotact=0;
+
+    //INFO DE CONTACTO
+    var protelefono=[];
+    var protottelefono=0;
+    var proemail=[];
+    var prototemail=0;
+    var proemailte=[];
+    var prototemailte=0;
+
+    var prototclie=[]
+    var totalproclie=0;
+
+    //TICKETS
+    var ticketlea=0;
+    var ticketvip=0;
+    var ticketnor=0;
+    var tickettot=0;
     $(document).ready(function() {
         yearSelected = getCookie('year') || 2023;
-        ciasSelected = JSON.parse("[" + getCookie('cias') + "]") || [47];
-        if (ciasSelected.length == 0) {
-            ciasSelected = [47];
-        } else if (ciasSelected[0] == null) {
-            ciasSelected = [47];
-        }
+        var cookieSelect= getCookie('cias') || '47,50,52,56,57,59,63,64,65,68,70,72,73,74,75,76,78,82,85,88';
+        ciasSelected = JSON.parse("[" + cookieSelect + "]");
+        var selectTiendas= document.getElementById('cbbCia');
+        selectTiendas.value = cookieSelect;
+
         var select = document.getElementById('setYear');
         var currentYear = new Date().getFullYear();
         for (var year = 2023; year <= currentYear; year++) {
@@ -114,24 +149,15 @@
             select.appendChild(option);
         }
         select.value = yearSelected;
-        $('#cbbCia').select2({
-            closeOnSelect: false,
-            maximumSelectionLength: 6,
-            formatSelectionTooBig: function(limit) {
-                return 'Demasiado items seleccionados. Maximo: ' + limit + '';
-            }
-        });
-        ciasSelected.push(0);
-        $("#cbbCia").val(ciasSelected).trigger('change');
-        $("#cbbCia").on('select2:select', function(e) {
-            $("#lblError").addClass('d-none');
-        });
-        var width = 10000;
-        var widthTh = "4";
+        if (ciasSelected.length>1) {
+            ciasSelected.push(0);
+        }
+        var width = 30000;
+        var widthTh = "1.2";
         switch (ciasSelected.length) {
-            case 7:
-                width = 10000;
-                widthTh = "4";
+            case 21:
+                width = 30000;
+                widthTh = "1.2";
                 break;
             case 6:
                 width = 9000;
@@ -150,13 +176,13 @@
                 widthTh = "7.5";
                 break;
             default:
-                width = 3500;
+                width = 2500;
                 widthTh = "10.5";
                 break;
         }
         $("#exportExcel").on('click', function() {
             document.getElementById('loaderExcel').classList.remove('d-none');
-            var url = "http://172.16.15.20/API.LovablePHP/ZLO0019P/Export2/?anio=" + yearSelected +
+            var url = "http://172.16.15.20/API.LovablePHP/ZLO0019P/Export/?anio=" + yearSelected +
                 "&tiendas=" + ciasSelected + "";
             fetch(url)
                 .then(response => response.blob())
@@ -222,16 +248,28 @@
             `">Totales</th>`);
         const header = $("#headerPaises");
         header.append('<th></th>');
-        var tiendasArray = $("#cbbCia").select2('data');
+        //obteniendo descripcion de compañias
+        var urlCias = "http://172.16.15.20/API.LovablePHP/ZLO0019P/GetComdes/?tiendas="+ciasSelected+"";
+        var responseCias = ajaxRequest(urlCias);
+        var tiendasArray = [];
+        if (responseCias.code == 200) {
+            let data = responseCias.data;
+            for (let i = 0; i < data.length; i++) {
+                tiendasArray.push(data[i].COMDES);
+            }
+        }
         for (let i = 1; i <= 12; i++) {
             for (let j = 0; j < tiendasArray.length; j++) {
                 header.append(
                     `<th class="text-center border border-dark bg-light align-middle" style="font-size:14px;">` +
-                    tiendasArray[j].text + `</th>`);
+                    tiendasArray[j] + `</th>`);
             }
-            header.append(
+            if (ciasSelected.length>1) {
+                header.append(
                 `<th class="text-center border border-dark bg-black text-white align-middle" style="font-size:14px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TOTAL&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>`
                 );
+            }
+
         }
         header.append(`<th class="text-start responsive-font-example"></th>`);
         const tbody = $("#tbody");
@@ -246,13 +284,12 @@
                           'ACUMULADOS VIP',
                           'ACUMULADOS NORMALES'];
         var rowtd = "";
-        var urlRegistros = "http://172.16.15.20/API.LovablePHP/ZLO0019P/TiendasR2/?anio=" + yearSelected +
+        var urlRegistros = "http://172.16.15.20/API.LovablePHP/ZLO0019P/TiendasR/?anio=" + yearSelected +
             "&tiendas=" + ciasSelected + "";
-        console.log(urlRegistros);
         var responseRegistros = ajaxRequest(urlRegistros);
         tbody.append(`<tr class="border border-dark">
                             <td colspan="1" class="bg-dark text-white fw-bold text-center sticky-col">REGISTROS</td>
-                            <td colspan="99" class="bg-dark"></td>
+                            <td colspan="300" class="bg-dark"></td>
                         </tr>`);
         var backgroundColor = ['#F4E8FF','#F4E8FF','#F4E8FF', '#EED4FF','#EED4FF','#EED4FF', '#E8C1FF','#E8C1FF', '#E8C1FF'];
         if (responseRegistros.code == 200) {
@@ -288,7 +325,6 @@
                     datosRow9[mes][codcia] = 0;
                 });
             }
-            console.log(data);
             data.forEach(dato => {
                 //ROW1
                 datosRow1[dato.MESPRO][dato.CODCIA] = parseInt(dato.CLINUE);
@@ -309,7 +345,6 @@
                 //ROW9
                 datosRow9[dato.MESPRO][dato.CODCIA] = parseInt(dato.ACUNOR);
             });
-            console.log(datosRow8);
             var rowIndex = 1;
             for (let k = 0; k < arrayRegistros.length; k++) {
                 rowtd += '<tr class="border border-dark" style="background-color: ' + backgroundColor[k] +
@@ -384,6 +419,7 @@
                         Object.keys(datosRow3).forEach(mes => {
                             ciasSelected.forEach(codcia => {
                                 if (codcia == 0) {
+                                    prolea.push(totalMes);
                                     if (totalMes == 0) {
                                         rowtd +=
                                             '<td class="text-end fontM border border-dark"> </td>';
@@ -405,6 +441,7 @@
                                             }) : '‎') + '</td>';
                                     totalMes += parseInt(datosRow3[mes][codcia] || '0');
                                     totalRow += parseInt(datosRow3[mes][codcia] || '0');
+                                    prototlea=totalRow;
                                 }
                             });
                         });
@@ -413,6 +450,7 @@
                         Object.keys(datosRow4).forEach(mes => {
                             ciasSelected.forEach(codcia => {
                                 if (codcia == 0) {
+                                    provip.push(totalMes);
                                     if (totalMes == 0) {
                                         rowtd +=
                                             '<td class="text-end fontM border border-dark"> </td>';
@@ -434,6 +472,7 @@
                                             }) : '‎') + '</td>';
                                     totalMes += parseInt(datosRow4[mes][codcia] || '0');
                                     totalRow += parseInt(datosRow4[mes][codcia] || '0');
+                                    prototvip=totalRow;
                                 }
                             });
                         });
@@ -442,6 +481,7 @@
                         Object.keys(datosRow5).forEach(mes => {
                             ciasSelected.forEach(codcia => {
                                 if (codcia == 0) {
+                                    pronor.push(totalMes);
                                     if (totalMes == 0) {
                                         rowtd +=
                                             '<td class="text-end fontM border border-dark"> </td>';
@@ -463,6 +503,7 @@
                                             }) : '‎') + '</td>';
                                     totalMes += parseInt(datosRow5[mes][codcia] || '0');
                                     totalRow += parseInt(datosRow5[mes][codcia] || '0');
+                                    prototnor=totalRow;
                                 }
                             });
                         });
@@ -504,6 +545,7 @@
                                         rowtd +=
                                             '<td class="text-end fontM border border-dark"> </td>';
                                     } else {
+                                        totalRow = parseInt(totalMes || '0');
                                         rowtd +=
                                             '<td class="text-end fontM border border-dark">' +
                                             totalMes.toLocaleString('es-419', {
@@ -520,7 +562,9 @@
                                                 maximumFractionDigits: 0
                                             }) : '‎') + '</td>';
                                     totalMes += parseInt(datosRow7[mes][codcia] || '0');
-                                    acum = parseInt(datosRow7[mes][codcia] || '0');
+                                    if (codcia==81) {
+                                        totalRow = parseInt(datosRow7[mes][codcia] || '0');
+                                    }
                                 }
                             });
                         });
@@ -533,6 +577,7 @@
                                         rowtd +=
                                             '<td class="text-end fontM border border-dark"> </td>';
                                     } else {
+                                        totalRow = parseInt(totalMes || '0');
                                         rowtd +=
                                             '<td class="text-end fontM border border-dark">' +
                                             totalMes.toLocaleString('es-419', {
@@ -549,7 +594,9 @@
                                                 maximumFractionDigits: 0
                                             }) : '‎') + '</td>';
                                     totalMes += parseInt(datosRow8[mes][codcia] || '0');
-                                    acum= parseInt(datosRow8[mes][codcia] || '0');
+                                    if (codcia==81) {
+                                        totalRow = parseInt(datosRow8[mes][codcia] || '0');
+                                    }
                                 }
                             });
                         });
@@ -562,6 +609,7 @@
                                         rowtd +=
                                             '<td class="text-end fontM border border-dark"> </td>';
                                     } else {
+                                        totalRow = parseInt(totalMes || '0');
                                         rowtd +=
                                             '<td class="text-end fontM border border-dark">' +
                                             totalMes.toLocaleString('es-419', {
@@ -578,16 +626,18 @@
                                                 maximumFractionDigits: 0
                                             }) : '‎') + '</td>';
                                     totalMes += parseInt(datosRow9[mes][codcia] || '0');
-                                    acum = parseInt(datosRow9[mes][codcia] || '0');
+                                    if (codcia==81) {
+                                        totalRow = parseInt(datosRow9[mes][codcia] || '0');
+                                    }
                                 }
                             });
                         });
                         break;
                     default:
                         rowtd += '<td class="text-end fontM border border-dark">0</td>';
-                        break;
+                    break;
                 }
-                if (rowIndex!=7 && rowIndex!=8 && rowIndex!=9) {
+                if (totalRow!=0) {
                     rowtd += '<td class="text-end fontM border border-dark">' + totalRow.toLocaleString('es-419', {
                         minimumFractionDigits: 0,
                         maximumFractionDigits: 0
@@ -632,13 +682,13 @@
             'ACUMULADOS NORMALES'
         ];
         var rowtd = "";
-        var urlTransacciones = " http://172.16.15.20/API.LovablePHP/ZLO0019P/TiendasT2/?anio=" + yearSelected +
+        var urlTransacciones = " http://172.16.15.20/API.LovablePHP/ZLO0019P/TiendasT/?anio=" + yearSelected +
             "&tiendas=" + ciasSelected + "";
         var responseTransacciones = ajaxRequest(urlTransacciones);
         tbody.append(`<tr><td colspan='14'></td></tr>
                           <tr class="border border-dark">
                             <td colspan="1" class="bg-dark text-white fw-bold text-center sticky-col">TRANSACCIONES</td>
-                            <td colspan="99" class="bg-dark"></td>
+                            <td colspan="300" class="bg-dark"></td>
                           </tr>
                           <tr><td colspan='14'></td></tr>`);
 
@@ -727,6 +777,7 @@
                         Object.keys(datosRow1).forEach(mes => {
                             ciasSelected.forEach(codcia => {
                                 if (codcia == 0) {
+                                    porcelea.push(totalMes);
                                     if (totalMes == 0) {
                                         rowtd +=
                                             '<td class="text-end fontM border border-dark"> </td>';
@@ -748,14 +799,17 @@
                                             }) : '‎') + '</td>';
                                     totalMes += parseInt(datosRow1[mes][codcia] || '0');
                                     totalRow += parseInt(datosRow1[mes][codcia] || '0');
+                                    porcetotlea=totalRow;
+
                                 }
                             });
                         });
-                        break;
+                    break;
                     case 2:
                         Object.keys(datosRow2).forEach(mes => {
                             ciasSelected.forEach(codcia => {
                                 if (codcia == 0) {
+                                    porceact.push(totalMes);
                                     if (totalMes == 0) {
                                         rowtd +=
                                             '<td class="text-end fontM border border-dark"> </td>';
@@ -777,14 +831,16 @@
                                             }) : '‎') + '</td>';
                                     totalMes += parseInt(datosRow2[mes][codcia] || '0');
                                     totalRow += parseInt(datosRow2[mes][codcia] || '0');
+                                    porcetotact=totalRow;
                                 }
                             });
                         });
-                        break;
+                    break;
                     case 3:
                         Object.keys(datosRow3).forEach(mes => {
                             ciasSelected.forEach(codcia => {
                                 if (codcia == 0) {
+                                    tottralea.push(totalMes);
                                     if (totalMes == 0) {
                                         rowtd +=
                                             '<td class="text-end fontM border border-dark"> </td>';
@@ -806,14 +862,17 @@
                                             }) : '‎') + '</td>';
                                     totalMes += parseInt(datosRow3[mes][codcia] || '0');
                                     totalRow += parseInt(datosRow3[mes][codcia] || '0');
+                                    tratprolea=totalRow;
                                 }
                             });
                         });
-                        break;
+                    break;
                     case 4:
                         Object.keys(datosRow4).forEach(mes => {
                             ciasSelected.forEach(codcia => {
                                 if (codcia == 0) {
+                                    tottravip.push(totalMes);
+
                                     if (totalMes == 0) {
                                         rowtd +=
                                             '<td class="text-end fontM border border-dark"> </td>';
@@ -835,14 +894,16 @@
                                             }) : '‎') + '</td>';
                                     totalMes += parseInt(datosRow4[mes][codcia] || '0');
                                     totalRow += parseInt(datosRow4[mes][codcia] || '0');
+                                    tratprovip=totalRow;
                                 }
                             });
                         });
-                        break;
+                    break;
                     case 5:
                         Object.keys(datosRow5).forEach(mes => {
                             ciasSelected.forEach(codcia => {
                                 if (codcia == 0) {
+                                    tottranor.push(totalMes);
                                     if (totalMes == 0) {
                                         rowtd +=
                                             '<td class="text-end fontM border border-dark"> </td>';
@@ -864,14 +925,16 @@
                                             }) : '‎') + '</td>';
                                     totalMes += parseInt(datosRow5[mes][codcia] || '0');
                                     totalRow += parseInt(datosRow5[mes][codcia] || '0');
+                                    tratpronor=totalRow;
                                 }
                             });
                         });
-                        break;
+                    break;
                     case 6:
                         Object.keys(datosRow6).forEach(mes => {
                             ciasSelected.forEach(codcia => {
                                 if (codcia == 0) {
+                                    tottransacciones.push(totalMes);
                                     if (totalMes == 0) {
                                         rowtd +=
                                             '<td class="text-end fontM border border-dark"> </td>';
@@ -893,46 +956,129 @@
                                             }) : '‎') + '</td>';
                                     totalMes += parseInt(datosRow6[mes][codcia] || '0');
                                     totalRow += parseInt(datosRow6[mes][codcia] || '0');
+                                    tottratransacciones=totalRow;
+
                                 }
                             });
                         });
                     break;
                     case 7:
+                        var currentMes=0;
                         Object.keys(datosRow7).forEach(mes => {
                             ciasSelected.forEach(codcia => {
-                                rowtd += '<td class="text-end fontM border border-dark">' + (
-                                    datosRow7[mes][codcia] != 0 ? datosRow7[mes][codcia]
-                                    .toLocaleString('es-419', {
-                                        minimumFractionDigits: 2,
-                                        maximumFractionDigits: 2
-                                    }) + '%' : '‎') + '</td>';
-                                totalRow += parseInt(datosRow7[mes][codcia] || '0');
+                                if (codcia == 0) {
+                                        var promedio=0;
+                                        if (prolea[currentMes]!=0) {
+                                            promedio=tottralea[currentMes]/prolea[currentMes];
+                                        }
+                                        if (promedio == 0) {
+                                        rowtd +=
+                                            '<td class="text-end fontM border border-dark"> </td>';
+                                        } else {
+                                            rowtd +=
+                                                '<td class="text-end fontM border border-dark">' +
+                                                promedio.toLocaleString('es-419', {
+                                                    minimumFractionDigits: 2,
+                                                    maximumFractionDigits: 2
+                                                }) + '%</td>';
+                                        }
+                                    currentMes++;
+                                    totalMes = 0;
+                                } else {
+                                    rowtd += '<td class="text-end fontM border border-dark">' +
+                                        (datosRow7[mes][codcia] != 0 ? datosRow7[mes][codcia]
+                                            .toLocaleString('es-419', {
+                                                minimumFractionDigits: 2,
+                                                maximumFractionDigits: 2
+                                            }) +'%' : '‎') + '</td>';
+                                    totalMes += parseInt(datosRow7[mes][codcia] || '0');
+
+                                    var promedio=0;
+                                        if (prototlea!=0) {
+                                            promedio=tratprolea/prototlea;
+                                        }
+                                        totalRow = promedio;
+                                }
                             });
                         });
                     break;
                     case 8:
+                        var currentMes=0;
                         Object.keys(datosRow8).forEach(mes => {
                             ciasSelected.forEach(codcia => {
-                                rowtd += '<td class="text-end fontM border border-dark">' + (
-                                    datosRow8[mes][codcia] != 0 ? datosRow8[mes][codcia]
-                                    .toLocaleString('es-419', {
-                                        minimumFractionDigits: 2,
-                                        maximumFractionDigits: 2
-                                    }) + '%' : '‎') + '</td>';
-                                totalRow += parseInt(datosRow8[mes][codcia] || '0');
+                                if (codcia == 0) {
+                                        var promedio=0;
+                                        if (provip[currentMes]!=0) {
+                                            promedio=tottravip[currentMes]/provip[currentMes];
+                                        }
+                                        if (promedio == 0) {
+                                        rowtd +=
+                                            '<td class="text-end fontM border border-dark"> </td>';
+                                        } else {
+                                            rowtd +=
+                                                '<td class="text-end fontM border border-dark">' +
+                                                promedio.toLocaleString('es-419', {
+                                                    minimumFractionDigits: 2,
+                                                    maximumFractionDigits: 2
+                                                }) + '%</td>';
+                                        }
+                                    currentMes++;
+                                    totalMes = 0;
+                                } else {
+                                    rowtd += '<td class="text-end fontM border border-dark">' +
+                                        (datosRow8[mes][codcia] != 0 ? datosRow8[mes][codcia]
+                                            .toLocaleString('es-419', {
+                                                minimumFractionDigits: 2,
+                                                maximumFractionDigits: 2
+                                            }) +'%' : '‎') + '</td>';
+                                    totalMes += parseInt(datosRow8[mes][codcia] || '0');
+
+                                    var promedio=0;
+                                        if (prototvip!=0) {
+                                            promedio=tratprovip/prototvip;
+                                        }
+                                        totalRow = promedio;
+                                }
                             });
                         });
                     break;
                     case 9:
+                        var currentMes=0;
                         Object.keys(datosRow9).forEach(mes => {
                             ciasSelected.forEach(codcia => {
-                                rowtd += '<td class="text-end fontM border border-dark">' + (
-                                    datosRow9[mes][codcia] != 0 ? datosRow9[mes][codcia]
-                                    .toLocaleString('es-419', {
-                                        minimumFractionDigits: 2,
-                                        maximumFractionDigits: 2
-                                    }) + '%' : '‎') + '</td>';
-                                totalRow += parseInt(datosRow9[mes][codcia] || '0');
+                                if (codcia == 0) {
+                                        var promedio=0;
+                                        if (pronor[currentMes]!=0) {
+                                            promedio=tottranor[currentMes]/pronor[currentMes];
+                                        }
+                                        if (promedio == 0) {
+                                        rowtd +=
+                                            '<td class="text-end fontM border border-dark"> </td>';
+                                        } else {
+                                            rowtd +=
+                                                '<td class="text-end fontM border border-dark">' +
+                                                promedio.toLocaleString('es-419', {
+                                                    minimumFractionDigits: 2,
+                                                    maximumFractionDigits: 2
+                                                }) + '%</td>';
+                                        }
+                                    currentMes++;
+                                    totalMes = 0;
+                                } else {
+                                    rowtd += '<td class="text-end fontM border border-dark">' +
+                                        (datosRow9[mes][codcia] != 0 ? datosRow9[mes][codcia]
+                                            .toLocaleString('es-419', {
+                                                minimumFractionDigits: 2,
+                                                maximumFractionDigits: 2
+                                            }) +'%' : '‎') + '</td>';
+                                    totalMes += parseInt(datosRow9[mes][codcia] || '0');
+
+                                    var promedio=0;
+                                        if (prototnor!=0) {
+                                            promedio=tratpronor/prototnor;
+                                        }
+                                        totalRow = promedio;
+                                }
                             });
                         });
                     break;
@@ -1025,16 +1171,24 @@
                     break;
                     default:
                         rowtd += '<td class="text-end fontM border border-dark">0</td>';
-                        break;
+                    break;
                 }
-                if (k == 6 || k == 7) {
+                if (totalRow==0) {
                     rowtd += '<td class="text-end fontM border border-dark"></td>';
                 } else {
+                   if (k==6 || k==7 || k==8) {
+                    rowtd += '<td class="text-end fontM border border-dark">' + totalRow.toLocaleString('es-419', {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2
+                    }) + '%</td>';
+
+                   }else{
                     rowtd += '<td class="text-end fontM border border-dark">' + totalRow.toLocaleString(
                         'es-419', {
                             minimumFractionDigits: 0,
                             maximumFractionDigits: 0
                         }) + '</td>';
+                   }
                 }
                 rowtd += '</tr>';
                 rowIndex++;
@@ -1063,39 +1217,35 @@
             '% DE TRANSACCIONES CON NUEVOS REGISTROS VS TOTAL DE TRANSACCIONES',
             '% DE TRANSACCIONES CON ACTUALIZACION  DE DATOS VS TOTAL DE TRANSACCIONES',
             '% DE TRANSACCIONES CON STATUS REGISTRADO Y/O ACTUALIZADO VS TOTAL DE TRANSACCIONES',
-            '% DE TRANSACCIONES DE CLIENTES INSCRITOS EN PDL VS TRANSACCIONES TOTALES',
             '% DE TRANSACCIONES DE CLIENTE NO INSCRITO VS TRANSACCIONES TOTALES'
         ];
         var rowtd = "";
-        var urlPTransacciones = " http://172.16.15.20/API.LovablePHP/ZLO0019P/TiendasPT2/?anio=" + yearSelected +
+        var urlPTransacciones = " http://172.16.15.20/API.LovablePHP/ZLO0019P/TiendasPT/?anio=" + yearSelected +
             "&tiendas=" + ciasSelected + "";
         var responsePTransacciones = ajaxRequest(urlPTransacciones);
         tbody.append(`<tr><td colspan='14'></td></tr>
                           <tr class="border border-dark">
                             <td colspan="1" class="bg-dark text-white fw-bold text-center sticky-col">PORCENTAJES  DE TRANSACCIONES</td>
-                            <td colspan="99" class="bg-dark"></td>
+                            <td colspan="300" class="bg-dark"></td>
                           </tr>
                           <tr><td colspan='14'></td></tr>`);
-        var backgroundColor = ['#FCFFDF', '#FBFFCC', '#FAFF99', '#F9FF66', '#F8FF33'];
+        var backgroundColor = ['#FBFFCC', '#FAFF99', '#F9FF66', '#F8FF33'];
         if (responsePTransacciones.code == 200) {
             let data = responsePTransacciones.data;
             let datosRow1 = {};
             let datosRow2 = {};
             let datosRow3 = {};
             let datosRow4 = {};
-            let datosRow5 = {};
             for (let mes = 1; mes <= 12; mes++) {
                 datosRow1[mes] = {};
                 datosRow2[mes] = {};
                 datosRow3[mes] = {};
                 datosRow4[mes] = {};
-                datosRow5[mes] = {};
                 ciasSelected.forEach(codcia => {
                     datosRow1[mes][codcia] = 0;
                     datosRow2[mes][codcia] = 0;
                     datosRow3[mes][codcia] = 0;
                     datosRow4[mes][codcia] = 0;
-                    datosRow5[mes][codcia] = 0;
                 });
             }
             data.forEach(dato => {
@@ -1106,9 +1256,7 @@
                 //ROW3
                 datosRow3[dato.MESPRO][dato.CODCIA] = parseFloat(dato.PORCE8);
                 //ROW4
-                datosRow4[dato.MESPRO][dato.CODCIA] = parseFloat(dato.PORCE9);
-                //ROW5
-                datosRow5[dato.MESPRO][dato.CODCIA] = parseFloat(dato.PORCE0);
+                datosRow4[dato.MESPRO][dato.CODCIA] = parseFloat(dato.PORCE0);
             });
 
             var rowIndex = 1;
@@ -1121,67 +1269,161 @@
                 var totalRow = 0;
                 switch (rowIndex) {
                     case 1:
+                        var currentMes=0;
                         Object.keys(datosRow1).forEach(mes => {
                             ciasSelected.forEach(codcia => {
-                                rowtd += '<td class="text-end fontM border border-dark">' + (
-                                    datosRow1[mes][codcia] != 0 ? datosRow1[mes][codcia]
-                                    .toLocaleString('es-419', {
-                                        minimumFractionDigits: 2,
-                                        maximumFractionDigits: 2
-                                    }) + '%' : '‎') + '</td>';
-                                totalRow += parseInt(datosRow1[mes][codcia] || '0');
+                                if (codcia == 0) {
+                                        var promedio=0;
+                                        if (tottransacciones[currentMes]!=0) {
+                                            promedio=(porcelea[currentMes]/tottransacciones[currentMes])*100;
+                                        }
+                                        if (promedio == 0) {
+                                        rowtd +=
+                                            '<td class="text-end fontM border border-dark"> </td>';
+                                        } else {
+                                            rowtd +=
+                                                '<td class="text-end fontM border border-dark">' +
+                                                promedio.toLocaleString('es-419', {
+                                                    minimumFractionDigits: 2,
+                                                    maximumFractionDigits: 2
+                                                }) + '%</td>';
+                                        }
+                                    currentMes++;
+                                    totalMes = 0;
+                                } else {
+                                    rowtd += '<td class="text-end fontM border border-dark">' +
+                                        (datosRow1[mes][codcia] != 0 ? datosRow1[mes][codcia]
+                                            .toLocaleString('es-419', {
+                                                minimumFractionDigits: 2,
+                                                maximumFractionDigits: 2
+                                            }) +'%' : '‎') + '</td>';
+                                    totalMes += parseInt(datosRow1[mes][codcia] || '0');
+
+                                    var promedio=0;
+                                        if (tottratransacciones!=0) {
+                                            promedio=porcetotlea/tottratransacciones;
+                                        }
+                                        totalRow = promedio*100;
+                                }
                             });
                         });
                         break;
                     case 2:
+                        var currentMes=0;
                         Object.keys(datosRow2).forEach(mes => {
                             ciasSelected.forEach(codcia => {
-                                rowtd += '<td class="text-end fontM border border-dark">' + (
-                                    datosRow2[mes][codcia] != 0 ? datosRow2[mes][codcia]
-                                    .toLocaleString('es-419', {
-                                        minimumFractionDigits: 2,
-                                        maximumFractionDigits: 2
-                                    }) + '%' : '‎') + '</td>';
-                                totalRow += parseInt(datosRow2[mes][codcia] || '0');
+                                if (codcia == 0) {
+                                        var promedio=0;
+                                        if (tottransacciones[currentMes]!=0) {
+                                            promedio=(porceact[currentMes]/tottransacciones[currentMes]) *100;
+                                        }
+                                        if (promedio == 0) {
+                                        rowtd +=
+                                            '<td class="text-end fontM border border-dark"> </td>';
+                                        } else {
+                                            rowtd +=
+                                                '<td class="text-end fontM border border-dark">' +
+                                                promedio.toLocaleString('es-419', {
+                                                    minimumFractionDigits: 2,
+                                                    maximumFractionDigits: 2
+                                                }) + '%</td>';
+                                        }
+                                    currentMes++;
+                                    totalMes = 0;
+                                } else {
+                                    rowtd += '<td class="text-end fontM border border-dark">' +
+                                        (datosRow2[mes][codcia] != 0 ? datosRow2[mes][codcia]
+                                            .toLocaleString('es-419', {
+                                                minimumFractionDigits: 2,
+                                                maximumFractionDigits: 2
+                                            }) +'%' : '‎') + '</td>';
+                                    totalMes += parseInt(datosRow2[mes][codcia] || '0');
+                                    var promedio=0;
+                                    if (tottratransacciones!=0) {
+                                        promedio=porcetotact/tottratransacciones;
+                                    }
+                                    totalRow = promedio*100;
+                                }
                             });
                         });
                         break;
                     case 3:
+                        var currentMes=0;
                         Object.keys(datosRow3).forEach(mes => {
                             ciasSelected.forEach(codcia => {
-                                rowtd += '<td class="text-end fontM border border-dark">' + (
-                                    datosRow3[mes][codcia] != 0 ? datosRow3[mes][codcia]
-                                    .toLocaleString('es-419', {
-                                        minimumFractionDigits: 2,
-                                        maximumFractionDigits: 2
-                                    }) + '%' : '‎') + '</td>';
-                                totalRow += parseInt(datosRow3[mes][codcia] || '0');
+                                if (codcia == 0) {
+                                        var promedio=0;
+                                        if (tottransacciones[currentMes]!=0) {
+                                            promedio=(tottralea[currentMes]/tottransacciones[currentMes]) *100;
+                                        }
+                                        if (promedio == 0) {
+                                        rowtd +=
+                                            '<td class="text-end fontM border border-dark"> </td>';
+                                        } else {
+                                            rowtd +=
+                                                '<td class="text-end fontM border border-dark">' +
+                                                promedio.toLocaleString('es-419', {
+                                                    minimumFractionDigits: 2,
+                                                    maximumFractionDigits: 2
+                                                }) + '%</td>';
+                                        }
+                                    currentMes++;
+                                    totalMes = 0;
+                                } else {
+                                    rowtd += '<td class="text-end fontM border border-dark">' +
+                                        (datosRow3[mes][codcia] != 0 ? datosRow3[mes][codcia]
+                                            .toLocaleString('es-419', {
+                                                minimumFractionDigits: 2,
+                                                maximumFractionDigits: 2
+                                            }) +'%' : '‎') + '</td>';
+                                    totalMes += parseInt(datosRow3[mes][codcia] || '0');
+                                    var promedio=0;
+                                    if (tottratransacciones!=0) {
+                                        promedio=tratprolea/tottratransacciones;
+                                    }
+                                    totalRow = promedio*100;
+                                }
                             });
                         });
                         break;
                     case 4:
+                        var currentMes=0;
                         Object.keys(datosRow4).forEach(mes => {
                             ciasSelected.forEach(codcia => {
-                                rowtd += '<td class="text-end fontM border border-dark">' + (
-                                    datosRow4[mes][codcia] != 0 ? datosRow4[mes][codcia]
-                                    .toLocaleString('es-419', {
-                                        minimumFractionDigits: 2,
-                                        maximumFractionDigits: 2
-                                    }) + '%' : '‎') + '</td>';
-                                totalRow += parseInt(datosRow4[mes][codcia] || '0');
-                            });
-                        });
-                        break;
-                    case 5:
-                        Object.keys(datosRow5).forEach(mes => {
-                            ciasSelected.forEach(codcia => {
-                                rowtd += '<td class="text-end fontM border border-dark">' + (
-                                    datosRow5[mes][codcia] != 0 ? datosRow5[mes][codcia]
-                                    .toLocaleString('es-419', {
-                                        minimumFractionDigits: 2,
-                                        maximumFractionDigits: 2
-                                    }) + '%' : '‎') + '</td>';
-                                totalRow += parseInt(datosRow5[mes][codcia] || '0');
+                                if (codcia == 0) {
+                                        var promedio=0;
+                                        if (tottransacciones[currentMes]!=0) {
+                                            var suma=tottravip[currentMes]+tottranor[currentMes];
+                                            promedio=(suma/tottransacciones[currentMes]) *100;
+                                        }
+                                        if (promedio == 0) {
+                                        rowtd +=
+                                            '<td class="text-end fontM border border-dark"> </td>';
+                                        } else {
+                                            rowtd +=
+                                                '<td class="text-end fontM border border-dark">' +
+                                                promedio.toLocaleString('es-419', {
+                                                    minimumFractionDigits: 2,
+                                                    maximumFractionDigits: 2
+                                                }) + '%</td>';
+                                        }
+                                    currentMes++;
+                                    totalMes = 0;
+                                } else {
+                                    rowtd += '<td class="text-end fontM border border-dark">' +
+                                        (datosRow4[mes][codcia] != 0 ? datosRow4[mes][codcia]
+                                            .toLocaleString('es-419', {
+                                                minimumFractionDigits: 2,
+                                                maximumFractionDigits: 2
+                                            }) +'%' : '‎') + '</td>';
+                                    totalMes += parseInt(datosRow4[mes][codcia] || '0');
+                                    var promedio=0;
+                                    if (tottratransacciones!=0) {
+                                        var suma=tratprovip+tratpronor;
+                                        promedio=suma/tottratransacciones;
+                                    }
+                                    totalRow = promedio*100;
+                                }
                             });
                         });
                         break;
@@ -1189,7 +1431,15 @@
                         rowtd += '<td class="text-end fontM border border-dark">0</td>';
                         break;
                 }
-                rowtd += '<td class="text-end fontM border border-dark"></td>';
+                if (totalRow==0) {
+                    rowtd += '<td class="text-end fontM border border-dark"></td>';
+                } else {
+                    rowtd += '<td class="text-end fontM border border-dark">' + totalRow.toLocaleString('es-419', {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2
+                    }) + '%</td>';
+
+                }
                 rowtd += '</tr>';
                 rowIndex++;
             }
@@ -1222,13 +1472,13 @@
             '% DE CLIENTES QUE BRINDARON CORREO'
         ];
         var rowtd = "";
-        var urlDesglose = "http://172.16.15.20/API.LovablePHP/ZLO0019P/TiendasD2/?anio=" + yearSelected +
+        var urlDesglose = "http://172.16.15.20/API.LovablePHP/ZLO0019P/TiendasD/?anio=" + yearSelected +
             "&tiendas=" + ciasSelected + "";
         var responseDesglose = ajaxRequest(urlDesglose);
         tbody.append(`<tr><td colspan='14'></td></tr>
                           <tr class="border border-dark">
                             <td colspan="1" class="bg-dark text-white fw-bold text-center sticky-col">DESGLOSE DEL TIPO DE INFORMACION QUE EL CLIENTE PROPORCIONA</td>
-                            <td colspan="99" class="bg-dark"></td>
+                            <td colspan="300" class="bg-dark"></td>
                           </tr>
                           <tr><td colspan='14'></td></tr>`);
         var backgroundColor = ['#D4E5FF', '#C3E2FF', '#B2DFFF', '#A1DCFF', '#90D9FF', '#7FD6FF', '#6ED3FF'];
@@ -1289,6 +1539,7 @@
                         Object.keys(datosRow1).forEach(mes => {
                             ciasSelected.forEach(codcia => {
                                 if (codcia == 0) {
+                                    prototclie.push(totalMes);
                                     if (totalMes == 0) {
                                         rowtd +=
                                             '<td class="text-end fontM border border-dark"> </td>';
@@ -1310,6 +1561,7 @@
                                             }) : '‎') + '</td>';
                                     totalMes += parseInt(datosRow1[mes][codcia] || '0');
                                     totalRow += parseInt(datosRow1[mes][codcia] || '0');
+                                    totalproclie=totalRow;
                                 }
                             });
                         });
@@ -1318,6 +1570,7 @@
                         Object.keys(datosRow2).forEach(mes => {
                             ciasSelected.forEach(codcia => {
                                 if (codcia == 0) {
+                                    proemailte.push(totalMes);
                                     if (totalMes == 0) {
                                         rowtd +=
                                             '<td class="text-end fontM border border-dark"> </td>';
@@ -1339,20 +1592,47 @@
                                             }) : '‎') + '</td>';
                                     totalMes += parseInt(datosRow2[mes][codcia] || '0');
                                     totalRow += parseInt(datosRow2[mes][codcia] || '0');
+                                    prototemailte=totalRow;
                                 }
                             });
                         });
                         break;
                     case 3:
+                        var currentMes=0;
                         Object.keys(datosRow3).forEach(mes => {
                             ciasSelected.forEach(codcia => {
-                                rowtd += '<td class="text-end fontM border border-dark">' + (
-                                    datosRow3[mes][codcia] != 0 ? datosRow3[mes][codcia]
-                                    .toLocaleString('es-419', {
-                                        minimumFractionDigits: 2,
-                                        maximumFractionDigits: 2
-                                    }) + '%' : '‎') + '</td>';
-                                totalRow += parseInt(datosRow3[mes][codcia] || '0');
+                                if (codcia == 0) {
+                                        var promedio=0;
+                                        if (prototclie[currentMes]!=0) {
+                                            promedio=(proemailte[currentMes]/prototclie[currentMes]) *100;
+                                        }
+                                        if (promedio == 0) {
+                                        rowtd +=
+                                            '<td class="text-end fontM border border-dark"> </td>';
+                                        } else {
+                                            rowtd +=
+                                                '<td class="text-end fontM border border-dark">' +
+                                                promedio.toLocaleString('es-419', {
+                                                    minimumFractionDigits: 2,
+                                                    maximumFractionDigits: 2
+                                                }) + '%</td>';
+                                        }
+                                    currentMes++;
+                                    totalMes = 0;
+                                } else {
+                                    rowtd += '<td class="text-end fontM border border-dark">' +
+                                        (datosRow3[mes][codcia] != 0 ? datosRow3[mes][codcia]
+                                            .toLocaleString('es-419', {
+                                                minimumFractionDigits: 2,
+                                                maximumFractionDigits: 2
+                                            }) +'%' : '‎') + '</td>';
+                                    totalMes += parseInt(datosRow3[mes][codcia] || '0');
+                                    var promedio=0;
+                                    if (totalproclie!=0) {
+                                        promedio=prototemailte/totalproclie;
+                                    }
+                                    totalRow = promedio*100;
+                                }
                             });
                         });
                         break;
@@ -1360,6 +1640,7 @@
                         Object.keys(datosRow4).forEach(mes => {
                             ciasSelected.forEach(codcia => {
                                 if (codcia == 0) {
+                                    protelefono.push(totalMes);
                                     if (totalMes == 0) {
                                         rowtd +=
                                             '<td class="text-end fontM border border-dark"> </td>';
@@ -1381,27 +1662,55 @@
                                             }) : '‎') + '</td>';
                                     totalMes += parseInt(datosRow4[mes][codcia] || '0');
                                     totalRow += parseInt(datosRow4[mes][codcia] || '0');
+                                    protottelefono=totalRow;
                                 }
                             });
                         });
                         break;
                     case 5:
+                        var currentMes=0;
                         Object.keys(datosRow5).forEach(mes => {
                             ciasSelected.forEach(codcia => {
-                                rowtd += '<td class="text-end fontM border border-dark">' + (
-                                    datosRow5[mes][codcia] != 0 ? datosRow5[mes][codcia]
-                                    .toLocaleString('es-419', {
-                                        minimumFractionDigits: 2,
-                                        maximumFractionDigits: 2
-                                    }) + '%' : '‎') + '</td>';
-                                totalRow += parseInt(datosRow5[mes][codcia] || '0');
+                                if (codcia == 0) {
+                                        var promedio=0;
+                                        if (prototclie[currentMes]!=0) {
+                                            promedio=(protelefono[currentMes]/prototclie[currentMes]) *100;
+                                        }
+                                        if (promedio == 0) {
+                                        rowtd +=
+                                            '<td class="text-end fontM border border-dark"> </td>';
+                                        } else {
+                                            rowtd +=
+                                                '<td class="text-end fontM border border-dark">' +
+                                                promedio.toLocaleString('es-419', {
+                                                    minimumFractionDigits: 2,
+                                                    maximumFractionDigits: 2
+                                                }) + '%</td>';
+                                        }
+                                    currentMes++;
+                                    totalMes = 0;
+                                } else {
+                                    rowtd += '<td class="text-end fontM border border-dark">' +
+                                        (datosRow5[mes][codcia] != 0 ? datosRow5[mes][codcia]
+                                            .toLocaleString('es-419', {
+                                                minimumFractionDigits: 2,
+                                                maximumFractionDigits: 2
+                                            }) +'%' : '‎') + '</td>';
+                                    totalMes += parseInt(datosRow5[mes][codcia] || '0');
+                                    var promedio=0;
+                                    if (totalproclie!=0) {
+                                        promedio=protottelefono/totalproclie;
+                                    }
+                                    totalRow = promedio*100;
+                                }
                             });
                         });
                         break;
                     case 6:
-                        Object.keys(datosRow5).forEach(mes => {
+                        Object.keys(datosRow6).forEach(mes => {
                             ciasSelected.forEach(codcia => {
                                 if (codcia == 0) {
+                                    proemail.push(totalMes);
                                     if (totalMes == 0) {
                                         rowtd +=
                                             '<td class="text-end fontM border border-dark"> </td>';
@@ -1423,20 +1732,47 @@
                                             }) : '‎') + '</td>';
                                     totalMes += parseInt(datosRow6[mes][codcia] || '0');
                                     totalRow += parseInt(datosRow6[mes][codcia] || '0');
+                                    prototemail=totalRow;
                                 }
                             });
                         });
                         break;
                     case 7:
-                        Object.keys(datosRow5).forEach(mes => {
+                        var currentMes=0;
+                        Object.keys(datosRow7).forEach(mes => {
                             ciasSelected.forEach(codcia => {
-                                rowtd += '<td class="text-end fontM border border-dark">' + (
-                                    datosRow7[mes][codcia] != 0 ? datosRow7[mes][codcia]
-                                    .toLocaleString('es-419', {
-                                        minimumFractionDigits: 2,
-                                        maximumFractionDigits: 2
-                                    }) + '%' : '‎') + '</td>';
-                                totalRow += parseFloat(datosRow7[mes][codcia] || '0');
+                                if (codcia == 0) {
+                                        var promedio=0;
+                                        if (prototclie[currentMes]!=0) {
+                                            promedio=(proemail[currentMes]/prototclie[currentMes]) *100;
+                                        }
+                                        if (promedio == 0) {
+                                        rowtd +=
+                                            '<td class="text-end fontM border border-dark"> </td>';
+                                        } else {
+                                            rowtd +=
+                                                '<td class="text-end fontM border border-dark">' +
+                                                promedio.toLocaleString('es-419', {
+                                                    minimumFractionDigits: 2,
+                                                    maximumFractionDigits: 2
+                                                }) + '%</td>';
+                                        }
+                                    currentMes++;
+                                    totalMes = 0;
+                                } else {
+                                    rowtd += '<td class="text-end fontM border border-dark">' +
+                                        (datosRow7[mes][codcia] != 0 ? datosRow7[mes][codcia]
+                                            .toLocaleString('es-419', {
+                                                minimumFractionDigits: 2,
+                                                maximumFractionDigits: 2
+                                            }) +'%' : '‎') + '</td>';
+                                    totalMes += parseInt(datosRow7[mes][codcia] || '0');
+                                    var promedio=0;
+                                    if (totalproclie!=0) {
+                                        promedio=prototemail/totalproclie;
+                                    }
+                                    totalRow = promedio*100;
+                                }
                             });
                         });
                         break;
@@ -1444,14 +1780,23 @@
                         rowtd += '<td class="text-end fontM border border-dark">0</td>';
                         break;
                 }
-                if (k == 2 || k == 4 || k == 6) {
+
+                if (totalRow==0) {
                     rowtd += '<td class="text-end fontM border border-dark"></td>';
                 } else {
+                   if (k==2 || k==4 || k==6) {
+                    rowtd += '<td class="text-end fontM border border-dark">' + totalRow.toLocaleString('es-419', {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2
+                    }) + '%</td>';
+
+                   }else{
                     rowtd += '<td class="text-end fontM border border-dark">' + totalRow.toLocaleString(
                         'es-419', {
                             minimumFractionDigits: 0,
                             maximumFractionDigits: 0
                         }) + '</td>';
+                   }
                 }
                 rowtd += '</tr>';
                 rowIndex++;
@@ -1482,32 +1827,37 @@
             'TICKET PROMEDIO  GENERAL'
         ];
         var rowtd = "";
-        var urlTicket = "http://172.16.15.20/API.LovablePHP/ZLO0019P/TiendasTC2/?anio=" + yearSelected +
+        var urlTicket = "http://172.16.15.20/API.LovablePHP/ZLO0019P/TiendasTC/?anio=" + yearSelected +
             "&tiendas=" + ciasSelected + "";
         var responseTicket = ajaxRequest(urlTicket);
         tbody.append(`<tr><td colspan='14'></td></tr>
                           <tr class="border border-dark">
                             <td colspan="1" class="bg-dark text-white fw-bold text-center sticky-col">TICKET PROMEDIO</td>
-                            <td colspan="99" class="bg-dark"></td>
+                            <td colspan="300" class="bg-dark"></td>
                           </tr>
                           <tr><td colspan='14'></td></tr>`);
         var backgroundColor = ['#FFE0CC', '#FFD199','#FFD199', '#FFC266'];
         if (responseTicket.code == 200) {
             let data = responseTicket.data;
-            let datosRow1 = {};
-            let datosRow2 = {};
-            let datosRow3 = {};
-            let datosRow4 = {};
+            let datosRow1 = {};let datosRow2 = {};let datosRow3 = {}; let datosRow4 = {}; let datosVallea = {}; let datosValvip = {}; let datosValnor = {}; let datosValtot = {};
             for (let mes = 1; mes <= 12; mes++) {
                 datosRow1[mes] = {};
                 datosRow2[mes] = {};
                 datosRow3[mes] = {};
                 datosRow4[mes] = {};
+                datosVallea[mes] = {};
+                datosValvip[mes] = {};
+                datosValnor[mes] = {};
+                datosValtot[mes] = {};
                 ciasSelected.forEach(codcia => {
                     datosRow1[mes][codcia] = 0;
                     datosRow2[mes][codcia] = 0;
                     datosRow3[mes][codcia] = 0;
                     datosRow4[mes][codcia] = 0;
+                    datosVallea[mes][codcia] = 0;
+                    datosValvip[mes][codcia] = 0;
+                    datosValnor[mes][codcia] = 0;
+                    datosValtot[mes][codcia] = 0;
                 });
             }
             data.forEach(dato => {
@@ -1519,6 +1869,11 @@
                 datosRow3[dato.MESPRO][dato.CODCIA] = parseFloat(dato.PORVNO);
                 //ROW3
                 datosRow4[dato.MESPRO][dato.CODCIA] = parseFloat(dato.PORVTO);
+                //VALORES VENTA
+                datosVallea[dato.MESPRO][dato.CODCIA] = parseFloat(dato.VALLEA);
+                datosValvip[dato.MESPRO][dato.CODCIA] = parseFloat(dato.VALVIP);
+                datosValnor[dato.MESPRO][dato.CODCIA] = parseFloat(dato.VALNOR);
+                datosValtot[dato.MESPRO][dato.CODCIA] = parseFloat(dato.VALTOT);
             });
             var rowIndex = 1;
             for (let k = 0; k < arrayTicket.length; k++) {
@@ -1527,57 +1882,163 @@
                 rowtd +=
                     '<td class="text-center align-middle fontS border border-dark sticky-col" style="background-color: ' +
                     backgroundColor[k] + '">' + arrayTicket[k] + '</td>';
-                var totalRow = 0;
+                var totalRowVal = 0;
+                var totalRowTra=0;
+                var totalMes = 0;
                 switch (rowIndex) {
                     case 1:
+                        var currentMes=0;
                         Object.keys(datosRow1).forEach(mes => {
                             ciasSelected.forEach(codcia => {
-                                rowtd += '<td class="text-end fontM border border-dark">' + (
-                                    datosRow1[mes][codcia] != 0 ? 'D.'+datosRow1[mes][codcia]
-                                    .toLocaleString('es-419', {
-                                        minimumFractionDigits: 2,
-                                        maximumFractionDigits: 2
-                                    }) : '‎') + '</td>';
-                                totalRow += parseInt(datosRow1[mes][codcia] || '0');
+                                if (codcia == 0) {
+                                        var promedio=0;
+                                        if (tottralea[currentMes]!=0) {
+                                            promedio=(totalMes/tottralea[currentMes]);
+                                            totalRowTra+=tottralea[currentMes];
+                                        }
+                                        if (promedio == 0) {
+                                        rowtd +=
+                                            '<td class="text-end fontM border border-dark"> </td>';
+                                        } else {
+                                            rowtd +=
+                                                '<td class="text-end fontM border border-dark"> D.' +
+                                                promedio.toLocaleString('es-419', {
+                                                    minimumFractionDigits: 2,
+                                                    maximumFractionDigits: 2
+                                                }) + '</td>';
+                                        }
+                                    currentMes++;
+                                    totalMes = 0;
+                                } else {
+                                    rowtd += '<td class="text-end fontM border border-dark">' +
+                                        (datosRow1[mes][codcia] != 0 ? 'D.'+datosRow1[mes][codcia]
+                                            .toLocaleString('es-419', {
+                                                minimumFractionDigits: 2,
+                                                maximumFractionDigits: 2
+                                            }) : '‎') + '</td>';
+                                    totalMes += parseFloat(datosVallea[mes][codcia] || '0');
+                                    totalRowVal += parseFloat(datosVallea[mes][codcia] || '0');
+                                    if (codcia==81) {
+                                        totalRowTra=tratprolea;
+                                    }
+                                }
                             });
                         });
                         break;
                     case 2:
+                        var currentMes=0;
                         Object.keys(datosRow2).forEach(mes => {
                             ciasSelected.forEach(codcia => {
-                                rowtd += '<td class="text-end fontM border border-dark">' + (
-                                    datosRow2[mes][codcia] != 0 ? 'D.'+datosRow2[mes][codcia]
-                                    .toLocaleString('es-419', {
-                                        minimumFractionDigits: 2,
-                                        maximumFractionDigits: 2
-                                    }) : '‎') + '</td>';
-                                totalRow += parseInt(datosRow2[mes][codcia] || '0');
+                                if (codcia == 0) {
+                                        var promedio=0;
+                                        if (tottravip[currentMes]!=0) {
+                                            promedio=(totalMes/tottravip[currentMes]);
+                                            totalRowTra+=tottravip[currentMes];
+                                        }
+                                        if (promedio == 0) {
+                                        rowtd +=
+                                            '<td class="text-end fontM border border-dark"> </td>';
+                                        } else {
+                                            rowtd +=
+                                                '<td class="text-end fontM border border-dark"> D.' +
+                                                promedio.toLocaleString('es-419', {
+                                                    minimumFractionDigits: 2,
+                                                    maximumFractionDigits: 2
+                                                }) + '</td>';
+                                        }
+                                    currentMes++;
+                                    totalMes = 0;
+                                } else {
+                                    rowtd += '<td class="text-end fontM border border-dark">' +
+                                        (datosRow2[mes][codcia] != 0 ? 'D.'+datosRow2[mes][codcia]
+                                            .toLocaleString('es-419', {
+                                                minimumFractionDigits: 2,
+                                                maximumFractionDigits: 2
+                                            }) : '‎') + '</td>';
+                                    totalMes += parseFloat(datosValvip[mes][codcia] || '0');
+                                    totalRowVal += parseFloat(datosValvip[mes][codcia] || '0');
+                                    if (codcia==81) {
+                                        totalRowTra=tratprovip;
+                                    }
+                                }
                             });
                         });
                         break;
                     case 3:
+                        var currentMes=0;
                         Object.keys(datosRow3).forEach(mes => {
                             ciasSelected.forEach(codcia => {
-                                rowtd += '<td class="text-end fontM border border-dark">' + (
-                                    datosRow3[mes][codcia] != 0 ? 'D.'+datosRow3[mes][codcia]
-                                    .toLocaleString('es-419', {
-                                        minimumFractionDigits: 2,
-                                        maximumFractionDigits: 2
-                                    }) : '‎') + '</td>';
-                                totalRow += parseInt(datosRow3[mes][codcia] || '0');
+                                if (codcia == 0) {
+                                        var promedio=0;
+                                        if (tottranor[currentMes]!=0) {
+                                            promedio=(totalMes/tottranor[currentMes]);
+                                            totalRowTra+=tottranor[currentMes];
+                                        }
+                                        if (promedio == 0) {
+                                        rowtd +=
+                                            '<td class="text-end fontM border border-dark"> </td>';
+                                        } else {
+                                            rowtd +=
+                                                '<td class="text-end fontM border border-dark"> D.' +
+                                                promedio.toLocaleString('es-419', {
+                                                    minimumFractionDigits: 2,
+                                                    maximumFractionDigits: 2
+                                                }) + '</td>';
+                                        }
+                                    currentMes++;
+                                    totalMes = 0;
+                                } else {
+                                    rowtd += '<td class="text-end fontM border border-dark">' +
+                                        (datosRow3[mes][codcia] != 0 ? 'D.'+datosRow3[mes][codcia]
+                                            .toLocaleString('es-419', {
+                                                minimumFractionDigits: 2,
+                                                maximumFractionDigits: 2
+                                            }) : '‎') + '</td>';
+                                    totalMes += parseFloat(datosValnor[mes][codcia] || '0');
+                                    totalRowVal += parseFloat(datosValnor[mes][codcia] || '0');
+                                    if (codcia==81) {
+                                        totalRowTra=tratpronor;
+                                    }
+                                }
                             });
                         });
                         break;
                     case 4:
+                        var currentMes=0;
                         Object.keys(datosRow4).forEach(mes => {
                             ciasSelected.forEach(codcia => {
-                                rowtd += '<td class="text-end fontM border border-dark">' + (
-                                    datosRow4[mes][codcia] != 0 ? 'D.'+datosRow4[mes][codcia]
-                                    .toLocaleString('es-419', {
-                                        minimumFractionDigits: 2,
-                                        maximumFractionDigits: 2
-                                    }) : '‎') + '</td>';
-                                totalRow += parseInt(datosRow4[mes][codcia] || '0');
+                                if (codcia == 0) {
+                                        var promedio=0;
+                                        if (tottransacciones[currentMes]!=0) {
+                                            promedio=(totalMes/tottransacciones[currentMes]);
+                                            totalRowTra+=tottransacciones[currentMes];
+                                        }
+                                        if (promedio == 0) {
+                                        rowtd +=
+                                            '<td class="text-end fontM border border-dark"> </td>';
+                                        } else {
+                                            rowtd +=
+                                                '<td class="text-end fontM border border-dark"> D.' +
+                                                promedio.toLocaleString('es-419', {
+                                                    minimumFractionDigits: 2,
+                                                    maximumFractionDigits: 2
+                                                }) + '</td>';
+                                        }
+                                    currentMes++;
+                                    totalMes = 0;
+                                } else {
+                                    rowtd += '<td class="text-end fontM border border-dark">' +
+                                        (datosRow4[mes][codcia] != 0 ? 'D.'+datosRow4[mes][codcia]
+                                            .toLocaleString('es-419', {
+                                                minimumFractionDigits: 2,
+                                                maximumFractionDigits: 2
+                                            }) : '‎') + '</td>';
+                                    totalMes += parseFloat(datosValtot[mes][codcia] || '0');
+                                    totalRowVal += parseFloat(datosValtot[mes][codcia] || '0');
+                                    if (codcia==81) {
+                                        totalRowTra=tratpronor+tratprovip+tratprolea;
+                                    }
+                                }
                             });
                         });
                         break;
@@ -1585,7 +2046,18 @@
                         rowtd += '<td class="text-end fontM border border-dark">0</td>';
                         break;
                 }
-                rowtd += '<td class="text-end fontM border border-dark"> </td>';
+                if (totalRowVal==0) {
+                    rowtd += '<td class="text-end fontM border border-dark"></td>';
+                } else {
+                    var promedio=0;
+                    if (totalRowTra!=0) {
+                        promedio=totalRowVal/totalRowTra;
+                    }
+                    rowtd += '<td class="text-end fontM border border-dark"> D.' + promedio.toLocaleString('es-419', {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2
+                    }) + '</td>';
+                }
                 rowtd += '</tr>';
                 rowIndex++;
             }
