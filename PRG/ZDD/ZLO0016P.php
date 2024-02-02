@@ -549,7 +549,6 @@
         Date2 = currentDate.substr(13, 10);
         var fechasActual = $("#FechasGrabs").val();
         if (fechasActual != "") {
-
             Date1 = fechasActual.substr(0, 10);
             Date2 = fechasActual.substr(13, 10);
         }
