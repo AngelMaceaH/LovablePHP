@@ -14,9 +14,9 @@
         <nav aria-label="breadcrumb">
         <ol class="breadcrumb my-0 ms-2">
               <li class="breadcrumb-item">
-              <span>Envios correo electronicos / Pedidos</span>
+              <span>Envios correo electronicos / Inscripciones</span>
               </li>
-              <li class="breadcrumb-item active"><span>ZLO0021P</span></li>
+              <li class="breadcrumb-item active"><span>ZLO0022P</span></li>
             </ol>
         </nav>
     </div>
@@ -33,7 +33,7 @@
                 <div class="position-absolute top-0 start-0 w-100 h-100 bg-opacity-50 rounded" style="z-index: 9998;"></div>
             </div>
             <div class="card-header">
-                <h1 class="fs-4 mb-1 mt-2 text-center">Envío de correos electronicos de pedidos web</h1>
+                <h1 class="fs-4 mb-1 mt-2 text-center">Envío de correos electronicos de reactivación o inscripción</h1>
             </div>
             <div class="card-body " >
                 <div class="container p-5">
@@ -89,7 +89,7 @@
                 document.getElementById("lblError").classList.add("d-none");
                 bgLoader.classList.remove("d-none");
                 sendingEmail.classList.remove("d-none");
-                let url="http://172.16.15.20/API.LovablePHP/ZLO0021P/SEND2/?numped="+value+"&sendclie="+valueCk;
+                let url="http://172.16.15.20/API.LovablePHP/ZLO0022P/SEND/?numped="+value+"&sendclie="+valueCk;
                 fetch(url)
                     .then(() => {
                         Swal.fire({

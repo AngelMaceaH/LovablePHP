@@ -1868,7 +1868,7 @@
                                     <div class="row">
                                         <div class="col-9 text-center">
                                             <label class="form-control bg-dark text-white mt-2  border border-0 p-0">
-                                                Análisis de movimiento de estilos
+                                                Acceso a agrupaciones de companías
                                             </label>
                                         </div>
                                         <div class="col-3 text-end">
@@ -2194,7 +2194,7 @@
                                     <div class="row">
                                         <div class="col-9 text-center">
                                             <label class="form-control bg-dark text-white mt-2  border border-0 p-0">
-                                                Análisis de movimiento de estilos
+                                                 Acceso a agrupaciones de companías
                                             </label>
                                         </div>
                                         <div class="col-3 text-end">
