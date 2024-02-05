@@ -150,7 +150,7 @@
             document.cookie = "cam" + i + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/";
         }
 
-        var urlComarc = 'http://172.16.15.20/API.LovablePHP/ZLO0015P/ListComarc/?user=' + usuario + '';
+        var urlComarc = 'http://172.16.15.20/API.LovablePHP/ZLO0015P/ListComarc2/?user=' + usuario + '';
         var responseComarc = ajaxRequest(urlComarc);
         if (responseComarc.code == 200) {
             for (let i = 0; i < responseComarc.data.length; i++) {
@@ -837,11 +837,10 @@
             }
         }
         var urlList = baseUrl + "?" + queryParams.join("&");
-        console.log(urlList);
         var response = ajaxRequest(urlList);
         const body = $("#myTableBody");
         if (response.code == 200) {
-            $("#cbbDepartamentos").val(response.data[0]['CODDEP'] + '-' + response.data[0]['CODSEC']);
+           // $("#cbbDepartamentos").val(response.data[0]['CODDEP'] + '-' + response.data[0]['CODSEC']);
             let tr;
             let limit = Math.min(response.data.length, 100);
             //let limit=response.data.length;
@@ -1219,7 +1218,6 @@
         var permisos = "<?php echo isset($_SESSION['PERESP'])? $_SESSION['PERESP']: ''; ?>";
         if (permisos === 'S') {
             var urlPermisos="http://172.16.15.20/API.LovablePHP/ZLO0015P/GetPermiso/?user="+ usuario +"";
-            console.log(urlPermisos);
             var responsePermisos = ajaxRequest(urlPermisos);
             if (responsePermisos.code==200) {
                 var data=responsePermisos.data;

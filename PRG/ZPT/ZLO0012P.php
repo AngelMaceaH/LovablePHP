@@ -15,7 +15,7 @@
       $agrup=isset($_SESSION['agrup'])? $_SESSION['agrup']:'1';
       $ckProductos1 = isset($_SESSION['productosCk1']) ? $_SESSION['productosCk1'] : "0";
       $filtro=isset($_SESSION['filtro'])? $_SESSION['filtro']:'1';
-    ?> 
+    ?>
      <div class="container-fluid">
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb my-0 ms-2">
@@ -39,7 +39,7 @@
                       <div class="col-sm-12 col-md-6 mt-2">
                         <label>Visualizar por:</label>
                         <select class="form-select  mt-1" id="cbbAgrupacion" name="cbbAgrupacion">
-                      
+
                         </select>
                       </div>
                       <div class="col-sm-12 col-md-6 mt-2">
@@ -52,7 +52,7 @@
                             Inventario General
                           </label>
                         </div>
-                         
+
                           </div>
                           <div class="col-6">
                           <div class="form-check">
@@ -116,21 +116,21 @@
                                     <th  class="responsive-font-example text-center text-black">Tipo<br>Inventario</th>
                                     <th  class="responsive-font-example text-center text-black">Marca</th>
                                     <th  class="responsive-font-example text-center text-black">Genero</th>
-                                    
+
                                 </tr>
                             </thead>
                             <tbody id="myTableSeguimientoBody" style="font-size: 13px;">
-                              
+
                               </tbody>
                           </table>
               </div>
                       </div>
                     </div>
-                </div> 
+                </div>
         </div>
       </div>
     </div>
-   
+
       <div class="footer bg-blck flex-grow-1 d-flex justify-content-center">
       <p class="bggray responsive-font-example"><i>Lovable de Honduras S.A. de C.V</i></p>
       </div>
@@ -143,7 +143,8 @@
         var agrupSelect="";
         var filtroP="";
           document.addEventListener('DOMContentLoaded', function() {
-            var urlAgrupaciones="http://172.16.15.20/API.LOVABLEPHP/ZLO0012P/ListAgrupacion/";
+            var usuario= '<?php echo $_SESSION['CODUSU']; ?>';
+            var urlAgrupaciones="http://172.16.15.20/API.LOVABLEPHP/ZLO0012P/ListAgrupacion/?user="+usuario+"";
           var responseAgrupaciones=ajaxRequest(urlAgrupaciones);
         if (responseAgrupaciones && responseAgrupaciones.code == 200) {
             var options = "";
@@ -151,6 +152,8 @@
                 options += "<option value='" + item['CODIGO'] + "'>" + item['DESCRI'] + "</option>";
             });
             document.getElementById('cbbAgrupacion').innerHTML += options;
+        }else{
+          console.log("Error al cargar las agrupaciones");
         }
 
         var agrupSelect = '<?php echo $agrup; ?>';
@@ -204,12 +207,12 @@
                                 }
                             });
                         $('#myTableSeguimiento').on('dblclick', '.clickable-row', function () {
-                                var estiloValue = $(this).data('estilo'); 
+                                var estiloValue = $(this).data('estilo');
                                 var registrosFiltrados = registrosMismoEstilo.filter(function (registro) {
                                     if (registro.ESTILO == estiloValue) {
                                         return  registro ;
                                     }
-                                });       
+                                });
                                 openModalDetalles(estiloValue);
                             });
                         },
@@ -225,27 +228,27 @@
                     { "data": "MESTOT" ,className:"text-end","searchable": false},
                     { "data": "UNIVEN" ,className:"text-end text-cyan","searchable": false, render: function(data) {
                             var valor=parseFloat(data);
-                            if (isNaN(valor)) {valor='';}                       
+                            if (isNaN(valor)) {valor='';}
         return  valor.toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     }},
                     { "data": "PROMEN" ,className:"text-end text-cyan","searchable": false, render: function(data) {
                             var valor=parseFloat(data);
-                            if (isNaN(valor)) {valor='';}                       
+                            if (isNaN(valor)) {valor='';}
         return  valor.toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     }},
                     { "data": "EXIACT" ,className:"text-end text-green","searchable": false, render: function(data) {
                             var valor=parseFloat(data);
-                            if (isNaN(valor)) {valor='';}                       
+                            if (isNaN(valor)) {valor='';}
         return  valor.toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     }},
                     { "data": "ROTINV" ,className:"text-end","searchable": false, render: function(data) {
                             var valor=parseFloat(data);
-                            if (isNaN(valor)) {valor='';}                       
+                            if (isNaN(valor)) {valor='';}
         return  valor.toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     }},
                     { "data": "MESINV" ,className:"text-end text-warning","searchable": false, render: function(data) {
                             var valor=parseFloat(data);
-                            if (isNaN(valor)) {valor='';}                       
+                            if (isNaN(valor)) {valor='';}
         return  valor.toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     }},
                     { "data": "PORDES" ,"searchable": false,className:"text-end"},
@@ -253,7 +256,7 @@
                       render: function (data, type, row) {
               const fechaOriginal = data;
              if (fechaOriginal=="") {
-               return ""; 
+               return "";
              }else{
               const year = fechaOriginal.slice(0, 4);
               const month = fechaOriginal.slice(4, 6);
@@ -266,7 +269,7 @@
                       render: function (data, type, row) {
               const fechaOriginal = data;
               if (fechaOriginal=="") {
-               return ""; 
+               return "";
              }else{
               const year = fechaOriginal.slice(0, 4);
               const month = fechaOriginal.slice(4, 6);
@@ -279,7 +282,7 @@
                       render: function (data, type, row) {
               const fechaOriginal = data;
               if (fechaOriginal=="") {
-               return ""; 
+               return "";
              }else{
               const year = fechaOriginal.slice(0, 4);
               const month = fechaOriginal.slice(4, 6);
@@ -488,7 +491,7 @@
                 $('#myTableSeguimiento_filter input').val(searchTerm.toUpperCase())
             });
         });
-        function openModalDetalles(estilo){ 
+        function openModalDetalles(estilo){
           $("#tableAppend").empty();
           $("#tableAppend").append(`<table id="myTableDetalles" class="table stripe"style="width:100%;">
                         <thead>
@@ -517,10 +520,10 @@
                             </tr>
                         </thead>
                         <tbody id="myTableDetallesBody" style="font-size: 13px;">
-                                
+
                         </tbody>
                     </table>`)
-          
+
           var agrup=$("#cbbAgrupacion").val();
           var urlDeta="http://172.16.15.20/API.LOVABLEPHP/ZLO0012P/GetDeta/?agrup="+agrup+"&estilo="+estilo+"";
           var responseDeta=ajaxRequest(urlDeta);
@@ -580,7 +583,7 @@
                             options+="<td class='text-end'>"+returnBlank(responseDeta.data[i]['TIPINV'])+"</td>";
                        break;
                           }
-                  
+
                   options+="<td class='text-start'>"+returnBlank(responseDeta.data[i]['MARCA'])+"</td>";
                   options+="<td class='text-start'>"+returnBlank(responseDeta.data[i]['GENERO'])+"</td>";
                   options+="<td class=' d-none text-start'>"+returnBlank(responseDeta.data[i]['ISTOT'])+"</td>";
@@ -755,7 +758,7 @@
                   }
         }
     ],
-        
+
       });
             $('#detallesModal').modal('show');
           }
@@ -770,7 +773,7 @@
 
         function formatFecha(fechaOriginal){
           if (fechaOriginal==" "  || fechaOriginal==0) {
-               return "&nbsp;"; 
+               return "&nbsp;";
              }else{
               const year = fechaOriginal.slice(0, 4);
               const month = fechaOriginal.slice(4, 6);
