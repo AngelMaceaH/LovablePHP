@@ -92,7 +92,9 @@
         }
     }
     </style>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -116,7 +118,7 @@
   }
   $connIBM = conexionIBM();
   ?>
-    <script>
+  <script>
     $(document).ready(function() {
         var usuario = '<?php echo $_SESSION['CODUSU']; ?>';
         var isDev = '<?php echo $_SESSION['DEV']; ?>';
@@ -124,6 +126,8 @@
         setTimeout(() => {
             spinnerWrapperEl.style.display = 'none';
         }, 1000);
+        const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+        const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
         if (usuario=='MARVIN') {
             $("#dropdown-admin").append(`<div class="dropdown-menu dropdown-menu-end pt-0"
                                                     style="position: absolute; inset: 0px 0px auto auto; margin: 0px; transform: translate(0px, 42px);"
@@ -356,7 +360,7 @@
                             </div>
                         </div>
                     </div>
-                    <button type="button" class="btn btn-light ms-2" onclick="logOut()" style="height:50px;">
+                    <button type="button" class="btn btn-light ms-2" onclick="logOut()" style="height:50px;" data-bs-toggle="tooltip" data-bs-placement="left" data-bs-title="Salir">
                         <svg class="icon me-2">
                             <use xlink:href="assets/vendors/@coreui/icons/svg/free.svg#cil-account-logout"></use>
                         </svg>
@@ -372,6 +376,7 @@
             <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/js/all.min.js"
                 integrity="sha512-2bMhOkE/ACz21dJT8zBOMgMecNxx0d37NND803ExktKiKdSzdwn+L7i9fdccw/3V06gM/DBWKbYmQvKMdAA9Nw=="
                 crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
             <script>
             function ajaxRequest(url, data = {}, method = "GET") {
                 var dataResponse = null;

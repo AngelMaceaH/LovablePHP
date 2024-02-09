@@ -62,13 +62,13 @@
         }
         .table-container {
             width: 100%;
-            height:530px;
+            height:540px;
             overflow-x: auto;
             position: relative;
             z-index: 1;
             top: 0;
-        } 
-        @media screen and (min-width: 1920px) {
+        }
+        @media screen and (min-width: 1900px) {
         .table-container {
             width: 100%;
             height:760px;
@@ -76,12 +76,12 @@
             position: relative;
             z-index: 1;
             top: 0;
-        } 
+        }
     }
     .sticky-col {
             position: sticky;
             left: 0;
-            background-color: white; 
+            background-color: white;
             z-index: 1;
         }
 
@@ -89,6 +89,6 @@
      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" integrity="sha512-nMNlpuaDPrqlEls3IX/Q56H36qvBASwb3ipuo3MxeWbsQB1881ox0cRv7UPTgBlriqoynt35KjEwgGUeUXIPnw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
-    
+
 </body>
 </html>

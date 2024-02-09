@@ -15,7 +15,7 @@
               <li class="breadcrumb-item">
               <span>  /  </span>
               </li>
-              <li class="breadcrumb-item active"><span>ZLO0023P</span></li>
+              <li class="breadcrumb-item active"><span>ZLO0024P</span></li>
             </ol>
         </nav>
     </div>
@@ -23,7 +23,7 @@
     <div id="body-div" class="body flex-grow-3">
         <div class="card mb-5">
             <div class="card-header">
-                <h1 class="fs-4 mb-1 mt-2 text-center">REACTIVACIÓN</h1>
+                <h1 class="fs-4 mb-1 mt-2 text-center">TIENDAS</h1>
             </div>
             <div class="card-body">
                 <div class="container p-5">

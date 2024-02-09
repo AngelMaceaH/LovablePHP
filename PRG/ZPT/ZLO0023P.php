@@ -15,7 +15,7 @@
               <li class="breadcrumb-item">
               <span>Producto Terminado / Clasificación de producto</span>
               </li>
-              <li class="breadcrumb-item active"><span>ZLO0009P</span></li>
+              <li class="breadcrumb-item active"><span>ZLO0023P</span></li>
             </ol>
           </nav>
         </div>
@@ -34,15 +34,8 @@
 
                                       </div>
                                       <div class="col-3">
-                                        <label>Agrupación por país:</label>
+                                        <label>Punto de Venta:</label>
                                         <select class="form-select mt-1 fw-bold" id="cbbAgrup" >
-                                          <option  value="11">Tiendas Honduras (Lov. Ecommerce)</option>
-                                          <option  value="9">Tiendas Honduras (Mod. Íntima)</option>
-                                          <option  value="10">Tiendas Guatemala</option>
-                                          <option  value="12">Tiendas El Salvador</option>
-                                          <option  value="13">Tiendas Costa Rica</option>
-                                          <option  value="16">Tiendas Nicaragua</option>
-                                          <option  value="19">Tiendas Republica Dominicana</option>
                                         </select>
                                       </div>
                                       <div class="col-3">
@@ -235,6 +228,21 @@
         let chart2=null;
         window.addEventListener('DOMContentLoaded', (event) => {
           const cbbAgrup = document.getElementById('cbbAgrup');
+            let usuario = '<?php echo $_SESSION["CODUSU"];?>';
+            let urlTiendas = 'http://172.16.15.20/API.LovablePHP/ZLO0015P/ListTiendas/?user=' + usuario + '';
+            let responseTiendas = ajaxRequest(urlTiendas);
+            let tiendasOptions = '';
+            if (responseTiendas.code == 200) {
+                for (let i = 0; i < responseTiendas.data.length; i++) {
+                    if (responseTiendas.data[i].COMCOD!=1 && responseTiendas.data[i].COMCOD!=35) {
+                        tiendasOptions += '<option value="' + responseTiendas.data[i].COMCOD.padStart(2, '0') + '">' +
+                        responseTiendas.data[
+                            i].COMDES + '</option>';
+                    }
+                }
+            }
+            cbbAgrup.innerHTML = tiendasOptions;
+
           const cbbAno = document.getElementById('cbbAno');
           const cbbGrafica = document.getElementById('selectGrafica');
             let valAno=parseInt(cbbAno.value);
@@ -444,7 +452,7 @@
         function chargeTable(valAno,valAgrup) {
           //AÑO 1
           lineSinDesc1=[]; line20Desc1=[]; line30Desc1=[]; line40Desc1=[]; line50Desc1=[]; lineZ1Desc1=[]; lineZ2Desc1=[];
-          var urlList="http://172.16.15.20/API.LovablePHP/ZLO0009P/List2/?anopro="+valAno+"&agrup="+valAgrup;
+          var urlList="http://172.16.15.20/API.LovablePHP/ZLO0023P/List/?anopro="+valAno+"&agrup="+valAgrup;
           let lblAno1=document.getElementById('lblano1');
           lblAno1.innerHTML='Año '+valAno;
           const tbDetalle = document.getElementById('tableInventarioDetalle');
@@ -563,7 +571,8 @@
         function chargeTable2(valAno,valAgrup) {
           //AÑO 2
           lineSinDesc2=[]; line20Desc2=[]; line30Desc2=[]; line40Desc2=[]; line50Desc2=[]; lineZ1Desc2=[]; lineZ2Desc2=[];
-          var urlList="http://172.16.15.20/API.LovablePHP/ZLO0009P/List2/?anopro="+valAno+"&agrup="+valAgrup;
+          var urlList="http://172.16.15.20/API.LovablePHP/ZLO0023P/List/?anopro="+valAno+"&agrup="+valAgrup;
+          console.log(urlList);
           let lblAno2=document.getElementById('lblano2');
           lblAno2.innerHTML='Año '+valAno;
           const tbDetalle = document.getElementById('tableInventarioDetalle2');

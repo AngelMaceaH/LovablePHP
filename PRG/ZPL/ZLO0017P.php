@@ -1018,11 +1018,8 @@
                 rowtd += `<tr class="border border-dark bg-secondary" style="height:50px;"><td class="text-center align-middle fontS border border-dark sticky-col bg-secondary">${arrayTiendas[i]}</td>${row}<td class="text-end fontM border border-dark">${suma}</td></tr>`;
             }
             tbody.append(rowtd);
-
             }
-
         });
-
     </script>
    <!-- <script src="../../assets/js/PRG/ZPL/ZLO0017P.js"></script>-->
 </body>
