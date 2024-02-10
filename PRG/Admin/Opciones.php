@@ -140,13 +140,6 @@
         });
       });
 
-     /* var i=1;
-            $('#tbUsuarios thead th').each(function(){
-                var title = $(this).text();
-                console.log(title + '<br /><input type="text" id="inputSearch'+i+'"  class="form-control mt-2"/>');
-                $(this).html(title + '<br /><input type="text" id="inputSearch'+i+'"  class="form-control mt-2"/>');
-                i++;
-            });*/
              tableUsuarios = $('#tbUsuarios').DataTable({
                 language: {
                     url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json',

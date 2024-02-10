@@ -14,7 +14,7 @@
       $agrup=isset($_SESSION['agrup'])? $_SESSION['agrup']:'1';
       $ckProductos1 = isset($_SESSION['productosCk1']) ? $_SESSION['productosCk1'] : "0";
       $filtro=isset($_SESSION['filtro'])? $_SESSION['filtro']:'1';
-    ?> 
+    ?>
      <div class="container-fluid">
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb my-0 ms-2">
@@ -38,7 +38,7 @@
                       <div class="col-sm-12 col-md-12 mt-2">
                         <label>Visualizar por:</label>
                         <select class="form-select  mt-1" id="cbbAgrupacion" name="cbbAgrupacion">
-                      
+
                         </select>
                       </div>
                 </div>
@@ -79,17 +79,17 @@
                                 </tr>
                             </thead>
                             <tbody id="myTableSeguimientoBody" style="font-size: 13px;">
-                              
+
                               </tbody>
                           </table>
                       </div>
                       </div>
                     </div>
-          </div> 
+          </div>
         </div>
       </div>
     </div>
-   
+
       <div class="footer bg-blck flex-grow-1 d-flex justify-content-center">
       <p class="bggray responsive-font-example"><i>Lovable de Honduras S.A. de C.V</i></p>
       </div>
@@ -113,7 +113,7 @@
           }
           agrupSelect='<?php echo $agrup; ?>';
           $("#cbbAgrupacion").val(agrupSelect);
-         
+
           $("#cbbAgrupacion").on("change",function() {
             $("#formFiltros").submit();
           });
@@ -134,7 +134,6 @@
               $("#formFiltros").submit();
             });
             $("input[name=radioFiltro][value=" + filtroP + "]").prop('checked', true);
-          console.log("http://172.16.15.20/API.LOVABLEPHP/ZLO0014P/List/?agrup="+agrupSelect);
          var table= $('#myTableSeguimiento').DataTable({
             language: {
             url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json',
@@ -177,7 +176,7 @@
         return data.toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     } },
                     { "data": "ROTINV","searchable": false, className: "text-success",  },
-                    { "data": "MESINV","searchable": false, className: "text-brown", 
+                    { "data": "MESINV","searchable": false, className: "text-brown",
                         render: function(data) {
         return data.toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     } },
@@ -236,7 +235,7 @@
                         }else{
                           return " ";
                         }
-              
+
             }},
                     { "data": "DIAANT","searchable": false},
                     { "data": "DIAANC","searchable": false},
@@ -381,7 +380,7 @@
                             $('c[r^="I"]', row).attr('s', textDarkGreen);
                             $('c[r^="J"]', row).attr('s', textgreen1);
                             $('c[r^="K"]', row).attr('s', textBrown);
-                            
+
                         });
                     var tagName = sSh.getElementsByTagName('sz');
                     for (i = 0; i < tagName.length; i++) {
@@ -393,7 +392,7 @@
 
             });
         });
-       
+
       </script>
 </body>
 </html>

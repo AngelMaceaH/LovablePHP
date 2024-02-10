@@ -178,7 +178,6 @@
         });
     });
     $("input[name=radioFiltro][value=" + filtroP + "]").prop('checked', true);
-        console.log("http://172.16.15.20/API.LOVABLEPHP/ZLO0012P/List/?agrup="+agrupSelect+"&cond=1&filtro="+filtroP+"");
          var table= $('#myTableSeguimiento').DataTable({
             language: {
             url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json',

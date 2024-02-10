@@ -430,7 +430,6 @@
                             var isOut =
                                 '<?php echo isset($_SESSION['VALIDATE'])? $_SESSION['VALIDATE']:"0"; ?>';
                             if (isOut == '1') {
-                                console.log('ELIMINANDO');
                                 var usuario = '<?php echo $_SESSION['CODUSU']; ?>';
                                 var urlDelete =
                                     'http://172.16.15.20/API.LovablePHP/ZLO0015P/DelUsuario/?user=' +

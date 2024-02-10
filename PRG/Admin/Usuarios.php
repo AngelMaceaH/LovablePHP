@@ -604,7 +604,6 @@
             } else {
                 agrupacionesAsignadasEdit.splice(agrupacionesAsignadasEdit.indexOf(codigo), 1);
             }
-            console.log(agrupacionesAsignadasEdit);
         });
         $("#AllckEdit").on("click", function() {
             if ($(this).is(":checked")) {
@@ -614,7 +613,6 @@
                 $(".checkAgrupEdit").prop("checked", false);
                 agrupacionesAsignadasEdit = [];
             }
-            console.log(agrupacionesAsignadasEdit);
         });
     });
 

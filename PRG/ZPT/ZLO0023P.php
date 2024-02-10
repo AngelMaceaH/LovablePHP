@@ -22,6 +22,9 @@
       </header>
       <div id="body-div" class="body flex-grow-1">
         <div class="card mb-5">
+            <div class="card-header">
+              <h1 class="fs-4 mb-1 mt-2 text-center">Análisis de inventario por clasificación de productos por tienda</h1>
+            </div>
           <div class="card-body">
           <div class="card border border-0">
                 <div class="card-body">
@@ -34,7 +37,7 @@
 
                                       </div>
                                       <div class="col-3">
-                                        <label>Punto de Venta:</label>
+                                        <label>Punto de venta:</label>
                                         <select class="form-select mt-1 fw-bold" id="cbbAgrup" >
                                         </select>
                                       </div>
@@ -74,7 +77,7 @@
                                 <tr>
                                   <th colspan="2" class=" border border-dark bg-secondary  border-bottom-0"></th>
                                   <th colspan="14" class=" border border-dark bg-secondary align-middle">
-                                   Análisis de inventario por clasificación de productos ( Sin Descuento / Con Descuento / Segundas)&nbsp;&nbsp;&nbsp;&nbsp;<span id="lblano1" class="fs-5"></span>
+                                   <span id="lblano1" class="fs-5"></span>
                                   </th>
                                 </tr>
                                 <tr>
@@ -122,7 +125,7 @@
                                 <tr>
                                   <th colspan="2" class=" border border-dark bg-secondary  border-bottom-0"></th>
                                   <th colspan="14" class=" border border-dark bg-secondary align-middle">
-                                   Análisis de inventario por clasificación de productos ( Sin Descuento / Con Descuento / Segundas)&nbsp;&nbsp;&nbsp;&nbsp;<span id="lblano2" class="fs-5"></span>
+                                  <span id="lblano2" class="fs-5"></span>
                                   </th>
                                 </tr>
                                 <tr>
@@ -211,6 +214,10 @@
 
         let lineSinDesc1=[];
         let lineSinDesc2=[];
+
+        let lineSinDescSecure1=[];
+        let lineSinDescSecure2=[];
+
         let line20Desc1=[];
         let line20Desc2=[];
         let line30Desc1=[];
@@ -330,6 +337,13 @@
                       column: {
                           pointPadding: 0.2,
                           borderWidth: 0
+                      },
+                      series: {
+                          borderWidth: 0,
+                          dataLabels: {
+                              enabled: true,
+                              format: '{point.y:.2f}%'
+                          }
                       }
                   },
                   credits: {
@@ -348,7 +362,7 @@
                     },
                     enabled: true,
                     sourceWidth: 1600,
-                    sourceHeight: 900,
+                    sourceHeight: 800,
                     chartOptions: {
                       chart: {
                         backgroundColor: '#303030'
@@ -387,7 +401,7 @@
                           }
                   },
               xAxis: {
-                 categories: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+                categories: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
                       labels: {
                           style: {
                               color: '#FFFFFF'
@@ -408,12 +422,13 @@
                       }
               },
               plotOptions: {
-                  line: {
-                      dataLabels: {
-                          enabled: true
-                      },
-                      enableMouseTracking: false
-                  }
+                line: {
+                  dataLabels: {
+                    enabled: true,
+                    format: '{y} %'
+                  },
+                  enableMouseTracking: false
+                }
               },
               credits: {
                       enabled: false
@@ -431,7 +446,7 @@
                     },
                     enabled: true,
                     sourceWidth: 1600,
-                    sourceHeight: 900,
+                    sourceHeight: 800,
                     chartOptions: {
                       chart: {
                         backgroundColor: '#303030'
@@ -446,7 +461,9 @@
                   data: lineSinDesc2
               }]
           });
-          }, 1200);
+          lineSinDescSecure1=[...lineSinDesc1];
+          lineSinDescSecure2=[...lineSinDesc2];
+          }, 1500);
         });
 
         function chargeTable(valAno,valAgrup) {
@@ -493,6 +510,7 @@
                 totz1+=parseFloat(item.UNIZ1);
                 totz2+=parseFloat(item.UNIZ2);
                 lineSinDesc1.push( Math.round(parseFloat(item.PORDESC) * 100) / 100);
+                lineSinDescSecure1=[...lineSinDesc1];
                 line20Desc1.push( Math.round(parseFloat(item.POR20) * 100) / 100);
                 line30Desc1.push( Math.round(parseFloat(item.POR30) * 100) / 100);
                 line40Desc1.push( Math.round(parseFloat(item.POR40) * 100) / 100);
@@ -572,7 +590,6 @@
           //AÑO 2
           lineSinDesc2=[]; line20Desc2=[]; line30Desc2=[]; line40Desc2=[]; line50Desc2=[]; lineZ1Desc2=[]; lineZ2Desc2=[];
           var urlList="http://172.16.15.20/API.LovablePHP/ZLO0023P/List/?anopro="+valAno+"&agrup="+valAgrup;
-          console.log(urlList);
           let lblAno2=document.getElementById('lblano2');
           lblAno2.innerHTML='Año '+valAno;
           const tbDetalle = document.getElementById('tableInventarioDetalle2');
@@ -614,6 +631,7 @@
                 totz2+=parseFloat(item.UNIZ2);
 
                 lineSinDesc2.push( Math.round(parseFloat(item.PORDESC) * 100) / 100);
+                lineSinDescSecure2=[...lineSinDesc2];
                 line20Desc2.push( Math.round(parseFloat(item.POR20) * 100) / 100);
                 line30Desc2.push( Math.round(parseFloat(item.POR30) * 100) / 100);
                 line40Desc2.push( Math.round(parseFloat(item.POR40) * 100) / 100);
@@ -740,12 +758,7 @@
 
           let valoresLineal1=[];
           let valoresLineal2=[];
-
           switch (valGrafica) {
-            case 'G1':
-              valoresLineal1=lineSinDesc1;
-              valoresLineal2=lineSinDesc2;
-              break;
             case 'G2':
               valoresLineal1=line20Desc1;
               valoresLineal2=line20Desc2;
@@ -771,8 +784,8 @@
               valoresLineal2=lineZ2Desc2;
               break;
             default:
-              valoresLineal1=lineSinDesc1;
-              valoresLineal2=lineSinDesc2;
+              valoresLineal1=lineSinDescSecure1;
+              valoresLineal2=lineSinDescSecure2;
               break;
           }
 
@@ -785,7 +798,7 @@
                       align: 'center'
                   },
               xAxis: {
-                  categories: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic']
+                  categories: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
               },
               plotOptions: {
                   line: {

@@ -683,7 +683,6 @@
                 li.appendChild(a);
                 hiddenColumns.appendChild(li);
             }
-        console.log("http://172.16.15.20/API.LovablePHP/ZLO0013P/List/?marca=" + marca + "&plan=" + plan + "&estado=" + estado + "&btnor=" + btnOrder + "&inventarios=" + inventarios + "&clasificacion=" + clasificacion + "&orden=" + orden + "&filtro=" + filtro + "&repro=" + repro + "&formato=" + formato + "&searchVal=" + searchBox + "");
         var requestError = false;
         columnsFixed=5;
         for (let i = 0; i < columnDataValues.length; i++) {
