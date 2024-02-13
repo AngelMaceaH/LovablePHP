@@ -276,7 +276,7 @@
                           }
                       },
                       title: {
-                          text: 'Promedio histórico por tipo de inventario <br>'+ cbbAgrup.options[cbbAgrup.selectedIndex].text,
+                          text: 'Promedio histórico por tipo de descuento <br>'+ cbbAgrup.options[cbbAgrup.selectedIndex].text,
                           align: 'center',
                           style: {
                               color: '#FFFFFF',
@@ -465,9 +465,34 @@
           .then(response => response.json())
           .then(data => {
             if (data.code==200) {
+              let coun1ttot=0; let coun1tdes=0; let coun1t20=0; let coun1t30=0; let coun1t40=0; let coun1t50=0; let coun1tz1=0; let coun1tz2=0;
               let total=0; let totdes=0; let tot20=0; let tot30=0; let tot40=0; let tot50=0; let totz1=0; let totz2=0;
               responseDataA1=[...data.data];
               data.data.forEach((item) => {
+                if (item.UNITOT!=0) {
+                  coun1ttot++;
+                }
+                if (item.SIDESC!=0) {
+                  coun1tdes++;
+                }
+                if (item.UNI20!=0) {
+                  coun1t20++;
+                }
+                if (item.UNI30!=0) {
+                  coun1t30++;
+                }
+                if (item.UNI40!=0) {
+                  coun1t40++;
+                }
+                if (item.UNI50!=0) {
+                  coun1t50++;
+                }
+                if (item.UNIZ1!=0) {
+                  coun1tz1++;
+                }
+                if (item.UNIZ2!=0) {
+                  coun1tz2++;
+                }
                 const row = document.createElement('tr');
                 row.innerHTML = `
                   <td class="bg-light border border-dark">${item.MESDES}</td>
@@ -508,25 +533,55 @@
               const count=data.data.length;
               let unitot=0; let unides=0; let uni20=0; let uni30=0; let uni40=0; let uni50=0; let uniz1=0; let uniz2=0;
               let protot=0; let prodes=0; let pro20=0; let pro30=0; let pro40=0; let pro50=0; let proz1=0; let proz2=0;
-              if (count>0) {
-                unitot=total/count;
-                unides=totdes/count;
-                uni20=tot20/count;
-                uni30=tot30/count;
-                uni40=tot40/count;
-                uni50=tot50/count;
-                uniz1=totz1/count;
-                uniz2=totz2/count;
-              }
-              if(total>0){
-                prodes=(totdes/total)*100;
-                pro20=(tot30/total)*100;
-                pro30=(tot30/total)*100;
-                pro40=(tot40/total)*100;
-                pro50=(tot50/total)*100;
-                proz1=(totz1/total)*100;
-                proz2=(totz2/total)*100;
-              }
+                unitot= (coun1ttot!=0) ? total/coun1ttot : 0;
+                unides= (coun1tdes!=0) ? totdes/coun1tdes : 0;
+                uni20= (coun1t20!=0) ? tot20/coun1t20 : 0;
+                uni30= (coun1t30!=0) ? tot30/coun1t30 : 0;
+                uni40= (coun1t40!=0) ? tot40/coun1t40 : 0;
+                uni50= (coun1t50!=0) ? tot50/coun1t50 : 0;
+                uniz1= (coun1tz1!=0) ? totz1/coun1tz1 : 0;
+                uniz2= (coun1tz2!=0) ? totz2/coun1tz2 : 0;
+                let filtDes = lineSinDescSecure1.filter(value => value !== 0);
+                let sumDes = filtDes.reduce((a, b) => a + b, 0);
+
+                if (filtDes.length > 0) {
+                  prodes = sumDes / filtDes.length;
+                }
+                let filt20 = line20Desc1.filter(value => value !== 0);
+                let sum20 = filt20.reduce((a, b) => a + b, 0);
+
+                if (filt20.length > 0) {
+                  pro20 = sum20 / filt20.length;
+                }
+                let filt30 = line30Desc1.filter(value => value !== 0);
+                let sum30 = filt30.reduce((a, b) => a + b, 0);
+
+                if (filt30.length > 0) {
+                  pro30 = sum30 / filt30.length;
+                }
+                let filt40 = line40Desc1.filter(value => value !== 0);
+                let sum40 = filt40.reduce((a, b) => a + b, 0);
+
+                if (filt40.length > 0) {
+                  pro40 = sum40 / filt40.length;
+                }
+                let filt50 = line50Desc1.filter(value => value !== 0);
+                let sum50 = filt50.reduce((a, b) => a + b, 0);
+
+                if (filt50.length > 0) {
+                  pro50 = sum50 / filt50.length;
+                }
+                let filtZ1 = lineZ1Desc1.filter(value => value !== 0);
+                let sumZ1 = filtZ1.reduce((a, b) => a + b, 0);
+
+                if (filtZ1.length > 0) {
+                  proz1 = sumZ1 / filtZ1.length;
+                }
+                let filtZ2 = lineZ2Desc1.filter(value => value !== 0);
+                let sumZ2 = filtZ2.reduce((a, b) => a + b, 0);
+                if (filtZ2.length > 0) {
+                  proz2 = sumZ2 / filtZ2.length;
+                }
               barGra1=[
                 Math.round(prodes * 100) / 100,
                 Math.round(pro20 * 100) / 100,
@@ -550,7 +605,7 @@
                   <td class="bg-secondary border border-dark">${parseFloat(pro40) === 0 ? '‎' : parseFloat(pro40).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})+'%'}</td>
                   <td class="bg-secondary border border-dark">${parseFloat(uni50) === 0 ? '‎' : parseFloat(uni50).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
                   <td class="bg-secondary border border-dark">${parseFloat(pro50) === 0 ? '‎' : parseFloat(pro50).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})+'%'}</td>
-                  <td class="bg-secondary border border-dark">${parseFloat(uniz1) === 0 ? '‎' : parseFloat(uni50).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
+                  <td class="bg-secondary border border-dark">${parseFloat(uniz1) === 0 ? '‎' : parseFloat(uniz1).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
                   <td class="bg-secondary border border-dark">${parseFloat(proz1) === 0 ? '‎' : parseFloat(proz1).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})+'%'}</td>
                   <td class="bg-secondary border border-dark">${parseFloat(uniz2) === 0 ? '‎' : parseFloat(uniz2).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
                   <td class="bg-secondary border border-dark">${parseFloat(proz2) === 0 ? '‎' : parseFloat(proz2).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})+'%'}</td>
@@ -584,10 +639,35 @@
           fetch(urlList)
           .then(response => response.json())
           .then(data => {
+           let coun2ttot=0; let coun2tdes=0; let coun2t20=0; let coun2t30=0; let coun2t40=0; let coun2t50=0; let coun2tz1=0; let coun2tz2=0;
             if (data.code==200) {
               let total=0; let totdes=0; let tot20=0; let tot30=0; let tot40=0; let tot50=0; let totz1=0; let totz2=0;
               responseDataA2=[...data.data];
               responseDataA2.forEach((item) => {
+                if (item.UNITOT!=0) {
+                  coun2ttot++;
+                }
+                if (item.SIDESC!=0) {
+                  coun2tdes++;
+                }
+                if (item.UNI20!=0) {
+                  coun2t20++;
+                }
+                if (item.UNI30!=0) {
+                  coun2t30++;
+                }
+                if (item.UNI40!=0) {
+                  coun2t40++;
+                }
+                if (item.UNI50!=0) {
+                  coun2t50++;
+                }
+                if (item.UNIZ1!=0) {
+                  coun2tz1++;
+                }
+                if (item.UNIZ2!=0) {
+                  coun2tz2++;
+                }
                 const row = document.createElement('tr');
                 row.innerHTML = `
                   <td class="bg-light border border-dark">${item.MESDES}</td>
@@ -626,28 +706,66 @@
                 lineZ1Desc2.push( Math.round(parseFloat(item.PORZ1) * 100) / 100);
                 lineZ2Desc2.push( Math.round(parseFloat(item.PORZ2) * 100) / 100);
               });
-              const count=data.data.length;
               let unitot=0; let unides=0; let uni20=0; let uni30=0; let uni40=0; let uni50=0; let uniz1=0; let uniz2=0;
               let protot=0; let prodes=0; let pro20=0; let pro30=0; let pro40=0; let pro50=0; let proz1=0; let proz2=0;
-              if (count>0) {
-                unitot=total/count;
-                unides=totdes/count;
-                uni20=tot20/count;
-                uni30=tot30/count;
-                uni40=tot40/count;
-                uni50=tot50/count;
-                uniz1=totz1/count;
-                uniz2=totz2/count;
-              }
-              if(total>0){
-                prodes=(totdes/total)*100;
-                pro20=(tot30/total)*100;
-                pro30=(tot30/total)*100;
-                pro40=(tot40/total)*100;
-                pro50=(tot50/total)*100;
-                proz1=(totz1/total)*100;
-                proz2=(totz2/total)*100;
-              }
+                unitot= (coun2ttot!=0) ? total/coun2ttot : 0;
+                unides= (coun2tdes!=0) ? totdes/coun2tdes : 0;
+                uni20= (coun2t20!=0) ? tot20/coun2t20 : 0;
+                uni30= (coun2t30!=0) ? tot30/coun2t30 : 0;
+                uni40= (coun2t40!=0) ? tot40/coun2t40 : 0;
+                uni50= (coun2t50!=0) ? tot50/coun2t50 : 0;
+                uniz1= (coun2tz1!=0) ? totz1/coun2tz1 : 0;
+                uniz2= (coun2tz2!=0) ? totz2/coun2tz2 : 0;
+                let filtDes = lineSinDescSecure2.filter(value => value !== 0);
+                let sumDes = filtDes.reduce((a, b) => a + b, 0);
+
+                if (filtDes.length > 0) {
+                  prodes = sumDes / filtDes.length;
+                }
+                let filt20 = line20Desc2.filter(value => value !== 0);
+                let sum20 = filt20.reduce((a, b) => a + b, 0);
+
+                if (filt20.length > 0) {
+                  pro20 = sum20 / filt20.length;
+                }
+                let filt30 = line30Desc2.filter(value => value !== 0);
+                let sum30 = filt30.reduce((a, b) => a + b, 0);
+
+                if (filt30.length > 0) {
+                  pro30 = sum30 / filt30.length;
+                }
+                let filt40 = line40Desc2.filter(value => value !== 0);
+                let sum40 = filt40.reduce((a, b) => a + b, 0);
+
+                if (filt40.length > 0) {
+                  pro40 = sum40 / filt40.length;
+                }
+                let filt50 = line50Desc2.filter(value => value !== 0);
+                let sum50 = filt50.reduce((a, b) => a + b, 0);
+
+                if (filt50.length > 0) {
+                  pro50 = sum50 / filt50.length;
+                }
+                let filtZ1 = lineZ1Desc2.filter(value => value !== 0);
+                let sumZ1 = filtZ1.reduce((a, b) => a + b, 0);
+
+                if (filtZ1.length > 0) {
+                  proz1 = sumZ1 / filtZ1.length;
+                }
+                let filtZ2 = lineZ2Desc2.filter(value => value !== 0);
+                let sumZ2 = filtZ2.reduce((a, b) => a + b, 0);
+                if (filtZ2.length > 0) {
+                  proz2 = sumZ2 / filtZ2.length;
+                }
+              /*  if(total>0){
+                  prodes=(totdes/total)*100;
+                  pro20=(tot20/total)*100;
+                  pro30=(tot30/total)*100;
+                  pro40=(tot40/total)*100;
+                  pro50=(tot50/total)*100;
+                  proz1=(totz1/total)*100;
+                  proz2=(totz2/total)*100;
+                }*/
               barGra2=[
                 Math.round(prodes * 100) / 100,
                 Math.round(pro20 * 100) / 100,
@@ -671,7 +789,7 @@
                   <td class="bg-secondary border border-dark">${parseFloat(pro40) === 0 ? '‎' : parseFloat(pro40).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})+'%'}</td>
                   <td class="bg-secondary border border-dark">${parseFloat(uni50) === 0 ? '‎' : parseFloat(uni50).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
                   <td class="bg-secondary border border-dark">${parseFloat(pro50) === 0 ? '‎' : parseFloat(pro50).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})+'%'}</td>
-                  <td class="bg-secondary border border-dark">${parseFloat(uniz1) === 0 ? '‎' : parseFloat(uni50).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
+                  <td class="bg-secondary border border-dark">${parseFloat(uniz1) === 0 ? '‎' : parseFloat(uniz1).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
                   <td class="bg-secondary border border-dark">${parseFloat(proz1) === 0 ? '‎' : parseFloat(proz1).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})+'%'}</td>
                   <td class="bg-secondary border border-dark">${parseFloat(uniz2) === 0 ? '‎' : parseFloat(uniz2).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
                   <td class="bg-secondary border border-dark">${parseFloat(proz2) === 0 ? '‎' : parseFloat(proz2).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})+'%'}</td>
@@ -707,7 +825,7 @@
                   type: 'column'
               },
               title: {
-                  text: 'Promedio histórico por tipo de inventario <br>'+ cbbAgrup.options[cbbAgrup.selectedIndex].text,
+                  text: 'Promedio histórico por tipo de descuento <br>'+ cbbAgrup.options[cbbAgrup.selectedIndex].text,
                   align: 'center'
               },
               xAxis: {

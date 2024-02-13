@@ -7,7 +7,7 @@
 <body>
   <?php
       include '../layout-prg.php';
-      include '../../assets/php/ZPT/ZLO0009P/header.php';
+      include '../../assets/php/ZPT/ZLO0024P/header.php';
   ?>
      <div class="container-fluid">
           <nav aria-label="breadcrumb">
@@ -15,15 +15,16 @@
               <li class="breadcrumb-item">
               <span>Producto Terminado / Clasificación de producto</span>
               </li>
-              <li class="breadcrumb-item active"><span>ZLO0009P</span></li>
+              <li class="breadcrumb-item active"><span>ZLO0025P</span></li>
             </ol>
           </nav>
         </div>
       </header>
       <div id="body-div" class="body flex-grow-1">
         <div class="card mb-5">
+          <div class="card mb-5">
             <div class="card-header">
-              <h1 class="fs-4 mb-1 mt-2 text-center">Análisis de inventario por clasificación de productos por país</h1>
+              <h1 class="fs-4 mb-1 mt-2 text-center">Análisis de ventas por clasificación de productos por fábrica</h1>
             </div>
           <div class="card-body">
           <div class="card border border-0">
@@ -37,15 +38,9 @@
 
                                       </div>
                                       <div class="col-3">
-                                        <label>Agrupación por país:</label>
-                                        <select class="form-select mt-1 fw-bold" id="cbbAgrup" >
-                                          <option  value="11">Tiendas Honduras (Lov. Ecommerce)</option>
-                                          <option  value="9">Tiendas Honduras (Mod. Íntima)</option>
-                                          <option  value="10">Tiendas Guatemala</option>
-                                          <option  value="12">Tiendas El Salvador</option>
-                                          <option  value="13">Tiendas Costa Rica</option>
-                                          <option  value="16">Tiendas Nicaragua</option>
-                                          <option  value="15">Tiendas Republica Dominicana</option>
+                                        <label>Fábrica:</label>
+                                        <select class="form-control mt-1 fw-bold" id="cbbAgrup" >
+                                          <option  value="1">Lovable de Honduras</option>
                                         </select>
                                       </div>
                                       <div class="col-3">
@@ -84,13 +79,13 @@
                                 <tr>
                                   <th colspan="2" class=" border border-dark bg-secondary  border-bottom-0"></th>
                                   <th colspan="14" class=" border border-dark bg-secondary align-middle">
-                                   <span id="lblano1" class="fs-5"></span>
+                                  <span id="lblano1" class="fs-5"></span>
                                   </th>
                                 </tr>
                                 <tr>
                                   <th colspan="2" class=" border border-dark bg-secondary border-bottom-0 border-top-0 boder-end-0 "></th>
-                                  <th colspan="2" class=" border border-dark bg-secondary align-middle">Inventario Precio Regular</th>
-                                  <th colspan="8"class=" border border-dark bg-secondary align-middle">Inventario Con Descuento</th>
+                                  <th colspan="2" class=" border border-dark bg-secondary align-middle">Ventas Precio Regular</th>
+                                  <th colspan="8"class=" border border-dark bg-secondary align-middle">Ventas Con Descuento</th>
                                   <th colspan="4" class=" border border-dark bg-secondary align-middle">Segundas</th>
                                 </tr>
                                 <tr>
@@ -137,8 +132,8 @@
                                 </tr>
                                 <tr>
                                   <th colspan="2" class=" border border-dark bg-secondary border-bottom-0 border-top-0 boder-end-0"></th>
-                                  <th colspan="2" class=" border border-dark bg-secondary align-middle">Inventario Precio Regular</th>
-                                  <th colspan="8"class=" border border-dark bg-secondary align-middle">Inventario Con Descuento</th>
+                                  <th colspan="2" class=" border border-dark bg-secondary align-middle">Ventas Precio Regular</th>
+                                  <th colspan="8"class=" border border-dark bg-secondary align-middle">Ventas Con Descuento</th>
                                   <th colspan="4" class=" border border-dark bg-secondary align-middle">Segundas</th>
                                 </tr>
                                 <tr>
@@ -181,13 +176,13 @@
                             <div class="col-12">
                               <label class="form-control border border-0 fw-bold">Visualizar gráfica:</label>
                               <select id="selectGrafica" class="form-select fw-bold">
-                                <option value="G1">Promedio histórico de inventario Sin descuento</option>
-                                <option value="G2">Promedio histórico de inventario Con 20% descuento</option>
-                                <option value="G3">Promedio histórico de inventario Con 30% descuento</option>
-                                <option value="G4">Promedio histórico de inventario Con 40% descuento</option>
-                                <option value="G5">Promedio histórico de inventario Con 50% descuento</option>
-                                <option value="G6">Promedio histórico de inventario Segundas Nivel 1</option>
-                                <option value="G7">Promedio histórico de inventario Segundas Nivel 2</option>
+                                <option value="G1">Promedio histórico de ventas Sin descuento</option>
+                                <option value="G2">Promedio histórico de ventas Con 20% descuento</option>
+                                <option value="G3">Promedio histórico de ventas Con 30% descuento</option>
+                                <option value="G4">Promedio histórico de ventas Con 40% descuento</option>
+                                <option value="G5">Promedio histórico de ventas Con 50% descuento</option>
+                                <option value="G6">Promedio histórico de ventas Segundas Nivel 1</option>
+                                <option value="G7">Promedio histórico de ventas Segundas Nivel 2</option>
                               </select>
                             </div>
                           <div class="col-12">
@@ -364,11 +359,13 @@
                   series: [
                       {
                           name: 'Ano '+valAno,
-                          data: barGra1
+                          data: barGra1,
+                          color: '#20c997'
                       },
                       {
                           name: 'Ano '+valAno2,
-                          data: barGra2
+                          data: barGra2,
+                          color: '#ffd700'
                       }
                   ]
           });
@@ -447,10 +444,12 @@
                   },
               series: [{
                   name: 'Ano '+valAno,
-                  data: lineSinDesc1
+                  data: lineSinDesc1,
+                  color: '#20c997'
               }, {
                   name: 'Ano '+valAno2,
-                  data: lineSinDesc2
+                  data: lineSinDesc2,
+                  color: '#ffd700'
               }]
           });
           lineSinDescSecure1=[...lineSinDesc1];
@@ -461,7 +460,7 @@
         function chargeTable(valAno,valAgrup) {
           //AÑO 1
           lineSinDesc1=[]; line20Desc1=[]; line30Desc1=[]; line40Desc1=[]; line50Desc1=[]; lineZ1Desc1=[]; lineZ2Desc1=[];
-          var urlList="http://172.16.15.20/API.LovablePHP/ZLO0009P/List2/?anopro="+valAno+"&agrup="+valAgrup;
+          var urlList="http://172.16.15.20/API.LovablePHP/ZLO0025P/List/?anopro="+valAno+"&agrup="+valAgrup;
           let lblAno1=document.getElementById('lblano1');
           lblAno1.innerHTML='Año '+valAno;
           const tbDetalle = document.getElementById('tableInventarioDetalle');
@@ -636,7 +635,7 @@
         function chargeTable2(valAno,valAgrup) {
           //AÑO 2
           lineSinDesc2=[]; line20Desc2=[]; line30Desc2=[]; line40Desc2=[]; line50Desc2=[]; lineZ1Desc2=[]; lineZ2Desc2=[];
-          var urlList="http://172.16.15.20/API.LovablePHP/ZLO0009P/List2/?anopro="+valAno+"&agrup="+valAgrup;
+          var urlList="http://172.16.15.20/API.LovablePHP/ZLO0025P/List/?anopro="+valAno+"&agrup="+valAgrup;
           let lblAno2=document.getElementById('lblano2');
           lblAno2.innerHTML='Año '+valAno;
           const tbDetalle = document.getElementById('tableInventarioDetalle2');
@@ -908,7 +907,7 @@
                       align: 'center'
                   },
               xAxis: {
-                categories: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                  categories: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
               },
               plotOptions: {
                   line: {

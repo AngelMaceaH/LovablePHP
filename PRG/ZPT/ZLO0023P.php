@@ -289,7 +289,7 @@
                           }
                       },
                       title: {
-                          text: 'Promedio histórico por tipo de inventario <br>'+ cbbAgrup.options[cbbAgrup.selectedIndex].text,
+                          text: 'Promedio histórico por tipo de descuento <br>'+ cbbAgrup.options[cbbAgrup.selectedIndex].text,
                           align: 'center',
                           style: {
                               color: '#FFFFFF',
@@ -563,7 +563,7 @@
                   <td class="bg-secondary border border-dark">${parseFloat(pro40) === 0 ? '‎' : parseFloat(pro40).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})+'%'}</td>
                   <td class="bg-secondary border border-dark">${parseFloat(uni50) === 0 ? '‎' : parseFloat(uni50).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
                   <td class="bg-secondary border border-dark">${parseFloat(pro50) === 0 ? '‎' : parseFloat(pro50).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})+'%'}</td>
-                  <td class="bg-secondary border border-dark">${parseFloat(uniz1) === 0 ? '‎' : parseFloat(uni50).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
+                  <td class="bg-secondary border border-dark">${parseFloat(uniz1) === 0 ? '‎' : parseFloat(uniz1).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
                   <td class="bg-secondary border border-dark">${parseFloat(proz1) === 0 ? '‎' : parseFloat(proz1).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})+'%'}</td>
                   <td class="bg-secondary border border-dark">${parseFloat(uniz2) === 0 ? '‎' : parseFloat(uniz2).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
                   <td class="bg-secondary border border-dark">${parseFloat(proz2) === 0 ? '‎' : parseFloat(proz2).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})+'%'}</td>
@@ -684,7 +684,7 @@
                   <td class="bg-secondary border border-dark">${parseFloat(pro40) === 0 ? '‎' : parseFloat(pro40).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})+'%'}</td>
                   <td class="bg-secondary border border-dark">${parseFloat(uni50) === 0 ? '‎' : parseFloat(uni50).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
                   <td class="bg-secondary border border-dark">${parseFloat(pro50) === 0 ? '‎' : parseFloat(pro50).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})+'%'}</td>
-                  <td class="bg-secondary border border-dark">${parseFloat(uniz1) === 0 ? '‎' : parseFloat(uni50).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
+                  <td class="bg-secondary border border-dark">${parseFloat(uniz1) === 0 ? '‎' : parseFloat(uniz1).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
                   <td class="bg-secondary border border-dark">${parseFloat(proz1) === 0 ? '‎' : parseFloat(proz1).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})+'%'}</td>
                   <td class="bg-secondary border border-dark">${parseFloat(uniz2) === 0 ? '‎' : parseFloat(uniz2).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
                   <td class="bg-secondary border border-dark">${parseFloat(proz2) === 0 ? '‎' : parseFloat(proz2).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})+'%'}</td>
@@ -720,7 +720,7 @@
                   type: 'column'
               },
               title: {
-                  text: 'Promedio histórico por tipo de inventario <br>'+ cbbAgrup.options[cbbAgrup.selectedIndex].text,
+                  text: 'Promedio histórico por tipo de descuento <br>'+ cbbAgrup.options[cbbAgrup.selectedIndex].text,
                   align: 'center'
               },
               xAxis: {
