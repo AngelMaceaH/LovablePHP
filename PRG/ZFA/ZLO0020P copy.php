@@ -10,7 +10,7 @@
     <?php
       include '../layout-prg.php';
       include '../../assets/php/ZFA/ZLO0020P/header.php';
-    ?>
+?>
     <div class="container-fluid">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb my-0 ms-2">
@@ -63,24 +63,6 @@
                                 <option value="2">Solo tiendas</option>
                             </select>
                         </div>
-                        <div class="form-check form-switch ms-2 mb-3 d-flex">
-                                <div>
-                                    <label class="form-control border border-0">Mostrar año:</label>
-                                </div>
-                                <div>
-                                <select id="setYearTab" class="form-select fw-bold">
-                                </select>
-                                </div>
-                                </div>
-                                <div class="form-check form-switch ms-2 mb-3 d-flex">
-                                <div>
-                                    <label class="form-control border border-0">Mostrar mes:</label>
-                                </div>
-                                <div>
-                                    <select id="setMesTab" class="form-select fw-bold">
-                                </select>
-                                </div>
-                            </div>
                     </div>
 
                     <ul class="tablist" role="tablist">
@@ -137,18 +119,29 @@
     var ano2 = 0;
     var mes1 = 0;
     var mes2 = 0;
-    //Tab variables
-    var ano1Tab = 0;
-    var ano2Tab = 0;
-    var mes1Tab = 0;
-    var mes2Tab = 0;
-
+    //Tab1 variables
+    var ano1Tab1 = 0;
+    var ano2Tab1 = 0;
+    var mes1Tab1 = 0;
+    var mes2Tab1 = 0;
+    //Tab2 variables
+    var ano1Tab2 = 0;
+    var ano2Tab2 = 0;
+    var mes1Tab2 = 0;
+    var mes2Tab2 = 0;
+    //TAB3
+    var ano1Tab3 = 0;
+    var ano2Tab3 = 0;
+    //TAB4
+    var ano1Tab4 = 0;
+    var ano2Tab4 = 0;
+    var mes1Tab4 = 0;
     var usuario = '<?php echo $_SESSION["CODUSU"];?>';
     document.addEventListener("DOMContentLoaded", (event) => {
         var currentDate = new Date();
         ano1 = currentDate.getFullYear();
         mes1 = currentDate.getMonth() + 1;
-        ano2 = ano1 - 1;
+        ano2 = ano1;
         mes2 = mes1 - 1;
         if (mes2 == 0) {
             mes2 = 12;
@@ -162,36 +155,37 @@
         } else {
             ckDolar.checked = false;
         }
+
         //TAB1
-        if (getCookie("yearTab") != null) {
-            ano1Tab = getCookie("yearTab");
-            ano2Tab = getCookie("yearTab") - 1;
-        } else {
-            ano1Tab = ano1;
-            ano2Tab = ano2;
-        }
-        if (getCookie("mesTab") != null) {
-            mes1Tab = getCookie("mesTab");
-            mes2Tab = getCookie("mesTab") - 1;
-            if (mes2Tab == 0) {
-                mes2Tab = 12;
-                ano2Tab = ano2 - 1;
-            }
-        }else{
-            mes1Tab = mes1;
-            mes2Tab = mes2;
-        }
+        ano1Tab1 = (getCookie("ano1Tab1") != null) ? getCookie("ano1Tab1") : ano1;
+        ano2Tab1 = (getCookie("ano2Tab1") != null) ? getCookie("ano2Tab1") : ano2;
+        mes1Tab1 = (getCookie("mes1Tab1") != null) ? getCookie("mes1Tab1") : mes1;
+        mes2Tab1 = (getCookie("mes2Tab1") != null) ? getCookie("mes2Tab1") : mes2;
+        //document.getElementById("tab1").innerHTML = getCurrentMonth(mes1Tab1) + ' ' + ano1Tab1 + ' vs ' + getCurrentMonth(mes2Tab1) + ' ' + ano2Tab1;
         document.getElementById("tab1").innerHTML = 'MES VS MES ANTERIOR';
-        chargeTab1(ano1Tab, ano2Tab, mes1Tab, mes2Tab);
+        chargeTab1(ano1Tab1, ano2Tab1, mes1Tab1, mes2Tab1);
         //TAB2
+        ano1Tab2 = (getCookie("ano1Tab2") != null) ? getCookie("ano1Tab2") : ano1;
+        ano2Tab2 = (getCookie("ano2Tab2") != null) ? getCookie("ano2Tab2") : ano2;
+        mes1Tab2 = (getCookie("mes1Tab2") != null) ? getCookie("mes1Tab2") : mes1;
+        mes2Tab2 = (getCookie("mes2Tab2") != null) ? getCookie("mes2Tab2") : mes1;
+        //document.getElementById("tab2").innerHTML = getCurrentMonth(mes1Tab2) + ' ' + ano1Tab2 + ' vs ' +getCurrentMonth(mes2Tab2) + ' ' + ano2Tab2;
         document.getElementById("tab2").innerHTML = 'MES VS MISMO MES DEL AÑO ANTERIOR';
-        chargeTab2(ano1Tab, ano2Tab, mes1Tab, mes1Tab);
+        chargeTab2(ano1Tab2, ano2Tab2, mes1Tab2, mes2Tab2);
         //TAB3
+        var ano1Tab3 = (getCookie("ano1Tab3") != null) ? getCookie("ano1Tab3") : ano1;
+        var ano2Tab3 = (getCookie("ano2Tab3") != null) ? getCookie("ano2Tab3") : ano2;
+        //document.getElementById("tab3").innerHTML = 'Año ' + ano1Tab3 + ' vs '+ ' Año ' + ano2Tab3;
         document.getElementById("tab3").innerHTML = 'ANUAL TODO EL AÑO';
-        chargeTab3(ano1Tab, ano2Tab);
+        chargeTab3(ano1Tab3, ano2Tab3);
         //TAB4
+        var ano1Tab4 = (getCookie("ano1Tab4") != null) ? getCookie("ano1Tab4") : ano1;
+        var ano2Tab4 = (getCookie("ano2Tab4") != null) ? getCookie("ano2Tab4") : ano2;
+        var mes1Tab4 = (getCookie("mes1Tab4") != null) ? getCookie("mes1Tab4") : mes1;
+        //document.getElementById("tab4").innerHTML = 'Año ' + ano1Tab4 + ' vs '+ ' Año ' + ano2Tab4;
         document.getElementById("tab4").innerHTML = 'ANUAL HASTA EL MES';
-        chargeTab4(ano1Tab, ano2Tab, mes1Tab);
+        chargeTab4(ano1Tab4, ano2Tab4, mes1Tab4);
+
 
         ckDolar.addEventListener('change', (event) => {
             if (ckDolar.checked) {
@@ -203,16 +197,16 @@
             }
             loaderTable.classList.remove('d-none');
             setTimeout(() => {
-                chargeTab1(ano1Tab, ano2Tab, mes1Tab, mes2Tab);
+                chargeTab1(ano1Tab1, ano2Tab1, mes1Tab1, mes2Tab1);
             }, 1000);
             setTimeout(() => {
-                chargeTab2(ano1Tab, ano2Tab, mes1Tab, mes2Tab);
+                chargeTab2(ano1Tab2, ano2Tab2, mes1Tab2, mes2Tab2);
             }, 1000);
             setTimeout(() => {
-                chargeTab3(ano1Tab, ano2Tab);
+                chargeTab3(ano1Tab3, ano2Tab3);
             }, 1000);
             setTimeout(() => {
-                chargeTab4(ano1Tab, ano2Tab, mes1Tab);
+                chargeTab4(ano1Tab4, ano2Tab4, mes1Tab4);
             }, 1000);
             setTimeout(() => {
                 loaderTable.classList.add('d-none');
@@ -221,16 +215,16 @@
         filterBy.addEventListener('change', (event) => {
             loaderTable.classList.remove('d-none');
             setTimeout(() => {
-                chargeTab1(ano1Tab, ano2Tab, mes1Tab, mes2Tab);
+                chargeTab1(ano1Tab1, ano2Tab1, mes1Tab1, mes2Tab1);
             }, 1000);
             setTimeout(() => {
-                chargeTab2(ano1Tab, ano2Tab, mes1Tab, mes2Tab);
+                chargeTab2(ano1Tab2, ano2Tab2, mes1Tab2, mes2Tab2);
             }, 1000);
             setTimeout(() => {
-                chargeTab3(ano1Tab, ano2Tab);
+                chargeTab3(ano1Tab3, ano2Tab3);
             }, 1000);
             setTimeout(() => {
-                chargeTab4(ano1Tab, ano2Tab, mes1Tab);
+                chargeTab4(ano1Tab4, ano2Tab4, mes1Tab4);
             }, 1000);
             setTimeout(() => {
                 loaderTable.classList.add('d-none');
@@ -240,73 +234,24 @@
         showBy.addEventListener('change', (event) => {
             loaderTable.classList.remove('d-none');
             setTimeout(() => {
-                chargeTab1(ano1Tab, ano2Tab, mes1Tab, mes2Tab);
+                chargeTab1(ano1Tab1, ano2Tab1, mes1Tab1, mes2Tab1);
             }, 1000);
             setTimeout(() => {
-                chargeTab2(ano1Tab, ano2Tab, mes1Tab, mes2Tab);
+                chargeTab2(ano1Tab2, ano2Tab2, mes1Tab2, mes2Tab2);
             }, 1000);
             setTimeout(() => {
-                chargeTab3(ano1Tab, ano2Tab);
+                chargeTab3(ano1Tab3, ano2Tab3);
             }, 1000);
             setTimeout(() => {
-                chargeTab4(ano1Tab, ano2Tab, mes1Tab);
+                chargeTab4(ano1Tab4, ano2Tab4, mes1Tab4);
             }, 1000);
             setTimeout(() => {
                 loaderTable.classList.add('d-none');
             }, 1000);
 
         });
-        $('#setYearTab').on('change', function() {
-            $("#loaderTable").removeClass('d-none');
-            setCookie('yearTab', this.value, 1);
-            ano1Tab = this.value;
-            ano2Tab = this.value;
-            mes1Tab = $("#setMesTab").val();
-            mes2Tab = $("#setMesTab").val() - 1;
-            if (mes2Tab == 0) {
-                mes2Tab = 12;
-                ano2Tab = ano1Tab - 1;
-            }
-            mes1Tab = (mes1Tab).toString().padStart(2, '0');
-            mes2Tab = (mes2Tab).toString().padStart(2, '0');
-            chargeTab1(ano1Tab, ano2Tab, mes1Tab, mes2Tab);
-            setTimeout(() => {
-                ano2Tab = ano1Tab - 1;
-                chargeTab2(ano1Tab, ano2Tab, mes1Tab, mes1Tab);
-            }, 500);
-            setTimeout(() => {
-                chargeTab3(ano1Tab, ano2Tab);
-            }, 500);
-            setTimeout(() => {
-                chargeTab4(ano1Tab, ano2Tab, mes1Tab);
-            }, 500);
-            $("#loaderTable").addClass('d-none');
-        });
-        $('#setMesTab').on('change', function() {
-            $("#loaderTable").removeClass('d-none');
-            setCookie('mesTab', this.value, 1);
-            mes1Tab = this.value
-            mes2Tab = this.value - 1
-            ano1Tab = $("#setYearTab").val();
-            ano2Tab = $("#setYearTab").val();
-            if (mes2Tab == 0) {
-                mes2Tab = 12;
-                ano2Tab = ano1Tab - 1;
-            }
-            mes1Tab = (mes1Tab).toString().padStart(2, '0');
-            mes2Tab = (mes2Tab).toString().padStart(2, '0');
-            chargeTab1(ano1Tab, ano2Tab, mes1Tab, mes2Tab);
-            setTimeout(() => {
-                chargeTab2(ano1Tab, ano2Tab, mes1Tab, mes1Tab);
-            }, 1000);
-            setTimeout(() => {
-                chargeTab3(ano1Tab, ano2Tab);
-            }, 1000);
-            setTimeout(() => {
-                chargeTab4(ano1Tab, ano2Tab, mes1Tab);
-            }, 1000);
-            $("#loaderTable").addClass('d-none');
-        });
+
+
     });
 
     function chargeTab1(ano1, ano2, mes1, mes2) {
@@ -352,6 +297,35 @@
         document.getElementById("panel1").innerHTML = '';
         document.getElementById("panel1").innerHTML =
             `  <div class="row">
+            <div class="col-12" >
+                                        <div class="card border border-0">
+                                            <div class="card-body p-0 m-0">
+                                                <div class="row ms-2 mt-2 mb-2">
+                                                    <div class="col-2 d-flex">
+                                                        <div>
+                                                            <label class="form-control border border-0">Mostrar año:</label>
+                                                        </div>
+                                                        <div>
+                                                            <select id="setYearTab1" class="form-select fw-bold">
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-3 d-flex">
+                                                        <div>
+                                                            <label class="form-control border border-0">Mostrar mes:</label>
+                                                        </div>
+                                                        <div>
+                                                            <select id="setMesTab1" class="form-select fw-bold">
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <hr>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="col-12" id="graficaTab1">
                                         <figure class="highcharts-figure ">
                                             <div id="ctx1" >
@@ -384,26 +358,38 @@
                                                         </div>
                                     </div>
                             </div> `;
-        var currentDate = new Date();
-        var yearSelected = getCookie('yearTab') ||  currentDate.getFullYear();
-        var select = document.getElementById('setYearTab');
+        var yearSelected = getCookie('yearTab1') || 2024;
+        var select = document.getElementById('setYearTab1');
         var currentYear = new Date().getFullYear();
-        select.innerHTML = '';
         for (var year = 2021; year <= currentYear; year++) {
             var option = document.createElement('option');
             option.value = year;
             option.textContent = year;
             select.appendChild(option);
         }
-
         select.value = yearSelected;
-        var monthSelected = getCookie('mesTab') ||  currentDate.getMonth() + 1;
-        var select = document.getElementById('setMesTab');
+        $('#setYearTab1').on('change', function() {
+            $("#loaderTable").removeClass('d-none');
+            setCookie('yearTab1', this.value, 1);
+            ano1Tab1 = this.value;
+            ano2Tab1 = this.value;
+            mes1Tab1 = $("#setMesTab1").val();
+            mes2Tab1 = $("#setMesTab1").val() - 1;
+            if (mes2Tab1 == 0) {
+                mes2Tab1 = 12;
+                ano2Tab1 = ano2 - 1;
+            }
+            mes1Tab1 = (mes1Tab1).toString().padStart(2, '0');
+            mes2Tab1 = (mes2Tab1).toString().padStart(2, '0');
+            chargeTab1(ano1Tab1, ano2Tab1, mes1Tab1, mes2Tab1);
+            $("#loaderTable").addClass('d-none');
+        });
+        var monthSelected = getCookie('mesTab1') || 1;
+        var select = document.getElementById('setMesTab1');
         var currentMonth = new Date().getMonth();
         var meses = ['ENERO', 'FEBRERO', 'MARZO', 'ABRIL', 'MAYO', 'JUNIO', 'JULIO', 'AGOSTO', 'SEPTIEMBRE', 'OCTUBRE',
             'NOVIEMBRE', 'DICIEMBRE'
         ];
-        select.innerHTML = '';
         for (var i = 0; i < meses.length; i++) {
             var option = document.createElement('option');
             option.value = i + 1;
@@ -411,7 +397,22 @@
             select.appendChild(option);
         }
         select.value = monthSelected;
-
+        $('#setMesTab1').on('change', function() {
+            $("#loaderTable").removeClass('d-none');
+            setCookie('mesTab1', this.value, 1);
+            mes1Tab1 = this.value
+            mes2Tab1 = this.value - 1
+            ano1Tab1 = $("#setYearTab1").val();
+            ano2Tab1 = $("#setYearTab1").val();
+            if (mes2Tab1 == 0) {
+                mes2Tab1 = 12;
+                ano2Tab1 = ano2 - 1;
+            }
+            mes1Tab1 = (mes1Tab1).toString().padStart(2, '0');
+            mes2Tab1 = (mes2Tab1).toString().padStart(2, '0');
+            chargeTab1(ano1Tab1, ano2Tab1, mes1Tab1, mes2Tab1);
+            $("#loaderTable").addClass('d-none');
+        });
         var isLabel = true;
         var pixelWidth = window.innerWidth;
         if (pixelWidth <= 600) {
@@ -881,6 +882,7 @@
          }*/
 
     }
+
     function chargeTab2(ano1, ano2, mes1, mes2) {
         mes1 = mes1.toString().padStart(2, '0');
         var filterBy = document.getElementById("filterBy");
@@ -931,6 +933,33 @@
         document.getElementById("panel2").innerHTML = '';
         document.getElementById("panel2").innerHTML =
             `  <div class="row">
+                                    <div class="card border border-0">
+                                            <div class="card-body p-0 m-0">
+                                                <div class="row ms-2 mt-2 mb-2">
+                                                    <div class="col-2 d-flex">
+                                                        <div>
+                                                            <label class="form-control border border-0">Mostrar año:</label>
+                                                        </div>
+                                                        <div>
+                                                            <select id="setYearTab2" class="form-select fw-bold">
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-3 d-flex">
+                                                        <div>
+                                                            <label class="form-control border border-0">Mostrar mes:</label>
+                                                        </div>
+                                                        <div>
+                                                            <select id="setMesTab2" class="form-select fw-bold">
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <hr>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                    </div>
                                     <div class="col-12" id="graficaTab2">
                                         <figure class="highcharts-figure ">
                                             <div id="ctx2" >
@@ -963,20 +992,63 @@
                                     </div>
                             </div> `;
 
-                            var currentDate = new Date();
-        var yearSelected = getCookie('yearTab') || currentDate.getFullYear();
-        var select = document.getElementById('setYearTab');
+
+        var yearSelected = getCookie('yearTab2') || 2024;
+        var select = document.getElementById('setYearTab2');
         var currentYear = new Date().getFullYear();
+        for (var year = 2021; year <= currentYear; year++) {
+            var option = document.createElement('option');
+            option.value = year;
+            option.textContent = year;
+            select.appendChild(option);
+        }
         select.value = yearSelected;
+        $('#setYearTab2').on('change', function() {
+            $("#loaderTable").removeClass('d-none');
+            setCookie('yearTab2', this.value, 1);
+            ano1Tab2 = this.value;
+            ano2Tab2 = this.value;
+            mes1Tab2 = $("#setMesTab2").val();
+            mes2Tab2 = $("#setMesTab2").val() - 1;
+            if (mes2Tab2 == 0) {
+                mes2Tab2 = 12;
+                ano2Tab2 = ano2 - 1;
+            }
+            mes1Tab2 = (mes1Tab2).toString().padStart(2, '0');
+            mes2Tab2 = (mes2Tab2).toString().padStart(2, '0');
+            chargeTab2(ano1Tab2, ano2Tab2, mes1Tab2, mes2Tab2);
+            $("#loaderTable").addClass('d-none');
+        });
 
-
-        var monthSelected = getCookie('mesTab') ||  currentDate.getMonth() + 1;
-        var select = document.getElementById('setMesTab');
+        var monthSelected = getCookie('mesTab2') || 1;
+        var select = document.getElementById('setMesTab2');
         var currentMonth = new Date().getMonth();
         var meses = ['ENERO', 'FEBRERO', 'MARZO', 'ABRIL', 'MAYO', 'JUNIO', 'JULIO', 'AGOSTO', 'SEPTIEMBRE', 'OCTUBRE',
             'NOVIEMBRE', 'DICIEMBRE'
         ];
+        for (var i = 0; i < meses.length; i++) {
+            var option = document.createElement('option');
+            option.value = i + 1;
+            option.textContent = meses[i];
+            select.appendChild(option);
+        }
         select.value = monthSelected;
+        $('#setMesTab2').on('change', function() {
+            $("#loaderTable").removeClass('d-none');
+            setCookie('mesTab2', this.value, 1);
+            mes1Tab2 = this.value
+            mes2Tab2 = this.value - 1
+            ano1Tab2 = $("#setYearTab2").val();
+            ano2Tab2 = $("#setYearTab2").val();
+            if (mes2Tab2 == 0) {
+                mes2Tab2 = 12;
+                ano2Tab2 = ano2 - 1;
+            }
+            mes1Tab2 = (mes1Tab2).toString().padStart(2, '0');
+            mes2Tab2 = (mes2Tab2).toString().padStart(2, '0');
+            chargeTab2(ano1Tab2, ano2Tab2, mes1Tab2, mes2Tab2);
+            $("#loaderTable").addClass('d-none');
+        });
         var isLabel = true;
         var pixelWidth = window.innerWidth;
         if (pixelWidth <= 600) {
@@ -1276,6 +1348,7 @@
                 });
             }
         });
+
         /* const detailRows = []
          table.on('click', 'tbody td.dt-control', function() {
              let tr = event.target.closest('tr');
@@ -1448,6 +1521,7 @@
          }*/
 
     }
+
     function chargeTab3(ano1, ano2) {
         var filterBy = document.getElementById("filterBy");
         var showBy = document.getElementById("showBy");
@@ -1497,6 +1571,26 @@
         document.getElementById("panel3").innerHTML = '';
         document.getElementById("panel3").innerHTML =
             `  <div class="row">
+                                     <div class="col-12" >
+                                        <div class="card border border-0">
+                                            <div class="card-body p-0 m-0">
+                                                <div class="row ms-2 mt-2 mb-2">
+                                                    <div class="col-12 d-flex">
+                                                        <div>
+                                                            <label class="form-control border border-0">Mostrar año:</label>
+                                                        </div>
+                                                        <div>
+                                                            <select id="setYearTab3" class="form-select fw-bold">
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <hr>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="col-12" id="graficaTab2">
                                         <figure class="highcharts-figure ">
                                             <div id="ctx3" >
@@ -1528,11 +1622,24 @@
                                                         </div>
                                     </div>
                             </div> `;
-                            var currentDate = new Date();
-        var yearSelected = getCookie('yearTab') || currentDate.getFullYear();
-        var select = document.getElementById('setYearTab');
+        var yearSelected = getCookie('yearTab3') || 2024;
+        var select = document.getElementById('setYearTab3');
         var currentYear = new Date().getFullYear();
+        for (var year = 2021; year <= currentYear; year++) {
+            var option = document.createElement('option');
+            option.value = year;
+            option.textContent = year;
+            select.appendChild(option);
+        }
         select.value = yearSelected;
+        $('#setYearTab3').on('change', function() {
+            $("#loaderTable").removeClass('d-none');
+            setCookie('yearTab3', this.value, 1);
+            ano1Tab3 = this.value;
+            ano2Tab3 = this.value - 1;
+            chargeTab3(ano1Tab3, ano2Tab3)
+            $("#loaderTable").addClass('d-none');
+        });
         var isLabel = true;
         var pixelWidth = window.innerWidth;
         if (pixelWidth <= 600) {
@@ -2002,6 +2109,7 @@
 
         }*/
     }
+
     function chargeTab4(ano1, ano2, mes1) {
         var filterBy = document.getElementById("filterBy");
         var showBy = document.getElementById("showBy");
@@ -2051,6 +2159,36 @@
         document.getElementById("panel4").innerHTML = '';
         document.getElementById("panel4").innerHTML =
             `  <div class="row">
+                                     <div class="col-12" >
+                                        <div class="card border border-0">
+                                            <div class="card-body p-0 m-0">
+                                                <div class="row ms-2 mt-2 mb-2">
+                                                    <div class="col-2 d-flex">
+                                                        <div>
+                                                            <label class="form-control border border-0">Mostrar año:</label>
+                                                        </div>
+                                                        <div>
+                                                            <select id="setYearTab4" class="form-select fw-bold">
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-3 d-flex">
+                                                        <div>
+                                                            <label class="form-control border border-0">Mostrar mes:</label>
+                                                        </div>
+                                                        <div>
+                                                            <select id="setMesTab4" class="form-select fw-bold">
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <hr>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="col-12" id="graficaTab2">
                                         <figure class="highcharts-figure ">
                                             <div id="ctx4" >
@@ -2082,18 +2220,50 @@
                                                         </div>
                                     </div>
                             </div> `;
-        var currentDate = new Date();
-        var yearSelected = getCookie('yearTab') || currentDate.getFullYear();
-        var select = document.getElementById('setYearTab');
+        var yearSelected = getCookie('yearTab4') || 2024;
+        var select = document.getElementById('setYearTab4');
         var currentYear = new Date().getFullYear();
+        for (var year = 2021; year <= currentYear; year++) {
+            var option = document.createElement('option');
+            option.value = year;
+            option.textContent = year;
+            select.appendChild(option);
+        }
         select.value = yearSelected;
-        var monthSelected = getCookie('mesTab') || currentDate.getMonth() + 1;
-        var select = document.getElementById('setMesTab');
+        $('#setYearTab4').on('change', function() {
+            $("#loaderTable").removeClass('d-none');
+            setCookie('yearTab4', this.value, 1);
+            ano1Tab4 = this.value;
+            ano2Tab4 = this.value - 1;
+            mes1Tab4 = $("#setMesTab4").val().toString().padStart(2, '0');
+
+            chargeTab4(ano1Tab4, ano2Tab4, mes1Tab4);
+            $("#loaderTable").addClass('d-none');
+        });
+
+        var monthSelected = getCookie('mesTab4') || 1;
+        var select = document.getElementById('setMesTab4');
         var currentMonth = new Date().getMonth();
         var meses = ['ENERO', 'FEBRERO', 'MARZO', 'ABRIL', 'MAYO', 'JUNIO', 'JULIO', 'AGOSTO', 'SEPTIEMBRE', 'OCTUBRE',
             'NOVIEMBRE', 'DICIEMBRE'
         ];
+        for (var i = 0; i < meses.length; i++) {
+            var option = document.createElement('option');
+            option.value = i + 1;
+            option.textContent = meses[i];
+            select.appendChild(option);
+        }
         select.value = monthSelected;
+        $('#setMesTab4').on('change', function() {
+            $("#loaderTable").removeClass('d-none');
+            setCookie('mesTab4', this.value, 1);
+            mes1Tab4 = (this.value).toString().padStart(2, '0');
+            ano1Tab4 = ano1;
+            ano2Tab4 = ano1 - 1;
+            chargeTab4(ano1Tab4, ano2Tab4, mes1Tab4);
+            $("#loaderTable").addClass('d-none');
+        });
+
         var isLabel = true;
         var pixelWidth = window.innerWidth;
         if (pixelWidth <= 600) {
@@ -2565,6 +2735,7 @@
         }*/
 
     }
+
     function getCurrentMonth(mes) {
         const meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre",
             "Octubre", "Noviembre", "Diciembre"

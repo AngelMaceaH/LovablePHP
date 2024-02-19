@@ -13,7 +13,7 @@
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb my-0 ms-2">
               <li class="breadcrumb-item">
-              <span>Producto Terminado / Clasificación de producto</span>
+              <span>Producto Terminado / Inventario por clasificación de producto</span>
               </li>
               <li class="breadcrumb-item active"><span>ZLO0009P</span></li>
             </ol>
