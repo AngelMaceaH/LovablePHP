@@ -33,11 +33,11 @@
                             <div class="position-relative">
                               <form>
                                 <div class="row mb-2">
-                                      <div class="col-3">
+                                <div class="col-0 col-lg-3">
 
-                                      </div>
-                                      <div class="col-3">
-                                        <label>Agrupación por país:</label>
+                                        </div>
+                                        <div class="col-12 col-lg-3">
+                                        <label class="mt-2">Agrupación por país:</label>
                                         <select class="form-select mt-1 fw-bold" id="cbbAgrup" >
                                           <option  value="11">Tiendas Honduras (Lov. Ecommerce)</option>
                                           <option  value="9">Tiendas Honduras (Mod. Íntima)</option>
@@ -47,21 +47,22 @@
                                           <option  value="16">Tiendas Nicaragua</option>
                                           <option  value="15">Tiendas Republica Dominicana</option>
                                         </select>
-                                      </div>
-                                      <div class="col-3">
-                                        <label>Año:</label>
-                                        <select class="form-select  mt-1" id="cbbAno" name="cbbAno">
-                                          <?php
-                                                $anio_actual = date('Y');
-                                                for ($i = $anio_actual; $i >= 2021; $i--) {
-                                                echo "<option value='$i'>$i</option>";
-                                                }
-                                            ?>
-                                        </select>
-                                      </div>
-                                      <div class="col-3">
+                                                  </div>
+                                                  <div class="col-12 col-lg-3">
+                                                    <label class="mt-2">Año:</label>
+                                                    <select class="form-select  mt-1" id="cbbAno" name="cbbAno">
+                                                      <?php
+                                                            $anio_actual = date('Y');
+                                                            for ($i = $anio_actual; $i >= 2021; $i--) {
+                                                            echo "<option value='$i'>$i</option>";
+                                                            }
+                                                        ?>
+                                                    </select>
+                                                  </div>
+                                                  <div class="col-0 col-lg-3">
 
-                                      </div>
+                                                  </div>
+
                                       <div class="col-12">
                                         <hr>
                                       </div>
@@ -257,7 +258,7 @@
             chargeTable2(valAno2,valAgrup);
             setTimeout(() => {
               chargeGrafica();
-            }, 500);
+            }, 700);
           });
           cbbAno.addEventListener('change', (event) => {
             let valAno=parseInt(cbbAno.value);
@@ -267,201 +268,200 @@
             chargeTable2(valAno2,valAgrup);
             setTimeout(() => {
               chargeGrafica();
-            }, 500);
+            }, 700);
           });
           cbbGrafica.addEventListener('change', (event) => {
             chargeGrafica();
           });
           setTimeout(() => {
-          chart1=Highcharts.chart('container', {
-                  chart: {
-                          type: 'column',
-                          style: {
-                              color: '#FFFFFF'
-                          }
+            chart1=Highcharts.chart('container', {
+                    chart: {
+                            type: 'column',
+                            style: {
+                                color: '#FFFFFF'
+                            }
+                        },
+                        title: {
+                            text: 'Promedio histórico por tipo de descuento <br>'+ cbbAgrup.options[cbbAgrup.selectedIndex].text,
+                            align: 'center',
+                            style: {
+                                color: '#FFFFFF',
+                            }
+                        },
+                        lang: {
+                          viewFullscreen:"Ver en pantalla completa",
+                          exitFullscreen:"Salir de pantalla completa",
+                          downloadJPEG:"Descargar imagen JPEG",
+                          downloadPDF:"Descargar en PDF",
                       },
-                      title: {
-                          text: 'Promedio histórico por tipo de descuento <br>'+ cbbAgrup.options[cbbAgrup.selectedIndex].text,
-                          align: 'center',
-                          style: {
-                              color: '#FFFFFF',
-                          }
-                      },
-                      lang: {
-                        viewFullscreen:"Ver en pantalla completa",
-                        exitFullscreen:"Salir de pantalla completa",
-                        downloadJPEG:"Descargar imagen JPEG",
-                        downloadPDF:"Descargar en PDF",
+                    xAxis: {
+                        categories: ['Prendas Sin Dscto.', 'Prendas 20%', 'Prendas 30%', 'Prendas 40%', 'Prendas 50%', 'Segundas Nivel 1', 'Segundas Nivel 2'],
+                        crosshair: true,
+                        accessibility: {
+                            description: 'Countries'
+                        },
+                        labels: {
+                            style: {
+                                color: '#FFFFFF'
+                            }
+                        }
                     },
-                  xAxis: {
-                      categories: ['Prendas Sin Dscto.', 'Prendas 20%', 'Prendas 30%', 'Prendas 40%', 'Prendas 50%', 'Segundas Nivel 1', 'Segundas Nivel 2'],
-                      crosshair: true,
-                      accessibility: {
-                          description: 'Countries'
-                      },
-                      labels: {
-                          style: {
-                              color: '#FFFFFF'
-                          }
-                      }
-                  },
-                  yAxis: {
-                      min: 0,
-                      title: {
-                          text: ' ',
-                          style: {
-                              color: '#FFFFFF'
-                          }
-                      },
-                      labels: {
-                          style: {
-                              color: '#FFFFFF'
-                          }
-                      }
-                  },
-                  tooltip: {
-                      valueSuffix: ' %',
-                      style: {
-                          color: '#FFFFFF'
-                      }
-                  },
-                  plotOptions: {
-                      column: {
-                          pointPadding: 0.2,
-                          borderWidth: 0
-                      },
-                      series: {
-                          borderWidth: 0,
-                          dataLabels: {
-                              enabled: true,
-                              format: '{point.y:.2f}%'
-                          }
-                      }
-                  },
-                  credits: {
-                      enabled: false
-                  },
-                  legend: {
-                      itemStyle: {
-                          color: '#FFFFFF'
-                      }
-                  },
-                  exporting: {
-                    buttons: {
-                      contextButton: {
-                        menuItems: ["viewFullscreen", "separator","downloadJPEG", "downloadPDF"]
-                      }
+                    yAxis: {
+                        min: 0,
+                        title: {
+                            text: ' ',
+                            style: {
+                                color: '#FFFFFF'
+                            }
+                        },
+                        labels: {
+                            style: {
+                                color: '#FFFFFF'
+                            }
+                        }
                     },
-                    enabled: true,
-                    sourceWidth: 1600,
-                    sourceHeight: 800,
-                    chartOptions: {
-                      chart: {
-                        backgroundColor: '#303030'
-                      }
-                    }
-                  },
-                  series: [
-                      {
-                          name: 'Ano '+valAno,
-                          data: barGra1,
-                          color: '#20c997'
+                    tooltip: {
+                        valueSuffix: ' %',
+                        style: {
+                            color: '#FFFFFF'
+                        }
+                    },
+                    plotOptions: {
+                        column: {
+                            pointPadding: 0.2,
+                            borderWidth: 0
+                        },
+                        series: {
+                            borderWidth: 0,
+                            dataLabels: {
+                                enabled: true,
+                                format: '{point.y:.2f}%'
+                            }
+                        }
+                    },
+                    credits: {
+                        enabled: false
+                    },
+                    legend: {
+                        itemStyle: {
+                            color: '#FFFFFF'
+                        }
+                    },
+                    exporting: {
+                      buttons: {
+                        contextButton: {
+                          menuItems: ["viewFullscreen", "separator","downloadJPEG", "downloadPDF"]
+                        }
                       },
-                      {
-                          name: 'Ano '+valAno2,
-                          data: barGra2,
-                          color: '#ffd700'
-                      }
-                  ]
-          });
-          chart2=Highcharts.chart('container2', {
-              chart: {
-                  type: 'line',
-                  style: {
-                              color: '#FFFFFF'
-                          }
-              },
-              lang: {
-                  viewFullscreen:"Ver en pantalla completa",
-                  exitFullscreen:"Salir de pantalla completa",
-                  downloadJPEG:"Descargar imagen JPEG",
-                  downloadPDF:"Descargar en PDF",
-              },
-              title: {
-                      text: cbbGrafica.options[cbbGrafica.selectedIndex].text + '<br>' + cbbAgrup.options[cbbAgrup.selectedIndex].text,
-                      align: 'center',
-                      style: {
-                              color: '#FFFFFF'
-                          }
-                  },
-              xAxis: {
-                categories: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
-                      labels: {
-                          style: {
-                              color: '#FFFFFF'
-                          }
-                      }
-              },
-              yAxis: {
-                      title: {
-                          text: ' ',
-                          style: {
-                              color: '#FFFFFF'
-                          }
-                      },
-                      labels: {
-                          style: {
-                              color: '#FFFFFF'
-                          }
-                      }
-              },
-              plotOptions: {
-                line: {
-                  dataLabels: {
-                    enabled: true,
-                    format: '{y} %'
-                  },
-                  enableMouseTracking: false
-                }
-              },
-              credits: {
-                      enabled: false
-                  },
-                  legend: {
-                      itemStyle: {
-                          color: '#FFFFFF'
-                      }
-                  },
-                  exporting: {
-                    buttons: {
-                      contextButton: {
-                        menuItems: ["viewFullscreen", "separator","downloadJPEG", "downloadPDF"]
+                      enabled: true,
+                      sourceWidth: 1600,
+                      sourceHeight: 700,
+                      chartOptions: {
+                        chart: {
+                          backgroundColor: '#303030'
+                        }
                       }
                     },
-                    enabled: true,
-                    sourceWidth: 1600,
-                    sourceHeight: 800,
-                    chartOptions: {
-                      chart: {
-                        backgroundColor: '#303030'
+                    series: [
+                        {
+                            name: 'Ano '+valAno,
+                            data: barGra1,
+                            color: '#20c997'
+                        },
+                        {
+                            name: 'Ano '+valAno2,
+                            data: barGra2,
+                            color: '#ffd700'
+                        }
+                    ]
+            });
+            chart2=Highcharts.chart('container2', {
+                chart: {
+                    type: 'line',
+                    style: {
+                                color: '#FFFFFF'
+                            }
+                },
+                lang: {
+                    viewFullscreen:"Ver en pantalla completa",
+                    exitFullscreen:"Salir de pantalla completa",
+                    downloadJPEG:"Descargar imagen JPEG",
+                    downloadPDF:"Descargar en PDF",
+                },
+                title: {
+                        text: cbbGrafica.options[cbbGrafica.selectedIndex].text + '<br>' + cbbAgrup.options[cbbAgrup.selectedIndex].text,
+                        align: 'center',
+                        style: {
+                                color: '#FFFFFF'
+                            }
+                    },
+                xAxis: {
+                  categories: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                        labels: {
+                            style: {
+                                color: '#FFFFFF'
+                            }
+                        }
+                },
+                yAxis: {
+                        title: {
+                            text: ' ',
+                            style: {
+                                color: '#FFFFFF'
+                            }
+                        },
+                        labels: {
+                            style: {
+                                color: '#FFFFFF'
+                            }
+                        }
+                },
+                plotOptions: {
+                  line: {
+                    dataLabels: {
+                      enabled: true,
+                      format: '{y} %'
+                    },
+                    enableMouseTracking: false
+                  }
+                },
+                credits: {
+                        enabled: false
+                    },
+                    legend: {
+                        itemStyle: {
+                            color: '#FFFFFF'
+                        }
+                    },
+                    exporting: {
+                      buttons: {
+                        contextButton: {
+                          menuItems: ["viewFullscreen", "separator","downloadJPEG", "downloadPDF"]
+                        }
+                      },
+                      enabled: true,
+                      sourceWidth: 1600,
+                      sourceHeight: 700,
+                      chartOptions: {
+                        chart: {
+                          backgroundColor: '#303030'
+                        }
                       }
-                    }
-                  },
-              series: [{
-                  name: 'Ano '+valAno,
-                  data: lineSinDesc1,
-                  color: '#20c997'
-              }, {
-                  name: 'Ano '+valAno2,
-                  data: lineSinDesc2,
-                  color: '#ffd700'
-              }]
-          });
-          lineSinDescSecure1=[...lineSinDesc1];
-          lineSinDescSecure2=[...lineSinDesc2];
+                    },
+                series: [{
+                    name: 'Ano '+valAno,
+                    data: lineSinDesc1,
+                    color: '#20c997'
+                }, {
+                    name: 'Ano '+valAno2,
+                    data: lineSinDesc2,
+                    color: '#ffd700'
+                }]
+            });
+            lineSinDescSecure1=[...lineSinDesc1];
+            lineSinDescSecure2=[...lineSinDesc2];
           }, 1500);
         });
-
         function chargeTable(valAno,valAgrup) {
           //AÑO 1
           lineSinDesc1=[]; line20Desc1=[]; line30Desc1=[]; line40Desc1=[]; line50Desc1=[]; lineZ1Desc1=[]; lineZ2Desc1=[];
@@ -821,7 +821,6 @@
               tbDetalle.appendChild(row);
           });
         }
-
         function chargeGrafica() {
           const cbbGrafica = document.getElementById('selectGrafica');
           let valGrafica=cbbGrafica.value;
@@ -869,7 +868,6 @@
                   },
               ]
           });
-
           let valoresLineal1=[];
           let valoresLineal2=[];
           switch (valGrafica) {
@@ -902,7 +900,6 @@
               valoresLineal2=lineSinDescSecure2;
               break;
           }
-
           chart2.update({
               chart: {
                   type: 'line'

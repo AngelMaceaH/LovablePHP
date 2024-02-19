@@ -15,9 +15,9 @@
       $ordenFiltro=isset($_SESSION['Orden']) ? $_SESSION['Orden'] : 1;
       $mes_actual=date("m")-1;
       $ano_actual=date("Y");
-           $mesfiltro=isset($_SESSION['mesfiltro3'])? $_SESSION['mesfiltro3']: $mes_actual; 
-           $anofiltro=isset($_SESSION['anofiltro2'])? $_SESSION['anofiltro2']: $ano_actual; 
-           $paisfiltro=isset($_SESSION['paisfiltro9'])? $_SESSION['paisfiltro9']: 1; 
+           $mesfiltro=isset($_SESSION['mesfiltro3'])? $_SESSION['mesfiltro3']: $mes_actual;
+           $anofiltro=isset($_SESSION['anofiltro2'])? $_SESSION['anofiltro2']: $ano_actual;
+           $paisfiltro=isset($_SESSION['paisfiltro9'])? $_SESSION['paisfiltro9']: 1;
            if ($paisfiltro==8) {
             $paisfiltro=1;
            }
@@ -44,8 +44,8 @@
                       case 7:
                         $cia="CODCIA IN (81)";
                         break;
-                      
-            
+
+
             default:
               # code...
               break;
@@ -66,39 +66,39 @@
         }else{
           $sqlOrden=" ORDER BY Orden ASC";
         }
-      
 
-     $sqlmeses="SELECT T4.CODSEC,T1.CODCIA,NOMCIA,PRV12M,PRV06M,MIN12M,M1,M2,M3,M4,M5,M6,(M1+M2+M3+M4+M5+M6)Orden FROM( 
+
+     $sqlmeses="SELECT T4.CODSEC,T1.CODCIA,NOMCIA,PRV12M,PRV06M,MIN12M,M1,M2,M3,M4,M5,M6,(M1+M2+M3+M4+M5+M6)Orden FROM(
       SELECT M1.CODCIA, M1.PRV12M,M1.PRV06M, M1.MIN12M,M1.MIN06M M1, M2.MIN06M M2, M3.MIN06M M3,M4.MIN06M M4,M5.MIN06M M5, M6.MIN06M M6 FROM (
       SELECT CODCIA,PRV12M,PRV06M,MIN12M,MIN06M FROM lbprddat/LO1960 WHERE
       ".$cia." and ANOPRO=".$anoConsulta[0]." AND MESPRO=".$mesConsulta[0].") AS M1
       LEFT JOIN (
       SELECT CODCIA,MIN06M FROM lbprddat/LO1960 WHERE
-      ".$cia." and ANOPRO=".$anoConsulta[1]." AND MESPRO=".($mesConsulta[1]).") AS M2 ON M1.CODCIA=M2.CODCIA  
+      ".$cia." and ANOPRO=".$anoConsulta[1]." AND MESPRO=".($mesConsulta[1]).") AS M2 ON M1.CODCIA=M2.CODCIA
       LEFT JOIN (
       SELECT CODCIA,MIN06M FROM lbprddat/LO1960 WHERE
-      ".$cia." and ANOPRO=".$anoConsulta[2]." AND MESPRO=".($mesConsulta[2]).") AS M3 ON M1.CODCIA=M3.CODCIA 
+      ".$cia." and ANOPRO=".$anoConsulta[2]." AND MESPRO=".($mesConsulta[2]).") AS M3 ON M1.CODCIA=M3.CODCIA
       LEFT JOIN (
         SELECT CODCIA,MIN06M FROM lbprddat/LO1960 WHERE
-        ".$cia." and ANOPRO=".$anoConsulta[3]." AND MESPRO=".($mesConsulta[3]).") AS M4 ON M1.CODCIA=M4.CODCIA 
+        ".$cia." and ANOPRO=".$anoConsulta[3]." AND MESPRO=".($mesConsulta[3]).") AS M4 ON M1.CODCIA=M4.CODCIA
         LEFT JOIN (
           SELECT CODCIA,MIN06M FROM lbprddat/LO1960 WHERE
-          ".$cia." and ANOPRO=".$anoConsulta[4]." AND MESPRO=".($mesConsulta[4]).") AS M5 ON M1.CODCIA=M5.CODCIA 
+          ".$cia." and ANOPRO=".$anoConsulta[4]." AND MESPRO=".($mesConsulta[4]).") AS M5 ON M1.CODCIA=M5.CODCIA
           LEFT JOIN (
             SELECT CODCIA,MIN06M FROM lbprddat/LO1960 WHERE
-            ".$cia." and ANOPRO=".$anoConsulta[5]." AND MESPRO=".($mesConsulta[5]).") AS M6 ON M1.CODCIA=M6.CODCIA 
+            ".$cia." and ANOPRO=".$anoConsulta[5]." AND MESPRO=".($mesConsulta[5]).") AS M6 ON M1.CODCIA=M6.CODCIA
       )AS T1
       LEFT JOIN LBPRDDAT/LO0705 AS T2 ON T1.CODCIA = T2.CODCIA
-      LEFT JOIN LBPRDDAT/LO0686 AS T4 ON T4.CODCIA = T1.CODCIA ".$sqlOrden."";
-      
-      $resultMeses=odbc_exec($connIBM,$sqlmeses); 
+      LEFT JOIN LBPRDDAT/LO0686 AS T4 ON T4.CODCIA = T1.CODCIA ORDER BY T4.CODSEC";
+
+      $resultMeses=odbc_exec($connIBM,$sqlmeses);
 
       $sqlUnidades="SELECT T4.CODSEC,T1.CODCIA,T2.NOMCIA,UNICOM,UNIVEN, UNIEXI FROM LBPRDDAT/LO1960 AS T1
       LEFT JOIN LBPRDDAT/LO0705 AS T2 ON T1.CODCIA = T2.CODCIA
       LEFT JOIN LBPRDDAT/LO0686 AS T4 ON T4.CODCIA = T1.CODCIA
       WHERE T1.".$cia." AND ANOPRO=".$anofiltro." AND MESPRO=".$mesfiltro."
       ORDER BY T4.CODSEC";
-      $resultUnidades=odbc_exec($connIBM,$sqlUnidades); 
+      $resultUnidades=odbc_exec($connIBM,$sqlUnidades);
 ?>
      <div class="container-fluid">
           <nav aria-label="breadcrumb">
@@ -183,8 +183,8 @@
                       <figure class="highcharts-figure" >
                                 <div id="container" ></div>
                         </figure>
-                    </div>    
-                    
+                    </div>
+
                     <div class="table-responsive mt-3" style="width:100%">
                           <table id="myTableInvMeses" class="table stripe table-hover " style="width:100%">
                             <thead>
@@ -262,7 +262,7 @@
                     </div>
                     <div id="panel2" class="tablist__panel is-hidden p-3" aria-labelledby="tab2" aria-hidden="true" role="tabpanel">
                     <div id="grafica2" class="row">
-                    <div id="carouselExampleDark" class="carousel carousel-dark slide"  data-bs-ride="carousel">
+                    <div id="carouselExampleDark" class="carousel carousel-dark slide">
                 <div class="carousel-indicators">
                   <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
                   <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>
@@ -292,7 +292,7 @@
                   <span class="visually-hidden">Next</span>
                 </button>
                       </div>
-                                
+
                     </div>
                     <div class="table-responsive mt-3">
                           <table id="myTableInvUnidades" class="table stripe table-hover " style="width:100%">
@@ -328,12 +328,12 @@
                                     $paisesUndExi[$cont1]=round($rowUni['UNIEXI'],0);
                                     $cont1++;
                                    }
-                                  
+
                                    for ($i = 0; $i < ((count($paisesLabel1))); $i++) {
                                      if (
                                          $paisesUndComp[$i] == 0 &&
                                          $paisesUndVen[$i] == 0 &&
-                                         $paisesUndExi[$i] == 0 
+                                         $paisesUndExi[$i] == 0
                                      ) {
                                          unset($paisesLabel1[$i]);
                                          unset($paisesUndComp[$i]);
@@ -358,7 +358,7 @@
         </div>
         </div>
       </div>
-      
+
     </div>
     <div class="footer bg-blck flex-grow-1 d-flex justify-content-center">
       <p class="bggray responsive-font-example"><i>Lovable de Honduras S.A. de C.V</i></p>
@@ -369,7 +369,7 @@
       <script src="https://code.highcharts.com/modules/export-data.js"></script>
       <script src="https://code.highcharts.com/modules/accessibility.js"></script>
       <?php include '../../assets/php/ZPT/ZLO0004P/ZLO0004P.php';?>
-      
-    
+
+
 </body>
 </html>

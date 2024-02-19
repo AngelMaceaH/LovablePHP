@@ -34,29 +34,29 @@
                             <div class="position-relative">
                               <form>
                                 <div class="row mb-2">
-                                      <div class="col-3">
+                                <div class="col-0 col-lg-3">
 
-                                      </div>
-                                      <div class="col-3">
-                                        <label>Fábrica:</label>
-                                        <select class="form-control mt-1 fw-bold" id="cbbAgrup" >
-                                          <option  value="1">Lovable de Honduras</option>
-                                        </select>
-                                      </div>
-                                      <div class="col-3">
-                                        <label>Año:</label>
-                                        <select class="form-select  mt-1" id="cbbAno" name="cbbAno">
-                                          <?php
-                                                $anio_actual = date('Y');
-                                                for ($i = $anio_actual; $i >= 2021; $i--) {
-                                                echo "<option value='$i'>$i</option>";
-                                                }
-                                            ?>
-                                        </select>
-                                      </div>
-                                      <div class="col-3">
+                                          </div>
+                                          <div class="col-12 col-lg-3">
+                                            <label class="mt-2">Fábrica:</label>
+                                            <select class="form-select mt-1 fw-bold" id="cbbAgrup" >
+                                              <option  value="1">Lovable de Honduras</option>
+                                            </select>
+                                          </div>
+                                          <div class="col-12 col-lg-3">
+                                            <label class="mt-2">Año:</label>
+                                            <select class="form-select  mt-1" id="cbbAno" name="cbbAno">
+                                              <?php
+                                                    $anio_actual = date('Y');
+                                                    for ($i = $anio_actual; $i >= 2021; $i--) {
+                                                    echo "<option value='$i'>$i</option>";
+                                                    }
+                                                ?>
+                                            </select>
+                                          </div>
+                                          <div class="col-0 col-lg-3">
 
-                                      </div>
+                                          </div>
                                       <div class="col-12">
                                         <hr>
                                       </div>
@@ -252,7 +252,7 @@
             chargeTable2(valAno2,valAgrup);
             setTimeout(() => {
               chargeGrafica();
-            }, 500);
+            }, 700);
           });
           cbbAno.addEventListener('change', (event) => {
             let valAno=parseInt(cbbAno.value);
@@ -262,7 +262,7 @@
             chargeTable2(valAno2,valAgrup);
             setTimeout(() => {
               chargeGrafica();
-            }, 500);
+            }, 700);
           });
           cbbGrafica.addEventListener('change', (event) => {
             chargeGrafica();
@@ -349,7 +349,7 @@
                     },
                     enabled: true,
                     sourceWidth: 1600,
-                    sourceHeight: 800,
+                    sourceHeight: 700,
                     chartOptions: {
                       chart: {
                         backgroundColor: '#303030'
@@ -433,7 +433,7 @@
                     },
                     enabled: true,
                     sourceWidth: 1600,
-                    sourceHeight: 800,
+                    sourceHeight: 700,
                     chartOptions: {
                       chart: {
                         backgroundColor: '#303030'

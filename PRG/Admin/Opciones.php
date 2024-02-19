@@ -817,7 +817,6 @@
         var modulo = $("#txtModulo").val().split("-")[0];
         var abrv= $("#txtModulo").val().split("-")[1];
         var opcion = $("#txtOpcion").val();
-        var codigo = $("#txtCodigo").val();
         var descrp = $("#txtDescrp").val();
         if (modulo == 0 || descrp == "" || opcion == 0) {
             $("#lblError").text('Rellene la información solicitada');
@@ -829,6 +828,8 @@
             if (response.code == 200) {
                 $("#lblError").text('');
                 chargeProgramas();
+                var codigo = response.data;
+                console.log(codigo);
                 $("#modal").modal("hide");
                 asignarPrograma(codigo);
             } else {

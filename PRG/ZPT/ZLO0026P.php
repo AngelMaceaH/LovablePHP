@@ -33,16 +33,16 @@
                             <div class="position-relative">
                               <form>
                                 <div class="row mb-2">
-                                      <div class="col-3">
+                                      <div class="col-0 col-lg-3">
 
                                       </div>
-                                      <div class="col-3">
-                                        <label>Punto de venta:</label>
+                                      <div class="col-12 col-lg-3">
+                                        <label class="mt-2">Punto de venta:</label>
                                         <select class="form-select mt-1 fw-bold" id="cbbAgrup" >
                                         </select>
                                       </div>
-                                      <div class="col-3">
-                                        <label>Año:</label>
+                                      <div class="col-12 col-lg-3">
+                                        <label class="mt-2">Año:</label>
                                         <select class="form-select  mt-1" id="cbbAno" name="cbbAno">
                                           <?php
                                                 $anio_actual = date('Y');
@@ -52,7 +52,7 @@
                                             ?>
                                         </select>
                                       </div>
-                                      <div class="col-3">
+                                      <div class="col-0 col-lg-3">
 
                                       </div>
                                       <div class="col-12">
@@ -265,7 +265,7 @@
             chargeTable2(valAno2,valAgrup);
             setTimeout(() => {
               chargeGrafica();
-            }, 500);
+            }, 700);
           });
           cbbAno.addEventListener('change', (event) => {
             let valAno=parseInt(cbbAno.value);
@@ -275,7 +275,7 @@
             chargeTable2(valAno2,valAgrup);
             setTimeout(() => {
               chargeGrafica();
-            }, 500);
+            }, 700);
           });
           cbbGrafica.addEventListener('change', (event) => {
             chargeGrafica();
@@ -362,7 +362,7 @@
                     },
                     enabled: true,
                     sourceWidth: 1600,
-                    sourceHeight: 800,
+                    sourceHeight: 700,
                     chartOptions: {
                       chart: {
                         backgroundColor: '#303030'
@@ -448,7 +448,7 @@
                     },
                     enabled: true,
                     sourceWidth: 1600,
-                    sourceHeight: 800,
+                    sourceHeight: 700,
                     chartOptions: {
                       chart: {
                         backgroundColor: '#303030'

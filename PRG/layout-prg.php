@@ -429,24 +429,6 @@
                         HTTPError.code = jqXHR.status;
                         HTTPError.data = jqXHR;
                         HTTPError.message += "Request http Error: " + url + ", Exception: ";
-                        // http errors
-                        if (jqXHR.status === 0) {
-                            HTTPError.message += 'Not connect.\n Verify Network.';
-                        } else if (jqXHR.status == 404) {
-                            HTTPError.message += 'Requested page not found. [404]';
-                        } else if (jqXHR.status == 500) {
-                            HTTPError.message += 'Internal Server Error [500].';
-                        } else if (jqXHR.status == 401) {
-                            HTTPError.message += 'Unauthorized Server Action [401].';
-                        } else if (exception === 'parsererror') {
-                            HTTPError.message += 'Requested JSON parse failed.';
-                        } else if (exception === 'timeout') {
-                            HTTPError.message += 'Time out error.';
-                        } else if (exception === 'abort') {
-                            HTTPError.message += 'Ajax request aborted.';
-                        } else {
-                            HTTPError.message += jqXHR.responseText;
-                        }
                         dataResponse = HTTPError;
                         console.log(HTTPError);
                     }

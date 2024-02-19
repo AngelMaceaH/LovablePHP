@@ -102,7 +102,8 @@
         var agrupSelect="";
         var filtroP="";
         $( document ).ready(function() {
-          var urlAgrupaciones="http://172.16.15.20/API.LOVABLEPHP/ZLO0012P/ListAgrupacion/";
+          var usuario= '<?php echo $_SESSION['CODUSU']; ?>';
+          var urlAgrupaciones="http://172.16.15.20/API.LOVABLEPHP/ZLO0012P/ListAgrupacion/?user="+usuario+"";
           var responseAgrupaciones=ajaxRequest(urlAgrupaciones);
           if (responseAgrupaciones.code==200) {
             var options="";
