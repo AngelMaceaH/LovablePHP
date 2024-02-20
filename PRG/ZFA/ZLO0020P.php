@@ -148,11 +148,11 @@
         var currentDate = new Date();
         ano1 = currentDate.getFullYear();
         mes1 = currentDate.getMonth() + 1;
-        ano2 = ano1 - 1;
+        ano2 = ano1;
         mes2 = mes1 - 1;
         if (mes2 == 0) {
             mes2 = 12;
-            ano2 = ano2 - 1;
+            ano2 = ano1 - 1;
         }
         //MOSTRAR VALORES EN DOLARES
         var ckDolar = document.getElementById("dolaresCk");
@@ -185,13 +185,13 @@
         chargeTab1(ano1Tab, ano2Tab, mes1Tab, mes2Tab);
         //TAB2
         document.getElementById("tab2").innerHTML = 'MES VS MISMO MES DEL AÑO ANTERIOR';
-        chargeTab2(ano1Tab, ano2Tab, mes1Tab, mes1Tab);
+        chargeTab2(ano1Tab, (ano1Tab-1), mes1Tab, mes1Tab);
         //TAB3
         document.getElementById("tab3").innerHTML = 'ANUAL TODO EL AÑO';
-        chargeTab3(ano1Tab, ano2Tab);
+        chargeTab3(ano1Tab, (ano1Tab-1));
         //TAB4
         document.getElementById("tab4").innerHTML = 'ANUAL HASTA EL MES';
-        chargeTab4(ano1Tab, ano2Tab, mes1Tab);
+        chargeTab4(ano1Tab, (ano1Tab-1), mes1Tab);
 
         ckDolar.addEventListener('change', (event) => {
             if (ckDolar.checked) {
@@ -206,13 +206,13 @@
                 chargeTab1(ano1Tab, ano2Tab, mes1Tab, mes2Tab);
             }, 1000);
             setTimeout(() => {
-                chargeTab2(ano1Tab, ano2Tab, mes1Tab, mes2Tab);
+                chargeTab2(ano1Tab, (ano1Tab-1), mes1Tab, mes2Tab);
             }, 1000);
             setTimeout(() => {
-                chargeTab3(ano1Tab, ano2Tab);
+                chargeTab3(ano1Tab, (ano1Tab-1));
             }, 1000);
             setTimeout(() => {
-                chargeTab4(ano1Tab, ano2Tab, mes1Tab);
+                chargeTab4(ano1Tab, (ano1Tab-1), mes1Tab);
             }, 1000);
             setTimeout(() => {
                 loaderTable.classList.add('d-none');
@@ -224,13 +224,13 @@
                 chargeTab1(ano1Tab, ano2Tab, mes1Tab, mes2Tab);
             }, 1000);
             setTimeout(() => {
-                chargeTab2(ano1Tab, ano2Tab, mes1Tab, mes2Tab);
+                chargeTab2(ano1Tab, (ano1Tab-1), mes1Tab, mes2Tab);
             }, 1000);
             setTimeout(() => {
-                chargeTab3(ano1Tab, ano2Tab);
+                chargeTab3(ano1Tab, (ano1Tab-1));
             }, 1000);
             setTimeout(() => {
-                chargeTab4(ano1Tab, ano2Tab, mes1Tab);
+                chargeTab4(ano1Tab, (ano1Tab-1), mes1Tab);
             }, 1000);
             setTimeout(() => {
                 loaderTable.classList.add('d-none');
@@ -243,13 +243,13 @@
                 chargeTab1(ano1Tab, ano2Tab, mes1Tab, mes2Tab);
             }, 1000);
             setTimeout(() => {
-                chargeTab2(ano1Tab, ano2Tab, mes1Tab, mes2Tab);
+                chargeTab2(ano1Tab, (ano1Tab-1), mes1Tab, mes2Tab);
             }, 1000);
             setTimeout(() => {
-                chargeTab3(ano1Tab, ano2Tab);
+                chargeTab3(ano1Tab, (ano1Tab-1));
             }, 1000);
             setTimeout(() => {
-                chargeTab4(ano1Tab, ano2Tab, mes1Tab);
+                chargeTab4(ano1Tab, (ano1Tab-1), mes1Tab);
             }, 1000);
             setTimeout(() => {
                 loaderTable.classList.add('d-none');

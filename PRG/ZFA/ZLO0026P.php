@@ -13,9 +13,9 @@
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb my-0 ms-2">
               <li class="breadcrumb-item">
-              <span>Producto Terminado / Ventas por clasificación de producto</span>
+              <span>Facturación / Ventas por clasificación de producto</span>
               </li>
-              <li class="breadcrumb-item active"><span>ZLO0024P</span></li>
+              <li class="breadcrumb-item active"><span>ZLO0026P</span></li>
             </ol>
           </nav>
         </div>
@@ -23,7 +23,7 @@
       <div id="body-div" class="body flex-grow-1">
         <div class="card mb-5">
             <div class="card-header">
-              <h1 class="fs-4 mb-1 mt-2 text-center">Análisis de ventas por clasificación de productos por país</h1>
+              <h1 class="fs-4 mb-1 mt-2 text-center">Análisis de ventas por clasificación de productos por tienda</h1>
             </div>
           <div class="card-body">
           <div class="card border border-0">
@@ -33,36 +33,28 @@
                             <div class="position-relative">
                               <form>
                                 <div class="row mb-2">
-                                <div class="col-0 col-lg-3">
+                                      <div class="col-0 col-lg-3">
 
-                                        </div>
-                                        <div class="col-12 col-lg-3">
-                                        <label class="mt-2">Agrupación por país:</label>
+                                      </div>
+                                      <div class="col-12 col-lg-3">
+                                        <label class="mt-2">Punto de venta:</label>
                                         <select class="form-select mt-1 fw-bold" id="cbbAgrup" >
-                                          <option  value="11">Tiendas Honduras (Lov. Ecommerce)</option>
-                                          <option  value="9">Tiendas Honduras (Mod. Íntima)</option>
-                                          <option  value="10">Tiendas Guatemala</option>
-                                          <option  value="12">Tiendas El Salvador</option>
-                                          <option  value="13">Tiendas Costa Rica</option>
-                                          <option  value="16">Tiendas Nicaragua</option>
-                                          <option  value="15">Tiendas Republica Dominicana</option>
                                         </select>
-                                                  </div>
-                                                  <div class="col-12 col-lg-3">
-                                                    <label class="mt-2">Año:</label>
-                                                    <select class="form-select  mt-1" id="cbbAno" name="cbbAno">
-                                                      <?php
-                                                            $anio_actual = date('Y');
-                                                            for ($i = $anio_actual; $i >= 2021; $i--) {
-                                                            echo "<option value='$i'>$i</option>";
-                                                            }
-                                                        ?>
-                                                    </select>
-                                                  </div>
-                                                  <div class="col-0 col-lg-3">
+                                      </div>
+                                      <div class="col-12 col-lg-3">
+                                        <label class="mt-2">Año:</label>
+                                        <select class="form-select  mt-1" id="cbbAno" name="cbbAno">
+                                          <?php
+                                                $anio_actual = date('Y');
+                                                for ($i = $anio_actual; $i >= 2021; $i--) {
+                                                echo "<option value='$i'>$i</option>";
+                                                }
+                                            ?>
+                                        </select>
+                                      </div>
+                                      <div class="col-0 col-lg-3">
 
-                                                  </div>
-
+                                      </div>
                                       <div class="col-12">
                                         <hr>
                                       </div>
@@ -90,8 +82,8 @@
                                 </tr>
                                 <tr>
                                   <th colspan="2" class=" border border-dark bg-secondary border-bottom-0 border-top-0 boder-end-0 "></th>
-                                  <th colspan="2" class=" border border-dark bg-secondary align-middle">Venta Precio Regular</th>
-                                  <th colspan="8"class=" border border-dark bg-secondary align-middle">Venta Con Descuento</th>
+                                  <th colspan="2" class=" border border-dark bg-secondary align-middle">Ventas Precio Regular</th>
+                                  <th colspan="8"class=" border border-dark bg-secondary align-middle">Ventas Con Descuento</th>
                                   <th colspan="4" class=" border border-dark bg-secondary align-middle">Segundas</th>
                                 </tr>
                                 <tr>
@@ -133,13 +125,13 @@
                                 <tr>
                                   <th colspan="2" class=" border border-dark bg-secondary  border-bottom-0"></th>
                                   <th colspan="14" class=" border border-dark bg-secondary align-middle">
-                                   <span id="lblano2" class="fs-5"></span>
+                                  <span id="lblano2" class="fs-5"></span>
                                   </th>
                                 </tr>
                                 <tr>
                                   <th colspan="2" class=" border border-dark bg-secondary border-bottom-0 border-top-0 boder-end-0"></th>
-                                  <th colspan="2" class=" border border-dark bg-secondary align-middle">Venta Precio Regular</th>
-                                  <th colspan="8"class=" border border-dark bg-secondary align-middle">Venta Con Descuento</th>
+                                  <th colspan="2" class=" border border-dark bg-secondary align-middle">Ventas Precio Regular</th>
+                                  <th colspan="8"class=" border border-dark bg-secondary align-middle">Ventas Con Descuento</th>
                                   <th colspan="4" class=" border border-dark bg-secondary align-middle">Segundas</th>
                                 </tr>
                                 <tr>
@@ -243,6 +235,21 @@
         let chart2=null;
         window.addEventListener('DOMContentLoaded', (event) => {
           const cbbAgrup = document.getElementById('cbbAgrup');
+            let usuario = '<?php echo $_SESSION["CODUSU"];?>';
+            let urlTiendas = 'http://172.16.15.20/API.LovablePHP/ZLO0015P/ListTiendas/?user=' + usuario + '';
+            let responseTiendas = ajaxRequest(urlTiendas);
+            let tiendasOptions = '';
+            if (responseTiendas.code == 200) {
+                for (let i = 0; i < responseTiendas.data.length; i++) {
+                    if (responseTiendas.data[i].COMCOD!=1 && responseTiendas.data[i].COMCOD!=35) {
+                        tiendasOptions += '<option value="' + responseTiendas.data[i].COMCOD.padStart(2, '0') + '">' +
+                        responseTiendas.data[
+                            i].COMDES + '</option>';
+                    }
+                }
+            }
+            cbbAgrup.innerHTML = tiendasOptions;
+
           const cbbAno = document.getElementById('cbbAno');
           const cbbGrafica = document.getElementById('selectGrafica');
             let valAno=parseInt(cbbAno.value);
@@ -274,198 +281,199 @@
             chargeGrafica();
           });
           setTimeout(() => {
-            chart1=Highcharts.chart('container', {
-                    chart: {
-                            type: 'column',
-                            style: {
-                                color: '#FFFFFF'
-                            }
-                        },
-                        title: {
-                            text: 'Promedio histórico por tipo de descuento <br>'+ cbbAgrup.options[cbbAgrup.selectedIndex].text,
-                            align: 'center',
-                            style: {
-                                color: '#FFFFFF',
-                            }
-                        },
-                        lang: {
-                          viewFullscreen:"Ver en pantalla completa",
-                          exitFullscreen:"Salir de pantalla completa",
-                          downloadJPEG:"Descargar imagen JPEG",
-                          downloadPDF:"Descargar en PDF",
+          chart1=Highcharts.chart('container', {
+                  chart: {
+                          type: 'column',
+                          style: {
+                              color: '#FFFFFF'
+                          }
                       },
-                    xAxis: {
-                        categories: ['Prendas Sin Dscto.', 'Prendas 20%', 'Prendas 30%', 'Prendas 40%', 'Prendas 50%', 'Segundas Nivel 1', 'Segundas Nivel 2'],
-                        crosshair: true,
-                        accessibility: {
-                            description: 'Countries'
-                        },
-                        labels: {
-                            style: {
-                                color: '#FFFFFF'
-                            }
-                        }
-                    },
-                    yAxis: {
-                        min: 0,
-                        title: {
-                            text: ' ',
-                            style: {
-                                color: '#FFFFFF'
-                            }
-                        },
-                        labels: {
-                            style: {
-                                color: '#FFFFFF'
-                            }
-                        }
-                    },
-                    tooltip: {
-                        valueSuffix: ' %',
-                        style: {
-                            color: '#FFFFFF'
-                        }
-                    },
-                    plotOptions: {
-                        column: {
-                            pointPadding: 0.2,
-                            borderWidth: 0
-                        },
-                        series: {
-                            borderWidth: 0,
-                            dataLabels: {
-                                enabled: true,
-                                format: '{point.y:.2f}%'
-                            }
-                        }
-                    },
-                    credits: {
-                        enabled: false
-                    },
-                    legend: {
-                        itemStyle: {
-                            color: '#FFFFFF'
-                        }
-                    },
-                    exporting: {
-                      buttons: {
-                        contextButton: {
-                          menuItems: ["viewFullscreen", "separator","downloadJPEG", "downloadPDF"]
-                        }
+                      title: {
+                          text: 'Promedio histórico por tipo de descuento <br>'+ cbbAgrup.options[cbbAgrup.selectedIndex].text,
+                          align: 'center',
+                          style: {
+                              color: '#FFFFFF',
+                          }
                       },
-                      enabled: true,
-                      sourceWidth: 1600,
-                      sourceHeight: 700,
-                      chartOptions: {
-                        chart: {
-                          backgroundColor: '#303030'
-                        }
+                      lang: {
+                        viewFullscreen:"Ver en pantalla completa",
+                        exitFullscreen:"Salir de pantalla completa",
+                        downloadJPEG:"Descargar imagen JPEG",
+                        downloadPDF:"Descargar en PDF",
+                    },
+                  xAxis: {
+                      categories: ['Prendas Sin Dscto.', 'Prendas 20%', 'Prendas 30%', 'Prendas 40%', 'Prendas 50%', 'Segundas Nivel 1', 'Segundas Nivel 2'],
+                      crosshair: true,
+                      accessibility: {
+                          description: 'Countries'
+                      },
+                      labels: {
+                          style: {
+                              color: '#FFFFFF'
+                          }
+                      }
+                  },
+                  yAxis: {
+                      min: 0,
+                      title: {
+                          text: ' ',
+                          style: {
+                              color: '#FFFFFF'
+                          }
+                      },
+                      labels: {
+                          style: {
+                              color: '#FFFFFF'
+                          }
+                      }
+                  },
+                  tooltip: {
+                      valueSuffix: ' %',
+                      style: {
+                          color: '#FFFFFF'
+                      }
+                  },
+                  plotOptions: {
+                      column: {
+                          pointPadding: 0.2,
+                          borderWidth: 0
+                      },
+                      series: {
+                          borderWidth: 0,
+                          dataLabels: {
+                              enabled: true,
+                              format: '{point.y:.2f}%'
+                          }
+                      }
+                  },
+                  credits: {
+                      enabled: false
+                  },
+                  legend: {
+                      itemStyle: {
+                          color: '#FFFFFF'
+                      }
+                  },
+                  exporting: {
+                    buttons: {
+                      contextButton: {
+                        menuItems: ["viewFullscreen", "separator","downloadJPEG", "downloadPDF"]
                       }
                     },
-                    series: [
-                        {
-                            name: 'Ano '+valAno,
-                            data: barGra1,
-                            color: '#20c997'
-                        },
-                        {
-                            name: 'Ano '+valAno2,
-                            data: barGra2,
-                            color: '#ffd700'
-                        }
-                    ]
-            });
-            chart2=Highcharts.chart('container2', {
-                chart: {
-                    type: 'line',
-                    style: {
-                                color: '#FFFFFF'
-                            }
-                },
-                lang: {
-                    viewFullscreen:"Ver en pantalla completa",
-                    exitFullscreen:"Salir de pantalla completa",
-                    downloadJPEG:"Descargar imagen JPEG",
-                    downloadPDF:"Descargar en PDF",
-                },
-                title: {
-                        text: cbbGrafica.options[cbbGrafica.selectedIndex].text + '<br>' + cbbAgrup.options[cbbAgrup.selectedIndex].text,
-                        align: 'center',
-                        style: {
-                                color: '#FFFFFF'
-                            }
-                    },
-                xAxis: {
-                  categories: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
-                        labels: {
-                            style: {
-                                color: '#FFFFFF'
-                            }
-                        }
-                },
-                yAxis: {
-                        title: {
-                            text: ' ',
-                            style: {
-                                color: '#FFFFFF'
-                            }
-                        },
-                        labels: {
-                            style: {
-                                color: '#FFFFFF'
-                            }
-                        }
-                },
-                plotOptions: {
-                  line: {
-                    dataLabels: {
-                      enabled: true,
-                      format: '{y} %'
-                    },
-                    enableMouseTracking: false
-                  }
-                },
-                credits: {
-                        enabled: false
-                    },
-                    legend: {
-                        itemStyle: {
-                            color: '#FFFFFF'
-                        }
-                    },
-                    exporting: {
-                      buttons: {
-                        contextButton: {
-                          menuItems: ["viewFullscreen", "separator","downloadJPEG", "downloadPDF"]
-                        }
+                    enabled: true,
+                    sourceWidth: 1600,
+                    sourceHeight: 700,
+                    chartOptions: {
+                      chart: {
+                        backgroundColor: '#303030'
+                      }
+                    }
+                  },
+                  series: [
+                      {
+                          name: 'Ano '+valAno,
+                          data: barGra1,
+                          color: '#20c997'
                       },
-                      enabled: true,
-                      sourceWidth: 1600,
-                      sourceHeight: 700,
-                      chartOptions: {
-                        chart: {
-                          backgroundColor: '#303030'
-                        }
+                      {
+                          name: 'Ano '+valAno2,
+                          data: barGra2,
+                          color: '#ffd700'
+                      }
+                  ]
+          });
+          chart2=Highcharts.chart('container2', {
+              chart: {
+                  type: 'line',
+                  style: {
+                              color: '#FFFFFF'
+                          }
+              },
+              lang: {
+                  viewFullscreen:"Ver en pantalla completa",
+                  exitFullscreen:"Salir de pantalla completa",
+                  downloadJPEG:"Descargar imagen JPEG",
+                  downloadPDF:"Descargar en PDF",
+              },
+              title: {
+                      text: cbbGrafica.options[cbbGrafica.selectedIndex].text + '<br>' + cbbAgrup.options[cbbAgrup.selectedIndex].text,
+                      align: 'center',
+                      style: {
+                              color: '#FFFFFF'
+                          }
+                  },
+              xAxis: {
+                categories: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                      labels: {
+                          style: {
+                              color: '#FFFFFF'
+                          }
+                      }
+              },
+              yAxis: {
+                      title: {
+                          text: ' ',
+                          style: {
+                              color: '#FFFFFF'
+                          }
+                      },
+                      labels: {
+                          style: {
+                              color: '#FFFFFF'
+                          }
+                      }
+              },
+              plotOptions: {
+                line: {
+                  dataLabels: {
+                    enabled: true,
+                    format: '{y} %'
+                  },
+                  enableMouseTracking: false
+                }
+              },
+              credits: {
+                      enabled: false
+                  },
+                  legend: {
+                      itemStyle: {
+                          color: '#FFFFFF'
+                      }
+                  },
+                  exporting: {
+                    buttons: {
+                      contextButton: {
+                        menuItems: ["viewFullscreen", "separator","downloadJPEG", "downloadPDF"]
                       }
                     },
-                series: [{
-                    name: 'Ano '+valAno,
-                    data: lineSinDesc1,
-                    color: '#20c997'
-                }, {
-                    name: 'Ano '+valAno2,
-                    data: lineSinDesc2,
-                    color: '#ffd700'
-                }]
-            });
-            lineSinDescSecure1=[...lineSinDesc1];
-            lineSinDescSecure2=[...lineSinDesc2];
+                    enabled: true,
+                    sourceWidth: 1600,
+                    sourceHeight: 700,
+                    chartOptions: {
+                      chart: {
+                        backgroundColor: '#303030'
+                      }
+                    }
+                  },
+              series: [{
+                  name: 'Ano '+valAno,
+                  data: lineSinDesc1,
+                  color: '#20c997'
+              }, {
+                  name: 'Ano '+valAno2,
+                  data: lineSinDesc2,
+                  color: '#ffd700'
+              }]
+          });
+          lineSinDescSecure1=[...lineSinDesc1];
+          lineSinDescSecure2=[...lineSinDesc2];
           }, 1500);
         });
+
         function chargeTable(valAno,valAgrup) {
           //AÑO 1
           lineSinDesc1=[]; line20Desc1=[]; line30Desc1=[]; line40Desc1=[]; line50Desc1=[]; lineZ1Desc1=[]; lineZ2Desc1=[];
-          var urlList="http://172.16.15.20/API.LovablePHP/ZLO0024P/List/?anopro="+valAno+"&agrup="+valAgrup;
+          var urlList="http://172.16.15.20/API.LovablePHP/ZLO0026P/List/?anopro="+valAno+"&agrup="+valAgrup;
           let lblAno1=document.getElementById('lblano1');
           lblAno1.innerHTML='Año '+valAno;
           const tbDetalle = document.getElementById('tableInventarioDetalle');
@@ -474,39 +482,14 @@
           .then(response => response.json())
           .then(data => {
             if (data.code==200) {
-              let coun1ttot=0; let coun1tdes=0; let coun1t20=0; let coun1t30=0; let coun1t40=0; let coun1t50=0; let coun1tz1=0; let coun1tz2=0;
               let total=0; let totdes=0; let tot20=0; let tot30=0; let tot40=0; let tot50=0; let totz1=0; let totz2=0;
               responseDataA1=[...data.data];
               data.data.forEach((item) => {
-                if (item.UNITOT!=0) {
-                  coun1ttot++;
-                }
-                if (item.UNISDE!=0) {
-                  coun1tdes++;
-                }
-                if (item.UNI20!=0) {
-                  coun1t20++;
-                }
-                if (item.UNI30!=0) {
-                  coun1t30++;
-                }
-                if (item.UNI40!=0) {
-                  coun1t40++;
-                }
-                if (item.UNI50!=0) {
-                  coun1t50++;
-                }
-                if (item.UNIZ1!=0) {
-                  coun1tz1++;
-                }
-                if (item.UNIZ2!=0) {
-                  coun1tz2++;
-                }
                 const row = document.createElement('tr');
                 row.innerHTML = `
                   <td class="bg-light border border-dark">${item.MESDES}</td>
                   <td class="bg-light border border-dark">${parseFloat(item.UNITOT) === 0 ? '‎' : parseFloat(item.UNITOT).toLocaleString('es-419', {minimumFractionDigits: 0, maximumFractionDigits: 0})}</td>
-                  <td class="bgSkySoft border border-dark">${parseFloat(item.UNISDE) === 0 ? '‎' : parseFloat(item.UNISDE).toLocaleString('es-419', {minimumFractionDigits: 0, maximumFractionDigits: 0})}</td>
+                  <td class="bgSkySoft border border-dark">${parseFloat(item.SIDESC) === 0 ? '‎' : parseFloat(item.SIDESC).toLocaleString('es-419', {minimumFractionDigits: 0, maximumFractionDigits: 0})}</td>
                   <td class="bgSkySoft border border-dark">${parseFloat(item.PORDESC) === 0 ? '‎' : parseFloat(item.PORDESC).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})+'%'}</td>
                   <td class="bgGoldSoft border border-dark">${parseFloat(item.UNI20) === 0 ? '‎' : parseFloat(item.UNI20).toLocaleString('es-419', {minimumFractionDigits: 0, maximumFractionDigits: 0})}</td>
                   <td class="bgGoldSoft border border-dark">${parseFloat(item.POR20) === 0 ? '‎' : parseFloat(item.POR20).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})+'%'}</td>
@@ -523,7 +506,7 @@
                 `;
                 tbDetalle.appendChild(row);
                 total+=parseFloat(item.UNITOT);
-                totdes+=parseFloat(item.UNISDE);
+                totdes+=parseFloat(item.SIDESC);
                 tot20+=parseFloat(item.UNI20);
                 tot30+=parseFloat(item.UNI30);
                 tot40+=parseFloat(item.UNI40);
@@ -542,55 +525,25 @@
               const count=data.data.length;
               let unitot=0; let unides=0; let uni20=0; let uni30=0; let uni40=0; let uni50=0; let uniz1=0; let uniz2=0;
               let protot=0; let prodes=0; let pro20=0; let pro30=0; let pro40=0; let pro50=0; let proz1=0; let proz2=0;
-                unitot= (coun1ttot!=0) ? total/coun1ttot : 0;
-                unides= (coun1tdes!=0) ? totdes/coun1tdes : 0;
-                uni20= (coun1t20!=0) ? tot20/coun1t20 : 0;
-                uni30= (coun1t30!=0) ? tot30/coun1t30 : 0;
-                uni40= (coun1t40!=0) ? tot40/coun1t40 : 0;
-                uni50= (coun1t50!=0) ? tot50/coun1t50 : 0;
-                uniz1= (coun1tz1!=0) ? totz1/coun1tz1 : 0;
-                uniz2= (coun1tz2!=0) ? totz2/coun1tz2 : 0;
-                let filtDes = lineSinDescSecure1.filter(value => value !== 0);
-                let sumDes = filtDes.reduce((a, b) => a + b, 0);
-
-                if (filtDes.length > 0) {
-                  prodes = sumDes / filtDes.length;
-                }
-                let filt20 = line20Desc1.filter(value => value !== 0);
-                let sum20 = filt20.reduce((a, b) => a + b, 0);
-
-                if (filt20.length > 0) {
-                  pro20 = sum20 / filt20.length;
-                }
-                let filt30 = line30Desc1.filter(value => value !== 0);
-                let sum30 = filt30.reduce((a, b) => a + b, 0);
-
-                if (filt30.length > 0) {
-                  pro30 = sum30 / filt30.length;
-                }
-                let filt40 = line40Desc1.filter(value => value !== 0);
-                let sum40 = filt40.reduce((a, b) => a + b, 0);
-
-                if (filt40.length > 0) {
-                  pro40 = sum40 / filt40.length;
-                }
-                let filt50 = line50Desc1.filter(value => value !== 0);
-                let sum50 = filt50.reduce((a, b) => a + b, 0);
-
-                if (filt50.length > 0) {
-                  pro50 = sum50 / filt50.length;
-                }
-                let filtZ1 = lineZ1Desc1.filter(value => value !== 0);
-                let sumZ1 = filtZ1.reduce((a, b) => a + b, 0);
-
-                if (filtZ1.length > 0) {
-                  proz1 = sumZ1 / filtZ1.length;
-                }
-                let filtZ2 = lineZ2Desc1.filter(value => value !== 0);
-                let sumZ2 = filtZ2.reduce((a, b) => a + b, 0);
-                if (filtZ2.length > 0) {
-                  proz2 = sumZ2 / filtZ2.length;
-                }
+              if (count>0) {
+                unitot=total/count;
+                unides=totdes/count;
+                uni20=tot20/count;
+                uni30=tot30/count;
+                uni40=tot40/count;
+                uni50=tot50/count;
+                uniz1=totz1/count;
+                uniz2=totz2/count;
+              }
+              if(total>0){
+                prodes=(totdes/total)*100;
+                pro20=(tot30/total)*100;
+                pro30=(tot30/total)*100;
+                pro40=(tot40/total)*100;
+                pro50=(tot50/total)*100;
+                proz1=(totz1/total)*100;
+                proz2=(totz2/total)*100;
+              }
               barGra1=[
                 Math.round(prodes * 100) / 100,
                 Math.round(pro20 * 100) / 100,
@@ -640,7 +593,7 @@
         function chargeTable2(valAno,valAgrup) {
           //AÑO 2
           lineSinDesc2=[]; line20Desc2=[]; line30Desc2=[]; line40Desc2=[]; line50Desc2=[]; lineZ1Desc2=[]; lineZ2Desc2=[];
-          var urlList="http://172.16.15.20/API.LovablePHP/ZLO0024P/List/?anopro="+valAno+"&agrup="+valAgrup;
+          var urlList="http://172.16.15.20/API.LovablePHP/ZLO0026P/List/?anopro="+valAno+"&agrup="+valAgrup;
           let lblAno2=document.getElementById('lblano2');
           lblAno2.innerHTML='Año '+valAno;
           const tbDetalle = document.getElementById('tableInventarioDetalle2');
@@ -648,40 +601,15 @@
           fetch(urlList)
           .then(response => response.json())
           .then(data => {
-           let coun2ttot=0; let coun2tdes=0; let coun2t20=0; let coun2t30=0; let coun2t40=0; let coun2t50=0; let coun2tz1=0; let coun2tz2=0;
             if (data.code==200) {
               let total=0; let totdes=0; let tot20=0; let tot30=0; let tot40=0; let tot50=0; let totz1=0; let totz2=0;
               responseDataA2=[...data.data];
               responseDataA2.forEach((item) => {
-                if (item.UNITOT!=0) {
-                  coun2ttot++;
-                }
-                if (item.UNISDE!=0) {
-                  coun2tdes++;
-                }
-                if (item.UNI20!=0) {
-                  coun2t20++;
-                }
-                if (item.UNI30!=0) {
-                  coun2t30++;
-                }
-                if (item.UNI40!=0) {
-                  coun2t40++;
-                }
-                if (item.UNI50!=0) {
-                  coun2t50++;
-                }
-                if (item.UNIZ1!=0) {
-                  coun2tz1++;
-                }
-                if (item.UNIZ2!=0) {
-                  coun2tz2++;
-                }
                 const row = document.createElement('tr');
                 row.innerHTML = `
                   <td class="bg-light border border-dark">${item.MESDES}</td>
                   <td class="bg-light border border-dark">${parseFloat(item.UNITOT) === 0 ? '‎' : parseFloat(item.UNITOT).toLocaleString('es-419', {minimumFractionDigits: 0, maximumFractionDigits: 0})}</td>
-                  <td class="bgSkySoft border border-dark">${parseFloat(item.UNISDE) === 0 ? '‎' : parseFloat(item.UNISDE).toLocaleString('es-419', {minimumFractionDigits: 0, maximumFractionDigits: 0})}</td>
+                  <td class="bgSkySoft border border-dark">${parseFloat(item.SIDESC) === 0 ? '‎' : parseFloat(item.SIDESC).toLocaleString('es-419', {minimumFractionDigits: 0, maximumFractionDigits: 0})}</td>
                   <td class="bgSkySoft border border-dark">${parseFloat(item.PORDESC) === 0 ? '‎' : parseFloat(item.PORDESC).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})+'%'}</td>
                   <td class="bgGoldSoft border border-dark">${parseFloat(item.UNI20) === 0 ? '‎' : parseFloat(item.UNI20).toLocaleString('es-419', {minimumFractionDigits: 0, maximumFractionDigits: 0})}</td>
                   <td class="bgGoldSoft border border-dark">${parseFloat(item.POR20) === 0 ? '‎' : parseFloat(item.POR20).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})+'%'}</td>
@@ -698,7 +626,7 @@
                 `;
                 tbDetalle.appendChild(row);
                 total+=parseFloat(item.UNITOT);
-                totdes+=parseFloat(item.UNISDE);
+                totdes+=parseFloat(item.SIDESC);
                 tot20+=parseFloat(item.UNI20);
                 tot30+=parseFloat(item.UNI30);
                 tot40+=parseFloat(item.UNI40);
@@ -715,66 +643,28 @@
                 lineZ1Desc2.push( Math.round(parseFloat(item.PORZ1) * 100) / 100);
                 lineZ2Desc2.push( Math.round(parseFloat(item.PORZ2) * 100) / 100);
               });
+              const count=data.data.length;
               let unitot=0; let unides=0; let uni20=0; let uni30=0; let uni40=0; let uni50=0; let uniz1=0; let uniz2=0;
               let protot=0; let prodes=0; let pro20=0; let pro30=0; let pro40=0; let pro50=0; let proz1=0; let proz2=0;
-                unitot= (coun2ttot!=0) ? total/coun2ttot : 0;
-                unides= (coun2tdes!=0) ? totdes/coun2tdes : 0;
-                uni20= (coun2t20!=0) ? tot20/coun2t20 : 0;
-                uni30= (coun2t30!=0) ? tot30/coun2t30 : 0;
-                uni40= (coun2t40!=0) ? tot40/coun2t40 : 0;
-                uni50= (coun2t50!=0) ? tot50/coun2t50 : 0;
-                uniz1= (coun2tz1!=0) ? totz1/coun2tz1 : 0;
-                uniz2= (coun2tz2!=0) ? totz2/coun2tz2 : 0;
-                let filtDes = lineSinDescSecure2.filter(value => value !== 0);
-                let sumDes = filtDes.reduce((a, b) => a + b, 0);
-
-                if (filtDes.length > 0) {
-                  prodes = sumDes / filtDes.length;
-                }
-                let filt20 = line20Desc2.filter(value => value !== 0);
-                let sum20 = filt20.reduce((a, b) => a + b, 0);
-
-                if (filt20.length > 0) {
-                  pro20 = sum20 / filt20.length;
-                }
-                let filt30 = line30Desc2.filter(value => value !== 0);
-                let sum30 = filt30.reduce((a, b) => a + b, 0);
-
-                if (filt30.length > 0) {
-                  pro30 = sum30 / filt30.length;
-                }
-                let filt40 = line40Desc2.filter(value => value !== 0);
-                let sum40 = filt40.reduce((a, b) => a + b, 0);
-
-                if (filt40.length > 0) {
-                  pro40 = sum40 / filt40.length;
-                }
-                let filt50 = line50Desc2.filter(value => value !== 0);
-                let sum50 = filt50.reduce((a, b) => a + b, 0);
-
-                if (filt50.length > 0) {
-                  pro50 = sum50 / filt50.length;
-                }
-                let filtZ1 = lineZ1Desc2.filter(value => value !== 0);
-                let sumZ1 = filtZ1.reduce((a, b) => a + b, 0);
-
-                if (filtZ1.length > 0) {
-                  proz1 = sumZ1 / filtZ1.length;
-                }
-                let filtZ2 = lineZ2Desc2.filter(value => value !== 0);
-                let sumZ2 = filtZ2.reduce((a, b) => a + b, 0);
-                if (filtZ2.length > 0) {
-                  proz2 = sumZ2 / filtZ2.length;
-                }
-              /*  if(total>0){
-                  prodes=(totdes/total)*100;
-                  pro20=(tot20/total)*100;
-                  pro30=(tot30/total)*100;
-                  pro40=(tot40/total)*100;
-                  pro50=(tot50/total)*100;
-                  proz1=(totz1/total)*100;
-                  proz2=(totz2/total)*100;
-                }*/
+              if (count>0) {
+                unitot=total/count;
+                unides=totdes/count;
+                uni20=tot20/count;
+                uni30=tot30/count;
+                uni40=tot40/count;
+                uni50=tot50/count;
+                uniz1=totz1/count;
+                uniz2=totz2/count;
+              }
+              if(total>0){
+                prodes=(totdes/total)*100;
+                pro20=(tot30/total)*100;
+                pro30=(tot30/total)*100;
+                pro40=(tot40/total)*100;
+                pro50=(tot50/total)*100;
+                proz1=(totz1/total)*100;
+                proz2=(totz2/total)*100;
+              }
               barGra2=[
                 Math.round(prodes * 100) / 100,
                 Math.round(pro20 * 100) / 100,
@@ -821,6 +711,7 @@
               tbDetalle.appendChild(row);
           });
         }
+
         function chargeGrafica() {
           const cbbGrafica = document.getElementById('selectGrafica');
           let valGrafica=cbbGrafica.value;
@@ -868,6 +759,7 @@
                   },
               ]
           });
+
           let valoresLineal1=[];
           let valoresLineal2=[];
           switch (valGrafica) {
@@ -900,6 +792,7 @@
               valoresLineal2=lineSinDescSecure2;
               break;
           }
+
           chart2.update({
               chart: {
                   type: 'line'
@@ -909,7 +802,7 @@
                       align: 'center'
                   },
               xAxis: {
-                categories: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                  categories: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
               },
               plotOptions: {
                   line: {

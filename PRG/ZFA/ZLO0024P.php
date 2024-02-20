@@ -13,18 +13,17 @@
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb my-0 ms-2">
               <li class="breadcrumb-item">
-              <span>Producto Terminado / Ventas por clasificación de producto</span>
+              <span>Facturación / Ventas por clasificación de producto</span>
               </li>
-              <li class="breadcrumb-item active"><span>ZLO0025P</span></li>
+              <li class="breadcrumb-item active"><span>ZLO0024P</span></li>
             </ol>
           </nav>
         </div>
       </header>
       <div id="body-div" class="body flex-grow-1">
         <div class="card mb-5">
-          <div class="card mb-5">
             <div class="card-header">
-              <h1 class="fs-4 mb-1 mt-2 text-center">Análisis de ventas por clasificación de productos por fábrica</h1>
+              <h1 class="fs-4 mb-1 mt-2 text-center">Análisis de ventas por clasificación de productos por país</h1>
             </div>
           <div class="card-body">
           <div class="card border border-0">
@@ -36,27 +35,34 @@
                                 <div class="row mb-2">
                                 <div class="col-0 col-lg-3">
 
-                                    </div>
-                                    <div class="col-12 col-lg-3">
-                                      <label class="mt-2">Fábrica:</label>
-                                      <select class="form-select mt-1 fw-bold" id="cbbAgrup" >
-                                        <option  value="1">Lovable de Honduras</option>
-                                      </select>
-                                    </div>
-                                    <div class="col-12 col-lg-3">
-                                      <label class="mt-2">Año:</label>
-                                      <select class="form-select  mt-1" id="cbbAno" name="cbbAno">
-                                        <?php
-                                              $anio_actual = date('Y');
-                                              for ($i = $anio_actual; $i >= 2021; $i--) {
-                                              echo "<option value='$i'>$i</option>";
-                                              }
-                                          ?>
-                                      </select>
-                                    </div>
-                                    <div class="col-0 col-lg-3">
+                                        </div>
+                                        <div class="col-12 col-lg-3">
+                                        <label class="mt-2">Agrupación por país:</label>
+                                        <select class="form-select mt-1 fw-bold" id="cbbAgrup" >
+                                          <option  value="11">Tiendas Honduras (Lov. Ecommerce)</option>
+                                          <option  value="9">Tiendas Honduras (Mod. Íntima)</option>
+                                          <option  value="10">Tiendas Guatemala</option>
+                                          <option  value="12">Tiendas El Salvador</option>
+                                          <option  value="13">Tiendas Costa Rica</option>
+                                          <option  value="16">Tiendas Nicaragua</option>
+                                          <option  value="15">Tiendas Republica Dominicana</option>
+                                        </select>
+                                                  </div>
+                                                  <div class="col-12 col-lg-3">
+                                                    <label class="mt-2">Año:</label>
+                                                    <select class="form-select  mt-1" id="cbbAno" name="cbbAno">
+                                                      <?php
+                                                            $anio_actual = date('Y');
+                                                            for ($i = $anio_actual; $i >= 2021; $i--) {
+                                                            echo "<option value='$i'>$i</option>";
+                                                            }
+                                                        ?>
+                                                    </select>
+                                                  </div>
+                                                  <div class="col-0 col-lg-3">
 
-                                    </div>
+                                                  </div>
+
                                       <div class="col-12">
                                         <hr>
                                       </div>
@@ -79,13 +85,13 @@
                                 <tr>
                                   <th colspan="2" class=" border border-dark bg-secondary  border-bottom-0"></th>
                                   <th colspan="14" class=" border border-dark bg-secondary align-middle">
-                                  <span id="lblano1" class="fs-5"></span>
+                                   <span id="lblano1" class="fs-5"></span>
                                   </th>
                                 </tr>
                                 <tr>
                                   <th colspan="2" class=" border border-dark bg-secondary border-bottom-0 border-top-0 boder-end-0 "></th>
-                                  <th colspan="2" class=" border border-dark bg-secondary align-middle">Ventas Precio Regular</th>
-                                  <th colspan="8"class=" border border-dark bg-secondary align-middle">Ventas Con Descuento</th>
+                                  <th colspan="2" class=" border border-dark bg-secondary align-middle">Venta Precio Regular</th>
+                                  <th colspan="8"class=" border border-dark bg-secondary align-middle">Venta Con Descuento</th>
                                   <th colspan="4" class=" border border-dark bg-secondary align-middle">Segundas</th>
                                 </tr>
                                 <tr>
@@ -132,8 +138,8 @@
                                 </tr>
                                 <tr>
                                   <th colspan="2" class=" border border-dark bg-secondary border-bottom-0 border-top-0 boder-end-0"></th>
-                                  <th colspan="2" class=" border border-dark bg-secondary align-middle">Ventas Precio Regular</th>
-                                  <th colspan="8"class=" border border-dark bg-secondary align-middle">Ventas Con Descuento</th>
+                                  <th colspan="2" class=" border border-dark bg-secondary align-middle">Venta Precio Regular</th>
+                                  <th colspan="8"class=" border border-dark bg-secondary align-middle">Venta Con Descuento</th>
                                   <th colspan="4" class=" border border-dark bg-secondary align-middle">Segundas</th>
                                 </tr>
                                 <tr>
@@ -176,13 +182,13 @@
                             <div class="col-12">
                               <label class="form-control border border-0 fw-bold">Visualizar gráfica:</label>
                               <select id="selectGrafica" class="form-select fw-bold">
-                                <option value="G1">Promedio histórico de ventas Sin descuento</option>
-                                <option value="G2">Promedio histórico de ventas Con 20% descuento</option>
-                                <option value="G3">Promedio histórico de ventas Con 30% descuento</option>
-                                <option value="G4">Promedio histórico de ventas Con 40% descuento</option>
-                                <option value="G5">Promedio histórico de ventas Con 50% descuento</option>
-                                <option value="G6">Promedio histórico de ventas Segundas Nivel 1</option>
-                                <option value="G7">Promedio histórico de ventas Segundas Nivel 2</option>
+                                <option value="G1">Promedio histórico de venta Sin descuento</option>
+                                <option value="G2">Promedio histórico de venta Con 20% descuento</option>
+                                <option value="G3">Promedio histórico de venta Con 30% descuento</option>
+                                <option value="G4">Promedio histórico de venta Con 40% descuento</option>
+                                <option value="G5">Promedio histórico de venta Con 50% descuento</option>
+                                <option value="G6">Promedio histórico de venta Segundas Nivel 1</option>
+                                <option value="G7">Promedio histórico de venta Segundas Nivel 2</option>
                               </select>
                             </div>
                           <div class="col-12">
@@ -268,199 +274,198 @@
             chargeGrafica();
           });
           setTimeout(() => {
-          chart1=Highcharts.chart('container', {
-                  chart: {
-                          type: 'column',
-                          style: {
-                              color: '#FFFFFF'
-                          }
+            chart1=Highcharts.chart('container', {
+                    chart: {
+                            type: 'column',
+                            style: {
+                                color: '#FFFFFF'
+                            }
+                        },
+                        title: {
+                            text: 'Promedio histórico por tipo de descuento <br>'+ cbbAgrup.options[cbbAgrup.selectedIndex].text,
+                            align: 'center',
+                            style: {
+                                color: '#FFFFFF',
+                            }
+                        },
+                        lang: {
+                          viewFullscreen:"Ver en pantalla completa",
+                          exitFullscreen:"Salir de pantalla completa",
+                          downloadJPEG:"Descargar imagen JPEG",
+                          downloadPDF:"Descargar en PDF",
                       },
-                      title: {
-                          text: 'Promedio histórico por tipo de descuento <br>'+ cbbAgrup.options[cbbAgrup.selectedIndex].text,
-                          align: 'center',
-                          style: {
-                              color: '#FFFFFF',
-                          }
-                      },
-                      lang: {
-                        viewFullscreen:"Ver en pantalla completa",
-                        exitFullscreen:"Salir de pantalla completa",
-                        downloadJPEG:"Descargar imagen JPEG",
-                        downloadPDF:"Descargar en PDF",
+                    xAxis: {
+                        categories: ['Prendas Sin Dscto.', 'Prendas 20%', 'Prendas 30%', 'Prendas 40%', 'Prendas 50%', 'Segundas Nivel 1', 'Segundas Nivel 2'],
+                        crosshair: true,
+                        accessibility: {
+                            description: 'Countries'
+                        },
+                        labels: {
+                            style: {
+                                color: '#FFFFFF'
+                            }
+                        }
                     },
-                  xAxis: {
-                      categories: ['Prendas Sin Dscto.', 'Prendas 20%', 'Prendas 30%', 'Prendas 40%', 'Prendas 50%', 'Segundas Nivel 1', 'Segundas Nivel 2'],
-                      crosshair: true,
-                      accessibility: {
-                          description: 'Countries'
-                      },
-                      labels: {
-                          style: {
-                              color: '#FFFFFF'
-                          }
-                      }
-                  },
-                  yAxis: {
-                      min: 0,
-                      title: {
-                          text: ' ',
-                          style: {
-                              color: '#FFFFFF'
-                          }
-                      },
-                      labels: {
-                          style: {
-                              color: '#FFFFFF'
-                          }
-                      }
-                  },
-                  tooltip: {
-                      valueSuffix: ' %',
-                      style: {
-                          color: '#FFFFFF'
-                      }
-                  },
-                  plotOptions: {
-                      column: {
-                          pointPadding: 0.2,
-                          borderWidth: 0
-                      },
-                      series: {
-                          borderWidth: 0,
-                          dataLabels: {
-                              enabled: true,
-                              format: '{point.y:.2f}%'
-                          }
-                      }
-                  },
-                  credits: {
-                      enabled: false
-                  },
-                  legend: {
-                      itemStyle: {
-                          color: '#FFFFFF'
-                      }
-                  },
-                  exporting: {
-                    buttons: {
-                      contextButton: {
-                        menuItems: ["viewFullscreen", "separator","downloadJPEG", "downloadPDF"]
-                      }
+                    yAxis: {
+                        min: 0,
+                        title: {
+                            text: ' ',
+                            style: {
+                                color: '#FFFFFF'
+                            }
+                        },
+                        labels: {
+                            style: {
+                                color: '#FFFFFF'
+                            }
+                        }
                     },
-                    enabled: true,
-                    sourceWidth: 1600,
-                    sourceHeight: 700,
-                    chartOptions: {
-                      chart: {
-                        backgroundColor: '#303030'
-                      }
-                    }
-                  },
-                  series: [
-                      {
-                          name: 'Ano '+valAno,
-                          data: barGra1,
-                          color: '#20c997'
+                    tooltip: {
+                        valueSuffix: ' %',
+                        style: {
+                            color: '#FFFFFF'
+                        }
+                    },
+                    plotOptions: {
+                        column: {
+                            pointPadding: 0.2,
+                            borderWidth: 0
+                        },
+                        series: {
+                            borderWidth: 0,
+                            dataLabels: {
+                                enabled: true,
+                                format: '{point.y:.2f}%'
+                            }
+                        }
+                    },
+                    credits: {
+                        enabled: false
+                    },
+                    legend: {
+                        itemStyle: {
+                            color: '#FFFFFF'
+                        }
+                    },
+                    exporting: {
+                      buttons: {
+                        contextButton: {
+                          menuItems: ["viewFullscreen", "separator","downloadJPEG", "downloadPDF"]
+                        }
                       },
-                      {
-                          name: 'Ano '+valAno2,
-                          data: barGra2,
-                          color: '#ffd700'
-                      }
-                  ]
-          });
-          chart2=Highcharts.chart('container2', {
-              chart: {
-                  type: 'line',
-                  style: {
-                              color: '#FFFFFF'
-                          }
-              },
-              lang: {
-                  viewFullscreen:"Ver en pantalla completa",
-                  exitFullscreen:"Salir de pantalla completa",
-                  downloadJPEG:"Descargar imagen JPEG",
-                  downloadPDF:"Descargar en PDF",
-              },
-              title: {
-                      text: cbbGrafica.options[cbbGrafica.selectedIndex].text + '<br>' + cbbAgrup.options[cbbAgrup.selectedIndex].text,
-                      align: 'center',
-                      style: {
-                              color: '#FFFFFF'
-                          }
-                  },
-              xAxis: {
-                categories: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
-                      labels: {
-                          style: {
-                              color: '#FFFFFF'
-                          }
-                      }
-              },
-              yAxis: {
-                      title: {
-                          text: ' ',
-                          style: {
-                              color: '#FFFFFF'
-                          }
-                      },
-                      labels: {
-                          style: {
-                              color: '#FFFFFF'
-                          }
-                      }
-              },
-              plotOptions: {
-                line: {
-                  dataLabels: {
-                    enabled: true,
-                    format: '{y} %'
-                  },
-                  enableMouseTracking: false
-                }
-              },
-              credits: {
-                      enabled: false
-                  },
-                  legend: {
-                      itemStyle: {
-                          color: '#FFFFFF'
-                      }
-                  },
-                  exporting: {
-                    buttons: {
-                      contextButton: {
-                        menuItems: ["viewFullscreen", "separator","downloadJPEG", "downloadPDF"]
+                      enabled: true,
+                      sourceWidth: 1600,
+                      sourceHeight: 700,
+                      chartOptions: {
+                        chart: {
+                          backgroundColor: '#303030'
+                        }
                       }
                     },
-                    enabled: true,
-                    sourceWidth: 1600,
-                    sourceHeight: 700,
-                    chartOptions: {
-                      chart: {
-                        backgroundColor: '#303030'
+                    series: [
+                        {
+                            name: 'Ano '+valAno,
+                            data: barGra1,
+                            color: '#20c997'
+                        },
+                        {
+                            name: 'Ano '+valAno2,
+                            data: barGra2,
+                            color: '#ffd700'
+                        }
+                    ]
+            });
+            chart2=Highcharts.chart('container2', {
+                chart: {
+                    type: 'line',
+                    style: {
+                                color: '#FFFFFF'
+                            }
+                },
+                lang: {
+                    viewFullscreen:"Ver en pantalla completa",
+                    exitFullscreen:"Salir de pantalla completa",
+                    downloadJPEG:"Descargar imagen JPEG",
+                    downloadPDF:"Descargar en PDF",
+                },
+                title: {
+                        text: cbbGrafica.options[cbbGrafica.selectedIndex].text + '<br>' + cbbAgrup.options[cbbAgrup.selectedIndex].text,
+                        align: 'center',
+                        style: {
+                                color: '#FFFFFF'
+                            }
+                    },
+                xAxis: {
+                  categories: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                        labels: {
+                            style: {
+                                color: '#FFFFFF'
+                            }
+                        }
+                },
+                yAxis: {
+                        title: {
+                            text: ' ',
+                            style: {
+                                color: '#FFFFFF'
+                            }
+                        },
+                        labels: {
+                            style: {
+                                color: '#FFFFFF'
+                            }
+                        }
+                },
+                plotOptions: {
+                  line: {
+                    dataLabels: {
+                      enabled: true,
+                      format: '{y} %'
+                    },
+                    enableMouseTracking: false
+                  }
+                },
+                credits: {
+                        enabled: false
+                    },
+                    legend: {
+                        itemStyle: {
+                            color: '#FFFFFF'
+                        }
+                    },
+                    exporting: {
+                      buttons: {
+                        contextButton: {
+                          menuItems: ["viewFullscreen", "separator","downloadJPEG", "downloadPDF"]
+                        }
+                      },
+                      enabled: true,
+                      sourceWidth: 1600,
+                      sourceHeight: 700,
+                      chartOptions: {
+                        chart: {
+                          backgroundColor: '#303030'
+                        }
                       }
-                    }
-                  },
-              series: [{
-                  name: 'Ano '+valAno,
-                  data: lineSinDesc1,
-                  color: '#20c997'
-              }, {
-                  name: 'Ano '+valAno2,
-                  data: lineSinDesc2,
-                  color: '#ffd700'
-              }]
-          });
-          lineSinDescSecure1=[...lineSinDesc1];
-          lineSinDescSecure2=[...lineSinDesc2];
+                    },
+                series: [{
+                    name: 'Ano '+valAno,
+                    data: lineSinDesc1,
+                    color: '#20c997'
+                }, {
+                    name: 'Ano '+valAno2,
+                    data: lineSinDesc2,
+                    color: '#ffd700'
+                }]
+            });
+            lineSinDescSecure1=[...lineSinDesc1];
+            lineSinDescSecure2=[...lineSinDesc2];
           }, 1500);
         });
-
         function chargeTable(valAno,valAgrup) {
           //AÑO 1
           lineSinDesc1=[]; line20Desc1=[]; line30Desc1=[]; line40Desc1=[]; line50Desc1=[]; lineZ1Desc1=[]; lineZ2Desc1=[];
-          var urlList="http://172.16.15.20/API.LovablePHP/ZLO0025P/List/?anopro="+valAno+"&agrup="+valAgrup;
+          var urlList="http://172.16.15.20/API.LovablePHP/ZLO0024P/List/?anopro="+valAno+"&agrup="+valAgrup;
           let lblAno1=document.getElementById('lblano1');
           lblAno1.innerHTML='Año '+valAno;
           const tbDetalle = document.getElementById('tableInventarioDetalle');
@@ -476,7 +481,7 @@
                 if (item.UNITOT!=0) {
                   coun1ttot++;
                 }
-                if (item.SIDESC!=0) {
+                if (item.UNISDE!=0) {
                   coun1tdes++;
                 }
                 if (item.UNI20!=0) {
@@ -501,7 +506,7 @@
                 row.innerHTML = `
                   <td class="bg-light border border-dark">${item.MESDES}</td>
                   <td class="bg-light border border-dark">${parseFloat(item.UNITOT) === 0 ? '‎' : parseFloat(item.UNITOT).toLocaleString('es-419', {minimumFractionDigits: 0, maximumFractionDigits: 0})}</td>
-                  <td class="bgSkySoft border border-dark">${parseFloat(item.SIDESC) === 0 ? '‎' : parseFloat(item.SIDESC).toLocaleString('es-419', {minimumFractionDigits: 0, maximumFractionDigits: 0})}</td>
+                  <td class="bgSkySoft border border-dark">${parseFloat(item.UNISDE) === 0 ? '‎' : parseFloat(item.UNISDE).toLocaleString('es-419', {minimumFractionDigits: 0, maximumFractionDigits: 0})}</td>
                   <td class="bgSkySoft border border-dark">${parseFloat(item.PORDESC) === 0 ? '‎' : parseFloat(item.PORDESC).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})+'%'}</td>
                   <td class="bgGoldSoft border border-dark">${parseFloat(item.UNI20) === 0 ? '‎' : parseFloat(item.UNI20).toLocaleString('es-419', {minimumFractionDigits: 0, maximumFractionDigits: 0})}</td>
                   <td class="bgGoldSoft border border-dark">${parseFloat(item.POR20) === 0 ? '‎' : parseFloat(item.POR20).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})+'%'}</td>
@@ -518,7 +523,7 @@
                 `;
                 tbDetalle.appendChild(row);
                 total+=parseFloat(item.UNITOT);
-                totdes+=parseFloat(item.SIDESC);
+                totdes+=parseFloat(item.UNISDE);
                 tot20+=parseFloat(item.UNI20);
                 tot30+=parseFloat(item.UNI30);
                 tot40+=parseFloat(item.UNI40);
@@ -635,7 +640,7 @@
         function chargeTable2(valAno,valAgrup) {
           //AÑO 2
           lineSinDesc2=[]; line20Desc2=[]; line30Desc2=[]; line40Desc2=[]; line50Desc2=[]; lineZ1Desc2=[]; lineZ2Desc2=[];
-          var urlList="http://172.16.15.20/API.LovablePHP/ZLO0025P/List/?anopro="+valAno+"&agrup="+valAgrup;
+          var urlList="http://172.16.15.20/API.LovablePHP/ZLO0024P/List/?anopro="+valAno+"&agrup="+valAgrup;
           let lblAno2=document.getElementById('lblano2');
           lblAno2.innerHTML='Año '+valAno;
           const tbDetalle = document.getElementById('tableInventarioDetalle2');
@@ -651,7 +656,7 @@
                 if (item.UNITOT!=0) {
                   coun2ttot++;
                 }
-                if (item.SIDESC!=0) {
+                if (item.UNISDE!=0) {
                   coun2tdes++;
                 }
                 if (item.UNI20!=0) {
@@ -676,7 +681,7 @@
                 row.innerHTML = `
                   <td class="bg-light border border-dark">${item.MESDES}</td>
                   <td class="bg-light border border-dark">${parseFloat(item.UNITOT) === 0 ? '‎' : parseFloat(item.UNITOT).toLocaleString('es-419', {minimumFractionDigits: 0, maximumFractionDigits: 0})}</td>
-                  <td class="bgSkySoft border border-dark">${parseFloat(item.SIDESC) === 0 ? '‎' : parseFloat(item.SIDESC).toLocaleString('es-419', {minimumFractionDigits: 0, maximumFractionDigits: 0})}</td>
+                  <td class="bgSkySoft border border-dark">${parseFloat(item.UNISDE) === 0 ? '‎' : parseFloat(item.UNISDE).toLocaleString('es-419', {minimumFractionDigits: 0, maximumFractionDigits: 0})}</td>
                   <td class="bgSkySoft border border-dark">${parseFloat(item.PORDESC) === 0 ? '‎' : parseFloat(item.PORDESC).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})+'%'}</td>
                   <td class="bgGoldSoft border border-dark">${parseFloat(item.UNI20) === 0 ? '‎' : parseFloat(item.UNI20).toLocaleString('es-419', {minimumFractionDigits: 0, maximumFractionDigits: 0})}</td>
                   <td class="bgGoldSoft border border-dark">${parseFloat(item.POR20) === 0 ? '‎' : parseFloat(item.POR20).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})+'%'}</td>
@@ -693,7 +698,7 @@
                 `;
                 tbDetalle.appendChild(row);
                 total+=parseFloat(item.UNITOT);
-                totdes+=parseFloat(item.SIDESC);
+                totdes+=parseFloat(item.UNISDE);
                 tot20+=parseFloat(item.UNI20);
                 tot30+=parseFloat(item.UNI30);
                 tot40+=parseFloat(item.UNI40);
@@ -816,7 +821,6 @@
               tbDetalle.appendChild(row);
           });
         }
-
         function chargeGrafica() {
           const cbbGrafica = document.getElementById('selectGrafica');
           let valGrafica=cbbGrafica.value;
@@ -864,7 +868,6 @@
                   },
               ]
           });
-
           let valoresLineal1=[];
           let valoresLineal2=[];
           switch (valGrafica) {
@@ -897,7 +900,6 @@
               valoresLineal2=lineSinDescSecure2;
               break;
           }
-
           chart2.update({
               chart: {
                   type: 'line'
@@ -907,7 +909,7 @@
                       align: 'center'
                   },
               xAxis: {
-                  categories: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                categories: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
               },
               plotOptions: {
                   line: {

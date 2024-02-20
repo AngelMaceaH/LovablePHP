@@ -13,17 +13,18 @@
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb my-0 ms-2">
               <li class="breadcrumb-item">
-              <span>Producto Terminado / Ventas por clasificación de producto</span>
+              <span>Facturación / Ventas por clasificación de producto</span>
               </li>
-              <li class="breadcrumb-item active"><span>ZLO0026P</span></li>
+              <li class="breadcrumb-item active"><span>ZLO0025P</span></li>
             </ol>
           </nav>
         </div>
       </header>
       <div id="body-div" class="body flex-grow-1">
         <div class="card mb-5">
+          <div class="card mb-5">
             <div class="card-header">
-              <h1 class="fs-4 mb-1 mt-2 text-center">Análisis de ventas por clasificación de productos por tienda</h1>
+              <h1 class="fs-4 mb-1 mt-2 text-center">Análisis de ventas por clasificación de productos por fábrica</h1>
             </div>
           <div class="card-body">
           <div class="card border border-0">
@@ -33,28 +34,29 @@
                             <div class="position-relative">
                               <form>
                                 <div class="row mb-2">
-                                      <div class="col-0 col-lg-3">
+                                <div class="col-0 col-lg-3">
 
-                                      </div>
-                                      <div class="col-12 col-lg-3">
-                                        <label class="mt-2">Punto de venta:</label>
-                                        <select class="form-select mt-1 fw-bold" id="cbbAgrup" >
-                                        </select>
-                                      </div>
-                                      <div class="col-12 col-lg-3">
-                                        <label class="mt-2">Año:</label>
-                                        <select class="form-select  mt-1" id="cbbAno" name="cbbAno">
-                                          <?php
-                                                $anio_actual = date('Y');
-                                                for ($i = $anio_actual; $i >= 2021; $i--) {
-                                                echo "<option value='$i'>$i</option>";
-                                                }
-                                            ?>
-                                        </select>
-                                      </div>
-                                      <div class="col-0 col-lg-3">
+                                    </div>
+                                    <div class="col-12 col-lg-3">
+                                      <label class="mt-2">Fábrica:</label>
+                                      <select class="form-select mt-1 fw-bold" id="cbbAgrup" >
+                                        <option  value="1">Lovable de Honduras</option>
+                                      </select>
+                                    </div>
+                                    <div class="col-12 col-lg-3">
+                                      <label class="mt-2">Año:</label>
+                                      <select class="form-select  mt-1" id="cbbAno" name="cbbAno">
+                                        <?php
+                                              $anio_actual = date('Y');
+                                              for ($i = $anio_actual; $i >= 2021; $i--) {
+                                              echo "<option value='$i'>$i</option>";
+                                              }
+                                          ?>
+                                      </select>
+                                    </div>
+                                    <div class="col-0 col-lg-3">
 
-                                      </div>
+                                    </div>
                                       <div class="col-12">
                                         <hr>
                                       </div>
@@ -77,7 +79,7 @@
                                 <tr>
                                   <th colspan="2" class=" border border-dark bg-secondary  border-bottom-0"></th>
                                   <th colspan="14" class=" border border-dark bg-secondary align-middle">
-                                   <span id="lblano1" class="fs-5"></span>
+                                  <span id="lblano1" class="fs-5"></span>
                                   </th>
                                 </tr>
                                 <tr>
@@ -125,7 +127,7 @@
                                 <tr>
                                   <th colspan="2" class=" border border-dark bg-secondary  border-bottom-0"></th>
                                   <th colspan="14" class=" border border-dark bg-secondary align-middle">
-                                  <span id="lblano2" class="fs-5"></span>
+                                   <span id="lblano2" class="fs-5"></span>
                                   </th>
                                 </tr>
                                 <tr>
@@ -174,13 +176,13 @@
                             <div class="col-12">
                               <label class="form-control border border-0 fw-bold">Visualizar gráfica:</label>
                               <select id="selectGrafica" class="form-select fw-bold">
-                                <option value="G1">Promedio histórico de venta Sin descuento</option>
-                                <option value="G2">Promedio histórico de venta Con 20% descuento</option>
-                                <option value="G3">Promedio histórico de venta Con 30% descuento</option>
-                                <option value="G4">Promedio histórico de venta Con 40% descuento</option>
-                                <option value="G5">Promedio histórico de venta Con 50% descuento</option>
-                                <option value="G6">Promedio histórico de venta Segundas Nivel 1</option>
-                                <option value="G7">Promedio histórico de venta Segundas Nivel 2</option>
+                                <option value="G1">Promedio histórico de ventas Sin descuento</option>
+                                <option value="G2">Promedio histórico de ventas Con 20% descuento</option>
+                                <option value="G3">Promedio histórico de ventas Con 30% descuento</option>
+                                <option value="G4">Promedio histórico de ventas Con 40% descuento</option>
+                                <option value="G5">Promedio histórico de ventas Con 50% descuento</option>
+                                <option value="G6">Promedio histórico de ventas Segundas Nivel 1</option>
+                                <option value="G7">Promedio histórico de ventas Segundas Nivel 2</option>
                               </select>
                             </div>
                           <div class="col-12">
@@ -235,21 +237,6 @@
         let chart2=null;
         window.addEventListener('DOMContentLoaded', (event) => {
           const cbbAgrup = document.getElementById('cbbAgrup');
-            let usuario = '<?php echo $_SESSION["CODUSU"];?>';
-            let urlTiendas = 'http://172.16.15.20/API.LovablePHP/ZLO0015P/ListTiendas/?user=' + usuario + '';
-            let responseTiendas = ajaxRequest(urlTiendas);
-            let tiendasOptions = '';
-            if (responseTiendas.code == 200) {
-                for (let i = 0; i < responseTiendas.data.length; i++) {
-                    if (responseTiendas.data[i].COMCOD!=1 && responseTiendas.data[i].COMCOD!=35) {
-                        tiendasOptions += '<option value="' + responseTiendas.data[i].COMCOD.padStart(2, '0') + '">' +
-                        responseTiendas.data[
-                            i].COMDES + '</option>';
-                    }
-                }
-            }
-            cbbAgrup.innerHTML = tiendasOptions;
-
           const cbbAno = document.getElementById('cbbAno');
           const cbbGrafica = document.getElementById('selectGrafica');
             let valAno=parseInt(cbbAno.value);
@@ -473,7 +460,7 @@
         function chargeTable(valAno,valAgrup) {
           //AÑO 1
           lineSinDesc1=[]; line20Desc1=[]; line30Desc1=[]; line40Desc1=[]; line50Desc1=[]; lineZ1Desc1=[]; lineZ2Desc1=[];
-          var urlList="http://172.16.15.20/API.LovablePHP/ZLO0026P/List/?anopro="+valAno+"&agrup="+valAgrup;
+          var urlList="http://172.16.15.20/API.LovablePHP/ZLO0025P/List/?anopro="+valAno+"&agrup="+valAgrup;
           let lblAno1=document.getElementById('lblano1');
           lblAno1.innerHTML='Año '+valAno;
           const tbDetalle = document.getElementById('tableInventarioDetalle');
@@ -482,9 +469,34 @@
           .then(response => response.json())
           .then(data => {
             if (data.code==200) {
+              let coun1ttot=0; let coun1tdes=0; let coun1t20=0; let coun1t30=0; let coun1t40=0; let coun1t50=0; let coun1tz1=0; let coun1tz2=0;
               let total=0; let totdes=0; let tot20=0; let tot30=0; let tot40=0; let tot50=0; let totz1=0; let totz2=0;
               responseDataA1=[...data.data];
               data.data.forEach((item) => {
+                if (item.UNITOT!=0) {
+                  coun1ttot++;
+                }
+                if (item.SIDESC!=0) {
+                  coun1tdes++;
+                }
+                if (item.UNI20!=0) {
+                  coun1t20++;
+                }
+                if (item.UNI30!=0) {
+                  coun1t30++;
+                }
+                if (item.UNI40!=0) {
+                  coun1t40++;
+                }
+                if (item.UNI50!=0) {
+                  coun1t50++;
+                }
+                if (item.UNIZ1!=0) {
+                  coun1tz1++;
+                }
+                if (item.UNIZ2!=0) {
+                  coun1tz2++;
+                }
                 const row = document.createElement('tr');
                 row.innerHTML = `
                   <td class="bg-light border border-dark">${item.MESDES}</td>
@@ -525,25 +537,55 @@
               const count=data.data.length;
               let unitot=0; let unides=0; let uni20=0; let uni30=0; let uni40=0; let uni50=0; let uniz1=0; let uniz2=0;
               let protot=0; let prodes=0; let pro20=0; let pro30=0; let pro40=0; let pro50=0; let proz1=0; let proz2=0;
-              if (count>0) {
-                unitot=total/count;
-                unides=totdes/count;
-                uni20=tot20/count;
-                uni30=tot30/count;
-                uni40=tot40/count;
-                uni50=tot50/count;
-                uniz1=totz1/count;
-                uniz2=totz2/count;
-              }
-              if(total>0){
-                prodes=(totdes/total)*100;
-                pro20=(tot30/total)*100;
-                pro30=(tot30/total)*100;
-                pro40=(tot40/total)*100;
-                pro50=(tot50/total)*100;
-                proz1=(totz1/total)*100;
-                proz2=(totz2/total)*100;
-              }
+                unitot= (coun1ttot!=0) ? total/coun1ttot : 0;
+                unides= (coun1tdes!=0) ? totdes/coun1tdes : 0;
+                uni20= (coun1t20!=0) ? tot20/coun1t20 : 0;
+                uni30= (coun1t30!=0) ? tot30/coun1t30 : 0;
+                uni40= (coun1t40!=0) ? tot40/coun1t40 : 0;
+                uni50= (coun1t50!=0) ? tot50/coun1t50 : 0;
+                uniz1= (coun1tz1!=0) ? totz1/coun1tz1 : 0;
+                uniz2= (coun1tz2!=0) ? totz2/coun1tz2 : 0;
+                let filtDes = lineSinDescSecure1.filter(value => value !== 0);
+                let sumDes = filtDes.reduce((a, b) => a + b, 0);
+
+                if (filtDes.length > 0) {
+                  prodes = sumDes / filtDes.length;
+                }
+                let filt20 = line20Desc1.filter(value => value !== 0);
+                let sum20 = filt20.reduce((a, b) => a + b, 0);
+
+                if (filt20.length > 0) {
+                  pro20 = sum20 / filt20.length;
+                }
+                let filt30 = line30Desc1.filter(value => value !== 0);
+                let sum30 = filt30.reduce((a, b) => a + b, 0);
+
+                if (filt30.length > 0) {
+                  pro30 = sum30 / filt30.length;
+                }
+                let filt40 = line40Desc1.filter(value => value !== 0);
+                let sum40 = filt40.reduce((a, b) => a + b, 0);
+
+                if (filt40.length > 0) {
+                  pro40 = sum40 / filt40.length;
+                }
+                let filt50 = line50Desc1.filter(value => value !== 0);
+                let sum50 = filt50.reduce((a, b) => a + b, 0);
+
+                if (filt50.length > 0) {
+                  pro50 = sum50 / filt50.length;
+                }
+                let filtZ1 = lineZ1Desc1.filter(value => value !== 0);
+                let sumZ1 = filtZ1.reduce((a, b) => a + b, 0);
+
+                if (filtZ1.length > 0) {
+                  proz1 = sumZ1 / filtZ1.length;
+                }
+                let filtZ2 = lineZ2Desc1.filter(value => value !== 0);
+                let sumZ2 = filtZ2.reduce((a, b) => a + b, 0);
+                if (filtZ2.length > 0) {
+                  proz2 = sumZ2 / filtZ2.length;
+                }
               barGra1=[
                 Math.round(prodes * 100) / 100,
                 Math.round(pro20 * 100) / 100,
@@ -593,7 +635,7 @@
         function chargeTable2(valAno,valAgrup) {
           //AÑO 2
           lineSinDesc2=[]; line20Desc2=[]; line30Desc2=[]; line40Desc2=[]; line50Desc2=[]; lineZ1Desc2=[]; lineZ2Desc2=[];
-          var urlList="http://172.16.15.20/API.LovablePHP/ZLO0026P/List/?anopro="+valAno+"&agrup="+valAgrup;
+          var urlList="http://172.16.15.20/API.LovablePHP/ZLO0025P/List/?anopro="+valAno+"&agrup="+valAgrup;
           let lblAno2=document.getElementById('lblano2');
           lblAno2.innerHTML='Año '+valAno;
           const tbDetalle = document.getElementById('tableInventarioDetalle2');
@@ -601,10 +643,35 @@
           fetch(urlList)
           .then(response => response.json())
           .then(data => {
+           let coun2ttot=0; let coun2tdes=0; let coun2t20=0; let coun2t30=0; let coun2t40=0; let coun2t50=0; let coun2tz1=0; let coun2tz2=0;
             if (data.code==200) {
               let total=0; let totdes=0; let tot20=0; let tot30=0; let tot40=0; let tot50=0; let totz1=0; let totz2=0;
               responseDataA2=[...data.data];
               responseDataA2.forEach((item) => {
+                if (item.UNITOT!=0) {
+                  coun2ttot++;
+                }
+                if (item.SIDESC!=0) {
+                  coun2tdes++;
+                }
+                if (item.UNI20!=0) {
+                  coun2t20++;
+                }
+                if (item.UNI30!=0) {
+                  coun2t30++;
+                }
+                if (item.UNI40!=0) {
+                  coun2t40++;
+                }
+                if (item.UNI50!=0) {
+                  coun2t50++;
+                }
+                if (item.UNIZ1!=0) {
+                  coun2tz1++;
+                }
+                if (item.UNIZ2!=0) {
+                  coun2tz2++;
+                }
                 const row = document.createElement('tr');
                 row.innerHTML = `
                   <td class="bg-light border border-dark">${item.MESDES}</td>
@@ -643,28 +710,66 @@
                 lineZ1Desc2.push( Math.round(parseFloat(item.PORZ1) * 100) / 100);
                 lineZ2Desc2.push( Math.round(parseFloat(item.PORZ2) * 100) / 100);
               });
-              const count=data.data.length;
               let unitot=0; let unides=0; let uni20=0; let uni30=0; let uni40=0; let uni50=0; let uniz1=0; let uniz2=0;
               let protot=0; let prodes=0; let pro20=0; let pro30=0; let pro40=0; let pro50=0; let proz1=0; let proz2=0;
-              if (count>0) {
-                unitot=total/count;
-                unides=totdes/count;
-                uni20=tot20/count;
-                uni30=tot30/count;
-                uni40=tot40/count;
-                uni50=tot50/count;
-                uniz1=totz1/count;
-                uniz2=totz2/count;
-              }
-              if(total>0){
-                prodes=(totdes/total)*100;
-                pro20=(tot30/total)*100;
-                pro30=(tot30/total)*100;
-                pro40=(tot40/total)*100;
-                pro50=(tot50/total)*100;
-                proz1=(totz1/total)*100;
-                proz2=(totz2/total)*100;
-              }
+                unitot= (coun2ttot!=0) ? total/coun2ttot : 0;
+                unides= (coun2tdes!=0) ? totdes/coun2tdes : 0;
+                uni20= (coun2t20!=0) ? tot20/coun2t20 : 0;
+                uni30= (coun2t30!=0) ? tot30/coun2t30 : 0;
+                uni40= (coun2t40!=0) ? tot40/coun2t40 : 0;
+                uni50= (coun2t50!=0) ? tot50/coun2t50 : 0;
+                uniz1= (coun2tz1!=0) ? totz1/coun2tz1 : 0;
+                uniz2= (coun2tz2!=0) ? totz2/coun2tz2 : 0;
+                let filtDes = lineSinDescSecure2.filter(value => value !== 0);
+                let sumDes = filtDes.reduce((a, b) => a + b, 0);
+
+                if (filtDes.length > 0) {
+                  prodes = sumDes / filtDes.length;
+                }
+                let filt20 = line20Desc2.filter(value => value !== 0);
+                let sum20 = filt20.reduce((a, b) => a + b, 0);
+
+                if (filt20.length > 0) {
+                  pro20 = sum20 / filt20.length;
+                }
+                let filt30 = line30Desc2.filter(value => value !== 0);
+                let sum30 = filt30.reduce((a, b) => a + b, 0);
+
+                if (filt30.length > 0) {
+                  pro30 = sum30 / filt30.length;
+                }
+                let filt40 = line40Desc2.filter(value => value !== 0);
+                let sum40 = filt40.reduce((a, b) => a + b, 0);
+
+                if (filt40.length > 0) {
+                  pro40 = sum40 / filt40.length;
+                }
+                let filt50 = line50Desc2.filter(value => value !== 0);
+                let sum50 = filt50.reduce((a, b) => a + b, 0);
+
+                if (filt50.length > 0) {
+                  pro50 = sum50 / filt50.length;
+                }
+                let filtZ1 = lineZ1Desc2.filter(value => value !== 0);
+                let sumZ1 = filtZ1.reduce((a, b) => a + b, 0);
+
+                if (filtZ1.length > 0) {
+                  proz1 = sumZ1 / filtZ1.length;
+                }
+                let filtZ2 = lineZ2Desc2.filter(value => value !== 0);
+                let sumZ2 = filtZ2.reduce((a, b) => a + b, 0);
+                if (filtZ2.length > 0) {
+                  proz2 = sumZ2 / filtZ2.length;
+                }
+              /*  if(total>0){
+                  prodes=(totdes/total)*100;
+                  pro20=(tot20/total)*100;
+                  pro30=(tot30/total)*100;
+                  pro40=(tot40/total)*100;
+                  pro50=(tot50/total)*100;
+                  proz1=(totz1/total)*100;
+                  proz2=(totz2/total)*100;
+                }*/
               barGra2=[
                 Math.round(prodes * 100) / 100,
                 Math.round(pro20 * 100) / 100,
