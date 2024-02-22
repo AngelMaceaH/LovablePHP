@@ -204,11 +204,16 @@
                                         <div class="selectOptions">
                                             <span class="selectOption d-flex justify-content-between"
                                                 value="0">Todos</span>
-                                            <span class="selectOption d-flex justify-content-between" value="10"
-                                                data-bs-toggle="tooltip" data-bs-placement="right"
-                                                data-bs-title="No contiene: <br>-Marcas: 450,960,970,995<br>-Totales por estilo<br>-Estilos fuera de programa<br>-Estilos nuevos en programa<br>-MESES PRG 12M<br>Solamente desde 0 hasta 12 meses">Análisis de compras </span>
                                             <span class="selectOption d-flex justify-content-between"
-                                                value="20">Análisis de inventario </span>
+                                                value="10"
+                                                data-bs-toggle="tooltip" data-bs-placement="right"
+                                                data-bs-title="NO CONTIENE: &#13;&#10;-Marcas: 450,960,970,995&#13;&#10;-Totales por estilo&#13;&#10;-Estilos fuera de programa&#13;&#10;-Estilos nuevos en programa&#13;&#10;-MESES PRG 12M Solamente desde 0 hasta 12 meses"
+                                                >Análisis de compras </span>
+                                            <span class="selectOption d-flex justify-content-between"
+                                                value="20"
+                                                data-bs-toggle="tooltip" data-bs-placement="right"
+                                                data-bs-title="CONTIENE: Total docenas x estilo -Nuevos meses de inventario -Importados -Cantidad a mover a Materia Prima NO CONTIENE: &#13;&#10;-Marcas: 450,960,970,995&#13;&#10;-Totales por estilo&#13;&#10;-Estilos fuera de programa&#13;&#10;-Estilos nuevos en programa&#13;&#10;-Estilos en 0.00 Materia Prima"
+                                                >Análisis de inventario </span>
                                         </div>
                                         <input type="text" class="d-none" id="cbbFormato" name="cbbFormato" value="0">
                                     </div>

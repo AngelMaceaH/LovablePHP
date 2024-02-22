@@ -62,16 +62,36 @@
         }
         .table-container {
             width: 100%;
-            height:540px;
+            height:500px;
             overflow-x: auto;
             position: relative;
             z-index: 1;
             top: 0;
         }
-        @media screen and (min-width: 1900px) {
+        @media screen and (min-width: 1300px) {
+            .table-container {
+                width: 100%;
+                height:550px;
+                overflow-x: auto;
+                position: relative;
+                z-index: 1;
+                top: 0;
+            }
+        }
+        @media screen and (min-width: 1540px) {
+            .table-container {
+                width: 100%;
+                height:630px;
+                overflow-x: auto;
+                position: relative;
+                z-index: 1;
+                top: 0;
+            }
+        }
+        @media screen and (min-width: 1600px) {
         .table-container {
             width: 100%;
-            height:760px;
+            height:740px;
             overflow-x: auto;
             position: relative;
             z-index: 1;

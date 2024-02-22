@@ -22,13 +22,13 @@
 
 
       $ciaFiltro=isset($_SESSION['ciaFiltro'])? $_SESSION['ciaFiltro']:999;
-      
+
       $arrayConversion="";
       if ($ciaFiltro!=1 && $ciaFiltro!=999) {
         $counter=count($ciaFiltro);
-        for ($i = 0; $i < $counter; $i++) { 
+        for ($i = 0; $i < $counter; $i++) {
           $arrayConversion .= $ciaFiltro[$i];
-          if ($i < $counter - 1) {  
+          if ($i < $counter - 1) {
               $arrayConversion .= ',';
           }
       }
@@ -39,7 +39,7 @@
       if (isset($_SESSION['clickPais']) && isset($_SESSION['clickCia'])) {
         if ($_SESSION['clickCia']==1) {
               if ($ciaFiltro!=1 && $ciaFiltro!=999) {
-                for ($i=0; $i <count($ciaFiltro) ; $i++) { 
+                for ($i=0; $i <count($ciaFiltro) ; $i++) {
                 if ($ciaFiltro[$i]==1 ||$ciaFiltro[$i]==35 || $ciaFiltro[$i]==47 || $ciaFiltro[$i]==50 || $ciaFiltro[$i]==52 || $ciaFiltro[$i]==56 || $ciaFiltro[$i]==57 || $ciaFiltro[$i]==59
               || $ciaFiltro[$i]==63 || $ciaFiltro[$i]==64 || $ciaFiltro[$i]==65 || $ciaFiltro[$i]==68 || $ciaFiltro[$i]==70 || $ciaFiltro[$i]==72 || $ciaFiltro[$i]==73
               || $ciaFiltro[$i]==74 || $ciaFiltro[$i]==75 || $ciaFiltro[$i]==76 || $ciaFiltro[$i]==78 || $ciaFiltro[$i]==82 || $ciaFiltro[$i]==85) {
@@ -57,14 +57,14 @@
               }elseif ($ciaFiltro[$i]==81) {
                 $paisFiltro=7;
               }
-              
+
                 $cia=" AND CODCIA IN($arrayConversion)";
               }
            }else{
                 $cia= " AND CODCIA IN(35,47,50,52,56,57,59,63,64,65,68,70,72,73,74,75,76,78,82,85,88)";
                 $paisFiltro=1;
            }
-         
+
         }
         if ($_SESSION['clickPais']==1) {
           $ciaFiltro=[999];
@@ -87,25 +87,25 @@
         }
       }
   //VENTAS
-    $sqlVentas="SELECT T1.CODVEN, T1.MAENO3, T1.CANTRA, T1.CANTID, T1.VALOR VALOR1, T2.VALOR VALOR2, T3.VALOR VALOR3 FROM                   
-    (SELECT CODVEN, MAENO3, SUM(CANTRA) CANTRA,SUM(CANTID)              
-    CANTID,SUM(VALOR) VALOR                                             
-    FROM LBPRDDAT/LO1617 T1 INNER JOIN LBPRDDAT/MAEA01 T2               
-    ON T1.CODCIA=T2.MAEC14 AND T1.CODVEN=T2.MAEC15                      
-    WHERE FECPRO BETWEEN ".$anoFiltro1.$mesFiltro1.$diaFiltro1." AND ".$anoFiltro2.$mesFiltro2.$diaFiltro2." ".$cia."                                                                
+    $sqlVentas="SELECT T1.CODVEN, T1.MAENO3, T1.CANTRA, T1.CANTID, T1.VALOR VALOR1, T2.VALOR VALOR2, T3.VALOR VALOR3 FROM
+    (SELECT CODVEN, MAENO3, SUM(CANTRA) CANTRA,SUM(CANTID)
+    CANTID,SUM(VALOR) VALOR
+    FROM LBPRDDAT/LO1617 T1 INNER JOIN LBPRDDAT/MAEA01 T2
+    ON T1.CODCIA=T2.MAEC14 AND T1.CODVEN=T2.MAEC15
+    WHERE FECPRO BETWEEN ".$anoFiltro1.$mesFiltro1.$diaFiltro1." AND ".$anoFiltro2.$mesFiltro2.$diaFiltro2." ".$cia."
     GROUP BY CODVEN, MAENO3)T1 left JOIN
-    (SELECT CODVEN, SUM(CANTRA) CANTRA,SUM(CANTID)              
-    CANTID,SUM(VALOR) VALOR FROM LBPRDDAT/LO1617 T1 WHERE FECPRO BETWEEN ".($anoFiltro1-1).$mesFiltro1.$diaFiltro1." AND ".($anoFiltro2-1).$mesFiltro2.$diaFiltro2." ".$cia."                                                                
+    (SELECT CODVEN, SUM(CANTRA) CANTRA,SUM(CANTID)
+    CANTID,SUM(VALOR) VALOR FROM LBPRDDAT/LO1617 T1 WHERE FECPRO BETWEEN ".($anoFiltro1-1).$mesFiltro1.$diaFiltro1." AND ".($anoFiltro2-1).$mesFiltro2.$diaFiltro2." ".$cia."
     GROUP BY CODVEN)T2 ON T1.CODVEN=T2.CODVEN  left JOIN
-    (SELECT CODVEN, SUM(CANTRA) CANTRA,SUM(CANTID)              
-    CANTID,SUM(VALOR) VALOR FROM LBPRDDAT/LO1617 T1 WHERE FECPRO BETWEEN ".($anoFiltro1-2).$mesFiltro1.$diaFiltro1." AND ".($anoFiltro2-2).$mesFiltro2.$diaFiltro2." ".$cia."                                                                
+    (SELECT CODVEN, SUM(CANTRA) CANTRA,SUM(CANTID)
+    CANTID,SUM(VALOR) VALOR FROM LBPRDDAT/LO1617 T1 WHERE FECPRO BETWEEN ".($anoFiltro1-2).$mesFiltro1.$diaFiltro1." AND ".($anoFiltro2-2).$mesFiltro2.$diaFiltro2." ".$cia."
     GROUP BY CODVEN)T3 ON T1.CODVEN=T3.CODVEN
     ORDER BY VALOR1 DESC ";
-    
+
     $resultVentas=odbc_exec($connIBM,$sqlVentas);
-    
+
    //COMBOBOX
-   $sqlCOMARC = "SELECT T2.CODSEC,LO0705.CODCIA COMCOD, LO0705.NOMCIA COMDES 
+   $sqlCOMARC = "SELECT T2.CODSEC,LO0705.CODCIA COMCOD, LO0705.NOMCIA COMDES
    FROM LBPRDDAT/LO0705
    INNER JOIN LBPRDDAT/LO0686 AS T2 ON T2.CODCIA = LO0705.CODCIA
    ORDER BY T2.CODSEC";
@@ -188,7 +188,7 @@
               </div>
               <hr>
              <div id="grafica1" class="mt-3 mb-4">
-             <div id="carouselExampleDark" class="carousel carousel-dark slide"  data-bs-ride="carousel">
+             <div id="carouselExampleDark" class="carousel carousel-dark slide" >
                 <div class="carousel-indicators">
                   <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
                   <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>
@@ -227,7 +227,7 @@
                                 </div>
                                 <div class="carousel-item">
                                 <div class="me-5 ms-5">
-                                   
+
                                       <div id="ventaRadial" class="PaddingRadial">
                                       <h5 class="text-center">Venta y Venta 2 Años Antes </h5>
                                       <h5 class="text-center" id="lblRadial"></h5>
@@ -292,7 +292,7 @@
                                     $decimales=($rowVen['CANTID']!=0)?substr($rowVen['CANTID'],strpos($rowVen['CANTID'],".")+1,2):0;
                                     $cantidad=0;
                                     $cantidad=$docenas+$decimales;
-                                   
+
 
                                     $variacion1=$rowVen['VALOR1']-$rowVen['VALOR2'];
                                     $variacion2=$rowVen['VALOR1']-$rowVen['VALOR3'];
@@ -303,7 +303,7 @@
                                     if ($rowVen['VALOR3']!=0) {
                                       $crecimiento2 = round((($rowVen['VALOR1']/$rowVen['VALOR3'])-1)*100);
                                     }
-                                    
+
                                     print '<tr style="font-size:13px;">';
                                     print '<td  class=" text-start fw-bold">'.rtrim(utf8_encode($rowVen['MAENO3'])).'</td>';
                                     print '<td  class=" text-end">'.number_format($rowVen['CANTRA'],0).'</td>';
@@ -344,7 +344,7 @@
                               </tbody>
                           </table>
                       </div>
-                   
+
           </div>
           </div>
           <div class="card-footer">
@@ -353,7 +353,7 @@
         </div>
         </div>
       </div>
-      
+
     </div>
     <div class="footer bg-blck flex-grow-1 d-flex justify-content-center">
       <p class="bggray responsive-font-example"><i>Lovable de Honduras S.A. de C.V</i></p>
@@ -369,7 +369,7 @@
 
         var Date1=diaFiltro1+'/'+mesFiltro1+'/'+anoFiltro1;
         var Date2=diaFiltro2+'/'+mesFiltro2+'/'+anoFiltro2;
-       
+
         function sendForm(){
           $("#formFiltros").submit();
         }

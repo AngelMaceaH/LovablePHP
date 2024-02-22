@@ -32,10 +32,10 @@
         <nav aria-label="breadcrumb" style="width:100%" class="p-0">
             <div class="row" style="width:100%">
                 <div class="col-2 mt-1">
-                    <!--<button type="button" id="exportExcel" class="btn btn-success text-light fs-6 text-center mt-4"
+                    <button type="button" id="exportExcel" class="btn btn-success text-light fs-6 text-center mt-4"
                         style="width:100%;">
                         <i class="fa-solid fa-file-excel me-1"></i><b>Enviar a Excel</b>
-                    </button>-->
+                    </button>
                 </div>
                 <div class="col-2">
                     <label class="form-control border border-0">Año:</label>
@@ -182,8 +182,9 @@
         }
         $("#exportExcel").on('click', function() {
             document.getElementById('loaderExcel').classList.remove('d-none');
-            var url = "http://172.16.15.20/API.LovablePHP/ZLO0019P/Export/?anio=" + yearSelected +
+            var url = "http://172.16.15.20/API.LovablePHP/ZLO0019P/Export2/?anio=" + yearSelected +
                 "&tiendas=" + ciasSelected + "";
+                console.log(url);
             fetch(url)
                 .then(response => response.blob())
                 .then(blob => {
@@ -562,8 +563,8 @@
                                                 maximumFractionDigits: 0
                                             }) : '‎') + '</td>';
                                     totalMes += parseInt(datosRow7[mes][codcia] || '0');
-                                    if (codcia==81) {
-                                        totalRow = parseInt(datosRow7[mes][codcia] || '0');
+                                    if (codcia==81 && parseInt(datosRow7[mes][codcia])!=0) {
+                                        totalRow=parseInt(datosRow7[mes][codcia]);
                                     }
                                 }
                             });
@@ -594,8 +595,8 @@
                                                 maximumFractionDigits: 0
                                             }) : '‎') + '</td>';
                                     totalMes += parseInt(datosRow8[mes][codcia] || '0');
-                                    if (codcia==81) {
-                                        totalRow = parseInt(datosRow8[mes][codcia] || '0');
+                                    if (codcia==81 && parseInt(datosRow8[mes][codcia])!=0) {
+                                         totalRow = parseInt(datosRow8[mes][codcia]);
                                     }
                                 }
                             });
@@ -626,8 +627,8 @@
                                                 maximumFractionDigits: 0
                                             }) : '‎') + '</td>';
                                     totalMes += parseInt(datosRow9[mes][codcia] || '0');
-                                    if (codcia==81) {
-                                        totalRow = parseInt(datosRow9[mes][codcia] || '0');
+                                    if (codcia==81 && parseInt(datosRow9[mes][codcia])!=0) {
+                                        totalRow = parseInt(datosRow9[mes][codcia]);
                                     }
                                 }
                             });
@@ -1090,6 +1091,7 @@
                                         rowtd +=
                                             '<td class="text-end fontM border border-dark"> </td>';
                                     } else {
+                                        totalRow = parseInt(totalMes || '0');
                                         rowtd +=
                                             '<td class="text-end fontM border border-dark">' +
                                             totalMes.toLocaleString('es-419', {
@@ -1106,7 +1108,9 @@
                                                 maximumFractionDigits: 0
                                             }) : '‎') + '</td>';
                                     totalMes += parseInt(datosRow10[mes][codcia] || '0');
-                                    totalRow += parseInt(datosRow10[mes][codcia] || '0');
+                                    if (codcia==81 && parseInt(datosRow10[mes][codcia])!=0) {
+                                        totalRow = parseInt(datosRow10[mes][codcia]);
+                                    }
                                 }
                             });
                         });
@@ -1119,6 +1123,7 @@
                                         rowtd +=
                                             '<td class="text-end fontM border border-dark"> </td>';
                                     } else {
+                                        totalRow = parseInt(totalMes || '0');
                                         rowtd +=
                                             '<td class="text-end fontM border border-dark">' +
                                             totalMes.toLocaleString('es-419', {
@@ -1135,7 +1140,9 @@
                                                 maximumFractionDigits: 0
                                             }) : '‎') + '</td>';
                                     totalMes += parseInt(datosRow11[mes][codcia] || '0');
-                                    totalRow += parseInt(datosRow11[mes][codcia] || '0');
+                                    if (codcia==81 && parseInt(datosRow11[mes][codcia])!=0) {
+                                        totalRow = parseInt(datosRow11[mes][codcia]);
+                                    }
                                 }
                             });
                         });
@@ -1148,6 +1155,7 @@
                                         rowtd +=
                                             '<td class="text-end fontM border border-dark"> </td>';
                                     } else {
+                                        totalRow = parseInt(totalMes || '0');
                                         rowtd +=
                                             '<td class="text-end fontM border border-dark">' +
                                             totalMes.toLocaleString('es-419', {
@@ -1164,7 +1172,9 @@
                                                 maximumFractionDigits: 0
                                             }) : '‎') + '</td>';
                                     totalMes += parseInt(datosRow12[mes][codcia] || '0');
-                                    totalRow += parseInt(datosRow12[mes][codcia] || '0');
+                                    if (codcia==81 && parseInt(datosRow12[mes][codcia])!=0) {
+                                        totalRow = parseInt(datosRow12[mes][codcia]);
+                                    }
                                 }
                             });
                         });
@@ -1918,7 +1928,7 @@
                                             }) : '‎') + '</td>';
                                     totalMes += parseFloat(datosVallea[mes][codcia] || '0');
                                     totalRowVal += parseFloat(datosVallea[mes][codcia] || '0');
-                                    if (codcia==81) {
+                                    if (codcia==81 && tratprolea!=0) {
                                         totalRowTra=tratprolea;
                                     }
                                 }
@@ -1957,7 +1967,7 @@
                                             }) : '‎') + '</td>';
                                     totalMes += parseFloat(datosValvip[mes][codcia] || '0');
                                     totalRowVal += parseFloat(datosValvip[mes][codcia] || '0');
-                                    if (codcia==81) {
+                                    if (codcia==81 && tratprovip!=0) {
                                         totalRowTra=tratprovip;
                                     }
                                 }
@@ -1996,7 +2006,7 @@
                                             }) : '‎') + '</td>';
                                     totalMes += parseFloat(datosValnor[mes][codcia] || '0');
                                     totalRowVal += parseFloat(datosValnor[mes][codcia] || '0');
-                                    if (codcia==81) {
+                                    if (codcia==81 && tratpronor!=0) {
                                         totalRowTra=tratpronor;
                                     }
                                 }
@@ -2035,7 +2045,7 @@
                                             }) : '‎') + '</td>';
                                     totalMes += parseFloat(datosValtot[mes][codcia] || '0');
                                     totalRowVal += parseFloat(datosValtot[mes][codcia] || '0');
-                                    if (codcia==81) {
+                                    if (codcia==81 && tratpronor!=0) {
                                         totalRowTra=tratpronor+tratprovip+tratprolea;
                                     }
                                 }

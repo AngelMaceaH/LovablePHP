@@ -6,38 +6,39 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="../../assets/img/favicon.ico">
+    <link rel="stylesheet" href="../../assets/css/vendors/highcharts.css">
     <style>
-    .positionRel {
-        position: relative;
-        left: 50%;
-        transform: translateX(-50%);
-    }
-
-    div.dt-buttons {
-        float: left;
-    }
-
-    @media (max-width: 1199px) {
-        .graficasPC {
-            display: none;
+        .positionRel {
+            position: relative;
+            left: 50%;
+            transform: translateX(-50%);
         }
 
-        .graficasMovil {
-            display: flex;
-
-        }
-    }
-
-    @media (min-width: 1200px) {
-
-        .graficasPC {
-            display: block;
+        div.dt-buttons {
+            float: left;
         }
 
-        .graficasMovil {
-            display: none;
+        @media (max-width: 1199px) {
+            .graficasPC {
+                display: none;
+            }
+
+            .graficasMovil {
+                display: flex;
+
+            }
         }
-    }
+
+        @media (min-width: 1200px) {
+
+            .graficasPC {
+                display: block;
+            }
+
+            .graficasMovil {
+                display: none;
+            }
+        }
     </style>
 </head>
 
@@ -62,15 +63,7 @@
 
             </div>
             <div class="card-body">
-                <div class="demo">
-                    <ul class="tablist" role="tablist">
-                        <li id="tab1" class="tablist__tab text-center p-3  is-active" aria-controls="panel1"
-                            aria-selected="true" role="tab" tabindex="0">Puntos de venta</li>
-                        <li id="tab2" class="tablist__tab text-center p-3" aria-controls="panel2" aria-selected="false"
-                            role="tab" tabindex="0">Países</li>
-                        <li id="tab3" class="tablist__tab text-center p-3" aria-controls="panel3" aria-selected="false"
-                            role="tab" tabindex="0">Fabrica</li>
-                    </ul>
+                    <div class="container">
                     <div class="row mb-3">
                         <div class="col-6 col-lg-5">
                             <div>
@@ -99,7 +92,25 @@
                                     <i class="fa-solid fa-magnifying-glass"></i> Buscar</button>
                             </div>
                         </div>
-
+                        <div class="col-12">
+                        <label for="filtro1" class=" mt-2" id="">Visualizar gráfica por:</label>
+                                                <select id="selgra" class="form-select mb-2">
+                                                    <option value="1">Mes vs mes anterior</option>
+                                                    <option value="2">Mes vs mismo mes del año anterior</option>
+                                                </select>
+                        </div>
+                    </div>
+                    </div>
+                <div class="demo">
+                    <div class="text-center">
+                    <ul class="tablist" role="tablist">
+                                <li id="tab1" class="tablist__tab text-center p-3  is-active" aria-controls="panel1"
+                                    aria-selected="true" role="tab" tabindex="0">Puntos de venta</li>
+                                <li id="tab2" class="tablist__tab text-center p-3" aria-controls="panel2" aria-selected="false"
+                                    role="tab" tabindex="0">Países</li>
+                                <li id="tab3" class="tablist__tab text-center p-3" aria-controls="panel3" aria-selected="false"
+                                    role="tab" tabindex="0">Fabrica</li>
+                            </ul>
                     </div>
                     <div id="panel1" class="tablist__panel" aria-labelledby="tab1" aria-hidden="false" role="tabpanel">
                         <div class="card p-3">
@@ -119,8 +130,8 @@
                                                     <option value="3">Menor a Mayor</option>
                                                 </select>
                                             </div>
-                                            <div class="col-12 col-lg-9 mt-2 d-flex flex-wrap">
-                                                <label for="filtro1" class=" mt-2" id="">Visualizar por: </label>
+                                            <div class="col-12 col-lg-6 mt-2 d-flex flex-wrap">
+                                                <label for="filtro1" class=" mt-2" id="">Puntos de ventas: </label>
                                                 <select name="filtro1" id="filtro1" class="form-select">
                                                     <option value="11">Honduras (Lov. Ecommerce)</option>
                                                     <option value="9">Honduras (Mod. Íntima)</option>
@@ -131,8 +142,8 @@
                                                     <option value="15">Republica Dominicana</option>
                                                 </select>
                                             </div>
-                                            <div class="col-12 mt-2">
-                                                <div class="form-check">
+                                            <div class="col-12 col-lg-3 mt-4">
+                                                <div class="form-control mt-2">
                                                     <input class="form-check-input" type="checkbox" value="1"
                                                         id="productos" name="productos">
                                                     <label class="form-check-label" for="productos">
@@ -145,15 +156,21 @@
                                 </div>
                             </form>
                             <div class="graficasPC">
-                                <figure class="highcharts-figure">
-                                    <div id="container"></div>
-                                </figure>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <figure class="highcharts-figure">
+                                          <div id="container"  class="highcharts-dark text-white Math.rounded"></div>
+                                        </figure>
+                                    </div>
+                                </div>
+
                             </div>
                             <div class="graficasMovil justify-content-center mt-3 mb-3" style='width:100%;'>
                                 <canvas id="miGrafica4"></canvas>
                             </div>
                             <hr class="mt-4 mb-4">
 
+                            <div class="table-responsive">
                             <table id="myTableInventario" class="table stripe table-hover " style="width:100%">
                                 <thead>
                                     <tr>
@@ -161,11 +178,13 @@
                                         <th>Punto de Venta</th>
                                         <th>Docenas <span id="Pv1"></span></th>
                                         <th>Docenas <span id="Pv2"></span></th>
+                                        <th>Docenas <span id="Pv3"></span></th>
                                     </tr>
                                 </thead>
                                 <tbody id="myTableInventarioBody">
                                 </tbody>
                             </table>
+                            </div>
                         </div>
                     </div>
                     <div id="panel2" class="tablist__panel is-hidden" aria-labelledby="tab2" aria-hidden="true"
@@ -187,10 +206,8 @@
                                                     <option value="3">Menor a Mayor</option>
                                                 </select>
                                             </div>
-                                            <div class="col-12 col-lg-9 mt-2 d-flex flex-wrap">
-                                            </div>
-                                            <div class="col-12 mt-2">
-                                                <div class="form-check">
+                                            <div class="col-12 col-lg-3 mt-4">
+                                                <div class="form-control mt-2">
                                                     <input class="form-check-input" type="checkbox" value="1"
                                                         id="productos3" name="productos3">
                                                     <label class="form-check-label" for="productos3">
@@ -198,11 +215,13 @@
                                                     </label>
                                                 </div>
                                             </div>
+                                            <div class="col-12 col-lg-6 mt-2 d-flex flex-wrap">
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </form>
-                            <div class="positionRel" style='width:70%'>
+                            <div class="positionRel" style='width:100%'>
                                 <div class="graficasPC">
                                     <figure class="highcharts-figure">
                                         <div id="container2"></div>
@@ -213,6 +232,7 @@
                                 <canvas id="miGrafica3"></canvas>
                             </div>
                             <hr class="mt-4 mb-4">
+                            <div class="table-responsive">
                             <table id="myTableInventarioPaises" class="table stripe table-hover " style="width:100%">
                                 <thead>
                                     <tr>
@@ -220,11 +240,13 @@
                                         <th>Pais</th>
                                         <th>Docenas <span id="Pai1"></span></th>
                                         <th>Docenas <span id="Pai2"></span></th>
+                                        <th>Docenas <span id="Pai3"></span></th>
                                     </tr>
                                 </thead>
                                 <tbody id="myTableInventarioPaisesBody">
                                 </tbody>
                             </table>
+                            </div>
                         </div>
                     </div>
                     <div id="panel3" class="tablist__panel is-hidden" aria-labelledby="tab3" aria-hidden="true"
@@ -245,10 +267,8 @@
                                                     <option value="3">Menor a Mayor</option>
                                                 </select>
                                             </div>
-                                            <div class="col-12 col-lg-9 mt-2 d-flex flex-wrap">
-                                            </div>
-                                            <div class="col-12 mt-2">
-                                                <div class="form-check">
+                                            <div class="col-12 col-lg-3 mt-4">
+                                                <div class="form-control mt-2">
                                                     <input class="form-check-input" type="checkbox" value="1"
                                                         id="productos4" name="productos4">
                                                     <label class="form-check-label" for="productos4">
@@ -256,16 +276,19 @@
                                                     </label>
                                                 </div>
                                             </div>
+                                            <div class="col-12 col-lg-6 mt-2 d-flex flex-wrap">
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </form>
-                            <div class="positionRel" style='width:70%'>
+                            <div class="positionRel" style='width:100%'>
                                 <figure class="highcharts-figure">
                                     <div id="container3"></div>
                                 </figure>
                             </div>
                             <hr class="mt-4 mb-4">
+                            <div class="table-responsive">
                             <table id="myTableInventarioFab" class="table stripe table-hover " style="width:100%">
                                 <thead>
                                     <tr>
@@ -273,11 +296,13 @@
                                         <th>Fabrica</th>
                                         <th>Docenas <span id="Fab1"></span></th>
                                         <th>Docenas <span id="Fab2"></span></th>
+                                        <th>Docenas <span id="Fab3"></span></th>
                                     </tr>
                                 </thead>
                                 <tbody id="myTableInventarioFabBody">
                                 </tbody>
                             </table>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -302,13 +327,20 @@
     <script src="https://code.highcharts.com/modules/accessibility.js"></script>
 
     <script>
+          var gra1=null;
+          var gra2=null;
+          var gra3=null;
+          let selGrafica=null;
       $(document).ready(function() {
           var invArray1 = [];
           var invArray2=[];
+          var invArray3=[];
           var invPaisArray = [];
           var invPaisArray2 = [];
+          var invPaisArray3 = [];
           var invFabArray = [];
           var invFabArray2=[];
+          var invFabArray3=[];
           var currentDate = new Date();
           var yearSelected = getCookie('yearTab') || currentDate.getFullYear();
           var selectY = document.getElementById('setYearTab');
@@ -369,8 +401,7 @@
           $("#cbbOrden2").val(<?php echo $ordenFiltro;  ?>);
           $("#cbbOrden3").val(<?php echo $ordenFiltro3;  ?>);
           $("#cbbOrden4").val(<?php echo $ordenFiltro4;  ?>);
-          let filtroVal=<?php echo $filtro1;  ?>;
-          $("#filtro1").val(filtroVal);
+          $("#filtro1").val(<?php echo $filtro1;  ?>);
           $('#productos, #productos3, #productos4').prop('checked', <?php echo $productos;  ?>);
           $("#cbbOrden2, #productos, #filtro1").change(function() {
               $("#formOrden").submit();
@@ -387,7 +418,6 @@
           var filtro1 = '<?php echo $filtro1; ?>';
           // var urlPOV='http://172.16.15.20/API.LovablePHP/ZLO0002P/ListPOV/?orden='+ordenPOV+'&otros='+otrosProd+''+'&filtro='+filtro1+'';
 
-
           const btn=document.getElementById('btnSearch');
           btn.addEventListener('click', function(){
             const yearSelected=document.getElementById('setYearTab').value;
@@ -396,7 +426,6 @@
             document.cookie = "mesTab=" + monthSelected;
             location.reload();
           });
-
 
           var currentMes=monthSelected;
           var currentYear=yearSelected;
@@ -408,15 +437,19 @@
           }
           $("#Pv1").text(currentYear +' - '+ meses[currentMes - 1]);
           $("#Pv2").text(comparYear +' - '+ meses[comparMes - 1]);
+          $("#Pv3").text(currentYear-1 +' - '+ meses[currentMes - 1]);
           $("#Pai1").text(currentYear +' - '+ meses[currentMes - 1]);
           $("#Pai2").text(comparYear +' - '+ meses[comparMes - 1]);
+          $("#Pai3").text(currentYear-1 +' - '+ meses[currentMes - 1]);
           $("#Fab1").text(currentYear +' - '+ meses[currentMes - 1]);
           $("#Fab2").text(comparYear +' - '+ meses[comparMes - 1]);
-          var urlPOV = 'http://172.16.15.20/API.LovablePHP/ZLO0002P/ListPOV2/?orden=' + ordenPOV + '&otros=' +
+          $("#Fab3").text(currentYear-1 +' - '+ meses[currentMes - 1]);
+
+          var urlPOV = 'http://172.16.15.20/API.LovablePHP/ZLO0002P/ListPOV/?orden=' + ordenPOV + '&otros=' +
               otrosProd + '&filtro=' + filtro1 + '&ano=' + currentYear + '&mes=' + currentMes + '';
           var responsePOV = ajaxRequest(urlPOV);
           var ordenFab = '<?php echo $ordenFiltro4; ?>';
-          var urlFab = 'http://172.16.15.20/API.LovablePHP/ZLO0002P/ListFabrica2/?orden=' + ordenFab +
+          var urlFab = 'http://172.16.15.20/API.LovablePHP/ZLO0002P/ListFabrica/?orden=' + ordenFab +
               '&otros=' + otrosProd + '&ano=' + currentYear + '&mes=' + currentMes + '';
           var responseFab = ajaxRequest(urlFab);
           if (responsePOV.code == 200) {
@@ -433,20 +466,23 @@
                   options+='<td class="fw-bold d-none">'+responsePOV.data[i]['CODSEC']+'</td>';
                   options+='<td class="fw-bold">'+responsePOV.data[i]['NOMCIA']+'</td>';
                   options+='<td class="fw-bold">'+parseFloat(responsePOV.data[i]['MAESA2']).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})+'</td>';
-                  options+='<td class="fw-bold">'+parseFloat(responsePOV.data[i]['SACDOC']).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})+'</td>';
+                  options+='<td class="fw-bold">'+parseFloat(responsePOV.data[i]['SACDOC1']).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})+'</td>';
+                  options+='<td class="fw-bold">'+parseFloat(responsePOV.data[i]['SACDOC2']).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})+'</td>';
                   options+='</tr>';
                   ciaArray.push(responsePOV.data[i]['NOMCIA']);
                   invArray1.push(parseFloat(responsePOV.data[i]['MAESA2']));
-                  invArray2.push(parseFloat(responsePOV.data[i]['SACDOC']));
+                  invArray2.push(parseFloat(responsePOV.data[i]['SACDOC1']));
+                  invArray3.push(parseFloat(responsePOV.data[i]['SACDOC2']));
               }
               tableDetalle.innerHTML=options;
           }
           var ordenPaises = '<?php echo $ordenFiltro3; ?>';
-          var urlPaises = 'http://172.16.15.20/API.LovablePHP/ZLO0002P/ListPais2/?orden=' + ordenPaises +
+          var urlPaises = 'http://172.16.15.20/API.LovablePHP/ZLO0002P/ListPais/?orden=' + ordenPaises +
               '&otros=' + otrosProd + '&ano=' + currentYear + '&mes=' + currentMes + '';
           var responsePaises = ajaxRequest(urlPaises);
           if (responsePaises.code == 200) {
               var paisArray = [];
+
               var tableDetalle=document.getElementById('myTableInventarioPaisesBody');
               var options='';
               tableDetalle.innerHTML='';
@@ -455,11 +491,13 @@
                   options+='<td class="fw-bold d-none">'+responsePaises.data[i]['CODSEC']+'</td>';
                   options+='<td class="fw-bold">'+responsePaises.data[i]['NOMCIA']+'</td>';
                   options+='<td class="fw-bold">'+parseFloat(responsePaises.data[i]['MAESA2']).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})+'</td>';
-                  options+='<td class="fw-bold">'+parseFloat(responsePaises.data[i]['SACDOC']).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})+'</td>';
+                  options+='<td class="fw-bold">'+parseFloat(responsePaises.data[i]['SACDOC1']).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})+'</td>';
+                  options+='<td class="fw-bold">'+parseFloat(responsePaises.data[i]['SACDOC2']).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})+'</td>';
                   options+='</tr>';
                   paisArray.push(responsePaises.data[i]['NOMCIA']);
                   invPaisArray.push(parseFloat(responsePaises.data[i]['MAESA2']));
-                  invPaisArray2.push(parseFloat(responsePaises.data[i]['SACDOC']));
+                  invPaisArray2.push(parseFloat(responsePaises.data[i]['SACDOC1']));
+                  invPaisArray3.push(parseFloat(responsePaises.data[i]['SACDOC2']));
               }
               tableDetalle.innerHTML=options;
           }
@@ -477,11 +515,13 @@
                   options+='<td class="fw-bold d-none">'+responseFab.data[i]['CODSEC']+'</td>';
                   options+='<td class="fw-bold">'+responseFab.data[i]['NOMCIA']+'</td>';
                   options+='<td class="fw-bold">'+parseFloat(responseFab.data[i]['MAESA2']).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})+'</td>';
-                  options+='<td class="fw-bold">'+parseFloat(responseFab.data[i]['SACDOC']).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})+'</td>';
+                  options+='<td class="fw-bold">'+parseFloat(responseFab.data[i]['SACDOC1']).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})+'</td>';
+                  options+='<td class="fw-bold">'+parseFloat(responseFab.data[i]['SACDOC2']).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})+'</td>';
                   options+='</tr>';
                   ciaFab.push(responseFab.data[i]['NOMCIA']);
                   invFabArray.push(parseFloat(responseFab.data[i]['MAESA2']));
-                  invFabArray2.push(parseFloat(responseFab.data[i]['SACDOC']));
+                  invFabArray2.push(parseFloat(responseFab.data[i]['SACDOC1']));
+                  invFabArray3.push(parseFloat(responseFab.data[i]['SACDOC2']));
               }
               tableDetalle.innerHTML=options;
           }
@@ -490,7 +530,8 @@
               language: {
                   url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json',
               },
-              columns: [
+
+              columns: [{},
                   {},
                   {},
                   {},
@@ -504,9 +545,9 @@
                   text: '<i class="fa-solid fa-file-excel"></i> <b >Enviar a Excel</b>',
                   className: "btn btn-success text-light fs-6 mb-2",
                   exportOptions: {
-                      columns: [1, 2, 3]
+                      columns: [1,2,3,4]
                   },
-                  title: 'ReporteInventario Tiendas',
+                  title: 'Reporte de Inventario disponible',
                   customize: function(xlsx) {
                       var sheet = xlsx.xl.worksheets['sheet1.xml'];
                       var sSh = xlsx.xl['styles.xml'];
@@ -575,139 +616,14 @@
           })
 
           Chart.register(ChartDataLabels);
-          //GRAFICA PAISES BARRA
-          Highcharts.chart('container2', {
-              lang: {
-                  viewFullscreen: "Ver en pantalla completa",
-                  exitFullscreen: "Salir de pantalla completa",
-                  downloadJPEG: "Descargar imagen JPEG",
-                  downloadPDF: "Descargar en PDF",
-              },
-              chart: {
-                  height: 500,
-                  type: 'column'
-              },
-              title: {
-                  text: '',
-              },
-              xAxis: {
-                  className: 'fw-bold',
-                  categories: paisArray,
-              },
-              yAxis: {
-                  min: 0,
-                  endOnTick: false,
-                  tickInterval: 2600.01,
-                  lineWidth: 1,
-                  title: {
-                      text: ' '
+          //GRAFICA BARRAS
+            selGrafica=document.getElementById('selgra');
+            chargeChart(ciaArray,paisArray,ciaFab, invArray1, invArray2,invArray3, invPaisArray, invPaisArray2,invPaisArray3, invFabArray, invFabArray2,invFabArray3, currentYear, meses, currentMes, comparYear, comparMes);
+            selGrafica.addEventListener('change', function(){
+                chargeChart(ciaArray,paisArray,ciaFab, invArray1, invArray2,invArray3, invPaisArray, invPaisArray2,invPaisArray3, invFabArray, invFabArray2,invFabArray3, currentYear, meses, currentMes, comparYear, comparMes);
+            });
 
-                  },
-              },
-              legend: {
-                  reversed: false
-              },
-              credits: {
-                  enabled: false
-              },
-              series: [{
-                  name: currentYear +' - '+ meses[currentMes - 1],
-                  data: invPaisArray,
-                  color: "rgba(20, 36, 89,0.6)",
-                  dataLabels: [{
-                      align: "center",
-                      inside: false,
-                      enabled: true,
-                      borderColor: "",
-                      style: {
-                          fontSize: "12px",
-                          fontWeight: 'bold',
-                          fontFamily: "Arial",
-                          textShadow: false
-                      }
-                  }],
-              },
-              {
-                  name: comparYear +' - '+ meses[comparMes - 1],
-                  data: invPaisArray2,
-                  color: "rgba(23, 107, 160,0.6)",
-                  dataLabels: [{
-                      align: "center",
-                      inside: false,
-                      enabled: true,
-                      borderColor: "",
-                      style: {
-                          fontSize: "12px",
-                          fontWeight: 'bold',
-                          fontFamily: "Arial",
-                          textShadow: false
-                      }
-                  }],
-              },
-            ],
-              exporting: {
-                  buttons: {
-                      contextButton: {
-                          menuItems: ["viewFullscreen", "separator", "downloadJPEG", "downloadPDF"]
-                      }
-                  },
-                  enabled: true,
-                  filename: 'Inventario-disponible Países',
-                  sourceWidth: 1600,
-                  sourceHeight: 900,
-                  chartOptions: {
-
-                      title: {
-                          style: {
-                              fontSize: '20px',
-                          }
-                      },
-                      series: [{
-                          dataLabels: {
-                              style: {
-                                  fontSize: "16px",
-                                  fontWeight: "normal"
-                              }
-                          }
-                      }],
-
-                      xAxis: {
-                          //lineWidth: 1,
-                          labels: {
-                              rotate: -45,
-                              enabled: true,
-                              //format: "{value:.0f}",
-                              style: {
-                                  fontSize: "10px",
-                                  fontFamily: "Arial"
-                              }
-                          },
-                      },
-                      yAxis: {
-                          lineWidth: 1,
-                          title: {
-                              text: " ",
-                              style: {
-                                  fontFamily: "Arial",
-                                  fontSize: "16px",
-                              }
-                          },
-                          labels: {
-                              //rotate: -45,
-                              enabled: true,
-                              format: "{value:.0f}",
-                              style: {
-                                  fontSize: "16px",
-                                  fontFamily: "Arial"
-                              }
-                          },
-                          gridLineWidth: 0
-                      },
-                  },
-              },
-
-          });
-          //GRAFICA PAISES DONA
+          //GRAFICA DONA
           const ctx3 = document.getElementById('miGrafica3').getContext('2d');
           var myChart3 = new Chart(ctx3, {
               type: 'pie',
@@ -762,141 +678,6 @@
                   }
               }
           });
-          //GRAFICA PUNTO DE VENTAS
-
-          //PAISES INVENTARIO
-          Highcharts.chart('container', {
-              lang: {
-                  viewFullscreen: "Ver en pantalla completa",
-                  exitFullscreen: "Salir de pantalla completa",
-                  downloadJPEG: "Descargar imagen JPEG",
-                  downloadPDF: "Descargar en PDF",
-              },
-              chart: {
-                  height: 500,
-                  type: 'column'
-              },
-              title: {
-                  text: '',
-              },
-              xAxis: {
-                  className: 'fw-bold',
-                  categories: ciaArray,
-              },
-              yAxis: {
-                  min: 0,
-                  endOnTick: false,
-                  tickInterval: 500,
-                  lineWidth: 1,
-                  title: {
-                      text: ' '
-
-                  },
-              },
-              legend: {
-                  reversed: false
-              },
-              credits: {
-                  enabled: false
-              },
-              series: [{
-                  name: currentYear +' - '+ meses[currentMes - 1],
-                  data: invArray1,
-                  color: "rgba(20, 36, 89,0.6)",
-                  dataLabels: [{
-                      align: "center",
-                      inside: false,
-                      enabled: true,
-                      borderColor: "",
-                      style: {
-                          fontSize: "12px",
-                          fontWeight: 'bold',
-                          fontFamily: "Arial",
-                          textShadow: false
-                      }
-                  }],
-              },
-              {
-                  name: comparYear +' - '+ meses[comparMes - 1],
-                  data: invArray2,
-                  color: "rgba(23, 107, 160,0.6)",
-                  dataLabels: [{
-                      align: "center",
-                      inside: false,
-                      enabled: true,
-                      borderColor: "",
-                      style: {
-                          fontSize: "12px",
-                          fontWeight: 'bold',
-                          fontFamily: "Arial",
-                          textShadow: false
-                      }
-                  }],
-              },
-            ],
-              exporting: {
-                  buttons: {
-                      contextButton: {
-                          menuItems: ["viewFullscreen", "separator", "downloadJPEG", "downloadPDF"]
-                      }
-                  },
-                  enabled: true,
-                  filename: 'Inventario-disponible Tiendas',
-                  sourceWidth: 1600,
-                  sourceHeight: 900,
-                  chartOptions: {
-
-                      title: {
-                          style: {
-                              fontSize: '20px',
-                          }
-                      },
-                      series: [{
-                          dataLabels: {
-                              style: {
-                                  fontSize: "16px",
-                                  fontWeight: "normal"
-                              }
-                          }
-                      }],
-
-                      xAxis: {
-                          //lineWidth: 1,
-                          labels: {
-                              rotate: -45,
-                              enabled: true,
-                              //format: "{value:.0f}",
-                              style: {
-                                  fontSize: "10px",
-                                  fontFamily: "Arial"
-                              }
-                          },
-                      },
-                      yAxis: {
-                          lineWidth: 1,
-                          title: {
-                              text: " ",
-                              style: {
-                                  fontFamily: "Arial",
-                                  fontSize: "16px",
-                              }
-                          },
-                          labels: {
-                              //rotate: -45,
-                              enabled: true,
-                              format: "{value:.0f}",
-                              style: {
-                                  fontSize: "16px",
-                                  fontFamily: "Arial"
-                              }
-                          },
-                          gridLineWidth: 0
-                      },
-                  },
-              },
-
-          });
-          //GRAFICA PUNTO DE VENTA DONA
           const ctx4 = document.getElementById('miGrafica4').getContext('2d');
           var myChart4 = new Chart(ctx4, {
               type: 'pie',
@@ -958,136 +739,724 @@
                   }
               }
           });
-          //GRAFICA FABRICA BARRA
-          Highcharts.chart('container3', {
-              lang: {
-                  viewFullscreen: "Ver en pantalla completa",
-                  exitFullscreen: "Salir de pantalla completa",
-                  downloadJPEG: "Descargar imagen JPEG",
-                  downloadPDF: "Descargar en PDF",
-              },
-              chart: {
-                  height: 500,
-                  type: 'column'
-              },
-              title: {
-                  text: '',
-              },
-              xAxis: {
-                  className: 'fw-bold',
-                  categories: ciaFab,
-              },
-              yAxis: {
-                  min: 0,
-                  endOnTick: false,
-                  lineWidth: 1,
-                  title: {
-                      text: ' '
-
-                  },
-              },
-              legend: {
-                  reversed: false
-              },
-              credits: {
-                  enabled: false
-              },
-              series: [{
-                  name: currentYear +' - '+ meses[currentMes - 1],
-                  data: invFabArray,
-                  color: "rgba(20, 36, 89,0.6)",
-                  dataLabels: [{
-                      align: "center",
-                      inside: false,
-                      enabled: true,
-                      borderColor: "",
-                      style: {
-                          fontSize: "12px",
-                          fontWeight: 'bold',
-                          fontFamily: "Arial",
-                          textShadow: false
-                      }
-                  }],
-              }, {
-                  name:comparYear +' - '+ meses[comparMes - 1],
-                  data: invFabArray2,
-                  color: "rgba(23, 107, 160,0.6)",
-                  dataLabels: [{
-                      align: "center",
-                      inside: false,
-                      enabled: true,
-                      borderColor: "",
-                      style: {
-                          fontSize: "12px",
-                          fontWeight: 'bold',
-                          fontFamily: "Arial",
-                          textShadow: false
-                      }
-                  }],
-              },],
-              exporting: {
-                  buttons: {
-                      contextButton: {
-                          menuItems: ["viewFullscreen", "separator", "downloadJPEG", "downloadPDF"]
-                      }
-                  },
-                  enabled: true,
-                  filename: 'Inventario-disponible Fabrica',
-                  sourceWidth: 1600,
-                  sourceHeight: 900,
-                  chartOptions: {
-
-                      title: {
-                          style: {
-                              fontSize: '20px',
-                          }
-                      },
-                      series: [{
-                          dataLabels: {
-                              style: {
-                                  fontSize: "16px",
-                                  fontWeight: "normal"
-                              }
-                          }
-                      }],
-
-                      xAxis: {
-                          //lineWidth: 1,
-                          labels: {
-                              rotate: -45,
-                              enabled: true,
-                              //format: "{value:.0f}",
-                              style: {
-                                  fontSize: "10px",
-                                  fontFamily: "Arial"
-                              }
-                          },
-                      },
-                      yAxis: {
-                          lineWidth: 1,
-                          title: {
-                              text: " ",
-                              style: {
-                                  fontFamily: "Arial",
-                                  fontSize: "16px",
-                              }
-                          },
-                          labels: {
-                              //rotate: -45,
-                              enabled: true,
-                              format: "{value:.0f}",
-                              style: {
-                                  fontSize: "16px",
-                                  fontFamily: "Arial"
-                              }
-                          },
-                          gridLineWidth: 0
-                      },
-                  },
-              },
-
-          });
       });
+      function chargeChart(ciaArray,paisArray,ciaFab, invArray1, invArray2,invArray3, invPaisArray, invPaisArray2,invPaisArray3, invFabArray, invFabArray2,invFabArray3, currentYear, meses, currentMes, comparYear, comparMes) {
+        var valor=selGrafica.value;
+        let title='';
+            switch (valor) {
+                    case '2':
+                    title='Mes vs mismo mes del año anterior';
+                    gra1= Highcharts.chart('container', {
+                        chart: {
+                            type: 'column',
+                            style: {
+                                color: '#FFFFFF'
+                            }
+                        },
+                        lang: {
+                            viewFullscreen: "Ver en pantalla completa",
+                            exitFullscreen: "Salir de pantalla completa",
+                            downloadJPEG: "Descargar imagen JPEG",
+                            downloadPDF: "Descargar en PDF",
+                        },
+                        title: {
+                            text: title,
+                            align: 'center',
+                            style: {
+                                color: '#FFFFFF'
+                            }
+                        },
+                        xAxis: {
+                            categories: ciaArray,
+                            labels: {
+                                style: {
+                                    color: '#FFFFFF'
+                                }
+                            }
+                        },
+                        yAxis: {
+                            title: {
+                                text: ' ',
+                                style: {
+                                    color: '#FFFFFF'
+                                }
+                            },
+                            labels: {
+                                style: {
+                                    color: '#FFFFFF'
+                                }
+                            }
+                        },
+                        plotOptions: {
+                            line: {
+                                dataLabels: {
+                                    enabled: true,
+                                    format: '{point.y}',
+                                    color: '#FFFFFF'
+                                },
+                                enableMouseTracking: false
+                            }
+                        },
+                        tooltip: {
+                            style: {
+                                color: '#FFFFFF'
+                            }
+                        },
+                        legend: {
+                            itemStyle: {
+                                color: '#FFFFFF'
+                            }
+                        },
+                        exporting: {
+                            buttons: {
+                                contextButton: {
+                                    menuItems: ["viewFullscreen", "separator", "downloadJPEG",
+                                        "downloadPDF"
+                                    ]
+                                }
+                            },
+                            enabled: true,
+                            sourceWidth: 1600,
+                            sourceHeight: 700,
+                            chartOptions: {
+                                chart: {
+                                    backgroundColor: '#303030'
+                                }
+                            }
+                        },
+                        credits: {
+                            enabled: false
+                        },
+                        series: [{
+                            name: currentYear +' - '+ meses[currentMes - 1],
+                            data: invArray1,
+                            dataLabels: [{
+                                align: "center",
+                                inside: false,
+                                enabled: true,
+                                borderColor: "",
+                                style: {
+                                    fontSize: "12px",
+                                    fontWeight: 'bold',
+                                    fontFamily: "Arial",
+                                    textShadow: false,
+                                    color: '#FFFFFF'
+                                }
+                            }],
+                        },
+                        {
+                            name: currentYear-1 +' - '+ meses[currentMes - 1],
+                            data: invArray3,
+                            dataLabels: [{
+                                align: "center",
+                                inside: false,
+                                enabled: true,
+                                borderColor: "",
+                                style: {
+                                    fontSize: "12px",
+                                    fontWeight: 'bold',
+                                    fontFamily: "Arial",
+                                    textShadow: false,
+                                    color: '#FFFFFF'
+                                }
+                            }],
+                        },
+                        ],
+                    });
+                    gra2= Highcharts.chart('container2', {
+                        chart: {
+                            type: 'column',
+                            style: {
+                                color: '#FFFFFF'
+                            }
+                        },
+                        lang: {
+                            viewFullscreen: "Ver en pantalla completa",
+                            exitFullscreen: "Salir de pantalla completa",
+                            downloadJPEG: "Descargar imagen JPEG",
+                            downloadPDF: "Descargar en PDF",
+                        },
+                        title: {
+                            text: title,
+                            align: 'center',
+                            style: {
+                                color: '#FFFFFF'
+                            }
+                        },
+                        xAxis: {
+                            categories: paisArray,
+                            labels: {
+                                style: {
+                                    color: '#FFFFFF'
+                                }
+                            }
+                        },
+                        yAxis: {
+                            title: {
+                                text: ' ',
+                                style: {
+                                    color: '#FFFFFF'
+                                }
+                            },
+                            labels: {
+                                style: {
+                                    color: '#FFFFFF'
+                                }
+                            }
+                        },
+                        plotOptions: {
+                            line: {
+                                dataLabels: {
+                                    enabled: true,
+                                    format: '{point.y}',
+                                    color: '#FFFFFF'
+                                },
+                                enableMouseTracking: false
+                            }
+                        },
+                        tooltip: {
+                            style: {
+                                color: '#FFFFFF'
+                            }
+                        },
+                        legend: {
+                            itemStyle: {
+                                color: '#FFFFFF'
+                            }
+                        },
+                        exporting: {
+                            buttons: {
+                                contextButton: {
+                                    menuItems: ["viewFullscreen", "separator", "downloadJPEG",
+                                        "downloadPDF"
+                                    ]
+                                }
+                            },
+                            enabled: true,
+                            sourceWidth: 1600,
+                            sourceHeight: 700,
+                            chartOptions: {
+                                chart: {
+                                    backgroundColor: '#303030'
+                                }
+                            }
+                        },
+                        credits: {
+                            enabled: false
+                        },
+                        series: [{
+                            name: currentYear +' - '+ meses[currentMes - 1],
+                            data: invPaisArray,
+                            dataLabels: [{
+                                align: "center",
+                                inside: false,
+                                enabled: true,
+                                borderColor: "",
+                                style: {
+                                    fontSize: "12px",
+                                    fontWeight: 'bold',
+                                    fontFamily: "Arial",
+                                    textShadow: false,
+                                    color: '#FFFFFF'
+                                }
+                            }],
+                        },
+                        {
+                            name: currentYear-1 +' - '+ meses[currentMes - 1],
+                            data: invPaisArray3,
+                            dataLabels: [{
+                                align: "center",
+                                inside: false,
+                                enabled: true,
+                                borderColor: "",
+                                style: {
+                                    fontSize: "12px",
+                                    fontWeight: 'bold',
+                                    fontFamily: "Arial",
+                                    textShadow: false,
+                                    color: '#FFFFFF'
+                                }
+                            }],
+                        },
+                        ],
+                    });
+                    gra3= Highcharts.chart('container3',
+                    {
+                            chart: {
+                                type: 'column',
+                                style: {
+                                    color: '#FFFFFF'
+                                }
+                            },
+                            lang: {
+                                viewFullscreen: "Ver en pantalla completa",
+                                exitFullscreen: "Salir de pantalla completa",
+                                downloadJPEG: "Descargar imagen JPEG",
+                                downloadPDF: "Descargar en PDF",
+                            },
+                            title: {
+                                text: title,
+                                align: 'center',
+                                style: {
+                                    color: '#FFFFFF'
+                                }
+                            },
+                            xAxis: {
+                                categories: ciaFab,
+                                labels: {
+                                    style: {
+                                        color: '#FFFFFF'
+                                    }
+                                }
+                            },
+                            yAxis: {
+                                title: {
+                                    text: ' ',
+                                    style: {
+                                        color: '#FFFFFF'
+                                    }
+                                },
+                                labels: {
+                                    style: {
+                                        color: '#FFFFFF'
+                                    }
+                                }
+                            },
+                            plotOptions: {
+                                line: {
+                                    dataLabels: {
+                                        enabled: true,
+                                        format: '{point.y}',
+                                        color: '#FFFFFF'
+                                    },
+                                    enableMouseTracking: false
+                                }
+                            },
+                            tooltip: {
+                                style: {
+                                    color: '#FFFFFF'
+                                }
+                            },
+                            legend: {
+                                itemStyle: {
+                                    color: '#FFFFFF'
+                                }
+                            },
+                            exporting: {
+                                buttons: {
+                                    contextButton: {
+                                        menuItems: ["viewFullscreen", "separator", "downloadJPEG",
+                                            "downloadPDF"
+                                        ]
+                                    }
+                                },
+                                enabled: true,
+                                sourceWidth: 1600,
+                                sourceHeight: 700,
+                                chartOptions: {
+                                    chart: {
+                                        backgroundColor: '#303030'
+                                    }
+                                }
+                            },
+                            credits: {
+                                enabled: false
+                            },
+                            series: [{
+                                name: currentYear +' - '+ meses[currentMes - 1],
+                                data: invFabArray,
+                                dataLabels: [{
+                                    align: "center",
+                                    inside: false,
+                                    enabled: true,
+                                    borderColor: "",
+                                    style: {
+                                        fontSize: "12px",
+                                        fontWeight: 'bold',
+                                        fontFamily: "Arial",
+                                        textShadow: false,
+                                        color: '#FFFFFF'
+                                    }
+                                }],
+                            },
+                            {
+                                name: currentYear-1 +' - '+ meses[currentMes - 1],
+                                data: invFabArray3,
+                                dataLabels: [{
+                                    align: "center",
+                                    inside: false,
+                                    enabled: true,
+                                    borderColor: "",
+                                    style: {
+                                        fontSize: "12px",
+                                        fontWeight: 'bold',
+                                        fontFamily: "Arial",
+                                        textShadow: false,
+                                        color: '#FFFFFF'
+                                    }
+                                }],
+                            },
+                            ],
+                    });
+
+                    break;
+                default:
+                    title='Mes vs mes anterior';
+                    gra1= Highcharts.chart('container', {
+                        chart: {
+                            type: 'column',
+                            style: {
+                                color: '#FFFFFF'
+                            }
+                        },
+                        lang: {
+                            viewFullscreen: "Ver en pantalla completa",
+                            exitFullscreen: "Salir de pantalla completa",
+                            downloadJPEG: "Descargar imagen JPEG",
+                            downloadPDF: "Descargar en PDF",
+                        },
+                        title: {
+                            text: title,
+                            align: 'center',
+                            style: {
+                                color: '#FFFFFF'
+                            }
+                        },
+                        xAxis: {
+                            categories: ciaArray,
+                            labels: {
+                                style: {
+                                    color: '#FFFFFF'
+                                }
+                            }
+                        },
+                        yAxis: {
+                            title: {
+                                text: ' ',
+                                style: {
+                                    color: '#FFFFFF'
+                                }
+                            },
+                            labels: {
+                                style: {
+                                    color: '#FFFFFF'
+                                }
+                            }
+                        },
+                        plotOptions: {
+                            line: {
+                                dataLabels: {
+                                    enabled: true,
+                                    format: '{point.y}',
+                                    color: '#FFFFFF'
+                                },
+                                enableMouseTracking: false
+                            }
+                        },
+                        tooltip: {
+                            style: {
+                                color: '#FFFFFF'
+                            }
+                        },
+                        legend: {
+                            itemStyle: {
+                                color: '#FFFFFF'
+                            }
+                        },
+                        exporting: {
+                            buttons: {
+                                contextButton: {
+                                    menuItems: ["viewFullscreen", "separator", "downloadJPEG",
+                                        "downloadPDF"
+                                    ]
+                                }
+                            },
+                            enabled: true,
+                            sourceWidth: 1600,
+                            sourceHeight: 700,
+                            chartOptions: {
+                                chart: {
+                                    backgroundColor: '#303030'
+                                }
+                            }
+                        },
+                        credits: {
+                            enabled: false
+                        },
+                        series: [{
+                            name: currentYear +' - '+ meses[currentMes - 1],
+                            data: invArray1,
+                            dataLabels: [{
+                                align: "center",
+                                inside: false,
+                                enabled: true,
+                                borderColor: "",
+                                style: {
+                                    fontSize: "12px",
+                                    fontWeight: 'bold',
+                                    fontFamily: "Arial",
+                                    textShadow: false,
+                                    color: '#FFFFFF'
+                                }
+                            }],
+                        },
+                        {
+                            name: comparYear +' - '+ meses[comparMes - 1],
+                            data: invArray2,
+                            dataLabels: [{
+                                align: "center",
+                                inside: false,
+                                enabled: true,
+                                borderColor: "",
+                                style: {
+                                    fontSize: "12px",
+                                    fontWeight: 'bold',
+                                    fontFamily: "Arial",
+                                    textShadow: false,
+                                    color: '#FFFFFF'
+                                }
+                            }],
+                        },
+                        ],
+                    });
+                    gra2= Highcharts.chart('container2', {
+                        chart: {
+                            type: 'column',
+                            style: {
+                                color: '#FFFFFF'
+                            }
+                        },
+                        lang: {
+                            viewFullscreen: "Ver en pantalla completa",
+                            exitFullscreen: "Salir de pantalla completa",
+                            downloadJPEG: "Descargar imagen JPEG",
+                            downloadPDF: "Descargar en PDF",
+                        },
+                        title: {
+                            text: title,
+                            align: 'center',
+                            style: {
+                                color: '#FFFFFF'
+                            }
+                        },
+                        xAxis: {
+                            categories: paisArray,
+                            labels: {
+                                style: {
+                                    color: '#FFFFFF'
+                                }
+                            }
+                        },
+                        yAxis: {
+                            title: {
+                                text: ' ',
+                                style: {
+                                    color: '#FFFFFF'
+                                }
+                            },
+                            labels: {
+                                style: {
+                                    color: '#FFFFFF'
+                                }
+                            }
+                        },
+                        plotOptions: {
+                            line: {
+                                dataLabels: {
+                                    enabled: true,
+                                    format: '{point.y}',
+                                    color: '#FFFFFF'
+                                },
+                                enableMouseTracking: false
+                            }
+                        },
+                        tooltip: {
+                            style: {
+                                color: '#FFFFFF'
+                            }
+                        },
+                        legend: {
+                            itemStyle: {
+                                color: '#FFFFFF'
+                            }
+                        },
+                        exporting: {
+                            buttons: {
+                                contextButton: {
+                                    menuItems: ["viewFullscreen", "separator", "downloadJPEG",
+                                        "downloadPDF"
+                                    ]
+                                }
+                            },
+                            enabled: true,
+                            sourceWidth: 1600,
+                            sourceHeight: 700,
+                            chartOptions: {
+                                chart: {
+                                    backgroundColor: '#303030'
+                                }
+                            }
+                        },
+                        credits: {
+                            enabled: false
+                        },
+                        series: [{
+                            name: currentYear +' - '+ meses[currentMes - 1],
+                            data: invPaisArray,
+                            dataLabels: [{
+                                align: "center",
+                                inside: false,
+                                enabled: true,
+                                borderColor: "",
+                                style: {
+                                    fontSize: "12px",
+                                    fontWeight: 'bold',
+                                    fontFamily: "Arial",
+                                    textShadow: false,
+                                    color: '#FFFFFF'
+                                }
+                            }],
+                        },
+                        {
+                            name: comparYear +' - '+ meses[comparMes - 1],
+                            data: invPaisArray2,
+                            dataLabels: [{
+                                align: "center",
+                                inside: false,
+                                enabled: true,
+                                borderColor: "",
+                                style: {
+                                    fontSize: "12px",
+                                    fontWeight: 'bold',
+                                    fontFamily: "Arial",
+                                    textShadow: false,
+                                    color: '#FFFFFF'
+                                }
+                            }],
+                        },
+                        ],
+                    });
+                    gra3= Highcharts.chart('container3',
+                    {
+                            chart: {
+                                type: 'column',
+                                style: {
+                                    color: '#FFFFFF'
+                                }
+                            },
+                            lang: {
+                                viewFullscreen: "Ver en pantalla completa",
+                                exitFullscreen: "Salir de pantalla completa",
+                                downloadJPEG: "Descargar imagen JPEG",
+                                downloadPDF: "Descargar en PDF",
+                            },
+                            title: {
+                                text: title,
+                                align: 'center',
+                                style: {
+                                    color: '#FFFFFF'
+                                }
+                            },
+                            xAxis: {
+                                categories: ciaFab,
+                                labels: {
+                                    style: {
+                                        color: '#FFFFFF'
+                                    }
+                                }
+                            },
+                            yAxis: {
+                                title: {
+                                    text: ' ',
+                                    style: {
+                                        color: '#FFFFFF'
+                                    }
+                                },
+                                labels: {
+                                    style: {
+                                        color: '#FFFFFF'
+                                    }
+                                }
+                            },
+                            plotOptions: {
+                                line: {
+                                    dataLabels: {
+                                        enabled: true,
+                                        format: '{point.y}',
+                                        color: '#FFFFFF'
+                                    },
+                                    enableMouseTracking: false
+                                }
+                            },
+                            tooltip: {
+                                style: {
+                                    color: '#FFFFFF'
+                                }
+                            },
+                            legend: {
+                                itemStyle: {
+                                    color: '#FFFFFF'
+                                }
+                            },
+                            exporting: {
+                                buttons: {
+                                    contextButton: {
+                                        menuItems: ["viewFullscreen", "separator", "downloadJPEG",
+                                            "downloadPDF"
+                                        ]
+                                    }
+                                },
+                                enabled: true,
+                                sourceWidth: 1600,
+                                sourceHeight: 700,
+                                chartOptions: {
+                                    chart: {
+                                        backgroundColor: '#303030'
+                                    }
+                                }
+                            },
+                            credits: {
+                                enabled: false
+                            },
+                            series: [{
+                                name: currentYear +' - '+ meses[currentMes - 1],
+                                data: invFabArray,
+                                dataLabels: [{
+                                    align: "center",
+                                    inside: false,
+                                    enabled: true,
+                                    borderColor: "",
+                                    style: {
+                                        fontSize: "12px",
+                                        fontWeight: 'bold',
+                                        fontFamily: "Arial",
+                                        textShadow: false,
+                                        color: '#FFFFFF'
+                                    }
+                                }],
+                            },
+                            {
+                                name: comparYear +' - '+ meses[comparMes - 1],
+                                data: invFabArray2,
+                                dataLabels: [{
+                                    align: "center",
+                                    inside: false,
+                                    enabled: true,
+                                    borderColor: "",
+                                    style: {
+                                        fontSize: "12px",
+                                        fontWeight: 'bold',
+                                        fontFamily: "Arial",
+                                        textShadow: false,
+                                        color: '#FFFFFF'
+                                    }
+                                }],
+                            },
+                            ],
+                    });
+                    break;
+            }
+      }
     </script>
 </body>
 

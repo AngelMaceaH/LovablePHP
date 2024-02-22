@@ -27,7 +27,27 @@
             z-index: 1;
             top: 0;
         }
-        @media screen and (min-width: 1900px) {
+        @media screen and (min-width: 1300px) {
+            .table-container {
+                width: 100%;
+                height:530px;
+                overflow-x: auto;
+                position: relative;
+                z-index: 1;
+                top: 0;
+            }
+        }
+        @media screen and (min-width: 1540px) {
+            .table-container {
+                width: 100%;
+                height:600px;
+                overflow-x: auto;
+                position: relative;
+                z-index: 1;
+                top: 0;
+            }
+        }
+        @media screen and (min-width: 1600px) {
         .table-container {
             width: 100%;
             height:740px;
