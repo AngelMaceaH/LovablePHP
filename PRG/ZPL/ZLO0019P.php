@@ -46,7 +46,7 @@
                     <label class="form-control border border-0">Tiendas:</label>
                     <div class="overflow-auto">
                         <select class="form-select fw-bold" id="cbbCia" name="cbbCia[]" style="width: 100%;">
-                            <option class="fw-bold" value="47,50,52,56,57,59,63,64,65,68,70,72,73,74,75,76,78,82,85,88">Tiendas Honduras</option>
+                            <option class="fw-bold" value="47,52,56,57,59,63,64,65,68,70,72,73,74,75,76,78,82,85,88,50">Tiendas Honduras</option>
                             <option class="fw-bold" value="49,66,69,71,86">Tiendas Guatemala</option>
                             <option class="fw-bold" value="48,53,61,62">Tiendas El Salvador</option>
                             <option class="fw-bold" value="83,87">Tiendas Nicaragua</option>
@@ -135,7 +135,7 @@
     var tickettot=0;
     $(document).ready(function() {
         yearSelected = getCookie('year') || 2023;
-        var cookieSelect= getCookie('cias') || '47,50,52,56,57,59,63,64,65,68,70,72,73,74,75,76,78,82,85,88';
+        var cookieSelect= getCookie('cias') || '47,52,56,57,59,63,64,65,68,70,72,73,74,75,76,78,82,85,88,50';
         ciasSelected = JSON.parse("[" + cookieSelect + "]");
         var selectTiendas= document.getElementById('cbbCia');
         selectTiendas.value = cookieSelect;
@@ -252,18 +252,28 @@
         //obteniendo descripcion de compañias
         var urlCias = "http://172.16.15.20/API.LovablePHP/ZLO0019P/GetComdes/?tiendas="+ciasSelected+"";
         var responseCias = ajaxRequest(urlCias);
+        let tiendasCerradas=[];
         var tiendasArray = [];
         if (responseCias.code == 200) {
             let data = responseCias.data;
             for (let i = 0; i < data.length; i++) {
-                tiendasArray.push(data[i].COMDES);
+                tienda={CODCIA:data[i].CODCIA,COMDES:data[i].COMDES,ESTADO:data[i].GRUC02};
+                tiendasArray.push(tienda);
             }
         }
         for (let i = 1; i <= 12; i++) {
             for (let j = 0; j < tiendasArray.length; j++) {
-                header.append(
+                if (tiendasArray[j].ESTADO == 1 || tiendasArray[j].ESTADO == 0) {
+                    header.append(
                     `<th class="text-center border border-dark bg-light align-middle" style="font-size:14px;">` +
-                    tiendasArray[j] + `</th>`);
+                    tiendasArray[j].COMDES+ `</th>`);
+                } else {
+                    header.append(
+                        `<th class="text-center border border-dark bg-secondary bg-gradient text-white align-middle" style="font-size:14px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;` +
+                        tiendasArray[j].COMDES +`</th>`
+                    );
+                    tiendasCerradas.push(tiendasArray[j].CODCIA);
+                }
             }
             if (ciasSelected.length>1) {
                 header.append(
@@ -287,6 +297,7 @@
         var rowtd = "";
         var urlRegistros = "http://172.16.15.20/API.LovablePHP/ZLO0019P/TiendasR/?anio=" + yearSelected +
             "&tiendas=" + ciasSelected + "";
+            console.log(urlRegistros);
         var responseRegistros = ajaxRequest(urlRegistros);
         tbody.append(`<tr class="border border-dark">
                             <td colspan="1" class="bg-dark text-white fw-bold text-center sticky-col">REGISTROS</td>
@@ -348,8 +359,10 @@
             });
             var rowIndex = 1;
             for (let k = 0; k < arrayRegistros.length; k++) {
+
                 rowtd += '<tr class="border border-dark" style="background-color: ' + backgroundColor[k] +
                     '; height:50px;">';
+
                 rowtd +=
                     '<td class="text-center align-middle fontS border border-dark sticky-col" style="background-color: ' +
                     backgroundColor[k] + '">' + arrayRegistros[k] + '</td>';
@@ -360,13 +373,17 @@
                     case 1:
                         Object.keys(datosRow1).forEach(mes => {
                             ciasSelected.forEach(codcia => {
+                                let bgColorC="";
+                                if(tiendasCerradas.includes(codcia.toString())){
+                                    bgColorC="bg-secondary bg-gradient text-white";
+                                }
                                 if (codcia == 0) {
                                     if (totalMes == 0) {
                                         rowtd +=
-                                            '<td class="text-end fontM border border-dark"> </td>';
+                                            '<td class="text-end fontM border '+bgColorC+' border-dark"> </td>';
                                     } else {
                                         rowtd +=
-                                            '<td class="text-end fontM border border-dark">' +
+                                            '<td class="text-end fontM border '+bgColorC+' border-dark">' +
                                             totalMes.toLocaleString('es-419', {
                                                 minimumFractionDigits: 0,
                                                 maximumFractionDigits: 0
@@ -374,7 +391,7 @@
                                     }
                                     totalMes = 0;
                                 } else {
-                                    rowtd += '<td class="text-end fontM border border-dark">' +
+                                    rowtd += '<td class="text-end fontM border '+bgColorC+' border-dark">' +
                                         (datosRow1[mes][codcia] != 0 ? datosRow1[mes][codcia]
                                             .toLocaleString('es-419', {
                                                 minimumFractionDigits: 0,
@@ -390,13 +407,17 @@
                     case 2:
                         Object.keys(datosRow2).forEach(mes => {
                             ciasSelected.forEach(codcia => {
+                                let bgColorC="";
+                                if(tiendasCerradas.includes(codcia.toString())){
+                                    bgColorC="bg-secondary bg-gradient text-white";
+                                }
                                 if (codcia == 0) {
                                     if (totalMes == 0) {
                                         rowtd +=
-                                            '<td class="text-end fontM border border-dark"> </td>';
+                                            '<td class="text-end fontM border border-dark '+bgColorC+'"> </td>';
                                     } else {
                                         rowtd +=
-                                            '<td class="text-end fontM border border-dark">' +
+                                            '<td class="text-end fontM border border-dark '+bgColorC+'">' +
                                             totalMes.toLocaleString('es-419', {
                                                 minimumFractionDigits: 0,
                                                 maximumFractionDigits: 0
@@ -404,7 +425,7 @@
                                     }
                                     totalMes = 0;
                                 } else {
-                                    rowtd += '<td class="text-end fontM border border-dark">' +
+                                    rowtd += '<td class="text-end fontM border border-dark '+bgColorC+'">' +
                                         (datosRow2[mes][codcia] != 0 ? datosRow2[mes][codcia]
                                             .toLocaleString('es-419', {
                                                 minimumFractionDigits: 0,
@@ -419,14 +440,18 @@
                     case 3:
                         Object.keys(datosRow3).forEach(mes => {
                             ciasSelected.forEach(codcia => {
+                                let bgColorC="";
+                                if(tiendasCerradas.includes(codcia.toString())){
+                                    bgColorC="bg-secondary bg-gradient text-white";
+                                }
                                 if (codcia == 0) {
                                     prolea.push(totalMes);
                                     if (totalMes == 0) {
                                         rowtd +=
-                                            '<td class="text-end fontM border border-dark"> </td>';
+                                            '<td class="text-end fontM border border-dark '+bgColorC+'"> </td>';
                                     } else {
                                         rowtd +=
-                                            '<td class="text-end fontM border border-dark">' +
+                                            '<td class="text-end fontM border border-dark '+bgColorC+'">' +
                                             totalMes.toLocaleString('es-419', {
                                                 minimumFractionDigits: 0,
                                                 maximumFractionDigits: 0
@@ -434,7 +459,7 @@
                                     }
                                     totalMes = 0;
                                 } else {
-                                    rowtd += '<td class="text-end fontM border border-dark">' +
+                                    rowtd += '<td class="text-end fontM border border-dark '+bgColorC+'">' +
                                         (datosRow3[mes][codcia] != 0 ? datosRow3[mes][codcia]
                                             .toLocaleString('es-419', {
                                                 minimumFractionDigits: 0,
@@ -450,14 +475,18 @@
                     case 4:
                         Object.keys(datosRow4).forEach(mes => {
                             ciasSelected.forEach(codcia => {
+                                let bgColorC="";
+                                if(tiendasCerradas.includes(codcia.toString())){
+                                    bgColorC="bg-secondary bg-gradient text-white";
+                                }
                                 if (codcia == 0) {
                                     provip.push(totalMes);
                                     if (totalMes == 0) {
                                         rowtd +=
-                                            '<td class="text-end fontM border border-dark"> </td>';
+                                            '<td class="text-end fontM border border-dark '+bgColorC+'"> </td>';
                                     } else {
                                         rowtd +=
-                                            '<td class="text-end fontM border border-dark">' +
+                                            '<td class="text-end fontM border border-dark '+bgColorC+'">' +
                                             totalMes.toLocaleString('es-419', {
                                                 minimumFractionDigits: 0,
                                                 maximumFractionDigits: 0
@@ -465,7 +494,7 @@
                                     }
                                     totalMes = 0;
                                 } else {
-                                    rowtd += '<td class="text-end fontM border border-dark">' +
+                                    rowtd += '<td class="text-end fontM border border-dark '+bgColorC+'">' +
                                         (datosRow4[mes][codcia] != 0 ? datosRow4[mes][codcia]
                                             .toLocaleString('es-419', {
                                                 minimumFractionDigits: 0,
@@ -481,14 +510,18 @@
                     case 5:
                         Object.keys(datosRow5).forEach(mes => {
                             ciasSelected.forEach(codcia => {
+                                let bgColorC="";
+                                if(tiendasCerradas.includes(codcia.toString())){
+                                    bgColorC="bg-secondary bg-gradient text-white";
+                                }
                                 if (codcia == 0) {
                                     pronor.push(totalMes);
                                     if (totalMes == 0) {
                                         rowtd +=
-                                            '<td class="text-end fontM border border-dark"> </td>';
+                                            '<td class="text-end fontM border border-dark '+bgColorC+'"> </td>';
                                     } else {
                                         rowtd +=
-                                            '<td class="text-end fontM border border-dark">' +
+                                            '<td class="text-end fontM border border-dark '+bgColorC+'">' +
                                             totalMes.toLocaleString('es-419', {
                                                 minimumFractionDigits: 0,
                                                 maximumFractionDigits: 0
@@ -496,7 +529,7 @@
                                     }
                                     totalMes = 0;
                                 } else {
-                                    rowtd += '<td class="text-end fontM border border-dark">' +
+                                    rowtd += '<td class="text-end fontM border border-dark '+bgColorC+'">' +
                                         (datosRow5[mes][codcia] != 0 ? datosRow5[mes][codcia]
                                             .toLocaleString('es-419', {
                                                 minimumFractionDigits: 0,
@@ -512,13 +545,17 @@
                     case 6:
                         Object.keys(datosRow6).forEach(mes => {
                             ciasSelected.forEach(codcia => {
+                                let bgColorC="";
+                                if(tiendasCerradas.includes(codcia.toString())){
+                                    bgColorC="bg-secondary bg-gradient text-white";
+                                }
                                 if (codcia == 0) {
                                     if (totalMes == 0) {
                                         rowtd +=
-                                            '<td class="text-end fontM border border-dark"> </td>';
+                                            '<td class="text-end fontM border border-dark '+bgColorC+'"> </td>';
                                     } else {
                                         rowtd +=
-                                            '<td class="text-end fontM border border-dark">' +
+                                            '<td class="text-end fontM border border-dark '+bgColorC+'">' +
                                             totalMes.toLocaleString('es-419', {
                                                 minimumFractionDigits: 0,
                                                 maximumFractionDigits: 0
@@ -526,7 +563,7 @@
                                     }
                                     totalMes = 0;
                                 } else {
-                                    rowtd += '<td class="text-end fontM border border-dark">' +
+                                    rowtd += '<td class="text-end fontM border border-dark '+bgColorC+'">' +
                                         (datosRow6[mes][codcia] != 0 ? datosRow6[mes][codcia]
                                             .toLocaleString('es-419', {
                                                 minimumFractionDigits: 0,
@@ -541,14 +578,18 @@
                     case 7:
                         Object.keys(datosRow7).forEach(mes => {
                             ciasSelected.forEach(codcia => {
+                                let bgColorC="";
+                                if(tiendasCerradas.includes(codcia.toString())){
+                                    bgColorC="bg-secondary bg-gradient text-white";
+                                }
                                 if (codcia == 0) {
                                     if (totalMes == 0) {
                                         rowtd +=
-                                            '<td class="text-end fontM border border-dark"> </td>';
+                                            '<td class="text-end fontM border border-dark '+bgColorC+'"> </td>';
                                     } else {
                                         totalRow = parseInt(totalMes || '0');
                                         rowtd +=
-                                            '<td class="text-end fontM border border-dark">' +
+                                            '<td class="text-end fontM border border-dark '+bgColorC+'">' +
                                             totalMes.toLocaleString('es-419', {
                                                 minimumFractionDigits: 0,
                                                 maximumFractionDigits: 0
@@ -556,7 +597,7 @@
                                     }
                                     totalMes = 0;
                                 } else {
-                                    rowtd += '<td class="text-end fontM border border-dark">' +
+                                    rowtd += '<td class="text-end fontM border border-dark '+bgColorC+'">' +
                                         (datosRow7[mes][codcia] != 0 ? datosRow7[mes][codcia]
                                             .toLocaleString('es-419', {
                                                 minimumFractionDigits: 0,
@@ -570,17 +611,21 @@
                             });
                         });
                         break;
-                        case 8:
+                    case 8:
                         Object.keys(datosRow8).forEach(mes => {
                             ciasSelected.forEach(codcia => {
+                                let bgColorC="";
+                                if(tiendasCerradas.includes(codcia.toString())){
+                                    bgColorC="bg-secondary bg-gradient text-white";
+                                }
                                 if (codcia == 0) {
                                     if (totalMes == 0) {
                                         rowtd +=
-                                            '<td class="text-end fontM border border-dark"> </td>';
+                                            '<td class="text-end fontM border border-dark '+bgColorC+'"> </td>';
                                     } else {
                                         totalRow = parseInt(totalMes || '0');
                                         rowtd +=
-                                            '<td class="text-end fontM border border-dark">' +
+                                            '<td class="text-end fontM border border-dark '+bgColorC+'">' +
                                             totalMes.toLocaleString('es-419', {
                                                 minimumFractionDigits: 0,
                                                 maximumFractionDigits: 0
@@ -588,7 +633,7 @@
                                     }
                                     totalMes = 0;
                                 } else {
-                                    rowtd += '<td class="text-end fontM border border-dark">' +
+                                    rowtd += '<td class="text-end fontM border border-dark '+bgColorC+'">' +
                                         (datosRow8[mes][codcia] != 0 ? datosRow8[mes][codcia]
                                             .toLocaleString('es-419', {
                                                 minimumFractionDigits: 0,
@@ -602,17 +647,21 @@
                             });
                         });
                         break;
-                        case 9:
+                    case 9:
                         Object.keys(datosRow9).forEach(mes => {
                             ciasSelected.forEach(codcia => {
+                                let bgColorC="";
+                                if(tiendasCerradas.includes(codcia.toString())){
+                                    bgColorC="bg-secondary bg-gradient text-white";
+                                }
                                 if (codcia == 0) {
                                     if (totalMes == 0) {
                                         rowtd +=
-                                            '<td class="text-end fontM border border-dark"> </td>';
+                                            '<td class="text-end fontM border border-dark '+bgColorC+'"> </td>';
                                     } else {
                                         totalRow = parseInt(totalMes || '0');
                                         rowtd +=
-                                            '<td class="text-end fontM border border-dark">' +
+                                            '<td class="text-end fontM border border-dark '+bgColorC+'">' +
                                             totalMes.toLocaleString('es-419', {
                                                 minimumFractionDigits: 0,
                                                 maximumFractionDigits: 0
@@ -620,7 +669,7 @@
                                     }
                                     totalMes = 0;
                                 } else {
-                                    rowtd += '<td class="text-end fontM border border-dark">' +
+                                    rowtd += '<td class="text-end fontM border border-dark '+bgColorC+'">' +
                                         (datosRow9[mes][codcia] != 0 ? datosRow9[mes][codcia]
                                             .toLocaleString('es-419', {
                                                 minimumFractionDigits: 0,
@@ -777,14 +826,18 @@
                     case 1:
                         Object.keys(datosRow1).forEach(mes => {
                             ciasSelected.forEach(codcia => {
+                                let bgColorC="";
+                                if(tiendasCerradas.includes(codcia.toString())){
+                                    bgColorC="bg-secondary bg-gradient text-white";
+                                }
                                 if (codcia == 0) {
                                     porcelea.push(totalMes);
                                     if (totalMes == 0) {
                                         rowtd +=
-                                            '<td class="text-end fontM border border-dark"> </td>';
+                                            '<td class="text-end fontM border border-dark '+bgColorC+' "> </td>';
                                     } else {
                                         rowtd +=
-                                            '<td class="text-end fontM border border-dark">' +
+                                            '<td class="text-end fontM border border-dark '+bgColorC+'">' +
                                             totalMes.toLocaleString('es-419', {
                                                 minimumFractionDigits: 0,
                                                 maximumFractionDigits: 0
@@ -792,7 +845,7 @@
                                     }
                                     totalMes = 0;
                                 } else {
-                                    rowtd += '<td class="text-end fontM border border-dark">' +
+                                    rowtd += '<td class="text-end fontM border border-dark '+bgColorC+'">' +
                                         (datosRow1[mes][codcia] != 0 ? datosRow1[mes][codcia]
                                             .toLocaleString('es-419', {
                                                 minimumFractionDigits: 0,
@@ -809,14 +862,18 @@
                     case 2:
                         Object.keys(datosRow2).forEach(mes => {
                             ciasSelected.forEach(codcia => {
+                                let bgColorC="";
+                                if(tiendasCerradas.includes(codcia.toString())){
+                                    bgColorC="bg-secondary bg-gradient text-white";
+                                }
                                 if (codcia == 0) {
                                     porceact.push(totalMes);
                                     if (totalMes == 0) {
                                         rowtd +=
-                                            '<td class="text-end fontM border border-dark"> </td>';
+                                            '<td class="text-end fontM border border-dark '+bgColorC+'"> </td>';
                                     } else {
                                         rowtd +=
-                                            '<td class="text-end fontM border border-dark">' +
+                                            '<td class="text-end fontM border border-dark '+bgColorC+'">' +
                                             totalMes.toLocaleString('es-419', {
                                                 minimumFractionDigits: 0,
                                                 maximumFractionDigits: 0
@@ -824,7 +881,7 @@
                                     }
                                     totalMes = 0;
                                 } else {
-                                    rowtd += '<td class="text-end fontM border border-dark">' +
+                                    rowtd += '<td class="text-end fontM border border-dark '+bgColorC+'">' +
                                         (datosRow2[mes][codcia] != 0 ? datosRow2[mes][codcia]
                                             .toLocaleString('es-419', {
                                                 minimumFractionDigits: 0,
@@ -840,14 +897,18 @@
                     case 3:
                         Object.keys(datosRow3).forEach(mes => {
                             ciasSelected.forEach(codcia => {
+                                let bgColorC="";
+                                if(tiendasCerradas.includes(codcia.toString())){
+                                    bgColorC="bg-secondary bg-gradient text-white";
+                                }
                                 if (codcia == 0) {
                                     tottralea.push(totalMes);
                                     if (totalMes == 0) {
                                         rowtd +=
-                                            '<td class="text-end fontM border border-dark"> </td>';
+                                            '<td class="text-end fontM border border-dark '+bgColorC+'"> </td>';
                                     } else {
                                         rowtd +=
-                                            '<td class="text-end fontM border border-dark">' +
+                                            '<td class="text-end fontM border border-dark '+bgColorC+'">' +
                                             totalMes.toLocaleString('es-419', {
                                                 minimumFractionDigits: 0,
                                                 maximumFractionDigits: 0
@@ -855,7 +916,7 @@
                                     }
                                     totalMes = 0;
                                 } else {
-                                    rowtd += '<td class="text-end fontM border border-dark">' +
+                                    rowtd += '<td class="text-end fontM border border-dark '+bgColorC+'">' +
                                         (datosRow3[mes][codcia] != 0 ? datosRow3[mes][codcia]
                                             .toLocaleString('es-419', {
                                                 minimumFractionDigits: 0,
@@ -871,15 +932,19 @@
                     case 4:
                         Object.keys(datosRow4).forEach(mes => {
                             ciasSelected.forEach(codcia => {
+                                let bgColorC="";
+                                if(tiendasCerradas.includes(codcia.toString())){
+                                    bgColorC="bg-secondary bg-gradient text-white";
+                                }
                                 if (codcia == 0) {
                                     tottravip.push(totalMes);
 
                                     if (totalMes == 0) {
                                         rowtd +=
-                                            '<td class="text-end fontM border border-dark"> </td>';
+                                            '<td class="text-end fontM border border-dark '+bgColorC+'"> </td>';
                                     } else {
                                         rowtd +=
-                                            '<td class="text-end fontM border border-dark">' +
+                                            '<td class="text-end fontM border border-dark '+bgColorC+'">' +
                                             totalMes.toLocaleString('es-419', {
                                                 minimumFractionDigits: 0,
                                                 maximumFractionDigits: 0
@@ -887,7 +952,7 @@
                                     }
                                     totalMes = 0;
                                 } else {
-                                    rowtd += '<td class="text-end fontM border border-dark">' +
+                                    rowtd += '<td class="text-end fontM border border-dark '+bgColorC+'">' +
                                         (datosRow4[mes][codcia] != 0 ? datosRow4[mes][codcia]
                                             .toLocaleString('es-419', {
                                                 minimumFractionDigits: 0,
@@ -903,14 +968,18 @@
                     case 5:
                         Object.keys(datosRow5).forEach(mes => {
                             ciasSelected.forEach(codcia => {
+                                let bgColorC="";
+                                if(tiendasCerradas.includes(codcia.toString())){
+                                    bgColorC="bg-secondary bg-gradient text-white";
+                                }
                                 if (codcia == 0) {
                                     tottranor.push(totalMes);
                                     if (totalMes == 0) {
                                         rowtd +=
-                                            '<td class="text-end fontM border border-dark"> </td>';
+                                            '<td class="text-end fontM border border-dark '+bgColorC+'"> </td>';
                                     } else {
                                         rowtd +=
-                                            '<td class="text-end fontM border border-dark">' +
+                                            '<td class="text-end fontM border border-dark '+bgColorC+'">' +
                                             totalMes.toLocaleString('es-419', {
                                                 minimumFractionDigits: 0,
                                                 maximumFractionDigits: 0
@@ -918,7 +987,7 @@
                                     }
                                     totalMes = 0;
                                 } else {
-                                    rowtd += '<td class="text-end fontM border border-dark">' +
+                                    rowtd += '<td class="text-end fontM border border-dark '+bgColorC+'">' +
                                         (datosRow5[mes][codcia] != 0 ? datosRow5[mes][codcia]
                                             .toLocaleString('es-419', {
                                                 minimumFractionDigits: 0,
@@ -934,14 +1003,18 @@
                     case 6:
                         Object.keys(datosRow6).forEach(mes => {
                             ciasSelected.forEach(codcia => {
+                                let bgColorC="";
+                                if(tiendasCerradas.includes(codcia.toString())){
+                                    bgColorC="bg-secondary bg-gradient text-white";
+                                }
                                 if (codcia == 0) {
                                     tottransacciones.push(totalMes);
                                     if (totalMes == 0) {
                                         rowtd +=
-                                            '<td class="text-end fontM border border-dark"> </td>';
+                                            '<td class="text-end fontM border border-dark '+bgColorC+'"> </td>';
                                     } else {
                                         rowtd +=
-                                            '<td class="text-end fontM border border-dark">' +
+                                            '<td class="text-end fontM border border-dark '+bgColorC+'">' +
                                             totalMes.toLocaleString('es-419', {
                                                 minimumFractionDigits: 0,
                                                 maximumFractionDigits: 0
@@ -949,7 +1022,7 @@
                                     }
                                     totalMes = 0;
                                 } else {
-                                    rowtd += '<td class="text-end fontM border border-dark">' +
+                                    rowtd += '<td class="text-end fontM border border-dark '+bgColorC+'">' +
                                         (datosRow6[mes][codcia] != 0 ? datosRow6[mes][codcia]
                                             .toLocaleString('es-419', {
                                                 minimumFractionDigits: 0,
@@ -967,6 +1040,10 @@
                         var currentMes=0;
                         Object.keys(datosRow7).forEach(mes => {
                             ciasSelected.forEach(codcia => {
+                                let bgColorC="";
+                                if(tiendasCerradas.includes(codcia.toString())){
+                                    bgColorC="bg-secondary bg-gradient text-white";
+                                }
                                 if (codcia == 0) {
                                         var promedio=0;
                                         if (prolea[currentMes]!=0) {
@@ -974,10 +1051,10 @@
                                         }
                                         if (promedio == 0) {
                                         rowtd +=
-                                            '<td class="text-end fontM border border-dark"> </td>';
+                                            '<td class="text-end fontM border border-dark '+bgColorC+'"> </td>';
                                         } else {
                                             rowtd +=
-                                                '<td class="text-end fontM border border-dark">' +
+                                                '<td class="text-end fontM border border-dark '+bgColorC+'">' +
                                                 promedio.toLocaleString('es-419', {
                                                     minimumFractionDigits: 2,
                                                     maximumFractionDigits: 2
@@ -986,7 +1063,7 @@
                                     currentMes++;
                                     totalMes = 0;
                                 } else {
-                                    rowtd += '<td class="text-end fontM border border-dark">' +
+                                    rowtd += '<td class="text-end fontM border border-dark '+bgColorC+'">' +
                                         (datosRow7[mes][codcia] != 0 ? datosRow7[mes][codcia]
                                             .toLocaleString('es-419', {
                                                 minimumFractionDigits: 2,
@@ -1007,6 +1084,10 @@
                         var currentMes=0;
                         Object.keys(datosRow8).forEach(mes => {
                             ciasSelected.forEach(codcia => {
+                                let bgColorC="";
+                                if(tiendasCerradas.includes(codcia.toString())){
+                                    bgColorC="bg-secondary bg-gradient text-white";
+                                }
                                 if (codcia == 0) {
                                         var promedio=0;
                                         if (provip[currentMes]!=0) {
@@ -1014,10 +1095,10 @@
                                         }
                                         if (promedio == 0) {
                                         rowtd +=
-                                            '<td class="text-end fontM border border-dark"> </td>';
+                                            '<td class="text-end fontM border border-dark '+bgColorC+' "> </td>';
                                         } else {
                                             rowtd +=
-                                                '<td class="text-end fontM border border-dark">' +
+                                                '<td class="text-end fontM border border-dark '+bgColorC+' ">' +
                                                 promedio.toLocaleString('es-419', {
                                                     minimumFractionDigits: 2,
                                                     maximumFractionDigits: 2
@@ -1026,7 +1107,7 @@
                                     currentMes++;
                                     totalMes = 0;
                                 } else {
-                                    rowtd += '<td class="text-end fontM border border-dark">' +
+                                    rowtd += '<td class="text-end fontM border border-dark '+bgColorC+' ">' +
                                         (datosRow8[mes][codcia] != 0 ? datosRow8[mes][codcia]
                                             .toLocaleString('es-419', {
                                                 minimumFractionDigits: 2,
@@ -1047,6 +1128,10 @@
                         var currentMes=0;
                         Object.keys(datosRow9).forEach(mes => {
                             ciasSelected.forEach(codcia => {
+                                let bgColorC="";
+                                if(tiendasCerradas.includes(codcia.toString())){
+                                    bgColorC="bg-secondary bg-gradient text-white";
+                                }
                                 if (codcia == 0) {
                                         var promedio=0;
                                         if (pronor[currentMes]!=0) {
@@ -1054,10 +1139,10 @@
                                         }
                                         if (promedio == 0) {
                                         rowtd +=
-                                            '<td class="text-end fontM border border-dark"> </td>';
+                                            '<td class="text-end fontM border border-dark '+bgColorC+' "> </td>';
                                         } else {
                                             rowtd +=
-                                                '<td class="text-end fontM border border-dark">' +
+                                                '<td class="text-end fontM border border-dark '+bgColorC+' ">' +
                                                 promedio.toLocaleString('es-419', {
                                                     minimumFractionDigits: 2,
                                                     maximumFractionDigits: 2
@@ -1066,7 +1151,7 @@
                                     currentMes++;
                                     totalMes = 0;
                                 } else {
-                                    rowtd += '<td class="text-end fontM border border-dark">' +
+                                    rowtd += '<td class="text-end fontM border border-dark '+bgColorC+' ">' +
                                         (datosRow9[mes][codcia] != 0 ? datosRow9[mes][codcia]
                                             .toLocaleString('es-419', {
                                                 minimumFractionDigits: 2,
@@ -1086,14 +1171,18 @@
                     case 10:
                         Object.keys(datosRow10).forEach(mes => {
                             ciasSelected.forEach(codcia => {
+                               let bgColorC="";
+                                if(tiendasCerradas.includes(codcia.toString())){
+                                    bgColorC="bg-secondary bg-gradient text-white";
+                                }
                                 if (codcia == 0) {
                                     if (totalMes == 0) {
                                         rowtd +=
-                                            '<td class="text-end fontM border border-dark"> </td>';
+                                            '<td class="text-end fontM border border-dark '+bgColorC+' "> </td>';
                                     } else {
                                         totalRow = parseInt(totalMes || '0');
                                         rowtd +=
-                                            '<td class="text-end fontM border border-dark">' +
+                                            '<td class="text-end fontM border border-dark '+bgColorC+' ">' +
                                             totalMes.toLocaleString('es-419', {
                                                 minimumFractionDigits: 0,
                                                 maximumFractionDigits: 0
@@ -1101,7 +1190,7 @@
                                     }
                                     totalMes = 0;
                                 } else {
-                                    rowtd += '<td class="text-end fontM border border-dark">' +
+                                    rowtd += '<td class="text-end fontM border border-dark '+bgColorC+' ">' +
                                         (datosRow10[mes][codcia] != 0 ? datosRow10[mes][codcia]
                                             .toLocaleString('es-419', {
                                                 minimumFractionDigits: 0,
@@ -1118,14 +1207,18 @@
                     case 11:
                         Object.keys(datosRow11).forEach(mes => {
                             ciasSelected.forEach(codcia => {
+                               let bgColorC="";
+                                if(tiendasCerradas.includes(codcia.toString())){
+                                    bgColorC="bg-secondary bg-gradient text-white";
+                                }
                                 if (codcia == 0) {
                                     if (totalMes == 0) {
                                         rowtd +=
-                                            '<td class="text-end fontM border border-dark"> </td>';
+                                            '<td class="text-end fontM border border-dark '+bgColorC+' "> </td>';
                                     } else {
                                         totalRow = parseInt(totalMes || '0');
                                         rowtd +=
-                                            '<td class="text-end fontM border border-dark">' +
+                                            '<td class="text-end fontM border border-dark '+bgColorC+' ">' +
                                             totalMes.toLocaleString('es-419', {
                                                 minimumFractionDigits: 0,
                                                 maximumFractionDigits: 0
@@ -1133,7 +1226,7 @@
                                     }
                                     totalMes = 0;
                                 } else {
-                                    rowtd += '<td class="text-end fontM border border-dark">' +
+                                    rowtd += '<td class="text-end fontM border border-dark '+bgColorC+' ">' +
                                         (datosRow11[mes][codcia] != 0 ? datosRow11[mes][codcia]
                                             .toLocaleString('es-419', {
                                                 minimumFractionDigits: 0,
@@ -1150,14 +1243,18 @@
                     case 12:
                         Object.keys(datosRow12).forEach(mes => {
                             ciasSelected.forEach(codcia => {
+                               let bgColorC="";
+                                if(tiendasCerradas.includes(codcia.toString())){
+                                    bgColorC="bg-secondary bg-gradient text-white";
+                                }
                                 if (codcia == 0) {
                                     if (totalMes == 0) {
                                         rowtd +=
-                                            '<td class="text-end fontM border border-dark"> </td>';
+                                            '<td class="text-end fontM border border-dark '+bgColorC+' "> </td>';
                                     } else {
                                         totalRow = parseInt(totalMes || '0');
                                         rowtd +=
-                                            '<td class="text-end fontM border border-dark">' +
+                                            '<td class="text-end fontM border border-dark '+bgColorC+' ">' +
                                             totalMes.toLocaleString('es-419', {
                                                 minimumFractionDigits: 0,
                                                 maximumFractionDigits: 0
@@ -1165,7 +1262,7 @@
                                     }
                                     totalMes = 0;
                                 } else {
-                                    rowtd += '<td class="text-end fontM border border-dark">' +
+                                    rowtd += '<td class="text-end fontM border border-dark '+bgColorC+' ">' +
                                         (datosRow12[mes][codcia] != 0 ? datosRow12[mes][codcia]
                                             .toLocaleString('es-419', {
                                                 minimumFractionDigits: 0,
@@ -1223,12 +1320,13 @@
         tbody.append(rowtd);
 
         //PORCENTAJE TRANSACCIONES----------------------------------------------------------------------------------------------------------------------
-        var arrayPorTransacciones = [
-            '% DE TRANSACCIONES CON NUEVOS REGISTROS VS TOTAL DE TRANSACCIONES',
-            '% DE TRANSACCIONES CON ACTUALIZACION  DE DATOS VS TOTAL DE TRANSACCIONES',
-            '% DE TRANSACCIONES CON STATUS REGISTRADO Y/O ACTUALIZADO VS TOTAL DE TRANSACCIONES',
-            '% DE TRANSACCIONES DE CLIENTE NO INSCRITO VS TRANSACCIONES TOTALES'
-        ];
+        var arrayPorTransacciones=[
+                          '% DE TRANSACCIONES CON NUEVOS REGISTROS VS TOTAL DE TRANSACCIONES',
+                          '% DE TRANSACCIONES CON ACTUALIZACION  DE DATOS VS TOTAL DE TRANSACCIONES',
+                          '% DE TRANSACCIONES DE PROGRAMA LEALTAD',
+                          '% DE TRANSACCIONES DE CLIENTES VIP',
+                          '% DE TRANSACCIONES DE CLIENTES NORMALES'
+                        ];
         var rowtd = "";
         var urlPTransacciones = " http://172.16.15.20/API.LovablePHP/ZLO0019P/TiendasPT/?anio=" + yearSelected +
             "&tiendas=" + ciasSelected + "";
@@ -1239,23 +1337,26 @@
                             <td colspan="300" class="bg-dark"></td>
                           </tr>
                           <tr><td colspan='14'></td></tr>`);
-        var backgroundColor = ['#FBFFCC', '#FAFF99', '#F9FF66', '#F8FF33'];
+                          var backgroundColor = [ '#FBFFCC', '#FAFF99','#F9FF66','#F8FF33','#F7FF00'];
         if (responsePTransacciones.code == 200) {
             let data = responsePTransacciones.data;
             let datosRow1 = {};
             let datosRow2 = {};
             let datosRow3 = {};
             let datosRow4 = {};
+            let datosRow5 = {};
             for (let mes = 1; mes <= 12; mes++) {
                 datosRow1[mes] = {};
                 datosRow2[mes] = {};
                 datosRow3[mes] = {};
                 datosRow4[mes] = {};
+                datosRow5[mes] = {};
                 ciasSelected.forEach(codcia => {
                     datosRow1[mes][codcia] = 0;
                     datosRow2[mes][codcia] = 0;
                     datosRow3[mes][codcia] = 0;
                     datosRow4[mes][codcia] = 0;
+                    datosRow5[mes][codcia] = 0;
                 });
             }
             data.forEach(dato => {
@@ -1266,7 +1367,9 @@
                 //ROW3
                 datosRow3[dato.MESPRO][dato.CODCIA] = parseFloat(dato.PORCE8);
                 //ROW4
-                datosRow4[dato.MESPRO][dato.CODCIA] = parseFloat(dato.PORCE0);
+                datosRow4[dato.MESPRO][dato.CODCIA] = (parseFloat(dato.TRAVIP)/parseFloat(dato.TOTTRA))*100;
+                //ROW5
+                datosRow5[dato.MESPRO][dato.CODCIA] = (parseFloat(dato.TRANOR)/parseFloat(dato.TOTTRA))*100;
             });
 
             var rowIndex = 1;
@@ -1282,6 +1385,10 @@
                         var currentMes=0;
                         Object.keys(datosRow1).forEach(mes => {
                             ciasSelected.forEach(codcia => {
+                               let bgColorC="";
+                                if(tiendasCerradas.includes(codcia.toString())){
+                                    bgColorC="bg-secondary bg-gradient text-white";
+                                }
                                 if (codcia == 0) {
                                         var promedio=0;
                                         if (tottransacciones[currentMes]!=0) {
@@ -1289,10 +1396,10 @@
                                         }
                                         if (promedio == 0) {
                                         rowtd +=
-                                            '<td class="text-end fontM border border-dark"> </td>';
+                                            '<td class="text-end fontM border border-dark '+bgColorC+' "> </td>';
                                         } else {
                                             rowtd +=
-                                                '<td class="text-end fontM border border-dark">' +
+                                                '<td class="text-end fontM border border-dark '+bgColorC+' ">' +
                                                 promedio.toLocaleString('es-419', {
                                                     minimumFractionDigits: 2,
                                                     maximumFractionDigits: 2
@@ -1301,7 +1408,7 @@
                                     currentMes++;
                                     totalMes = 0;
                                 } else {
-                                    rowtd += '<td class="text-end fontM border border-dark">' +
+                                    rowtd += '<td class="text-end fontM border border-dark '+bgColorC+' ">' +
                                         (datosRow1[mes][codcia] != 0 ? datosRow1[mes][codcia]
                                             .toLocaleString('es-419', {
                                                 minimumFractionDigits: 2,
@@ -1322,6 +1429,10 @@
                         var currentMes=0;
                         Object.keys(datosRow2).forEach(mes => {
                             ciasSelected.forEach(codcia => {
+                               let bgColorC="";
+                                if(tiendasCerradas.includes(codcia.toString())){
+                                    bgColorC="bg-secondary bg-gradient text-white";
+                                }
                                 if (codcia == 0) {
                                         var promedio=0;
                                         if (tottransacciones[currentMes]!=0) {
@@ -1329,10 +1440,10 @@
                                         }
                                         if (promedio == 0) {
                                         rowtd +=
-                                            '<td class="text-end fontM border border-dark"> </td>';
+                                            '<td class="text-end fontM border border-dark '+bgColorC+' "> </td>';
                                         } else {
                                             rowtd +=
-                                                '<td class="text-end fontM border border-dark">' +
+                                                '<td class="text-end fontM border border-dark '+bgColorC+' ">' +
                                                 promedio.toLocaleString('es-419', {
                                                     minimumFractionDigits: 2,
                                                     maximumFractionDigits: 2
@@ -1341,7 +1452,7 @@
                                     currentMes++;
                                     totalMes = 0;
                                 } else {
-                                    rowtd += '<td class="text-end fontM border border-dark">' +
+                                    rowtd += '<td class="text-end fontM border border-dark '+bgColorC+' ">' +
                                         (datosRow2[mes][codcia] != 0 ? datosRow2[mes][codcia]
                                             .toLocaleString('es-419', {
                                                 minimumFractionDigits: 2,
@@ -1361,6 +1472,10 @@
                         var currentMes=0;
                         Object.keys(datosRow3).forEach(mes => {
                             ciasSelected.forEach(codcia => {
+                               let bgColorC="";
+                                if(tiendasCerradas.includes(codcia.toString())){
+                                    bgColorC="bg-secondary bg-gradient text-white";
+                                }
                                 if (codcia == 0) {
                                         var promedio=0;
                                         if (tottransacciones[currentMes]!=0) {
@@ -1368,10 +1483,10 @@
                                         }
                                         if (promedio == 0) {
                                         rowtd +=
-                                            '<td class="text-end fontM border border-dark"> </td>';
+                                            '<td class="text-end fontM border border-dark '+bgColorC+' "> </td>';
                                         } else {
                                             rowtd +=
-                                                '<td class="text-end fontM border border-dark">' +
+                                                '<td class="text-end fontM border border-dark '+bgColorC+' ">' +
                                                 promedio.toLocaleString('es-419', {
                                                     minimumFractionDigits: 2,
                                                     maximumFractionDigits: 2
@@ -1380,7 +1495,7 @@
                                     currentMes++;
                                     totalMes = 0;
                                 } else {
-                                    rowtd += '<td class="text-end fontM border border-dark">' +
+                                    rowtd += '<td class="text-end fontM border border-dark '+bgColorC+' ">' +
                                         (datosRow3[mes][codcia] != 0 ? datosRow3[mes][codcia]
                                             .toLocaleString('es-419', {
                                                 minimumFractionDigits: 2,
@@ -1400,18 +1515,22 @@
                         var currentMes=0;
                         Object.keys(datosRow4).forEach(mes => {
                             ciasSelected.forEach(codcia => {
+                               let bgColorC="";
+                                if(tiendasCerradas.includes(codcia.toString())){
+                                    bgColorC="bg-secondary bg-gradient text-white";
+                                }
                                 if (codcia == 0) {
                                         var promedio=0;
                                         if (tottransacciones[currentMes]!=0) {
-                                            var suma=tottravip[currentMes]+tottranor[currentMes];
+                                            var suma=parseFloat(tottravip[currentMes]);
                                             promedio=(suma/tottransacciones[currentMes]) *100;
                                         }
                                         if (promedio == 0) {
                                         rowtd +=
-                                            '<td class="text-end fontM border border-dark"> </td>';
+                                            '<td class="text-end fontM border border-dark '+bgColorC+' "> </td>';
                                         } else {
                                             rowtd +=
-                                                '<td class="text-end fontM border border-dark">' +
+                                                '<td class="text-end fontM border border-dark '+bgColorC+' ">' +
                                                 promedio.toLocaleString('es-419', {
                                                     minimumFractionDigits: 2,
                                                     maximumFractionDigits: 2
@@ -1420,8 +1539,8 @@
                                     currentMes++;
                                     totalMes = 0;
                                 } else {
-                                    rowtd += '<td class="text-end fontM border border-dark">' +
-                                        (datosRow4[mes][codcia] != 0 ? datosRow4[mes][codcia]
+                                    rowtd += '<td class="text-end fontM border border-dark '+bgColorC+' ">' +
+                                        ((datosRow4[mes][codcia] != 0 && !isNaN(datosRow4[mes][codcia])) ? datosRow4[mes][codcia]
                                             .toLocaleString('es-419', {
                                                 minimumFractionDigits: 2,
                                                 maximumFractionDigits: 2
@@ -1429,7 +1548,52 @@
                                     totalMes += parseInt(datosRow4[mes][codcia] || '0');
                                     var promedio=0;
                                     if (tottratransacciones!=0) {
-                                        var suma=tratprovip+tratpronor;
+                                        var suma=tratprovip;
+                                        promedio=suma/tottratransacciones;
+                                    }
+                                    totalRow = promedio*100;
+                                }
+                            });
+                        });
+                        break;
+                    case 5:
+                        var currentMes=0;
+                        Object.keys(datosRow5).forEach(mes => {
+                            ciasSelected.forEach(codcia => {
+                               let bgColorC="";
+                                if(tiendasCerradas.includes(codcia.toString())){
+                                    bgColorC="bg-secondary bg-gradient text-white";
+                                }
+                                if (codcia == 0) {
+                                        var promedio=0;
+                                        if (tottransacciones[currentMes]!=0) {
+                                            var suma=parseFloat(tottranor[currentMes]);
+                                            promedio=(suma/tottransacciones[currentMes]) *100;
+                                        }
+                                        if (promedio == 0) {
+                                        rowtd +=
+                                            '<td class="text-end fontM border border-dark '+bgColorC+' "> </td>';
+                                        } else {
+                                            rowtd +=
+                                                '<td class="text-end fontM border border-dark '+bgColorC+' ">' +
+                                                promedio.toLocaleString('es-419', {
+                                                    minimumFractionDigits: 2,
+                                                    maximumFractionDigits: 2
+                                                }) + '%</td>';
+                                        }
+                                    currentMes++;
+                                    totalMes = 0;
+                                } else {
+                                    rowtd += '<td class="text-end fontM border border-dark '+bgColorC+' ">' +
+                                        ((datosRow5[mes][codcia] != 0 && !isNaN(datosRow5[mes][codcia])) ? datosRow5[mes][codcia]
+                                            .toLocaleString('es-419', {
+                                                minimumFractionDigits: 2,
+                                                maximumFractionDigits: 2
+                                            }) +'%' : '‎') + '</td>';
+                                    totalMes += parseInt(datosRow5[mes][codcia] || '0');
+                                    var promedio=0;
+                                    if (tottratransacciones!=0) {
+                                        var suma=tratpronor;
                                         promedio=suma/tottratransacciones;
                                     }
                                     totalRow = promedio*100;
@@ -1548,14 +1712,18 @@
                     case 1:
                         Object.keys(datosRow1).forEach(mes => {
                             ciasSelected.forEach(codcia => {
+                               let bgColorC="";
+                                if(tiendasCerradas.includes(codcia.toString())){
+                                    bgColorC="bg-secondary bg-gradient text-white";
+                                }
                                 if (codcia == 0) {
                                     prototclie.push(totalMes);
                                     if (totalMes == 0) {
                                         rowtd +=
-                                            '<td class="text-end fontM border border-dark"> </td>';
+                                            '<td class="text-end fontM border border-dark '+bgColorC+' "> </td>';
                                     } else {
                                         rowtd +=
-                                            '<td class="text-end fontM border border-dark">' +
+                                            '<td class="text-end fontM border border-dark '+bgColorC+' ">' +
                                             totalMes.toLocaleString('es-419', {
                                                 minimumFractionDigits: 0,
                                                 maximumFractionDigits: 0
@@ -1563,7 +1731,7 @@
                                     }
                                     totalMes = 0;
                                 } else {
-                                    rowtd += '<td class="text-end fontM border border-dark">' +
+                                    rowtd += '<td class="text-end fontM border border-dark '+bgColorC+' ">' +
                                         (datosRow1[mes][codcia] != 0 ? datosRow1[mes][codcia]
                                             .toLocaleString('es-419', {
                                                 minimumFractionDigits: 0,
@@ -1579,14 +1747,18 @@
                     case 2:
                         Object.keys(datosRow2).forEach(mes => {
                             ciasSelected.forEach(codcia => {
+                               let bgColorC="";
+                                if(tiendasCerradas.includes(codcia.toString())){
+                                    bgColorC="bg-secondary bg-gradient text-white";
+                                }
                                 if (codcia == 0) {
                                     proemailte.push(totalMes);
                                     if (totalMes == 0) {
                                         rowtd +=
-                                            '<td class="text-end fontM border border-dark"> </td>';
+                                            '<td class="text-end fontM border border-dark '+bgColorC+' "> </td>';
                                     } else {
                                         rowtd +=
-                                            '<td class="text-end fontM border border-dark">' +
+                                            '<td class="text-end fontM border border-dark '+bgColorC+' ">' +
                                             totalMes.toLocaleString('es-419', {
                                                 minimumFractionDigits: 0,
                                                 maximumFractionDigits: 0
@@ -1594,7 +1766,7 @@
                                     }
                                     totalMes = 0;
                                 } else {
-                                    rowtd += '<td class="text-end fontM border border-dark">' +
+                                    rowtd += '<td class="text-end fontM border border-dark '+bgColorC+' ">' +
                                         (datosRow2[mes][codcia] != 0 ? datosRow2[mes][codcia]
                                             .toLocaleString('es-419', {
                                                 minimumFractionDigits: 0,
@@ -1611,6 +1783,10 @@
                         var currentMes=0;
                         Object.keys(datosRow3).forEach(mes => {
                             ciasSelected.forEach(codcia => {
+                               let bgColorC="";
+                                if(tiendasCerradas.includes(codcia.toString())){
+                                    bgColorC="bg-secondary bg-gradient text-white";
+                                }
                                 if (codcia == 0) {
                                         var promedio=0;
                                         if (prototclie[currentMes]!=0) {
@@ -1618,10 +1794,10 @@
                                         }
                                         if (promedio == 0) {
                                         rowtd +=
-                                            '<td class="text-end fontM border border-dark"> </td>';
+                                            '<td class="text-end fontM border border-dark '+bgColorC+' "> </td>';
                                         } else {
                                             rowtd +=
-                                                '<td class="text-end fontM border border-dark">' +
+                                                '<td class="text-end fontM border border-dark '+bgColorC+' ">' +
                                                 promedio.toLocaleString('es-419', {
                                                     minimumFractionDigits: 2,
                                                     maximumFractionDigits: 2
@@ -1630,7 +1806,7 @@
                                     currentMes++;
                                     totalMes = 0;
                                 } else {
-                                    rowtd += '<td class="text-end fontM border border-dark">' +
+                                    rowtd += '<td class="text-end fontM border border-dark '+bgColorC+' ">' +
                                         (datosRow3[mes][codcia] != 0 ? datosRow3[mes][codcia]
                                             .toLocaleString('es-419', {
                                                 minimumFractionDigits: 2,
@@ -1649,14 +1825,18 @@
                     case 4:
                         Object.keys(datosRow4).forEach(mes => {
                             ciasSelected.forEach(codcia => {
+                               let bgColorC="";
+                                if(tiendasCerradas.includes(codcia.toString())){
+                                    bgColorC="bg-secondary bg-gradient text-white";
+                                }
                                 if (codcia == 0) {
                                     protelefono.push(totalMes);
                                     if (totalMes == 0) {
                                         rowtd +=
-                                            '<td class="text-end fontM border border-dark"> </td>';
+                                            '<td class="text-end fontM border border-dark '+bgColorC+' "> </td>';
                                     } else {
                                         rowtd +=
-                                            '<td class="text-end fontM border border-dark">' +
+                                            '<td class="text-end fontM border border-dark '+bgColorC+' ">' +
                                             totalMes.toLocaleString('es-419', {
                                                 minimumFractionDigits: 0,
                                                 maximumFractionDigits: 0
@@ -1664,7 +1844,7 @@
                                     }
                                     totalMes = 0;
                                 } else {
-                                    rowtd += '<td class="text-end fontM border border-dark">' +
+                                    rowtd += '<td class="text-end fontM border border-dark '+bgColorC+' ">' +
                                         (datosRow4[mes][codcia] != 0 ? datosRow4[mes][codcia]
                                             .toLocaleString('es-419', {
                                                 minimumFractionDigits: 0,
@@ -1681,6 +1861,10 @@
                         var currentMes=0;
                         Object.keys(datosRow5).forEach(mes => {
                             ciasSelected.forEach(codcia => {
+                               let bgColorC="";
+                                if(tiendasCerradas.includes(codcia.toString())){
+                                    bgColorC="bg-secondary bg-gradient text-white";
+                                }
                                 if (codcia == 0) {
                                         var promedio=0;
                                         if (prototclie[currentMes]!=0) {
@@ -1688,10 +1872,10 @@
                                         }
                                         if (promedio == 0) {
                                         rowtd +=
-                                            '<td class="text-end fontM border border-dark"> </td>';
+                                            '<td class="text-end fontM border border-dark '+bgColorC+' "> </td>';
                                         } else {
                                             rowtd +=
-                                                '<td class="text-end fontM border border-dark">' +
+                                                '<td class="text-end fontM border border-dark '+bgColorC+' ">' +
                                                 promedio.toLocaleString('es-419', {
                                                     minimumFractionDigits: 2,
                                                     maximumFractionDigits: 2
@@ -1700,7 +1884,7 @@
                                     currentMes++;
                                     totalMes = 0;
                                 } else {
-                                    rowtd += '<td class="text-end fontM border border-dark">' +
+                                    rowtd += '<td class="text-end fontM border border-dark '+bgColorC+' ">' +
                                         (datosRow5[mes][codcia] != 0 ? datosRow5[mes][codcia]
                                             .toLocaleString('es-419', {
                                                 minimumFractionDigits: 2,
@@ -1719,14 +1903,18 @@
                     case 6:
                         Object.keys(datosRow6).forEach(mes => {
                             ciasSelected.forEach(codcia => {
+                               let bgColorC="";
+                                if(tiendasCerradas.includes(codcia.toString())){
+                                    bgColorC="bg-secondary bg-gradient text-white";
+                                }
                                 if (codcia == 0) {
                                     proemail.push(totalMes);
                                     if (totalMes == 0) {
                                         rowtd +=
-                                            '<td class="text-end fontM border border-dark"> </td>';
+                                            '<td class="text-end fontM border border-dark '+bgColorC+' "> </td>';
                                     } else {
                                         rowtd +=
-                                            '<td class="text-end fontM border border-dark">' +
+                                            '<td class="text-end fontM border border-dark '+bgColorC+' ">' +
                                             totalMes.toLocaleString('es-419', {
                                                 minimumFractionDigits: 0,
                                                 maximumFractionDigits: 0
@@ -1734,7 +1922,7 @@
                                     }
                                     totalMes = 0;
                                 } else {
-                                    rowtd += '<td class="text-end fontM border border-dark">' +
+                                    rowtd += '<td class="text-end fontM border border-dark '+bgColorC+' ">' +
                                         (datosRow6[mes][codcia] != 0 ? datosRow6[mes][codcia]
                                             .toLocaleString('es-419', {
                                                 minimumFractionDigits: 0,
@@ -1751,6 +1939,10 @@
                         var currentMes=0;
                         Object.keys(datosRow7).forEach(mes => {
                             ciasSelected.forEach(codcia => {
+                               let bgColorC="";
+                                if(tiendasCerradas.includes(codcia.toString())){
+                                    bgColorC="bg-secondary bg-gradient text-white";
+                                }
                                 if (codcia == 0) {
                                         var promedio=0;
                                         if (prototclie[currentMes]!=0) {
@@ -1758,10 +1950,10 @@
                                         }
                                         if (promedio == 0) {
                                         rowtd +=
-                                            '<td class="text-end fontM border border-dark"> </td>';
+                                            '<td class="text-end fontM border border-dark '+bgColorC+' "> </td>';
                                         } else {
                                             rowtd +=
-                                                '<td class="text-end fontM border border-dark">' +
+                                                '<td class="text-end fontM border border-dark '+bgColorC+' ">' +
                                                 promedio.toLocaleString('es-419', {
                                                     minimumFractionDigits: 2,
                                                     maximumFractionDigits: 2
@@ -1770,7 +1962,7 @@
                                     currentMes++;
                                     totalMes = 0;
                                 } else {
-                                    rowtd += '<td class="text-end fontM border border-dark">' +
+                                    rowtd += '<td class="text-end fontM border border-dark '+bgColorC+' ">' +
                                         (datosRow7[mes][codcia] != 0 ? datosRow7[mes][codcia]
                                             .toLocaleString('es-419', {
                                                 minimumFractionDigits: 2,
@@ -1900,6 +2092,10 @@
                         var currentMes=0;
                         Object.keys(datosRow1).forEach(mes => {
                             ciasSelected.forEach(codcia => {
+                               let bgColorC="";
+                                if(tiendasCerradas.includes(codcia.toString())){
+                                    bgColorC="bg-secondary bg-gradient text-white";
+                                }
                                 if (codcia == 0) {
                                         var promedio=0;
                                         if (tottralea[currentMes]!=0) {
@@ -1908,10 +2104,10 @@
                                         }
                                         if (promedio == 0) {
                                         rowtd +=
-                                            '<td class="text-end fontM border border-dark"> </td>';
+                                            '<td class="text-end fontM border border-dark '+bgColorC+' "> </td>';
                                         } else {
                                             rowtd +=
-                                                '<td class="text-end fontM border border-dark"> D.' +
+                                                '<td class="text-end fontM border border-dark '+bgColorC+' "> D.' +
                                                 promedio.toLocaleString('es-419', {
                                                     minimumFractionDigits: 2,
                                                     maximumFractionDigits: 2
@@ -1920,7 +2116,7 @@
                                     currentMes++;
                                     totalMes = 0;
                                 } else {
-                                    rowtd += '<td class="text-end fontM border border-dark">' +
+                                    rowtd += '<td class="text-end fontM border border-dark '+bgColorC+' ">' +
                                         (datosRow1[mes][codcia] != 0 ? 'D.'+datosRow1[mes][codcia]
                                             .toLocaleString('es-419', {
                                                 minimumFractionDigits: 2,
@@ -1939,6 +2135,10 @@
                         var currentMes=0;
                         Object.keys(datosRow2).forEach(mes => {
                             ciasSelected.forEach(codcia => {
+                               let bgColorC="";
+                                if(tiendasCerradas.includes(codcia.toString())){
+                                    bgColorC="bg-secondary bg-gradient text-white";
+                                }
                                 if (codcia == 0) {
                                         var promedio=0;
                                         if (tottravip[currentMes]!=0) {
@@ -1947,10 +2147,10 @@
                                         }
                                         if (promedio == 0) {
                                         rowtd +=
-                                            '<td class="text-end fontM border border-dark"> </td>';
+                                            '<td class="text-end fontM border border-dark '+bgColorC+' "> </td>';
                                         } else {
                                             rowtd +=
-                                                '<td class="text-end fontM border border-dark"> D.' +
+                                                '<td class="text-end fontM border border-dark '+bgColorC+' "> D.' +
                                                 promedio.toLocaleString('es-419', {
                                                     minimumFractionDigits: 2,
                                                     maximumFractionDigits: 2
@@ -1959,7 +2159,7 @@
                                     currentMes++;
                                     totalMes = 0;
                                 } else {
-                                    rowtd += '<td class="text-end fontM border border-dark">' +
+                                    rowtd += '<td class="text-end fontM border border-dark '+bgColorC+' ">' +
                                         (datosRow2[mes][codcia] != 0 ? 'D.'+datosRow2[mes][codcia]
                                             .toLocaleString('es-419', {
                                                 minimumFractionDigits: 2,
@@ -1978,6 +2178,10 @@
                         var currentMes=0;
                         Object.keys(datosRow3).forEach(mes => {
                             ciasSelected.forEach(codcia => {
+                               let bgColorC="";
+                                if(tiendasCerradas.includes(codcia.toString())){
+                                    bgColorC="bg-secondary bg-gradient text-white";
+                                }
                                 if (codcia == 0) {
                                         var promedio=0;
                                         if (tottranor[currentMes]!=0) {
@@ -1986,10 +2190,10 @@
                                         }
                                         if (promedio == 0) {
                                         rowtd +=
-                                            '<td class="text-end fontM border border-dark"> </td>';
+                                            '<td class="text-end fontM border border-dark '+bgColorC+' "> </td>';
                                         } else {
                                             rowtd +=
-                                                '<td class="text-end fontM border border-dark"> D.' +
+                                                '<td class="text-end fontM border border-dark '+bgColorC+' "> D.' +
                                                 promedio.toLocaleString('es-419', {
                                                     minimumFractionDigits: 2,
                                                     maximumFractionDigits: 2
@@ -1998,7 +2202,7 @@
                                     currentMes++;
                                     totalMes = 0;
                                 } else {
-                                    rowtd += '<td class="text-end fontM border border-dark">' +
+                                    rowtd += '<td class="text-end fontM border border-dark '+bgColorC+' ">' +
                                         (datosRow3[mes][codcia] != 0 ? 'D.'+datosRow3[mes][codcia]
                                             .toLocaleString('es-419', {
                                                 minimumFractionDigits: 2,
@@ -2017,6 +2221,10 @@
                         var currentMes=0;
                         Object.keys(datosRow4).forEach(mes => {
                             ciasSelected.forEach(codcia => {
+                               let bgColorC="";
+                                if(tiendasCerradas.includes(codcia.toString())){
+                                    bgColorC="bg-secondary bg-gradient text-white";
+                                }
                                 if (codcia == 0) {
                                         var promedio=0;
                                         if (tottransacciones[currentMes]!=0) {
@@ -2025,10 +2233,10 @@
                                         }
                                         if (promedio == 0) {
                                         rowtd +=
-                                            '<td class="text-end fontM border border-dark"> </td>';
+                                            '<td class="text-end fontM border border-dark '+bgColorC+' "> </td>';
                                         } else {
                                             rowtd +=
-                                                '<td class="text-end fontM border border-dark"> D.' +
+                                                '<td class="text-end fontM border border-dark '+bgColorC+' "> D.' +
                                                 promedio.toLocaleString('es-419', {
                                                     minimumFractionDigits: 2,
                                                     maximumFractionDigits: 2
@@ -2037,7 +2245,7 @@
                                     currentMes++;
                                     totalMes = 0;
                                 } else {
-                                    rowtd += '<td class="text-end fontM border border-dark">' +
+                                    rowtd += '<td class="text-end fontM border border-dark '+bgColorC+' ">' +
                                         (datosRow4[mes][codcia] != 0 ? 'D.'+datosRow4[mes][codcia]
                                             .toLocaleString('es-419', {
                                                 minimumFractionDigits: 2,

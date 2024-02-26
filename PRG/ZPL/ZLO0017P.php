@@ -580,8 +580,9 @@
              var arrayPorTransacciones=[
                           '% DE TRANSACCIONES CON NUEVOS REGISTROS VS TOTAL DE TRANSACCIONES',
                           '% DE TRANSACCIONES CON ACTUALIZACION  DE DATOS VS TOTAL DE TRANSACCIONES',
-                          '% DE TRANSACCIONES CON STATUS REGISTRADO Y/O ACTUALIZADO VS TOTAL DE TRANSACCIONES',
-                          '% DE TRANSACCIONES DE CLIENTE NO INSCRITO VS TRANSACCIONES TOTALES'
+                          '% DE TRANSACCIONES DE PROGRAMA LEALTAD',
+                          '% DE TRANSACCIONES DE CLIENTES VIP',
+                          '% DE TRANSACCIONES DE CLIENTES NORMALES'
                         ];
             var rowtd="";
             var urlPTransacciones=" http://172.16.15.20/API.LovablePHP/ZLO0017P/PaisesPT/?anio="+yearSelected+"";
@@ -592,17 +593,18 @@
                             <td colspan="73" class="bg-dark"></td>
                           </tr>
                           <tr><td colspan='74'></td></tr>`);
-                          var backgroundColor = [ '#FBFFCC', '#FAFF99', '#F9FF66','#F8FF33'];
+                        var backgroundColor = [ '#FBFFCC', '#FAFF99','#F9FF66','#F8FF33','#F7FF00'];
             if (responsePTransacciones.code==200) {
                 let data=responsePTransacciones.data;
-                let datosRow1 = {}; let datosRow2 = {}; let datosRow3 = {}; let datosRow4 = {};
+                let datosRow1 = {}; let datosRow2 = {}; let datosRow3 = {}; let datosRow4 = {};let datosRow5 = {};
                 for (let mes = 1; mes <= 12; mes++) {
-                    datosRow1[mes] = {}; datosRow2[mes] = {}; datosRow3[mes] = {}; datosRow4[mes] = {};
+                    datosRow1[mes] = {}; datosRow2[mes] = {}; datosRow3[mes] = {}; datosRow4[mes] = {}; datosRow5[mes] = {};
                     [1, 3, 4, 5, 6, 19].forEach(codpai => {
                         datosRow1[mes][codpai] = 0;
                         datosRow2[mes][codpai] = 0;
                         datosRow3[mes][codpai] = 0;
                         datosRow4[mes][codpai] = 0;
+                        datosRow5[mes][codpai] = 0;
                     });
                 }
                 data.forEach(dato => {
@@ -613,7 +615,9 @@
                     //ROW3
                     datosRow3[dato.MESPRO][dato.CODPAI] = parseFloat(dato.PORCE8);
                     //ROW4
-                    datosRow4[dato.MESPRO][dato.CODPAI] = parseFloat(dato.PORCE0);
+                    datosRow4[dato.MESPRO][dato.CODPAI] = (parseFloat(dato.TRAVIP)/parseFloat(dato.TOTTRA))*100;
+                    //ROW5
+                    datosRow5[dato.MESPRO][dato.CODPAI] = (parseFloat(dato.TRANOR)/parseFloat(dato.TOTTRA))*100;
                 });
 
                 var rowIndex=1;
@@ -658,11 +662,21 @@
                         case 4:
                         Object.keys(datosRow4).forEach(mes => {
                             [1, 3, 4, 5, 6, 19].forEach(codpai => {
-                                rowtd += '<td class="text-end fontM border border-dark">' + (datosRow4[mes][codpai]!=0 ? datosRow4[mes][codpai].toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})+'%' : '‎') + '</td>';
+                                rowtd += '<td class="text-end fontM border border-dark">' + ((datosRow4[mes][codpai] != 0 && !isNaN(datosRow4[mes][codpai])) ? datosRow4[mes][codpai].toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})+'%' : '‎') + '</td>';
                                     totalRow=0;
                                     if (totaltransacciones!=0) {
-                                        var suma=travip+tranor;
-                                             totalRow=(suma/totaltransacciones)*100;
+                                             totalRow=(travip/totaltransacciones)*100;
+                                    }
+                                });
+                            });
+                            break;
+                        case 5:
+                        Object.keys(datosRow5).forEach(mes => {
+                            [1, 3, 4, 5, 6, 19].forEach(codpai => {
+                                rowtd += '<td class="text-end fontM border border-dark">' + ((datosRow5[mes][codpai] != 0 && !isNaN(datosRow5[mes][codpai])) ? datosRow5[mes][codpai].toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})+'%' : '‎') + '</td>';
+                                    totalRow=0;
+                                    if (totaltransacciones!=0) {
+                                             totalRow=(tranor/totaltransacciones)*100;
                                     }
                                 });
                             });

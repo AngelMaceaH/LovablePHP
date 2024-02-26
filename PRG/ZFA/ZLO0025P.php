@@ -55,7 +55,7 @@
                                       <select class="form-select  mt-1" id="cbbAno" name="cbbAno">
                                         <?php
                                               $anio_actual = date('Y');
-                                              for ($i = $anio_actual; $i >= 2021; $i--) {
+                                              for ($i = $anio_actual; $i >= 2015; $i--) {
                                               echo "<option value='$i'>$i</option>";
                                               }
                                           ?>
@@ -276,6 +276,9 @@
             chargeTable(valAno,valAgrup);
             chargeTable2(valAno2,valAgrup);
             chargeHistorico(valAno,valAgrup);
+            setTimeout(() => {
+              chargeGrafica(valAno,valAgrup);
+            }, 500);
           });
           cbbAno.addEventListener('change', (event) => {
             let valAno=parseInt(cbbAno.value);
@@ -284,6 +287,9 @@
             chargeTable(valAno,valAgrup);
             chargeTable2(valAno2,valAgrup);
             chargeHistorico(valAno,valAgrup);
+            setTimeout(() => {
+              chargeGrafica(valAno,valAgrup);
+            }, 500);
           });
           cbbGrafica.addEventListener('change', (event) => {
             chargeHistorico(valAno,valAgrup);
@@ -816,19 +822,71 @@
                       }
                   },
                   exporting: {
-                    buttons: {
-                      contextButton: {
-                        menuItems: ["viewFullscreen", "separator","downloadJPEG", "downloadPDF"]
-                      }
-                    },
-                    enabled: true,
-                    sourceWidth: 1600,
-                    sourceHeight: 700,
-                    chartOptions: {
-                      chart: {
-                        backgroundColor: '#303030'
-                      }
-                    }
+                        buttons: {
+                          contextButton: {
+                            menuItems: ["viewFullscreen", "separator", "downloadJPEG", "downloadPDF"]
+                          },
+                          showAllButton: {
+                            text: 'Mostrar todos',
+                            onclick: function () {
+                              this.series.forEach(function(series) {
+                                series.setVisible(true, false);
+                              });
+                              this.redraw();
+                            },
+                            theme: {
+                              fill: 'white',
+                              stroke: 'silver',
+                              r: 0,
+                              style: {
+                                color: '#FFFFFF'
+                              },
+                              states: {
+                                hover: {
+                                  fill: '#a4edba'
+                                },
+                                select: {
+                                  stroke: '#039',
+                                  fill: '#a4edba'
+                                }
+                              }
+                            }
+                          },
+                          removeAllButton: {
+                            text: 'Quitar todos',
+                            onclick: function () {
+                              this.series.forEach(function(series) {
+                                series.setVisible(false, false);
+                              });
+                              this.redraw();
+                            },
+                            theme: {
+                              fill: 'white',
+                              stroke: 'silver',
+                              r: 0,
+                              style: {
+                                color: '#FFFFFF'
+                              },
+                              states: {
+                                hover: {
+                                  fill: '#a4edba'
+                                },
+                                select: {
+                                  stroke: '#039',
+                                  fill: '#a4edba'
+                                }
+                              }
+                            }
+                          }
+                        },
+                        enabled: true,
+                        sourceWidth: 1600,
+                        sourceHeight: 700,
+                        chartOptions: {
+                          chart: {
+                            backgroundColor: '#303030'
+                          }
+                        }
                   },
               series: seriesData,
           });
@@ -964,19 +1022,71 @@
                       }
                   },
                   exporting: {
-                    buttons: {
-                      contextButton: {
-                        menuItems: ["viewFullscreen", "separator","downloadJPEG", "downloadPDF"]
-                      }
-                    },
-                    enabled: true,
-                    sourceWidth: 1600,
-                    sourceHeight: 700,
-                    chartOptions: {
-                      chart: {
-                        backgroundColor: '#303030'
-                      }
-                    }
+                        buttons: {
+                          contextButton: {
+                            menuItems: ["viewFullscreen", "separator", "downloadJPEG", "downloadPDF"]
+                          },
+                          showAllButton: {
+                            text: 'Mostrar todos',
+                            onclick: function () {
+                              this.series.forEach(function(series) {
+                                series.setVisible(true, false);
+                              });
+                              this.redraw();
+                            },
+                            theme: {
+                              fill: 'white',
+                              stroke: 'silver',
+                              r: 0,
+                              style: {
+                                color: '#FFFFFF'
+                              },
+                              states: {
+                                hover: {
+                                  fill: '#a4edba'
+                                },
+                                select: {
+                                  stroke: '#039',
+                                  fill: '#a4edba'
+                                }
+                              }
+                            }
+                          },
+                          removeAllButton: {
+                            text: 'Quitar todos',
+                            onclick: function () {
+                              this.series.forEach(function(series) {
+                                series.setVisible(false, false);
+                              });
+                              this.redraw();
+                            },
+                            theme: {
+                              fill: 'white',
+                              stroke: 'silver',
+                              r: 0,
+                              style: {
+                                color: '#FFFFFF'
+                              },
+                              states: {
+                                hover: {
+                                  fill: '#a4edba'
+                                },
+                                select: {
+                                  stroke: '#039',
+                                  fill: '#a4edba'
+                                }
+                              }
+                            }
+                          }
+                        },
+                        enabled: true,
+                        sourceWidth: 1600,
+                        sourceHeight: 700,
+                        chartOptions: {
+                          chart: {
+                            backgroundColor: '#303030'
+                          }
+                        }
                   },
               series: seriesData,
           });
@@ -985,20 +1095,18 @@
             console.error('Hubo un problema con la petición Fetch:', error);
           });
         }
-        /* SIN USO
         function chargeGrafica() {
           const cbbGrafica = document.getElementById('selectGrafica');
           let valGrafica=cbbGrafica.value;
-
           const cbbAno = document.getElementById('cbbAno');
-            let valAno=parseInt(cbbAno.value);
-            let valAno2=valAno-1;
+          let valAno=parseInt(cbbAno.value);
+          let valAno2=valAno-1;
           chart1.update({
               chart: {
                   type: 'column'
               },
               title: {
-                  text: 'Promedio histórico por tipo de descuento <br>'+ cbbAgrup.options[cbbAgrup.selectedIndex].text,
+                  text: 'Promedio histórico por tipo de descuento <br>'+ cbbAgrup.options[cbbAgrup.selectedIndex].text ,
                   align: 'center'
               },
               xAxis: {
@@ -1042,7 +1150,7 @@
                   },
               ]
           });
-          let valoresLineal1=[];
+         /* SIN USO let valoresLineal1=[];
           let valoresLineal2=[];
           switch (valGrafica){
             case 'G2':
@@ -1120,8 +1228,8 @@
                 name: 'Año '+valAno2,
                 data: valoresLineal2,
               }]
-          });
-        }*/
+          });*/
+        }
       </script>
 </body>
 </html>
