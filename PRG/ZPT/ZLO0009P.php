@@ -13,7 +13,7 @@
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb my-0 ms-2">
               <li class="breadcrumb-item">
-              <span>Producto Terminado / inventario por clasificación de producto</span>
+              <span>Producto Terminado / Inventario por clasificación de producto</span>
               </li>
               <li class="breadcrumb-item active"><span>ZLO0009P</span></li>
             </ol>
@@ -23,7 +23,7 @@
       <div id="body-div" class="body flex-grow-1">
         <div class="card mb-5">
             <div class="card-header">
-              <h1 class="fs-4 mb-1 mt-2 text-center">Análisis de Inventario por clasificación de productos por Tiendas</h1>
+              <h1 class="fs-4 mb-1 mt-2 text-center">Análisis de Inventario por clasificación de productos por país</h1>
             </div>
           <div class="card-body">
           <div id="loaderExcel" class="d-none">
@@ -111,7 +111,7 @@
                                 <tr>
                                   <th colspan="2" class=" border border-dark bg-secondary border-bottom-0 border-top-0 boder-end-0 "></th>
                                   <th colspan="2" class=" border border-dark bgEnc1">Sin Descuento</th>
-                                  <th colspan="2" class="border border-dark bgEnc2">10%</th>
+                                  <th colspan="2" class="border border-dark bgEnc2">&lt; 20%</th>
                                   <th colspan="2"class=" border border-dark bgEnc3">20%</th>
                                   <th colspan="2"class=" border border-dark bgEnc4">30%</th>
                                   <th colspan="2"class=" border border-dark bgEnc5">40%</th>
@@ -171,7 +171,7 @@
                                 <tr>
                                   <th colspan="2" class=" border border-dark bg-secondary border-bottom-0 border-top-0 boder-end-0 "></th>
                                   <th colspan="2" class=" border border-dark bgEnc1">Sin Descuento</th>
-                                  <th colspan="2" class="border border-dark bgEnc2">10%</th>
+                                  <th colspan="2" class="border border-dark bgEnc2">&lt; 20%</th>
                                   <th colspan="2"class=" border border-dark bgEnc3">20%</th>
                                   <th colspan="2"class=" border border-dark bgEnc4">30%</th>
                                   <th colspan="2"class=" border border-dark bgEnc5">40%</th>
@@ -266,7 +266,7 @@
         let chart2=null;
         window.addEventListener('DOMContentLoaded', (event) => {
           const cbbAgrup = document.getElementById('cbbAgrup');
-            let usuario = '<?php echo $_SESSION["CODUSU"];?>';
+          let usuario = '<?php echo $_SESSION["CODUSU"];?>';
           const cbbAno = document.getElementById('cbbAno');
           const cbbGrafica = document.getElementById('selectGrafica');
             let valAno=parseInt(cbbAno.value);
@@ -322,7 +322,7 @@
                         downloadPDF:"Descargar en PDF",
                     },
                   xAxis: {
-                      categories: ['Prendas Sin Dscto.','Prendas 10%', 'Prendas 20%', 'Prendas 30%', 'Prendas 40%', 'Prendas 50%','Prendas 60%','Prendas 70%','Prendas >70%', 'Segundas Nivel 1', 'Segundas Nivel 2'],
+                      categories: ['Prendas Sin Dscto.','Prendas <20%', 'Prendas 20%', 'Prendas 30%', 'Prendas 40%', 'Prendas 50%','Prendas 60%','Prendas 70%','Prendas >70%', 'Segundas Nivel 1', 'Segundas Nivel 2'],
                       crosshair: true,
                       accessibility: {
                           description: 'Countries'
@@ -414,7 +414,7 @@
                       var a = document.createElement('a');
                       a.href = tempUrl;
                       a.download =
-                      'InventarioProductos-Tiendas.xlsx'; // Puedes personalizar el nombre del archivo
+                      'InventarioProductos-Paises.xlsx'; // Puedes personalizar el nombre del archivo
                       document.body.appendChild(a);
                       a.click();
                       window.URL.revokeObjectURL(tempUrl);
@@ -431,6 +431,7 @@
           //AÑO 1
           gArray['lineSinDesc1']=[]; gArray['line10Desc1']=[]; gArray['line20Desc1']=[]; gArray['line30Desc1']=[]; gArray['line40Desc1']=[]; gArray['line50Desc1']=[]; gArray['line60Desc1']=[]; gArray['line70Desc1']=[]; gArray['line80Desc1']=[]; gArray['lineZ1Desc1']=[];  gArray['lineZ2Desc1']=[];
           var urlList="http://172.16.15.20/API.LovablePHP/ZLO0009P/List/?anopro="+valAno+"&agrup="+valAgrup;
+          console.log(urlList);
           let lblAno1=document.getElementById('lblano1');
           lblAno1.innerHTML='Año '+valAno;
           const tbDetalle = document.getElementById('tableInventarioDetalle');
@@ -441,8 +442,12 @@
             if (data.code==200) {
               let total=0; let totdes=0; let tot10=0; let tot20=0; let tot30=0; let tot40=0; let tot50=0; let tot60=0; let tot70=0; let tot80=0; let totz1=0; let totz2=0;
               responseDataA1=[...data.data];
+              let count=0;
               data.data.forEach((item) => {
                 const row = document.createElement('tr');
+                if (item.UNITOT!=0) {
+                  count++;
+                }
                 row.innerHTML = `
                   <td class="bg-light border border-dark">${item.MESDES}</td>
                   <td class="bg-light border border-dark">${parseFloat(item.UNITOT) === 0 ? '‎' : parseFloat(item.UNITOT).toLocaleString('es-419', {minimumFractionDigits: 0, maximumFractionDigits: 0})}</td>
@@ -494,7 +499,6 @@
                 gArray['lineZ1Desc1'].push( Math.round(parseFloat(item.PORZ1) * 100) / 100);
                 gArray['lineZ2Desc1'].push( Math.round(parseFloat(item.PORZ2) * 100) / 100);
               });
-              const count=data.data.length;
               let unitot=0; let unides=0; let uni1=0; let uni20=0; let uni30=0; let uni40=0; let uni50=0; let uni60=0; let uni70=0; let uni80=0; let uniz1=0; let uniz2=0;
               let protot=0; let prodes=0; let pro10=0; let pro20=0; let pro30=0; let pro40=0; let pro50=0; let pro60=0; let pro70=0; let pro80=0; let proz1=0; let proz2=0;
               if (count>0) {
@@ -510,19 +514,17 @@
                 uni80=tot80/count;
                 uniz1=totz1/count;
                 uniz2=totz2/count;
-              }
-              if(total>0){
-                prodes=(totdes/total)*100;
-                pro10=(tot10/total)*100;
-                pro20=(tot30/total)*100;
-                pro30=(tot30/total)*100;
-                pro40=(tot40/total)*100;
-                pro50=(tot50/total)*100;
-                pro60=(tot60/total)*100;
-                pro70=(tot70/total)*100;
-                pro80=(tot80/total)*100;
-                proz1=(totz1/total)*100;
-                proz2=(totz2/total)*100;
+                prodes = (gArray['lineSinDesc1'].reduce((a, b) => a + b, 0))/count;
+                pro10 = (gArray['line10Desc1'].reduce((a, b) => a + b, 0))/count;
+                pro20 = (gArray['line20Desc1'].reduce((a, b) => a + b, 0))/count;
+                pro30 = (gArray['line30Desc1'].reduce((a, b) => a + b, 0))/count;
+                pro40 = (gArray['line40Desc1'].reduce((a, b) => a + b, 0))/count;
+                pro50 = (gArray['line50Desc1'].reduce((a, b) => a + b, 0))/count;
+                pro60 = (gArray['line60Desc1'].reduce((a, b) => a + b, 0))/count;
+                pro70 = (gArray['line70Desc1'].reduce((a, b) => a + b, 0))/count;
+                pro80 = (gArray['line80Desc1'].reduce((a, b) => a + b, 0))/count;
+                proz1 = (gArray['lineZ1Desc1'].reduce((a, b) => a + b, 0))/count;
+                proz2 = (gArray['lineZ2Desc1'].reduce((a, b) => a + b, 0))/count;
               }
               barGra1=[
                 Math.round(prodes * 100) / 100,
@@ -596,7 +598,11 @@
             if (data.code==200) {
               let total=0; let totdes=0; let tot10=0; let tot20=0; let tot30=0; let tot40=0; let tot50=0; let tot60=0; let tot70=0; let tot80=0; let totz1=0; let totz2=0;
               responseDataA2=[...data.data];
+              let count=0;
               data.data.forEach((item) => {
+                if (item.UNITOT!=0) {
+                  count++;
+                }
                 const row = document.createElement('tr');
                 row.innerHTML = `
                   <td class="bg-light border border-dark">${item.MESDES}</td>
@@ -649,7 +655,7 @@
                 gArray['lineZ1Desc2'].push( Math.round(parseFloat(item.PORZ1) * 100) / 100);
                 gArray['lineZ2Desc2'].push( Math.round(parseFloat(item.PORZ2) * 100) / 100);
               });
-              const count=data.data.length;
+
               let unitot=0; let unides=0; let uni1=0; let uni20=0; let uni30=0; let uni40=0; let uni50=0; let uni60=0; let uni70=0; let uni80=0; let uniz1=0; let uniz2=0;
               let protot=0; let prodes=0; let pro10=0; let pro20=0; let pro30=0; let pro40=0; let pro50=0; let pro60=0; let pro70=0; let pro80=0; let proz1=0; let proz2=0;
               if (count>0) {
@@ -665,19 +671,17 @@
                 uni80=tot80/count;
                 uniz1=totz1/count;
                 uniz2=totz2/count;
-              }
-              if(total>0){
-                prodes=(totdes/total)*100;
-                pro10=(tot10/total)*100;
-                pro20=(tot30/total)*100;
-                pro30=(tot30/total)*100;
-                pro40=(tot40/total)*100;
-                pro50=(tot50/total)*100;
-                pro60=(tot60/total)*100;
-                pro70=(tot70/total)*100;
-                pro80=(tot80/total)*100;
-                proz1=(totz1/total)*100;
-                proz2=(totz2/total)*100;
+                prodes = (gArray['lineSinDesc2'].reduce((a, b) => a + b, 0))/count;
+                pro10 = (gArray['line10Desc2'].reduce((a, b) => a + b, 0))/count;
+                pro20 = (gArray['line20Desc2'].reduce((a, b) => a + b, 0))/count;
+                pro30 = (gArray['line30Desc2'].reduce((a, b) => a + b, 0))/count;
+                pro40 = (gArray['line40Desc2'].reduce((a, b) => a + b, 0))/count;
+                pro50 = (gArray['line50Desc2'].reduce((a, b) => a + b, 0))/count;
+                pro60 = (gArray['line60Desc2'].reduce((a, b) => a + b, 0))/count;
+                pro70 = (gArray['line70Desc2'].reduce((a, b) => a + b, 0))/count;
+                pro80 = (gArray['line80Desc2'].reduce((a, b) => a + b, 0))/count;
+                proz1 = (gArray['lineZ1Desc2'].reduce((a, b) => a + b, 0))/count;
+                proz2 = (gArray['lineZ2Desc2'].reduce((a, b) => a + b, 0))/count;
               }
               barGra2=[
                 Math.round(prodes * 100) / 100,
@@ -1116,7 +1120,7 @@
                   align: 'center'
               },
               xAxis: {
-                      categories: ['Prendas Sin Dscto.','Prendas 10%', 'Prendas 20%', 'Prendas 30%', 'Prendas 40%', 'Prendas 50%','Prendas 60%','Prendas 70%','Prendas >70%', 'Segundas Nivel 1', 'Segundas Nivel 2'],
+                      categories: ['Prendas Sin Dscto.','Prendas <20%', 'Prendas 20%', 'Prendas 30%', 'Prendas 40%', 'Prendas 50%','Prendas 60%','Prendas 70%','Prendas >70%', 'Segundas Nivel 1', 'Segundas Nivel 2'],
                       crosshair: true,
                       accessibility: {
                           description: 'Countries'
