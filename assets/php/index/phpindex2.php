@@ -9,7 +9,18 @@
   $fecha_actual = date("Ymd");
   $mes_actual=date("m");
   $ano_actual=date("Y");
-  $compFiltroP=(float)(isset($_SESSION['$compFiltro'])? $_SESSION['$compFiltro']:2);
+  switch ($_SESSION["CODUSU"]) {
+    case 'JACQUELINE':
+      $compFiltroP=(float)(isset($_SESSION['$compFiltro'])? $_SESSION['$compFiltro']:4);
+      break;
+      case 'ELVIRA':
+        $compFiltroP=(float)(isset($_SESSION['$compFiltro'])? $_SESSION['$compFiltro']:2);
+        break;
+    default:
+      $compFiltroP=(float)(isset($_SESSION['$compFiltro'])? $_SESSION['$compFiltro']:0);
+      break;
+  }
+
   $fechaGraficas=isset($_SESSION['FechaGraficas'])? $_SESSION['FechaGraficas']:$fecha_actual;
 
   $aniografica=substr($fechaGraficas,0,4);
@@ -92,11 +103,20 @@
         //LLENADO DE COMARC
         if (responseComarc.code==200) {
               for (let i = 0; i < responseComarc.data.length; i++) {
-               $("#cbbMesgra").append(' <option value='+responseComarc.data[i]['COMCOD']+' selected>'+responseComarc.data[i]['COMDES']+'</option>');
+                if (i==0) {
+                  $("#cbbMesgra").append(' <option value='+responseComarc.data[i]['COMCOD']+' selected>'+responseComarc.data[i]['COMDES']+'</option>');
+                }else{
+                  $("#cbbMesgra").append(' <option value='+responseComarc.data[i]['COMCOD']+'>'+responseComarc.data[i]['COMDES']+'</option>');
+                }
+
               }
+            }
+            if (compFiltro==0 || compFiltro==null) {
+                compFiltro=$("#cbbMesgra").val();
             }
       //VENTAS DIA
       var urlDia="http://172.16.15.20/API.LovablePHP/Index/ValorDia/?fechaGraficas="+fechasGraficas+"&compFiltro="+compFiltro+"&dck="+dolaresck+"";
+      console.log(urlDia);
       var responseDia = ajaxRequest(urlDia);
       //VENTAS MES
       var urlMes="http://172.16.15.20/API.LovablePHP/Index/ValorMes/?mesGraficas1="+Mes1Num+"&anoGraficas1="+Anio1+"&compFiltro="+compFiltro+"&dck="+dolaresck+"";

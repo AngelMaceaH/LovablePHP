@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Ladda/1.0.6/ladda-themeless.min.css" integrity="sha512-EOY99TUZ7AClCNvbnvrhtMXDuWzxUBXV7SFovruHvYf2dbvRB5ya+jgDPk5bOyTtZDbqFH3PTuTWl/D7+7MGsA==" crossorigin="anonymous" referrerpolicy="no-referrer" />    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Ladda/1.0.6/ladda-themeless.min.css" integrity="sha512-EOY99TUZ7AClCNvbnvrhtMXDuWzxUBXV7SFovruHvYf2dbvRB5ya+jgDPk5bOyTtZDbqFH3PTuTWl/D7+7MGsA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Ladda/1.0.0/spin.min.js" integrity="sha512-fgSmjQtBho/dzDJ+79r/yKH01H/35//QPPvA2LR8hnBTA5bTODFncYfSRuMal78C08vUa93q3jyxPa273cWzqA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Ladda/1.0.0/ladda.min.js" integrity="sha512-hZL8cWjOAFfWZza/p0uD0juwMeIuyLhAd5QDodiK4sBp1sG7BIeE1TbMGIbnUcUgwm3lVSWJzBK6KxqYTiDGkg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <style>
@@ -43,14 +43,14 @@
     #myTablePlaneacion_filter input[type="search"] {
         display: none;
     }
-    
+
    .table-responsive {
         overflow-x: auto;
     }
-    
+
     .table-container {
         width: 100%;
-        height:450px;
+        height:560px;
         overflow-x: auto;
         position: relative;
         z-index: 1;
@@ -64,6 +64,16 @@
         z-index: 1;
         top: 0;
     }
+    @media screen and (min-width: 1400px) {
+            .table-container {
+                width: 100%;
+                height:560px;
+                overflow-x: auto;
+                position: relative;
+                z-index: 1;
+                top: 0;
+            }
+        }
     @media screen and (min-width: 1650px) {
         .table-container {
             width: 100%;
@@ -72,14 +82,14 @@
             position: relative;
             z-index: 1;
             top: 0;
-        } 
+        }
         .table-container2{
             width: 100%;
             height:500px;
             overflow-x: auto;
             position: relative;
             z-index: 1;
-            top: 0; 
+            top: 0;
         }
     }
     .text-brown {
@@ -113,7 +123,7 @@
 
 .btn.btn-success .btn-inner,
 .btn.btn-primary .btn-inner {
-    
+
     display: inline-block;
     vertical-align: middle;
     line-height: normal;
@@ -122,7 +132,7 @@
 .fixed-scrollbar {
     overflow:auto;
     }
-  
+
 
 .text-transparent{
     color: transparent !important;
@@ -161,7 +171,7 @@ span.selectArrow {
     user-select: none;
     background:#fff;
 }
- 
+
 span.selectArrow,span.selected {
     position:relative;
     float:left;
@@ -181,7 +191,7 @@ div.selectOptions {
     padding-top:2px;
     display:none;
 }
-     
+
 span.selectOption {
     display:block;
     width:100%;
@@ -204,9 +214,9 @@ span.selectOption {
 }
 span.selectOption:hover {
     color:#f6f6f6;
-    background:#000; 
+    background:#000;
 /*     opacity:0.5; */
-}       
+}
 </style>
 </head>
 <body>

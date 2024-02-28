@@ -292,6 +292,9 @@
             }, 500);
           });
           cbbGrafica.addEventListener('change', (event) => {
+            const cbbGrafica = document.getElementById('selectGrafica');
+            let valAgrup=cbbAgrup.value;
+            let valAno=parseInt(cbbAno.value);
             chargeHistorico(valAno,valAgrup);
           });
           setTimeout(() => {

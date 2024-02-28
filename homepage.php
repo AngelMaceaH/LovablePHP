@@ -57,13 +57,29 @@
                         <div class="col-sm-12 col-lg-6 mt-2">
                             <label>Vista por:</label>
                             <select class="form-select" id="cbbMesgra" name="cbbMesgra">
-                                <option class="fw-bold" value="2">Tiendas Honduras (Lov. Ecommerce)</option>
-                                <option class="fw-bold" value="3">Tiendas Honduras (Mod. Íntima)</option>
-                                <option class="fw-bold" value="4">Tiendas Guatemala</option>
-                                <option class="fw-bold" value="5">Tiendas El Salvador</option>
-                                <option class="fw-bold" value="6">Tiendas Nicaragua</option>
-                                <option class="fw-bold" value="7">Tiendas Costa Rica</option>
-                                <option class="fw-bold" value="8">Tiendas Republica Dominicana</option>
+                                <?php
+                                    switch ($_SESSION["CODUSU"]) {
+                                        case 'JACQUELINE':
+                                            echo '<option class="fw-bold" value="4">Tiendas Guatemala</option>';
+                                            echo '<option class="fw-bold" value="5">Tiendas El Salvador</option>';
+                                            echo '<option class="fw-bold" value="6">Tiendas Nicaragua</option>';
+                                            echo '<option class="fw-bold" value="7">Tiendas Costa Rica</option>';
+                                            echo '<option class="fw-bold" value="8">Tiendas Republica Dominicana</option>';
+                                            break;
+                                        case 'ELVIRA':
+                                            echo '<option class="fw-bold" value="2">Tiendas Honduras (Lov. Ecommerce)</option>';
+                                            echo '<option class="fw-bold" value="3">Tiendas Honduras (Mod. Íntima)</option>';
+                                            echo '<option class="fw-bold" value="4">Tiendas Guatemala</option>';
+                                            echo '<option class="fw-bold" value="5">Tiendas El Salvador</option>';
+                                            echo '<option class="fw-bold" value="6">Tiendas Nicaragua</option>';
+                                            echo '<option class="fw-bold" value="7">Tiendas Costa Rica</option>';
+                                            echo '<option class="fw-bold" value="8">Tiendas Republica Dominicana</option>';
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                ?>
+
                             </select>
                             <input type="text" id="fechaCk10" name="fechaCk10" class="d-none">
                         </div>
@@ -94,9 +110,9 @@
                                     <div class="row justify-content-evenly">
                                         <?php
                                             if ($compFiltroP == 2 || $compFiltroP == 3 || $compFiltroP == 4 || $compFiltroP == 5 || $compFiltroP == 6 || $compFiltroP == 7) {
-                                              echo '<div id="colHonDia"  class=" col-12 col-lg-4">
+                                              echo '<div id="colHonDia"  class=" col-12 col-lg-6">
                                                               <h5 class="mt-2 mb-1 text-center">Ventas del día</h5>
-                                                              <canvas  id="HonDia" class="mt-3 mb-3" ></canvas>
+                                                              <canvas  id="HonDia" class="" ></canvas>
                                                               </div>';
                                             } else {
                                               echo '<div id="colHonDia"  class="col-12">
@@ -108,9 +124,9 @@
                                             }
 
                                             if ($compFiltroP == 2 || $compFiltroP == 3 || $compFiltroP == 4 || $compFiltroP == 5 || $compFiltroP == 6 || $compFiltroP == 7) {
-                                              echo '<div id="colHonMes" class="col-12 col-lg-4">
+                                              echo '<div id="colHonMes" class="col-12 col-lg-6">
                                                             <h5 class="mt-2 mb-1 text-center">Ventas del Mes</h5>
-                                                            <canvas  id="HonMes1" class="mt-3 mb-3" ></canvas>
+                                                            <canvas  id="HonMes1" class="" ></canvas>
                                                             </div>';
                                             } else {
                                               echo '<div id="colHonMes" class="col-12">
@@ -143,11 +159,11 @@
                           echo '
                               <div id="colHonMes2" class="col-12 col-lg-9">
                               <div class="d-flex justify-content-evenly">
-                              <div>
+                              <div class="text-center">
                               <label class="responsive-font-example fw-bold">' . obtenerNombreMes($mesGraficas1) . ' ' . $anoGraficas1 . '</label>
                               <div class="" style="display:inline-block; width:30px; height:20px; background-color:rgba(25, 170, 222,1);"></div>
                               </div>
-                              <div >
+                              <div  class="text-center">
                               <label class="responsive-font-example fw-bold">' . obtenerNombreMes($mesGraficas2) . ' ' . $anoGraficas2 . '</label>
                               <div class="" style="display:inline-block; width:30px; height:20px; background-color:rgba(125, 58, 193,1);"></div>
                               </div>
@@ -161,11 +177,11 @@
                           echo '
                               <div id="colHonMes2" class="col-12 col-lg-9">
                               <div class="d-flex justify-content-evenly">
-                              <div>
+                              <div  class="text-center">
                               <label class="responsive-font-example fw-bold">' . obtenerNombreMes($mesGraficas1) . ' ' . $anoGraficas1 . '</label>
                               <div class="" style="display:inline-block; width:30px; height:20px; background-color:rgba(25, 170, 222,1);"></div>
                               </div>
-                              <div >
+                              <div  class="text-center">
                               <label class="responsive-font-example fw-bold">' . obtenerNombreMes($mesGraficas2) . ' ' . $anoGraficas1 . '</label>
                               <div class="" style="display:inline-block; width:30px; height:20px; background-color:rgba(125, 58, 193,1);"></div>
                               </div>
@@ -210,11 +226,11 @@
                                             <canvas id="AnualGrafica" height="250px" ></canvas>
                                             </div>
                                             <div class="d-flex justify-content-around">
-                                            <div>
+                                            <div  class="text-center">
                                             <label class="responsive-font-example fw-bold">Año ' . $anoGraficas1 . '</label>
                                             <div class="" style="display:inline-block; width:30px; height:20px; background-color:rgba(25, 170, 222,1);"></div>
                                             </div>
-                                            <div >
+                                            <div  class="text-center">
                                             <label class="responsive-font-example fw-bold">Año ' . $anoGraficas2 . '</label>
                                             <div class="" style="display:inline-block; width:30px; height:20px; background-color:rgba(125, 58, 193,1);"></div>
                                             </div>
@@ -233,11 +249,11 @@
                                         <?php
                                     echo ' <div id="colHonMes3" class="col-12  col-lg-9">
                                                 <div class="d-flex justify-content-evenly">
-                                                  <div>
+                                                  <div  class="text-center">
                                                   <label class="responsive-font-example fw-bold" >' . obtenerNombreMes($mesGraficas1) . ' ' . $anoGraficas1 . '</label>
                                                   <div class="" style="display:inline-block; width:30px; height:20px; background-color:rgba(25, 170, 222,1);"></div>
                                                   </div>
-                                                  <div >
+                                                  <div  class="text-center">
                                                   <label class="responsive-font-example fw-bold">' . obtenerNombreMes($mesGraficas1) . ' ' . $anoGraficas2 . '</label>
                                                   <div class="" style="display:inline-block; width:30px; height:20px; background-color:rgba(125, 58, 193,1);"></div>
                                                   </div>

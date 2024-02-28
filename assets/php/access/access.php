@@ -91,8 +91,8 @@ if ($name != '' && $ps != '') {
         $_SESSION['INDEX'] = 'homepag.php';
         header('Location: /'.$_SESSION['DEV'].'LovablePHP/homepag.php');
       } elseif ($_SESSION['NIVEL'] == 0){
-        $_SESSION['INDEX'] = 'homepag.php';
-        header('Location: /'.$_SESSION['DEV'].'LovablePHP/homepag.php');
+        $_SESSION['INDEX'] = 'home.php';
+        header('Location: /'.$_SESSION['DEV'].'LovablePHP/home.php');
       }
     } else {
       // Si 'val' no es 1, redirigir al usuario a la página de login

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="utf-8">
+  <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico">
+  <style type='text/css'>
+   
+    @media (min-width: 1200px) {
+    <?php
+    $FiltroDiv=(float)(isset($_GET['c'])? $_GET['c']:1);
+    if($FiltroDiv==2||$FiltroDiv==3||$FiltroDiv==4||$FiltroDiv==5||$FiltroDiv==6||$FiltroDiv==7)
+    {
+    echo '#colHonMes3,#colHonMes2 {margin-top:11%; margin-bottom:13%;}';
+    }
+  ?>
+  }
+  @media (min-width: 1600px) {
+    <?php
+    $FiltroDiv=(float)(isset($_GET['c'])? $_GET['c']:1);
+    if($FiltroDiv==2||$FiltroDiv==3||$FiltroDiv==4||$FiltroDiv==5||$FiltroDiv==6||$FiltroDiv==7)
+    {
+    echo '#colHonMes3,#colHonMes2 {margin-top:11%; margin-bottom:15%;}';
+    }
+  ?>
+  }
+  
+  
+</style>
+</head>
+
+<body>
+  <?php
+      include 'layout.php';
+      include 'assets/php/index/phpindex2.php';
+    ?>
+  <div class="container-fluid">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb my-0 ms-2">
+        <li class="breadcrumb-item">
+              <span>Inicio</span>
+        </li>
+        <li class="breadcrumb-item active"><span>Pagina Principal</span></li>
+      </ol>
+    </nav>
+  </div>
+  </header>
+  <div class="body flex-grow-1 px-3">
+      
+      <div class="card mb-4">
+          <div class="card-body p-5">
+          <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+                  <div class="carousel-inner rounded">
+                  <div class="carousel-item active ">
+                      <img src="https://www.api.lovable.com.hn/uploads/banner/image/banner_principal_lovable_01_t.png" class="d-block w-100 " alt="...">
+                    </div>
+                    <div class="carousel-item ">
+                      <img src="https://www.api.lovable.com.hn/uploads/banner/image/banner_principal_swimwear_02_t.png" class="d-block w-100 " alt="...">
+                    </div>
+                    <div class="carousel-item ">
+                      <img src="https://www.api.lovable.com.hn/uploads/banner/image/banner_teen_03_t.png" class="d-block w-100 " alt="...">
+                    </div>
+                    <div class="carousel-item ">
+                      <img src="https://www.api.lovable.com.hn/uploads/banner/image/banner_principal_andros_04_t.png" class="d-block w-100 " alt="...">
+                    </div>
+                  </div>
+                </div> 
+          </div>
+        </div>
+
+  </div>
+  <!--BODY-->
+  <div class="footer bg-blck flex-grow-1 d-flex justify-content-center">
+    <p class="bggray responsive-font-example"><i>Lovable de Honduras S.A. de C.V</i></p>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.2.1"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+  <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js" integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa" crossorigin="anonymous"></script>
+  <script>
+   
+    function obtenerNombreMes(numeroMes) {
+              const nombresMes = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+              return nombresMes[numeroMes - 1];
+            }
+            var Mes1 = obtenerNombreMes(<?php echo $mesGraficas1; ?>);
+            var Mes2 = obtenerNombreMes(<?php echo $mesGraficas2; ?>);
+            var Anio1 = <?php echo $anoGraficas1; ?>;
+            var Anio2 = <?php echo $anoGraficas2; ?>;
+            var compFiltro = <?php echo $compFiltroP; ?>;
+
+    $(document).ready(function () {
+      
+      $('#dolaresCk').prop('checked', <?php echo $dolarescheck; ?>);
+      $('#fechaCk').prop('checked', <?php echo  $fechacheck ?>);
+      $("#cbbMesgra").val(compFiltro);
+      $("#tituloGraficasVentas").empty();
+      $("#tituloGraficasVentas").append($( "#cbbMesgra option:selected" ).text());
+      $("#fechagra").val(formatoFecha("<?php echo $fechaGraficas; ?>"));
+
+    });
+    function formatoFecha(fecha) {
+      let year = fecha.substring(0, 4);
+      let month = fecha.substring(4, 6);
+      let day = fecha.substring(6, 8);
+      return year + "-" + month + "-" + day;
+    }
+  </script>
+</body>
+
+
+</html>

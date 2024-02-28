@@ -299,6 +299,9 @@
 
           });
           cbbGrafica.addEventListener('change', (event) => {
+            const cbbGrafica = document.getElementById('selectGrafica');
+            let valAgrup=cbbAgrup.value;
+            let valAno=parseInt(cbbAno.value);
             chargeHistorico(valAno,valAgrup);
           });
           setTimeout(() => {
@@ -915,7 +918,6 @@
         }
         function chargeHistorico(valAno,valAgrup) {
           var url="http://172.16.15.20/API.LovablePHP/ZLO0024P/ListHistorico/?anopro="+valAno+"&agrup="+valAgrup+"";
-          console.log(url);
           fetch(url)
           .then(response => response.json())
           .then(data => {
@@ -929,7 +931,6 @@
               if (!grupoYear[ano]) {
                 grupoYear[ano] = [];
               }
-              console.log(grupoYear);
               switch (valGrafica){
             case 'G2':
               grupoYear[ano].push(Math.round(element.POR10 * 100) / 100);

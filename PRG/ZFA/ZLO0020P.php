@@ -37,16 +37,16 @@
                         style="z-index: 9998; width:100%; height:100%;"></div>
                 </div>
                 <div class="demo">
-                    <div class="d-flex">
-                        <div class="form-check form-switch ms-2 mb-3">
-                            <input class="form-check-input fs-5 " type="checkbox" role="switch" id="dolaresCk"
-                                name="dolaresChk" checked>
-                            <label class="form-check-label fs-6 fw-bold mt-2" for="dolaresCk">Mostrar valores en
-                                dólares</label>
+                    <div class="row mb-2">
+                        <div class="col-12 col-lg-2">
+                            <div class="form-check form-switch mt-4">
+                                <input class="form-check-input fs-5" type="checkbox" role="switch" id="dolaresCk" name="dolaresChk" checked>
+                                <label class="form-check-label fs-6 fw-bold " for="dolaresCk">Mostrar valores en dólares</label>
+                            </div>
                         </div>
-                        <div class="form-check form-switch ms-2 mb-3 d-flex">
-                            <label class="form-check-label fs-6 fw-bold mt-2">Filtrar&nbsp;por:</label>
-                            <select id="filterBy" class="form-select fw-bold ms-2">
+                        <div class="col-6 col-lg-3">
+                        <label class="form-control border border-0 fs-6 fw-bold">Filtrar&nbsp;por:</label>
+                            <select id="filterBy" class="form-select fw-bold">
                                 <option value="0">TODOS</option>
                                 <option value="G">General</option>
                                 <option value="V">Ventas por catálogo</option>
@@ -55,32 +55,24 @@
                                 <option value="N">Ventas normales</option>
                             </select>
                         </div>
-                        <div class="form-check form-switch ms-2 mb-3 d-flex">
-                            <label class="form-check-label fs-6 fw-bold mt-2">Mostrar&nbsp;por:</label>
-                            <select id="showBy" class="form-select fw-bold ms-2" style="width:280px;">
-                                <option value="0">Fábrica + Tiendas</option>
-                                <option value="1">Solo fábrica</option>
-                                <option value="2">Solo tiendas</option>
+                        <div class="col-6 col-lg-3">
+                                <label class="form-control border border-0 fs-6 fw-bold">Mostrar&nbsp;por:</label>
+                                <select id="showBy" class="form-select fw-bold">
+                                    <option value="0">Fábrica + Tiendas</option>
+                                    <option value="1">Solo fábrica</option>
+                                    <option value="2">Solo tiendas</option>
+                                </select>
+                        </div>
+                        <div class="col-6 col-lg-2">
+                            <label class="form-control border border-0">Mostrar año:</label>
+                            <select id="setYearTab" class="form-select fw-bold">
                             </select>
                         </div>
-                        <div class="form-check form-switch ms-2 mb-3 d-flex">
-                                <div>
-                                    <label class="form-control border border-0">Mostrar año:</label>
-                                </div>
-                                <div>
-                                <select id="setYearTab" class="form-select fw-bold">
-                                </select>
-                                </div>
-                                </div>
-                                <div class="form-check form-switch ms-2 mb-3 d-flex">
-                                <div>
-                                    <label class="form-control border border-0">Mostrar mes:</label>
-                                </div>
-                                <div>
-                                    <select id="setMesTab" class="form-select fw-bold">
-                                </select>
-                                </div>
-                            </div>
+                        <div class="col-6 col-lg-2">
+                        <label class="form-control border border-0">Mostrar mes:</label>
+                        <select id="setMesTab" class="form-select fw-bold">
+                         </select>
+                        </div>
                     </div>
 
                     <ul class="tablist" role="tablist">
@@ -98,15 +90,12 @@
                     </div>
                     <div id="panel2" class="tablist__panel p-2 is-hidden" aria-labelledby="tab2" aria-hidden="true"
                         role="tabpanel">
-                        <h1>Panel2</h1>
                     </div>
                     <div id="panel3" class="tablist__panel p-2 is-hidden" aria-labelledby="tab3" aria-hidden="true"
                         role="tabpanel">
-                        <h1>Panel3</h1>
                     </div>
                     <div id="panel4" class="tablist__panel p-2 is-hidden" aria-labelledby="tab4" aria-hidden="true"
                         role="tabpanel">
-                        <h1>Panel4</h1>
                     </div>
                 </div>
             </div>
@@ -184,7 +173,7 @@
         document.getElementById("tab1").innerHTML = 'MES VS MES ANTERIOR';
         chargeTab1(ano1Tab, ano2Tab, mes1Tab, mes2Tab);
         //TAB2
-        document.getElementById("tab2").innerHTML = 'MES VS MISMO MES DEL AÑO ANTERIOR';
+        document.getElementById("tab2").innerHTML = 'MES VS MES AÑO ANTERIOR';
         chargeTab2(ano1Tab, (ano1Tab-1), mes1Tab, mes1Tab);
         //TAB3
         document.getElementById("tab3").innerHTML = 'ANUAL TODO EL AÑO';

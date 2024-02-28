@@ -71,13 +71,24 @@
         @media screen and (min-width: 1300px) {
             .table-container {
                 width: 100%;
-                height:550px;
+                height:700px;
                 overflow-x: auto;
                 position: relative;
                 z-index: 1;
                 top: 0;
             }
         }
+        @media screen and (min-width: 1400px) {
+            .table-container {
+                width: 100%;
+                height:620px;
+                overflow-x: auto;
+                position: relative;
+                z-index: 1;
+                top: 0;
+            }
+        }
+
         @media screen and (min-width: 1540px) {
             .table-container {
                 width: 100%;

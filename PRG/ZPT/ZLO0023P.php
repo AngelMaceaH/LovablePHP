@@ -304,6 +304,9 @@
             }, 500);
           });
           cbbGrafica.addEventListener('change', (event) => {
+            const cbbGrafica = document.getElementById('selectGrafica');
+            let valAgrup=cbbAgrup.value;
+            let valAno=parseInt(cbbAno.value);
             chargeHistorico(valAno,valAgrup);
           });
           setTimeout(() => {
@@ -437,7 +440,6 @@
           //AÑO 1
           gArray['lineSinDesc1']=[]; gArray['line10Desc1']=[]; gArray['line20Desc1']=[]; gArray['line30Desc1']=[]; gArray['line40Desc1']=[]; gArray['line50Desc1']=[]; gArray['line60Desc1']=[]; gArray['line70Desc1']=[]; gArray['line80Desc1']=[]; gArray['lineZ1Desc1']=[];  gArray['lineZ2Desc1']=[];
           var urlList="http://172.16.15.20/API.LovablePHP/ZLO0023P/List/?anopro="+valAno+"&agrup="+valAgrup;
-          console.log(urlList);
           let lblAno1=document.getElementById('lblano1');
           lblAno1.innerHTML='Año '+valAno;
           const tbDetalle = document.getElementById('tableInventarioDetalle');

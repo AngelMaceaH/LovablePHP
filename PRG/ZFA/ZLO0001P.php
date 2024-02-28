@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-  <meta charset="utf-8">
-  <link rel="icon" type="image/x-icon" href="../../assets/img/favicon.ico">
-  <style>
-    .bg-secondary2{
-      background-color: #E7E7E7!important;
-    }
-  </style>
+
+<head>
+    <meta charset="utf-8">
+    <link rel="icon" type="image/x-icon" href="../../assets/img/favicon.ico">
+    <style>
+      .bg-secondary2 {
+          background-color: #E7E7E7 !important;
+      }
+    </style>
 </head>
+
 <body>
-  <?php
+    <?php
       include '../layout-prg.php';
       $fecha_actual = date("Ymd");
       $mes_actual=date("m");
@@ -28,65 +30,75 @@
       $tablaDIA="";$tablaMES="";
       $sqlquery_zlo0001p = isset($_SESSION['logicSql']) ? $_SESSION['logicSql'] : " ";
     ?>
-     <div class="container-fluid">
-          <nav aria-label="breadcrumb">
+    <div class="container-fluid">
+        <nav aria-label="breadcrumb">
             <ol class="breadcrumb my-0 ms-2">
-              <li class="breadcrumb-item">
-              <span>Módulo de facturación / Consultas</span>
-              </li>
-              <li class="breadcrumb-item active"><span>ZLO0001P</span></li>
+                <li class="breadcrumb-item">
+                    <span>Módulo de facturación / Consultas</span>
+                </li>
+                <li class="breadcrumb-item active"><span>ZLO0001P</span></li>
             </ol>
-          </nav>
-        </div>
-      </header>
-      <div id="body-div" class="body flex-grow-1">
+        </nav>
+    </div>
+    </header>
+    <div id="body-div" class="body flex-grow-1">
         <div class="card mb-5">
-          <div class="card-header">
-          <h1 class="fs-4 mb-1 mt-2 text-center">Consulta de ventas resumidas - Tiendas</h1>
-          </div>
-          <div class="card-body">
-            <form id="formFiltros" action="../../assets/php/ZFA/ZLO0001P/logic.php" method="POST">
-          <div class="row mb-2">
-              <div class="col-sm-12 col-lg-6 mt-2">
-                <label>Compañía:</label>
-                <select class="form-select" id="comppro" name="comppro" >
-                    <option value="0" selected>Todas las compañías</option>
-                  </select>
-              </div>
-              <div class="col-sm-12 col-lg-6 mt-2">
-              <label>Hasta la fecha:</label>
-               <input type="date" class="form-control" name="fechapro" id="fechapro" data-date-format="dd/mm/yyyy" onfocus="(this.type='date')" onkeydown="return false;">
-              </div>
-              <div class="btn-group mt-3 d-flex justify-content-center justify-content-md-start" role="group" aria-label="Basic radio toggle button group">
-                <input type="radio" class="btn-check " name="btnradio1" id="btnradio1" autocomplete="off">
-                <label class="btn btn-outline-secondary responsive-font-example pt-3 pb-3" for="btnradio1"><b>Unidades</b></label>
-
-                <input type="radio" class="btn-check" name="btnradio2"  id="btnradio2" autocomplete="off">
-                <label class="btn btn-outline-secondary responsive-font-example  pt-3 pb-3" for="btnradio2" id="btnnradio2"><b>Transacciones</b></label>
-
-                <input type="radio" class="btn-check" name="btnradio3" id="btnradio3" autocomplete="off">
-                <label class="btn btn-outline-secondary responsive-font-example  pt-3 pb-3" for="btnradio3"><b>Valores Dólarizados</b></label>
-
-                <input type="radio" class="btn-check" name="btnradio4" id="btnradio4" autocomplete="off" >
-                <label class="btn btn-outline-secondary responsive-font-example  pt-3 pb-3" for="btnradio4"><b>Moneda Nacional</b></label>
+            <div class="card-header">
+                <h1 class="fs-4 mb-1 mt-2 text-center">Consulta de ventas resumidas - Tiendas</h1>
             </div>
-          </div>
-          </form>
-          <hr>
-          <div class="demo">
-                <ul class="tablist" role="tablist">
-                    <li id="tab1" class="tablist__tab text-center p-3 is-active" aria-controls="panel1" aria-selected="true" role="tab" tabindex="0">Día y Mes</li>
-                    <li id="tab2" class="tablist__tab text-center p-3 " aria-controls="panel1" aria-selected="true" role="tab" tabindex="0">Anual</li>
-                    <li id="tab3" class="tablist__tab text-center p-3 " aria-controls="panel1" aria-selected="true" role="tab" tabindex="0">Promedio por Transacción</li>
-                </ul>
-                <div id="panel1" class="tablist__panel p-2" aria-labelledby="tab1" aria-hidden="false" role="tabpanel">
+            <div class="card-body">
+                <form id="formFiltros" action="../../assets/php/ZFA/ZLO0001P/logic.php" method="POST">
+                    <div class="row mb-2">
+                        <div class="col-sm-12 col-lg-6 mt-2">
+                            <label>Compañía:</label>
+                            <select class="form-select" id="comppro" name="comppro">
+                                <option value="0" selected>Todas las compañías</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-12 col-lg-6 mt-2">
+                            <label>Hasta la fecha:</label>
+                            <input type="date" class="form-control" name="fechapro" id="fechapro"
+                                data-date-format="dd/mm/yyyy" onfocus="(this.type='date')" onkeydown="return false;">
+                        </div>
+                        <div class="btn-group mt-3 d-flex justify-content-center justify-content-md-start" role="group"
+                            aria-label="Basic radio toggle button group">
+                            <input type="radio" class="btn-check " name="btnradio1" id="btnradio1" autocomplete="off">
+                            <label class="btn btn-outline-secondary responsive-font-example pt-3 pb-3"
+                                for="btnradio1"><b>Unidades</b></label>
+
+                            <input type="radio" class="btn-check" name="btnradio2" id="btnradio2" autocomplete="off">
+                            <label class="btn btn-outline-secondary responsive-font-example  pt-3 pb-3" for="btnradio2"
+                                id="btnnradio2"><b>Transacciones</b></label>
+
+                            <input type="radio" class="btn-check" name="btnradio3" id="btnradio3" autocomplete="off">
+                            <label class="btn btn-outline-secondary responsive-font-example  pt-3 pb-3"
+                                for="btnradio3"><b>Valores Dólarizados</b></label>
+
+                            <input type="radio" class="btn-check" name="btnradio4" id="btnradio4" autocomplete="off">
+                            <label class="btn btn-outline-secondary responsive-font-example  pt-3 pb-3"
+                                for="btnradio4"><b>Moneda Nacional</b></label>
+                        </div>
+                    </div>
+                </form>
+                <hr>
+                <div class="demo">
+                    <ul class="tablist" role="tablist">
+                        <li id="tab1" class="tablist__tab text-center p-3 is-active" aria-controls="panel1"
+                            aria-selected="true" role="tab" tabindex="0">Día y Mes</li>
+                        <li id="tab2" class="tablist__tab text-center p-3 " aria-controls="panel1" aria-selected="true"
+                            role="tab" tabindex="0">Anual</li>
+                        <li id="tab3" class="tablist__tab text-center p-3 " aria-controls="panel1" aria-selected="true"
+                            role="tab" tabindex="0">Promedio por Transacción</li>
+                    </ul>
+                    <div id="panel1" class="tablist__panel p-2" aria-labelledby="tab1" aria-hidden="false"
+                        role="tabpanel">
 
 
-                  <div class="table-responsive">
+                        <div class="table-responsive">
 
-                    <table id="myTable" class="table stripe table-hover mt-2" style="width:100%" >
+                            <table id="myTable" class="table stripe table-hover mt-2" style="width:100%">
 
-                    <?php
+                                <?php
 
                     $label1="";$label2="";$label3="";$label4=""; $label5="";$label6="";
                           switch ($_SESSION['filtro']) {
@@ -129,20 +141,20 @@
                        print '     </thead>';
                        print '     <tbody id="myTableBody">';
                           ?>
-                        </tbody>
-                        </table>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
-                  </div>
-              </div>
+                </div>
+            </div>
         </div>
-      </div>
+    </div>
     </div>
 
-      <div class="footer bg-blck flex-grow-1 d-flex justify-content-center">
-      <p class="bggray responsive-font-example"><i>Lovable de Honduras S.A. de C.V</i></p>
-      </div>
-      <?php include '../../assets/js/PRG/ZFA/ZLO0001P.php'; ?>
+    <div class="footer bg-blck flex-grow-1 d-flex justify-content-center">
+        <p class="bggray responsive-font-example"><i>Lovable de Honduras S.A. de C.V</i></p>
+    </div>
+    <?php include '../../assets/js/PRG/ZFA/ZLO0001P.php'; ?>
 </body>
 
 </html>
