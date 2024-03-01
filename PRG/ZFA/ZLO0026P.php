@@ -105,7 +105,7 @@
                                 <tr>
                                   <th colspan="2" class=" border border-dark bg-secondary border-bottom-0 border-top-0 boder-end-0 "></th>
                                   <th colspan="2" class=" border border-dark bgEnc1">Sin Descuento</th>
-                                  <th colspan="2" class="border border-dark bgEnc2">10%</th>
+                                  <th colspan="2" class="border border-dark bgEnc2">&lt; 20%</th>
                                   <th colspan="2"class=" border border-dark bgEnc3">20%</th>
                                   <th colspan="2"class=" border border-dark bgEnc4">30%</th>
                                   <th colspan="2"class=" border border-dark bgEnc5">40%</th>
@@ -165,7 +165,7 @@
                                 <tr>
                                   <th colspan="2" class=" border border-dark bg-secondary border-bottom-0 border-top-0 boder-end-0 "></th>
                                   <th colspan="2" class=" border border-dark bgEnc1">Sin Descuento</th>
-                                  <th colspan="2" class="border border-dark bgEnc2">10%</th>
+                                  <th colspan="2" class="border border-dark bgEnc2">&lt; 20%</th>
                                   <th colspan="2"class=" border border-dark bgEnc3">20%</th>
                                   <th colspan="2"class=" border border-dark bgEnc4">30%</th>
                                   <th colspan="2"class=" border border-dark bgEnc5">40%</th>
@@ -332,7 +332,7 @@
                         downloadPDF:"Descargar en PDF",
                     },
                   xAxis: {
-                      categories: ['Prendas Sin Dscto.','Prendas 10%', 'Prendas 20%', 'Prendas 30%', 'Prendas 40%', 'Prendas 50%','Prendas 60%','Prendas 70%','Prendas >70%', 'Segundas Nivel 1', 'Segundas Nivel 2'],
+                      categories: ['Prendas Sin Dscto.','Prendas <20%', 'Prendas 20%', 'Prendas 30%', 'Prendas 40%', 'Prendas 50%','Prendas 60%','Prendas 70%','Prendas >70%', 'Segundas Nivel 1', 'Segundas Nivel 2'],
                       crosshair: true,
                       accessibility: {
                           description: 'Countries'
@@ -552,28 +552,28 @@
               const row = document.createElement('tr');
               row.innerHTML = `
                   <td class="bg-secondary border border-dark">Promedio</td>
-                  <td class="bg-secondary border border-dark">${parseFloat(unitot) === 0 ? '‎' : parseFloat(unitot).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
-                  <td class="bg-secondary border border-dark">${parseFloat(unides) === 0 ? '‎' : parseFloat(unides).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
+                  <td class="bg-secondary border border-dark">${parseFloat(unitot) === 0 ? '‎' : parseFloat(unitot).toLocaleString('es-419', {minimumFractionDigits: 0, maximumFractionDigits: 0})}</td>
+                  <td class="bg-secondary border border-dark">${parseFloat(unides) === 0 ? '‎' : parseFloat(unides).toLocaleString('es-419', {minimumFractionDigits: 0, maximumFractionDigits: 0})}</td>
                   <td class="bg-secondary border border-dark">${parseFloat(prodes) === 0 ? '‎' : parseFloat(prodes).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})+'%'}</td>
-                  <td class="bg-secondary border border-dark">${parseFloat(uni10) === 0 ? '‎' : parseFloat(uni10).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
+                  <td class="bg-secondary border border-dark">${parseFloat(uni10) === 0 ? '‎' : parseFloat(uni10).toLocaleString('es-419', {minimumFractionDigits: 0, maximumFractionDigits: 0})}</td>
                   <td class="bg-secondary border border-dark">${parseFloat(pro10) === 0 ? '‎' : parseFloat(pro10).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})+'%'}</td>
-                  <td class="bg-secondary border border-dark">${parseFloat(uni20) === 0 ? '‎' : parseFloat(uni20).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
+                  <td class="bg-secondary border border-dark">${parseFloat(uni20) === 0 ? '‎' : parseFloat(uni20).toLocaleString('es-419', {minimumFractionDigits: 0, maximumFractionDigits: 0})}</td>
                   <td class="bg-secondary border border-dark">${parseFloat(pro20) === 0 ? '‎' : parseFloat(pro20).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})+'%'}</td>
-                  <td class="bg-secondary border border-dark">${parseFloat(uni30) === 0 ? '‎' : parseFloat(uni30).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
+                  <td class="bg-secondary border border-dark">${parseFloat(uni30) === 0 ? '‎' : parseFloat(uni30).toLocaleString('es-419', {minimumFractionDigits: 0, maximumFractionDigits: 0})}</td>
                   <td class="bg-secondary border border-dark">${parseFloat(pro30) === 0 ? '‎' : parseFloat(pro30).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})+'%'}</td>
-                  <td class="bg-secondary border border-dark">${parseFloat(uni40) === 0 ? '‎' : parseFloat(uni40).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
+                  <td class="bg-secondary border border-dark">${parseFloat(uni40) === 0 ? '‎' : parseFloat(uni40).toLocaleString('es-419', {minimumFractionDigits: 0, maximumFractionDigits: 0})}</td>
                   <td class="bg-secondary border border-dark">${parseFloat(pro40) === 0 ? '‎' : parseFloat(pro40).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})+'%'}</td>
-                  <td class="bg-secondary border border-dark">${parseFloat(uni50) === 0 ? '‎' : parseFloat(uni50).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
+                  <td class="bg-secondary border border-dark">${parseFloat(uni50) === 0 ? '‎' : parseFloat(uni50).toLocaleString('es-419', {minimumFractionDigits: 0, maximumFractionDigits: 0})}</td>
                   <td class="bg-secondary border border-dark">${parseFloat(pro50) === 0 ? '‎' : parseFloat(pro50).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})+'%'}</td>
-                  <td class="bg-secondary border border-dark">${parseFloat(uni60) === 0 ? '‎' : parseFloat(uni60).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
+                  <td class="bg-secondary border border-dark">${parseFloat(uni60) === 0 ? '‎' : parseFloat(uni60).toLocaleString('es-419', {minimumFractionDigits: 0, maximumFractionDigits: 0})}</td>
                   <td class="bg-secondary border border-dark">${parseFloat(pro60) === 0 ? '‎' : parseFloat(pro60).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})+'%'}</td>
-                  <td class="bg-secondary border border-dark">${parseFloat(uni70) === 0 ? '‎' : parseFloat(uni70).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
+                  <td class="bg-secondary border border-dark">${parseFloat(uni70) === 0 ? '‎' : parseFloat(uni70).toLocaleString('es-419', {minimumFractionDigits: 0, maximumFractionDigits: 0})}</td>
                   <td class="bg-secondary border border-dark">${parseFloat(pro70) === 0 ? '‎' : parseFloat(pro70).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})+'%'}</td>
-                  <td class="bg-secondary border border-dark">${parseFloat(uni80) === 0 ? '‎' : parseFloat(uni80).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
+                  <td class="bg-secondary border border-dark">${parseFloat(uni80) === 0 ? '‎' : parseFloat(uni80).toLocaleString('es-419', {minimumFractionDigits: 0, maximumFractionDigits: 0})}</td>
                   <td class="bg-secondary border border-dark">${parseFloat(pro80) === 0 ? '‎' : parseFloat(pro80).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})+'%'}</td>
-                  <td class="bg-secondary border border-dark">${parseFloat(uniz1) === 0 ? '‎' : parseFloat(uniz1).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
+                  <td class="bg-secondary border border-dark">${parseFloat(uniz1) === 0 ? '‎' : parseFloat(uniz1).toLocaleString('es-419', {minimumFractionDigits: 0, maximumFractionDigits: 0})}</td>
                   <td class="bg-secondary border border-dark">${parseFloat(proz1) === 0 ? '‎' : parseFloat(proz1).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})+'%'}</td>
-                  <td class="bg-secondary border border-dark">${parseFloat(uniz2) === 0 ? '‎' : parseFloat(uniz2).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
+                  <td class="bg-secondary border border-dark">${parseFloat(uniz2) === 0 ? '‎' : parseFloat(uniz2).toLocaleString('es-419', {minimumFractionDigits: 0, maximumFractionDigits: 0})}</td>
                   <td class="bg-secondary border border-dark">${parseFloat(proz2) === 0 ? '‎' : parseFloat(proz2).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})+'%'}</td>
                 `;
                 tbDetalle.appendChild(row);
@@ -708,28 +708,28 @@
               const row = document.createElement('tr');
               row.innerHTML = `
                   <td class="bg-secondary border border-dark">Promedio</td>
-                  <td class="bg-secondary border border-dark">${parseFloat(unitot) === 0 ? '‎' : parseFloat(unitot).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
-                  <td class="bg-secondary border border-dark">${parseFloat(unides) === 0 ? '‎' : parseFloat(unides).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
+                  <td class="bg-secondary border border-dark">${parseFloat(unitot) === 0 ? '‎' : parseFloat(unitot).toLocaleString('es-419', {minimumFractionDigits: 0, maximumFractionDigits: 0})}</td>
+                  <td class="bg-secondary border border-dark">${parseFloat(unides) === 0 ? '‎' : parseFloat(unides).toLocaleString('es-419', {minimumFractionDigits: 0, maximumFractionDigits: 0})}</td>
                   <td class="bg-secondary border border-dark">${parseFloat(prodes) === 0 ? '‎' : parseFloat(prodes).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})+'%'}</td>
-                  <td class="bg-secondary border border-dark">${parseFloat(uni10) === 0 ? '‎' : parseFloat(uni10).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
+                  <td class="bg-secondary border border-dark">${parseFloat(uni10) === 0 ? '‎' : parseFloat(uni10).toLocaleString('es-419', {minimumFractionDigits: 0, maximumFractionDigits: 0})}</td>
                   <td class="bg-secondary border border-dark">${parseFloat(pro10) === 0 ? '‎' : parseFloat(pro10).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})+'%'}</td>
-                  <td class="bg-secondary border border-dark">${parseFloat(uni20) === 0 ? '‎' : parseFloat(uni20).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
+                  <td class="bg-secondary border border-dark">${parseFloat(uni20) === 0 ? '‎' : parseFloat(uni20).toLocaleString('es-419', {minimumFractionDigits: 0, maximumFractionDigits: 0})}</td>
                   <td class="bg-secondary border border-dark">${parseFloat(pro20) === 0 ? '‎' : parseFloat(pro20).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})+'%'}</td>
-                  <td class="bg-secondary border border-dark">${parseFloat(uni30) === 0 ? '‎' : parseFloat(uni30).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
+                  <td class="bg-secondary border border-dark">${parseFloat(uni30) === 0 ? '‎' : parseFloat(uni30).toLocaleString('es-419', {minimumFractionDigits: 0, maximumFractionDigits: 0})}</td>
                   <td class="bg-secondary border border-dark">${parseFloat(pro30) === 0 ? '‎' : parseFloat(pro30).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})+'%'}</td>
-                  <td class="bg-secondary border border-dark">${parseFloat(uni40) === 0 ? '‎' : parseFloat(uni40).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
+                  <td class="bg-secondary border border-dark">${parseFloat(uni40) === 0 ? '‎' : parseFloat(uni40).toLocaleString('es-419', {minimumFractionDigits: 0, maximumFractionDigits: 0})}</td>
                   <td class="bg-secondary border border-dark">${parseFloat(pro40) === 0 ? '‎' : parseFloat(pro40).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})+'%'}</td>
-                  <td class="bg-secondary border border-dark">${parseFloat(uni50) === 0 ? '‎' : parseFloat(uni50).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
+                  <td class="bg-secondary border border-dark">${parseFloat(uni50) === 0 ? '‎' : parseFloat(uni50).toLocaleString('es-419', {minimumFractionDigits: 0, maximumFractionDigits: 0})}</td>
                   <td class="bg-secondary border border-dark">${parseFloat(pro50) === 0 ? '‎' : parseFloat(pro50).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})+'%'}</td>
-                  <td class="bg-secondary border border-dark">${parseFloat(uni60) === 0 ? '‎' : parseFloat(uni60).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
+                  <td class="bg-secondary border border-dark">${parseFloat(uni60) === 0 ? '‎' : parseFloat(uni60).toLocaleString('es-419', {minimumFractionDigits: 0, maximumFractionDigits: 0})}</td>
                   <td class="bg-secondary border border-dark">${parseFloat(pro60) === 0 ? '‎' : parseFloat(pro60).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})+'%'}</td>
-                  <td class="bg-secondary border border-dark">${parseFloat(uni70) === 0 ? '‎' : parseFloat(uni70).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
+                  <td class="bg-secondary border border-dark">${parseFloat(uni70) === 0 ? '‎' : parseFloat(uni70).toLocaleString('es-419', {minimumFractionDigits: 0, maximumFractionDigits: 0})}</td>
                   <td class="bg-secondary border border-dark">${parseFloat(pro70) === 0 ? '‎' : parseFloat(pro70).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})+'%'}</td>
-                  <td class="bg-secondary border border-dark">${parseFloat(uni80) === 0 ? '‎' : parseFloat(uni80).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
+                  <td class="bg-secondary border border-dark">${parseFloat(uni80) === 0 ? '‎' : parseFloat(uni80).toLocaleString('es-419', {minimumFractionDigits: 0, maximumFractionDigits: 0})}</td>
                   <td class="bg-secondary border border-dark">${parseFloat(pro80) === 0 ? '‎' : parseFloat(pro80).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})+'%'}</td>
-                  <td class="bg-secondary border border-dark">${parseFloat(uniz1) === 0 ? '‎' : parseFloat(uniz1).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
+                  <td class="bg-secondary border border-dark">${parseFloat(uniz1) === 0 ? '‎' : parseFloat(uniz1).toLocaleString('es-419', {minimumFractionDigits: 0, maximumFractionDigits: 0})}</td>
                   <td class="bg-secondary border border-dark">${parseFloat(proz1) === 0 ? '‎' : parseFloat(proz1).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})+'%'}</td>
-                  <td class="bg-secondary border border-dark">${parseFloat(uniz2) === 0 ? '‎' : parseFloat(uniz2).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
+                  <td class="bg-secondary border border-dark">${parseFloat(uniz2) === 0 ? '‎' : parseFloat(uniz2).toLocaleString('es-419', {minimumFractionDigits: 0, maximumFractionDigits: 0})}</td>
                   <td class="bg-secondary border border-dark">${parseFloat(proz2) === 0 ? '‎' : parseFloat(proz2).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})+'%'}</td>
                 `;
                 tbDetalle.appendChild(row);
@@ -1129,7 +1129,7 @@
                   align: 'center'
               },
               xAxis: {
-                      categories: ['Prendas Sin Dscto.','Prendas 10%', 'Prendas 20%', 'Prendas 30%', 'Prendas 40%', 'Prendas 50%','Prendas 60%','Prendas 70%','Prendas >70%', 'Segundas Nivel 1', 'Segundas Nivel 2'],
+                      categories: ['Prendas Sin Dscto.','Prendas <20%', 'Prendas 20%', 'Prendas 30%', 'Prendas 40%', 'Prendas 50%','Prendas 60%','Prendas 70%','Prendas >70%', 'Segundas Nivel 1', 'Segundas Nivel 2'],
                       crosshair: true,
                       accessibility: {
                           description: 'Countries'

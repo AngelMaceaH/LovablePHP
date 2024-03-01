@@ -447,10 +447,12 @@
 
           var urlPOV = 'http://172.16.15.20/API.LovablePHP/ZLO0002P/ListPOV/?orden=' + ordenPOV + '&otros=' +
               otrosProd + '&filtro=' + filtro1 + '&ano=' + currentYear + '&mes=' + currentMes + '';
+              console.log(urlPOV);
           var responsePOV = ajaxRequest(urlPOV);
           var ordenFab = '<?php echo $ordenFiltro4; ?>';
           var urlFab = 'http://172.16.15.20/API.LovablePHP/ZLO0002P/ListFabrica/?orden=' + ordenFab +
               '&otros=' + otrosProd + '&ano=' + currentYear + '&mes=' + currentMes + '';
+              console.log(urlFab);
           var responseFab = ajaxRequest(urlFab);
           if (responsePOV.code == 200) {
               var cantidadInv = 0;
@@ -479,6 +481,7 @@
           var ordenPaises = '<?php echo $ordenFiltro3; ?>';
           var urlPaises = 'http://172.16.15.20/API.LovablePHP/ZLO0002P/ListPais/?orden=' + ordenPaises +
               '&otros=' + otrosProd + '&ano=' + currentYear + '&mes=' + currentMes + '';
+              console.log(urlPaises);
           var responsePaises = ajaxRequest(urlPaises);
           if (responsePaises.code == 200) {
               var paisArray = [];
