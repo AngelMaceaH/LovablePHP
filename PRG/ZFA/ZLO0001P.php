@@ -5,30 +5,42 @@
     <meta charset="utf-8">
     <link rel="icon" type="image/x-icon" href="../../assets/img/favicon.ico">
     <style>
-      .bg-secondary2 {
-          background-color: #E7E7E7 !important;
-      }
+    .bg-secondary2 {
+        background-color: #E7E7E7 !important;
+    }
     </style>
 </head>
 
 <body>
     <?php
-      include '../layout-prg.php';
-      $fecha_actual = date("Ymd");
-      $mes_actual=date("m");
-      $ano_actual=date("Y");
-      $_SESSION['FechaFiltro'] = isset($_SESSION['fechapro']) && !empty($_SESSION['fechapro']) ? $_SESSION['fechapro'] : $fecha_actual;
-      $_SESSION['MesFiltro'] = isset($_SESSION['mespro']) && !empty($_SESSION['mespro']) ? $_SESSION['mespro'] : $mes_actual;
-      $_SESSION['AnoFiltro'] = isset($_SESSION['anopro']) && !empty($_SESSION['anopro']) ? $_SESSION['anopro'] : $ano_actual;
-      $_SESSION['CompFiltro'] = isset($_SESSION['comppro']) && !empty($_SESSION['comppro']) ? "AND T1.CODCIA = ".$_SESSION['comppro'] : "AND T1.CODCIA > "."0";
-      //VALIDACIONES JS
-      $ckProductos = isset($_SESSION['productosCk']) ? $_SESSION['productosCk'] : "";
-      $fechafiltro = isset($_SESSION['FechaFiltro']) ? $_SESSION['FechaFiltro'] : "";
-      $compfiltro = isset($_SESSION['comppro']) && !empty($_SESSION['comppro']) ? $_SESSION['comppro'] : 0;
-      $_SESSION['filtro'] = isset($_GET['fil']) ? $_GET['fil'] : "3";
-      $_SESSION['opcion'] = isset($_GET['opc']) ? $_GET['opc'] : "1";
-      $tablaDIA="";$tablaMES="";
-      $sqlquery_zlo0001p = isset($_SESSION['logicSql']) ? $_SESSION['logicSql'] : " ";
+        // Incluye el archivo 'layout-prg.php'
+        include '../layout-prg.php';
+
+        // Obtiene la fecha, mes y año actual
+        $fecha_actual = date("Ymd");
+        $mes_actual=date("m");
+        $ano_actual=date("Y");
+
+        // Establece los valores de la sesión basándose en si existen o no en la sesión actual
+        $_SESSION['FechaFiltro'] = isset($_SESSION['fechapro']) && !empty($_SESSION['fechapro']) ? $_SESSION['fechapro'] : $fecha_actual;
+        $_SESSION['MesFiltro'] = isset($_SESSION['mespro']) && !empty($_SESSION['mespro']) ? $_SESSION['mespro'] : $mes_actual;
+        $_SESSION['AnoFiltro'] = isset($_SESSION['anopro']) && !empty($_SESSION['anopro']) ? $_SESSION['anopro'] : $ano_actual;
+        $_SESSION['CompFiltro'] = isset($_SESSION['comppro']) && !empty($_SESSION['comppro']) ? "AND T1.CODCIA = ".$_SESSION['comppro'] : "AND T1.CODCIA > "."0";
+
+        // Validaciones JS
+        $ckProductos = isset($_SESSION['productosCk']) ? $_SESSION['productosCk'] : "";
+        $fechafiltro = isset($_SESSION['FechaFiltro']) ? $_SESSION['FechaFiltro'] : "";
+        $compfiltro = isset($_SESSION['comppro']) && !empty($_SESSION['comppro']) ? $_SESSION['comppro'] : 0;
+
+        // Establece los valores de la sesión basándose en si existen o no en la URL
+        $_SESSION['filtro'] = isset($_GET['fil']) ? $_GET['fil'] : "3";
+        $_SESSION['opcion'] = isset($_GET['opc']) ? $_GET['opc'] : "1";
+
+        // Inicializa las variables de las tablas
+        $tablaDIA="";$tablaMES="";
+
+        // Establece la consulta SQL basándose en si existe o no en la sesión actual
+        $sqlquery_zlo0001p = isset($_SESSION['logicSql']) ? $_SESSION['logicSql'] : " ";
     ?>
     <div class="container-fluid">
         <nav aria-label="breadcrumb">
@@ -98,49 +110,64 @@
 
                             <table id="myTable" class="table stripe table-hover mt-2" style="width:100%">
 
-                                <?php
+                            <?php
 
-                    $label1="";$label2="";$label3="";$label4=""; $label5="";$label6="";
-                          switch ($_SESSION['filtro']) {
-                            case 1:
-                              $label1="Unidades día"; $label2="Unidades mes";
-                              $label3="Unidades Anual"; $label4="Unidades Año Comparación";
-                              break;
-                              case 2:
-                                $label1="Trans. día"; $label2="Trans. mes";
-                                $label3="Trans. Anual"; $label4="Trans. Año Comparación";
-                                break;
-                            default:
-                                 $label1="Ventas día"; $label2="Ventas mes";
-                                 $label3="Venta Anual"; $label4="Venta Año Comparación";
-                                 $label5="Comparativo mes anterior";$label6="Comparativo mes actual ".($_SESSION['AnoFiltro']-1);
-                              break;
-                          }
-                       print ' <thead>';
-                       print '         <tr>';
-                       print '             <th class="text-start responsive-font-example d-none"></th>';
-                       print '             <th class="text-start responsive-font-example d-none">ID</th>';
-                       print '             <th class="text-start responsive-font-example" width="20%">Punto de venta</th>';
-                       print '             <th id="thdia1" class="text-end responsive-font-example">'. $label1.'</th>';
-                       print '             <th id="thdia2" class="text-end responsive-font-example">'. $label2.'</th>';
-                       if ($_SESSION['filtro']!=1 && $_SESSION['filtro']!=2) {
-                        print '             <th id="thdia3" class="text-end responsive-font-example">'. $label5.'</th>';
-                        print '             <th id="thdia4" class="text-end responsive-font-example">'. $label6.'</th>';
-                       }
-                       print '             <th id="thanual1" class="text-end responsive-font-example d-none">'.$label3.'</th>';
-                       print '             <th id="thanual2" class="text-end responsive-font-example d-none">'.$label4.'</th>';
-                       print '             <th id="thanual3" class="text-end responsive-font-example d-none">Variación</th>';
-                       print '             <th id="thanual4" class="text-end responsive-font-example d-none">Crecimiento</th>';
-                       if($_SESSION['filtro']!=2 ){ print '             <th id="thpro1" class="text-end responsive-font-example d-none">Promedio día</th>';
-                       print '             <th id="thpro2" class="text-end responsive-font-example d-none">Promedio Mes</th>';
-                       print '             <th id="thpro3"  class="text-end responsive-font-example d-none">Año '.$_SESSION['AnoFiltro'].'</th>';
-                       print '             <th id="thpro4" class="text-end responsive-font-example d-none">Año '.($_SESSION['AnoFiltro']-1).'</th>';
-                       print '             <th id="thpro5" class="text-end responsive-font-example d-none">Variación</th>';
-                       print '             <th id="thpro6" class="text-end responsive-font-example d-none">Crecimiento</th>';}
-                       print '         </tr>';
-                       print '     </thead>';
-                       print '     <tbody id="myTableBody">';
-                          ?>
+                                // Inicializamos las variables de etiquetas
+                                $label1="";$label2="";$label3="";$label4=""; $label5="";$label6="";
+
+                                // Dependiendo del valor de 'filtro' en la sesión, asignamos diferentes valores a las etiquetas
+                                switch ($_SESSION['filtro']) {
+                                    case 1:
+                                        $label1="Unidades día"; $label2="Unidades mes";
+                                        $label3="Unidades Anual"; $label4="Unidades Año Comparación";
+                                        break;
+                                    case 2:
+                                        $label1="Trans. día"; $label2="Trans. mes";
+                                        $label3="Trans. Anual"; $label4="Trans. Año Comparación";
+                                        break;
+                                    default:
+                                        $label1="Ventas día"; $label2="Ventas mes";
+                                        $label3="Venta Anual"; $label4="Venta Año Comparación";
+                                        $label5="Comparativo mes anterior";$label6="Comparativo mes actual ".($_SESSION['AnoFiltro']-1);
+                                        break;
+                                }
+
+                                // Imprimimos el encabezado de la tabla
+                                print ' <thead>';
+                                print '         <tr>';
+                                print '             <th class="text-start responsive-font-example d-none"></th>';
+                                print '             <th class="text-start responsive-font-example d-none">ID</th>';
+                                print '             <th class="text-start responsive-font-example" width="20%">Punto de venta</th>';
+                                print '             <th id="thdia1" class="text-end responsive-font-example">'. $label1.'</th>';
+                                print '             <th id="thdia2" class="text-end responsive-font-example">'. $label2.'</th>';
+
+                                // Si el filtro no es 1 ni 2, imprimimos dos columnas adicionales
+                                if ($_SESSION['filtro']!=1 && $_SESSION['filtro']!=2) {
+                                    print '             <th id="thdia3" class="text-end responsive-font-example">'. $label5.'</th>';
+                                    print '             <th id="thdia4" class="text-end responsive-font-example">'. $label6.'</th>';
+                                }
+
+                                // Continuamos imprimiendo el resto de las columnas
+                                print '             <th id="thanual1" class="text-end responsive-font-example d-none">'.$label3.'</th>';
+                                print '             <th id="thanual2" class="text-end responsive-font-example d-none">'.$label4.'</th>';
+                                print '             <th id="thanual3" class="text-end responsive-font-example d-none">Variación</th>';
+                                print '             <th id="thanual4" class="text-end responsive-font-example d-none">Crecimiento</th>';
+
+                                // Si el filtro no es 2, imprimimos varias columnas adicionales
+                                if($_SESSION['filtro']!=2 ){
+                                    print '             <th id="thpro1" class="text-end responsive-font-example d-none">Promedio día</th>';
+                                    print '             <th id="thpro2" class="text-end responsive-font-example d-none">Promedio Mes</th>';
+                                    print '             <th id="thpro3"  class="text-end responsive-font-example d-none">Año '.$_SESSION['AnoFiltro'].'</th>';
+                                    print '             <th id="thpro4" class="text-end responsive-font-example d-none">Año '.($_SESSION['AnoFiltro']-1).'</th>';
+                                    print '             <th id="thpro5" class="text-end responsive-font-example d-none">Variación</th>';
+                                    print '             <th id="thpro6" class="text-end responsive-font-example d-none">Crecimiento</th>';
+                                }
+
+                                // Cerramos el encabezado de la tabla y abrimos el cuerpo de la tabla
+                                print '         </tr>';
+                                print '     </thead>';
+                                print '     <tbody id="myTableBody">';
+                            ?>
                                 </tbody>
                             </table>
                         </div>
@@ -154,7 +181,7 @@
     <div class="footer bg-blck flex-grow-1 d-flex justify-content-center">
         <p class="bggray responsive-font-example"><i>Lovable de Honduras S.A. de C.V</i></p>
     </div>
-    <?php include '../../assets/js/PRG/ZFA/ZLO0001P.php'; ?>
+    <?php include '../../assets/js/PRG/ZFA/ZLO0001P/ZLO0001P.php'; ?>
 </body>
 
 </html>

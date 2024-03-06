@@ -1,13 +1,17 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-  <meta charset="utf-8">
-  <link rel="icon" type="image/x-icon" href="../../assets/img/favicon.ico">
-  <link rel="stylesheet" href="../../assets/vendors/dayrangepicker/index.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" integrity="sha512-nMNlpuaDPrqlEls3IX/Q56H36qvBASwb3ipuo3MxeWbsQB1881ox0cRv7UPTgBlriqoynt35KjEwgGUeUXIPnw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<head>
+    <meta charset="utf-8">
+    <link rel="icon" type="image/x-icon" href="../../assets/img/favicon.ico">
+    <link rel="stylesheet" href="../../assets/vendors/dayrangepicker/index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css"
+        integrity="sha512-nMNlpuaDPrqlEls3IX/Q56H36qvBASwb3ipuo3MxeWbsQB1881ox0cRv7UPTgBlriqoynt35KjEwgGUeUXIPnw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
+
 <body>
-<?php
+    <?php
       include '../layout-prg.php';
       $_SESSION['tab'] = isset($_COOKIE['tabselected']) ? $_COOKIE['tabselected'] : "1";
       $mes_actual=date("m");
@@ -111,30 +115,30 @@
    ORDER BY T2.CODSEC";
    $resultCOMARC=odbc_exec($connIBM,$sqlCOMARC);
 ?>
-     <div class="container-fluid">
-          <nav aria-label="breadcrumb">
+    <div class="container-fluid">
+        <nav aria-label="breadcrumb">
             <ol class="breadcrumb my-0 ms-2">
-              <li class="breadcrumb-item">
-              <span>Módulo de facturación / Consultas</span>
-              </li>
-              <li class="breadcrumb-item active"><span>ZLO0007P</span></li>
+                <li class="breadcrumb-item">
+                    <span>Módulo de facturación / Consultas</span>
+                </li>
+                <li class="breadcrumb-item active"><span>ZLO0007P</span></li>
             </ol>
-          </nav>
-        </div>
-      </header>
-      <div id="body-div" class="body flex-grow-3">
-          <div class="card mb-5">
+        </nav>
+    </div>
+    </header>
+    <div id="body-div" class="body flex-grow-3">
+        <div class="card mb-5">
             <div class="card-header">
-              <h1 class="fs-4 mb-1 mt-2 text-center">Consulta de ventas por vendedor</h1>
+                <h1 class="fs-4 mb-1 mt-2 text-center">Consulta de ventas por vendedor</h1>
             </div>
             <div class="card-body">
-          <div class="position-relative">
-              <form id="formFiltros" action="../../assets/php/ZFA/ZLO0007P/filtroLogica.php" method="POST">
-                <input class="d-none" id="cbbClick" name="cbbClick"/>
-                <div class="row mb-2">
-                <div class="col-sm-12 col-lg-4 mt-2">
-                        <label class="mb-1">Punto de Venta:</label>
-                       <!-- <select class="form-select  mt-1" id="cbbCia" name="cbbCia">
+                <div class="position-relative">
+                    <form id="formFiltros" action="../../assets/php/ZFA/ZLO0007P/filtroLogica.php" method="POST">
+                        <input class="d-none" id="cbbClick" name="cbbClick" />
+                        <div class="row mb-2">
+                            <div class="col-sm-12 col-lg-4 mt-2">
+                                <label class="mb-1">Punto de Venta:</label>
+                                <!-- <select class="form-select  mt-1" id="cbbCia" name="cbbCia">
                         <option value="999">Todos los puntos de ventas</option>
                           <?php
                          /* while ($rowCOMARC = odbc_fetch_array($resultCOMARC)) {
@@ -142,249 +146,302 @@
                           }*/
                           ?>
                         </select>-->
-                        <select class="form-select  mt-1" id="cbbCia" name="cbbCia[]" name="states[]" multiple="multiple" style="width: 100%;">
-                          <option value="999">Todos los puntos de ventas</option>
-                          <?php
+                                <select class="form-select  mt-1" id="cbbCia" name="cbbCia[]" name="states[]"
+                                    multiple="multiple" style="width: 100%;">
+                                    <option value="999">Todos los puntos de ventas</option>
+                                    <?php
                             while ($rowCOMARC = odbc_fetch_array($resultCOMARC)) {
                               echo "<option value='" . $rowCOMARC['COMCOD'] . "'>" . rtrim(utf8_encode($rowCOMARC['COMDES'])) . "</option>";
                             }
                           ?>
-                        </select>
-                      </div>
-                      <div class="col-sm-12 col-lg-3 mt-2">
-                        <label>País:</label>
-                        <select class="form-select  mt-1" id="cbbPais" name="cbbPais">
-                          <option value="1">Honduras (Lov. Ecommerce)</option>
-                          <option value="2">Honduras (Mod. Íntima)</option>
-                          <option value="3">Guatemala</option>
-                          <option value="4">El Salvador</option>
-                          <option value="5">Costa Rica</option>
-                          <option value="6">Nicaragua</option>
-                          <option value="7">Rep. Dominicana</option>
-                        </select>
-                      </div>
-                      <div class="col-sm-12 col-lg-3  mt-2">
-                      <label>Fecha:</label>
-                        <div class="input-group mt-1">
-                        <input class="form-control" id="datepicker2" name="datepicker2"/>
-                        <span class="input-group-text" id="basic-addon2"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar" viewBox="0 0 16 16">
-                          <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
-                        </svg></span>
+                                </select>
+                            </div>
+                            <div class="col-sm-12 col-lg-3 mt-2">
+                                <label>País:</label>
+                                <select class="form-select  mt-1" id="cbbPais" name="cbbPais">
+                                    <option value="1">Honduras (Lov. Ecommerce)</option>
+                                    <option value="2">Honduras (Mod. Íntima)</option>
+                                    <option value="3">Guatemala</option>
+                                    <option value="4">El Salvador</option>
+                                    <option value="5">Costa Rica</option>
+                                    <option value="6">Nicaragua</option>
+                                    <option value="7">Rep. Dominicana</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-12 col-lg-3  mt-2">
+                                <label>Fecha:</label>
+                                <div class="input-group mt-1">
+                                    <input class="form-control" id="datepicker2" name="datepicker2" />
+                                    <span class="input-group-text" id="basic-addon2"><svg
+                                            xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                            fill="currentColor" class="bi bi-calendar" viewBox="0 0 16 16">
+                                            <path
+                                                d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z" />
+                                        </svg></span>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-2 mt-2">
+                                <button type="button" class="btn btn-success mt-4 fw-bold text-white"
+                                    style="width:100%;" onclick="searchF()">
+                                    <span class="me-2">BUSCAR</span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="#fff"
+                                        class="bi bi-search" viewBox="0 0 16 16">
+                                        <path
+                                            d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                                    </svg>
+                                </button>
+                            </div>
                         </div>
-                      </div>
-                      <div class="col-12 col-lg-2 mt-2">
-                                            <button type="button" class="btn btn-success mt-4 fw-bold text-white"
-                                                style="width:100%;" onclick="searchF()">
-                                                <span class="me-2">BUSCAR</span>
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
-                                                    fill="#fff" class="bi bi-search" viewBox="0 0 16 16">
-                                                    <path
-                                                        d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
-                                                </svg>
-                                            </button>
+                    </form>
+                </div>
+                <hr>
+                <div id="grafica1" class="mt-3 mb-4">
+                    <div id="carouselExampleDark" class="carousel carousel-dark slide">
+                        <div class="carousel-indicators">
+                            <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0"
+                                class="active" aria-current="true" aria-label="Slide 1"></button>
+                            <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1"
+                                aria-label="Slide 2"></button>
+                            <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2"
+                                aria-label="Slide 3"></button>
+                            <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="3"
+                                aria-label="Slide 4"></button>
+                            <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="4"
+                                aria-label="Slide 5"></button>
                         </div>
-                </div>
-              </form>
-              </div>
-              <hr>
-             <div id="grafica1" class="mt-3 mb-4">
-             <div id="carouselExampleDark" class="carousel carousel-dark slide" >
-                <div class="carousel-indicators">
-                  <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                  <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                  <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"></button>
-                  <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="3" aria-label="Slide 4"></button>
-                  <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="4" aria-label="Slide 5"></button>
-                </div>
-                <div class="carousel-inner">
-                <div class="carousel-item active">
-                                  <div class="me-5 ms-5 overflow-auto">
-                                      <figure class="highcharts-figure" >
-                                                <div id="container" ></div>
-                                        </figure>
-                                    </div>
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <div class="me-5 ms-5 overflow-auto">
+                                    <figure class="highcharts-figure">
+                                        <div id="container"></div>
+                                    </figure>
                                 </div>
-                                <div class="carousel-item">
+                            </div>
+                            <div class="carousel-item">
                                 <div class="me-5 ms-5">
-                                      <figure class="highcharts-figure" >
-                                                <div id="container2" ></div>
-                                        </figure>
-                                    </div>
+                                    <figure class="highcharts-figure">
+                                        <div id="container2"></div>
+                                    </figure>
                                 </div>
-                                <div class="carousel-item">
+                            </div>
+                            <div class="carousel-item">
                                 <div class="me-5 ms-5">
-                                      <figure class="highcharts-figure" >
-                                                <div id="container3" ></div>
-                                        </figure>
-                                    </div>
+                                    <figure class="highcharts-figure">
+                                        <div id="container3"></div>
+                                    </figure>
                                 </div>
-                                <div class="carousel-item">
+                            </div>
+                            <div class="carousel-item">
                                 <div class="me-5 ms-5">
-                                      <figure class="highcharts-figure" >
-                                                <div id="container4" ></div>
-                                        </figure>
-                                    </div>
+                                    <figure class="highcharts-figure">
+                                        <div id="container4"></div>
+                                    </figure>
                                 </div>
-                                <div class="carousel-item">
+                            </div>
+                            <div class="carousel-item">
                                 <div class="me-5 ms-5">
 
-                                      <div id="ventaRadial" class="PaddingRadial">
-                                      <h5 class="text-center">Venta y Venta 2 Años Antes </h5>
-                                      <h5 class="text-center" id="lblRadial"></h5>
-                                          <div class="d-flex justify-content-evenly">
-                                          <div>
-                                          <label class="responsive-font-example fw-bold">Venta Año Actual</label>
-                                          <div class="" style="display:inline-block; width:30px; height:20px; background-color:rgba(25, 170, 222,1);"></div>
-                                          </div>
-                                          <div >
-                                          <label class="responsive-font-example fw-bold">Venta 2 Años Antes</label>
-                                          <div class="" style="display:inline-block; width:30px; height:20px; background-color:rgba(125, 58, 193,1);"></div>
-                                          </div>
+                                    <div id="ventaRadial" class="PaddingRadial">
+                                        <h5 class="text-center">Venta y Venta 2 Años Antes </h5>
+                                        <h5 class="text-center" id="lblRadial"></h5>
+                                        <div class="d-flex justify-content-evenly">
+                                            <div>
+                                                <label class="responsive-font-example fw-bold">Venta Año Actual</label>
+                                                <div class=""
+                                                    style="display:inline-block; width:30px; height:20px; background-color:rgba(25, 170, 222,1);">
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <label class="responsive-font-example fw-bold">Venta 2 Años
+                                                    Antes</label>
+                                                <div class=""
+                                                    style="display:inline-block; width:30px; height:20px; background-color:rgba(125, 58, 193,1);">
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="" style="height:450px; ">
-                                        <canvas id="compRadial" ></canvas>
+                                            <canvas id="compRadial"></canvas>
                                         </div>
-                                      </div>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark"
+                            data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark"
+                            data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
                 </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
-                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                  <span class="visually-hidden">Previous</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
-                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                  <span class="visually-hidden">Next</span>
-                </button>
-              </div>
-             </div>
-             <hr>
-                    <div class="table-responsive mt-3" style="width:100%">
-                          <table id="myTableVendedorVentas" class="table stripe table-hover " style="width:100%">
-                            <thead>
-                                <tr style="font-size:14px;">
-                                    <th class=" text-start">Vendedor</th>
-                                    <th  class=" text-end" >Transacciones</th>
-                                    <th  class=" text-end" >Unidades</th>
-                                    <th  class=" text-end" >Venta</th>
-                                    <th  class=" text-end">Promedio de Ventas</th>
-                                    <th  class=" text-end">Venta Año Anterior</th>
-                                    <th  class=" text-end">Variación</th>
-                                    <th  class=" text-end">Crecimiento</th>
-                                    <th  class=" text-end">Venta 2 Años Antes</th>
-                                    <th  class=" text-end">Variación</th>
-                                    <th  class=" text-end">Crecimiento</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php
+                <hr>
+                <div class="table-responsive mt-3" style="width:100%">
+                    <table id="myTableVendedorVentas" class="table stripe table-hover " style="width:100%">
+                        <thead>
+                            <tr style="font-size:16px;">
+                                <th class=" text-start">Vendedor</th>
+                                <th class=" text-end">Transacciones</th>
+                                <th class=" text-end">Unidades</th>
+                                <th class=" text-end">Venta</th>
+                                <th class=" text-end">Promedio de Ventas</th>
+                                <th class=" text-end">Venta Año Anterior</th>
+                                <th class=" text-end">Variación</th>
+                                <th class=" text-end">Crecimiento</th>
+                                <th class=" text-end">Venta 2 Años Antes</th>
+                                <th class=" text-end">Variación</th>
+                                <th class=" text-end">Crecimiento</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                                 // Inicializamos la variable "validator1" en "true"
                                  $validator1="true";
+                                 // Creamos varios arrays vacíos y una variable contadora
                                  $vendedoresLabel[]=array();$cont=0;
                                  $v1[]=array();$v2[]=array();$v3[]=array();
                                  $transacciones[]=array();
                                  $vendedoresUnidades[]=array();$vendedoresVentas[]=array();
                                  $vendedoresUnidades2[]=array();$vendedoresVentas2[]=array();
+                                 // Inicializamos las variables "venano1" y "venano2" en 0
                                  $venano1=0; $venano2=0;
+                                 // Mientras haya resultados en "resultVentas"...
                                   while($rowVen = odbc_fetch_array($resultVentas)){
+                                    // Cambiamos el valor de "validator1" a "false"
                                     $validator1="false";
+                                    // Calculamos el promedio de ventas
                                     $promVen=($rowVen['CANTRA']!=0)? $rowVen['VALOR1']/$rowVen['CANTRA']:' ';
+                                    // Calculamos las docenas
                                     $docenas=floor($rowVen['CANTID'])*12;
+                                    // Obtenemos los decimales
                                     $decimales=($rowVen['CANTID']!=0)?substr($rowVen['CANTID'],strpos($rowVen['CANTID'],".")+1,2):0;
+                                    // Inicializamos la variable "cantidad" en 0
                                     $cantidad=0;
+                                    // Sumamos las docenas y los decimales para obtener la cantidad total
                                     $cantidad=$docenas+$decimales;
 
-
+                                    // Calculamos las variaciones
                                     $variacion1=$rowVen['VALOR1']-$rowVen['VALOR2'];
                                     $variacion2=$rowVen['VALOR1']-$rowVen['VALOR3'];
+                                    // Inicializamos las variables "crecimiento1" y "crecimiento2" en 0
                                     $crecimiento1=0; $crecimiento2=0;
+                                    // Si "VALOR2" es diferente de 0, calculamos el crecimiento1
                                     if ($rowVen['VALOR2']!=0 ) {
                                       $crecimiento1 = round((($rowVen['VALOR1']/$rowVen['VALOR2'])-1)*100);
                                     }
+                                    // Si "VALOR3" es diferente de 0, calculamos el crecimiento2
                                     if ($rowVen['VALOR3']!=0) {
                                       $crecimiento2 = round((($rowVen['VALOR1']/$rowVen['VALOR3'])-1)*100);
                                     }
 
-                                    print '<tr style="font-size:13px;">';
+                                    print '<tr style="font-size:15px;">';
                                     print '<td  class=" text-start fw-bold">'.rtrim(utf8_encode($rowVen['MAENO3'])).'</td>';
+                                    // Imprime el número de transacciones en formato de número con 0 decimales
                                     print '<td  class=" text-end">'.number_format($rowVen['CANTRA'],0).'</td>';
+                                    // Imprime la cantidad
                                     print '<td  class=" text-end">'.$cantidad.'</td>';
+                                    // Imprime el valor 1 si no es 0, de lo contrario imprime un espacio
                                     print '<td  class=" text-end fw-bold">'.(($rowVen['VALOR1']!=0)? number_format($rowVen['VALOR1'],2):' ').'</td>';
+                                    // Imprime el promedio de ventas en formato de número con 2 decimales
                                     print '<td  class=" text-end fw-bold">'.number_format($promVen,2).'</td>';
+                                    // Imprime el valor 2 si no es 0, de lo contrario imprime un espacio
                                     print '<td  class=" text-end fw-bold">'.(($rowVen['VALOR2']!=0)? number_format($rowVen['VALOR2'],2):' ').'</td>';
+                                    // Imprime la variación 1 en formato de número con 2 decimales y colorea el texto en rojo si es negativo, de lo contrario en verde
                                     print ($variacion1<0)? '<td  class=" text-end text-danger">'.(($variacion1!=0)? number_format($variacion1,2):' ').'</td>':'<td  class=" text-end text-success">'.(($variacion1!=0)? number_format($variacion1,2):' ').'</td>';
+                                    // Imprime el crecimiento 1 en formato de número con 0 decimales y colorea el texto en rojo si es negativo o cero, de lo contrario en verde
                                     if (intval($crecimiento1)<=0) {
-                                      print '<td  class=" text-end text-danger">'.number_format($crecimiento1,0).'%'.'</td>';
+                                    print '<td  class=" text-end text-danger">'.number_format($crecimiento1,0).'%'.'</td>';
                                     }else{
-                                      print '<td  class=" text-end text-success">'.number_format($crecimiento1,0).'%'.'</td>';
+                                    print '<td  class=" text-end text-success">'.number_format($crecimiento1,0).'%'.'</td>';
                                     }
-                                    //print ()? : (intval($crecimiento1)>0)? '<td  class=" text-end text-success">'.number_format($crecimiento1,0).'%'.'</td>':'<td  class=" text-end">'.number_format($crecimiento1,0).'%'.'</td>';
+                                    // Imprime el valor 3 si no es 0, de lo contrario imprime un espacio
                                     print '<td  class=" text-end fw-bold">'.(($rowVen['VALOR3']!=0)? number_format($rowVen['VALOR3'],2):' ').'</td>';
+                                    // Imprime la variación 2 en formato de número con 2 decimales y colorea el texto en rojo si es negativo, de lo contrario en verde
                                     print ($variacion2<0)? '<td  class=" text-end text-danger">'.(($variacion2!=0)? number_format($variacion2,2):' ').'</td>':'<td  class=" text-end text-success">'.(($variacion2!=0)? number_format($variacion2,2):' ').'</td>';
+                                    // Imprime el crecimiento 2 en formato de número con 0 decimales y colorea el texto en rojo si es negativo o cero, de lo contrario en verde
                                     if (intval($crecimiento2)<=0) {
-                                      print '<td  class=" text-end text-danger">'.number_format($crecimiento2,0).'%'.'</td>';
+                                    print '<td  class=" text-end text-danger">'.number_format($crecimiento2,0).'%'.'</td>';
                                     }else{
-                                      print '<td  class=" text-end text-success">'.number_format($crecimiento2,0).'%'.'</td>';
+                                    print '<td  class=" text-end text-success">'.number_format($crecimiento2,0).'%'.'</td>';
                                     }
-                                    //print (intval($crecimiento2)<0)? '<td  class=" text-end text-danger">'.number_format($crecimiento2,0).'%'.'</td>': (intval($crecimiento2)>0)? '<td  class=" text-end text-success">'.number_format($crecimiento2,0).'%'.'</td>':'<td  class=" text-end">'.number_format($crecimiento2,0).'%'.'</td>';
+                                    // Cierra la fila de la tabla
                                     print '</tr>';
+                                    // Almacena el nombre del vendedor
                                     $vendedoresLabel[$cont]=rtrim(utf8_encode($rowVen['MAENO3']));
+                                    // Almacena el valor 1, 2 y 3
                                     $v1[$cont]=floatval(($rowVen['VALOR1']!=0)? number_format($rowVen['VALOR1'],2, '.', ''):0);
                                     $v2[$cont]=floatval(($rowVen['VALOR2']!=0)? number_format($rowVen['VALOR2'],2, '.', ''):0);
                                     $v3[$cont]=floatval(($rowVen['VALOR3']!=0)? number_format($rowVen['VALOR3'],2, '.', ''):0);
+                                    // Almacena el número de transacciones
                                     $transacciones[$cont]=floatval(number_format($rowVen['CANTRA'],0, '.', ''));
+                                    // Almacena las unidades vendidas por vendedor
                                     $vendedoresUnidades[$cont]=array(rtrim(utf8_encode($rowVen['MAENO3'])) => $cantidad);
+                                    // Almacena la cantidad en formato de número con 2 decimales
                                     $vendedoresUnidades2[$cont]=floatval(number_format($cantidad,2, '.', ''));
+                                    // Almacena las ventas por vendedor
                                     $vendedoresVentas[$cont]=array(rtrim(utf8_encode($rowVen['MAENO3'])) => floatval(($rowVen['VALOR1']!=0)? number_format($rowVen['VALOR1'],2, '.', ''):0));
+                                    // Almacena el valor 1 en formato de número con 2 decimales
                                     $vendedoresVentas2[$cont]=floatval(($rowVen['VALOR1']!=0)? number_format($rowVen['VALOR1'],2, '.', ''):0);
+                                    // Suma el valor 1 y 2 al total de ventas del año
                                     $venano1+=$rowVen['VALOR1'];
                                     $venano2+=$rowVen['VALOR2'];
+                                    // Incrementa el contador
                                     $cont++;
                                   }
                                 ?>
-                              </tbody>
-                          </table>
-                      </div>
+                        </tbody>
+                    </table>
+                </div>
 
-          </div>
-          </div>
-          <div class="card-footer">
+            </div>
+        </div>
+        <div class="card-footer">
 
-          </div>
         </div>
-        </div>
-      </div>
+    </div>
+    </div>
+    </div>
 
     </div>
     <div class="footer bg-blck flex-grow-1 d-flex justify-content-center">
-      <p class="bggray responsive-font-example"><i>Lovable de Honduras S.A. de C.V</i></p>
-      </div>
-      <script>
+        <p class="bggray responsive-font-example"><i>Lovable de Honduras S.A. de C.V</i></p>
+    </div>
+    <script>
+        // Declara e inicializa las variables mesFiltro1, anoFiltro1, diaFiltro1, mesFiltro2, anoFiltro2, diaFiltro2 con los valores obtenidos de PHP
+        var mesFiltro1 = "<?php echo $mesFiltro1; ?>";
+        var anoFiltro1 = "<?php echo $anoFiltro1; ?>";
+        var diaFiltro1 = "<?php echo $diaFiltro1; ?>";
+        var mesFiltro2 = "<?php echo $mesFiltro2; ?>";
+        var anoFiltro2 = "<?php echo $anoFiltro2; ?>";
+        var diaFiltro2 = "<?php echo $diaFiltro2; ?>";
 
-        var mesFiltro1= "<?php echo $mesFiltro1; ?>";
-        var anoFiltro1= "<?php echo $anoFiltro1; ?>";
-        var diaFiltro1= "<?php echo $diaFiltro1; ?>";
-        var mesFiltro2= "<?php echo $mesFiltro2; ?>";
-        var anoFiltro2= "<?php echo $anoFiltro2; ?>";
-        var diaFiltro2= "<?php echo $diaFiltro2; ?>";
+        // Crea las variables Date1 y Date2 con el formato de fecha dia/mes/año
+        var Date1 = diaFiltro1 + '/' + mesFiltro1 + '/' + anoFiltro1;
+        var Date2 = diaFiltro2 + '/' + mesFiltro2 + '/' + anoFiltro2;
 
-        var Date1=diaFiltro1+'/'+mesFiltro1+'/'+anoFiltro1;
-        var Date2=diaFiltro2+'/'+mesFiltro2+'/'+anoFiltro2;
-
-        function sendForm(){
-          $("#formFiltros").submit();
+        // Declara la función sendForm que envía el formulario con id "formFiltros"
+        function sendForm() {
+        $("#formFiltros").submit();
         }
-      </script>
-      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
-      <script src="../../assets/vendors/dayrangepicker/index.umd.min.js"></script>
-      <script src="https://code.highcharts.com/stock/highstock.js"></script>
-      <script src="https://code.highcharts.com/highcharts-3d.js"></script>
-      <script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
-      <script src="https://code.highcharts.com/stock/modules/accessibility.js"></script>
-      <script src="https://cdn.jsdelivr.net/npm/chart.js@4.2.1"></script>
-      <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
-      <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js" integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-     <?php include '../../assets/php/ZFA/ZLO0007P/ZLO0007P.php'; ?>
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous">
+    </script>
+    <script src="../../assets/vendors/dayrangepicker/index.umd.min.js"></script>
+    <script src="https://code.highcharts.com/stock/highstock.js"></script>
+    <script src="https://code.highcharts.com/highcharts-3d.js"></script>
+    <script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/stock/modules/accessibility.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.2.1"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"
+        integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <?php include '../../assets/php/ZFA/ZLO0007P/ZLO0007P.php'; ?>
 </body>
 </html>

@@ -11,8 +11,8 @@
 <body>
     <?php
       include '../layout-prg.php';
-      include '../../assets/js/PRG/ZFA/ZLO0003P.php';
-?>
+      include '../../assets/js/PRG/ZFA/ZLO0003P/ZLO0003P.php';
+    ?>
     <div class="container-fluid">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb my-0 ms-2">
@@ -62,76 +62,90 @@
                         <li id="tab2" class="tablist__tab text-center p-3" aria-controls="panel2" aria-selected="false"
                             role="tab" tabindex="0">Tiendas</li>
                     </ul>
-                    <div id="panel1" class="tablist__panel p-3" aria-labelledby="tab1" aria-hidden="false"
-                        role="tabpanel">
-                        <div class="row" id="grafica">
-                            <div class="col-12 col-lg-12">
-                                <figure class="highcharts-figure">
-                                    <div id="container2"></div>
-                                </figure>
+                                        <!-- Inicio del panel 1 -->
+                                        <div id="panel1" class="tablist__panel p-3" aria-labelledby="tab1" aria-hidden="false"
+                                            role="tabpanel">
+                                            <!-- Inicio de la fila de la gráfica -->
+                                            <div class="row" id="grafica">
+                                                <div class="col-12 col-lg-12">
+                                                    <figure class="highcharts-figure">
+                                                        <!-- Contenedor de la gráfica -->
+                                                        <div id="container2"></div>
+                                                    </figure>
+                                                </div>
+                                            </div>
+                                            <!-- Inicio de la tabla responsiva -->
+                                            <div class="table-responsive">
+                                                <table id="myTableMarcasPaises" class="table stripe table-hover " style="width:100%">
+                                                    <thead>
+                                                        <tr>
+                                                            <!-- Cabeceras de la tabla -->
+                                                            <th class="d-none">ID</th>
+                                                            <th class="text-start">Paises</th>
+                                                            <th class="text-end">Und. Año <?php echo $ano2;?></th>
+                                                            <th class="text-end">Valor Año <?php echo $ano2;?></th>
+                                                            <th class="text-end">Und. Año <?php echo $ano2-1;?></th>
+                                                            <th class="text-end">Valor Año <?php echo $ano2-1;?></th>
+                                                            <th class="text-end">Variación</th>
+                                                            <th class="text-end">Crecimiento</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <!-- Cuerpo de la tabla -->
+                                                    <tbody id="myTableMarcasPaisesBody">
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <!-- Inicio del panel 2 -->
+                                        <div id="panel2" class="tablist__panel is-hidden p-3" aria-labelledby="tab2" aria-hidden="true"
+                                            role="tabpanel">
+                                            <!-- Inicio de la fila de la gráfica 2 -->
+                                            <div class="row" id="grafica2">
+                                                <div class="col-12 col-lg-12">
+                                                    <figure class="highcharts-figure">
+                                                        <!-- Contenedor de la gráfica 2 -->
+                                                        <div id="container3"></div>
+                                                    </figure>
+                                                </div>
+                                            </div>
+                                            <!-- Inicio de la segunda tabla -->
+                                            <table id="myTableMarcasTiendas" class="table stripe table-hover " style="width:100%">
+                                                <thead>
+                                                    <tr>
+                                                        <!-- Cabeceras de la segunda tabla -->
+                                                        <th class="d-none">ID</th>
+                                                        <th class="text-start">Punto de venta</th>
+                                                        <th class="text-end">Und. Año <?php echo $ano2;?></th>
+                                                        <th class="text-end">Valor Año <?php echo $ano2;?></th>
+                                                        <th class="text-end">Und. Año <?php echo $ano2-1;?></th>
+                                                        <th class="text-end">Valor Año <?php echo $ano2-1;?></th>
+                                                        <th class="text-end">Variación</th>
+                                                        <th class="text-end">Crecimiento</th>
+                                                    </tr>
+                                                </thead>
+                                                <!-- Cuerpo de la segunda tabla -->
+                                                <tbody id="myTableMarcasTiendasBody">
+
+                                                </tbody>
+                                            </table>
+
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="table-responsive">
-                            <table id="myTableMarcasPaises" class="table stripe table-hover " style="width:100%">
-                                <thead>
-                                    <tr>
-                                        <th class="d-none">ID</th>
-                                        <th class="text-start">Paises</th>
-                                        <th class="text-end">Und. Año <?php echo $ano2;?></th>
-                                        <th class="text-end">Valor Año <?php echo $ano2;?></th>
-                                        <th class="text-end">Und. Año <?php echo $ano2-1;?></th>
-                                        <th class="text-end">Valor Año <?php echo $ano2-1;?></th>
-                                        <th class="text-end">Variación</th>
-                                        <th class="text-end">Crecimiento</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="myTableMarcasPaisesBody">
-                                </tbody>
-                            </table>
+                        <!-- Inicio del pie de página -->
+                        <div class="footer bg-blck flex-grow-1 d-flex justify-content-center">
+                            <p class="bggray responsive-font-example"><i>Lovable de Honduras S.A. de C.V</i></p>
                         </div>
-                    </div>
-                    <div id="panel2" class="tablist__panel is-hidden p-3" aria-labelledby="tab2" aria-hidden="true"
-                            role="tabpanel">
-                            <div class="row" id="grafica2">
-                              <div class="col-12 col-lg-12">
-                                  <figure class="highcharts-figure">
-                                      <div id="container3"></div>
-                                  </figure>
-                              </div>
-                          </div>
-                            <table id="myTableMarcasTiendas" class="table stripe table-hover " style="width:100%">
-                                <thead>
-                                    <tr>
-                                        <th class="d-none">ID</th>
-                                        <th class="text-start">Punto de venta</th>
-                                        <th class="text-end">Und. Año <?php echo $ano2;?></th>
-                                        <th class="text-end">Valor Año <?php echo $ano2;?></th>
-                                        <th class="text-end">Und. Año <?php echo $ano2-1;?></th>
-                                        <th class="text-end">Valor Año <?php echo $ano2-1;?></th>
-                                        <th class="text-end">Variación</th>
-                                        <th class="text-end">Crecimiento</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="myTableMarcasTiendasBody">
-                                   
-                                </tbody>
-                            </table>
+                        <!-- Inclusión de scripts necesarios para las gráficas y el calendario -->
+                        <script src="https://code.highcharts.com/highcharts.js"></script>
+                        <script src="https://code.highcharts.com/modules/exporting.js"></script>
+                        <script src="https://code.highcharts.com/modules/export-data.js"></script>
+                        <script src="https://code.highcharts.com/modules/accessibility.js"></script>
 
-                        </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="footer bg-blck flex-grow-1 d-flex justify-content-center">
-        <p class="bggray responsive-font-example"><i>Lovable de Honduras S.A. de C.V</i></p>
-    </div>
-    <script src="https://code.highcharts.com/highcharts.js"></script>
-    <script src="https://code.highcharts.com/modules/exporting.js"></script>
-    <script src="https://code.highcharts.com/modules/export-data.js"></script>
-    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+                        <script src="../../assets/vendors/monthpicker/picker.js"></script>
+                        <script src="../../assets/vendors/monthpicker/calendars.min.js"></script>
+                    </body>
 
-    <script src="../../assets/vendors/monthpicker/picker.js"></script>
-    <script src="../../assets/vendors/monthpicker/calendars.min.js"></script>
-</body>
-
-</html>
+                    </html>

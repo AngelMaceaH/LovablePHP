@@ -16,9 +16,9 @@
       $_SESSION['tab'] = isset($_COOKIE['tabselected']) ? $_COOKIE['tabselected'] : "1";
       $mes_actual=date("m")-1;
       $ano_actual=date("Y");
-           $mesfiltro=isset($_SESSION['mesfiltro3'])? $_SESSION['mesfiltro3']: $mes_actual;
-           $anofiltro=isset($_SESSION['anofiltro2'])? $_SESSION['anofiltro2']: $ano_actual;
-           $paisfiltro=isset($_SESSION['paisfiltro2'])? $_SESSION['paisfiltro2']: 1;
+      $mesfiltro=isset($_SESSION['mesfiltro3'])? $_SESSION['mesfiltro3']: $mes_actual;
+      $anofiltro=isset($_SESSION['anofiltro2'])? $_SESSION['anofiltro2']: $ano_actual;
+      $paisfiltro=isset($_SESSION['paisfiltro2'])? $_SESSION['paisfiltro2']: 1;
            if ($paisfiltro==8) {
             $paisfiltro=1;
            }
@@ -45,8 +45,6 @@
                       case 7:
                         $cia="CODCIA IN (81)";
                         break;
-
-
             default:
             $cia="CODCIA IN (".$paisfiltro.")";
               break;
@@ -98,19 +96,18 @@
         $cont++;
       }
        //COMBOBOX
-   $sqlCOMARC = "SELECT T2.CODSEC,LO0705.CODCIA COMCOD, LO0705.NOMCIA COMDES
-   FROM LBPRDDAT/LO0705
-   INNER JOIN LBPRDDAT/LO0686 AS T2 ON T2.CODCIA = LO0705.CODCIA
-   WHERE LO0705.CODCIA<>1
-   ORDER BY T2.CODSEC";
-   $resultCOMARC=odbc_exec($connIBM,$sqlCOMARC);
+        $sqlCOMARC = "SELECT T2.CODSEC,LO0705.CODCIA COMCOD, LO0705.NOMCIA COMDES
+        FROM LBPRDDAT/LO0705
+        INNER JOIN LBPRDDAT/LO0686 AS T2 ON T2.CODCIA = LO0705.CODCIA
+        WHERE LO0705.CODCIA<>1
+        ORDER BY T2.CODSEC";
+        $resultCOMARC=odbc_exec($connIBM,$sqlCOMARC);
 
-
-   $lblDocenas="";
-   if ($paisfiltro==="01") {
-    $lblDocenas="(Docenas)";
-   }
-?>
+        $lblDocenas="";
+        if ($paisfiltro==="01") {
+          $lblDocenas="(Docenas)";
+        }
+      ?>
     <div class="container-fluid">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb my-0 ms-2">
@@ -152,10 +149,10 @@
                                     <optgroup>
                                         <option class="fw-bold" value="0" disabled>Punto de Venta</option>
                                         <?php
-                          while ($rowCOMARC = odbc_fetch_array($resultCOMARC)) {
-                            echo "<option value='" . $rowCOMARC['COMCOD'] . "'>" . rtrim(utf8_encode($rowCOMARC['COMDES'])) . "</option>";
-                          }
-                          ?>
+                                            while ($rowCOMARC = odbc_fetch_array($resultCOMARC)) {
+                                              echo "<option value='" . $rowCOMARC['COMCOD'] . "'>" . rtrim(utf8_encode($rowCOMARC['COMDES'])) . "</option>";
+                                            }
+                                        ?>
                                     </optgroup>
                                 </select>
                             </div>
@@ -225,133 +222,140 @@
                                 </thead>
                                 <tbody>
                                     <?php
-                                $paisesLabel1[]=array();  $cont=0;
-                                $paisesM1[]=array();
-                                $paisesM2[]=array();
-                                $paisesM3[]=array();
-                                $paisesM4[]=array();
-                                $paisesM5[]=array();
-                                $paisesM6[]=array();
-                                $validator1="true";
-                                $firstvalue=0;$i=0;
-                                   while($rowMeses = odbc_fetch_array($resultMeses)){
-                                    for ($i; $i <=1; $i++) {
-                                      $firstvalue=number_format($rowMeses['PRV12M'],2);
-                                    }
-                                    $i=5;
-                                    if ($firstvalue!=0) {
-                                    $validator1="false";
-                                    $PRV12M=$rowMeses['PRV12M'];
-                                    $PRV06M=$rowMeses['PRV06M'];
-                                    if ($paisfiltro==="01") {
-                                      $docenas=floor($rowMeses['PRV12M']/12);
-                                      $decimales=($rowMeses['PRV12M']-($docenas*12));
-                                      if (strlen($decimales)==1) {
-                                        $decimales= "0.0".$decimales;
-                                      }else{
-                                        $decimales="0.".$decimales;
-                                      }
-                                      $PRV12M=$docenas+$decimales;
+                                      // Inicializando arrays y variables
+                                      $paisesLabel1[]=array();  $cont=0;
+                                      $paisesM1[]=array();$paisesM2[]=array();$paisesM3[]=array();$paisesM4[]=array();$paisesM5[]=array();$paisesM6[]=array();
+                                      $validator1="true";
+                                      $firstvalue=0;$i=0;
+                                        // Recorriendo los resultados de la consulta
+                                        while($rowMeses = odbc_fetch_array($resultMeses)){
+                                          // Obteniendo el primer valor
+                                          for ($i; $i <=1; $i++) {
+                                            $firstvalue=number_format($rowMeses['PRV12M'],2);
+                                          }
+                                          $i=5;
+                                          // Si el primer valor no es cero
+                                          if ($firstvalue!=0) {
+                                          $validator1="false";
+                                          $PRV12M=$rowMeses['PRV12M'];
+                                          $PRV06M=$rowMeses['PRV06M'];
+                                          // Si el país seleccionado es "01"
+                                          if ($paisfiltro==="01") {
+                                            // Calculando docenas y decimales
+                                            $docenas=floor($rowMeses['PRV12M']/12);
+                                            $decimales=($rowMeses['PRV12M']-($docenas*12));
+                                            // Formateando decimales
+                                            if (strlen($decimales)==1) {
+                                              $decimales= "0.0".$decimales;
+                                            }else{
+                                              $decimales="0.".$decimales;
+                                            }
+                                            $PRV12M=$docenas+$decimales;
 
-                                      $docenas=floor($rowMeses['PRV06M']/12);
-                                      $decimales=($rowMeses['PRV06M']-($docenas*12));
-                                      if (strlen($decimales)==1) {
-                                        $decimales= "0.0".$decimales;
-                                      }else{
-                                        $decimales="0.".$decimales;
-                                      }
-                                      $PRV06M=$docenas+$decimales;
-                                     }
+                                            // Repitiendo el proceso para PRV06M
+                                            $docenas=floor($rowMeses['PRV06M']/12);
+                                            $decimales=($rowMeses['PRV06M']-($docenas*12));
+                                            if (strlen($decimales)==1) {
+                                              $decimales= "0.0".$decimales;
+                                            }else{
+                                              $decimales="0.".$decimales;
+                                            }
+                                            $PRV06M=$docenas+$decimales;
+                                          }
 
-                                    print '<tr>';
-                                      print '<td>1</td>';
-                                      for ($i=0; $i < count($marcasId); $i++) {
-                                        if ($marcasId[$i]==$rowMeses['MARCA']) {
-                                             print '<td class="responsive-font-example fw-bold text-start">'.$marcasLabel[$i].'</td>';
-                                          $paisesLabel1[$cont]=$marcasLabel[$i];
-                                        }
-                                      }
-                                      switch ($paisfiltro) {
-                                        case 1:
-                                         $MIN12M=$rowMeses['MIN12M']/20;
-                                         $M1=$rowMeses['M1']/20;
-                                          $M2=$rowMeses['M2']/20;
-                                          $M3=$rowMeses['M3']/20;
-                                          $M4=$rowMeses['M4']/20;
-                                          $M5=$rowMeses['M5']/20;
-                                          $M6=$rowMeses['M6']/20;
-                                          break;
-                                          case 2:
-                                            $MIN12M=$rowMeses['MIN12M']/2;
-                                            $M1=$rowMeses['M1']/2;
-                                             $M2=$rowMeses['M2']/2;
-                                             $M3=$rowMeses['M3']/2;
-                                             $M4=$rowMeses['M4']/2;
-                                             $M5=$rowMeses['M5']/2;
-                                             $M6=$rowMeses['M6']/2;
-                                            break;
-                                          case 3:
-                                            $MIN12M=$rowMeses['MIN12M']/5;
-                                            $M1=$rowMeses['M1']/5;
-                                              $M2=$rowMeses['M2']/5;
-                                              $M3=$rowMeses['M3']/5;
-                                              $M4=$rowMeses['M4']/5;
-                                              $M5=$rowMeses['M5']/5;
-                                              $M6=$rowMeses['M6']/5;
-                                            break;
-                                            case 4:
-                                              $MIN12M=$rowMeses['MIN12M']/4;
-                                              $M1=$rowMeses['M1']/4;
-                                                $M2=$rowMeses['M2']/4;
-                                                $M3=$rowMeses['M3']/4;
-                                                $M4=$rowMeses['M4']/4;
-                                                $M5=$rowMeses['M5']/4;
-                                                $M6=$rowMeses['M6']/4;
-                                              break;
-                                              case 5:
-                                                $MIN12M=$rowMeses['MIN12M']/2;
-                                                  $M1=$rowMeses['M1']/2;
-                                                    $M2=$rowMeses['M2']/2;
-                                                    $M3=$rowMeses['M3']/2;
-                                                    $M4=$rowMeses['M4']/2;
-                                                    $M5=$rowMeses['M5']/2;
-                                                    $M6=$rowMeses['M6']/2;
+                                          // Imprimiendo la fila de la tabla
+                                          print '<tr>';
+                                            print '<td>1</td>';
+                                            // Recorriendo las marcas
+                                            for ($i=0; $i < count($marcasId); $i++) {
+                                              // Si la marca coincide con la del resultado
+                                              if ($marcasId[$i]==$rowMeses['MARCA']) {
+                                                  // Imprimiendo la marca
+                                                  print '<td class="responsive-font-example fw-bold text-start">'.$marcasLabel[$i].'</td>';
+                                                // Guardando la marca en el array
+                                                $paisesLabel1[$cont]=$marcasLabel[$i];
+                                              }
+                                            }
+                                            switch ($paisfiltro) {
+                                              case 1:
+                                              $MIN12M=$rowMeses['MIN12M']/20;
+                                              $M1=$rowMeses['M1']/20;
+                                                $M2=$rowMeses['M2']/20;
+                                                $M3=$rowMeses['M3']/20;
+                                                $M4=$rowMeses['M4']/20;
+                                                $M5=$rowMeses['M5']/20;
+                                                $M6=$rowMeses['M6']/20;
                                                 break;
-                                                case 6:
+                                                case 2:
                                                   $MIN12M=$rowMeses['MIN12M']/2;
                                                   $M1=$rowMeses['M1']/2;
-                                                   $M2=$rowMeses['M2']/2;
-                                                   $M3=$rowMeses['M3']/2;
-                                                   $M4=$rowMeses['M4']/2;
-                                                   $M5=$rowMeses['M5']/2;
-                                                   $M6=$rowMeses['M6']/2;
+                                                  $M2=$rowMeses['M2']/2;
+                                                  $M3=$rowMeses['M3']/2;
+                                                  $M4=$rowMeses['M4']/2;
+                                                  $M5=$rowMeses['M5']/2;
+                                                  $M6=$rowMeses['M6']/2;
                                                   break;
-                                                    default:
-                                                    $MIN12M=$rowMeses['MIN12M']/1;
-                                                    $M1=$rowMeses['M1']/1;
-                                                     $M2=$rowMeses['M2']/1;
-                                                     $M3=$rowMeses['M3']/1;
-                                                     $M4=$rowMeses['M4']/1;
-                                                     $M5=$rowMeses['M5']/1;
-                                                     $M6=$rowMeses['M6']/1;
-                                              break;
-                                          }
-                                      if($PRV12M==0){print '<td class="responsive-font-example fw-bold text-end"> </td>';}else{print '<td class="responsive-font-example fw-bold text-end">'.number_format($PRV12M,2).'</td>';}
-                                      if($PRV06M==0){print '<td class="responsive-font-example fw-bold text-end"> </td>';}else{print '<td class="responsive-font-example fw-bold text-end">'.number_format($PRV06M,2).'</td>';}
-                                      if($rowMeses['MIN12M']==0){print '<td class="responsive-font-example fw-bold text-end"> </td>';}else{print '<td class="responsive-font-example fw-bold text-end">'.number_format($MIN12M,2).'</td>';}
-                                      if($rowMeses['M1']==0){print '<td class="responsive-font-example fw-bold text-end"> </td>';}else{print '<td class="responsive-font-example fw-bold text-end">'.number_format($M1,2).'</td>';}
-                                      if($rowMeses['M2']==0){print '<td class="responsive-font-example fw-bold text-end"> </td>';}else{print '<td class="responsive-font-example fw-bold text-end">'.number_format($M2,2).'</td>';}
-                                      if($rowMeses['M3']==0){print '<td class="responsive-font-example fw-bold text-end"> </td>';}else{print '<td class="responsive-font-example fw-bold text-end">'.number_format($M3,2).'</td>';}
-                                    print '</tr>';
-                                    $paisesM1[$cont]=round($M1,2);
-                                    $paisesM2[$cont]=round($M2,2);
-                                    $paisesM3[$cont]=round($M3,2);
-                                    $paisesM4[$cont]=round($M4,2);
-                                    $paisesM5[$cont]=round($M5,2);
-                                    $paisesM6[$cont]=round($M6,2);
-                                    $cont++;
-                                   }}
-
+                                                case 3:
+                                                  $MIN12M=$rowMeses['MIN12M']/5;
+                                                  $M1=$rowMeses['M1']/5;
+                                                    $M2=$rowMeses['M2']/5;
+                                                    $M3=$rowMeses['M3']/5;
+                                                    $M4=$rowMeses['M4']/5;
+                                                    $M5=$rowMeses['M5']/5;
+                                                    $M6=$rowMeses['M6']/5;
+                                                  break;
+                                                  case 4:
+                                                    $MIN12M=$rowMeses['MIN12M']/4;
+                                                    $M1=$rowMeses['M1']/4;
+                                                      $M2=$rowMeses['M2']/4;
+                                                      $M3=$rowMeses['M3']/4;
+                                                      $M4=$rowMeses['M4']/4;
+                                                      $M5=$rowMeses['M5']/4;
+                                                      $M6=$rowMeses['M6']/4;
+                                                    break;
+                                                    case 5:
+                                                      $MIN12M=$rowMeses['MIN12M']/2;
+                                                        $M1=$rowMeses['M1']/2;
+                                                          $M2=$rowMeses['M2']/2;
+                                                          $M3=$rowMeses['M3']/2;
+                                                          $M4=$rowMeses['M4']/2;
+                                                          $M5=$rowMeses['M5']/2;
+                                                          $M6=$rowMeses['M6']/2;
+                                                      break;
+                                                      case 6:
+                                                        $MIN12M=$rowMeses['MIN12M']/2;
+                                                        $M1=$rowMeses['M1']/2;
+                                                        $M2=$rowMeses['M2']/2;
+                                                        $M3=$rowMeses['M3']/2;
+                                                        $M4=$rowMeses['M4']/2;
+                                                        $M5=$rowMeses['M5']/2;
+                                                        $M6=$rowMeses['M6']/2;
+                                                        break;
+                                                          default:
+                                                          $MIN12M=$rowMeses['MIN12M']/1;
+                                                          $M1=$rowMeses['M1']/1;
+                                                          $M2=$rowMeses['M2']/1;
+                                                          $M3=$rowMeses['M3']/1;
+                                                          $M4=$rowMeses['M4']/1;
+                                                          $M5=$rowMeses['M5']/1;
+                                                          $M6=$rowMeses['M6']/1;
+                                                    break;
+                                            }
+                                            if($PRV12M==0){print '<td class="responsive-font-example fw-bold text-end"> </td>';}else{print '<td class="responsive-font-example fw-bold text-end">'.number_format($PRV12M,2).'</td>';}
+                                            if($PRV06M==0){print '<td class="responsive-font-example fw-bold text-end"> </td>';}else{print '<td class="responsive-font-example fw-bold text-end">'.number_format($PRV06M,2).'</td>';}
+                                            if($rowMeses['MIN12M']==0){print '<td class="responsive-font-example fw-bold text-end"> </td>';}else{print '<td class="responsive-font-example fw-bold text-end">'.number_format($MIN12M,2).'</td>';}
+                                            if($rowMeses['M1']==0){print '<td class="responsive-font-example fw-bold text-end"> </td>';}else{print '<td class="responsive-font-example fw-bold text-end">'.number_format($M1,2).'</td>';}
+                                            if($rowMeses['M2']==0){print '<td class="responsive-font-example fw-bold text-end"> </td>';}else{print '<td class="responsive-font-example fw-bold text-end">'.number_format($M2,2).'</td>';}
+                                            if($rowMeses['M3']==0){print '<td class="responsive-font-example fw-bold text-end"> </td>';}else{print '<td class="responsive-font-example fw-bold text-end">'.number_format($M3,2).'</td>';}
+                                          print '</tr>';
+                                          $paisesM1[$cont]=round($M1,2);
+                                          $paisesM2[$cont]=round($M2,2);
+                                          $paisesM3[$cont]=round($M3,2);
+                                          $paisesM4[$cont]=round($M4,2);
+                                          $paisesM5[$cont]=round($M5,2);
+                                          $paisesM6[$cont]=round($M6,2);
+                                          $cont++;
+                                        }}
                                 ?>
                                 </tbody>
                             </table>
@@ -360,7 +364,7 @@
                     <div id="panel2" class="tablist__panel is-hidden p-3" aria-labelledby="tab2" aria-hidden="true"
                         role="tabpanel">
                         <div id="grafica2" class="row">
-                            <div id="carouselExampleDark" class="carousel carousel-dark slide" >
+                            <div id="carouselExampleDark" class="carousel carousel-dark slide">
                                 <div class="carousel-indicators">
                                     <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0"
                                         class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -416,71 +420,86 @@
                                 </thead>
                                 <tbody>
                                     <?php
-                                 $paisesUndComp[]=array();  $paisesUndVen[]=array(); $paisesUndExi[]=array();$cont1=0;
-                                 $paisesLabel2[]=array();
-                                 $validator2="true";
-                                 $firstvalue=0;$i=0;
-                                   while($rowUni = odbc_fetch_array($resultUnidades)){
+                                      $paisesUndComp[]=array();  $paisesUndVen[]=array(); $paisesUndExi[]=array();$cont1=0;
+                                      $paisesLabel2[]=array();
+                                      $validator2="true";
+                                      $firstvalue=0;$i=0;
+                                        while($rowUni = odbc_fetch_array($resultUnidades)){
 
-                                    for ($i; $i <=1; $i++) {
-                                      $firstvalue=number_format($rowUni['UNICOM'],2);
-                                    }
-                                    $i=5;
-                                    if ($firstvalue!=0) {
-                                    $validator2="false";
-                                    $variacion=$rowUni['UNIVEN'] - $rowUni['UNICOM'];
-                                    $UNICOM=$rowUni['UNICOM'];
-                                    $UNIVEN=$rowUni['UNIVEN'];
-                                    $UNIEXI=$rowUni['UNIEXI'];
-                                    if ($paisfiltro==="01") {
-                                      $docenas=floor($rowUni['UNICOM']/12);
-                                      $decimales=($rowUni['UNICOM']-($docenas*12));
-                                      if (strlen($decimales)==1) {
-                                        $decimales= "0.0".$decimales;
-                                      }else{
-                                        $decimales="0.".$decimales;
-                                      }
-                                      $UNICOM=$docenas+$decimales;
-                                      //
-                                      $docenas=floor($rowUni['UNIVEN']/12);
-                                      $decimales=($rowUni['UNIVEN']-($docenas*12));
-                                      if (strlen($decimales)==1) {
-                                        $decimales= "0.0".$decimales;
-                                      }else{
-                                        $decimales="0.".$decimales;
-                                      }
-                                      $UNIVEN=$docenas+$decimales;
-                                      //
-                                      $docenas=floor($rowUni['UNIEXI']/12);
-                                      $decimales=($rowUni['UNIEXI']-($docenas*12));
-                                      if (strlen($decimales)==1) {
-                                        $decimales= "0.0".$decimales;
-                                      }else{
-                                        $decimales="0.".$decimales;
-                                      }
-                                      $UNIEXI=$docenas+$decimales;
-                                     }
+                                          for ($i; $i <=1; $i++) {
+                                            $firstvalue=number_format($rowUni['UNICOM'],2);
+                                          }
+                                          $i=5;
+                                          if ($firstvalue!=0) {
+                                          $validator2="false";
+                                          $variacion=$rowUni['UNIVEN'] - $rowUni['UNICOM'];
+                                          $UNICOM=$rowUni['UNICOM'];
+                                          $UNIVEN=$rowUni['UNIVEN'];
+                                          $UNIEXI=$rowUni['UNIEXI'];
+                                          // Si el filtro de país es "01"
+                                          if ($paisfiltro==="01") {
+                                          // Calcula las docenas de UNICOM
+                                          $docenas=floor($rowUni['UNICOM']/12);
+                                          // Calcula los decimales de UNICOM
+                                          $decimales=($rowUni['UNICOM']-($docenas*12));
+                                          // Si la longitud de los decimales es 1, añade "0.0" delante
+                                          if (strlen($decimales)==1) {
+                                          $decimales= "0.0".$decimales;
+                                          }else{
+                                          // Si no, añade "0." delante
+                                          $decimales="0.".$decimales;
+                                          }
+                                          // Suma las docenas y los decimales para obtener UNICOM
+                                          $UNICOM=$docenas+$decimales;
+                                          //
+                                          // Repite el proceso para UNIVEN
+                                          $docenas=floor($rowUni['UNIVEN']/12);
+                                          $decimales=($rowUni['UNIVEN']-($docenas*12));
+                                          if (strlen($decimales)==1) {
+                                          $decimales= "0.0".$decimales;
+                                          }else{
+                                          $decimales="0.".$decimales;
+                                          }
+                                          $UNIVEN=$docenas+$decimales;
+                                          //
+                                          // Repite el proceso para UNIEXI
+                                          $docenas=floor($rowUni['UNIEXI']/12);
+                                          $decimales=($rowUni['UNIEXI']-($docenas*12));
+                                          if (strlen($decimales)==1) {
+                                          $decimales= "0.0".$decimales;
+                                          }else{
+                                          $decimales="0.".$decimales;
+                                          }
+                                          $UNIEXI=$docenas+$decimales;
+                                          }
 
-                                    print '<tr>';
-                                      print '<td>'.$rowUni['MARCA'].'</td>';
-                                      for ($i=0; $i < count($marcasId); $i++) {
-                                        if ($marcasId[$i]==$rowUni['MARCA']) {
-                                             print '<td class="responsive-font-example fw-bold text-start">'.$marcasLabel[$i].'</td>';
-                                             $paisesLabel2[$cont1]=$marcasLabel[$i];
-                                        }
-                                      }
-                                      if($UNICOM==0){print '<td class="responsive-font-example fw-bold text-end"> </td>';}else{print '<td class="responsive-font-example fw-bold text-end">'.number_format($UNICOM,2).'</td>';}
-                                      if($UNIVEN==0){print '<td class="responsive-font-example fw-bold text-end"> </td>';}else{print '<td class="responsive-font-example fw-bold text-end">'.number_format($UNIVEN,2).'</td>';}
-                                      if ($variacion<0) {print '<td class="text-danger responsive-font-example fw-bold text-end">'.number_format(($variacion),0).'</td>';}else{if ($variacion>0) {print '<td class="text-success responsive-font-example fw-bold text-end">'.number_format(($variacion),0).'</td>';}else{print '<td class="fw-bold responsive-font-example text-end">'.(($variacion==0)?' ':number_format( $variacion,0)).'</td>';}}
-                                      if($UNIEXI==0){print '<td class="responsive-font-example fw-bold text-end"> </td>';}else{print '<td class="responsive-font-example fw-bold text-end">'.number_format($UNIEXI,2).'</td>';}
-                                    print '</tr>';
-                                    $paisesUndComp[$cont1]=round($UNICOM,2);
-                                    $paisesUndVen[$cont1]=round($UNIVEN,2);
-                                    $paisesUndExi[$cont1]=round($UNIEXI,2);
-                                    $cont1++;
-                                   }}
-
-
+                                          // Imprime una fila de la tabla
+                                          print '<tr>';
+                                          // Imprime la marca
+                                          print '<td>'.$rowUni['MARCA'].'</td>';
+                                          // Recorre las marcas
+                                          for ($i=0; $i < count($marcasId); $i++) {
+                                          // Si la marca coincide, imprime la etiqueta de la marca
+                                          if ($marcasId[$i]==$rowUni['MARCA']) {
+                                          print '<td class="responsive-font-example fw-bold text-start">'.$marcasLabel[$i].'</td>';
+                                          // Añade la etiqueta de la marca a paisesLabel2
+                                            $paisesLabel2[$cont1]=$marcasLabel[$i];
+                                            }
+                                          }
+                                          // Imprime UNICOM, UNIVEN, variación y UNIEXI con formato
+                                          if($UNICOM==0){print '<td class="responsive-font-example fw-bold text-end"> </td>';}else{print '<td class="responsive-font-example fw-bold text-end">'.number_format($UNICOM,2).'</td>';}
+                                          if($UNIVEN==0){print '<td class="responsive-font-example fw-bold text-end"> </td>';}else{print '<td class="responsive-font-example fw-bold text-end">'.number_format($UNIVEN,2).'</td>';}
+                                          if ($variacion<0) {print '<td class="text-danger responsive-font-example fw-bold text-end">'.number_format(($variacion),0).'</td>';}else{if ($variacion>0) {print '<td class="text-success responsive-font-example fw-bold text-end">'.number_format(($variacion),0).'</td>';}else{print '<td class="fw-bold responsive-font-example text-end">'.(($variacion==0)?' ':number_format( $variacion,0)).'</td>';}}
+                                          if($UNIEXI==0){print '<td class="responsive-font-example fw-bold text-end"> </td>';}else{print '<td class="responsive-font-example fw-bold text-end">'.number_format($UNIEXI,2).'</td>';}
+                                          // Cierra la fila de la tabla
+                                          print '</tr>';
+                                          // Añade UNICOM, UNIVEN y UNIEXI a sus respectivos arrays
+                                          $paisesUndComp[$cont1]=round($UNICOM,2);
+                                          $paisesUndVen[$cont1]=round($UNIVEN,2);
+                                          $paisesUndExi[$cont1]=round($UNIEXI,2);
+                                          // Incrementa el contador
+                                          $cont1++;
+                                    }}
                                 ?>
                                 </tbody>
                             </table>

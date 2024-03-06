@@ -1,43 +1,60 @@
 <script>
+
+// Definir el usuario a partir de la sesión
 var usuario = '<?php echo $_SESSION["CODUSU"];?>';
+
+// Definir la URL para obtener la lista de Comarc
 var urlComarc = 'http://172.16.15.20/API.LovablePHP/ZLO0001P/ListComarc/?usuario=' + usuario + '';
+
+// Realizar la solicitud AJAX para obtener la lista de Comarc
 var responseComarc = ajaxRequest(urlComarc);
 
-
+// Definir la fecha de filtro y el filtro de la compañía a partir de la sesión
 var fechafiltro = '<?php echo $fechafiltro;?>';
 var compfiltro = '<?php echo $_SESSION['CompFiltro'];?>';
+
+// Definir el caso a partir de la sesión
 var case1 = <?php echo $_SESSION['filtro'];?>;
+
+// Inicializar las URLs
 var url1 = "",
     url2 = "",
     url3 = "";
 
+// Dependiendo del caso, definir las URLs para obtener las listas de unidades, transacciones o valores
 switch (case1) {
     case 1:
-        var url1 = 'http://172.16.15.20/API.LovablePHP/ZLO0001P/ListUnidades1/?fechaFiltro=' + fechafiltro +
+        // Caso 1: Unidades
+        url1 = 'http://172.16.15.20/API.LovablePHP/ZLO0001P/ListUnidades1/?fechaFiltro=' + fechafiltro +
             '&compFiltro=' + compfiltro + '&usuario=' + usuario + '&case=' + case1 + '&vend=1';
-        var url2 = 'http://172.16.15.20/API.LovablePHP/ZLO0001P/ListUnidades2/?fechaFiltro=' + fechafiltro +
+        url2 = 'http://172.16.15.20/API.LovablePHP/ZLO0001P/ListUnidades2/?fechaFiltro=' + fechafiltro +
             '&compFiltro=' + compfiltro + '&usuario=' + usuario + '&case=' + case1 + '&vend=1';
-        var url3 = 'http://172.16.15.20/API.LovablePHP/ZLO0001P/ListUnidades3/?fechaFiltro=' + fechafiltro +
+        url3 = 'http://172.16.15.20/API.LovablePHP/ZLO0001P/ListUnidades3/?fechaFiltro=' + fechafiltro +
             '&compFiltro=' + compfiltro + '&usuario=' + usuario + '&case=' + case1 + '&vend=1';
         break;
     case 2:
-        var url1 = 'http://172.16.15.20/API.LovablePHP/ZLO0001P/ListTransacciones1/?fechaFiltro=' + fechafiltro +
+        // Caso 2: Transacciones
+        url1 = 'http://172.16.15.20/API.LovablePHP/ZLO0001P/ListTransacciones1/?fechaFiltro=' + fechafiltro +
             '&compFiltro=' + compfiltro + '&usuario=' + usuario + '&case=' + case1 + '&vend=1';
-        var url2 = 'http://172.16.15.20/API.LovablePHP/ZLO0001P/ListTransacciones2/?fechaFiltro=' + fechafiltro +
+        url2 = 'http://172.16.15.20/API.LovablePHP/ZLO0001P/ListTransacciones2/?fechaFiltro=' + fechafiltro +
             '&compFiltro=' + compfiltro + '&usuario=' + usuario + '&case=' + case1 + '&vend=1';
         break;
     default:
-        var url1 = 'http://172.16.15.20/API.LovablePHP/ZLO0001P/ListValores1/?fechaFiltro=' + fechafiltro +
+        // Caso por defecto: Valores
+        url1 = 'http://172.16.15.20/API.LovablePHP/ZLO0001P/ListValores1/?fechaFiltro=' + fechafiltro +
             '&compFiltro=' + compfiltro + '&usuario=' + usuario + '&case=' + case1 + '&vend=1';
-        var url2 = 'http://172.16.15.20/API.LovablePHP/ZLO0001P/ListValores2/?fechaFiltro=' + fechafiltro +
+        url2 = 'http://172.16.15.20/API.LovablePHP/ZLO0001P/ListValores2/?fechaFiltro=' + fechafiltro +
             '&compFiltro=' + compfiltro + '&usuario=' + usuario + '&case=' + case1 + '&vend=1';
-        var url3 = 'http://172.16.15.20/API.LovablePHP/ZLO0001P/ListValores3/?fechaFiltro=' + fechafiltro +
+        url3 = 'http://172.16.15.20/API.LovablePHP/ZLO0001P/ListValores3/?fechaFiltro=' + fechafiltro +
             '&compFiltro=' + compfiltro + '&usuario=' + usuario + '&case=' + case1 + '&vend=1';
         break;
 }
-console.log(url2);
+
+// Realizar las solicitudes AJAX para obtener las listas de unidades, transacciones o valores
 var responseDiayMes = ajaxRequest(url1);
 var responseAnual = ajaxRequest(url2);
+
+// Si el caso no es 2, realizar la solicitud AJAX para obtener la lista de promedios
 if (case1 != 2) {
     var responsePromedios = ajaxRequest(url3);
 }
@@ -49,10 +66,7 @@ $(document).ready(function() {
                 responseComarc.data[i]['COMDES'] + '</option>');
         }
     }
-
     //LLENADO DE TABLA
-    console.log(responseDiayMes);
-    console.log(responseAnual);
     if (responseDiayMes.code == 200 && responseAnual.code == 200) {
         for (let i = 0; i < responseDiayMes.data.length; i++) {
             let mon = '';
@@ -257,7 +271,6 @@ $(document).ready(function() {
             $("#myTableBody").append('</tr>');
         }
     }
-
     $("#myTable").DataTable({
         language: {
             url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json',
@@ -473,9 +486,6 @@ $(document).ready(function() {
     $("#myTable").append(
         '<caption style="caption-side: top" class="fw-bold text-black"><label class="ms-2 fw-bold">**Presione doble clic sobre la factura para ver detalles de la factura**</label></caption>'
     );
-
-
-
     if (<?php echo isset($_SESSION['opcion']) ? $_SESSION['opcion'] : "1"; ?> == 3) {
         $("#btnradio2").addClass("d-none");
         $("#btnnradio2").addClass("d-none");
@@ -486,7 +496,6 @@ $(document).ready(function() {
     if (<?php echo isset($_SESSION['filtro']) ? $_SESSION['filtro'] : "1"; ?> == 2) {
         $("#tab3").addClass("d-none");
     }
-
 
     //BOTONES
     var tab;
@@ -549,16 +558,21 @@ $(document).ready(function() {
 
 });
 
+
+// Cuando los elementos con id "fechapro", "comppro" y "productosCk" cambian, se envía el formulario "formFiltros".
 $("#fechapro, #comppro, #productosCk").change(function() {
     $("#formFiltros").submit();
 });
 
+// Función para formatear la fecha. Toma una fecha en formato YYYYMMDD y la convierte a YYYY-MM-DD.
 function formatoFecha(fecha) {
     let year = fecha.substring(0, 4);
     let month = fecha.substring(4, 6);
     let day = fecha.substring(6, 8);
     return year + "-" + month + "-" + day;
 }
+
+// Cuando se hace clic en el elemento con id "tab1", se realizan varias operaciones de adición y eliminación de clases.
 $("#tab1").click(function() {
     $("#btnradio2").removeClass("d-none");
     $("#btnnradio2").removeClass("d-none");
@@ -570,6 +584,8 @@ $("#tab1").click(function() {
     $("#thpro1, #thpro2, #thpro3, #thpro4, #thpro5, #thpro6").addClass("d-none");
     $("#tdpro1, #tdpro2, #tdpro3, #tdpro4, #tdpro5, #tdpro6").addClass("d-none");
 });
+
+// Cuando se hace clic en el elemento con id "tab2", se realizan varias operaciones de adición y eliminación de clases.
 $("#tab2").click(function() {
     $("#btnradio2").removeClass("d-none");
     $("#btnnradio2").removeClass("d-none");
@@ -581,6 +597,8 @@ $("#tab2").click(function() {
     $("#thpro1, #thpro2, #thpro3, #thpro4, #thpro5, #thpro6").addClass("d-none");
     $("#tdpro1, #tdpro2, #tdpro3, #tdpro4, #tdpro5, #tdpro6").addClass("d-none");
 });
+
+// Cuando se hace clic en el elemento con id "tab3", se realizan varias operaciones de adición y eliminación de clases.
 $("#tab3").click(function() {
     $("#btnradio2").addClass("d-none");
     $("#btnnradio2").addClass("d-none");
