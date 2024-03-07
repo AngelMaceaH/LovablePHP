@@ -55,8 +55,7 @@
                                 <input type="text" class="form-control d-none" id="tipDocs">
                             </div>
                             <div class="col-12 mt-3" id="searchBoxes">
-                                <form action="#" id="header-search-people" class="form-area" novalidate="novalidate"
-                                    autocomplete="off">
+                                <form action="#" id="header-search-people" class="form-area" novalidate="novalidate">
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <div class="table-responsive">
@@ -112,7 +111,7 @@
     var inputs = "";
     var cor = "";
     var tipoWeb = "";
-    var usuario ="";
+    var usuario = "";
     $(document).ready(function() {
         var anoing = "<?php echo isset($_SESSION['ANOING'])? $_SESSION['ANOING']: ''; ?>";
         var numemp = "<?php echo isset($_SESSION['NUMEMP'])? $_SESSION['NUMEMP']: ''; ?>";
@@ -215,7 +214,7 @@
                     departamentos.append(`<option value="` + responseDepas.data[i].SECDEP + `-` + responseDepas
                         .data[i].SECCOD + `">` + responseDepas.data[i].SECDES + `</option>`);
                 }
-            }else{
+            } else {
                 $("#isGerencia").append(`<div class="col-12"> <h6 class="mb-3 text-start">Tipo de documento</h6>
                                         <select class="form-select mt-1" id="tiposDoc">
                                            <option value="A">TODOS LOS DOCUMENTOS</option>
@@ -227,7 +226,7 @@
             var title = $(this).text();
             $(this).html(title +
                 '<br /><input type="text"  oninput="this.value = this.value.toUpperCase()" class="form-control mt-2"/>'
-                );
+            );
         });
         var table = $('#tbProveedores').DataTable({
             language: {
@@ -361,7 +360,7 @@
     });
 
     function tiposChange() {
-        codigo="";
+        codigo = "";
         var camposLength = 0;
         var tipo = $("#tiposDoc").val();
         if (tipo != null) {
@@ -391,7 +390,7 @@
                 if (camposDes[i].toLowerCase() == "proveedor") {
                     // htmlAppend+='<span onclick="showProveedores()"><input class="form-select inputsDoc fn" type="text" id="'+responseCampos.data[0]['TIPDOC']+i+'" required readonly /></span>';
                     htmlAppend +=
-                        '<input class="inputsDoc fn" style="font-size:16px;"  type="text" autocomplete="off" data-placeholder-focus="false" required id="' +
+                        '<input class="inputsDoc fn" style="font-size:16px;"  type="text" data-placeholder-focus="false" required id="' +
                         responseCampos.data[0]['TIPDOC'] + i +
                         '" onclick="showProveedores()"  oninput="noTextInput(this)"/><button type="button" class="btn p-0 m-0 fs-5" onclick="vaciarInput()"><i class="fa-solid fa-xmark fs-6 "></i></button>';
                     htmlAppend +=
@@ -400,7 +399,7 @@
                 } else if (camposDes[i].toLowerCase() == "tienda") {
                     // htmlAppend+='<span onclick="showProveedores()"><input class="form-select inputsDoc fn" type="text" id="'+responseCampos.data[0]['TIPDOC']+i+'" required readonly /></span>';
                     htmlAppend +=
-                        '<input class="inputsDoc fn" style="font-size:16px;"  type="text" autocomplete="off" data-placeholder-focus="false" required id="' +
+                        '<input class="inputsDoc fn" style="font-size:16px;"  type="text"  data-placeholder-focus="false" required id="' +
                         responseCampos.data[0]['TIPDOC'] + i + '" onclick="showTiendas(`' + responseCampos.data[0][
                             'TIPDOC'
                         ] + i +
@@ -410,24 +409,26 @@
                 } else if (camposDes[i].toLowerCase() == "compañia") {
                     // htmlAppend+='<span onclick="showProveedores()"><input class="form-select inputsDoc fn" type="text" id="'+responseCampos.data[0]['TIPDOC']+i+'" required readonly /></span>';
                     htmlAppend +=
-                        '<input class="inputsDoc fn" style="font-size:16px;"  type="text" autocomplete="off" data-placeholder-focus="false" required id="' +
-                        responseCampos.data[0]['TIPDOC'] + i + '" onclick="showCompanias(`' + responseCampos.data[0]['TIPDOC'] + i +
-                    '`)"  oninput="noTextInput5(this)"/><button type="button" class="btn p-0 m-0 fs-5" onclick="vaciarInput5()"><i class="fa-solid fa-xmark fs-6"></i></button>';
+                        '<input class="inputsDoc fn" style="font-size:16px;"  type="text"  data-placeholder-focus="false" required id="' +
+                        responseCampos.data[0]['TIPDOC'] + i + '" onclick="showCompanias(`' + responseCampos.data[0][
+                            'TIPDOC'
+                        ] + i +
+                        '`)"  oninput="noTextInput5(this)"/><button type="button" class="btn p-0 m-0 fs-5" onclick="vaciarInput5()"><i class="fa-solid fa-xmark fs-6"></i></button>';
                     htmlAppend +=
                         '<input class="d-none" id="originalCompania" /> <input class="d-none" id="codigoCompania" />'
                 } else if (camposDes[i] == "Fecha de documento") {
                     htmlAppend +=
-                        '<input class="inputsDoc fn" style="font-size:14px;"  type="text" autocomplete="off" data-placeholder-focus="false" required id="FechasDocs" onclick="showRange()"  oninput="noTextInput2(this)"/><button type="button" class="btn p-0 m-0 fs-5" onclick="vaciarInput2()"><i class="fa-solid fa-xmark fs-6"></i></button>';
+                        '<input class="inputsDoc fn" style="font-size:14px;"  type="text"  data-placeholder-focus="false" required id="FechasDocs" onclick="showRange()"  oninput="noTextInput2(this)"/><button type="button" class="btn p-0 m-0 fs-5" onclick="vaciarInput2()"><i class="fa-solid fa-xmark fs-6"></i></button>';
                     htmlAppend +=
                         '<input class="d-none" id="originalRangeDocumento" /> <input class="d-none" id="valueTipo" />'
                 } else if (camposDes[i] == "Fecha de digitalización") {
                     htmlAppend +=
-                        '<input class="inputsDoc fn" style="font-size:14px;"  type="text" autocomplete="off" data-placeholder-focus="false" required id="FechasGrabs" onclick="showRange2()"  oninput="noTextInput4(this)"/><button type="button" class="btn p-0 m-0 fs-5" onclick="vaciarInput4()"><i class="fa-solid fa-xmark fs-6"></i></button>';
+                        '<input class="inputsDoc fn" style="font-size:14px;"  type="text"  data-placeholder-focus="false" required id="FechasGrabs" onclick="showRange2()"  oninput="noTextInput4(this)"/><button type="button" class="btn p-0 m-0 fs-5" onclick="vaciarInput4()"><i class="fa-solid fa-xmark fs-6"></i></button>';
                     htmlAppend += '<input class="d-none" id="originalRangeGrabado" /> <input class="d-none" />'
                 } else {
 
                     htmlAppend +=
-                        '<input class="inputsDoc fn"  type="text" autocomplete="off" data-placeholder-focus="false" required id="' +
+                        '<input class="inputsDoc fn"  type="text"  data-placeholder-focus="false" required id="' +
                         responseCampos.data[0]['TIPDOC'] + i + '"  />'
                 }
 
@@ -840,7 +841,7 @@
         var response = ajaxRequest(urlList);
         const body = $("#myTableBody");
         if (response.code == 200) {
-           // $("#cbbDepartamentos").val(response.data[0]['CODDEP'] + '-' + response.data[0]['CODSEC']);
+            // $("#cbbDepartamentos").val(response.data[0]['CODDEP'] + '-' + response.data[0]['CODSEC']);
             let tr;
             let limit = Math.min(response.data.length, 100);
             //let limit=response.data.length;
@@ -1159,7 +1160,8 @@
             case 'png':
             case 'jpg':
             case 'jpeg':
-                $("#downloadFrame").append('<img src="http://172.16.15.20' + urldoc + '"  style="width:200px;" alt="">');
+                $("#downloadFrame").append('<img src="http://172.16.15.20' + urldoc +
+                '"  style="width:200px;" alt="">');
                 break;
             case 'xlsx':
                 $("#downloadFrame").append('<img src="../../assets/img/icons/excel.png" style="width:150px;" alt="">');
@@ -1217,36 +1219,39 @@
         $("#AuthDoc").empty();
         var permisos = "<?php echo isset($_SESSION['PERESP'])? $_SESSION['PERESP']: ''; ?>";
         if (permisos === 'S') {
-            var urlPermisos="http://172.16.15.20/API.LovablePHP/ZLO0015P/GetPermiso/?user="+ usuario +"";
+            var urlPermisos = "http://172.16.15.20/API.LovablePHP/ZLO0015P/GetPermiso/?user=" + usuario + "";
             var responsePermisos = ajaxRequest(urlPermisos);
-            if (responsePermisos.code==200) {
-                var data=responsePermisos.data;
+            if (responsePermisos.code == 200) {
+                var data = responsePermisos.data;
                 for (let i = 0; i < data.length; i++) {
-                   if (data[i]['ACCION']=='E') {
-                    $("#trashDoc").append(
-                        ` <button type="button" class="btn btn-danger m-0 mt-2 me-3  text-white" onclick="deleteCard('` +
-                        nomcard +
-                        `','` + usugra + `','` + fecgra + `','` + horgra + `','` + extdoc + `','` + urldoc +
-                        `')" ><i class="fa-solid fa-trash-can fw-bold"></i></button>`);
-                   }else{
-                    if (data[i]['ACCION']=='A') {
-                        var urlAuth = "http://172.16.15.20/API.LovablePHP/ZLO0016P/ISAuth/?nomdoc=" + nomcard + "&urldoc=" + urldoc+"";
-                        var responseAuth=ajaxRequest(urlAuth);
-                        if (responseAuth.code==200) {
+                    if (data[i]['ACCION'] == 'E') {
+                        $("#trashDoc").append(
+                            ` <button type="button" class="btn btn-danger m-0 mt-2 me-3  text-white" onclick="deleteCard('` +
+                            nomcard +
+                            `','` + usugra + `','` + fecgra + `','` + horgra + `','` + extdoc + `','` + urldoc +
+                            `')" ><i class="fa-solid fa-trash-can fw-bold"></i></button>`);
+                    } else {
+                        if (data[i]['ACCION'] == 'A') {
+                            var urlAuth = "http://172.16.15.20/API.LovablePHP/ZLO0016P/ISAuth/?nomdoc=" + nomcard +
+                                "&urldoc=" + urldoc + "";
+                            var responseAuth = ajaxRequest(urlAuth);
+                            if (responseAuth.code == 200) {
                                 $("#AuthDiv").removeClass('d-none');
                                 $("#userAuth").text(responseAuth.data[0]['USUREV']);
                                 $("#fechaAuth").text(formatFecha(responseAuth.data[0]['FECGRA']));
                                 $("#horaAuth").text(formatTime(responseAuth.data[0]['HORGRA']));
-                        }else{
-                            $("#AuthDiv").addClass('d-none');
-                            $("#AuthDoc").append(
-                            ` <button type="button" class="btn btn-success text-white mt-1 fw-bold" style="width:100%;"  onclick="authCard('` +nomcard +
-                            `','` + usuario + `','` + fecgra + `','` + horgra + `','` + extdoc + `','` + urldoc +
-                            `')">
+                            } else {
+                                $("#AuthDiv").addClass('d-none');
+                                $("#AuthDoc").append(
+                                    ` <button type="button" class="btn btn-success text-white mt-1 fw-bold" style="width:100%;"  onclick="authCard('` +
+                                    nomcard +
+                                    `','` + usuario + `','` + fecgra + `','` + horgra + `','` + extdoc + `','` +
+                                    urldoc +
+                                    `')">
                             <i class="fa-solid fa-clipboard-check fw-bold fs-5"></i> Autorizar documento </button>`);
+                            }
                         }
                     }
-                   }
                 }
             }
 
@@ -1347,10 +1352,12 @@
         }
         $("#docInfo").modal('hide');
     }
+
     function authCard(nomcard, usugra, fecgra, horgra, extdoc, urldoc) {
-        fecgra=currentDate();
-        horgra=currentTime();
-        var urlAuth = "http://172.16.15.20/API.LovablePHP/ZLO0016P/Auth/?nomdoc=" + nomcard + "&urldoc=" + urldoc + "&user="+ usugra +"&fecgra="+ fecgra +"&horgra="+ horgra+"";
+        fecgra = currentDate();
+        horgra = currentTime();
+        var urlAuth = "http://172.16.15.20/API.LovablePHP/ZLO0016P/Auth/?nomdoc=" + nomcard + "&urldoc=" + urldoc +
+            "&user=" + usugra + "&fecgra=" + fecgra + "&horgra=" + horgra + "";
         var response = ajaxRequest(urlAuth);
         if (response.code == 200) {
             chargeTable();
@@ -1375,6 +1382,7 @@
         const fechaActual = año.toString() + mes + dia;
         return fechaActual;
     }
+
     function formatFecha(inputDate) {
         var year = inputDate.substring(0, 4);
         var month = inputDate.substring(4, 6);
@@ -1383,6 +1391,7 @@
 
         return formattedDate;
     }
+
     function formatFechaInput(inputDate) {
         var year = inputDate.substring(10, 6);
         var month = inputDate.substring(3, 5);
@@ -1391,6 +1400,7 @@
 
         return formattedDate;
     }
+
     function formatTime(inputTime) {
         inputTime = (inputTime.length < 6 ? "0" + inputTime : inputTime);
         var hour = inputTime.substring(0, 2);
@@ -1449,23 +1459,23 @@
 
                                 </div>
                                 <div id="AuthDiv" class="col-12 rounded mt-2 bg-success d-none">
-                                      <div class="row p-2 text-center text-white">
+                                    <div class="row p-2 text-center text-white">
                                         <div class="col-12">
-                                             <h5 class="mt-2 mb-3 fw-bold">Documento autorizado</h5>
+                                            <h5 class="mt-2 mb-3 fw-bold">Documento autorizado</h5>
                                         </div>
                                         <div class="col-4">
-                                             <label>Autorizado por:</label>
-                                             <span id="userAuth"></span>
-                                             </div>
-                                             <div class="col-4">
-                                           <label>Fecha:</label>
-                                             <span id="fechaAuth"></span>
-                                            </div>
-                                         <div class="col-4">
+                                            <label>Autorizado por:</label>
+                                            <span id="userAuth"></span>
+                                        </div>
+                                        <div class="col-4">
+                                            <label>Fecha:</label>
+                                            <span id="fechaAuth"></span>
+                                        </div>
+                                        <div class="col-4">
                                             <label>Hora:</label>
-                                             <span  id="horaAuth"></span>
-                                       </div>
-                                     </div>
+                                            <span id="horaAuth"></span>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="col-12">
                                     <hr>

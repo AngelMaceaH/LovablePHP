@@ -186,8 +186,10 @@
                                         <th style="width:8%"
                                             class=" border border-dark bg-secondary border-bottom-0 border-top-0 boder-end-0 ">
                                             Mes</th>
-                                        <th style="width:24%" class=" border border-dark bgSky">Unidades Compradas 12M</th>
-                                        <th style="width:24%" class=" border border-dark bgGold">Unidades Vendidas 12M</th>
+                                        <th style="width:24%" class=" border border-dark bgSky">Unidades Compradas 12M
+                                        </th>
+                                        <th style="width:24%" class=" border border-dark bgGold">Unidades Vendidas 12M
+                                        </th>
                                         <th style="width:24%" class=" border border-dark bgGreen">Variación</th>
                                         <th style="width:24%" class=" border border-dark bgSea">Unidades Existencia</th>
                                     </tr>
@@ -209,8 +211,10 @@
                                         <th style="width:8%"
                                             class=" border border-dark bg-secondary border-bottom-0 border-top-0 boder-end-0 ">
                                             Mes</th>
-                                        <th style="width:24%" class=" border border-dark bgSky">Unidades Compradas 12M</th>
-                                        <th style="width:24%" class=" border border-dark bgGold">Unidades Vendidas 12M</th>
+                                        <th style="width:24%" class=" border border-dark bgSky">Unidades Compradas 12M
+                                        </th>
+                                        <th style="width:24%" class=" border border-dark bgGold">Unidades Vendidas 12M
+                                        </th>
                                         <th style="width:24%" class=" border border-dark bgGreen">Variación</th>
                                         <th style="width:24%" class=" border border-dark bgSea">Unidades Existencia</th>
                                     </tr>
@@ -259,8 +263,8 @@
                                         <th style="width:8%"
                                             class=" border border-dark bg-secondary border-bottom-0 border-top-0 boder-end-0 ">
                                             Mes</th>
-                                            <th style="width:24%" class=" border border-dark bgSky">Prom. Vta 12M</th>
-                                            <th style="width:24%" class=" border border-dark bgGold">Prom. Vta 6M</th>
+                                        <th style="width:24%" class=" border border-dark bgSky">Prom. Vta 12M</th>
+                                        <th style="width:24%" class=" border border-dark bgGold">Prom. Vta 6M</th>
                                     </tr>
                                 </thead>
                                 <tbody id="tableInventarioDetalle5">
@@ -278,9 +282,10 @@
                                     </tr>
                                     <tr>
                                         <th style="width:8%"
-                                            class=" border border-dark bg-secondary border-bottom-0 border-top-0 boder-end-0 ">Mes</th>
-                                            <th style="width:24%" class=" border border-dark bgSky">Prom. Vta 12M</th>
-                                            <th style="width:24%" class=" border border-dark bgGold">Prom. Vta 6M</th>
+                                            class=" border border-dark bg-secondary border-bottom-0 border-top-0 boder-end-0 ">
+                                            Mes</th>
+                                        <th style="width:24%" class=" border border-dark bgSky">Prom. Vta 12M</th>
+                                        <th style="width:24%" class=" border border-dark bgGold">Prom. Vta 6M</th>
                                     </tr>
                                 </thead>
                                 <tbody id="tableInventarioDetalle6">
@@ -304,35 +309,19 @@
     <script src="https://code.highcharts.com/modules/export-data.js"></script>
     <script src="https://code.highcharts.com/modules/accessibility.js"></script>
     <script>
-    let responseDataA1 = [];
-    let responseDataA2 = [];
+    let responseDataA1 = [];let responseDataA2 = [];
 
-    let responseDataA3 = [];
-    let responseDataA4 = [];
+    let responseDataA3 = [];let responseDataA4 = [];
 
-    let linePRV12M1 = [];
-    let linePVR06M1 = [];
-    let lineMIN12M1 = [];
-    let lineMIN06M1 = [];
+    let linePRV12M1 = [];let linePVR06M1 = [];let lineMIN12M1 = [];let lineMIN06M1 = [];
 
-    let linePRV12M2 = [];
-    let linePVR06M2 = [];
-    let lineMIN12M2 = [];
-    let lineMIN06M2 = [];
+    let linePRV12M2 = [];let linePVR06M2 = [];let lineMIN12M2 = [];let lineMIN06M2 = [];
 
-    let lineUNICOM1 = [];
-    let lineUNIVEN1 = [];
-    let lineUNIEXI1 = [];
-    let lineVaria1=[];
+    let lineUNICOM1 = [];let lineUNIVEN1 = [];let lineUNIEXI1 = [];let lineVaria1 = [];
 
-    let lineUNICOM2 = [];
-    let lineUNIVEN2 = [];
-    let lineUNIEXI2 = [];
-    let lineVaria2=[];
+    let lineUNICOM2 = [];let lineUNIVEN2 = [];let lineUNIEXI2 = [];let lineVaria2 = [];
 
-    let chart1 = null;
-    let chart2 = null;
-    let chart3 = null;
+    let chart1 = null;let chart2 = null;let chart3 = null;
     window.addEventListener('DOMContentLoaded', (event) => {
         const cbbAgrup = document.getElementById('cbbAgrup');
         let usuario = '<?php echo $_SESSION["CODUSU"];?>';
@@ -368,8 +357,8 @@
             chargeTable(valAno, valAgrup);
             chargeTable2(valAno2, valAgrup);
             setTimeout(() => {
-              chargeTable3(valAno, valAgrup);
-              chargeTable4(valAno2, valAgrup);
+                chargeTable3(valAno, valAgrup);
+                chargeTable4(valAno2, valAgrup);
                 chargeGrafica();
                 chargeGrafica2();
                 chargeGrafica3();
@@ -385,8 +374,8 @@
             chargeTable3(valAno, valAgrup);
             chargeTable4(valAno2, valAgrup);
             setTimeout(() => {
-              chargeTable5(valAno, valAgrup);
-              chargeTable6(valAno2, valAgrup);
+                chargeTable5(valAno, valAgrup);
+                chargeTable6(valAno2, valAgrup);
                 chargeGrafica();
                 chargeGrafica2();
                 chargeGrafica3();
@@ -672,7 +661,6 @@
             });
         }, 1500);
     });
-    //MESES
     function chargeTable(valAno, valAgrup) {
         //AÑO 1
         linePRV12M1 = [];
@@ -704,7 +692,8 @@
                     });
                 } else {
                     const row = document.createElement('tr');
-                    row.innerHTML = `<td colspan="5"><span style="font-size:16px; margin:50px;">No hay datos</span></td> `;
+                    row.innerHTML =
+                        `<td colspan="5"><span style="font-size:16px; margin:50px;">No hay datos</span></td> `;
                     tbDetalle.appendChild(row);
                 }
             })
@@ -746,7 +735,8 @@
                     });
                 } else {
                     const row = document.createElement('tr');
-                    row.innerHTML = `<td colspan="5"><span style="font-size:16px; margin:50px;">No hay datos</span></td>`;
+                    row.innerHTML =
+                        `<td colspan="5"><span style="font-size:16px; margin:50px;">No hay datos</span></td>`;
                     tbDetalle.appendChild(row);
                 }
             })
@@ -757,7 +747,6 @@
                 tbDetalle.appendChild(row);
             });
     }
-    //UNIDADES
     function chargeTable3(valAno, valAgrup) {
         //AÑO 1
         lineUNICOM1 = [];
@@ -776,15 +765,20 @@
                     data.data.forEach((item) => {
                         const row = document.createElement('tr');
                         row.innerHTML = `<td class="bg-light border border-dark">${item.MESDES}</td>`;
-                        row.innerHTML+= `<td class="bgSkySoft border border-dark">${parseFloat(item.UNICOM) === 0 ? '‎' : parseFloat(item.UNICOM).toLocaleString('es-419', {minimumFractionDigits: 0, maximumFractionDigits: 0})}</td>`;
-                        row.innerHTML+= `<td class="bgGoldSoft border border-dark">${parseFloat(item.UNIVEN) === 0 ? '‎' : parseFloat(item.UNIVEN).toLocaleString('es-419', {minimumFractionDigits: 0, maximumFractionDigits: 0})}</td>`;
+                        row.innerHTML +=
+                            `<td class="bgSkySoft border border-dark">${parseFloat(item.UNICOM) === 0 ? '‎' : parseFloat(item.UNICOM).toLocaleString('es-419', {minimumFractionDigits: 0, maximumFractionDigits: 0})}</td>`;
+                        row.innerHTML +=
+                            `<td class="bgGoldSoft border border-dark">${parseFloat(item.UNIVEN) === 0 ? '‎' : parseFloat(item.UNIVEN).toLocaleString('es-419', {minimumFractionDigits: 0, maximumFractionDigits: 0})}</td>`;
                         let variacion = parseFloat(item.UNIVEN) - parseFloat(item.UNICOM);
-                        if (variacion>0) {
-                          row.innerHTML+= `<td class="bgGreenSoft text-success fw-bold border border-dark">${parseFloat(variacion) === 0 ? '‎' : parseFloat(variacion).toLocaleString('es-419', {minimumFractionDigits: 0, maximumFractionDigits: 0})}</td>`;
-                        }else{
-                          row.innerHTML+= `<td class="bgGreenSoft text-danger fw-bold border border-dark">${parseFloat(variacion) === 0 ? '‎' : parseFloat(variacion).toLocaleString('es-419', {minimumFractionDigits: 0, maximumFractionDigits: 0})}</td>`;
+                        if (variacion > 0) {
+                            row.innerHTML +=
+                                `<td class="bgGreenSoft text-success fw-bold border border-dark">${parseFloat(variacion) === 0 ? '‎' : parseFloat(variacion).toLocaleString('es-419', {minimumFractionDigits: 0, maximumFractionDigits: 0})}</td>`;
+                        } else {
+                            row.innerHTML +=
+                                `<td class="bgGreenSoft text-danger fw-bold border border-dark">${parseFloat(variacion) === 0 ? '‎' : parseFloat(variacion).toLocaleString('es-419', {minimumFractionDigits: 0, maximumFractionDigits: 0})}</td>`;
                         }
-                         row.innerHTML+= `<td class="bgSeaSoft border border-dark">${parseFloat(item.UNIEXI) === 0 ? '‎' : parseFloat(item.UNIEXI).toLocaleString('es-419', {minimumFractionDigits: 0, maximumFractionDigits: 0})}</td>`;
+                        row.innerHTML +=
+                            `<td class="bgSeaSoft border border-dark">${parseFloat(item.UNIEXI) === 0 ? '‎' : parseFloat(item.UNIEXI).toLocaleString('es-419', {minimumFractionDigits: 0, maximumFractionDigits: 0})}</td>`;
                         lineUNICOM1.push(parseFloat(item.UNICOM));
                         lineUNIVEN1.push(parseFloat(item.UNIVEN));
                         lineUNIEXI1.push(parseFloat(item.UNIEXI));
@@ -793,7 +787,8 @@
                     });
                 } else {
                     const row = document.createElement('tr');
-                    row.innerHTML = `<td colspan="5"><span style="font-size:16px; margin:50px;">No hay datos</span></td> `;
+                    row.innerHTML =
+                        `<td colspan="5"><span style="font-size:16px; margin:50px;">No hay datos</span></td> `;
                     tbDetalle.appendChild(row);
                 }
             })
@@ -820,17 +815,22 @@
                 if (data.code == 200) {
                     responseDataA3 = [...data.data];
                     data.data.forEach((item) => {
-                      const row = document.createElement('tr');
+                        const row = document.createElement('tr');
                         row.innerHTML = `<td class="bg-light border border-dark">${item.MESDES}</td>`;
-                        row.innerHTML+= `<td class="bgSkySoft border border-dark">${parseFloat(item.UNICOM) === 0 ? '‎' : parseFloat(item.UNICOM).toLocaleString('es-419', {minimumFractionDigits: 0, maximumFractionDigits: 0})}</td>`;
-                        row.innerHTML+= `<td class="bgGoldSoft border border-dark">${parseFloat(item.UNIVEN) === 0 ? '‎' : parseFloat(item.UNIVEN).toLocaleString('es-419', {minimumFractionDigits: 0, maximumFractionDigits: 0})}</td>`;
+                        row.innerHTML +=
+                            `<td class="bgSkySoft border border-dark">${parseFloat(item.UNICOM) === 0 ? '‎' : parseFloat(item.UNICOM).toLocaleString('es-419', {minimumFractionDigits: 0, maximumFractionDigits: 0})}</td>`;
+                        row.innerHTML +=
+                            `<td class="bgGoldSoft border border-dark">${parseFloat(item.UNIVEN) === 0 ? '‎' : parseFloat(item.UNIVEN).toLocaleString('es-419', {minimumFractionDigits: 0, maximumFractionDigits: 0})}</td>`;
                         let variacion = parseFloat(item.UNIVEN) - parseFloat(item.UNICOM);
-                        if (variacion>0) {
-                          row.innerHTML+= `<td class="bgGreenSoft text-success fw-bold border border-dark">${parseFloat(variacion) === 0 ? '‎' : parseFloat(variacion).toLocaleString('es-419', {minimumFractionDigits: 0, maximumFractionDigits: 0})}</td>`;
-                        }else{
-                          row.innerHTML+= `<td class="bgGreenSoft text-danger fw-bold border border-dark">${parseFloat(variacion) === 0 ? '‎' : parseFloat(variacion).toLocaleString('es-419', {minimumFractionDigits: 0, maximumFractionDigits: 0})}</td>`;
+                        if (variacion > 0) {
+                            row.innerHTML +=
+                                `<td class="bgGreenSoft text-success fw-bold border border-dark">${parseFloat(variacion) === 0 ? '‎' : parseFloat(variacion).toLocaleString('es-419', {minimumFractionDigits: 0, maximumFractionDigits: 0})}</td>`;
+                        } else {
+                            row.innerHTML +=
+                                `<td class="bgGreenSoft text-danger fw-bold border border-dark">${parseFloat(variacion) === 0 ? '‎' : parseFloat(variacion).toLocaleString('es-419', {minimumFractionDigits: 0, maximumFractionDigits: 0})}</td>`;
                         }
-                         row.innerHTML+= `<td class="bgSeaSoft border border-dark">${parseFloat(item.UNIEXI) === 0 ? '‎' : parseFloat(item.UNIEXI).toLocaleString('es-419', {minimumFractionDigits: 0, maximumFractionDigits: 0})}</td>`;
+                        row.innerHTML +=
+                            `<td class="bgSeaSoft border border-dark">${parseFloat(item.UNIEXI) === 0 ? '‎' : parseFloat(item.UNIEXI).toLocaleString('es-419', {minimumFractionDigits: 0, maximumFractionDigits: 0})}</td>`;
                         lineUNICOM2.push(parseFloat(item.UNICOM));
                         lineUNIVEN2.push(parseFloat(item.UNIVEN));
                         lineUNIEXI2.push(parseFloat(item.UNIEXI));
@@ -839,7 +839,8 @@
                     });
                 } else {
                     const row = document.createElement('tr');
-                    row.innerHTML = `<td colspan="5"><span style="font-size:16px; margin:50px;">No hay datos</span></td> `;
+                    row.innerHTML =
+                        `<td colspan="5"><span style="font-size:16px; margin:50px;">No hay datos</span></td> `;
                     tbDetalle.appendChild(row);
                 }
             })
@@ -850,7 +851,6 @@
                 tbDetalle.appendChild(row);
             });
     }
-    //PROMEDIOS
     function chargeTable5(valAno, valAgrup) {
         let lblAno1 = document.getElementById('lblano5');
         lblAno1.innerHTML = 'Año ' + valAno;
@@ -858,19 +858,19 @@
         tbDetalle.innerHTML = '';
         if (responseDataA1.length > 0) {
             responseDataA1.forEach((item) => {
-                        const row = document.createElement('tr');
-                        row.innerHTML = `
+                const row = document.createElement('tr');
+                row.innerHTML = `
                           <td class="bg-light border border-dark">${item.MESDES}</td>
                           <td class="bgSkySoft border border-dark">${parseFloat(item.PRV12M) === 0 ? '‎' : parseFloat(item.PRV12M).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
                           <td class="bgGoldSoft border border-dark">${parseFloat(item.PRV06M) === 0 ? '‎' : parseFloat(item.PRV06M).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
                           `;
-                        tbDetalle.appendChild(row);
-                    });
-                } else {
-                    const row = document.createElement('tr');
-                    row.innerHTML = `<td colspan="5"><span style="font-size:16px; margin:50px;">No hay datos</span></td> `;
-                    tbDetalle.appendChild(row);
-                }
+                tbDetalle.appendChild(row);
+            });
+        } else {
+            const row = document.createElement('tr');
+            row.innerHTML = `<td colspan="5"><span style="font-size:16px; margin:50px;">No hay datos</span></td> `;
+            tbDetalle.appendChild(row);
+        }
     }
     function chargeTable6(valAno, valAgrup) {
         let lblAno1 = document.getElementById('lblano6');
@@ -878,25 +878,22 @@
         const tbDetalle = document.getElementById('tableInventarioDetalle6');
         tbDetalle.innerHTML = '';
 
-                if (responseDataA2.length > 0) {
-                    responseDataA2.forEach((item) => {
-                        const row = document.createElement('tr');
-                        row.innerHTML = `
+        if (responseDataA2.length > 0) {
+            responseDataA2.forEach((item) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
                           <td class="bg-light border border-dark">${item.MESDES}</td>
                           <td class="bgSkySoft border border-dark">${parseFloat(item.PRV12M) === 0 ? '‎' : parseFloat(item.PRV12M).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
                           <td class="bgGoldSoft border border-dark">${parseFloat(item.PRV06M) === 0 ? '‎' : parseFloat(item.PRV06M).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
                           `;
-                        tbDetalle.appendChild(row);
-                    });
-                } else {
-                    const row = document.createElement('tr');
-                    row.innerHTML = `<td colspan="5"><span style="font-size:16px; margin:50px;">No hay datos</span></td>`;
-                    tbDetalle.appendChild(row);
-                }
+                tbDetalle.appendChild(row);
+            });
+        } else {
+            const row = document.createElement('tr');
+            row.innerHTML = `<td colspan="5"><span style="font-size:16px; margin:50px;">No hay datos</span></td>`;
+            tbDetalle.appendChild(row);
         }
-
-
-
+    }
     function chargeGrafica() {
         const cbbGrafica = document.getElementById('selectGrafica');
         let valGrafica = cbbGrafica.value;

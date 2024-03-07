@@ -96,7 +96,9 @@
     var countInputs = "";
     var boolIsChange=0;
     var searchval=0; var proveedorval=0;
+    var usuario = "";
     $(document).ready(function() {
+        usuario = '<?php echo $_SESSION["CODUSU"];?>';
 
     $("#toggle-menu-btn").on('click', function() {
         $('#my-dropdown-menu').toggleClass('show');

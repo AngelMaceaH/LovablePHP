@@ -164,58 +164,65 @@
         $('#fechaDigit').text(currentDate);
         $('#fechaDoc').val(currentDate);
 
-            $('#tbProveedores thead th').each(function() {
-                var title = $(this).text();
-                $(this).html(title + '<br /><input type="text"  oninput="this.value = this.value.toUpperCase()" class="form-control mt-2"/>');
-            });
-            var table = $('#tbProveedores').DataTable({
-                language: {
-                    url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json',
+        $('#tbProveedores thead th').each(function() {
+            var title = $(this).text();
+            $(this).html(title +
+                '<br /><input type="text"  oninput="this.value = this.value.toUpperCase()" class="form-control mt-2"/>'
+                );
+        });
+        var table = $('#tbProveedores').DataTable({
+            language: {
+                url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json',
+            },
+            "pageLength": 10,
+            "processing": true,
+            "serverSide": true,
+            "ajax": {
+                "url": "http://172.16.15.20/API.LovablePHP/ZLO0015P/ListProveedoresAsync/",
+                "type": "POST",
+                "complete": function(xhr) {
+                    //console.log(xhr.responseJSON);
                 },
-                "pageLength": 10,
-                "processing": true,
-                "serverSide": true,
-                "ajax": {
-                    "url": "http://172.16.15.20/API.LovablePHP/ZLO0015P/ListProveedoresAsync/",
-                    "type": "POST",
-                    "complete": function (xhr) {
-                            //console.log(xhr.responseJSON);
-                        },
-                        error: function (xhr, status, error) {
-                            console.log(error);
-                            requestError = true;
-                        }
-                },
-                "ordering": false,
-                "dom": 'rtip',
-                "columns": [
-                    { "data": "ARCCIU",
-                        render: function(data) {
-                          return data.padStart(2, '0');
-                      } },
-                    { "data": "ARCCO1",
-                        render: function(data) {
-                          return data.padStart(4, '0');
-                      }  },
-                    { "data": "ARCNOM" },
-                ],
-                "drawCallback": function() {
-                    $('#tbProveedores tbody tr').on('click', function() {
-                        sendProveedor(this);
-                    });
+                error: function(xhr, status, error) {
+                    console.log(error);
+                    requestError = true;
                 }
-            });
-            $('#tbProveedores thead input').on('keyup', function() {
-                var columnIndex = $(this).parent().index();
-                var inputValue = $(this).val().trim();
+            },
+            "ordering": false,
+            "dom": 'rtip',
+            "columns": [{
+                    "data": "ARCCIU",
+                    render: function(data) {
+                        return data.padStart(2, '0');
+                    }
+                },
+                {
+                    "data": "ARCCO1",
+                    render: function(data) {
+                        return data.padStart(4, '0');
+                    }
+                },
+                {
+                    "data": "ARCNOM"
+                },
+            ],
+            "drawCallback": function() {
+                $('#tbProveedores tbody tr').on('click', function() {
+                    sendProveedor(this);
+                });
+            }
+        });
+        $('#tbProveedores thead input').on('keyup', function() {
+            var columnIndex = $(this).parent().index();
+            var inputValue = $(this).val().trim();
 
-                if (table.column(columnIndex).search() !== inputValue) {
-                    table
-                        .column(columnIndex)
-                        .search(inputValue)
-                        .draw();
-                }
-            });
+            if (table.column(columnIndex).search() !== inputValue) {
+                table
+                    .column(columnIndex)
+                    .search(inputValue)
+                    .draw();
+            }
+        });
 
         $("#tiposDoc").on('change', function() {
             const inputs = $("#inputs");
@@ -330,190 +337,236 @@
     }
     </script>
     <script type="module">
-    import {
-        Uppy,
-        Dashboard
-    } from "../../assets/vendors/uppyjs/uppy.min.js"
-    const uppy = new Uppy()
-    uppy.use(Dashboard, {
-        target: '#uppy',
-        inline: true
-    })
+        /**
+         * Este archivo contiene el código para subir documentos utilizando la biblioteca Uppy.js.
+         *
+         * @package LovablePHP
+         * @subpackage PRG/ZDD
+         */
 
-    function handleComplete(result) {
-        if ((numemp != 0 && anoing != 0) || (codsec != 0 && coddep != 0)) {
-            var fecgra = currentDate();
-            var horgra = currentTime();
-            var codeResponse = 0;
-            var promises = [];
-            result.successful.forEach(file => {
-                var promise = new Promise((resolve, reject) => {
-                    blobToBase64(file.data, (base64) => {
-                        var fileExtension = file.name.split('.').pop();
-                        var campos = {
-                            "CAM0": "",
-                            "CAM1": "",
-                            "CAM2": "",
-                            "CAM3": "",
-                            "CAM4": "",
-                            "CAM5": "",
-                            "CAM6": "",
-                            "CAM7": "",
-                            "CAM8": "",
-                            "CAM9": ""
-                        };
-                        const inputs = $(".inputsDoc");
-                        var tipo = $("#tipDocs").val();
-                        var length = inputs.length;
-                        for (let i = 0; i < length; i++) {
-                            if ($("#lbl" + i).text().toLowerCase().includes("proveedor:")) {
-                                campos["CAM" + i] = codigo;
+        import {
+            Uppy,
+            Dashboard
+        } from "../../assets/vendors/uppyjs/uppy.min.js"
+
+        const uppy = new Uppy()
+
+        /**
+         * Configura el panel de control de Uppy y define el elemento HTML de destino.
+         *
+         * @param {string} target - El selector CSS del elemento HTML de destino.
+         * @param {boolean} inline - Indica si el panel de control debe mostrarse en línea o en un modal.
+         */
+        uppy.use(Dashboard, {
+            target: '#uppy',
+            inline: true
+        })
+
+        /**
+         * Maneja el evento 'complete' de Uppy cuando se han subido los archivos.
+         *
+         * @param {object} result - El objeto que contiene los archivos subidos.
+         */
+        function handleComplete(result) {
+            // Verifica si se han seleccionado valores válidos para numemp, anoing, codsec y coddep
+            if ((numemp != 0 && anoing != 0) || (codsec != 0 && coddep != 0)) {
+                var fecgra = currentDate();
+                var horgra = currentTime();
+                var codeResponse = 0;
+                var promises = [];
+                result.successful.forEach(file => {
+                    var promise = new Promise((resolve, reject) => {
+                        blobToBase64(file.data, (base64) => {
+                            var fileExtension = file.name.split('.').pop();
+                            var campos = {
+                                "CAM0": "",
+                                "CAM1": "",
+                                "CAM2": "",
+                                "CAM3": "",
+                                "CAM4": "",
+                                "CAM5": "",
+                                "CAM6": "",
+                                "CAM7": "",
+                                "CAM8": "",
+                                "CAM9": ""
+                            };
+                            const inputs = $(".inputsDoc");
+                            var tipo = $("#tipDocs").val();
+                            var length = inputs.length;
+                            for (let i = 0; i < length; i++) {
+                                if ($("#lbl" + i).text().toLowerCase().includes("proveedor:")) {
+                                    campos["CAM" + i] = codigo;
+                                } else {
+                                    campos["CAM" + i] = $("#" + tipo + i + "").val();
+                                }
+                            }
+
+                            var nameFile = file.name;
+                            nameFile = nameFile.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+                            var fecha = $("#fechaDoc").val();
+                            var descrip = $("#descrpDoc").val();
+                            var dataSave = {
+                                "NOMDOC": nameFile,
+                                "EXTDOC": fileExtension,
+                                "ANOING": anoing,
+                                "NUMEMP": numemp,
+                                "CODSEC": codsec,
+                                "CODDEP": coddep,
+                                "USUGRA": codusu,
+                                "FECGRA": fecgra,
+                                "HORGRA": horgra,
+                                "ARCHIVO": base64,
+                                "TIPDOC": tipo,
+                                "DESCRP": descrip,
+                                "FECHA": fecha.replace(/-/g, ''),
+                                "CAM1": campos['CAM0'],
+                                "CAM2": campos['CAM1'],
+                                "CAM3": campos['CAM2'],
+                                "CAM4": campos['CAM3'],
+                                "CAM5": campos['CAM4'],
+                                "CAM6": campos['CAM5'],
+                                "CAM7": campos['CAM6'],
+                                "CAM8": campos['CAM7'],
+                                "CAM9": campos['CAM8'],
+                                "CAM10": campos['CAM9']
+                            };
+                            var urlSave =
+                                "http://172.16.15.20/API.LovablePHP/ZLO0015P/SaveDocument/";
+                            var responseSave = ajaxRequest(urlSave, dataSave, "POST");
+                            if (responseSave.code == 200) {
+                                resolve(responseSave.code);
                             } else {
-                                campos["CAM" + i] = $("#" + tipo + i + "").val();
+                                reject(responseSave.code);
                             }
-                        }
-
-                        var nameFile = file.name;
-                        nameFile = nameFile.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
-                        var fecha = $("#fechaDoc").val();
-                        var descrip = $("#descrpDoc").val();
-                        var dataSave = {
-                            "NOMDOC": nameFile,
-                            "EXTDOC": fileExtension,
-                            "ANOING": anoing,
-                            "NUMEMP": numemp,
-                            "CODSEC": codsec,
-                            "CODDEP": coddep,
-                            "USUGRA": codusu,
-                            "FECGRA": fecgra,
-                            "HORGRA": horgra,
-                            "ARCHIVO": base64,
-                            "TIPDOC": tipo,
-                            "DESCRP": descrip,
-                            "FECHA": fecha.replace(/-/g, ''),
-                            "CAM1": campos['CAM0'],
-                            "CAM2": campos['CAM1'],
-                            "CAM3": campos['CAM2'],
-                            "CAM4": campos['CAM3'],
-                            "CAM5": campos['CAM4'],
-                            "CAM6": campos['CAM5'],
-                            "CAM7": campos['CAM6'],
-                            "CAM8": campos['CAM7'],
-                            "CAM9": campos['CAM8'],
-                            "CAM10": campos['CAM9']
-                        };
-                        var urlSave =
-                            "http://172.16.15.20/API.LovablePHP/ZLO0015P/SaveDocument/";
-                        var responseSave = ajaxRequest(urlSave, dataSave, "POST");
-                        if (responseSave.code == 200) {
-                            resolve(responseSave.code);
-                        } else {
-                            reject(responseSave.code);
-                        }
-                        //console.log(dataSave);
-                        //resolve(200);
+                            //console.log(dataSave);
+                            //resolve(200);
+                        });
                     });
+                    promises.push(promise);
                 });
-                promises.push(promise);
-            });
-            Promise.all(promises)
-                .then((responses) => {
-                    Swal.fire(
-                        'Realizado',
-                        'Archivos subidos correctamente.',
-                        'success'
-                    ).then((result) => {
-                        if (result.isConfirmed) {
-                            uppy.cancelAll();
-                            $("#tiposDoc").val(1).trigger('change');
-                            $("#descrpDoc").val("").trigger('change');
-                            var isOut =
-                                '<?php echo isset($_SESSION['VALIDATE'])? $_SESSION['VALIDATE']:"0"; ?>';
-                            if (isOut == '1') {
-                                var usuario = '<?php echo $_SESSION['CODUSU']; ?>';
-                                var urlDelete =
-                                    'http://172.16.15.20/API.LovablePHP/ZLO0015P/DelUsuario/?user=' +
-                                    usuario + '';
-                                var responseDel = ajaxRequest(urlDelete);
-                                var inactivarUrl =
-                                    "http://172.16.15.20/API.LovablePHP/ZLO0015P/Inactivar2296/?cod=" +
-                                    cor + "";
-                                var responseParams = ajaxRequest(inactivarUrl);
+                Promise.all(promises)
+                    .then((responses) => {
+                        Swal.fire(
+                            'Realizado',
+                            'Archivos subidos correctamente.',
+                            'success'
+                        ).then((result) => {
+                            if (result.isConfirmed) {
+                                uppy.cancelAll();
+                                $("#tiposDoc").val(1).trigger('change');
+                                $("#descrpDoc").val("").trigger('change');
+                                var isOut =
+                                    '<?php echo isset($_SESSION['VALIDATE'])? $_SESSION['VALIDATE']:"0"; ?>';
+                                if (isOut == '1') {
+                                    var usuario = '<?php echo $_SESSION['CODUSU']; ?>';
+                                    var urlDelete =
+                                        'http://172.16.15.20/API.LovablePHP/ZLO0015P/DelUsuario/?user=' +
+                                        usuario + '';
+                                    var responseDel = ajaxRequest(urlDelete);
+                                    var inactivarUrl =
+                                        "http://172.16.15.20/API.LovablePHP/ZLO0015P/Inactivar2296/?cod=" +
+                                        cor + "";
+                                    var responseParams = ajaxRequest(inactivarUrl);
+                                }
                             }
-                        }
+                        });
+                    })
+                    .catch((errorCode) => {
+                        console.log(errorCode);
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Ha ocurrido un error.',
+                            text: 'Porfavor notifiquelo al administrador del sistema.',
+                        });
                     });
-                })
-                .catch((errorCode) => {
-                    console.log(errorCode);
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Ha ocurrido un error.',
-                        text: 'Porfavor notifiquelo al administrador del sistema.',
-                    });
-                });
-        } else {
-            var urlDepas = "http://172.16.15.20/API.LOVABLEPHP/ZLO0015P/ListDepas/";
-            var responseDepas = ajaxRequest(urlDepas);
-            if (responseDepas.code == 200) {
-                const departamentos = $("#cbbDepartamentos");
-                departamentos.empty();
-                departamentos.append(`<option value="0"> </option>`);
-                for (let i = 0; i < responseDepas.data.length; i++) {
-                    departamentos.append(`<option value="` + responseDepas.data[i].SECDEP + `-` + responseDepas.data[i]
-                        .SECCOD + `">` + responseDepas.data[i].SECDES + `</option>`);
+            } else {
+                var urlDepas = "http://172.16.15.20/API.LOVABLEPHP/ZLO0015P/ListDepas/";
+                var responseDepas = ajaxRequest(urlDepas);
+                if (responseDepas.code == 200) {
+                    const departamentos = $("#cbbDepartamentos");
+                    departamentos.empty();
+                    departamentos.append(`<option value="0"> </option>`);
+                    for (let i = 0; i < responseDepas.data.length; i++) {
+                        departamentos.append(`<option value="` + responseDepas.data[i].SECDEP + `-` + responseDepas.data[i]
+                            .SECCOD + `">` + responseDepas.data[i].SECDES + `</option>`);
+                    }
+                    $("#cbbDepartamentos").flexselect();
                 }
-                $("#cbbDepartamentos").flexselect();
+                $("#departModal").modal('show');
             }
-            $("#departModal").modal('show');
         }
-    }
 
-    function closeWindow() {
-        let new_window =
-            open(location, '_self');
-        new_window.close();
-        return false;
-    }
+        /**
+         * Cierra la ventana actual.
+         *
+         * @returns {boolean} - Devuelve false para evitar que la ventana se cierre.
+         */
+        function closeWindow() {
+            let new_window =
+                open(location, '_self');
+            new_window.close();
+            return false;
+        }
 
-    function blobToBase64(blob, callback) {
-        const reader = new FileReader();
-        reader.onload = function() {
-            const dataUrl = reader.result;
-            const base64String = dataUrl.split(',')[1];
-            callback(base64String);
-        };
-        reader.readAsDataURL(blob);
-    }
+        /**
+         * Convierte un objeto Blob a una cadena base64.
+         *
+         * @param {Blob} blob - El objeto Blob a convertir.
+         * @param {function} callback - La función de devolución de llamada que se ejecuta después de la conversión.
+         */
+        function blobToBase64(blob, callback) {
+            const reader = new FileReader();
+            reader.onload = function() {
+                const dataUrl = reader.result;
+                const base64String = dataUrl.split(',')[1];
+                callback(base64String);
+            };
+            reader.readAsDataURL(blob);
+        }
 
-    function currentTime() {
-        const fecha = new Date();
-        const horas = fecha.getHours().toString().padStart(2, "0");
-        const minutos = fecha.getMinutes().toString().padStart(2, "0");
-        const segundos = fecha.getSeconds().toString().padStart(2, "0");
-        const horaActual = horas + minutos + segundos;
-        return horaActual;
-    }
+        /**
+         * Devuelve la hora actual en formato HHMMSS.
+         *
+         * @returns {string} - La hora actual en formato HHMMSS.
+         */
+        function currentTime() {
+            const fecha = new Date();
+            const horas = fecha.getHours().toString().padStart(2, "0");
+            const minutos = fecha.getMinutes().toString().padStart(2, "0");
+            const segundos = fecha.getSeconds().toString().padStart(2, "0");
+            const horaActual = horas + minutos + segundos;
+            return horaActual;
+        }
 
-    function currentDate() {
-        const fecha = new Date();
-        const año = fecha.getFullYear();
-        const mes = (fecha.getMonth() + 1).toString().padStart(2, "0");
-        const dia = fecha.getDate().toString().padStart(2, "0");
-        const fechaActual = año.toString() + mes + dia;
-        return fechaActual;
-    }
-    uppy.on('complete', handleComplete);
+        /**
+         * Devuelve la fecha actual en formato AAAAMMDD.
+         *
+         * @returns {string} - La fecha actual en formato AAAAMMDD.
+         */
+        function currentDate() {
+            const fecha = new Date();
+            const año = fecha.getFullYear();
+            const mes = (fecha.getMonth() + 1).toString().padStart(2, "0");
+            const dia = fecha.getDate().toString().padStart(2, "0");
+            const fechaActual = año.toString() + mes + dia;
+            return fechaActual;
+        }
 
-    function updateClock() {
-        const now = new Date();
-        const hours = String(now.getHours()).padStart(2, '0');
-        const minutes = String(now.getMinutes()).padStart(2, '0');
-        const seconds = String(now.getSeconds()).padStart(2, '0');
-        const timeString = `${hours}:${minutes}:${seconds}`;
+        uppy.on('complete', handleComplete);
 
-        document.getElementById('horaDigit').innerText = timeString;
-    }
-    setInterval(updateClock, 1000);
+        /**
+         * Actualiza el reloj en la página mostrando la hora actual.
+         */
+        function updateClock() {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            const timeString = `${hours}:${minutes}:${seconds}`;
+
+            document.getElementById('horaDigit').innerText = timeString;
+        }
+        setInterval(updateClock, 1000);
     </script>
     <script src="../../assets/js/jquery.flexselect.js"></script>
     <script src="../../assets/js/liquidmetal.js"></script>
