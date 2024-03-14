@@ -13,91 +13,35 @@
     <link href="../../assets/css/style.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/themes/prism.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css" />
-
     <link href="../../assets/css/examples.css" rel="stylesheet">
     <link href="../../assets/css/mystyle.css" rel="stylesheet">
-
     <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/js/all.min.js"
         integrity="sha512-2bMhOkE/ACz21dJT8zBOMgMecNxx0d37NND803ExktKiKdSzdwn+L7i9fdccw/3V06gM/DBWKbYmQvKMdAA9Nw=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@500&display=swap" rel="stylesheet">
-
     <style>
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6,
-    p,
-    span,
-    td,
-    th,
-    a,
-    button,
-    label,
-    b,
-    li,
-    ul {
-        font-family: 'Rubik', sans-serif;
-    }
-
-    .loader {
-        position: relative;
-        width: 40px;
-        height: 60px;
-        animation: heartBeat 1.2s infinite cubic-bezier(0.215, 0.61, 0.355, 1);
-    }
-
-    .loader:before,
-    .loader:after {
-        content: "";
-        background: #ff3d00;
-        width: 40px;
-        height: 60px;
-        border-radius: 50px 50px 0 0;
-        position: absolute;
-        left: 0;
-        bottom: 0;
-        transform: rotate(45deg);
-        transform-origin: 50% 68%;
-        box-shadow: 5px 4px 5px #0004 inset;
-    }
-
-    .loader:after {
-        transform: rotate(-45deg);
-    }
-
-    @keyframes heartBeat {
-        0% {
-            transform: scale(0.95)
+        h1, h2, h3, h4, h5, h6, p, span, td, th, a, button, label, b, li, ul { font-family: 'Rubik', sans-serif; }
+        .loader {
+            position: relative; width: 40px; height: 60px;
+            animation: heartBeat 1.2s infinite cubic-bezier(0.215, 0.61, 0.355, 1);
         }
-
-        5% {
-            transform: scale(1.1)
+        .loader:before, .loader:after {
+            content: ""; background: #ff3d00; width: 40px; height: 60px; border-radius: 50px 50px 0 0;
+            position: absolute; left: 0; bottom: 0; transform: rotate(45deg); transform-origin: 50% 68%;
+            box-shadow: 5px 4px 5px #0004 inset;
         }
-
-        39% {
-            transform: scale(0.85)
+        .loader:after { transform: rotate(-45deg); }
+        @keyframes heartBeat {
+            0% { transform: scale(0.95) }
+            5% { transform: scale(1.1) }
+            39% { transform: scale(0.85) }
+            45% { transform: scale(1) }
+            60% { transform: scale(0.95) }
+            100% { transform: scale(0.9) }
         }
-
-        45% {
-            transform: scale(1)
-        }
-
-        60% {
-            transform: scale(0.95)
-        }
-
-        100% {
-            transform: scale(0.9)
-        }
-    }
     </style>
 </head>
 
@@ -132,6 +76,21 @@
             $_SESSION["ANOING"]=$row['ANOING'];
             $_SESSION["NUMEMP"]=$row['NUMEMP'];
             $_SESSION["PERESP"]=$row['PERESP'];
+        }
+        $sqlHist= "SELECT COUNT(*) CONT FROM LBDESDAT/LO2207B WHERE CODUSU='".$codusu."'";
+        $resultHist = odbc_exec($connIBM, $sqlHist);
+        $contador = 0;
+        while ($row = odbc_fetch_array($resultHist)) {
+            $contador=utf8_encode(trim($row['CONT']));
+        }
+        $currentTime= date('H:i:s');
+        $currentDate= date('Ymd');
+        if($contador==0){
+            $sqlHist= "INSERT INTO LBDESDAT/LO2207B (CODUSU,FECGRA,HORGRA) VALUES ('".$codusu."',$currentDate,'$currentTime')";
+            $resultHist = odbc_exec($connIBM, $sqlHist);
+        }else {
+            $sqlHist= "UPDATE LBDESDAT/LO2207B SET FECGRA=$currentDate,HORGRA='$currentTime' WHERE CODUSU='".$codusu."'";
+            $resultHist = odbc_exec($connIBM, $sqlHist);
         }
     }else{
         header('Location: /' . $_SESSION['DEV'] . 'LovablePHP/login.php');

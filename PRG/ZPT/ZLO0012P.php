@@ -23,6 +23,7 @@
       $agrup=isset($_SESSION['agrup'])? $_SESSION['agrup']:'1';
       $ckProductos1 = isset($_SESSION['productosCk1']) ? $_SESSION['productosCk1'] : "0";
       $filtro=isset($_SESSION['filtro'])? $_SESSION['filtro']:'1';
+
     ?>
     <div class="container-fluid">
         <nav aria-label="breadcrumb">
@@ -199,8 +200,6 @@
                 });
             });
             $("input[name=radioFiltro][value=" + filtroP + "]").prop('checked', true);
-            console.log("http://172.16.15.20/API.LOVABLEPHP/ZLO0012P/List/?agrup=" + agrupSelect +
-                "&cond=1&filtro=" + filtroP + "");
             var table = $('#myTableSeguimiento').DataTable({
                 language: {
                     url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json',
@@ -627,7 +626,6 @@
                 $('#myTableSeguimiento_filter input').val(searchTerm.toUpperCase())
             });
         } else {
-            console.log("Error al cargar las agrupaciones");
             var table = $('#myTableSeguimiento').DataTable({
                 language: {
                     url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json',

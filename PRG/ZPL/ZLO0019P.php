@@ -52,7 +52,7 @@
                             <option class="fw-bold" value="49,66,69,71,86">Tiendas Guatemala</option>
                             <option class="fw-bold" value="48,53,61,62">Tiendas El Salvador</option>
                             <option class="fw-bold" value="83,87">Tiendas Nicaragua</option>
-                            <option class="fw-bold" value="60,80">Tiendas Costa Rica</option>
+                            <option class="fw-bold" value="60,80,54">Tiendas Costa Rica</option>
                             <option class="fw-bold" value="81">Tiendas Republica Dominicana</option>
                         </select>
                     </div>
