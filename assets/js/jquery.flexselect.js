@@ -1,18 +1,4 @@
-/**
- * flexselect: a jQuery plugin, version: 0.9.0 (2016-09-16)
- * @requires jQuery v1.3 or later
- *
- * FlexSelect is a jQuery plugin that makes it easy to convert a select box into
- * a Quicksilver-style, autocompleting, flex matching selection tool.
- *
- * For usage and examples, visit:
- * http://rmm5t.github.io/jquery-flexselect/
- *
- * Licensed under the MIT:
- * http://www.opensource.org/licenses/mit-license.php
- *
- * Copyright (c) 2009-2015, Ryan McGeary (ryan -[at]- mcgeary [*dot*] org)
- */
+
 (function($) {
   $.flexselect = function(select, options) { this.init(select, options); };
 

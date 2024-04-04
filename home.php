@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico">
   <style type='text/css'>
-   
+
     @media (min-width: 1200px) {
     <?php
     $FiltroDiv=(float)(isset($_GET['c'])? $_GET['c']:1);
@@ -24,8 +24,8 @@
     }
   ?>
   }
-  
-  
+
+
 </style>
 </head>
 
@@ -46,25 +46,25 @@
   </div>
   </header>
   <div class="body flex-grow-1 px-3">
-      
+
       <div class="card mb-4">
           <div class="card-body p-5">
           <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
-                  <div class="carousel-inner rounded">
+                <div class="carousel-inner rounded">
                   <div class="carousel-item active ">
-                      <img src="https://www.api.lovable.com.hn/uploads/banner/image/banner_principal_lovable_01_t.png" class="d-block w-100 " alt="...">
+                      <img src="https://www.api.lovable.com.hn/uploads/banner/image/banner_principal_lovable_01_t.jpg" class="d-block w-100 " alt="...">
                     </div>
                     <div class="carousel-item ">
-                      <img src="https://www.api.lovable.com.hn/uploads/banner/image/banner_principal_swimwear_02_t.png" class="d-block w-100 " alt="...">
+                      <img src="https://www.api.lovable.com.hn/uploads/banner/image/banner_principal_swimwear_02_t.jpg" class="d-block w-100 " alt="...">
                     </div>
                     <div class="carousel-item ">
-                      <img src="https://www.api.lovable.com.hn/uploads/banner/image/banner_teen_03_t.png" class="d-block w-100 " alt="...">
+                      <img src="https://www.api.lovable.com.hn/uploads/banner/image/banner_teen_03_t.jpg" class="d-block w-100 " alt="...">
                     </div>
                     <div class="carousel-item ">
-                      <img src="https://www.api.lovable.com.hn/uploads/banner/image/banner_principal_andros_04_t.png" class="d-block w-100 " alt="...">
+                      <img src="https://www.api.lovable.com.hn/uploads/banner/image/banner_principal_andros_04_t.jpg" class="d-block w-100 " alt="...">
                     </div>
                   </div>
-                </div> 
+                </div>
           </div>
         </div>
 
@@ -80,7 +80,7 @@
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js" integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa" crossorigin="anonymous"></script>
   <script>
-   
+
     function obtenerNombreMes(numeroMes) {
               const nombresMes = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
               return nombresMes[numeroMes - 1];
@@ -92,7 +92,7 @@
             var compFiltro = <?php echo $compFiltroP; ?>;
 
     $(document).ready(function () {
-      
+
       $('#dolaresCk').prop('checked', <?php echo $dolarescheck; ?>);
       $('#fechaCk').prop('checked', <?php echo  $fechacheck ?>);
       $("#cbbMesgra").val(compFiltro);

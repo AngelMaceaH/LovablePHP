@@ -121,7 +121,6 @@
                                                 <div class="fw-semibold">Opciones de administrador</div></div>
                                                 <a class="dropdown-item p-2" href="/<?php echo $_SESSION['DEV'] ?>LovablePHP/PRG/Admin/Usuarios.php"><i class="fa-solid fa-user me-2"></i>Usuarios</a>
                                                 <a class="dropdown-item p-2" href="/<?php echo $_SESSION['DEV'] ?>LovablePHP/PRG/Admin/Opciones.php"><i class="fa-solid fa-bars me-2"></i>Menú</a>`);
-
         }
         //MODULOS
         var urlModulos = 'http://172.16.15.20/API.LovablePHP/Opc/LayoutM/?code=' + usuario + '';

@@ -1844,6 +1844,7 @@
             $("#lblEstilo").text(estilo);
             var urlResumen = "http://172.16.15.20/API.LovablePHP/ZLO0013P/ListResumen/?ano=" + anoActual + "&estilo=" +
                 estilo + "";
+
             var responseResumen = ajaxRequest(urlResumen);
             const tableResumenBody = $("#tableResumenBody");
             tableResumenBody.empty();

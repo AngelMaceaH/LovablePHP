@@ -138,14 +138,14 @@
     var ticketnor = 0;
     var tickettot = 0;
     $(document).ready(function() {
-        yearSelected = getCookie('year') || 2023;
+        var currentYear = new Date().getFullYear();
+        yearSelected = getCookie('year') || currentYear;
         var cookieSelect = getCookie('cias') || '47,52,56,57,59,63,64,65,68,70,72,73,74,75,76,78,82,85,88,50';
         ciasSelected = JSON.parse("[" + cookieSelect + "]");
         var selectTiendas = document.getElementById('cbbCia');
         selectTiendas.value = cookieSelect;
 
         var select = document.getElementById('setYear');
-        var currentYear = new Date().getFullYear();
         for (var year = 2023; year <= currentYear; year++) {
             var option = document.createElement('option');
             option.value = year;

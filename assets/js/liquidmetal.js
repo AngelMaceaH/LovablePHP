@@ -1,17 +1,4 @@
-/**
- * LiquidMetal, version: 1.2.1 (2012-04-21)
- *
- * A mimetic poly-alloy of Quicksilver's scoring algorithm, essentially
- * LiquidMetal.
- *
- * For usage and examples, visit:
- * http://github.com/rmm5t/liquidmetal
- *
- * Licensed under the MIT:
- * http://www.opensource.org/licenses/mit-license.php
- *
- * Copyright (c) 2009-2012, Ryan McGeary (ryan -[at]- mcgeary [*dot*] org)
- */
+
 var LiquidMetal = (function() {
   var SCORE_NO_MATCH = 0.0;
   var SCORE_MATCH = 1.0;

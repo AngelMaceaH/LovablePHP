@@ -122,9 +122,9 @@
     var contelefono = 0;
     var conemail = 0;
     $(document).ready(function() {
-        yearSelected = getCookie('year') || 2023;
-        var select = document.getElementById('setYear');
         var currentYear = new Date().getFullYear();
+        yearSelected = getCookie('year') || currentYear;
+        var select = document.getElementById('setYear');
         for (var year = 2023; year <= currentYear; year++) {
             var option = document.createElement('option');
             option.value = year;
