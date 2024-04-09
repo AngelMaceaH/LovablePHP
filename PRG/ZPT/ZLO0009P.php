@@ -449,6 +449,7 @@
         exportExcel.addEventListener('click', (event) => {
             const cbbAgrup = document.getElementById('cbbAgrup');
             document.getElementById('loaderExcel').classList.remove('d-none');
+            valAgrup= cbbAgrup.value;
             var url = "http://172.16.15.20/API.LovablePHP/ZLO0009P/Export/?anopro=" + valAno +
                 "&agrup=" + valAgrup + "&cia=" + cbbAgrup.options[cbbAgrup.selectedIndex].text;
             fetch(url)

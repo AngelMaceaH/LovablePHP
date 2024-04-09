@@ -264,7 +264,7 @@
                     } else {
                         inputs.append(`<label class=" text-start" id="lbl` + i +
                             `" style="width:100%;  margin-top: 15px;">` + camposDes[i] +
-                            `: <input type="text" class="form-control inputsDoc" id="` +
+                            `: <input type="text" maxlength="30" class="form-control inputsDoc" id="` +
                             responseCampos.data[0]['TIPDOC'] + i + `" /></label>`);
                     }
                 }

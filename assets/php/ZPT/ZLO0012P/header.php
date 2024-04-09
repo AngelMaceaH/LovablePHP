@@ -9,7 +9,7 @@
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
-    } 
+    }
     .table-container {
         width: 100%;
         overflow-x: auto;
@@ -19,7 +19,7 @@
         top: 0;
     }
     .total-row {
-        background-color: rgba(0, 0, 0, 0.3) !important;
+        background-color: rgba(0, 0, 0, 0.2) !important;
         color: white !important;
     }
     .gray-letters{
@@ -45,6 +45,6 @@
   </style>
 </head>
 <body>
-    
+
 </body>
 </html>

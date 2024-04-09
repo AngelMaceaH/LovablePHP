@@ -158,7 +158,7 @@
         }
         var width = 30000;
         var widthTh = "1.2";
-        switch (ciasSelected.length) {
+        switch (ciasSelected.length){
             case 21:
                 width = 30000;
                 widthTh = "1.2";
@@ -188,7 +188,6 @@
             document.getElementById('loaderExcel').classList.remove('d-none');
             var url = "http://172.16.15.20/API.LovablePHP/ZLO0019P/Export2/?anio=" + yearSelected +
                 "&tiendas=" + ciasSelected + "";
-            console.log(url);
             fetch(url)
                 .then(response => response.blob())
                 .then(blob => {

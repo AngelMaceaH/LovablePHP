@@ -1163,6 +1163,10 @@
         }
         var previousSearch = "";
         function initTable() {
+            console.log("http://172.16.15.20/API.LovablePHP/ZLO0013P/List2/?marca=" + marca + "&plan=" +
+                        plan + "&estado=" + estado + "&btnor=" + btnOrder + "&inventarios=" + inventarios +
+                        "&clasificacion=" + clasificacion + "&orden=" + orden + "&filtro=" + filtro +
+                        "&repro=" + repro + "&formato=" + formato + "&searchVal=" + searchBox + "");
             var table = $('#myTablePlaneacion').DataTable({
                 language: {
                     url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json',

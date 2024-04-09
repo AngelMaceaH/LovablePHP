@@ -238,6 +238,17 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="col-12">
+                                            <div class="form-control border d-flex mt-4">
+                                                <label class="form-check-label mt-2 me-3">Permiso para <span
+                                                        class="fw-bold">enviar  documentos
+                                                    digitales: correos electrónicos</span> </label>
+                                                <div class="form-check form-switch fs-5 mt-1">
+                                                    <input class="form-check-input mt-3 text-danger" id="permisosEsp3"
+                                                        type="checkbox" role="switch">
+                                                </div>
+                                            </div>
+                                        </div>
                                         <div class="col-12 mb-1">
                                             <label class="form-check-label mt-3 me-3">Tipos de documentos a
                                                 visualizar</label>
