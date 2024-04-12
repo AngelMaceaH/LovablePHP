@@ -236,10 +236,8 @@
                 var camposDes = responseCampos.data[0].CAMPOS.split("/");
                 for (let i = 0; i < camposDes.length; i++) {
                     if (camposDes[i].toLowerCase() == "proveedor") {
-                        var select =
-                            '<span class="" onclick="showProveedores()"><input type="text" class="text-muted form-select inputsDoc" id="' +
-                            responseCampos.data[0]['TIPDOC'] + i +
-                            '" placeholder="Selecciona un proveedor" readonly /></span> <input class="d-none" id="provId" value="' +
+                        var select ='<span class="" onclick="showProveedores()"><input type="text" class="text-muted form-select inputsDoc" id="' +
+                            responseCampos.data[0]['TIPDOC'] + i +'" placeholder="Selecciona un proveedor" readonly /></span> <input class="d-none" id="provId" value="' +
                             responseCampos.data[0]['TIPDOC'] + i + '" />';
                         inputs.append(`<label class=" text-start" id="lbl` + i +
                             `" style="width:100%; margin-top: 15px;">` + camposDes[i] + `: ` +
