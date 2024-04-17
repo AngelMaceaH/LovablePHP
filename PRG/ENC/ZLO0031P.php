@@ -17,7 +17,7 @@
                 <li class="breadcrumb-item">
                     <span>Envios correo electronicos / Clientes</span>
                 </li>
-                <li class="breadcrumb-item active"><span>ZLO0030P</span></li>
+                <li class="breadcrumb-item active"><span>ZLO0031P</span></li>
             </ol>
         </nav>
     </div>
@@ -37,7 +37,7 @@
                 </div>
             </div>
             <div class="card-header">
-                <h1 class="fs-4 mb-1 mt-2 text-center">Envío de correos electronicos registros de clientes web</h1>
+                <h1 class="fs-4 mb-1 mt-2 text-center">Envío de correos electronicos cancelación de clientes web</h1>
             </div>
             <div class="card-body ">
                 <div class="container p-5">
@@ -155,7 +155,7 @@
             document.getElementById("lblError").classList.add("d-none");
             bgLoader.classList.remove("d-none");
             sendingEmail.classList.remove("d-none");
-            let url = "http://172.16.15.20/API.LovablePHP/ZLO0030P/SEND/?codcli=" + value + "&sendclie=" + valueCk;
+            let url = "http://172.16.15.20/API.LovablePHP/ZLO0031P/SEND/?codcli=" + value + "&sendclie=" + valueCk;
             console.log(url);
             fetch(url)
                 .then(() => {
