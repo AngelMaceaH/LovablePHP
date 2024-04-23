@@ -95,7 +95,7 @@
             document.getElementById("lblError").classList.add("d-none");
             bgLoader.classList.remove("d-none");
             sendingEmail.classList.remove("d-none");
-            let url = "http://172.16.15.20/API.LovablePHP/ZLO0022P/SEND/?numped=" + value + "&sendclie=" + valueCk;
+            let url = "/API.LovablePHP/ZLO0022P/SEND/?numped=" + value + "&sendclie=" + valueCk;
             fetch(url)
                 .then(() => {
                     Swal.fire({

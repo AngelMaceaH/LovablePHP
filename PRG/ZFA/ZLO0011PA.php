@@ -30,7 +30,7 @@
       }elseif ($_SESSION['cia']==7) {
        $cia=" AND LO2261.CODCIA IN(81)";
       }
-    ?> 
+    ?>
      <div class="container-fluid">
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb my-0 ms-2">
@@ -125,11 +125,11 @@
                           </table>
                       </div>
                     </div>
-          </div> 
+          </div>
         </div>
       </div>
     </div>
-   
+
       <div class="footer bg-blck flex-grow-1 d-flex justify-content-center">
       <p class="bggray responsive-font-example"><i>Lovable de Honduras S.A. de C.V</i></p>
       </div>
@@ -146,7 +146,7 @@
           $("#cbbAno").val(anopro);
           $("#cbbMes").val(mespro);
           $("#filtro1").val(ciaSelect);
-          var urlList="http://172.16.15.20/API.LovablePHP/ZLO0011P/List/?anopro="+anopro+"&mespro="+mespro+"&cia="+cia+"";
+          var urlList="/API.LovablePHP/ZLO0011P/List/?anopro="+anopro+"&mespro="+mespro+"&cia="+cia+"";
           var options="";
           var responseList=ajaxRequest(urlList);
           var arrayList=[];
@@ -167,7 +167,7 @@
             var total=responseList.data[i]['PORTOT'];
             arrayList[i] = {
               name: responseList.data[i]['NOMCIA'],
-              data: [parseInt(sidesc), parseInt(por10), parseInt(por20), parseInt(por30), parseInt(por40), parseInt(por50), parseInt(por60), 
+              data: [parseInt(sidesc), parseInt(por10), parseInt(por20), parseInt(por30), parseInt(por40), parseInt(por50), parseInt(por60),
               parseInt(por70), parseInt(por80), parseInt(porz1), parseInt(porz2)]
             };
             options+='<tr>';
@@ -256,7 +256,7 @@
                     columns: [1,2,3,4,5,6,7,8,9,10,11,12]
                 },
                 title: 'ReporteInv Descuentos',
-                
+
                 customize: function (xlsx) {
                     var sheet = xlsx.xl.worksheets['sheet1.xml'];
                     var sSh = xlsx.xl['styles.xml'];
@@ -282,17 +282,17 @@
                     var s4 = '<xf numFmtId="0" fontId="2" fillId="2" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
                                 '<alignment horizontal="center" wrapText="1"/></xf>'
                     var s5 = '<xf  numFmtId="200" fontId="'+(lastFontIndex+1)+'" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
-                     '<alignment horizontal="right"/></xf>';  
+                     '<alignment horizontal="right"/></xf>';
                      var s6 = '<xf  numFmtId="200" fontId="'+(lastFontIndex+2)+'" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
-                     '<alignment horizontal="right"/></xf>';  
+                     '<alignment horizontal="right"/></xf>';
                      var s7 = '<xf  numFmtId="300" fontId="'+(lastFontIndex+1)+'" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
-                     '<alignment horizontal="right"/></xf>';  
+                     '<alignment horizontal="right"/></xf>';
                      var s8 = '<xf  numFmtId="300" fontId="'+(lastFontIndex+2)+'" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
                      '<alignment horizontal="right"/></xf>';
                     sSh.childNodes[0].childNodes[0].innerHTML += n1 + n2;
                     sSh.childNodes[0].childNodes[1].innerHTML += f1 + f2;
-                    sSh.childNodes[0].childNodes[5].innerHTML += s1 + s2 + s3 + s4 + s5 + s6 + s7 + s8; 
-                     
+                    sSh.childNodes[0].childNodes[5].innerHTML += s1 + s2 + s3 + s4 + s5 + s6 + s7 + s8;
+
                     var fourDecPlaces    = lastXfIndex + 1;
                     var greyBoldCentered = lastXfIndex + 2;
                     var twoDecPlacesBold = lastXfIndex + 3;
@@ -301,7 +301,7 @@
                     var textgreen1 = lastXfIndex + 6;
                     var textred2 = lastXfIndex + 7;
                     var textgreen2 = lastXfIndex + 8;
-                    
+
                     $('c[r=A1] t', sheet).text( 'INVENTARIO POR CLASIFICACIÓN DE PRODUCTOS TIENDAS' );
                     $('row:eq(0) c', sheet).attr( 's', greyBoldCentered );
                     $('row:eq(1) c', sheet).attr( 's', 7 );

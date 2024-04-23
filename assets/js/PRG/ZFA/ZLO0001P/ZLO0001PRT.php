@@ -4,25 +4,25 @@ $(document).ready(function() {
     var id = '<?php echo $_GET['id'];?>';
     var enca2bool = false;
     //CORRELATIVO
-    var corre = 'http://172.16.15.20/API.LovablePHP/ZLO0001P/ListCorre/?fac=' + fac + '&compFiltro=' + id + '';
+    var corre = '/API.LovablePHP/ZLO0001P/ListCorre/?fac=' + fac + '&compFiltro=' + id + '';
     var responseCorre = ajaxRequest(corre);
     //ENCABEZADO
-    var enca = 'http://172.16.15.20/API.LovablePHP/ZLO0001P/ListEnca/?fac=' + fac + '&compFiltro=' + id + '';
+    var enca = '/API.LovablePHP/ZLO0001P/ListEnca/?fac=' + fac + '&compFiltro=' + id + '';
     var responseEnca = ajaxRequest(enca);
     $("#enca2, #enca22").addClass("d-none");
     if (responseEnca.code == 500) {
         $("#enca2 , #enca22").removeClass("d-none");
         $("#enca1").addClass("d-none");
         var enca2bool = true;
-        var enca = 'http://172.16.15.20/API.LovablePHP/ZLO0001P/ListEnca2/?fac=' + fac + '&compFiltro=' + id +
+        var enca = '/API.LovablePHP/ZLO0001P/ListEnca2/?fac=' + fac + '&compFiltro=' + id +
             '';
         var responseEnca = ajaxRequest(enca);
     }
     //DETALLES
-    var deta = 'http://172.16.15.20/API.LovablePHP/ZLO0001P/ListDeta/?fac=' + fac + '&compFiltro=' + id + '';
+    var deta = '/API.LovablePHP/ZLO0001P/ListDeta/?fac=' + fac + '&compFiltro=' + id + '';
     var responseDeta = ajaxRequest(deta);
     if (responseDeta.code == 500) {
-        var deta = 'http://172.16.15.20/API.LovablePHP/ZLO0001P/ListDeta2/?fac=' + fac + '&compFiltro=' + id +
+        var deta = '/API.LovablePHP/ZLO0001P/ListDeta2/?fac=' + fac + '&compFiltro=' + id +
             '';
         var responseDeta = ajaxRequest(deta);
     }

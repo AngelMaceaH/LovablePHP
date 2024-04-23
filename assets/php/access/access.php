@@ -11,7 +11,7 @@ $name = $_POST['user'];
 $ps = $_POST['password'];
 
 // Construir la URL para la petición a la API
-$url = "http://172.16.15.20/API.LovablePHP/Access/GetAccess/?user=".$name."&ps=".$ps."";
+$url = "http:/172.16.15.20/API.LovablePHP/Access/GetAccess/?user=".$name."&ps=".$ps."";
 
 // Inicializar cURL
 $ch = curl_init();
@@ -72,7 +72,7 @@ if ($name != '' && $ps != '') {
       var cookie3 = "codusu" + "=" + encodeURIComponent(user) + ";expires=" + fechaExpiracion.toUTCString() + ";path=/";
       document.cookie = cookie3;
       // Redirigir al usuario
-      location.href ="http://172.16.15.20/Lovablehn.proveedores/";
+      location.href ="/Lovablehn.proveedores/";
      </script>
     <?php
   } else {
@@ -97,11 +97,11 @@ if ($name != '' && $ps != '') {
     } else {
       // Si 'val' no es 1, redirigir al usuario a la página de login
       $_SESSION['val'] = "2";
-      header('Location: /'.$_SESSION['DEV'].'LovablePHP/login.php');
+        header('Location: /'.$_SESSION['DEV'].'LovablePHP/login.php');
     }
   }
 } else {
   // Si el usuario o la contraseña están vacíos, redirigir al usuario a la página de login
-  header('Location: /'.$_SESSION['DEV'].'LovablePHP/login.php');
+      header('Location: /'.$_SESSION['DEV'].'LovablePHP/login.php');
 }
 ?>

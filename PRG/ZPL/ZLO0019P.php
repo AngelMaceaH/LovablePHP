@@ -146,7 +146,7 @@
         selectTiendas.value = cookieSelect;
 
         var select = document.getElementById('setYear');
-        for (var year = 2023; year <= currentYear; year++) {
+        for (var year = currentYear; year >= 2023; year--) {
             var option = document.createElement('option');
             option.value = year;
             option.textContent = year;
@@ -186,7 +186,7 @@
         }
         $("#exportExcel").on('click', function() {
             document.getElementById('loaderExcel').classList.remove('d-none');
-            var url = "http://172.16.15.20/API.LovablePHP/ZLO0019P/Export2/?anio=" + yearSelected +
+            var url = "/API.LovablePHP/ZLO0019P/Export2/?anio=" + yearSelected +
                 "&tiendas=" + ciasSelected + "";
             fetch(url)
                 .then(response => response.blob())
@@ -253,7 +253,7 @@
         const header = $("#headerPaises");
         header.append('<th></th>');
         //obteniendo descripcion de compañias
-        var urlCias = "http://172.16.15.20/API.LovablePHP/ZLO0019P/GetComdes/?tiendas=" + ciasSelected + "";
+        var urlCias = "/API.LovablePHP/ZLO0019P/GetComdes/?tiendas=" + ciasSelected + "";
         var responseCias = ajaxRequest(urlCias);
         let tiendasCerradas = [];
         var tiendasArray = [];
@@ -303,7 +303,7 @@
             'ACUMULADOS NORMALES'
         ];
         var rowtd = "";
-        var urlRegistros = "http://172.16.15.20/API.LovablePHP/ZLO0019P/TiendasR/?anio=" + yearSelected +
+        var urlRegistros = "/API.LovablePHP/ZLO0019P/TiendasR/?anio=" + yearSelected +
             "&tiendas=" + ciasSelected + "";
         console.log(urlRegistros);
         var responseRegistros = ajaxRequest(urlRegistros);
@@ -770,7 +770,7 @@
             'ACUMULADOS NORMALES'
         ];
         var rowtd = "";
-        var urlTransacciones = " http://172.16.15.20/API.LovablePHP/ZLO0019P/TiendasT/?anio=" + yearSelected +
+        var urlTransacciones = " /API.LovablePHP/ZLO0019P/TiendasT/?anio=" + yearSelected +
             "&tiendas=" + ciasSelected + "";
         var responseTransacciones = ajaxRequest(urlTransacciones);
         tbody.append(`<tr><td colspan='14'></td></tr>
@@ -1408,7 +1408,7 @@
             '% DE TRANSACCIONES DE CLIENTES NORMALES'
         ];
         var rowtd = "";
-        var urlPTransacciones = " http://172.16.15.20/API.LovablePHP/ZLO0019P/TiendasPT/?anio=" + yearSelected +
+        var urlPTransacciones = " /API.LovablePHP/ZLO0019P/TiendasPT/?anio=" + yearSelected +
             "&tiendas=" + ciasSelected + "";
         var responsePTransacciones = ajaxRequest(urlPTransacciones);
         tbody.append(`<tr><td colspan='14'></td></tr>
@@ -1751,7 +1751,7 @@
             '% DE CLIENTES QUE BRINDARON SOLO CORREO'
         ];
         var rowtd = "";
-        var urlDesglose = "http://172.16.15.20/API.LovablePHP/ZLO0019P/TiendasD/?anio=" + yearSelected +
+        var urlDesglose = "/API.LovablePHP/ZLO0019P/TiendasD/?anio=" + yearSelected +
             "&tiendas=" + ciasSelected + "";
         var responseDesglose = ajaxRequest(urlDesglose);
         tbody.append(`<tr><td colspan='14'></td></tr>
@@ -2159,7 +2159,7 @@
             'TICKET PROMEDIO  GENERAL'
         ];
         var rowtd = "";
-        var urlTicket = "http://172.16.15.20/API.LovablePHP/ZLO0019P/TiendasTC/?anio=" + yearSelected +
+        var urlTicket = "/API.LovablePHP/ZLO0019P/TiendasTC/?anio=" + yearSelected +
             "&tiendas=" + ciasSelected + "";
         var responseTicket = ajaxRequest(urlTicket);
         tbody.append(`<tr><td colspan='14'></td></tr>

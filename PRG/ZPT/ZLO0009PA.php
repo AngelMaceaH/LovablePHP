@@ -145,7 +145,7 @@
           $("#cbbAno").val(anopro);
           $("#cbbMes").val(mespro);
           $("#filtro1").val(ciaSelect);
-          var urlList="http://172.16.15.20/API.LovablePHP/ZLO0009P/List/?anopro="+anopro+"&mespro="+mespro+"&cia="+cia+"";
+          var urlList="/API.LovablePHP/ZLO0009P/List/?anopro="+anopro+"&mespro="+mespro+"&cia="+cia+"";
           var options="";
           var responseList=ajaxRequest(urlList);
           var arrayList=[];

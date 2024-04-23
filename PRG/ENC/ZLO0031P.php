@@ -99,7 +99,7 @@
             "processing": true,
             "serverSide": true,
             "ajax": {
-                "url": "http://172.16.15.20/API.LovablePHP/ZLO0030P/ListClientesAsync/",
+                "url": "/API.LovablePHP/ZLO0030P/ListClientesAsync/",
                 "type": "POST",
                 "complete": function(xhr) {
                     //console.log(xhr.responseJSON);
@@ -155,7 +155,7 @@
             document.getElementById("lblError").classList.add("d-none");
             bgLoader.classList.remove("d-none");
             sendingEmail.classList.remove("d-none");
-            let url = "http://172.16.15.20/API.LovablePHP/ZLO0031P/SEND/?codcli=" + value + "&sendclie=" + valueCk;
+            let url = "/API.LovablePHP/ZLO0031P/SEND/?codcli=" + value + "&sendclie=" + valueCk;
             console.log(url);
             fetch(url)
                 .then(() => {

@@ -503,7 +503,7 @@
     $(document).ready(function() {
         $('#cbbCia').select2({});
         var usuario = '<?php echo $_SESSION["CODUSU"];?>';
-        var urlComarc = 'http://172.16.15.20/API.LovablePHP/ZLO0001P/ListComarc/?usuario=' + usuario + '';
+        var urlComarc = '/API.LovablePHP/ZLO0001P/ListComarc/?usuario=' + usuario + '';
         var responseComarc = ajaxRequest(urlComarc);
         if (responseComarc.code == 200) {
             for (let i = 0; i < responseComarc.data.length; i++) {
@@ -1577,7 +1577,7 @@
         var ano2 = '<?php echo $ano2; ?>';
         var mesNum1 = '<?php echo $mesNum1; ?>';
         var mesNum2 = '<?php echo $mesNum2; ?>';
-        var urlGet = "http://172.16.15.20/API.LovablePHP/ZLO0003P/ListMarcasTiendas2/?ano=" + ano2 + "&mes=" + mesNum1 +
+        var urlGet = "/API.LovablePHP/ZLO0003P/ListMarcasTiendas2/?ano=" + ano2 + "&mes=" + mesNum1 +
             "&mes2=" + mesNum2 + "&marca=" + cias + "";
         var response = ajaxRequest(urlGet);
         var tiendasAno1 = [];

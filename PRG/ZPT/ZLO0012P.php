@@ -165,7 +165,7 @@
     var filtroP = "";
     document.addEventListener('DOMContentLoaded', function() {
         var usuario = '<?php echo $_SESSION['CODUSU']; ?>';
-        var urlAgrupaciones = "http://172.16.15.20/API.LOVABLEPHP/ZLO0012P/ListAgrupacion/?user=" + usuario +
+        var urlAgrupaciones = "/API.LOVABLEPHP/ZLO0012P/ListAgrupacion/?user=" + usuario +
         "";
         var responseAgrupaciones = ajaxRequest(urlAgrupaciones);
         if (responseAgrupaciones && responseAgrupaciones.code == 200) {
@@ -214,7 +214,7 @@
                 },
                 "pageLength": 20,
                 "ajax": {
-                    "url": "http://172.16.15.20/API.LOVABLEPHP/ZLO0012P/List/?agrup=" + agrupSelect +
+                    "url": "/API.LOVABLEPHP/ZLO0012P/List/?agrup=" + agrupSelect +
                         "&cond=1&filtro=" + filtroP + "",
                     "type": "POST",
                     "complete": function(xhr) {
@@ -680,7 +680,7 @@
                     </table>`)
 
         var agrup = $("#cbbAgrupacion").val();
-        var urlDeta = "http://172.16.15.20/API.LOVABLEPHP/ZLO0012P/GetDeta/?agrup=" + agrup + "&estilo=" + estilo + "";
+        var urlDeta = "/API.LOVABLEPHP/ZLO0012P/GetDeta/?agrup=" + agrup + "&estilo=" + estilo + "";
         var responseDeta = ajaxRequest(urlDeta);
         var lastcolor = null;
         var color = ' ';

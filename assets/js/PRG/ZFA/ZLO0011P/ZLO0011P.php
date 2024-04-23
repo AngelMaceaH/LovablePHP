@@ -22,7 +22,7 @@
             var arrayList = [];
             var isEmpty = false;
             for (let j = 0; j < cias.length; j++) {
-                var urlList = "http://172.16.15.20/API.LovablePHP/ZLO0011P/List/?anopro=" + anopro + "&mespro=" +
+                var urlList = "/API.LovablePHP/ZLO0011P/List/?anopro=" + anopro + "&mespro=" +
                     mespro + "&cia=" + cias[j] + "";
                 var responseList = ajaxRequest(urlList);
                 if (responseList.code == 200) {

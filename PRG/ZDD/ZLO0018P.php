@@ -110,7 +110,7 @@
     });
 
         chargeRequest();
-        var urlComarc = 'http://172.16.15.20/API.LovablePHP/ZLO0015P/ListComarc/?user=' + 'MARVIN' + '';
+        var urlComarc = '/API.LovablePHP/ZLO0015P/ListComarc/?user=' + 'MARVIN' + '';
         var responseComarc = ajaxRequest(urlComarc);
         if (responseComarc.code == 200) {
             for (let i = 0; i < responseComarc.data.length; i++) {
@@ -119,7 +119,7 @@
                         i].COMDES + '</option>';
             }
         }
-        var urlTiendas = 'http://172.16.15.20/API.LovablePHP/ZLO0015P/ListTiendas/?user=' + 'MARVIN' + '';
+        var urlTiendas = '/API.LovablePHP/ZLO0015P/ListTiendas/?user=' + 'MARVIN' + '';
         var responseTiendas = ajaxRequest(urlTiendas);
         if (responseTiendas.code == 200) {
             for (let i = 0; i < responseTiendas.data.length; i++) {
@@ -144,7 +144,7 @@
             "processing": true,
             "serverSide": true,
             "ajax": {
-                "url": "http://172.16.15.20/API.LovablePHP/ZLO0015P/ListProveedoresAsync/",
+                "url": "/API.LovablePHP/ZLO0015P/ListProveedoresAsync/",
                 "type": "POST",
                 "complete": function(xhr) {
                 },
@@ -199,14 +199,14 @@
         $("#spinnerStart").removeClass('d-none');
         if ($("#valueTipo").val()==1) {
         var prov= $("#codigo").val();
-        var urlList="http://172.16.15.20/API.LovablePHP/ZLO0018P/List/?prov1="+prov+"";
+        var urlList="/API.LovablePHP/ZLO0018P/List/?prov1="+prov+"";
         }else if($("#valueTipo").val()==2){
          var fechas=  $("#searchInput").text().split(" - ");
          var fecha1=formatFechaSent(fechas[0].replace(/\//g, ''));
          var fecha2=formatFechaSent(fechas[1].replace(/\//g, ''));
-         var urlList="http://172.16.15.20/API.LovablePHP/ZLO0018P/List/?fech1="+fecha1+"&fech2="+fecha2+"";
+         var urlList="/API.LovablePHP/ZLO0018P/List/?fech1="+fecha1+"&fech2="+fecha2+"";
         }else{
-        var urlList="http://172.16.15.20/API.LovablePHP/ZLO0018P/List/";
+        var urlList="/API.LovablePHP/ZLO0018P/List/";
         }
         var responseList=ajaxRequest(urlList);
         $("#countRequest").text('0');
@@ -217,10 +217,10 @@
             const data=responseList.data;
             for (let i = 0; i < data.length; i++) {
                 $("#NoRequest").addClass('d-none');
-                var urlFind = "http://172.16.15.20/API.LovablePHP/ZLO0015P/ProveedoresFind/?tipo=" +data[i]['PROVE1'] + "&proveedor=" + data[i]['PROVE2'] + "";
+                var urlFind = "/API.LovablePHP/ZLO0015P/ProveedoresFind/?tipo=" +data[i]['PROVE1'] + "&proveedor=" + data[i]['PROVE2'] + "";
                 var responseFind = ajaxRequest(urlFind);
                 var descripcion = (responseFind.code == 200) ? responseFind.data[0]['ARCNOM'] : "";
-                var urlCampos = "http://172.16.15.20/API.LovablePHP/ZLO0015P/ListTiposFind/?tipo=" + data[i]['TIPDOC'];
+                var urlCampos = "/API.LovablePHP/ZLO0015P/ListTiposFind/?tipo=" + data[i]['TIPDOC'];
                 var responseCampos = ajaxRequest(urlCampos);
                 var desTipo="";
                 if (responseCampos.code==200) {
@@ -405,8 +405,8 @@
                                         </div>
                                     </div>
                                 </div>`);
-                //var urlTipos = "http://172.16.15.20/API.LovablePHP/ZLO0015P/ListTipos/";
-                var urlTipos = "http://172.16.15.20/API.LovablePHP/ZLO0015P/ListTipos2/?user=" + usuario + "";
+                //var urlTipos = "/API.LovablePHP/ZLO0015P/ListTipos/";
+                var urlTipos = "/API.LovablePHP/ZLO0015P/ListTipos2/?user=" + usuario + "";
                 var responseTipos = ajaxRequest(urlTipos);
                 if (responseTipos.code == 200) {
                     const tipos = $("#tiposDoc");
@@ -427,7 +427,7 @@ switch (extdoc) {
     case 'png':
     case 'jpg':
     case 'jpeg':
-        $("#downloadFrame").append('<img src="http://172.16.15.20' + urldoc + '" style="width:200px;" alt="">');
+        $("#downloadFrame").append('<img src="' + urldoc + '" style="width:200px;" alt="">');
         break;
     case 'xlsx':
         $("#downloadFrame").append('<img src="../../assets/img/icons/excel.png" style="width:150px;" alt="">');
@@ -459,12 +459,12 @@ if (extdoc == 'pdf' || extdoc == 'png' || extdoc == 'jpg' || extdoc == 'jpeg') {
         `
     <div class="row m-3">
         <div class="col-6">
-        <a class="btn btn-warning fw-bold text-white" style="width:100%;" target="_blank" href="http://172.16.15.20` +
+        <a class="btn btn-warning fw-bold text-white" style="width:100%;" target="_blank" href="` +
         urldoc + `" >Visualizar documento <i class="fa-solid fa-eye"></i></a>
 
         </div>
         <div class="col-6">
-            <a class="btn btn-info fw-bold text-white" style="width:100%;" href="http://172.16.15.20` +
+            <a class="btn btn-info fw-bold text-white" style="width:100%;" href="` +
         urldoc + `" download>Descargar <i class="fa-solid fa-download"></i></a>
         </div>
     </div>
@@ -473,7 +473,7 @@ if (extdoc == 'pdf' || extdoc == 'png' || extdoc == 'jpg' || extdoc == 'jpeg') {
     $("#downloadCard").append(
         `
         <div class="col-12">
-            <a class="btn btn-info fw-bold text-white" style="width:100%;" href="http://172.16.15.20` +
+            <a class="btn btn-info fw-bold text-white" style="width:100%;" href="` +
         urldoc + `" download>Descargar <i class="fa-solid fa-download"></i></a>
         </div>
     </div>
@@ -490,7 +490,7 @@ if (descrp == 'S-N') {
     descrp = '';
 }
 $("#descrpDoc").val(descrp);
-var depaUrl = "http://172.16.15.20/API.LovablePHP/ZLO0016P/GetDepa/?coddep=" + coddep + "&secdep=" + codsec +
+var depaUrl = "/API.LovablePHP/ZLO0016P/GetDepa/?coddep=" + coddep + "&secdep=" + codsec +
     "";
 var responseDepa = ajaxRequest(depaUrl);
 var depa = '';
@@ -540,9 +540,9 @@ $("#spinnerStart").addClass('d-none');
                             "CAM9":  ($("#CAM8").val()==null)?'':$("#CAM8").val(),
                             "CAM10": ($("#CAM9").val()==null)?'':$("#CAM9").val()
                         };
-                        var urlSave ="http://172.16.15.20/API.LovablePHP/ZLO0018P/DocUpdate/";
+                        var urlSave ="/API.LovablePHP/ZLO0018P/DocUpdate/";
                         var responseSave = ajaxRequest(urlSave, dataSave, "POST");
-                        var urlChange="http://172.16.15.20/API.LovablePHP/ZLO0018P/ChangeState/?nomdoc="+nomdoc+"&urldoc="+urldoc+"&estado="+state+"";
+                        var urlChange="/API.LovablePHP/ZLO0018P/ChangeState/?nomdoc="+nomdoc+"&urldoc="+urldoc+"&estado="+state+"";
                         var responseChange=ajaxRequest(urlChange);
                         if (responseChange.code==200) {
                             chargeRequest();
@@ -551,7 +551,7 @@ $("#spinnerStart").addClass('d-none');
                 $("#lblError").removeClass('d-none');
             }
         }else{
-            var urlChange="http://172.16.15.20/API.LovablePHP/ZLO0018P/ChangeState/?nomdoc="+nomdoc+"&urldoc="+urldoc+"&estado="+state+"";
+            var urlChange="/API.LovablePHP/ZLO0018P/ChangeState/?nomdoc="+nomdoc+"&urldoc="+urldoc+"&estado="+state+"";
             var responseChange=ajaxRequest(urlChange);
             if (responseChange.code==200) {
                 chargeRequest();
@@ -646,7 +646,7 @@ $("#spinnerStart").addClass('d-none');
                     };
         }
 
-var urlCampos = "http://172.16.15.20/API.LovablePHP/ZLO0015P/ListTiposFind/?tipo=" + tipdoc;
+var urlCampos = "/API.LovablePHP/ZLO0015P/ListTiposFind/?tipo=" + tipdoc;
 var responseCampos = ajaxRequest(urlCampos);
 if (responseCampos.code == 200) {
     const inputs = $("#extraInfo");
@@ -659,7 +659,7 @@ if (responseCampos.code == 200) {
         var descripcion = "";
         if (camposDes[i].toLowerCase() == "tienda" ) {
             if (campos['cam' + i]!=undefined) {
-                var urlDes = "http://172.16.15.20/API.LovablePHP/ZLO0001P/FindComarc/?compFiltro=" + campos['cam' + i] + "";
+                var urlDes = "/API.LovablePHP/ZLO0001P/FindComarc/?compFiltro=" + campos['cam' + i] + "";
                 var responseDes = ajaxRequest(urlDes);
                 descripcion = (responseDes.code == 200) ? responseDes.data[0]['COMDES'] : "";
                 inputs.append(`<div class="col-6 col-lg-2 mt-2">
@@ -679,7 +679,7 @@ if (responseCampos.code == 200) {
 
         } else if(camposDes[i].toLowerCase() == "compañia"){
             if (campos['cam' + i]!=undefined) {
-            var urlDes = "http://172.16.15.20/API.LovablePHP/ZLO0001P/FindComarc/?compFiltro=" + campos[
+            var urlDes = "/API.LovablePHP/ZLO0001P/FindComarc/?compFiltro=" + campos[
                 'cam' + i] + "";
             var responseDes = ajaxRequest(urlDes);
             descripcion = (responseDes.code == 200) ? responseDes.data[0]['COMDES'] : "";
@@ -702,7 +702,7 @@ if (responseCampos.code == 200) {
             var id = campos['cam' + i].split("-");
             var tipo = id[0];
             var prov = id[1];
-            var urlFind = "http://172.16.15.20/API.LovablePHP/ZLO0015P/ProveedoresFind/?tipo=" + tipo +
+            var urlFind = "/API.LovablePHP/ZLO0015P/ProveedoresFind/?tipo=" + tipo +
                 "&proveedor=" + prov + "";
             var responseFind = ajaxRequest(urlFind);
             descripcion = (responseFind.code == 200) ? responseFind.data[0]['ARCNOM'] : "";

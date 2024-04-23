@@ -98,7 +98,7 @@
             });
 
       var usuario='<?php echo $_SESSION["CODUSU"];?>';
-      var urlComarc='http://172.16.15.20/API.LovablePHP/Index/CompDes/?user='+usuario+'';
+      var urlComarc='/API.LovablePHP/Index/CompDes/?user='+usuario+'';
       var responseComarc = ajaxRequest(urlComarc);
         //LLENADO DE COMARC
         if (responseComarc.code==200) {
@@ -115,23 +115,23 @@
                 compFiltro=$("#cbbMesgra").val();
             }
       //VENTAS DIA
-      var urlDia="http://172.16.15.20/API.LovablePHP/Index/ValorDia/?fechaGraficas="+fechasGraficas+"&compFiltro="+compFiltro+"&dck="+dolaresck+"";
+      var urlDia="/API.LovablePHP/Index/ValorDia/?fechaGraficas="+fechasGraficas+"&compFiltro="+compFiltro+"&dck="+dolaresck+"";
       console.log(urlDia);
       var responseDia = ajaxRequest(urlDia);
       //VENTAS MES
-      var urlMes="http://172.16.15.20/API.LovablePHP/Index/ValorMes/?mesGraficas1="+Mes1Num+"&anoGraficas1="+Anio1+"&compFiltro="+compFiltro+"&dck="+dolaresck+"";
+      var urlMes="/API.LovablePHP/Index/ValorMes/?mesGraficas1="+Mes1Num+"&anoGraficas1="+Anio1+"&compFiltro="+compFiltro+"&dck="+dolaresck+"";
       var responseMes = ajaxRequest(urlMes);
       //VENTAS COMPARATIVO1
-      var urlComp1="http://172.16.15.20/API.LovablePHP/Index/comp1/?mesGraficas1="+Mes1Num+"&anoGraficas1="+Anio1+"&diagrafica="+diagrafica+"&compFiltro="+compFiltro+"&mesGraficas2="+Mes2Num+"&anoGraficas2="+Anio2+"&dck="+dolaresck+"";
+      var urlComp1="/API.LovablePHP/Index/comp1/?mesGraficas1="+Mes1Num+"&anoGraficas1="+Anio1+"&diagrafica="+diagrafica+"&compFiltro="+compFiltro+"&mesGraficas2="+Mes2Num+"&anoGraficas2="+Anio2+"&dck="+dolaresck+"";
       var responseComp1 = ajaxRequest(urlComp1);
       //VENTAS COMPARATIVO2
-      var urlComp2="http://172.16.15.20/API.LovablePHP/Index/comp2/?mesGraficas1="+Mes1Num+"&anoGraficas1="+Anio1+"&compFiltro="+compFiltro+"&mesGraficas2="+Mes2Num+"&anoGraficas2="+Anio2+"&dck="+dolaresck+"";
+      var urlComp2="/API.LovablePHP/Index/comp2/?mesGraficas1="+Mes1Num+"&anoGraficas1="+Anio1+"&compFiltro="+compFiltro+"&mesGraficas2="+Mes2Num+"&anoGraficas2="+Anio2+"&dck="+dolaresck+"";
       var responseComp2 = ajaxRequest(urlComp2);
       //VENTAS ANUAL
-      var urlAnual="http://172.16.15.20/API.LovablePHP/Index/compAnual/?mesGraficas1="+Mes1Num+"&anoGraficas1="+Anio1+"&compFiltro="+compFiltro+"&anoGraficas2="+Anio2+"&dck="+dolaresck+"";
+      var urlAnual="/API.LovablePHP/Index/compAnual/?mesGraficas1="+Mes1Num+"&anoGraficas1="+Anio1+"&compFiltro="+compFiltro+"&anoGraficas2="+Anio2+"&dck="+dolaresck+"";
       var responseAnual = ajaxRequest(urlAnual);
       //PROMEDIO
-      var urlPromedios="http://172.16.15.20/API.LovablePHP/Index/promedios/?fechaGraficas="+fechasGraficas+"&compFiltro="+compFiltro+"&dck="+dolaresck+"&mesGraficas1="+Mes1Num+"&anoGraficas1="+Anio1+"&mesGraficas2="+Mes2Num+"&anoGraficas2="+Anio2+"";
+      var urlPromedios="/API.LovablePHP/Index/promedios/?fechaGraficas="+fechasGraficas+"&compFiltro="+compFiltro+"&dck="+dolaresck+"&mesGraficas1="+Mes1Num+"&anoGraficas1="+Anio1+"&mesGraficas2="+Mes2Num+"&anoGraficas2="+Anio2+"";
       var responsePromedios = ajaxRequest(urlPromedios);
 
 

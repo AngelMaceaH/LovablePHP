@@ -120,7 +120,7 @@
             var paramsLength = "";
             var paramsData = [];
             cor = url.searchParams.get("cor");
-            var getParamsurl = "http://172.16.15.20/API.LovablePHP/ZLO0015P/GetParams2/?cod=" + cor + "";
+            var getParamsurl = "/API.LovablePHP/ZLO0015P/GetParams2/?cod=" + cor + "";
             var responseParams = ajaxRequest(getParamsurl);
             if (responseParams.code == 200) {
                 paramsData = responseParams.data;
@@ -132,7 +132,7 @@
             }
         }
         var usuario = '<?php echo $_SESSION["CODUSU"];?>';
-        var urlComarc = 'http://172.16.15.20/API.LovablePHP/ZLO0015P/ListComarc2/?user=' + usuario + '';
+        var urlComarc = '/API.LovablePHP/ZLO0015P/ListComarc2/?user=' + usuario + '';
         var responseComarc = ajaxRequest(urlComarc);
         if (responseComarc.code == 200) {
             for (let i = 0; i < responseComarc.data.length; i++) {
@@ -140,7 +140,7 @@
                     responseComarc.data[i].COMDES + '</option>';
             }
         }
-        var urlTiendas = 'http://172.16.15.20/API.LovablePHP/ZLO0015P/ListTiendas/?user=' + usuario + '';
+        var urlTiendas = '/API.LovablePHP/ZLO0015P/ListTiendas/?user=' + usuario + '';
         var responseTiendas = ajaxRequest(urlTiendas);
         if (responseTiendas.code == 200) {
             for (let i = 0; i < responseTiendas.data.length; i++) {
@@ -149,8 +149,8 @@
                         i].COMDES + '</option>';
             }
         }
-        //var urlTipos = "http://172.16.15.20/API.LovablePHP/ZLO0015P/ListTipos/";
-        var urlTipos = "http://172.16.15.20/API.LovablePHP/ZLO0015P/ListTipos2/?user=" + usuario + "";
+        //var urlTipos = "/API.LovablePHP/ZLO0015P/ListTipos/";
+        var urlTipos = "/API.LovablePHP/ZLO0015P/ListTipos2/?user=" + usuario + "";
         var responseTipos = ajaxRequest(urlTipos);
         if (responseTipos.code == 200) {
             const tipos = $("#tiposDoc");
@@ -178,7 +178,7 @@
             "processing": true,
             "serverSide": true,
             "ajax": {
-                "url": "http://172.16.15.20/API.LovablePHP/ZLO0015P/ListProveedoresAsync/",
+                "url": "/API.LovablePHP/ZLO0015P/ListProveedoresAsync/",
                 "type": "POST",
                 "complete": function(xhr) {
                     //console.log(xhr.responseJSON);
@@ -228,7 +228,7 @@
             const inputs = $("#inputs");
             inputs.empty();
             var selectedTipo = $("#tiposDoc").val();
-            var urlCampos = "http://172.16.15.20/API.LovablePHP/ZLO0015P/ListTiposFind/?tipo=" +
+            var urlCampos = "/API.LovablePHP/ZLO0015P/ListTiposFind/?tipo=" +
                 selectedTipo;
             var responseCampos = ajaxRequest(urlCampos);
             if (responseCampos.code == 200) {
@@ -279,7 +279,7 @@
                     var id = data[1].split("-");
                     var tipo = id[0];
                     var prov = id[1];
-                    var urlFind = "http://172.16.15.20/API.LovablePHP/ZLO0015P/ProveedoresFind/?tipo=" + tipo +
+                    var urlFind = "/API.LovablePHP/ZLO0015P/ProveedoresFind/?tipo=" + tipo +
                         "&proveedor=" + prov + "";
                     var responseFind = ajaxRequest(urlFind);
                     var descripcion = (responseFind.code == 200) ? responseFind.data[0]['ARCNOM'] : "";
@@ -429,7 +429,7 @@
                                 "CAM10": campos['CAM9']
                             };
                             var urlSave =
-                                "http://172.16.15.20/API.LovablePHP/ZLO0015P/SaveDocument/";
+                                "/API.LovablePHP/ZLO0015P/SaveDocument/";
                             var responseSave = ajaxRequest(urlSave, dataSave, "POST");
                             if (responseSave.code == 200) {
                                 resolve(responseSave.code);
@@ -458,11 +458,11 @@
                                 if (isOut == '1') {
                                     var usuario = '<?php echo $_SESSION['CODUSU']; ?>';
                                     var urlDelete =
-                                        'http://172.16.15.20/API.LovablePHP/ZLO0015P/DelUsuario/?user=' +
+                                        '/API.LovablePHP/ZLO0015P/DelUsuario/?user=' +
                                         usuario + '';
                                     var responseDel = ajaxRequest(urlDelete);
                                     var inactivarUrl =
-                                        "http://172.16.15.20/API.LovablePHP/ZLO0015P/Inactivar2296/?cod=" +
+                                        "/API.LovablePHP/ZLO0015P/Inactivar2296/?cod=" +
                                         cor + "";
                                     var responseParams = ajaxRequest(inactivarUrl);
                                 }
@@ -478,7 +478,7 @@
                         });
                     });
             } else {
-                var urlDepas = "http://172.16.15.20/API.LOVABLEPHP/ZLO0015P/ListDepas/";
+                var urlDepas = "/API.LOVABLEPHP/ZLO0015P/ListDepas/";
                 var responseDepas = ajaxRequest(urlDepas);
                 if (responseDepas.code == 200) {
                     const departamentos = $("#cbbDepartamentos");

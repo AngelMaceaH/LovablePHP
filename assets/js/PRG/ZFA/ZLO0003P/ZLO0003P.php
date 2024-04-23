@@ -50,7 +50,7 @@ if (strlen($mesfiltro)==1) {
 ?>
 <script>
 $(document).ready(function() {
-    var urlComarc = 'http://172.16.15.20/API.LovablePHP/ZLO0003P/ListComarc/';
+    var urlComarc = '/API.LovablePHP/ZLO0003P/ListComarc/';
     var responseComarc = ajaxRequest(urlComarc);
 
     //LLENADO DE MARCAS
@@ -76,7 +76,7 @@ $(document).ready(function() {
     var mesNum1 = '<?php echo $mesNum1; ?>';
     var mesNum2 = '<?php echo $mesNum2; ?>';
     var marcaFiltro = '<?php echo $marcaFiltro; ?>';
-    var urlMarcas = 'http://172.16.15.20/API.LovablePHP/ZLO0003P/ListMarcas/?ano=' + ano2 + '&mes=' + mesNum1 +
+    var urlMarcas = '/API.LovablePHP/ZLO0003P/ListMarcas/?ano=' + ano2 + '&mes=' + mesNum1 +
         '&mes2=' + mesNum2 + '&marca=' + marcaFiltro + '';
     var responseMarcas = ajaxRequest(urlMarcas);
     var paisesLabel = ['Honduras', 'Guatemala', 'El Salvador', 'Nicaragua', 'Costa Rica', 'Rep. Dominicana'];
@@ -582,7 +582,7 @@ $(document).ready(function() {
     });
 
     //LLENADO DE TABLA TIENDAS
-    var urlMarcas2 = 'http://172.16.15.20/API.LovablePHP/ZLO0003P/ListMarcasTiendas/?ano=' + ano2 + '&mes=' +
+    var urlMarcas2 = '/API.LovablePHP/ZLO0003P/ListMarcasTiendas/?ano=' + ano2 + '&mes=' +
         mesNum1 + '&mes2=' + mesNum2 + '&marca=' + marcaFiltro + '';
     var responseTiendas = ajaxRequest(urlMarcas2);
     var rows = "";

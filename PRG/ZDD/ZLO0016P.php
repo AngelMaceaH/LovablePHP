@@ -133,7 +133,7 @@
             var paramsLength = "";
             var paramsData = [];
             cor = url.searchParams.get("cor");
-            var getParamsurl = "http://172.16.15.20/API.LovablePHP/ZLO0016P/GetParams/?cod=" + cor + "";
+            var getParamsurl = "/API.LovablePHP/ZLO0016P/GetParams/?cod=" + cor + "";
             var responseParams = ajaxRequest(getParamsurl);
             if (responseParams.code == 200) {
                 paramsData = responseParams.data;
@@ -149,7 +149,7 @@
             document.cookie = "cam" + i + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/";
         }
 
-        var urlComarc = 'http://172.16.15.20/API.LovablePHP/ZLO0015P/ListComarc2/?user=' + usuario + '';
+        var urlComarc = '/API.LovablePHP/ZLO0015P/ListComarc2/?user=' + usuario + '';
         var responseComarc = ajaxRequest(urlComarc);
         if (responseComarc.code == 200) {
             for (let i = 0; i < responseComarc.data.length; i++) {
@@ -158,7 +158,7 @@
                         i].COMDES + '</option>';
             }
         }
-        var urlTiendas = 'http://172.16.15.20/API.LovablePHP/ZLO0015P/ListTiendas/?user=' + usuario + '';
+        var urlTiendas = '/API.LovablePHP/ZLO0015P/ListTiendas/?user=' + usuario + '';
         var responseTiendas = ajaxRequest(urlTiendas);
         if (responseTiendas.code == 200) {
             for (let i = 0; i < responseTiendas.data.length; i++) {
@@ -182,7 +182,7 @@
                                         </select>
                                     </div>`);
 
-            var urlDepas = "http://172.16.15.20/API.LOVABLEPHP/ZLO0015P/ListDepas/";
+            var urlDepas = "/API.LOVABLEPHP/ZLO0015P/ListDepas/";
             var responseDepas = ajaxRequest(urlDepas);
             if (responseDepas.code == 200) {
                 const departamentos = $("#cbbDepartamentos");
@@ -194,7 +194,7 @@
                 }
             }
         } else {
-            var urlDepas = 'http://172.16.15.20/API.LOVABLEPHP/ZLO0015P/ListDepasUsers/?user=' + usuario + '';
+            var urlDepas = '/API.LOVABLEPHP/ZLO0015P/ListDepasUsers/?user=' + usuario + '';
             var responseDepas = ajaxRequest(urlDepas);
             if (responseDepas.code == 200 && responseDepas.data.length > 1) {
                 $("#isGerencia").append(`<div class="col-12 col-lg-6">
@@ -236,7 +236,7 @@
             "processing": true,
             "serverSide": true,
             "ajax": {
-                "url": "http://172.16.15.20/API.LovablePHP/ZLO0015P/ListProveedoresAsync/",
+                "url": "/API.LovablePHP/ZLO0015P/ListProveedoresAsync/",
                 "type": "POST",
                 "complete": function(xhr) {
                     //console.log(xhr.responseJSON);
@@ -281,8 +281,8 @@
                     .draw();
             }
         });
-        //var urlTipos = "http://172.16.15.20/API.LovablePHP/ZLO0015P/ListTipos/";
-        var urlTipos = "http://172.16.15.20/API.LovablePHP/ZLO0015P/ListTipos2/?user=" + usuario + "";
+        //var urlTipos = "/API.LovablePHP/ZLO0015P/ListTipos/";
+        var urlTipos = "/API.LovablePHP/ZLO0015P/ListTipos2/?user=" + usuario + "";
         var responseTipos = ajaxRequest(urlTipos);
         if (responseTipos.code == 200) {
             const tipos = $("#tiposDoc");
@@ -313,7 +313,7 @@
                         var id = data[1].split("-");
                         var tipo = id[0];
                         var prov = id[1];
-                        var urlFind = "http://172.16.15.20/API.LovablePHP/ZLO0015P/ProveedoresFind/?tipo=" +
+                        var urlFind = "/API.LovablePHP/ZLO0015P/ProveedoresFind/?tipo=" +
                             tipo + "&proveedor=" + prov + "";
                         var responseFind = ajaxRequest(urlFind);
                         var descripcion = (responseFind.code == 200) ? responseFind.data[0]['ARCNOM'] : "";
@@ -374,7 +374,7 @@
         if (selectedTipo == null) {
             selectedTipo = getCookie("tipdoc");
         }
-        var urlCampos = "http://172.16.15.20/API.LovablePHP/ZLO0015P/ListTiposFind2/?tipo=" + selectedTipo;
+        var urlCampos = "/API.LovablePHP/ZLO0015P/ListTiposFind2/?tipo=" + selectedTipo;
         var responseCampos = ajaxRequest(urlCampos);
         if (responseCampos.code == 200) {
             $("#tipDocs").val($("#tiposDoc").val());
@@ -818,7 +818,7 @@
             'CAM9': getCookie("cam9"),
             'CAM10': getCookie("cam10")
         };
-        var baseUrl = "http://172.16.15.20/API.LovablePHP/ZLO0016P/ListAsync/";
+        var baseUrl = "/API.LovablePHP/ZLO0016P/ListAsync/";
         var queryParams = [];
         queryParams.push("user=" + usuario);
         if (anoing) queryParams.push("anoing=" + anoing);
@@ -960,7 +960,7 @@
                         ] + `','` + data['CAM8'] + `','` + data['CAM9'] + `','` +
                         data['CAM10'] + `','` + data['CODDEP'] + `','` + data['CODSEC'] + `')">
                                         <div class="card-body text-center">
-                                            <img src="http://172.16.15.20` + data['URLDOC'] +
+                                            <img src="` + data['URLDOC'] +
                         `"
                                                 style="height:50px;" alt="">
                                             <h6 class=" responsive-font-example mt-1" style="font-size:12px;" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="` +
@@ -1160,7 +1160,7 @@
             case 'png':
             case 'jpg':
             case 'jpeg':
-                $("#downloadFrame").append('<img src="http://172.16.15.20' + urldoc +
+                $("#downloadFrame").append('<img src="' + urldoc +
                 '"  style="width:200px;" alt="">');
                 break;
             case 'xlsx':
@@ -1193,12 +1193,12 @@
                 `
             <div class="row m-3">
                 <div class="col-6">
-                <a class="btn btn-warning fw-bold text-white" style="width:100%;" target="_blank" href="http://172.16.15.20` +
+                <a class="btn btn-warning fw-bold text-white" style="width:100%;" target="_blank" href="` +
                 urldoc + `" >Visualizar documento <i class="fa-solid fa-eye"></i></a>
 
                 </div>
                 <div class="col-6">
-                    <a class="btn btn-info fw-bold text-white" style="width:100%;" href="http://172.16.15.20` +
+                    <a class="btn btn-info fw-bold text-white" style="width:100%;" href="` +
                 urldoc + `" download>Descargar <i class="fa-solid fa-download"></i></a>
                 </div>
             </div>
@@ -1207,7 +1207,7 @@
             $("#downloadCard").append(
                 `
                 <div class="col-12">
-                    <a class="btn btn-info fw-bold text-white" style="width:100%;" href="http://172.16.15.20` +
+                    <a class="btn btn-info fw-bold text-white" style="width:100%;" href="` +
                 urldoc + `" download>Descargar <i class="fa-solid fa-download"></i></a>
                 </div>
             </div>
@@ -1219,7 +1219,7 @@
         $("#AuthDoc").empty();
         var permisos = "<?php echo isset($_SESSION['PERESP'])? $_SESSION['PERESP']: ''; ?>";
         if (permisos === 'S') {
-            var urlPermisos = "http://172.16.15.20/API.LovablePHP/ZLO0015P/GetPermiso/?user=" + usuario + "";
+            var urlPermisos = "/API.LovablePHP/ZLO0015P/GetPermiso/?user=" + usuario + "";
             var responsePermisos = ajaxRequest(urlPermisos);
             if (responsePermisos.code == 200) {
                 var data = responsePermisos.data;
@@ -1232,7 +1232,7 @@
                             `')" ><i class="fa-solid fa-trash-can fw-bold"></i></button>`);
                     } else {
                         if (data[i]['ACCION'] == 'A') {
-                            var urlAuth = "http://172.16.15.20/API.LovablePHP/ZLO0016P/ISAuth/?nomdoc=" + nomcard +
+                            var urlAuth = "/API.LovablePHP/ZLO0016P/ISAuth/?nomdoc=" + nomcard +
                                 "&urldoc=" + urldoc + "";
                             var responseAuth = ajaxRequest(urlAuth);
                             if (responseAuth.code == 200) {
@@ -1270,7 +1270,7 @@
             descrp = '';
         }
         $("#descrpDoc").text(descrp);
-        var depaUrl = "http://172.16.15.20/API.LovablePHP/ZLO0016P/GetDepa/?coddep=" + coddep + "&secdep=" + codsec +
+        var depaUrl = "/API.LovablePHP/ZLO0016P/GetDepa/?coddep=" + coddep + "&secdep=" + codsec +
             "";
         var responseDepa = ajaxRequest(depaUrl);
         var depa = '';
@@ -1292,7 +1292,7 @@
             cam8,
             cam9
         };
-        var urlCampos = "http://172.16.15.20/API.LovablePHP/ZLO0015P/ListTiposFind/?tipo=" + tipdoc;
+        var urlCampos = "/API.LovablePHP/ZLO0015P/ListTiposFind/?tipo=" + tipdoc;
         var responseCampos = ajaxRequest(urlCampos);
         if (responseCampos.code == 200) {
 
@@ -1304,7 +1304,7 @@
             for (let i = 0; i < length; i++) {
                 var descripcion = "";
                 if (camposDes[i].toLowerCase() == "tienda" || camposDes[i].toLowerCase() == "compañia") {
-                    var urlDes = "http://172.16.15.20/API.LovablePHP/ZLO0001P/FindComarc/?compFiltro=" + campos[
+                    var urlDes = "/API.LovablePHP/ZLO0001P/FindComarc/?compFiltro=" + campos[
                         'cam' + i] + "";
                     var responseDes = ajaxRequest(urlDes);
                     descripcion = (responseDes.code == 200) ? responseDes.data[0]['COMDES'] : "";
@@ -1312,7 +1312,7 @@
                     var id = campos['cam' + i].split("-");
                     var tipo = id[0];
                     var prov = id[1];
-                    var urlFind = "http://172.16.15.20/API.LovablePHP/ZLO0015P/ProveedoresFind/?tipo=" + tipo +
+                    var urlFind = "/API.LovablePHP/ZLO0015P/ProveedoresFind/?tipo=" + tipo +
                         "&proveedor=" + prov + "";
                     var responseFind = ajaxRequest(urlFind);
                     descripcion = (responseFind.code == 200) ? responseFind.data[0]['ARCNOM'] : "";
@@ -1344,7 +1344,7 @@
     }
 
     function deleteCard(nomcard, usugra, fecgra, horgra, extdoc, urldoc) {
-        var urlDelete = "http://172.16.15.20/API.LovablePHP/ZLO0016P/Delete/?nomdoc=" + nomcard + "&urldoc=" + urldoc +
+        var urlDelete = "/API.LovablePHP/ZLO0016P/Delete/?nomdoc=" + nomcard + "&urldoc=" + urldoc +
             "";
         var response = ajaxRequest(urlDelete);
         if (response.code == 200) {
@@ -1356,7 +1356,7 @@
     function authCard(nomcard, usugra, fecgra, horgra, extdoc, urldoc) {
         fecgra = currentDate();
         horgra = currentTime();
-        var urlAuth = "http://172.16.15.20/API.LovablePHP/ZLO0016P/Auth/?nomdoc=" + nomcard + "&urldoc=" + urldoc +
+        var urlAuth = "/API.LovablePHP/ZLO0016P/Auth/?nomdoc=" + nomcard + "&urldoc=" + urldoc +
             "&user=" + usugra + "&fecgra=" + fecgra + "&horgra=" + horgra + "";
         var response = ajaxRequest(urlAuth);
         if (response.code == 200) {

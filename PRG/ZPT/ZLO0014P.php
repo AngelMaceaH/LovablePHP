@@ -115,7 +115,7 @@
     var filtroP = "";
     $(document).ready(function() {
         var usuario = '<?php echo $_SESSION['CODUSU']; ?>';
-        var urlAgrupaciones = "http://172.16.15.20/API.LOVABLEPHP/ZLO0012P/ListAgrupacion/?user=" + usuario +
+        var urlAgrupaciones = "/API.LOVABLEPHP/ZLO0012P/ListAgrupacion/?user=" + usuario +
         "";
         var responseAgrupaciones = ajaxRequest(urlAgrupaciones);
         if (responseAgrupaciones.code == 200) {
@@ -163,7 +163,7 @@
             },
             "pageLength": 20,
             "ajax": {
-                "url": "http://172.16.15.20/API.LOVABLEPHP/ZLO0014P/List/?agrup=" + agrupSelect,
+                "url": "/API.LOVABLEPHP/ZLO0014P/List/?agrup=" + agrupSelect,
                 "type": "POST",
                 "complete": function(xhr) {},
                 error: function(xhr, status, error) {

@@ -19,11 +19,11 @@
             var url = new URL(currentUrl);
             var user= url.searchParams.get("user");
             var cor= url.searchParams.get("cor");
-            var cia=""; var prv=""; var tip=""; var doc=""; var apl=""; var docf=""; var fec=""; var tienda=""; var descrp="";   
+            var cia=""; var prv=""; var tip=""; var doc=""; var apl=""; var docf=""; var fec=""; var tienda=""; var descrp="";
             if (cor) {
              var paramsLength=""; var paramsData=[];
             cor=url.searchParams.get("cor");
-                var getParamsurl="http://172.16.15.20/API.LovablePHP/ZLO0015P/GetParams2/?cod="+cor+"";
+                var getParamsurl="/API.LovablePHP/ZLO0015P/GetParams2/?cod="+cor+"";
                 var responseParams = ajaxRequest(getParamsurl);
             if (responseParams.code==200){
                 paramsData=responseParams.data;
@@ -47,9 +47,9 @@
                 }
 
                 }
-            } 
+            }
            }
-            var urlDelete="http://172.16.15.20/API.LovablePHP/ZLO0016P/DeleteAS400/?apl="+apl+"&tip="+tip+"&cia="+cia+"&prv="+prv+"&doc="+doc+"&tie="+tienda+"";
+            var urlDelete="/API.LovablePHP/ZLO0016P/DeleteAS400/?apl="+apl+"&tip="+tip+"&cia="+cia+"&prv="+prv+"&doc="+doc+"&tie="+tienda+"";
             console.log(urlDelete);
             var response=ajaxRequest(urlDelete);
             if (response.code==200) {

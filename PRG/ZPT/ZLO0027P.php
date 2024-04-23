@@ -92,7 +92,7 @@
                                         </select>
                                     </div>
                                     <div class="col-12">
-                                        <div class="mt-4">
+                                        <div class="mt-4 p-0">
                                             <figure class="highcharts-figure">
                                                 <div id="container" class="highcharts-dark text-white Math.rounded">
                                                 </div>
@@ -102,7 +102,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="table-responsive" style="width:100%">
+                        <div class="table-responsive container-fluid p-3" style="width:100%">
                             <table id="tableInventario" class="table stripe table-hover text-center "
                                 style="width:100%; font-size:15px; color:#000;">
                                 <thead>
@@ -123,7 +123,7 @@
                                 </tbody>
                             </table>
                         </div>
-                        <div class="table-responsive mt-4" style="width:100%">
+                        <div class="table-responsive mt-4 container-fluid p-3" style="width:100%">
                             <table id="tableInventario2" class="table stripe table-hover text-center "
                                 style="width:100%; font-size:15px; color:#000;">
                                 <thead>
@@ -173,7 +173,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="table-responsive" style="width:100%">
+                        <div class="table-responsive container-fluid p-3" style="width:100%">
                             <table id="tableInventario3" class="table stripe table-hover text-center "
                                 style="width:100%; font-size:15px; color:#000;">
                                 <thead>
@@ -198,7 +198,7 @@
                                 </tbody>
                             </table>
                         </div>
-                        <div class="table-responsive mt-4" style="width:100%">
+                        <div class="table-responsive mt-4 container-fluid p-3" style="width:100%">
                             <table id="tableInventario4" class="table stripe table-hover text-center "
                                 style="width:100%; font-size:15px; color:#000;">
                                 <thead>
@@ -250,7 +250,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="table-responsive" style="width:100%">
+                        <div class="table-responsive container-fluid p-3" style="width:100%">
                             <table id="tableInventario5" class="table stripe table-hover text-center "
                                 style="width:100%; font-size:15px; color:#000;">
                                 <thead>
@@ -271,7 +271,7 @@
                                 </tbody>
                             </table>
                         </div>
-                        <div class="table-responsive mt-4" style="width:100%">
+                        <div class="table-responsive mt-4 container-fluid p-3" style="width:100%">
                             <table id="tableInventario6" class="table stripe table-hover text-center "
                                 style="width:100%; font-size:15px; color:#000;">
                                 <thead>
@@ -325,7 +325,7 @@
     window.addEventListener('DOMContentLoaded', (event) => {
         const cbbAgrup = document.getElementById('cbbAgrup');
         let usuario = '<?php echo $_SESSION["CODUSU"];?>';
-        let urlTiendas = 'http://172.16.15.20/API.LovablePHP/ZLO0015P/ListTiendas/?user=' + usuario + '';
+        let urlTiendas = '/API.LovablePHP/ZLO0015P/ListTiendas/?user=' + usuario + '';
         let responseTiendas = ajaxRequest(urlTiendas);
         let tiendasOptions = '';
         if (responseTiendas.code == 200) {
@@ -667,7 +667,7 @@
         linePVR06M1 = [];
         lineMIN12M1 = [];
         lineMIN06M1 = [];
-        var urlList = "http://172.16.15.20/API.LovablePHP/ZLO0027P/List/?anopro=" + valAno + "&cia=" + valAgrup;
+        var urlList = "/API.LovablePHP/ZLO0027P/List/?anopro=" + valAno + "&cia=" + valAgrup;
         let lblAno1 = document.getElementById('lblano1');
         lblAno1.innerHTML = 'Año ' + valAno;
         const tbDetalle = document.getElementById('tableInventarioDetalle');
@@ -710,7 +710,7 @@
         linePVR06M2 = [];
         lineMIN12M2 = [];
         lineMIN06M2 = [];
-        var urlList = "http://172.16.15.20/API.LovablePHP/ZLO0027P/List/?anopro=" + valAno + "&cia=" + valAgrup;
+        var urlList = "/API.LovablePHP/ZLO0027P/List/?anopro=" + valAno + "&cia=" + valAgrup;
         let lblAno1 = document.getElementById('lblano2');
         lblAno1.innerHTML = 'Año ' + valAno;
         const tbDetalle = document.getElementById('tableInventarioDetalle2');
@@ -752,7 +752,7 @@
         lineUNICOM1 = [];
         lineUNIVEN1 = [];
         lineUNIEXI1 = [];
-        var urlList = "http://172.16.15.20/API.LovablePHP/ZLO0027P/ListUnd/?anopro=" + valAno + "&cia=" + valAgrup;
+        var urlList = "/API.LovablePHP/ZLO0027P/ListUnd/?anopro=" + valAno + "&cia=" + valAgrup;
         let lblAno1 = document.getElementById('lblano3');
         lblAno1.innerHTML = 'Año ' + valAno;
         const tbDetalle = document.getElementById('tableInventarioDetalle3');
@@ -804,7 +804,7 @@
         lineUNICOM2 = [];
         lineUNIVEN2 = [];
         lineUNIEXI2 = [];
-        var urlList = "http://172.16.15.20/API.LovablePHP/ZLO0027P/ListUnd/?anopro=" + valAno + "&cia=" + valAgrup;
+        var urlList = "/API.LovablePHP/ZLO0027P/ListUnd/?anopro=" + valAno + "&cia=" + valAgrup;
         let lblAno1 = document.getElementById('lblano4');
         lblAno1.innerHTML = 'Año ' + valAno;
         const tbDetalle = document.getElementById('tableInventarioDetalle4');

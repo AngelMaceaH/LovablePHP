@@ -10,7 +10,7 @@
       $anopro=isset($_SESSION['anofiltro'])? $_SESSION['anofiltro']:date("Y");
       $mespro=isset($_SESSION['mesfiltro'])? $_SESSION['mesfiltro']:date("m");
       $cia=isset($_SESSION['cia'])? $_SESSION['cia']:'';
-    ?> 
+    ?>
      <div class="container-fluid">
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb my-0 ms-2">
@@ -92,11 +92,11 @@
                           </table>
                       </div>
                     </div>
-          </div> 
+          </div>
         </div>
       </div>
     </div>
-   
+
       <div class="footer bg-blck flex-grow-1 d-flex justify-content-center">
       <p class="bggray responsive-font-example"><i>Lovable de Honduras S.A. de C.V</i></p>
       </div>
@@ -120,12 +120,12 @@
           $("#cbbMes").val(mespro);
           $("#filtro1").val(ciaSelect);
           var paises=['Honduras (Lov. Eccommerce)','Honduras (Mod. Íntima)','Guatemala','El Salvador','Costa Rica','Nicaragua','Rep. Dominicana']
-          var cias=[ciaHon1,ciaHon2,ciaGua,ciaSal,ciaCos,ciaNic,ciaRep];	
+          var cias=[ciaHon1,ciaHon2,ciaGua,ciaSal,ciaCos,ciaNic,ciaRep];
           var options="";
           var arrayList=[];
           var isEmpty=false;
           for (let j = 0; j < cias.length; j++) {
-            var urlList="http://172.16.15.20/API.LovablePHP/ZLO0009P/List/?anopro="+anopro+"&mespro="+mespro+"&cia="+cias[j]+"";
+            var urlList="/API.LovablePHP/ZLO0009P/List/?anopro="+anopro+"&mespro="+mespro+"&cia="+cias[j]+"";
             var responseList=ajaxRequest(urlList);
             if (responseList.code==200) {
             var sidesc=0;var por20=0;var por30=0;var por40=0;var por50=0;var por60=0;
@@ -145,7 +145,7 @@
            }
            arrayList[j] = {
               name: paises[j],
-              data: [parseInt(sidesc), parseInt(por20), parseInt(por30), parseInt(por40), parseInt(por50), parseInt(por60), 
+              data: [parseInt(sidesc), parseInt(por20), parseInt(por30), parseInt(por40), parseInt(por50), parseInt(por60),
               parseInt(por70), parseInt(por80), parseInt(porz1), parseInt(porz2)]
             };
             options+='<tr onclick="location.href=\'/<?php echo $_SESSION['DEV']; ?>LovablePHP/PRG/ZPT/ZLO0009PA.php?id='+(j + 1)+'\'">';
@@ -201,14 +201,14 @@
             //isEmpty=true;
           }
           }
-         
+
           if (arrayList.length==0) {
             $("#grafica1").addClass("d-none");
           }
           $("#cbbAno, #cbbMes, #filtro1").on("change",function() {
             $("#formFiltros").submit();
           });
-         
+
               $("#myTableInvDesc").DataTable( {
         language: {
             url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json',
@@ -232,7 +232,7 @@
                     columns: [1,2,3,4,5,6,7,8,9,10,11,12]
                 },
                 title: 'ReporteInv Descuentos',
-                
+
                 customize: function (xlsx) {
                     var sheet = xlsx.xl.worksheets['sheet1.xml'];
                     var sSh = xlsx.xl['styles.xml'];
@@ -258,17 +258,17 @@
                     var s4 = '<xf numFmtId="0" fontId="2" fillId="2" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
                                 '<alignment horizontal="center" wrapText="1"/></xf>'
                     var s5 = '<xf  numFmtId="200" fontId="'+(lastFontIndex+1)+'" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
-                     '<alignment horizontal="right"/></xf>';  
+                     '<alignment horizontal="right"/></xf>';
                      var s6 = '<xf  numFmtId="200" fontId="'+(lastFontIndex+2)+'" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
-                     '<alignment horizontal="right"/></xf>';  
+                     '<alignment horizontal="right"/></xf>';
                      var s7 = '<xf  numFmtId="300" fontId="'+(lastFontIndex+1)+'" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
-                     '<alignment horizontal="right"/></xf>';  
+                     '<alignment horizontal="right"/></xf>';
                      var s8 = '<xf  numFmtId="300" fontId="'+(lastFontIndex+2)+'" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
                      '<alignment horizontal="right"/></xf>';
                     sSh.childNodes[0].childNodes[0].innerHTML += n1 + n2;
                     sSh.childNodes[0].childNodes[1].innerHTML += f1 + f2;
-                    sSh.childNodes[0].childNodes[5].innerHTML += s1 + s2 + s3 + s4 + s5 + s6 + s7 + s8; 
-                     
+                    sSh.childNodes[0].childNodes[5].innerHTML += s1 + s2 + s3 + s4 + s5 + s6 + s7 + s8;
+
                     var fourDecPlaces    = lastXfIndex + 1;
                     var greyBoldCentered = lastXfIndex + 2;
                     var twoDecPlacesBold = lastXfIndex + 3;
@@ -277,7 +277,7 @@
                     var textgreen1 = lastXfIndex + 6;
                     var textred2 = lastXfIndex + 7;
                     var textgreen2 = lastXfIndex + 8;
-                    
+
                     $('c[r=A1] t', sheet).text( 'INVENTARIO POR CLASIFICACIÓN DE PRODUCTOS TIENDAS' );
                     $('row:eq(0) c', sheet).attr( 's', greyBoldCentered );
                     $('row:eq(1) c', sheet).attr( 's', 7 );

@@ -29,10 +29,10 @@
                         tabPanels.attr('aria-hidden', 'true').addClass('is-hidden');
                         thisTabPanel.attr('aria-hidden', 'false').removeClass('is-hidden');
                     }
-          $("#cbbOrden2").val(<?php echo $ordenFiltro;  ?>); 
-          $("#cbbOrden3").val(<?php echo $ordenFiltro3;  ?>); 
-          $("#cbbOrden4").val(<?php echo $ordenFiltro4;  ?>); 
-          $("#filtro1").val(<?php echo $filtro1;  ?>); 
+          $("#cbbOrden2").val(<?php echo $ordenFiltro;  ?>);
+          $("#cbbOrden3").val(<?php echo $ordenFiltro3;  ?>);
+          $("#cbbOrden4").val(<?php echo $ordenFiltro4;  ?>);
+          $("#filtro1").val(<?php echo $filtro1;  ?>);
           $('#productos, #productos3, #productos4').prop('checked',<?php echo $productos;  ?>);
           $("#cbbOrden2, #productos, #filtro1").change(function() {
             $("#formOrden").submit();
@@ -47,13 +47,13 @@
 
 
            //LLENADO TABLA
-            var ordenPOV = '<?php echo $ordenFiltro; ?>';       
-            var otrosProd = '<?php echo $productos; ?>';  
-            var filtro1= '<?php echo $filtro1; ?>';  
-            var urlPOV='http://172.16.15.20/API.LovablePHP/ZLO0002P/ListPOV/?orden='+ordenPOV+'&otros='+otrosProd+''+'&filtro='+filtro1+'';
+            var ordenPOV = '<?php echo $ordenFiltro; ?>';
+            var otrosProd = '<?php echo $productos; ?>';
+            var filtro1= '<?php echo $filtro1; ?>';
+            var urlPOV='/API.LovablePHP/ZLO0002P/ListPOV/?orden='+ordenPOV+'&otros='+otrosProd+''+'&filtro='+filtro1+'';
             var responsePOV = ajaxRequest(urlPOV);
-            var ordenFab = '<?php echo $ordenFiltro4; ?>';   
-            var urlFab='http://172.16.15.20/API.LovablePHP/ZLO0002P/ListFabrica/?orden='+ordenFab+'&otros='+otrosProd+'';
+            var ordenFab = '<?php echo $ordenFiltro4; ?>';
+            var urlFab='/API.LovablePHP/ZLO0002P/ListFabrica/?orden='+ordenFab+'&otros='+otrosProd+'';
             var responseFab= ajaxRequest(urlFab);
           if (responsePOV.code==200) {
             var cantidadInv=0; var docenas=0; var decimales=0;
@@ -77,13 +77,13 @@
                 invArray.push(parseFloat(cantidadInv));
             }
            }
-           var ordenPaises = '<?php echo $ordenFiltro3; ?>'; 
-           var urlPaises='http://172.16.15.20/API.LovablePHP/ZLO0002P/ListPais/?orden='+ordenPaises+'&otros='+otrosProd+'';
+           var ordenPaises = '<?php echo $ordenFiltro3; ?>';
+           var urlPaises='/API.LovablePHP/ZLO0002P/ListPais/?orden='+ordenPaises+'&otros='+otrosProd+'';
            var responsePaises = ajaxRequest(urlPaises);
            if (responsePaises.code==200) {
             var paisArray=[]; var invPaisArray=[];
             for (let i = 0; i < responsePaises.data.length; i++) {
-                $("#myTableInventarioPaises").append(`<tr> 
+                $("#myTableInventarioPaises").append(`<tr>
                 <td class='fw-bold'>1</td>
                 <td class='fw-bold'>`+responsePaises.data[i]['Pais']+`</td>
                 <td class='fw-bold'>`+responsePaises.data[i]['MAESA2'].toLocaleString('es-419', {minimumFractionDigits: 2,maximumFractionDigits: 2})+`</td>
@@ -155,7 +155,7 @@
                     columns: [1,2]
                 },
                 title: 'ReporteInventario Tiendas',
-                
+
                 customize: function (xlsx) {
                     var sheet = xlsx.xl.worksheets['sheet1.xml'];
                     var sSh = xlsx.xl['styles.xml'];
@@ -181,17 +181,17 @@
                     var s4 = '<xf numFmtId="0" fontId="2" fillId="2" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
                                 '<alignment horizontal="center" wrapText="1"/></xf>'
                     var s5 = '<xf  numFmtId="200" fontId="'+(lastFontIndex+1)+'" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
-                     '<alignment horizontal="right"/></xf>';  
+                     '<alignment horizontal="right"/></xf>';
                      var s6 = '<xf  numFmtId="200" fontId="'+(lastFontIndex+2)+'" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
-                     '<alignment horizontal="right"/></xf>';  
+                     '<alignment horizontal="right"/></xf>';
                      var s7 = '<xf  numFmtId="300" fontId="'+(lastFontIndex+1)+'" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
-                     '<alignment horizontal="right"/></xf>';  
+                     '<alignment horizontal="right"/></xf>';
                      var s8 = '<xf  numFmtId="300" fontId="'+(lastFontIndex+2)+'" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
                      '<alignment horizontal="right"/></xf>';
                     sSh.childNodes[0].childNodes[0].innerHTML += n1 + n2;
                     sSh.childNodes[0].childNodes[1].innerHTML += f1 + f2;
-                    sSh.childNodes[0].childNodes[5].innerHTML += s1 + s2 + s3 + s4 + s5 + s6 + s7 + s8; 
-                     
+                    sSh.childNodes[0].childNodes[5].innerHTML += s1 + s2 + s3 + s4 + s5 + s6 + s7 + s8;
+
                     var fourDecPlaces    = lastXfIndex + 1;
                     var greyBoldCentered = lastXfIndex + 2;
                     var twoDecPlacesBold = lastXfIndex + 3;
@@ -200,7 +200,7 @@
                     var textgreen1 = lastXfIndex + 6;
                     var textred2 = lastXfIndex + 7;
                     var textgreen2 = lastXfIndex + 8;
-                    
+
                     $('c[r=A1] t', sheet).text( 'REPORTE DE INVENTARIO DISPONIBLE' );
                     $('row:eq(0) c', sheet).attr( 's', greyBoldCentered );
                     $('row:eq(1) c', sheet).attr( 's', 7 );
@@ -213,13 +213,13 @@
             }
            ]
           });
-   
+
           Chart.register(ChartDataLabels);
-          //GRAFICA PAISES BARRA    
-          
+          //GRAFICA PAISES BARRA
+
 
               Highcharts.chart('container2', {
-    lang: {      
+    lang: {
           viewFullscreen:"Ver en pantalla completa",
           exitFullscreen:"Salir de pantalla completa",
           downloadJPEG:"Descargar imagen JPEG",
@@ -276,7 +276,7 @@
               textShadow: false
             }
           }],
-        }, 
+        },
     ],
         exporting: {
               buttons: {
@@ -289,7 +289,7 @@
         sourceWidth: 1600,
         sourceHeight: 900,
         chartOptions: {
-        
+
           title: {
             style: {
                 fontSize: '20px',
@@ -303,7 +303,7 @@
               }
             }
           }],
-          
+
           xAxis: {
             //lineWidth: 1,
             labels: {
@@ -338,7 +338,7 @@
           },
         },
           },
-          
+
       });
             //GRAFICA PAISES DONA
             const ctx3 = document.getElementById('miGrafica3').getContext('2d');
@@ -376,9 +376,9 @@
                   "legend": {
                     "display": false,
                     "position": "bottom",
-                    
+
                   },
-                  datalabels: {   
+                  datalabels: {
                     color: '#fff',
                     offset: -10,
                   }
@@ -394,7 +394,7 @@
 
             //PAISES INVENTARIO
   Highcharts.chart('container', {
-    lang: {      
+    lang: {
           viewFullscreen:"Ver en pantalla completa",
           exitFullscreen:"Salir de pantalla completa",
           downloadJPEG:"Descargar imagen JPEG",
@@ -451,7 +451,7 @@
               textShadow: false
             }
           }],
-        }, 
+        },
     ],
         exporting: {
               buttons: {
@@ -464,7 +464,7 @@
         sourceWidth: 1600,
         sourceHeight: 900,
         chartOptions: {
-        
+
           title: {
             style: {
                 fontSize: '20px',
@@ -478,7 +478,7 @@
               }
             }
           }],
-          
+
           xAxis: {
             //lineWidth: 1,
             labels: {
@@ -513,7 +513,7 @@
           },
         },
           },
-          
+
       });
               //GRAFICA PUNTO DE VENTA DONA
             const ctx4 = document.getElementById('miGrafica4').getContext('2d');
@@ -552,7 +552,7 @@
                   "legend": {
                     "display": false,
                     "position": "bottom",
-                    
+
                   },
                   datalabels: {
                     formatter: (value, ctx) => {
@@ -572,11 +572,11 @@
                 }
             });
 
-             //GRAFICA FABRICA BARRA    
-          
+             //GRAFICA FABRICA BARRA
+
 
              Highcharts.chart('container3', {
-    lang: {      
+    lang: {
           viewFullscreen:"Ver en pantalla completa",
           exitFullscreen:"Salir de pantalla completa",
           downloadJPEG:"Descargar imagen JPEG",
@@ -632,7 +632,7 @@
               textShadow: false
             }
           }],
-        }, 
+        },
     ],
         exporting: {
               buttons: {
@@ -645,7 +645,7 @@
         sourceWidth: 1600,
         sourceHeight: 900,
         chartOptions: {
-        
+
           title: {
             style: {
                 fontSize: '20px',
@@ -659,7 +659,7 @@
               }
             }
           }],
-          
+
           xAxis: {
             //lineWidth: 1,
             labels: {
@@ -694,9 +694,9 @@
           },
         },
           },
-          
+
       });
         });
-         
-           
+
+
       </script>

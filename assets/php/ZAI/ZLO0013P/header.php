@@ -8,11 +8,143 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Ladda/1.0.0/spin.min.js" integrity="sha512-fgSmjQtBho/dzDJ+79r/yKH01H/35//QPPvA2LR8hnBTA5bTODFncYfSRuMal78C08vUa93q3jyxPa273cWzqA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Ladda/1.0.0/ladda.min.js" integrity="sha512-hZL8cWjOAFfWZza/p0uD0juwMeIuyLhAd5QDodiK4sBp1sG7BIeE1TbMGIbnUcUgwm3lVSWJzBK6KxqYTiDGkg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <style>
-    .table th {
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
+    html,
+    body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: auto;
     }
+    #body-div {
+      position: relative;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+    .table-frame {
+        height: calc(100vh - 220px);
+        overflow: auto;
+        z-index: 999;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 13px;
+    }
+    th {
+        white-space: nowrap;
+        text-align: center;
+    }
+    td {
+        white-space: nowrap;
+    }
+    /*th:nth-child(-n+6), td:nth-child(-n+6) {
+    position: sticky;
+    left: 0;
+    z-index: 2;
+    background-color: white;
+    }
+    th:nth-child(1), td:nth-child(1) { left: 0px; }
+    th:nth-child(2), td:nth-child(2) { left: 80px; }
+    th:nth-child(3), td:nth-child(3) { left: 135px; }
+    th:nth-child(4), td:nth-child(4) { left: 190px; }
+    th:nth-child(5), td:nth-child(5) { left: 245px; }
+    th:nth-child(6), td:nth-child(6) { left: 300px; }*/
+    #loaderScreen {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1040;
+      background-color: rgba(100, 100, 100,0.9);
+    }
+    #hiddenColumns {
+    z-index: 1050; /* Más alto que el loader */
+    position: relative; /* El z-index solo funciona en elementos posicionados */
+}
+    #menuFilter {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1050;
+    }
+    @media only screen and (min-width: 950px) {
+        #menuFilter {
+            height: 50%;
+        }
+    }
+    @media only screen and (min-width: 1450px) {
+        #menuFilter {
+            height: 60%;
+        }
+    }
+
+
+  /* Contenedor de paginación */
+#divPagination {
+    display: flex;
+    justify-content: center; /* Centrar los botones de paginación */
+    padding: 10px;
+    margin-top: 10px;
+    background-color: #f8f9fa; /* Color de fondo similar al de Bootstrap */
+    border: 1px solid #dee2e6; /* Borde como en Bootstrap */
+    border-radius: 0.25rem; /* Bordes redondeados */
+}
+#divRows {
+    display: flex;
+    justify-content: center; /* Centrar los botones de paginación */
+    padding: 10px;
+    margin-top: 10px;
+    background-color: #f8f9fa; /* Color de fondo similar al de Bootstrap */
+    border: 1px solid #dee2e6; /* Borde como en Bootstrap */
+    border-radius: 0.25rem; /* Bordes redondeados */
+    font-weight: bold;
+}
+
+/* Botones de paginación */
+#divPagination .paginate_button {
+    padding: 0.5rem 0.75rem; /* Padding similar al de los botones de Bootstrap */
+    margin-left: 4px; /* Espacio entre botones */
+    border: 1px solid #dee2e6; /* Borde de botones */
+    border-radius: 0.25rem; /* Bordes redondeados */
+    color: #007bff; /* Color azul de Bootstrap para enlaces */
+    text-decoration: none; /* Sin subrayado */
+    background-color: white; /* Fondo blanco */
+    cursor: pointer; /* Cursor tipo puntero para indicar clickeable */
+}
+
+/* Botones de paginación al pasar el mouse */
+#divPagination .paginate_button:hover {
+    color: white;
+    background-color: #007bff; /* Fondo azul al pasar el mouse */
+    border-color: #0056b3; /* Borde más oscuro al pasar el mouse */
+}
+
+/* Botón actualmente seleccionado (página actual) */
+#divPagination .paginate_button.current, #divPagination .paginate_button.current:hover {
+    color: white;
+    background-color: #007bff;
+    border-color: #0056b3;
+}
+
+/* Botones deshabilitados (anterior/siguiente cuando no aplicable) */
+#divPagination .paginate_button.disabled, #divPagination .paginate_button.disabled:hover {
+    color: #6c757d; /* Color gris para elementos deshabilitados */
+    pointer-events: none; /* Evita que se pueda interactuar con el botón */
+    background-color: #e9ecef;
+    border-color: #dee2e6;
+}
+
+
+
+
+
+
+
+
     .imgButtons {
         width: 50px;
     }
@@ -42,10 +174,6 @@
     }
     #myTablePlaneacion_filter input[type="search"] {
         display: none;
-    }
-
-   .table-responsive {
-        overflow-x: auto;
     }
 
     .table-container {

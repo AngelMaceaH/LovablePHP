@@ -452,7 +452,7 @@
             const cbbAgrup = document.getElementById('cbbAgrup');
             document.getElementById('loaderExcel').classList.remove('d-none');
             valAgrup= cbbAgrup.value;
-            var url = "http://172.16.15.20/API.LovablePHP/ZLO0025P/Export/?anopro=" + valAno +
+            var url = "/API.LovablePHP/ZLO0025P/Export/?anopro=" + valAno +
                 "&agrup=" + valAgrup + "&cia=" + cbbAgrup.options[cbbAgrup.selectedIndex].text;
             fetch(url)
                 .then(response => response.blob())
@@ -488,7 +488,7 @@
         gArray['line80Desc1'] = [];
         gArray['lineZ1Desc1'] = [];
         gArray['lineZ2Desc1'] = [];
-        var urlList = "http://172.16.15.20/API.LovablePHP/ZLO0025P/List/?anopro=" + valAno + "&agrup=" + valAgrup;
+        var urlList = "/API.LovablePHP/ZLO0025P/List/?anopro=" + valAno + "&agrup=" + valAgrup;
         let lblAno1 = document.getElementById('lblano1');
         lblAno1.innerHTML = 'Año ' + valAno;
         const tbDetalle = document.getElementById('tableInventarioDetalle');
@@ -688,7 +688,7 @@
         gArray['line80Desc2'] = [];
         gArray['lineZ1Desc2'] = [];
         gArray['lineZ2Desc2'] = [];
-        var urlList = "http://172.16.15.20/API.LovablePHP/ZLO0025P/List/?anopro=" + valAno + "&agrup=" + valAgrup;
+        var urlList = "/API.LovablePHP/ZLO0025P/List/?anopro=" + valAno + "&agrup=" + valAgrup;
         let lblAno2 = document.getElementById('lblano2');
         lblAno2.innerHTML = 'Año ' + valAno;
         const tbDetalle = document.getElementById('tableInventarioDetalle2');
@@ -876,7 +876,7 @@
     }
 
     function chargeHistoricoInit(valAno, valAgrup) {
-        var url = "http://172.16.15.20/API.LovablePHP/ZLO0025P/ListHistorico/?anopro=" + valAno + "&agrup=" + valAgrup +
+        var url = "/API.LovablePHP/ZLO0025P/ListHistorico/?anopro=" + valAno + "&agrup=" + valAgrup +
             "";
         fetch(url)
             .then(response => response.json())
@@ -1045,7 +1045,7 @@
     }
 
     function chargeHistorico(valAno, valAgrup) {
-        var url = "http://172.16.15.20/API.LovablePHP/ZLO0025P/ListHistorico/?anopro=" + valAno + "&agrup=" + valAgrup +
+        var url = "/API.LovablePHP/ZLO0025P/ListHistorico/?anopro=" + valAno + "&agrup=" + valAgrup +
             "";
         fetch(url)
             .then(response => response.json())

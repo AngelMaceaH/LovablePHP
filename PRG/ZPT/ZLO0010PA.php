@@ -9,7 +9,7 @@
       include '../layout-prg.php';
       $anopro=isset($_SESSION['anofiltro2'])? $_SESSION['anofiltro2']:date("Y");
       $mespro=isset($_SESSION['mesfiltro2'])? $_SESSION['mesfiltro2']:date("m");
-    ?> 
+    ?>
      <div class="container-fluid">
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb my-0 ms-2">
@@ -66,7 +66,7 @@
                       <figure class="highcharts-figure" >
                                 <div id="container" ></div>
                         </figure>
-                    </div> 
+                    </div>
               <div class="table-responsive mt-3" style="width:100%">
                           <table id="myTableInvDesc" class="table stripe table-hover " style="width:100%">
                             <thead>
@@ -92,11 +92,11 @@
                           </table>
                       </div>
                     </div>
-          </div> 
+          </div>
         </div>
       </div>
     </div>
-   
+
       <div class="footer bg-blck flex-grow-1 d-flex justify-content-center">
       <p class="bggray responsive-font-example"><i>Lovable de Honduras S.A. de C.V</i></p>
       </div>
@@ -112,7 +112,7 @@
             var por50='';var por60='';var por70='';var por80='';var porz1='';var porz2='';var total='';
           $("#cbbAno").val(anopro);
           $("#cbbMes").val(mespro);
-          var urlList="http://172.16.15.20/API.LovablePHP/ZLO0010P/List/?anopro="+anopro+"&mespro="+mespro+"";
+          var urlList="/API.LovablePHP/ZLO0010P/List/?anopro="+anopro+"&mespro="+mespro+"";
           var options="";
           var isEmpty=false;
           var responseList=ajaxRequest(urlList);
@@ -193,7 +193,7 @@
           $("#cbbAno, #cbbMes").on("change",function() {
             $("#formFiltros").submit();
           });
-          
+
               $("#myTableInvDesc").DataTable( {
         language: {
             url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json',
@@ -217,7 +217,7 @@
                     columns: [1,2,3,4,5,6,7,8,9,10,11,12,13]
                 },
                 title: 'ReporteInv Descuentos',
-                
+
                 customize: function (xlsx) {
                     var sheet = xlsx.xl.worksheets['sheet1.xml'];
                     var sSh = xlsx.xl['styles.xml'];
@@ -243,17 +243,17 @@
                     var s4 = '<xf numFmtId="0" fontId="2" fillId="2" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
                                 '<alignment horizontal="center" wrapText="1"/></xf>'
                     var s5 = '<xf  numFmtId="200" fontId="'+(lastFontIndex+1)+'" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
-                     '<alignment horizontal="right"/></xf>';  
+                     '<alignment horizontal="right"/></xf>';
                      var s6 = '<xf  numFmtId="200" fontId="'+(lastFontIndex+2)+'" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
-                     '<alignment horizontal="right"/></xf>';  
+                     '<alignment horizontal="right"/></xf>';
                      var s7 = '<xf  numFmtId="300" fontId="'+(lastFontIndex+1)+'" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
-                     '<alignment horizontal="right"/></xf>';  
+                     '<alignment horizontal="right"/></xf>';
                      var s8 = '<xf  numFmtId="300" fontId="'+(lastFontIndex+2)+'" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
                      '<alignment horizontal="right"/></xf>';
                     sSh.childNodes[0].childNodes[0].innerHTML += n1 + n2;
                     sSh.childNodes[0].childNodes[1].innerHTML += f1 + f2;
-                    sSh.childNodes[0].childNodes[5].innerHTML += s1 + s2 + s3 + s4 + s5 + s6 + s7 + s8; 
-                     
+                    sSh.childNodes[0].childNodes[5].innerHTML += s1 + s2 + s3 + s4 + s5 + s6 + s7 + s8;
+
                     var fourDecPlaces    = lastXfIndex + 1;
                     var greyBoldCentered = lastXfIndex + 2;
                     var twoDecPlacesBold = lastXfIndex + 3;
@@ -262,7 +262,7 @@
                     var textgreen1 = lastXfIndex + 6;
                     var textred2 = lastXfIndex + 7;
                     var textgreen2 = lastXfIndex + 8;
-                    
+
                     $('c[r=A1] t', sheet).text( 'INVENTARIO POR CLASIFICACIÓN DE PRODUCTOS FABRICA' );
                     $('row:eq(0) c', sheet).attr( 's', greyBoldCentered );
                     $('row:eq(1) c', sheet).attr( 's', 7 );
@@ -283,7 +283,7 @@
     chart: {
         type: 'column'
     },
-    lang: {      
+    lang: {
           viewFullscreen:"Ver en pantalla completa",
           exitFullscreen:"Salir de pantalla completa",
           downloadJPEG:"Descargar imagen JPEG",
@@ -313,7 +313,7 @@
     xAxis: {
         categories: ['Sin descuento','10%','20%','30%', '40%', '50%', '60%', '70%', '80%', 'Z1', 'Z2'],
         labels: {
-          
+
             x: -10
         }
     },
@@ -342,8 +342,8 @@
                 color: '#000',
             }
         }],
-        }, 
-      
+        },
+
     ],
     exporting: {
           buttons: {
@@ -356,13 +356,13 @@
     sourceWidth: 1200,
     sourceHeight:900,
     chartOptions: {
-     
+
       title: {
         style: {
             fontSize: '20px',
                 }
          },
-    
+
       xAxis: {
         //lineWidth: 1,
         labels: {
@@ -397,7 +397,7 @@
       },
     },
       },
-      
+
   });
         });
       </script>

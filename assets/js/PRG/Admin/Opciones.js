@@ -5,7 +5,7 @@ $(document).ready(function () {
     chargeOpciones();
     chargeProgramas();
     $("#tab3").on("click", function () {
-        var urlModulos = "http://172.16.15.20/API.LovablePHP/Opc/ListMod/";
+        var urlModulos = "/API.LovablePHP/Opc/ListMod/";
         var response = ajaxRequest(urlModulos);
         var opcMod = "";
         if (response.code == 200) {
@@ -19,7 +19,7 @@ $(document).ready(function () {
         }
         $("#srcModulo").on("change", function () {
             var modulo = $("#srcModulo").val().split("-")[0];
-            var urlModulos = "http://172.16.15.20/API.LovablePHP/Opc/ListOpc/?modulo=" + modulo + "";
+            var urlModulos = "/API.LovablePHP/Opc/ListOpc/?modulo=" + modulo + "";
             var response = ajaxRequest(urlModulos);
             var opcOpc = ``;
             if (response.code == 200) {
@@ -42,7 +42,7 @@ $(document).ready(function () {
         "processing": true,
         "serverSide": true,
         "ajax": {
-            "url": "http://172.16.15.20/API.LovablePHP/Users/GETAsync/",
+            "url": "/API.LovablePHP/Users/GETAsync/",
             "type": "POST",
             "complete": function (xhr) {
                 //console.log(xhr.responseJSON);
@@ -120,7 +120,7 @@ function chargeModules() {
         "pageLength": 50,
         "ordering": false,
         "ajax": {
-            "url": "http://172.16.15.20/API.LovablePHP/Opc/Mod/",
+            "url": "/API.LovablePHP/Opc/Mod/",
             "type": "POST",
             error: function (xhr, status, error) {
                 console.log(error);
@@ -178,7 +178,7 @@ function stateModules(check) {
     if ($(check).is(':checked')) {
         estadoactual = 1;
     }
-    var urlchange = "http://172.16.15.20/API.LovablePHP/Opc/changeMod/?code=" + modulo + "&estad=" + estadoactual +
+    var urlchange = "/API.LovablePHP/Opc/changeMod/?code=" + modulo + "&estad=" + estadoactual +
         "";
     var response = ajaxRequest(urlchange);
     if (response.code == 200) {
@@ -215,7 +215,7 @@ function saveModule() {
         $("#lblError").text('Rellene la información solicitada');
     } else {
         $("#lblError").text('');
-        var urlsave = "http://172.16.15.20/API.LovablePHP/Opc/createMod/?desc=" + descrp + "&abrv=" + abrv + "";
+        var urlsave = "/API.LovablePHP/Opc/createMod/?desc=" + descrp + "&abrv=" + abrv + "";
         var response = ajaxRequest(urlsave);
         if (response.code == 200) {
             $("#lblError").text('');
@@ -228,7 +228,7 @@ function saveModule() {
     }
 }
 function delModule(id) {
-    var deleteUrl = "http://172.16.15.20/API.LovablePHP/Opc/deleteMod/?code=" + id + "";
+    var deleteUrl = "/API.LovablePHP/Opc/deleteMod/?code=" + id + "";
     var response = ajaxRequest(deleteUrl);
     if (response.code == 200) {
         chargeModules();
@@ -237,7 +237,7 @@ function delModule(id) {
     }
 }
 function editModule(id) {
-    var urlFind = "http://172.16.15.20/API.LovablePHP/Opc/findMod/?code=" + id + "";
+    var urlFind = "/API.LovablePHP/Opc/findMod/?code=" + id + "";
     var response = ajaxRequest(urlFind);
     if (response.code == 200) {
         $("#titleModal").text("Editar un módulo");
@@ -270,7 +270,7 @@ function saveEditModule() {
         $("#lblErrorEdit").text('Rellene la información solicitada');
     } else {
         $("#lblErrorEdit").text('');
-        var urlsave = "http://172.16.15.20/API.LovablePHP/Opc/EditMod/?code=" + modulo + "&desc=" + descrp + "";
+        var urlsave = "/API.LovablePHP/Opc/EditMod/?code=" + modulo + "&desc=" + descrp + "";
         var response = ajaxRequest(urlsave);
         if (response.code == 200) {
             $("#lblErrorEdit").text('');
@@ -316,7 +316,7 @@ function chargeOpciones() {
             [1, 'asc']
         ],
         "ajax": {
-            "url": "http://172.16.15.20/API.LovablePHP/Opc/Opc/",
+            "url": "/API.LovablePHP/Opc/Opc/",
             "type": "POST",
             error: function (xhr, status, error) {
                 console.log(error);
@@ -382,7 +382,7 @@ function chargeOpciones() {
     });
 }
 function createOpciones() {
-    var urlModulos = "http://172.16.15.20/API.LovablePHP/Opc/ListMod/";
+    var urlModulos = "/API.LovablePHP/Opc/ListMod/";
     var response = ajaxRequest(urlModulos);
     var opcMod = "";
     if (response.code == 200) {
@@ -427,7 +427,7 @@ function saveOpcion() {
         $("#lblError").text('Rellene la información solicitada');
     } else {
         $("#lblError").text('');
-        var urlsave = "http://172.16.15.20/API.LovablePHP/Opc/createOpc/?modulo=" + modulo + "&desc=" + descrp + "";
+        var urlsave = "/API.LovablePHP/Opc/createOpc/?modulo=" + modulo + "&desc=" + descrp + "";
         var response = ajaxRequest(urlsave);
         if (response.code == 200) {
             $("#lblError").text('');
@@ -444,7 +444,7 @@ function stateOpcion(check) {
     if ($(check).is(':checked')) {
         estadoactual = 1;
     }
-    var urlchange = "http://172.16.15.20/API.LovablePHP/Opc/changeOpc/?code=" + modulo + "&estad=" + estadoactual +
+    var urlchange = "/API.LovablePHP/Opc/changeOpc/?code=" + modulo + "&estad=" + estadoactual +
         "";
     var response = ajaxRequest(urlchange);
     if (response.code == 200) {
@@ -453,7 +453,7 @@ function stateOpcion(check) {
     }
 }
 function delOpcion(id) {
-    var deleteUrl = "http://172.16.15.20/API.LovablePHP/Opc/deleteOpc/?code=" + id + "";
+    var deleteUrl = "/API.LovablePHP/Opc/deleteOpc/?code=" + id + "";
     var response = ajaxRequest(deleteUrl);
     if (response.code == 200) {
         chargeOpciones();
@@ -461,7 +461,7 @@ function delOpcion(id) {
     }
 }
 function editOpcion(id) {
-    var urlModulos = "http://172.16.15.20/API.LovablePHP/Opc/ListMod/";
+    var urlModulos = "/API.LovablePHP/Opc/ListMod/";
     var response = ajaxRequest(urlModulos);
     var opcMod = "";
     if (response.code == 200) {
@@ -471,7 +471,7 @@ function editOpcion(id) {
                 `<option value="${response.data[index]['CODIGO']}">${response.data[index]['DESCRP']}</option>`;
         }
     }
-    var urlFind = "http://172.16.15.20/API.LovablePHP/Opc/findOpcion/?code=" + id + "";
+    var urlFind = "/API.LovablePHP/Opc/findOpcion/?code=" + id + "";
     var response = ajaxRequest(urlFind);
     if (response.code == 200) {
         $("#titleModal").text("Editar una opción");
@@ -514,7 +514,7 @@ function saveEditOpcion() {
         $("#lblErrorEdit").text('Rellene la información solicitada');
     } else {
         $("#lblErrorEdit").text('');
-        var urlsave = "http://172.16.15.20/API.LovablePHP/Opc/EditOpc/?code=" + opcion + "&modulo=" + modulo +
+        var urlsave = "/API.LovablePHP/Opc/EditOpc/?code=" + opcion + "&modulo=" + modulo +
             "&desc=" + descrp + "";
         var response = ajaxRequest(urlsave);
         if (response.code == 200) {
@@ -562,7 +562,7 @@ function chargeProgramas() {
             [1, 'asc']
         ],
         "ajax": {
-            "url": "http://172.16.15.20/API.LovablePHP/Opc/Prg/?modulo=" + modulo + "&opcion=" + opcion + "",
+            "url": "/API.LovablePHP/Opc/Prg/?modulo=" + modulo + "&opcion=" + opcion + "",
             "type": "POST",
             error: function (xhr, status, error) {
                 console.log(error);
@@ -645,7 +645,7 @@ function chargeProgramas() {
     });
 }
 function createProgramas() {
-    var urlModulos = "http://172.16.15.20/API.LovablePHP/Opc/ListMod/";
+    var urlModulos = "/API.LovablePHP/Opc/ListMod/";
     var response = ajaxRequest(urlModulos);
     var opcMod = "";
     if (response.code == 200) {
@@ -687,7 +687,7 @@ function createProgramas() {
                                <i class="fa-solid fa-floppy-disk"></i> Guardar</button>`);
     $("#txtModulo").change(function () {
         var modulo = $("#txtModulo").val().split("-")[0];
-        var urlModulos = "http://172.16.15.20/API.LovablePHP/Opc/ListOpc/?modulo=" + modulo + "";
+        var urlModulos = "/API.LovablePHP/Opc/ListOpc/?modulo=" + modulo + "";
         var response = ajaxRequest(urlModulos);
         var opcOpc = ``;
         $("#divOpcion").empty();
@@ -716,7 +716,7 @@ function saveProgramas() {
         $("#lblError").text('Rellene la información solicitada');
     } else {
         $("#lblError").text('');
-        var urlsave = "http://172.16.15.20/API.LovablePHP/Opc/createPrg/?code=" + codigo + "&modulo=" + modulo +
+        var urlsave = "/API.LovablePHP/Opc/createPrg/?code=" + codigo + "&modulo=" + modulo +
             "&opcion=" + opcion + "&desc=" + descrp + "&abrv=" + abrv + "";
         var response = ajaxRequest(urlsave);
         if (response.code == 200) {
@@ -737,7 +737,7 @@ function stateProgramas(check) {
     if ($(check).is(':checked')) {
         estadoactual = 1;
     }
-    var urlchange = "http://172.16.15.20/API.LovablePHP/Opc/changePrg/?code=" + modulo + "&estad=" + estadoactual +
+    var urlchange = "/API.LovablePHP/Opc/changePrg/?code=" + modulo + "&estad=" + estadoactual +
         "";
     var response = ajaxRequest(urlchange);
     if (response.code == 200) {
@@ -745,14 +745,14 @@ function stateProgramas(check) {
     }
 }
 function delProgramas(id) {
-    var deleteUrl = "http://172.16.15.20/API.LovablePHP/Opc/deletePrg/?code=" + id + "";
+    var deleteUrl = "/API.LovablePHP/Opc/deletePrg/?code=" + id + "";
     var response = ajaxRequest(deleteUrl);
     if (response.code == 200) {
         chargeProgramas();
     }
 }
 function editProgramas(id) {
-    var urlModulos = "http://172.16.15.20/API.LovablePHP/Opc/ListMod/";
+    var urlModulos = "/API.LovablePHP/Opc/ListMod/";
     var response = ajaxRequest(urlModulos);
     var opcMod = "";
     if (response.code == 200) {
@@ -761,7 +761,7 @@ function editProgramas(id) {
                 `<option value="${response.data[index]['CODIGO']}">${response.data[index]['DESCRP']}</option>`;
         }
     }
-    var urlFind = "http://172.16.15.20/API.LovablePHP/Opc/findPrg/?code=" + id + "";
+    var urlFind = "/API.LovablePHP/Opc/findPrg/?code=" + id + "";
     var responseFind = ajaxRequest(urlFind);
     if (responseFind.code == 200) {
         $("#titleModal").text("Editar un programa");
@@ -799,7 +799,7 @@ function editProgramas(id) {
         $("#contentFooter").append(`<button type="button" class="btn btn-warning text-white fw-bold" onclick="saveEditProgramas()">
        <i class="fas fa-edit text-white"></i> Actualizar</button>`);
         $("#txtModuloEdit").val(responseFind.data[0]['MODULO']);
-        var urlModulos = "http://172.16.15.20/API.LovablePHP/Opc/ListOpc/?modulo=" + responseFind.data[0][
+        var urlModulos = "/API.LovablePHP/Opc/ListOpc/?modulo=" + responseFind.data[0][
             'MODULO'] + "";
         var response = ajaxRequest(urlModulos);
         var opcOpc = ``;
@@ -820,7 +820,7 @@ function editProgramas(id) {
 
         $("#txtModuloEdit").change(function () {
             var modulo = $("#txtModuloEdit").val();
-            var urlModulos = "http://172.16.15.20/API.LovablePHP/Opc/ListOpc/?modulo=" + modulo + "";
+            var urlModulos = "/API.LovablePHP/Opc/ListOpc/?modulo=" + modulo + "";
             var response = ajaxRequest(urlModulos);
             var opcOpc = ``;
             $("#divOpcionEdit").empty();
@@ -847,7 +847,7 @@ function saveEditProgramas() {
         $("#lblErrorEdit").text('Rellene la información solicitada');
     } else {
         $("#lblErrorEdit").text('');
-        var urlsave = "http://172.16.15.20/API.LovablePHP/Opc/EditPrg/?code=" + codigo + "&modulo=" + modulo +
+        var urlsave = "/API.LovablePHP/Opc/EditPrg/?code=" + codigo + "&modulo=" + modulo +
             "&opcion=" + opcion + "&desc=" + descrp + "&code2=" + codigo2 + "";
         var response = ajaxRequest(urlsave);
         if (response.code == 200) {
@@ -861,7 +861,7 @@ function saveEditProgramas() {
     }
 }
 function asignarPrograma(code) {
-    var urlFind = "http://172.16.15.20/API.LovablePHP/Opc/FindUsua/?code=" + code + "";
+    var urlFind = "/API.LovablePHP/Opc/FindUsua/?code=" + code + "";
     var responseFind = ajaxRequest(urlFind);
     usuarios = [];
     var row = "";
@@ -884,7 +884,7 @@ function asignarPrograma(code) {
     $("#modalPrograma").modal("show");
 }
 function saveAsignados() {
-    var urlFind = "http://172.16.15.20/API.LovablePHP/Opc/AsignarUsua/";
+    var urlFind = "/API.LovablePHP/Opc/AsignarUsua/";
     var code = $("#prgCode").text();
     var responseFind = ajaxRequest(urlFind, { "code": code, "codusu": usuarios }, "POST");
     if (responseFind.code == 200) {
@@ -892,7 +892,7 @@ function saveAsignados() {
     }
 }
 function delAsignado(usuario, code) {
-    var urlFind = "http://172.16.15.20/API.LovablePHP/Opc/DelAsigUsua/?modulo=" + usuario + "&code=" + code + "";
+    var urlFind = "/API.LovablePHP/Opc/DelAsigUsua/?modulo=" + usuario + "&code=" + code + "";
     var responseFind = ajaxRequest(urlFind);
     usuarios.splice(usuarios.indexOf(usuario), 1);
     $("#tableUsuariosBody").empty();

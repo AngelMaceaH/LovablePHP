@@ -125,7 +125,7 @@
         var currentYear = new Date().getFullYear();
         yearSelected = getCookie('year') || currentYear;
         var select = document.getElementById('setYear');
-        for (var year = 2023; year <= currentYear; year++) {
+        for (var year = currentYear; year >= 2023; year--) {
             var option = document.createElement('option');
             option.value = year;
             option.textContent = year;
@@ -138,7 +138,7 @@
         });
         $("#exportExcel").on('click', function() {
             document.getElementById('loaderExcel').classList.remove('d-none');
-            var url = "http://172.16.15.20/API.LovablePHP/ZLO0017P/Export/?anio=" + yearSelected + "";
+            var url = "/API.LovablePHP/ZLO0017P/Export/?anio=" + yearSelected + "";
 
             fetch(url)
                 .then(response => response.blob())
@@ -188,7 +188,7 @@
 
 
         var rowtd = "";
-        var urlRegistros = "http://172.16.15.20/API.LovablePHP/ZLO0017P/PaisesR/?anio=" + yearSelected + "";
+        var urlRegistros = "/API.LovablePHP/ZLO0017P/PaisesR/?anio=" + yearSelected + "";
         var responseRegistros = ajaxRequest(urlRegistros);
         tbody.append(`<tr class="border border-dark">
                             <td colspan="1" class="bg-dark text-white fw-bold text-center sticky-col">REGISTROS</td>
@@ -443,7 +443,7 @@
             'ACUMULADOS NORMALES'
         ];
         var rowtd = "";
-        var urlTransacciones = "http://172.16.15.20/API.LovablePHP/ZLO0017P/PaisesT/?anio=" + yearSelected + "";
+        var urlTransacciones = "/API.LovablePHP/ZLO0017P/PaisesT/?anio=" + yearSelected + "";
         var responseTransacciones = ajaxRequest(urlTransacciones);
         tbody.append(`<tr><td colspan='74'></td></tr>
                           <tr class="border border-dark">
@@ -772,7 +772,7 @@
             '% DE TRANSACCIONES DE CLIENTES NORMALES'
         ];
         var rowtd = "";
-        var urlPTransacciones = " http://172.16.15.20/API.LovablePHP/ZLO0017P/PaisesPT/?anio=" + yearSelected +
+        var urlPTransacciones = " /API.LovablePHP/ZLO0017P/PaisesPT/?anio=" + yearSelected +
             "";
         var responsePTransacciones = ajaxRequest(urlPTransacciones);
         tbody.append(`<tr><td colspan='74'></td></tr>
@@ -952,7 +952,7 @@
             '% DE CLIENTES QUE BRINDARON SOLO CORREO'
         ];
         var rowtd = "";
-        var urlDesglose = "http://172.16.15.20/API.LovablePHP/ZLO0017P/PaisesD/?anio=" + yearSelected + "";
+        var urlDesglose = "/API.LovablePHP/ZLO0017P/PaisesD/?anio=" + yearSelected + "";
         var responseDesglose = ajaxRequest(urlDesglose);
         tbody.append(`<tr><td colspan='74'></td></tr>
                           <tr class="border border-dark">
@@ -1168,7 +1168,7 @@
             'TICKET PROMEDIO  GENERAL'
         ];
         var rowtd = "";
-        var urlTicket = "http://172.16.15.20/API.LovablePHP/ZLO0017P/PaisesTC/?anio=" + yearSelected + "";
+        var urlTicket = "/API.LovablePHP/ZLO0017P/PaisesTC/?anio=" + yearSelected + "";
         var responseTicket = ajaxRequest(urlTicket);
         tbody.append(`<tr><td colspan='74'></td></tr>
                           <tr class="border border-dark">
@@ -1334,7 +1334,7 @@
 
         //TIENDAS----------------------------------------------------------------------------------------------------------------------
         var arrayTiendas = ['NUMERO DE TIENDAS'];
-        var urlTiendas = "http://172.16.15.20/API.LovablePHP/ZLO0017P/PaisesTiendas/";
+        var urlTiendas = "/API.LovablePHP/ZLO0017P/PaisesTiendas/";
         var responseTiendas = ajaxRequest(urlTiendas);
         if (responseTiendas.code == 200) {
             let data = responseTiendas.data;

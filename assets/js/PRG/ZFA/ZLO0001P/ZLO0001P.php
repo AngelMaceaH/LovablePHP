@@ -4,7 +4,7 @@
 var usuario = '<?php echo $_SESSION["CODUSU"];?>';
 
 // Definir la URL para obtener la lista de Comarc
-var urlComarc = 'http://172.16.15.20/API.LovablePHP/ZLO0001P/ListComarc/?usuario=' + usuario + '';
+var urlComarc = '/API.LovablePHP/ZLO0001P/ListComarc/?usuario=' + usuario + '';
 
 // Realizar la solicitud AJAX para obtener la lista de Comarc
 var responseComarc = ajaxRequest(urlComarc);
@@ -25,27 +25,27 @@ var url1 = "",
 switch (case1) {
     case 1:
         // Caso 1: Unidades
-        url1 = 'http://172.16.15.20/API.LovablePHP/ZLO0001P/ListUnidades1/?fechaFiltro=' + fechafiltro +
+        url1 = '/API.LovablePHP/ZLO0001P/ListUnidades1/?fechaFiltro=' + fechafiltro +
             '&compFiltro=' + compfiltro + '&usuario=' + usuario + '&case=' + case1 + '&vend=1';
-        url2 = 'http://172.16.15.20/API.LovablePHP/ZLO0001P/ListUnidades2/?fechaFiltro=' + fechafiltro +
+        url2 = '/API.LovablePHP/ZLO0001P/ListUnidades2/?fechaFiltro=' + fechafiltro +
             '&compFiltro=' + compfiltro + '&usuario=' + usuario + '&case=' + case1 + '&vend=1';
-        url3 = 'http://172.16.15.20/API.LovablePHP/ZLO0001P/ListUnidades3/?fechaFiltro=' + fechafiltro +
+        url3 = '/API.LovablePHP/ZLO0001P/ListUnidades3/?fechaFiltro=' + fechafiltro +
             '&compFiltro=' + compfiltro + '&usuario=' + usuario + '&case=' + case1 + '&vend=1';
         break;
     case 2:
         // Caso 2: Transacciones
-        url1 = 'http://172.16.15.20/API.LovablePHP/ZLO0001P/ListTransacciones1/?fechaFiltro=' + fechafiltro +
+        url1 = '/API.LovablePHP/ZLO0001P/ListTransacciones1/?fechaFiltro=' + fechafiltro +
             '&compFiltro=' + compfiltro + '&usuario=' + usuario + '&case=' + case1 + '&vend=1';
-        url2 = 'http://172.16.15.20/API.LovablePHP/ZLO0001P/ListTransacciones2/?fechaFiltro=' + fechafiltro +
+        url2 = '/API.LovablePHP/ZLO0001P/ListTransacciones2/?fechaFiltro=' + fechafiltro +
             '&compFiltro=' + compfiltro + '&usuario=' + usuario + '&case=' + case1 + '&vend=1';
         break;
     default:
         // Caso por defecto: Valores
-        url1 = 'http://172.16.15.20/API.LovablePHP/ZLO0001P/ListValores1/?fechaFiltro=' + fechafiltro +
+        url1 = '/API.LovablePHP/ZLO0001P/ListValores1/?fechaFiltro=' + fechafiltro +
             '&compFiltro=' + compfiltro + '&usuario=' + usuario + '&case=' + case1 + '&vend=1';
-        url2 = 'http://172.16.15.20/API.LovablePHP/ZLO0001P/ListValores2/?fechaFiltro=' + fechafiltro +
+        url2 = '/API.LovablePHP/ZLO0001P/ListValores2/?fechaFiltro=' + fechafiltro +
             '&compFiltro=' + compfiltro + '&usuario=' + usuario + '&case=' + case1 + '&vend=1';
-        url3 = 'http://172.16.15.20/API.LovablePHP/ZLO0001P/ListValores3/?fechaFiltro=' + fechafiltro +
+        url3 = '/API.LovablePHP/ZLO0001P/ListValores3/?fechaFiltro=' + fechafiltro +
             '&compFiltro=' + compfiltro + '&usuario=' + usuario + '&case=' + case1 + '&vend=1';
         break;
 }

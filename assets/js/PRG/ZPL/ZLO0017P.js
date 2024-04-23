@@ -8,12 +8,12 @@ $(document).ready(function () {
  fechaActual = new Date();
  mesActual = fechaActual.getMonth() + 1;
  anioActual = fechaActual.getFullYear();
-var urlGenerales = "http://172.16.15.20/API.LovablePHP/ZLO0017P/Generales/?anio=" + anioActual;
+var urlGenerales = "/API.LovablePHP/ZLO0017P/Generales/?anio=" + anioActual;
  responseGenerales = ajaxRequest(urlGenerales);
 
  mes = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
  labelMeses = [];
- 
+
 var rows=" ";
 for (let i = 0; i < responseGenerales.data.length; i++) {
   labelMeses[i] = mes[responseGenerales.data[i]['MESPRO'] - 1];
@@ -33,9 +33,9 @@ for (let i = 0; i < responseGenerales.data.length; i++) {
   rows += `</tr>`;
 }
 $("#tbodyGenerales").append(rows);
-  
+
 //TABLA
-$("#tableGenerales").DataTable( {   
+$("#tableGenerales").DataTable( {
   language: {
       url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json',
   },
@@ -48,7 +48,7 @@ $("#tableGenerales").DataTable( {
           text: '<i class="fa-solid fa-file-excel"></i> <b >Enviar a Excel</b>',
           className: "btn btn-success text-light fs-6 ",
           title: 'Estadisticas generales - programa lealtad',
-          
+
           customize: function (xlsx) {
               var sheet = xlsx.xl.worksheets['sheet1.xml'];
               var sSh = xlsx.xl['styles.xml'];
@@ -65,7 +65,7 @@ $("#tableGenerales").DataTable( {
                '<name val="Calibri" />'+
                '<color rgb="007800" />'+ // color verde en la fuente
              '</font>';
-               
+
               var n1 = '<numFmt formatCode="##0%"   numFmtId="300"/>';
               var n2 = '<numFmt formatCode="#,##0.00"   numFmtId="200" />';
               var s1 = '<xf numFmtId="300" fontId="0" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyNumberFormat="1"/>';
@@ -75,17 +75,17 @@ $("#tableGenerales").DataTable( {
               var s4 = '<xf numFmtId="0" fontId="2" fillId="2" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
                           '<alignment horizontal="center" wrapText="1"/></xf>'
               var s5 = '<xf  numFmtId="200" fontId="'+(lastFontIndex+1)+'" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
-               '<alignment horizontal="right"/></xf>';  
+               '<alignment horizontal="right"/></xf>';
                var s6 = '<xf  numFmtId="200" fontId="'+(lastFontIndex+2)+'" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
-               '<alignment horizontal="right"/></xf>';  
+               '<alignment horizontal="right"/></xf>';
                var s7 = '<xf  numFmtId="300" fontId="'+(lastFontIndex+1)+'" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
-               '<alignment horizontal="right"/></xf>';  
+               '<alignment horizontal="right"/></xf>';
                var s8 = '<xf  numFmtId="300" fontId="'+(lastFontIndex+2)+'" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
                '<alignment horizontal="right"/></xf>';
               sSh.childNodes[0].childNodes[0].innerHTML += n1 + n2;
               sSh.childNodes[0].childNodes[1].innerHTML += f1 + f2;
-              sSh.childNodes[0].childNodes[5].innerHTML += s1 + s2 + s3 + s4 + s5 + s6 + s7 + s8; 
-               
+              sSh.childNodes[0].childNodes[5].innerHTML += s1 + s2 + s3 + s4 + s5 + s6 + s7 + s8;
+
               var fourDecPlaces    = lastXfIndex + 1;
               var greyBoldCentered = lastXfIndex + 2;
               var twoDecPlacesBold = lastXfIndex + 3;
@@ -94,23 +94,23 @@ $("#tableGenerales").DataTable( {
               var textgreen1 = lastXfIndex + 6;
               var textred2 = lastXfIndex + 7;
               var textgreen2 = lastXfIndex + 8;
-              
+
               $('c[r=A1] t', sheet).text( 'ESTÁDISTICAS GENERALES - PROGRAMA LEALTAD ' );
               $('row:eq(0) c', sheet).attr( 's', greyBoldCentered );
-              $('row:eq(1) c', sheet).attr( 's', 7 ); 
+              $('row:eq(1) c', sheet).attr( 's', 7 );
 
               var tagName = sSh.getElementsByTagName('sz');
               for (i = 0; i < tagName.length; i++) {
                 tagName[i].setAttribute("val", "13");
               }
-              
+
 
             }
       }
   ]
     });
 
-var urlComarc = 'http://172.16.15.20/API.LovablePHP/ZLO0001P/ListComarc/?usuario=' + usuario + '';
+var urlComarc = '/API.LovablePHP/ZLO0001P/ListComarc/?usuario=' + usuario + '';
 var responseComarc = ajaxRequest(urlComarc);
 console.log(responseComarc.data);
 if (responseComarc.code == 200) {
@@ -221,7 +221,7 @@ if (creci4 <= 0) {
 </svg>`);
 }
 
-//GRAFICAS--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------  
+//GRAFICAS--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Disable the on-canvas tooltip
 Chart.defaults.pointHitDetectionRadius = 1;
 Chart.defaults.plugins.tooltip.enabled = false;
@@ -409,7 +409,7 @@ const cardChart4 = new Chart(document.getElementById('card-chart4'), {
 
 Highcharts.chart('container1', {
   chart: {
-    type: 'spline' 
+    type: 'spline'
 },
 lang: {
   viewFullscreen: "Ver en pantalla completa",
@@ -431,12 +431,12 @@ exporting: {
   title: {
       text: '<h2 class="fs-4">Historial total de clientes</h2>',
       align: 'left',
-      y: 10 
+      y: 10
   },
   subtitle: {
     text: '<div class="fs-6"><span>'+obtenerNombreMesActual(responseGenerales.data[0]['MESPRO']) + " " + responseGenerales.data[0]['ANOPRO']+' - '+obtenerNombreMesActual(responseGenerales.data[responseGenerales.data.length-1]['MESPRO']) + " " + responseGenerales.data[responseGenerales.data.length-1]['ANOPRO']+'</span></div>',
     align: 'left',
-    y: 35 
+    y: 35
 },
   yAxis: {
       title: {
@@ -447,7 +447,7 @@ exporting: {
         accessibility: {
             rangeDescription: ' '
         }
-    }, 
+    },
   legend: {
     enabled:true
   },
@@ -459,7 +459,7 @@ exporting: {
   }, {
       name: 'Clientes viejos',
       data: histClientesViejos,
-      type: 'areaspline',  
+      type: 'areaspline',
       fillColor: 'rgba(0,0,0,.1)'
   }],
 });
@@ -467,7 +467,7 @@ exporting: {
 
 Highcharts.chart('container2', {
   chart: {
-    type: 'spline' 
+    type: 'spline'
 },
 lang: {
   viewFullscreen: "Ver en pantalla completa",
@@ -489,12 +489,12 @@ exporting: {
   title: {
       text: '<h2 class="fs-4">Historial total de contactos</h2>',
       align: 'left',
-      y: 10 
+      y: 10
   },
   subtitle: {
     text: '<div class="fs-6"><span>'+obtenerNombreMesActual(responseGenerales.data[0]['MESPRO']) + " " + responseGenerales.data[0]['ANOPRO']+' - '+obtenerNombreMesActual(responseGenerales.data[responseGenerales.data.length-1]['MESPRO']) + " " + responseGenerales.data[responseGenerales.data.length-1]['ANOPRO']+'</span></div>',
     align: 'left',
-    y: 35 
+    y: 35
 },
   yAxis: {
       title: {
@@ -505,7 +505,7 @@ exporting: {
         accessibility: {
             rangeDescription: ' '
         }
-    }, 
+    },
   legend: {
     enabled:true
   },
@@ -514,7 +514,7 @@ exporting: {
   series: [{
       name: 'Telefonos',
       data: histTelefono,
-      type: 'areaspline',  
+      type: 'areaspline',
       fillColor: 'rgba(0,0,0,.1)'
   }, {
       name: 'Correos electronicos',
@@ -526,7 +526,7 @@ exporting: {
 
 Highcharts.chart('container3', {
   chart: {
-    type: 'column' 
+    type: 'column'
 },
 lang: {
   viewFullscreen: "Ver en pantalla completa",
@@ -548,12 +548,12 @@ exporting: {
   title: {
       text: '<h2 class="fs-4">Historial total de transacciones</h2>',
       align: 'left',
-      y: 10 
+      y: 10
   },
   subtitle: {
     text: '<div class="fs-6"><span>'+obtenerNombreMesActual(responseGenerales.data[0]['MESPRO']) + " " + responseGenerales.data[0]['ANOPRO']+' - '+obtenerNombreMesActual(responseGenerales.data[responseGenerales.data.length-1]['MESPRO']) + " " + responseGenerales.data[responseGenerales.data.length-1]['ANOPRO']+'</span></div>',
     align: 'left',
-    y: 35 
+    y: 35
 },
   yAxis: {
       title: {
@@ -564,7 +564,7 @@ exporting: {
         accessibility: {
             rangeDescription: ' '
         }
-    }, 
+    },
   legend: {
     enabled:true
   },
@@ -617,7 +617,7 @@ function obtenerNombreMesActual(mesActual) {
   return meses[mesActual - 1];
 }
 
-//PAISES--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------  
+//PAISES--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function chargeTableP(response) {
   var div=$("#tablePaisesDiv");
   div.empty();
@@ -626,7 +626,7 @@ function chargeTableP(response) {
           <table  id="tablePaises" class="table stripe table-hover " style="width:100%; height:650px;">
               <thead>
                   <tr>
-                      <th class="text-start">Mes</th>     
+                      <th class="text-start">Mes</th>
                       <th class="text-end">Clientes Viejos</th>
                       <th class="text-end">%</th>
                       <th class="text-end">Clientes Nuevos</th>
@@ -665,7 +665,7 @@ function chargeTableP(response) {
     }
     $("#tbodyPaises").append(rows);
 
-    $("#tablePaises").DataTable( {   
+    $("#tablePaises").DataTable( {
       language: {url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json',},
       "ordering": false,
       "pageLength": 50,
@@ -676,7 +676,7 @@ function chargeTableP(response) {
               text: '<i class="fa-solid fa-file-excel"></i> <b >Enviar a Excel</b>',
               className: "btn btn-success text-light fs-6 ",
               title: 'Estadisticas '+$("#cbbPais2 option:selected").text()+' - programa lealtad',
-              
+
               customize: function (xlsx) {
                   var sheet = xlsx.xl.worksheets['sheet1.xml'];
                   var sSh = xlsx.xl['styles.xml'];
@@ -693,7 +693,7 @@ function chargeTableP(response) {
                    '<name val="Calibri" />'+
                    '<color rgb="007800" />'+ // color verde en la fuente
                  '</font>';
-                   
+
                   var n1 = '<numFmt formatCode="##0%"   numFmtId="300"/>';
                   var n2 = '<numFmt formatCode="#,##0.00"   numFmtId="200" />';
                   var s1 = '<xf numFmtId="300" fontId="0" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyNumberFormat="1"/>';
@@ -703,17 +703,17 @@ function chargeTableP(response) {
                   var s4 = '<xf numFmtId="0" fontId="2" fillId="2" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
                               '<alignment horizontal="center" wrapText="1"/></xf>'
                   var s5 = '<xf  numFmtId="200" fontId="'+(lastFontIndex+1)+'" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
-                   '<alignment horizontal="right"/></xf>';  
+                   '<alignment horizontal="right"/></xf>';
                    var s6 = '<xf  numFmtId="200" fontId="'+(lastFontIndex+2)+'" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
-                   '<alignment horizontal="right"/></xf>';  
+                   '<alignment horizontal="right"/></xf>';
                    var s7 = '<xf  numFmtId="300" fontId="'+(lastFontIndex+1)+'" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
-                   '<alignment horizontal="right"/></xf>';  
+                   '<alignment horizontal="right"/></xf>';
                    var s8 = '<xf  numFmtId="300" fontId="'+(lastFontIndex+2)+'" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
                    '<alignment horizontal="right"/></xf>';
                   sSh.childNodes[0].childNodes[0].innerHTML += n1 + n2;
                   sSh.childNodes[0].childNodes[1].innerHTML += f1 + f2;
-                  sSh.childNodes[0].childNodes[5].innerHTML += s1 + s2 + s3 + s4 + s5 + s6 + s7 + s8; 
-                   
+                  sSh.childNodes[0].childNodes[5].innerHTML += s1 + s2 + s3 + s4 + s5 + s6 + s7 + s8;
+
                   var fourDecPlaces    = lastXfIndex + 1;
                   var greyBoldCentered = lastXfIndex + 2;
                   var twoDecPlacesBold = lastXfIndex + 3;
@@ -722,11 +722,11 @@ function chargeTableP(response) {
                   var textgreen1 = lastXfIndex + 6;
                   var textred2 = lastXfIndex + 7;
                   var textgreen2 = lastXfIndex + 8;
-                  
+
                   $('c[r=A1] t', sheet).text( 'ESTÁDISTICAS '+$("#cbbPais2 option:selected").text()+' - PROGRAMA LEALTAD ' );
                   $('row:eq(0) c', sheet).attr( 's', greyBoldCentered );
-                  $('row:eq(1) c', sheet).attr( 's', 7 ); 
-    
+                  $('row:eq(1) c', sheet).attr( 's', 7 );
+
                   var tagName = sSh.getElementsByTagName('sz');
                   for (i = 0; i < tagName.length; i++) {
                     tagName[i].setAttribute("val", "13");
@@ -742,7 +742,7 @@ function chargePaises() {
   paisesDiv.empty();
 
   var paises = $("#cbbPais").val();
-  var urlPaises = "http://172.16.15.20/API.LovablePHP/ZLO0017P/Paises/?anio=" + anioActual+"&paises="+paises+"";
+  var urlPaises = "/API.LovablePHP/ZLO0017P/Paises/?anio=" + anioActual+"&paises="+paises+"";
   var responsePaises = ajaxRequest(urlPaises);
 
   if (responsePaises.code==200) {
@@ -869,7 +869,7 @@ function chargePaises() {
                       <span class="visually-hidden">Next</span>
                   </button>
               </div>`);
-            
+
 
   var data=responsePaises.data;
   //Valores CARTAS
@@ -1138,7 +1138,7 @@ var histClientesNuevos = []; var histClientesViejos = [];
         });
               Highcharts.chart('container4', {
                 chart: {
-                  type: 'spline' 
+                  type: 'spline'
               },
               lang: {
                 viewFullscreen: "Ver en pantalla completa",
@@ -1160,12 +1160,12 @@ var histClientesNuevos = []; var histClientesViejos = [];
                 title: {
                     text: '<h2 class="fs-4">Historial total de clientes - '+paisSelected+'</h2>',
                     align: 'left',
-                    y: 10 
+                    y: 10
                 },
                 subtitle: {
                   text: '<div class="fs-6"><span>'+obtenerNombreMesActual(data[0]['MESPRO']) + " " + data[0]['ANOPRO']+' - '+obtenerNombreMesActual(data[data.length-1]['MESPRO']) + " " + data[data.length-1]['ANOPRO']+'</span></div>',
                   align: 'left',
-                  y: 35 
+                  y: 35
               },
                 yAxis: {
                     title: {
@@ -1176,7 +1176,7 @@ var histClientesNuevos = []; var histClientesViejos = [];
                       accessibility: {
                           rangeDescription: ' '
                       }
-                  }, 
+                  },
                 legend: {
                   enabled:false
                 },
@@ -1188,15 +1188,15 @@ var histClientesNuevos = []; var histClientesViejos = [];
                 }, {
                     name: 'Clientes viejos',
                     data: histClientesViejos,
-                    type: 'areaspline',  
+                    type: 'areaspline',
                     fillColor: 'rgba(0,0,0,.1)'
                 }],
-            
+
             });
-            
+
             Highcharts.chart('container5', {
               chart: {
-                type: 'spline' 
+                type: 'spline'
             },
             lang: {
               viewFullscreen: "Ver en pantalla completa",
@@ -1218,12 +1218,12 @@ var histClientesNuevos = []; var histClientesViejos = [];
               title: {
                   text: '<h2 class="fs-4">Historial total de contactos - '+paisSelected+'</h2>',
                   align: 'left',
-                  y: 10 
+                  y: 10
               },
               subtitle: {
                 text: '<div class="fs-6"><span>'+obtenerNombreMesActual(data[0]['MESPRO']) + " " + data[0]['ANOPRO']+' - '+obtenerNombreMesActual(data[data.length-1]['MESPRO']) + " " + data[data.length-1]['ANOPRO']+'</span></div>',
                 align: 'left',
-                y: 35 
+                y: 35
             },
               yAxis: {
                   title: {
@@ -1234,7 +1234,7 @@ var histClientesNuevos = []; var histClientesViejos = [];
                     accessibility: {
                         rangeDescription: ' '
                     }
-                }, 
+                },
               legend: {
                 enabled:true
               },
@@ -1243,19 +1243,19 @@ var histClientesNuevos = []; var histClientesViejos = [];
               series: [{
                   name: 'Telefonos',
                   data: histTelefono,
-                  type: 'areaspline',  
+                  type: 'areaspline',
                   fillColor: 'rgba(0,0,0,.1)'
               }, {
                   name: 'Correos electronicos',
                   data: histEmail,
               }],
             });
-          
-            
+
+
 
 Highcharts.chart('container6', {
   chart: {
-    type: 'column' 
+    type: 'column'
 },
 lang: {
   viewFullscreen: "Ver en pantalla completa",
@@ -1277,12 +1277,12 @@ exporting: {
   title: {
       text: '<h2 class="fs-4">Historial total de transacciones - '+paisSelected+'</h2>',
       align: 'left',
-      y: 10 
+      y: 10
   },
   subtitle: {
     text: '<div class="fs-6"><span>'+obtenerNombreMesActual(data[0]['MESPRO']) + " " + data[0]['ANOPRO']+' - '+obtenerNombreMesActual(data[data.length-1]['MESPRO']) + " " + data[data.length-1]['ANOPRO']+'</span></div>',
     align: 'left',
-    y: 35 
+    y: 35
 },
   yAxis: {
       title: {
@@ -1293,7 +1293,7 @@ exporting: {
         accessibility: {
             rangeDescription: ' '
         }
-    }, 
+    },
   legend: {
     enabled:true
   },
@@ -1317,7 +1317,7 @@ exporting: {
 
 
 
-//TIENDAS--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------  
+//TIENDAS--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function chargeTableT(response) {
   var div=$("#tableTiendasDiv");
   div.empty();
@@ -1326,7 +1326,7 @@ function chargeTableT(response) {
           <table  id="tableTiendas" class="table stripe table-hover " style="width:100%; height:650px;">
               <thead>
                   <tr>
-                      <th class="text-start">Mes</th>     
+                      <th class="text-start">Mes</th>
                       <th class="text-end">Clientes Viejos</th>
                       <th class="text-end">%</th>
                       <th class="text-end">Clientes Nuevos</th>
@@ -1365,7 +1365,7 @@ function chargeTableT(response) {
     }
     $("#tbodyTiendas").append(rows);
 
-    $("#tableTiendas").DataTable( {   
+    $("#tableTiendas").DataTable( {
       language: {url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json',},
       "ordering": false,
       "pageLength": 50,
@@ -1376,7 +1376,7 @@ function chargeTableT(response) {
               text: '<i class="fa-solid fa-file-excel"></i> <b >Enviar a Excel</b>',
               className: "btn btn-success text-light fs-6 ",
               title: 'Estadisticas '+$("#cbbCia2 option:selected").text()+' - programa lealtad',
-              
+
               customize: function (xlsx) {
                   var sheet = xlsx.xl.worksheets['sheet1.xml'];
                   var sSh = xlsx.xl['styles.xml'];
@@ -1393,7 +1393,7 @@ function chargeTableT(response) {
                    '<name val="Calibri" />'+
                    '<color rgb="007800" />'+ // color verde en la fuente
                  '</font>';
-                   
+
                   var n1 = '<numFmt formatCode="##0%"   numFmtId="300"/>';
                   var n2 = '<numFmt formatCode="#,##0.00"   numFmtId="200" />';
                   var s1 = '<xf numFmtId="300" fontId="0" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyNumberFormat="1"/>';
@@ -1403,17 +1403,17 @@ function chargeTableT(response) {
                   var s4 = '<xf numFmtId="0" fontId="2" fillId="2" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
                               '<alignment horizontal="center" wrapText="1"/></xf>'
                   var s5 = '<xf  numFmtId="200" fontId="'+(lastFontIndex+1)+'" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
-                   '<alignment horizontal="right"/></xf>';  
+                   '<alignment horizontal="right"/></xf>';
                    var s6 = '<xf  numFmtId="200" fontId="'+(lastFontIndex+2)+'" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
-                   '<alignment horizontal="right"/></xf>';  
+                   '<alignment horizontal="right"/></xf>';
                    var s7 = '<xf  numFmtId="300" fontId="'+(lastFontIndex+1)+'" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
-                   '<alignment horizontal="right"/></xf>';  
+                   '<alignment horizontal="right"/></xf>';
                    var s8 = '<xf  numFmtId="300" fontId="'+(lastFontIndex+2)+'" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
                    '<alignment horizontal="right"/></xf>';
                   sSh.childNodes[0].childNodes[0].innerHTML += n1 + n2;
                   sSh.childNodes[0].childNodes[1].innerHTML += f1 + f2;
-                  sSh.childNodes[0].childNodes[5].innerHTML += s1 + s2 + s3 + s4 + s5 + s6 + s7 + s8; 
-                   
+                  sSh.childNodes[0].childNodes[5].innerHTML += s1 + s2 + s3 + s4 + s5 + s6 + s7 + s8;
+
                   var fourDecPlaces    = lastXfIndex + 1;
                   var greyBoldCentered = lastXfIndex + 2;
                   var twoDecPlacesBold = lastXfIndex + 3;
@@ -1422,11 +1422,11 @@ function chargeTableT(response) {
                   var textgreen1 = lastXfIndex + 6;
                   var textred2 = lastXfIndex + 7;
                   var textgreen2 = lastXfIndex + 8;
-                  
+
                   $('c[r=A1] t', sheet).text( 'ESTÁDISTICAS '+$("#cbbCia2 option:selected").text()+' - PROGRAMA LEALTAD ' );
                   $('row:eq(0) c', sheet).attr( 's', greyBoldCentered );
-                  $('row:eq(1) c', sheet).attr( 's', 7 ); 
-    
+                  $('row:eq(1) c', sheet).attr( 's', 7 );
+
                   var tagName = sSh.getElementsByTagName('sz');
                   for (i = 0; i < tagName.length; i++) {
                     tagName[i].setAttribute("val", "13");
@@ -1442,7 +1442,7 @@ function chargeTiendas() {
   tiendasDiv.empty();
 
   var tienda = $("#cbbCia").val();
-  var urlTiendas = "http://172.16.15.20/API.LovablePHP/ZLO0017P/Tiendas/?anio="+anioActual+"&tiendas="+tienda+"";
+  var urlTiendas = "/API.LovablePHP/ZLO0017P/Tiendas/?anio="+anioActual+"&tiendas="+tienda+"";
   var responseTiendas = ajaxRequest(urlTiendas);
     chargeTableT(responseTiendas.data);
     tiendasDiv.append(`<div class="row mt-1">
@@ -1567,7 +1567,7 @@ function chargeTiendas() {
                       <span class="visually-hidden">Next</span>
                   </button>
               </div>`);
-            
+
 
   var data=[];
   if (responseTiendas.code==200) {
@@ -1584,10 +1584,10 @@ var histUsuarios = []; var histEmail = []; var histTelefono = []; var histTrans 
 var histClientesNuevos = []; var histClientesViejos = [];
 for (let j = 0; j < labelMeses.length; j++) {
    histUsuarios[j] = 0;
-   histEmail[j] = 0;  
-   histTelefono[j] = 0;  
+   histEmail[j] = 0;
+   histTelefono[j] = 0;
    histTrans[j] = 0;
-  
+
 }
       var telefonosActual=0; var emailActual=0;
       var telefonosPorcenActual=0; var emailsPorcenActual=0;
@@ -1602,7 +1602,7 @@ for (let j = 0; j < labelMeses.length; j++) {
               clieViejosActual = data[i]['CLIVIE'];
               nuevosPorcenActual = data[i]['PORCE2'];
               viejosPorcenActual = data[i]['PORCE1'];
-  
+
               emailActual = data[i]['EMAIL'];
               telefonosActual = data[i]['TELEFO'];
               telefonosPorcenActual = data[i]['PORCE5'];
@@ -1761,7 +1761,7 @@ for (let j = 0; j < labelMeses.length; j++) {
             }
           }
         })
-        
+
         // eslint-disable-next-line no-unused-vars
         var cardChart3 = new Chart(document.getElementById('card-chart11'), {
           type: 'line',
@@ -1805,7 +1805,7 @@ for (let j = 0; j < labelMeses.length; j++) {
             }
           }
         })
-        
+
         // eslint-disable-next-line no-unused-vars
         var cardChart4 = new Chart(document.getElementById('card-chart12'), {
           type: 'line',
@@ -1852,7 +1852,7 @@ for (let j = 0; j < labelMeses.length; j++) {
 
               Highcharts.chart('container7', {
                 chart: {
-                  type: 'spline' 
+                  type: 'spline'
               },
               lang: {
                 viewFullscreen: "Ver en pantalla completa",
@@ -1874,12 +1874,12 @@ for (let j = 0; j < labelMeses.length; j++) {
                 title: {
                     text: '<h2 class="fs-4">Historial total de clientes - '+tiendaSelected+'</h2>',
                     align: 'left',
-                    y: 10 
+                    y: 10
                 },
                 subtitle: {
                   text: '<div class="fs-6"><span>'+obtenerNombreMesActual(data[0]['MESPRO']) + " " + data[0]['ANOPRO']+' - '+obtenerNombreMesActual(data[data.length-1]['MESPRO']) + " " + data[data.length-1]['ANOPRO']+'</span></div>',
                   align: 'left',
-                  y: 35 
+                  y: 35
               },
                 yAxis: {
                     title: {
@@ -1890,7 +1890,7 @@ for (let j = 0; j < labelMeses.length; j++) {
                       accessibility: {
                           rangeDescription: ' '
                       }
-                  }, 
+                  },
                 legend: {
                   enabled:false
                 },
@@ -1902,15 +1902,15 @@ for (let j = 0; j < labelMeses.length; j++) {
                 }, {
                     name: 'Clientes viejos',
                     data: histClientesViejos,
-                    type: 'areaspline',  
+                    type: 'areaspline',
                     fillColor: 'rgba(0,0,0,.1)'
                 }],
-            
+
             });
-            
+
             Highcharts.chart('container8', {
               chart: {
-                type: 'spline' 
+                type: 'spline'
             },
             lang: {
               viewFullscreen: "Ver en pantalla completa",
@@ -1932,12 +1932,12 @@ for (let j = 0; j < labelMeses.length; j++) {
               title: {
                   text: '<h2 class="fs-4">Historial total de contactos - '+tiendaSelected+'</h2>',
                   align: 'left',
-                  y: 10 
+                  y: 10
               },
               subtitle: {
                 text: '<div class="fs-6"><span>'+obtenerNombreMesActual(data[0]['MESPRO']) + " " + data[0]['ANOPRO']+' - '+obtenerNombreMesActual(data[data.length-1]['MESPRO']) + " " + data[data.length-1]['ANOPRO']+'</span></div>',
                 align: 'left',
-                y: 35 
+                y: 35
             },
               yAxis: {
                   title: {
@@ -1948,7 +1948,7 @@ for (let j = 0; j < labelMeses.length; j++) {
                     accessibility: {
                         rangeDescription: ' '
                     }
-                }, 
+                },
               legend: {
                 enabled:true
               },
@@ -1957,19 +1957,19 @@ for (let j = 0; j < labelMeses.length; j++) {
               series: [{
                   name: 'Telefonos',
                   data: histTelefono,
-                  type: 'areaspline',  
+                  type: 'areaspline',
                   fillColor: 'rgba(0,0,0,.1)'
               }, {
                   name: 'Correos electronicos',
                   data: histEmail,
               }],
             });
-          
-            
+
+
 
 Highcharts.chart('container9', {
   chart: {
-    type: 'column' 
+    type: 'column'
 },
 lang: {
   viewFullscreen: "Ver en pantalla completa",
@@ -1991,12 +1991,12 @@ exporting: {
   title: {
       text: '<h2 class="fs-4">Historial total de transacciones - '+tiendaSelected+'</h2>',
       align: 'left',
-      y: 10 
+      y: 10
   },
   subtitle: {
     text: '<div class="fs-6"><span>'+obtenerNombreMesActual(data[0]['MESPRO']) + " " + data[0]['ANOPRO']+' - '+obtenerNombreMesActual(data[data.length-1]['MESPRO']) + " " + data[data.length-1]['ANOPRO']+'</span></div>',
     align: 'left',
-    y: 35 
+    y: 35
 },
   yAxis: {
       title: {
@@ -2007,7 +2007,7 @@ exporting: {
         accessibility: {
             rangeDescription: ' '
         }
-    }, 
+    },
   legend: {
     enabled:true
   },
@@ -2026,7 +2026,7 @@ exporting: {
       data: histTrans,
   },],
 });
-  
 
-  
+
+
 }

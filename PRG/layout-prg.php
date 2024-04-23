@@ -123,7 +123,7 @@
                                                 <a class="dropdown-item p-2" href="/<?php echo $_SESSION['DEV'] ?>LovablePHP/PRG/Admin/Opciones.php"><i class="fa-solid fa-bars me-2"></i>Menú</a>`);
         }
         //MODULOS
-        var urlModulos = 'http://172.16.15.20/API.LovablePHP/Opc/LayoutM/?code=' + usuario + '';
+        var urlModulos = '/API.LovablePHP/Opc/LayoutM/?code=' + usuario + '';
         var responseModulos = ajaxRequest(urlModulos);
         if (responseModulos.code == 200) {
             for (let i = 0; i < responseModulos.data.length; i++) {
@@ -139,9 +139,9 @@
             }
         }
         //SUBMODULOS
-        var urlSubModulosCount = 'http://172.16.15.20/API.LovablePHP/Opc/LayoutSCount/?code=' + usuario + '';
+        var urlSubModulosCount = '/API.LovablePHP/Opc/LayoutSCount/?code=' + usuario + '';
         var responseSMCount = ajaxRequest(urlSubModulosCount);
-        var urlSubModulos = 'http://172.16.15.20/API.LovablePHP/Opc/LayoutS/';
+        var urlSubModulos = '/API.LovablePHP/Opc/LayoutS/';
         var responseSM = ajaxRequest(urlSubModulos);
         if (responseSM.code == 200 && responseSMCount.code == 200) {
             for (let i = 0; i < responseSM.data.length; i++) {
@@ -167,7 +167,7 @@
         }
 
         //PROGRAMAS
-        var urlProgramas = 'http://172.16.15.20/API.LovablePHP/Opc/LayoutP/?code=' + usuario + '';
+        var urlProgramas = '/API.LovablePHP/Opc/LayoutP/?code=' + usuario + '';
         var responsePRG = ajaxRequest(urlProgramas);
         var arrayOrder=responsePRG.data;
         arrayOrder.sort((a, b) => {
@@ -235,7 +235,7 @@
 
         var anoing = "<?php echo isset($_SESSION['ANOING'])? $_SESSION['ANOING']: ''; ?>";
         var numemp = "<?php echo isset($_SESSION['NUMEMP'])? $_SESSION['NUMEMP']: ''; ?>";
-        var getArea="http://172.16.15.20/API.LovablePHP/ZLO0016P/FindArea/?anoing="+anoing+"&numemp="+numemp+"";
+        var getArea="/API.LovablePHP/ZLO0016P/FindArea/?anoing="+anoing+"&numemp="+numemp+"";
             var responseArea = ajaxRequest(getArea);
             if (responseArea.code==200){
                 $("#descripArea").text(responseArea.data['SECDES']);
@@ -244,7 +244,7 @@
           anoing=1;
           numemp=1;
         }else{
-          var getArea="http://172.16.15.20/API.LovablePHP/ZLO0016P/FindArea/?anoing="+anoing+"&numemp="+numemp+"";
+          var getArea="/API.LovablePHP/ZLO0016P/FindArea/?anoing="+anoing+"&numemp="+numemp+"";
             var responseArea = ajaxRequest(getArea);
             var areaDesc='';
             var areaId='';
@@ -261,7 +261,7 @@
                                         <span class="text-end" style="font-size: 14px;">Depto: (`+areaId+`) `+areaDesc+`</span>&nbsp;&nbsp;
                                     </div>`);
         }
-        var urlCia="http://172.16.15.20/API.LovablePHP/Access/GetCia/?anoing="+anoing+"&numemp="+numemp+"";
+        var urlCia="/API.LovablePHP/Access/GetCia/?anoing="+anoing+"&numemp="+numemp+"";
         var responseCia=ajaxRequest(urlCia);
         if(responseCia.code==200){
           $("#userCia").text(responseCia.data[0]['COMDES']);

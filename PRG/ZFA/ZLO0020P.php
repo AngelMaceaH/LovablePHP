@@ -302,7 +302,7 @@
         mes1 = mes1.toString().padStart(2, '0');
         var filterBy = document.getElementById("filterBy");
         var showBy = document.getElementById("showBy");
-        var url = 'http://172.16.15.20/API.LovablePHP/ZLO0020P/ListPanel1/?fechaFiltro=' + ano1 + mes1 + '01&usuario=' +
+        var url = '/API.LovablePHP/ZLO0020P/ListPanel1/?fechaFiltro=' + ano1 + mes1 + '01&usuario=' +
             usuario + '&case=' + dolar + '&vend=1&filtro=' + filterBy.value + '&mostrar=' + showBy.value;
         var response = ajaxRequest(url);
         var resultData = [];
@@ -702,7 +702,7 @@
         mes1 = mes1.toString().padStart(2, '0');
         var filterBy = document.getElementById("filterBy");
         var showBy = document.getElementById("showBy");
-        var url = 'http://172.16.15.20/API.LovablePHP/ZLO0020P/ListPanel2/?fechaFiltro=' + ano1 + mes1 + '01&usuario=' +
+        var url = '/API.LovablePHP/ZLO0020P/ListPanel2/?fechaFiltro=' + ano1 + mes1 + '01&usuario=' +
             usuario + '&case=' + dolar + '&vend=1&filtro=' + filterBy.value + '&mostrar=' + showBy.value + '';
         var response = ajaxRequest(url);
         var resultData = [];
@@ -1097,7 +1097,7 @@
     function chargeTab3(ano1, ano2) {
         var filterBy = document.getElementById("filterBy");
         var showBy = document.getElementById("showBy");
-        var url = 'http://172.16.15.20/API.LovablePHP/ZLO0020P/ListPanel3/?fechaFiltro=' + ano1 + mes1 + '01&usuario=' +
+        var url = '/API.LovablePHP/ZLO0020P/ListPanel3/?fechaFiltro=' + ano1 + mes1 + '01&usuario=' +
             usuario + '&case=' + dolar + '&vend=1&filtro=' + filterBy.value + '&mostrar=' + showBy.value + '';
         var response = ajaxRequest(url);
         var resultData = [];
@@ -1481,7 +1481,7 @@
     function chargeTab4(ano1, ano2, mes1) {
         var filterBy = document.getElementById("filterBy");
         var showBy = document.getElementById("showBy");
-        var url = 'http://172.16.15.20/API.LovablePHP/ZLO0020P/ListPanel4/?fechaFiltro=' + ano1 + mes1 + '01&usuario=' +
+        var url = '/API.LovablePHP/ZLO0020P/ListPanel4/?fechaFiltro=' + ano1 + mes1 + '01&usuario=' +
             usuario + '&case=' + dolar + '&vend=1&filtro=' + filterBy.value + '&mostrar=' + showBy.value + '';
         var response = ajaxRequest(url);
         var resultData = [];

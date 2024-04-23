@@ -26,7 +26,7 @@ $(document).ready(function() {
     // Se obtiene el usuario de la sesión
     var usuario = '<?php echo $_SESSION["CODUSU"];?>';
     // Se construye la URL para obtener las comarcas
-    var urlComarc = 'http://172.16.15.20/API.LovablePHP/ZLO0001P/ListComarc/?usuario=' + usuario + '';
+    var urlComarc = '/API.LovablePHP/ZLO0001P/ListComarc/?usuario=' + usuario + '';
     // Se realiza la petición AJAX
     var responseComarc = ajaxRequest(urlComarc);
     // Si la respuesta es exitosa, se llenan los selectores con las comarcas
@@ -117,7 +117,7 @@ $(document).ready(function() {
         nofiltro = '0';
     }
 
-    var urlFactura = 'http://172.16.15.20/API.LovablePHP/ZLO0001P/ListFacturas/?fechaFiltro=' + fechafiltro +
+    var urlFactura = '/API.LovablePHP/ZLO0001P/ListFacturas/?fechaFiltro=' + fechafiltro +
         '&compFiltro=' + compfiltro + '&ck1=' + ck1 + '&noFiltro=' + nofiltro + '';
     var responseFactura = ajaxRequest(urlFactura);
     var Facto2Tot = 0;
@@ -226,7 +226,7 @@ $(document).ready(function() {
     var ck2 = '<?php echo $ckProductos2;?>';
     var mes2 = '<?php echo  $mesficha; ?>';
     var ano2 = '<?php echo  $anioficha; ?>';
-    var urlDias = 'http://172.16.15.20/API.LovablePHP/ZLO0001P/ListDias/?mes=' + mes2 + '&anio=' + ano2 +
+    var urlDias = '/API.LovablePHP/ZLO0001P/ListDias/?mes=' + mes2 + '&anio=' + ano2 +
         '&compFiltro=' + compfiltro + '&ck2=' + ck2 + '&noFiltro2=' + nofiltro2 + '';
     var responseDias = ajaxRequest(urlDias);
     var traTot = 0;
