@@ -38,18 +38,7 @@
     td {
         white-space: nowrap;
     }
-    /*th:nth-child(-n+6), td:nth-child(-n+6) {
-    position: sticky;
-    left: 0;
-    z-index: 2;
-    background-color: white;
-    }
-    th:nth-child(1), td:nth-child(1) { left: 0px; }
-    th:nth-child(2), td:nth-child(2) { left: 80px; }
-    th:nth-child(3), td:nth-child(3) { left: 135px; }
-    th:nth-child(4), td:nth-child(4) { left: 190px; }
-    th:nth-child(5), td:nth-child(5) { left: 245px; }
-    th:nth-child(6), td:nth-child(6) { left: 300px; }*/
+
     #loaderScreen {
       position: absolute;
       top: 0;
@@ -71,14 +60,24 @@
       height: 100%;
       z-index: 1050;
     }
-    @media only screen and (min-width: 950px) {
+    @media only screen and (min-width: 992px) {
+        #menuFilter {
+            height: 60%;
+        }
+    }
+    @media only screen and (min-width: 1200px) {
         #menuFilter {
             height: 50%;
         }
     }
-    @media only screen and (min-width: 1450px) {
+    @media only screen and (min-width: 1400px) {
         #menuFilter {
-            height: 60%;
+            height: 58%;
+        }
+    }
+    @media only screen and (min-width: 1540px) {
+        #menuFilter {
+            height: 50%;
         }
     }
 
@@ -164,7 +163,7 @@
     #isPhone {
         display: none;
     }
-    @media only screen and (max-width: 1450px) {
+    @media only screen and (max-width: 1400px) {
         #isPhone {
             display: block;
         }

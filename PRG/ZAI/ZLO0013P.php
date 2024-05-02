@@ -53,7 +53,7 @@
         <i class="fa-solid fa-gear fa-spin text-white" style="font-size:200px;"></i>
       </div>
     </div>
-    <div id="menuFilter" class="bg-body p-2 border border-2">
+    <div id="menuFilter" class="bg-light p-2 border border-2">
       <div class="row mb-2">
         <div class="col-12 ">
           <input type="text" class="d-none" id="boole" name="boole">
@@ -215,16 +215,14 @@
             <div class="col-3">
               <div class="row">
                 <div class="col-12">
-                  <input type="radio" class="btn-check" name="btnOrderValue" value="1" id="btnOrder1" autocomplete="off"
-                    hidden>
-                  <label class="btn btn-danger mt-2" for="btnOrder1" style="width:100%;">
+                  <input type="radio" class="btn-check" name="btnOrderValue" value="1" id="btnOrder1" autocomplete="off">
+                  <label class="btn btn-danger mt-2" for="btnOrder1" style="width:100%;" data-bs-toggle="tooltip" data-bs-placement="left" data-bs-title="Ascendente">
                     <i class="fa-solid fa-up-long text-white f-2"></i>
                   </label>
                 </div>
                 <div class="col-12">
-                  <input type="radio" class="btn-check" name="btnOrderValue" value="2" id="btnOrder2" autocomplete="off"
-                    hidden>
-                  <label class="btn btn-danger mt-2" for="btnOrder2" style="width:100%;">
+                  <input type="radio" class="btn-check" name="btnOrderValue" value="2" id="btnOrder2" autocomplete="off">
+                  <label class="btn btn-danger mt-2" for="btnOrder2" style="width:100%;"  data-bs-toggle="tooltip" data-bs-placement="left" data-bs-title="Descendente">
                     <i class="fa-solid fa-down-long text-white f-2"></i>
                   </label>
                 </div>
@@ -1611,7 +1609,8 @@
 
   function refreshTable(marca, plan, estado, btnor, inventarios, clasificacion, orden, filtro, repro, formato,searchVal) {
     url =`http://172.16.15.20/API.LovablePHP/ZLO0013PB/List/?marca=${marca}&plan=${plan}&estado=${estado}&btnor=${btnor}&inventarios=${inventarios}&clasificacion=${clasificacion}&orden=${orden}&filtro=${filtro}&repro=${repro}&formato=${formato}&searchVal=${searchVal}`;
-   if (formato==20) {
+    table.ajax.url(url).load();
+    if (formato==20) {
       for (let i = 0; i < extraColumns.length; i++) {
             let columnIdx =extraColumns[i];
             let column = table.column(columnIdx);
@@ -1631,13 +1630,6 @@
             element.textContent = '👁 OCULTO - ' + element.textContent;
       }
     }
-    table.ajax.url(url).load();
-
-    /* divRows.innerHTML = '';
-    divPagination.innerHTML = '';
-    table.destroy();
-    columnsConfig=[];
-    chargeTable(marca, plan, estado, btnor, inventarios, clasificacion, orden, filtro, repro, formato,searchVal);*/
   }
 
   // Función para alternar la visibilidad de un elemento
@@ -1709,9 +1701,9 @@
 
       for (let i = 0; i < responseResumen.data.length; i++) {
         options += "<tr ondblclick='changeResumen(`" + responseResumen.data[i]['ANO'] + "`,`" + estilo + "`)'>";
-        options += "<td>" + responseResumen.data[i]['ANO'] + "</td>";
+        options += "<td class='text-end'>" + responseResumen.data[i]['ANO'] + "</td>";
         if (responseResumen.data[i]['INGRE'] != 0) {
-          options += "<td>" + ((isNaN(parseFloat(responseResumen.data[i]['INGRE'])) || parseFloat(
+          options += "<td class='text-end'>" + ((isNaN(parseFloat(responseResumen.data[i]['INGRE'])) || parseFloat(
             responseResumen.data[i]['INGRE']) == 0) ? '&#160;' : parseFloat(responseResumen.data[i][
             'INGRE'
           ]).toLocaleString('es-419', {
@@ -1722,7 +1714,7 @@
           options += "<td></td>";
         }
         if (responseResumen.data[i]['VENDI'] != null) {
-          options += "<td>" + ((isNaN(parseFloat(responseResumen.data[i]['VENDI'])) || parseFloat(
+          options += "<td class='text-end'>" + ((isNaN(parseFloat(responseResumen.data[i]['VENDI'])) || parseFloat(
             responseResumen.data[i]['VENDI']) == 0) ? '&#160;' : parseFloat(responseResumen.data[i][
             'VENDI'
           ]).toLocaleString('es-419', {
@@ -1733,7 +1725,7 @@
           options += "<td></td>";
         }
         if (responseResumen.data[i]['PERDI'] != null) {
-          options += "<td>" + ((isNaN(parseFloat(responseResumen.data[i]['PERDI'])) || parseFloat(
+          options += "<td class='text-end'>" + ((isNaN(parseFloat(responseResumen.data[i]['PERDI'])) || parseFloat(
             responseResumen.data[i]['PERDI']) == 0) ? '&#160;' : parseFloat(responseResumen.data[i][
             'PERDI'
           ]).toLocaleString('es-419', {
@@ -2057,12 +2049,10 @@
           className: "btn btn-success text-light fs-6 mb-2 text-center",
           title: estilo + '-detalle' + numano,
           action: function(e, dt, button, config) {
-            document.getElementById('loaderExcel').classList.remove('d-none');
+
             setTimeout(() => {
               $.fn.dataTable.ext.buttons.excelHtml5.action.call(this, e,
                 dt, button, config);
-              document.getElementById('loaderExcel').classList.add(
-                'd-none');
             }, 200);
           },
           messageTop: ' ',
@@ -2304,16 +2294,16 @@
                     <table id="tableResumen" class="table stripe table-secondary table-hover " style="width:100%">
                       <thead>
                         <tr>
-                          <th>
+                          <th class='text-end'>
                             Año
                           </th>
-                          <th>
+                          <th class='text-end'>
                             Docenas ingresadas
                           </th>
-                          <th>
+                          <th class='text-end'>
                             Docenas Vendidas
                           </th>
-                          <th>
+                          <th class='text-end'>
                             Docenas Perdida Ventas
                           </th>
                         </tr>
