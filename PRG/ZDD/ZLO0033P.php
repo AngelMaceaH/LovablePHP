@@ -32,11 +32,19 @@
     <div class="table-responsive bg-white p-3" style="height:100%">
       <div class="row mb-2">
         <div class="col-12 col-lg-10">
-          <div class="form-check mt-2 mb-2">
-            <input class="form-check-input" type="checkbox" value="" id="isAdmin">
-            <label class="form-check-label" for="isAdmin">
-              Mostrar solo facturas repetitivas
-            </label>
+          <div class='d-flex'>
+            <div class="form-check mt-2 mb-2 me-3">
+              <input class="form-check-input" type="checkbox" value="" id="isRecib">
+              <label class="form-check-label" for="isRecib">
+                Mostrar recibidos
+              </label>
+            </div>
+            <div class="form-check mt-2 mb-2">
+              <input class="form-check-input" type="checkbox" value="" id="isAdmin">
+              <label class="form-check-label" for="isAdmin">
+                Mostrar solo facturas repetitivas
+              </label>
+            </div>
           </div>
         </div>
         <div id="displaDiv" class="col-12 col-lg-2 d-none mt-2 mb-2">
@@ -47,13 +55,12 @@
       <table id="mainTable" class="table border border-1 shadow mt-3" style="width:100%">
         <thead class="table-light fw-semibold">
           <tr>
-            <th style="width:9%;">No. Factura</th>
-            <th style="width:11%;">Fecha</th>
-            <th style="width:18%;">Descripcion</th>
-            <th style="width:14%;">Solicitante</th>
-            <th style="width:17%;">Departamento</th>
-            <th style="width:14%;">Entregado por</th>
-            <th style="width:15%;">Recibido por</th>
+            <th style="width:10%;">No. Factura</th>
+            <th>No. Orden</th>
+            <th>Fecha entregado</th>
+            <th>Descripcion</th>
+            <th>Entregado por</th>
+            <th>Recibido por</th>
             <th style="width:1%;" class="text-end">Acciones</th>
             <th style="width:1%;">Estado</th>
           </tr>
@@ -81,7 +88,8 @@
   <script src="../../assets/js/jquery.flexselect.js"></script>
   <script>
   let table = null;
-  let departamentos = [];
+  let table2= null;
+  let proveedores = [];
   let user = '';
   let ck = 0;
   let options = "";
@@ -91,10 +99,16 @@
     if (user == 'MARVIN') {
       displaDiv.classList.remove('d-none');
     }
+    isRecib.addEventListener('change', function() {
+      ck1 = (isAdmin.checked) ? 1 : 0;
+      ck2 = (this.checked) ? 1 : 0;
+      urlTable = "/API.LovablePHP/ZLO0033P/List/?hora=" + ck1 + "&fecha=" + ck2;
+      table.ajax.url(urlTable).load();
+    });
     isAdmin.addEventListener('change', function() {
-      ck = (this.checked) ? 1 : 0;
-      console.log(ck);
-      urlTable = "/API.LovablePHP/ZLO0033P/List/?hora=" + ck;
+      ck1 = (this.checked) ? 1 : 0;
+      ck2 = (isRecib.checked) ? 1 : 0;
+      urlTable = "/API.LovablePHP/ZLO0033P/List/?hora=" + ck1 + "&fecha=" + ck2;
       table.ajax.url(urlTable).load();
     });
     btnNuevo.addEventListener('click', function() {
@@ -103,58 +117,32 @@
         `<button type="button" class="btn btn-secondary text-white fw-bold" data-bs-dismiss="modal">Cerrar</button>
                                  <button type="button" class="btn btn-primary text-white fw-bold" onclick="saveReq()">Guardar</button>`;
       box1.innerHTML =
-        `<input id="imagen" type="file" class="form-control" accept="image/png, image/jpeg, image/gif">`;
+        `<input id="imagen" type="file" class="form-control" >`;
       document.getElementById('nreq').value = '';
-      document.getElementById('fecha').value = '';
+      document.getElementById('fecha').value = new Date().toISOString().split('T')[0];
       document.getElementById('descrp').value = '';
-      document.getElementById('soli').value = '';
-      document.getElementById('depa').value = '';
-      document.getElementById('entrega').value = '';
+      document.getElementById('entrega').value = "<?php echo isset($_SESSION['NOMUSU'])? $_SESSION['NOMUSU']: ''; ?>";
       document.getElementById('recibi').value = '';
       document.getElementById('imagen').value = '';
       document.getElementById('isrepet').checked = false;
       $('#reqModal').modal('show');
     });
-    const urlDepas = "/API.LOVABLEPHP/ZLO0015P/ListDepas/";
-    let responseDepas = ajaxRequest(urlDepas);
-    if (responseDepas.code == 200) {
-      departamentos = responseDepas.data;
-      departamentos.forEach(depa => {
-        options += `<option value="${depa.SECDEP + '-' + depa.SECCOD}">${depa.SECDES}</option>`;
-      });
-      $("#depa").append(options);
-      $("#depa").flexselect();
-    } else {
-      console.log(responseDepas.message);
-    }
-
 
     $('#mainTable thead th').each(function() {
       var title = $(this).text();
-      if (title != 'Acciones' && title != 'Estado' && title != 'Departamento' && title != 'Fecha') {
+      if (title != 'Acciones' && title != 'Estado' && title != 'Proveedor' && title != 'Fecha entregado') {
         $(this).html(title + '<br /><input type="text" placeholder="Buscar..." class="form-control mt-2"/>');
       } else {
-        if (title == 'Fecha') {
+        if (title == 'Fecha entregado') {
           $(this).html(title +
             `<br /> <input type="text" placeholder="Buscar..." class="form-control mt-2"  id="FechasDocs" onclick="showRange()"/>`
           );
-        } else if (title == 'Departamento') {
-          $(this).html(title + `<br />  <select id="srcDepa" class="form-select mt-1">
-                                            <option value=""></option>
-                                        </select>
-                                       `);
-          /* <input type="text" id="srcDepatxt" class="d-none"/>*/
-          $("#srcDepa").append(options);
-          $("#srcDepa").flexselect();
-          $("#srcDepa").on('change', function() {
-            table.column(5).search(this.value).draw();
-          });
-
         } else {
           $(this).html('');
         }
       }
     });
+
     setTimeout(() => {
       urlTable = "/API.LovablePHP/ZLO0033P/List/?hora=" + ck;
       table = $('#mainTable').DataTable({
@@ -170,7 +158,6 @@
           "type": "POST",
           "dataSrc": function(json) {
             if (json.data) {
-              console.log(json);
               return json.data;
             } else {
               console.error(json);
@@ -194,29 +181,30 @@
           {
             "data": null,
             "render": function(data, type, row) {
-              return formatFecha(data.FECREQ, 2);
+              if (row.NUMORD==0) {
+                return '';
+              } else {
+                return row.NUMORD;
+              }
+            },
+          },
+          {
+            "data": null,
+            "render": function(data, type, row) {
+              return formatFecha(data.FECREQ, 2) + '&nbsp;&nbsp;' + formatHora(data.HORGRA);
             },
           },
           {
             "data": "DESCRP"
           },
           {
-            "data": "USUARI"
+            "data": "ENTREG"
           },
           {
             "data": null,
             "render": function(data, type, row) {
-              let descripcion = departamentos.find(depa => depa.SECDEP + '-' + depa.SECCOD == data
-                .CODDEP +
-                '-' + data.CODSEC).SECDES;
-              return descripcion;
+              return data.USUREC + '<br>' + formatFecha(data.FECREC, 2) + ' ' + formatHora(data.HORREC);
             },
-          },
-          {
-            "data": "ENTREG"
-          },
-          {
-            "data": "USUREC"
           },
           {
             "data": null,
@@ -254,7 +242,8 @@
                   break;
                 default:
                   if (row.IMAGEN == '') {
-                    buttons = `<div class="dropdown text-end">
+                    if (row.ESTADO == 0) {
+                      buttons = `<div class="dropdown text-end">
                                     <button class="btn btn-light p-1" type="button" data-coreui-toggle="dropdown" aria-haspopup="true"
                                         aria-expanded="false">
                                         <i class="fa-solid fa-ellipsis-vertical fs-5"></i>
@@ -263,8 +252,10 @@
                                         <a class="dropdown-item fw-bold" onclick="checkReq('${data.NUMREQ}')">Marcar recibido &nbsp;&nbsp;<i class="fa-solid fa-square-check"></i></a>
                                     </div>
                                 </div>`;
+                    }
                   } else {
-                    buttons = `<div class="dropdown text-end">
+                    if (row.ESTADO == 0) {
+                      buttons = `<div class="dropdown text-end">
                                     <button class="btn btn-light p-1" type="button" data-coreui-toggle="dropdown" aria-haspopup="true"
                                         aria-expanded="false">
                                         <i class="fa-solid fa-ellipsis-vertical fs-5"></i>
@@ -274,6 +265,17 @@
                                         <a class="dropdown-item fw-bold" onclick="showImg('${data.IMAGEN}','${data.FECGRA}','${data.HORGRA}','${data.USUREC}','${data.FECREC}','${data.HORREC}','${data.ESTADO}')">Ver imagen <i class="fa-solid fa-images"></i></a>
                                     </div>
                                 </div>`;
+                    } else {
+                      buttons = `<div class="dropdown text-end">
+                                    <button class="btn btn-light p-1" type="button" data-coreui-toggle="dropdown" aria-haspopup="true"
+                                        aria-expanded="false">
+                                        <i class="fa-solid fa-ellipsis-vertical fs-5"></i>
+                                    </button>
+                                    <div class="dropdown-menu dropdown-menu-end" style="">
+                                        <a class="dropdown-item fw-bold" onclick="showImg('${data.IMAGEN}','${data.FECGRA}','${data.HORGRA}','${data.USUREC}','${data.FECREC}','${data.HORREC}','${data.ESTADO}')">Ver imagen <i class="fa-solid fa-images"></i></a>
+                                    </div>
+                                </div>`;
+                    }
                   }
                   break;
               }
@@ -305,7 +307,6 @@
           .draw();
       }
     });
-
   });
 
   function sendForm() {
@@ -355,26 +356,26 @@
 
   function saveReq() {
     let nreq = document.getElementById('nreq').value;
+    let nord= document.getElementById('orden').value;
     let fecha = document.getElementById('fecha').value;
     let descrp = document.getElementById('descrp').value;
-    let soli = document.getElementById('soli').value;
-    let depa = document.getElementById('depa').value;
     let entrega = document.getElementById('entrega').value;
     let recibi = document.getElementById('recibi').value;
     let imagen = document.getElementById('imagen').files[0];
     let check = document.getElementById('isrepet');
     let isrepet = (check.checked) ? 1 : 0;
 
-    if (nreq == '' || fecha == '' || depa == '' || descrp == '' || entrega == '') {
+    if (nreq == '' || fecha == '' || descrp == '' || entrega == '') {
       lblError.classList.remove('d-none');
     } else {
       lblError.classList.add('d-none');
       let dataSave = {
         nreq: nreq,
+        nord: (nord == '') ? 0 : nord,
         fecha: formatFecha(fecha, 0),
         descrp: descrp,
-        soli: soli,
-        depa: depa,
+        prove1: 0,
+        prove2: 0,
         entrega: entrega,
         recibi: recibi,
         isrepet: isrepet,
@@ -453,26 +454,40 @@
         document.getElementById('nreq').value = req.NUMREQ;
         document.getElementById('fecha').value = formatFecha(req.FECREQ, 1);
         document.getElementById('descrp').value = req.DESCRP;
-        document.getElementById('soli').value = req.USUARI;
-        document.getElementById('depa').value = req.CODDEP + '-' + req.CODSEC;
         document.getElementById('entrega').value = req.ENTREG;
         document.getElementById('recibi').value = req.USUREC;
         document.getElementById('isrepet').checked = (req.ESREPE == 1) ? true : false;
         if (req.IMAGEN != '') {
-          let img = document.createElement('img');
-          img.src = `http://172.16.15.20${req.IMAGEN}`;
-          img.style.width = '100%';
-          img.style.height = '100%';
-          box1.innerHTML = `<div class="row mb-1">
+          if (req.IMAGEN.includes('pdf')) {
+            let pdf = document.createElement('embed');
+            pdf.src = `http://172.16.15.20${req.IMAGEN}`;
+            pdf.style.width = '100%';
+            pdf.style.height = '70vh';
+            box1.innerHTML = '';
+            box1.innerHTML = `<div class="row mb-1">
                                 <div class="col-12 text-end">
                                     <button class="btn btn-danger text-white" onclick="deleteImg()">Eliminar <i class="fa-solid fa-trash"></i></button>
                                 </div>
                             </div>`;
-          box1.appendChild(img);
-          imgUrl.value = req.IMAGEN;
+            box1.appendChild(pdf);
+            imgUrl.value= req.IMAGEN;
+          } else {
+            let img = document.createElement('img');
+            img.src = `http://172.16.15.20${req.IMAGEN}`;
+            img.style.width = '100%';
+            img.style.height = '100%';
+            box1.innerHTML = '';
+            box1.innerHTML = `<div class="row mb-1">
+                                <div class="col-12 text-end">
+                                    <button class="btn btn-danger text-white" onclick="deleteImg()">Eliminar <i class="fa-solid fa-trash"></i></button>
+                                </div>
+                            </div>`;
+            box1.appendChild(img);
+            imgUrl.value = req.IMAGEN;
+          }
         } else {
           box1.innerHTML =
-            `<input id="imagen" type="file" class="form-control" accept="image/png, image/jpeg, image/gif">`;
+            `<input id="imagen" type="file" class="form-control" >`;
         }
         $('#reqModal').modal('show');
       } else {
@@ -501,11 +516,10 @@
 
   function updateReq() {
     let nreq1 = document.getElementById('nreq1').value;
+    let nord= document.getElementById('orden').value;
     let nreq = document.getElementById('nreq').value;
     let fecha = document.getElementById('fecha').value;
     let descrp = document.getElementById('descrp').value;
-    let soli = document.getElementById('soli').value;
-    let depa = document.getElementById('depa').value;
     let entrega = document.getElementById('entrega').value;
     let recibi = document.getElementById('recibi').value;
     let imagenUrl = document.getElementById('imgUrl').value;
@@ -516,17 +530,18 @@
     let check = document.getElementById('isrepet');
     let isrepet = (check.checked) ? 1 : 0;
 
-    if (nreq == '' || fecha == '' || depa == '' || descrp == '' || entrega == '') {
+    if (nreq == '' || fecha == '' || descrp == '' || entrega == '') {
       lblError.classList.remove('d-none');
     } else {
       lblError.classList.add('d-none');
       let dataSave2 = {
         nreq1: nreq1,
         nreq: nreq,
+        nord: (nord == '') ? 0 : nord,
         fecha: formatFecha(fecha, 0),
         descrp: descrp,
-        soli: soli,
-        depa: depa,
+        prove1: 0,
+        prove2: 0,
         entrega: entrega,
         recibi: recibi,
         isrepet: isrepet,
@@ -591,33 +606,36 @@
     }).then((result) => {
       if (result.isConfirmed) {
         box1.innerHTML =
-          `<input id="imagen" type="file" class="form-control" accept="image/png, image/jpeg, image/gif">`;
+          `<input id="imagen" type="file" class="form-control" >`;
       }
     });
   }
 
   function formatFecha(fecha, formato) {
-    let year = fecha.substring(0, 4);
-    let month = fecha.substring(4, 6);
-    let day = fecha.substring(6, 8);
-    switch (formato) {
-      case 1:
-        fecha = year + "-" + month + "-" + day;
-        break;
-      case 2:
-        fecha = day + "/" + month + "/" + year;
-        break;
-      default:
-        fecha = fecha.replace(/-/g, '');
-        break;
+    if (fecha == '' || fecha == null || fecha == 0) {
+      return '';
+    } else {
+      let year = fecha.substring(0, 4);
+      let month = fecha.substring(4, 6);
+      let day = fecha.substring(6, 8);
+      switch (formato) {
+        case 1:
+          fecha = year + "-" + month + "-" + day;
+          break;
+        case 2:
+          fecha = day + "/" + month + "/" + year;
+          break;
+        default:
+          fecha = fecha.replace(/-/g, '');
+          break;
+      }
+      return fecha;
     }
-
-    return fecha;
   }
 
   function showImg(imagen, fecgra, horgra, usurec, fecrecibido, horrecibido, estado) {
     let fecha = formatFecha(fecgra.toString(), 2);
-    let hora = horgra.substring(0, 2) + ':' + horgra.substring(2, 4) + ':' + horgra.substring(4, 6);
+    let hora = formatHora(horgra);
     if (estado == '0') {
       divRecibido.classList.add('d-none');
     } else {
@@ -630,7 +648,21 @@
     }
     fechaGra.innerHTML = fecha;
     horaGra.innerHTML = hora;
-    imgFrame.src = `http://172.16.15.20/` + imagen;
+    if (imagen.includes('pdf')) {
+      let pdf = document.createElement('embed');
+      pdf.src = `http://172.16.15.20${imagen}`;
+      pdf.style.width = '100%';
+      pdf.style.height = '70vh';
+      box2.innerHTML = '';
+      box2.appendChild(pdf);
+    } else {
+      let img = document.createElement('img');
+      img.src = `http://172.16.15.20${imagen}`;
+      img.style.width = '100%';
+      img.style.height = '100%';
+      box2.innerHTML = '';
+      box2.appendChild(img);
+    }
     $('#imgModal').modal('show');
   }
 
@@ -651,6 +683,24 @@
     const fechaActual = año.toString() + mes + dia;
     return fechaActual;
   }
+
+  function formatHora(hora) {
+    if (hora.length < 6) {
+      hora = '0' + hora;
+    }
+    const hour24 = parseInt(hora.substring(0, 2), 10);
+    const minute = hora.substring(2, 4);
+    const ampm = hour24 < 12 ? "AM" : "PM";
+    let hour12 = hour24 % 12;
+    if (hour12 === 0) hour12 = 12;
+    if (hora != 0) {
+      return `${hour12}:${minute} ${ampm}`;
+    } else {
+      return "";
+    }
+  }
+
+
   </script>
   <div class="modal fade" id="reqModal" tabindex="-1" aria-labelledby="reqModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
@@ -668,7 +718,12 @@
               <input id="nreq" type="text" maxlength="10" class="form-control" placeholder="Ingrese la Factura">
             </div>
             <div class="col-12 col-lg-6">
-              <label for="fecha" class="form-control border border-0">Fecha <span class="text-danger">(*)</span></label>
+              <label for="nreq" class="form-control border border-0">N. Orden <span class="text-danger">(*)</span>
+              </label>
+              <input id="orden" type="text" maxlength="10" class="form-control" placeholder="Ingrese la orden">
+            </div>
+            <div class="col-12 col-lg-12">
+              <label for="fecha" class="form-control border border-0">Fecha de entrega <span class="text-danger">(*)</span></label>
               <input id="fecha" type="date" class="form-control">
             </div>
             <div class="col-12 col-lg-12 mt-2">
@@ -676,18 +731,6 @@
                   class="text-danger">(*)</span></label>
               <textarea id="descrp" placeholder="Ingrese una descripcion de la Factura" class="form-control" rows="5"
                 style="height:150px; resize: none;"></textarea>
-            </div>
-            <div class="col-12 col-lg-6 mt-2">
-              <label for="soli" class="form-control border border-0">Solicitante <span
-                  class="text-danger">(*)</span></label>
-              <input id="soli" type="text" maxlength="30" class="form-control" placeholder="Ingrese el solicitante">
-            </div>
-            <div class="col-12 col-lg-6 mt-2">
-              <label for="depa" class="form-control border border-0">Departamento <span
-                  class="text-danger">(*)</span></label>
-              <select id="depa" class="form-select mt-1">
-                <option value=""></option>
-              </select>
             </div>
             <div class="col-12 col-lg-12 mt-2">
               <label for="entrega" class="form-control border border-0">Entregado por <span
@@ -736,10 +779,10 @@
           </h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div class="modal-body">
+        <div class="modal-body" style="height:85vh;">
           <div class="row">
-            <div class="col-12 text-center">
-              <img id="imgFrame" src="" style="width:100%; height:100%;">
+            <div class="col-12 text-center" id="box2">
+
             </div>
             <div class="col-12" id="divRecibido">
               <div class="row mt-3">
@@ -772,7 +815,7 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-danger fw-bold text-white" onclick="deleteDate()">Borrar</button>
+          <button type="button" class="btn btn-danger fw-bold text-white" onclick="deleteDate()">Cancelar</button>
           <button type="button" class="btn btn-primary fw-bold text-white"
             onclick="$('#modalRangeDocumento').modal('hide')">Aceptar</button>
         </div>

@@ -441,6 +441,7 @@
   let totalVALVAA = 0;
   let table = null;
   let url = "";
+  let marcaValue='';
   document.addEventListener("DOMContentLoaded", function() {
     $("#menuFilter").fadeOut("fast", function() {});
     $("#loaderScreen").fadeOut("fast", function() {});
@@ -1123,9 +1124,8 @@
               setTimeout(() => {
                 var target = event.target.closest('.clickable-row');
                 if (target) {
-                  var marcaValue = target.getAttribute('data-marca');
-                  var estiloValue = target.getAttribute(
-                    'data-estilo');
+                  marcaValue = target.getAttribute('data-marca');
+                  var estiloValue = target.getAttribute('data-estilo');
                   var registrosFiltrados = registrosMismoEstilo
                     .filter(function(registro) {
                       return registro.MARCA == marcaValue &&
@@ -1692,7 +1692,6 @@
     $("#lblEstilo").text(estilo);
     var urlResumen = "/API.LovablePHP/ZLO0013PB/ListResumen/?ano=" + anoActual + "&estilo=" +
       estilo + "";
-
     var responseResumen = ajaxRequest(urlResumen);
     const tableResumenBody = $("#tableResumenBody");
     tableResumenBody.empty();
@@ -1814,7 +1813,9 @@
 
                             </tbody>
                         </table>`);
-    var urldeta = "/API.LovablePHP/ZLO0013PB/ListDeta/?marca=" + marca + "&plan=" +
+    let marcaStablished= (marcaValue=='') ? marca : marcaValue;
+
+    var urldeta = "/API.LovablePHP/ZLO0013PB/ListDeta/?marca=" + marcaStablished + "&plan=" +
       plan + "&estado=" + estado + "&btnor=" + btnor + "&inventarios=" + inventarios +
       "&clasificacion=" + clasificacion + "&orden=" + orden + "&filtro=" + filtro +
       "&repro=" + repro + "&formato=" + formato + "&searchVal=" + estilo + "&ano=" + numano + "";

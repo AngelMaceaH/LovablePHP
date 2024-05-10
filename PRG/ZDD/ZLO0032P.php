@@ -30,13 +30,21 @@
       </div>
     </div>
     <div class="table-responsive bg-white p-3" style="height:100%">
-      <div class="row mb-2">
+    <div class="row mb-2">
         <div class="col-12 col-lg-10">
-          <div class="form-check mt-2 mb-2 d-none">
-            <input class="form-check-input" type="checkbox" value="" id="isAdmin">
-            <label class="form-check-label" for="isAdmin">
-              Mostrar solo facturas repetitivas
-            </label>
+          <div class='d-flex'>
+            <div class="form-check mt-2 mb-2 me-3">
+              <input class="form-check-input" type="checkbox" value="" id="isRecib">
+              <label class="form-check-label" for="isRecib">
+                Mostrar recibidos
+              </label>
+            </div>
+            <div class="form-check mt-2 mb-2 d-none">
+              <input class="form-check-input" type="checkbox" value="" id="isAdmin">
+              <label class="form-check-label" for="isAdmin">
+                Mostrar solo facturas repetitivas
+              </label>
+            </div>
           </div>
         </div>
         <div id="displaDiv" class="col-12 col-lg-2 d-none mt-2 mb-2">
@@ -48,7 +56,7 @@
         <thead class="table-light fw-semibold">
           <tr>
             <th style="width:9%;">No. Requisición</th>
-            <th style="width:11%;">Fecha</th>
+            <th style="width:11%;">Fecha entregado</th>
             <th style="width:18%;">Descripcion</th>
             <th style="width:14%;">Solicitante</th>
             <th style="width:17%;">Departamento</th>
@@ -91,9 +99,14 @@
     if (user == 'MARVIN') {
       displaDiv.classList.remove('d-none');
     }
+    isRecib.addEventListener('change', function() {
+      ck1 = (isAdmin.checked) ? 1 : 0;
+      ck2 = (this.checked) ? 1 : 0;
+      urlTable = "/API.LovablePHP/ZLO0032P/List/?hora=" + ck1 + "&fecha=" + ck2;
+      table.ajax.url(urlTable).load();
+    });
     isAdmin.addEventListener('change', function() {
       ck = (this.checked) ? 1 : 0;
-      console.log(ck);
       urlTable = "/API.LovablePHP/ZLO0032P/List/?hora=" + ck;
       table.ajax.url(urlTable).load();
     });
@@ -103,13 +116,13 @@
         `<button type="button" class="btn btn-secondary text-white fw-bold" data-bs-dismiss="modal">Cerrar</button>
                                  <button type="button" class="btn btn-primary text-white fw-bold" onclick="saveReq()">Guardar</button>`;
       box1.innerHTML =
-        `<input id="imagen" type="file" class="form-control" accept="image/png, image/jpeg, image/gif">`;
+        `<input id="imagen" type="file" class="form-control" >`;
       document.getElementById('nreq').value = '';
-      document.getElementById('fecha').value = '';
+      document.getElementById('fecha').value = new Date().toISOString().split('T')[0];
       document.getElementById('descrp').value = '';
       document.getElementById('soli').value = '';
       document.getElementById('depa').value = '';
-      document.getElementById('entrega').value = '';
+      document.getElementById('entrega').value = "<?php echo isset($_SESSION['NOMUSU'])? $_SESSION['NOMUSU']: ''; ?>";
       document.getElementById('recibi').value = '';
       document.getElementById('imagen').value = '';
       document.getElementById('isrepet').checked = false;
@@ -131,10 +144,10 @@
 
     $('#mainTable thead th').each(function() {
       var title = $(this).text();
-      if (title != 'Acciones' && title != 'Estado' && title != 'Departamento' && title != 'Fecha') {
+      if (title != 'Acciones' && title != 'Estado' && title != 'Departamento' && title != 'Fecha entregado') {
         $(this).html(title + '<br /><input type="text" placeholder="Buscar..." class="form-control mt-2"/>');
       } else {
-        if (title == 'Fecha') {
+        if (title == 'Fecha entregado') {
           $(this).html(title +
             `<br /> <input type="text" placeholder="Buscar..." class="form-control mt-2"  id="FechasDocs" onclick="showRange()"/>`
           );
@@ -157,6 +170,7 @@
     });
     setTimeout(() => {
       urlTable = "/API.LovablePHP/ZLO0032P/List/?hora=" + ck;
+      console.log(urlTable);
       table = $('#mainTable').DataTable({
         language: {
           url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json',
@@ -170,7 +184,6 @@
           "type": "POST",
           "dataSrc": function(json) {
             if (json.data) {
-              console.log(json);
               return json.data;
             } else {
               console.error(json);
@@ -194,7 +207,7 @@
           {
             "data": null,
             "render": function(data, type, row) {
-              return formatFecha(data.FECREQ, 2);
+              return formatFecha(data.FECREQ, 2)+'<br>'+formatHora(data.HORGRA);
             },
           },
           {
@@ -216,7 +229,10 @@
             "data": "ENTREG"
           },
           {
-            "data": "USUREC"
+            "data": null,
+            "render": function(data, type, row) {
+              return data.USUREC+'<br>'+formatHora(data.HORREC);
+            },
           },
           {
             "data": null,
@@ -253,8 +269,9 @@
                   }
                   break;
                 default:
-                  if (row.IMAGEN == '') {
-                    buttons = `<div class="dropdown text-end">
+                if (row.IMAGEN == '') {
+                    if (row.ESTADO == 0) {
+                      buttons = `<div class="dropdown text-end">
                                     <button class="btn btn-light p-1" type="button" data-coreui-toggle="dropdown" aria-haspopup="true"
                                         aria-expanded="false">
                                         <i class="fa-solid fa-ellipsis-vertical fs-5"></i>
@@ -263,8 +280,10 @@
                                         <a class="dropdown-item fw-bold" onclick="checkReq('${data.NUMREQ}')">Marcar recibido &nbsp;&nbsp;<i class="fa-solid fa-square-check"></i></a>
                                     </div>
                                 </div>`;
+                    }
                   } else {
-                    buttons = `<div class="dropdown text-end">
+                    if (row.ESTADO == 0) {
+                      buttons = `<div class="dropdown text-end">
                                     <button class="btn btn-light p-1" type="button" data-coreui-toggle="dropdown" aria-haspopup="true"
                                         aria-expanded="false">
                                         <i class="fa-solid fa-ellipsis-vertical fs-5"></i>
@@ -274,6 +293,17 @@
                                         <a class="dropdown-item fw-bold" onclick="showImg('${data.IMAGEN}','${data.FECGRA}','${data.HORGRA}','${data.USUREC}','${data.FECREC}','${data.HORREC}','${data.ESTADO}')">Ver imagen <i class="fa-solid fa-images"></i></a>
                                     </div>
                                 </div>`;
+                    } else {
+                      buttons = `<div class="dropdown text-end">
+                                    <button class="btn btn-light p-1" type="button" data-coreui-toggle="dropdown" aria-haspopup="true"
+                                        aria-expanded="false">
+                                        <i class="fa-solid fa-ellipsis-vertical fs-5"></i>
+                                    </button>
+                                    <div class="dropdown-menu dropdown-menu-end" style="">
+                                        <a class="dropdown-item fw-bold" onclick="showImg('${data.IMAGEN}','${data.FECGRA}','${data.HORGRA}','${data.USUREC}','${data.FECREC}','${data.HORREC}','${data.ESTADO}')">Ver imagen <i class="fa-solid fa-images"></i></a>
+                                    </div>
+                                </div>`;
+                    }
                   }
 
                   break;
@@ -334,7 +364,6 @@
     Date2 = currentDate.substr(13, 10);
     var fechasActual = $("#FechasDocs").val();
     if (fechasActual != "") {
-
       Date1 = fechasActual.substr(0, 10);
       Date2 = fechasActual.substr(13, 10);
     }
@@ -460,20 +489,37 @@
         document.getElementById('recibi').value = req.USUREC;
         document.getElementById('isrepet').checked = (req.ESREPE == 1) ? true : false;
         if (req.IMAGEN != '') {
-          let img = document.createElement('img');
-          img.src = `http://172.16.15.20${req.IMAGEN}`;
-          img.style.width = '100%';
-          img.style.height = '100%';
-          box1.innerHTML = `<div class="row mb-1">
+          if (req.IMAGEN.includes('pdf')) {
+            let pdf = document.createElement('embed');
+            pdf.src = `http://172.16.15.20${req.IMAGEN}`;
+            pdf.style.width = '100%';
+            pdf.style.height = '70vh';
+            box1.innerHTML = ``;
+            box1.innerHTML = `<div class="row mb-1">
                                 <div class="col-12 text-end">
                                     <button class="btn btn-danger text-white" onclick="deleteImg()">Eliminar <i class="fa-solid fa-trash"></i></button>
                                 </div>
                             </div>`;
-          box1.appendChild(img);
-          imgUrl.value = req.IMAGEN;
+            box1.appendChild(pdf);
+            imgUrl.value = req.IMAGEN;
+          } else {
+            let img = document.createElement('img');
+            img.src = `http://172.16.15.20${req.IMAGEN}`;
+            img.style.width = '100%';
+            img.style.height = '100%';
+            box1.innerHTML = ``;
+            box1.innerHTML = `<div class="row mb-1">
+                                <div class="col-12 text-end">
+                                    <button class="btn btn-danger text-white" onclick="deleteImg()">Eliminar <i class="fa-solid fa-trash"></i></button>
+                                </div>
+                            </div>`;
+            box1.appendChild(img);
+            imgUrl.value = req.IMAGEN;
+          }
+
         } else {
           box1.innerHTML =
-            `<input id="imagen" type="file" class="form-control" accept="image/png, image/jpeg, image/gif">`;
+            `<input id="imagen" type="file" class="form-control" >`;
         }
         $('#reqModal').modal('show');
       } else {
@@ -592,7 +638,7 @@
     }).then((result) => {
       if (result.isConfirmed) {
         box1.innerHTML =
-          `<input id="imagen" type="file" class="form-control" accept="image/png, image/jpeg, image/gif">`;
+          `<input id="imagen" type="file" class="form-control" >`;
       }
     });
   }
@@ -618,20 +664,34 @@
 
   function showImg(imagen, fecgra, horgra, usurec, fecrecibido, horrecibido, estado) {
     let fecha = formatFecha(fecgra.toString(), 2);
-    let hora = horgra.substring(0, 2) + ':' + horgra.substring(2, 4) + ':' + horgra.substring(4, 6);
+    let hora = formatHora(horgra);
     if (estado == '0') {
       divRecibido.classList.add('d-none');
     } else {
       divRecibido.classList.remove('d-none');
       let fecha = formatFecha(fecrecibido.toString(), 2);
-      let hora = horrecibido.substring(0, 2) + ':' + horrecibido.substring(2, 4) + ':' + horrecibido.substring(4, 6);
+      let hora = formatHora(horrecibido);
       usuaRec.innerHTML = usurec;
       fechaRec.innerHTML = fecha;
       horaRec.innerHTML = hora;
     }
     fechaGra.innerHTML = fecha;
     horaGra.innerHTML = hora;
-    imgFrame.src = `http://172.16.15.20/` + imagen;
+    if (imagen.includes('pdf')) {
+            let pdf = document.createElement('embed');
+            pdf.src = `http://172.16.15.20${imagen}`;
+            pdf.style.width = '100%';
+            pdf.style.height = '70vh';
+            box2.innerHTML = '';
+            box2.appendChild(pdf);
+          } else {
+            let img = document.createElement('img');
+            img.src = `http://172.16.15.20${imagen}`;
+            img.style.width = '100%';
+            img.style.height = '100%';
+            box2.innerHTML = '';
+            box2.appendChild(img);
+          }
     $('#imgModal').modal('show');
   }
 
@@ -651,6 +711,21 @@
     const dia = fecha.getDate().toString().padStart(2, "0");
     const fechaActual = año.toString() + mes + dia;
     return fechaActual;
+  }
+  function formatHora(hora) {
+    if (hora.length < 6) {
+      hora= '0' + hora;
+    }
+    const hour24 = parseInt(hora.substring(0, 2), 10);
+    const minute = hora.substring(2, 4);
+    const ampm = hour24 < 12 ? "AM" : "PM";
+    let hour12 = hour24 % 12;
+    if (hour12 === 0) hour12 = 12;
+    if (hora != 0) {
+      return `${hour12}:${minute} ${ampm}`;
+    }else{
+      return "";
+    }
   }
   </script>
   <div class="modal fade" id="reqModal" tabindex="-1" aria-labelledby="reqModalLabel" aria-hidden="true">
@@ -737,10 +812,10 @@
           </h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div class="modal-body">
+        <div class="modal-body" style="height:85vh;">
           <div class="row">
-            <div class="col-12 text-center">
-              <img id="imgFrame" src="" style="width:100%; height:100%;">
+            <div class="col-12 text-center" id="box2">
+
             </div>
             <div class="col-12" id="divRecibido">
               <div class="row mt-3">
@@ -773,7 +848,7 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-danger fw-bold text-white" onclick="deleteDate()">Borrar</button>
+          <button type="button" class="btn btn-danger fw-bold text-white" onclick="deleteDate()">Cancelar</button>
           <button type="button" class="btn btn-primary fw-bold text-white"
             onclick="$('#modalRangeDocumento').modal('hide')">Aceptar</button>
         </div>

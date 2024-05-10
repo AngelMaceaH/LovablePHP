@@ -44,7 +44,6 @@
         }
     </style>
 </head>
-
 <body>
 <div class="spinner-wrapper">
       <img src="../../assets/img/lovableLoader.png" alt="loader" style="width:250px;">
@@ -200,8 +199,18 @@
                        <span class="nav-icon"></span><i class="fa-solid fa-circle me-2 ms-2" style="font-size:8px;"></i>` +
                     descripcionPrograma(arrayOrder[i]['CATDE1']).toUpperCase() + ` </a> </li>`);
             }
-        }
 
+
+            let currentPgm='<?php echo trim(substr($_SERVER["REQUEST_URI"],20,8)); ?>';
+            switch (currentPgm) {
+                case 'ZLO0034P':
+                    case 'ZLO0035P':
+                        $("#sidebar").addClass('hide');
+                    break;
+                default:
+                    break;
+            }
+        }
         document.querySelectorAll('.nav-group').forEach(function(navGroup) {
             setTimeout(() => {
                 if(navGroup.classList.contains('show')){
@@ -290,7 +299,7 @@
         </ul>
 
     </div>
-    <div class="wrapper d-flex flex-column min-vh-100  bg-light">
+    <div class="wrapper d-flex flex-column min-vh-100 bg-light">
         <header class="header header-sticky mb-4">
             <div class="container-fluid">
 

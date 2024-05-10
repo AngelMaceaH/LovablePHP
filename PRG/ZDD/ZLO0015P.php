@@ -279,8 +279,7 @@
                     var id = data[1].split("-");
                     var tipo = id[0];
                     var prov = id[1];
-                    var urlFind = "/API.LovablePHP/ZLO0015P/ProveedoresFind/?tipo=" + tipo +
-                        "&proveedor=" + prov + "";
+                    var urlFind = "/API.LovablePHP/ZLO0015P/ProveedoresFind/?tipo=" + tipo +"&proveedor=" + prov + "";
                     var responseFind = ajaxRequest(urlFind);
                     var descripcion = (responseFind.code == 200) ? responseFind.data[0]['ARCNOM'] : "";
                     prv = tipo + '-' + prov;
