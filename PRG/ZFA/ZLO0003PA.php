@@ -556,6 +556,64 @@
                 createEmptyCells: true,
                 messageTop: 'a',
                 title: 'Comparativo marcas, país y rango meses',
+                customizeData: function (data) {
+                data.body.forEach(function(row, index) {
+                        if (row[3] && row[3].startsWith('D.')) {
+                            row[3] = row[3].substring(2);
+                        }
+                        if (row[4] && row[4].startsWith('D.')) {
+                            row[4] = row[4].substring(2);
+                        }
+                        if (row[5] && row[5].startsWith('D.')) {
+                            row[5] = row[5].substring(2);
+                        }
+                        if (row[9] && row[9].startsWith('D.')) {
+                            row[9] = row[9].substring(2);
+                        }
+                        if (row[10] && row[10].startsWith('D.')) {
+                            row[10] = row[10].substring(2);
+                        }
+                        if (row[11] && row[11].startsWith('D.')) {
+                            row[11] = row[11].substring(2);
+                        }
+                        if (row[15] && row[15].startsWith('D.')) {
+                            row[15] = row[15].substring(2);
+                        }
+                        if (row[16] && row[16].startsWith('D.')) {
+                            row[16] = row[16].substring(2);
+                        }
+                        if (row[17] && row[17].startsWith('D.')) {
+                            row[17] = row[17].substring(2);
+                        }
+                        if (row[21] && row[21].startsWith('D.')) {
+                            row[21] = row[21].substring(2);
+                        }
+                        if (row[22] && row[22].startsWith('D.')) {
+                            row[22] = row[22].substring(2);
+                        }
+                        if (row[23] && row[23].startsWith('D.')) {
+                            row[23] = row[23].substring(2);
+                        }
+                        if (row[27] && row[27].startsWith('D.')) {
+                            row[27] = row[27].substring(2);
+                        }
+                        if (row[28] && row[28].startsWith('D.')) {
+                            row[28] = row[28].substring(2);
+                        }
+                        if (row[29] && row[29].startsWith('D.')) {
+                            row[29] = row[29].substring(2);
+                        }
+                        if (row[33] && row[33].startsWith('D.')) {
+                            row[33] = row[33].substring(2);
+                        }
+                        if (row[34] && row[34].startsWith('D.')) {
+                            row[34] = row[34].substring(2);
+                        }
+                        if (row[35] && row[35].startsWith('D.')) {
+                            row[35] = row[35].substring(2);
+                        }
+                    });
+                },
                 customize: function(xlsx) {
                     var sheet = xlsx.xl.worksheets['sheet1.xml'];
                     var sSh = xlsx.xl['styles.xml'];
@@ -623,8 +681,7 @@
                     //HONDURAS
                     for (let index = 3; index <= 22; index++) {
 
-                        if (parseFloat(($('row:eq(' + index + ') c[r^="F"]', sheet).text())
-                                .slice(2)) < 0) {
+                        if (parseFloat($('row:eq(' + index + ') c[r^="F"]', sheet).text()) < 0) {
                             $('row:eq(' + index + ') c[r^="F"]', sheet).attr('s',
                                 textred1); //ROJO
                         } else {
@@ -644,8 +701,7 @@
                     //GUATEMALA
                     for (let index = 3; index <= 22; index++) {
 
-                        if (parseFloat(($('row:eq(' + index + ') c[r^="L"]', sheet).text())
-                                .slice(2)) < 0) {
+                        if (parseFloat($('row:eq(' + index + ') c[r^="L"]', sheet).text()) < 0) {
                             $('row:eq(' + index + ') c[r^="L"]', sheet).attr('s',
                                 textred1); //ROJO
                         } else {
@@ -666,8 +722,7 @@
 
                     for (let index = 3; index <= 22; index++) {
 
-                        if (parseFloat(($('row:eq(' + index + ') c[r^="R"]', sheet).text())
-                                .slice(2)) < 0) {
+                        if (parseFloat($('row:eq(' + index + ') c[r^="R"]', sheet).text()) < 0) {
                             $('row:eq(' + index + ') c[r^="R"]', sheet).attr('s',
                                 textred1); //ROJO
                         } else {
@@ -688,8 +743,7 @@
 
                     for (let index = 3; index <= 22; index++) {
 
-                        if (parseFloat(($('row:eq(' + index + ') c[r^="X"]', sheet).text())
-                                .slice(2)) < 0) {
+                        if (parseFloat($('row:eq(' + index + ') c[r^="X"]', sheet).text()) < 0) {
                             $('row:eq(' + index + ') c[r^="X"]', sheet).attr('s',
                                 textred1); //ROJO
                         } else {
@@ -710,8 +764,7 @@
 
                     for (let index = 3; index <= 22; index++) {
 
-                        if (parseFloat(($('row:eq(' + index + ') c[r^="AD"]', sheet).text())
-                                .slice(2)) < 0) {
+                        if (parseFloat($('row:eq(' + index + ') c[r^="AD"]', sheet).text()) < 0) {
                             $('row:eq(' + index + ') c[r^="AD"]', sheet).attr('s',
                                 textred1); //ROJO
                         } else {
@@ -732,8 +785,7 @@
 
                     for (let index = 3; index <= 22; index++) {
 
-                        if (parseFloat(($('row:eq(' + index + ') c[r^="AJ"]', sheet).text())
-                                .slice(2)) < 0) {
+                        if (parseFloat($('row:eq(' + index + ') c[r^="AJ"]', sheet).text()) < 0) {
                             $('row:eq(' + index + ') c[r^="AJ"]', sheet).attr('s',
                                 textred1); //ROJO
                         } else {
@@ -1585,6 +1637,8 @@
         if (response.code == 200) {
             var data = response.data;
             var rows = "";
+            let totund1=0; let totund2=0;
+            let totval1=0; let totval2=0;
             for (let i = 0; i < data.length; i++) {
                 ano1hon = (data[i]['HONVALANO1'] != 0) ? (data[i]['HONVALANO1']) : 0;
                 ano2hon = (data[i]['HONVALANO2'] != 0) ? (data[i]['HONVALANO2']) : 0;
@@ -1630,7 +1684,44 @@
                 rows += "</tr>";
                 tiendasAno1.push(parseFloat(ano1hon));
                 tiendasAno2.push(parseFloat(ano2hon));
+                totund1+=parseFloat(can1hon);
+                totund2+=parseFloat(can2hon);
+                totval1+=parseFloat(ano1hon);
+                totval2+=parseFloat(ano2hon);
             }
+            rows += "<tr>";
+            rows += "<td></td>";
+            rows += "<td class='text-start'>TOTAL FINAL</td>";
+            rows += "<td class='text-end'>" + parseFloat(totund1).toLocaleString('es-419') + "</td>";
+            rows += "<td class='text-end'>" + parseFloat(totval1).toLocaleString('es-419', {minimumFractionDigits: 2,maximumFractionDigits: 2}) + "</td>";
+            rows += "<td class='text-end'>D." + parseFloat(totund2).toLocaleString('es-419') + "</td>";
+            rows += "<td class='text-end'>D." + parseFloat(totval2).toLocaleString('es-419', {minimumFractionDigits: 2,maximumFractionDigits: 2}) + "</td>";
+            varhon = totval1 - totval2;
+            crehon = (totval1 != 0 && totval2 != 0) ? parseFloat(((totval1 / totval2) - 1) * 100) : 0;
+                if (parseFloat(varhon) < 0) {
+                    varhon = "<td class='fw-bold  text-danger text-end'>D." + varhon.toLocaleString('es-419', {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2
+                    }) + "</td>";
+                } else {
+                    varhon = "<td class='fw-bold  text-success text-end'>D." + varhon.toLocaleString('es-419', {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2
+                    }) + "</td>";
+                }
+                if (parseFloat(crehon) < 0) {
+                    crehon = "<td class='fw-bold  text-danger text-end'>" + crehon.toLocaleString('es-419', {
+                        maximumFractionDigits: 0
+                    }) + "%</td>";
+                } else {
+                    crehon = "<td class='fw-bold  text-success text-end'>" + crehon.toLocaleString('es-419', {
+                        maximumFractionDigits: 0
+                    }) + "%</td>";
+                }
+            rows += varhon;
+            rows += crehon;
+            rows += "</tr>";
+
         }
         divTabla.empty();
         divTabla.append(`<div>
@@ -1685,6 +1776,19 @@
                 },
                 title: 'ReporteMarcasxTiendas',
                 messageTop: 'TIENDAS: ' + $('#cbbCia').find(":selected").text(),
+                customizeData: function (data) {
+                data.body.forEach(function(row, index) {
+                        if (row[3] && row[3].startsWith('D.')) {
+                            row[3] = row[3].substring(2);
+                        }
+                        if (row[4] && row[4].startsWith('D.')) {
+                            row[4] = row[4].substring(2);
+                        }
+                        if (row[5] && row[5].startsWith('D.')) {
+                            row[5] = row[5].substring(2);
+                        }
+                    });
+                },
                 customize: function(xlsx) {
                     var sheet = xlsx.xl.worksheets['sheet1.xml'];
                     var sSh = xlsx.xl['styles.xml'];
@@ -1756,8 +1860,7 @@
                     }
                     for (let index = 3; index <= 40; index++) {
 
-                        if (parseFloat(($('row:eq(' + index + ') c[r^="F"]', sheet).text()).slice(
-                                2)) < 0) {
+                        if (parseFloat($('row:eq(' + index + ') c[r^="F"]', sheet).text()) < 0) {
                             $('row:eq(' + index + ') c[r^="F"]', sheet).attr('s', textred1); //ROJO
                         } else {
                             $('row:eq(' + index + ') c[r^="F"]', sheet).attr('s',

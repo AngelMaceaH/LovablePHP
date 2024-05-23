@@ -286,7 +286,7 @@ $(document).ready(function() {
 
             exportOptions: {
                 columns: <?php if($_SESSION['filtro']!=2){
-                echo "[2,3,4,5,6,7,8,9,10,11,12,13,14],";
+                echo "[2,3,4,5,6,7,8,9,10,11,12,13,14,15,16],";
               }else{
                 echo "[2,3,4,5,6,7,8],";
                 }
@@ -295,6 +295,15 @@ $(document).ready(function() {
 
             title: 'ReporteVentas',
             messageTop: ' ',
+            customizeData: function (data) {
+                data.body.forEach(function(row, index) {
+                        for ($i = 1; $i <= 14; $i++) {
+                            if (row[$i] && (row[$i].startsWith('D.') || row[$i].startsWith('L.')|| row[$i].startsWith('Q.')|| row[$i].startsWith('C.') || row[$i].startsWith('P.'))) {
+                                row[$i] = row[$i].substring(2);
+                            }
+                        }
+                    });
+                },
             customize: function(xlsx) {
                 var sheet = xlsx.xl.worksheets['sheet1.xml'];
                 var sSh = xlsx.xl['styles.xml'];
@@ -395,78 +404,62 @@ $(document).ready(function() {
                     <?php
                     if($_SESSION['filtro']==1 || $_SESSION['filtro']==2){
                   ?>
-                    if (parseFloat($('row:eq(' + index + ') c[r^="B"]', sheet).text()) ==
-                        0) {
+                    if (parseFloat($('row:eq(' + index + ') c[r^="B"]', sheet).text()) ==0) {
                         $('row:eq(' + index + ') c[r^="B"]', sheet).attr('s',
                             textred1); //ROJO
                     }
-                    if (parseFloat($('row:eq(' + index + ') c[r^="F"]', sheet).text()) < 0) {
-                        $('row:eq(' + index + ') c[r^="F"]', sheet).attr('s',
+                    if (parseFloat($('row:eq(' + index + ') c[r^="J"]', sheet).text()) ==0) {
+                        $('row:eq(' + index + ') c[r^="J"]', sheet).attr('s',
                             textred1); //ROJO
+                    }
+                    if (parseFloat($('row:eq(' + index + ') c[r^="F"]', sheet).text()) < 0) {
+                        $('row:eq(' + index + ') c[r^="F"]', sheet).attr('s',textred1); //ROJO
                     } else {
-                        $('row:eq(' + index + ') c[r^="F"]', sheet).attr('s',
-                            textgreen1); //VERDE
+                        $('row:eq(' + index + ') c[r^="F"]', sheet).attr('s', textgreen1); //VERDE
                     }
 
-                    if (parseFloat($('row:eq(' + index + ') c[r^="M"]', sheet).text()) <
-                        0) {
-                        $('row:eq(' + index + ') c[r^="M"]', sheet).attr('s',
-                            textred2); //ROJO
+                    if (parseFloat($('row:eq(' + index + ') c[r^="G"]', sheet).text()) <0) {
+                        $('row:eq(' + index + ') c[r^="G"]', sheet).attr('s',textred2); //ROJO
                     } else {
-                        $('row:eq(' + index + ') c[r^="M"]', sheet).attr('s',
-                            textgreen2); //VERDE
-                    }
-                    if (parseFloat($('row:eq(' + index + ') c[r^="L"]', sheet).text()) <
-                        0) {
-                        $('row:eq(' + index + ') c[r^="L"]', sheet).attr('s',
-                            textred1); //ROJO
-                    } else {
-                        $('row:eq(' + index + ') c[r^="L"]', sheet).attr('s',
-                            textgreen1); //VERDE
+                        $('row:eq(' + index + ') c[r^="G"]', sheet).attr('s',textgreen2); //VERDE
                     }
                     <?php
                     }else{
                   ?>
-                    if (parseFloat(($('row:eq(' + index + ') c[r^="B"]', sheet).text())
-                            .slice(2)) == 0) {
-                        $('row:eq(' + index + ') c[r^="B"]', sheet).attr('s',
-                            textred1); //ROJO
+                    if (parseFloat($('row:eq(' + index + ') c[r^="B"]', sheet).text()) == 0) {
+                        $('row:eq(' + index + ') c[r^="B"]', sheet).attr('s',  textred1); //ROJO
                     }
-                    if (parseFloat(($('row:eq(' + index + ') c[r^="F"]', sheet).text())
-                            .slice(2)) < 0) {
-                        $('row:eq(' + index + ') c[r^="F"]', sheet).attr('s',
-                            textred1); //ROJO
+                    if (parseFloat($('row:eq(' + index + ') c[r^="J"]', sheet).text()) == 0) {
+                        $('row:eq(' + index + ') c[r^="J"]', sheet).attr('s',textred1); //ROJO
+                    }
+                    if (parseFloat($('row:eq(' + index + ') c[r^="H"]', sheet).text()) < 0) {
+                        $('row:eq(' + index + ') c[r^="H"]', sheet).attr('s',textred1); //ROJO
                     } else {
-                        $('row:eq(' + index + ') c[r^="F"]', sheet).attr('s',
-                            textgreen1); //VERDE
+                        $('row:eq(' + index + ') c[r^="H"]', sheet).attr('s',textgreen1); //VERDE
                     }
-                    if (parseFloat($('row:eq(' + index + ') c[r^="M"]', sheet).text()) <
+                    if (parseFloat($('row:eq(' + index + ') c[r^="N"]', sheet).text()) <
                         0) {
-                        $('row:eq(' + index + ') c[r^="M"]', sheet).attr('s',
-                            textred2); //ROJO
+                        $('row:eq(' + index + ') c[r^="N"]', sheet).attr('s',textred1); //ROJO
                     } else {
-                        $('row:eq(' + index + ') c[r^="M"]', sheet).attr('s',
-                            textgreen2); //VERDE
-                    }
-                    if (parseFloat(($('row:eq(' + index + ') c[r^="L"]', sheet).text())
-                            .slice(2)) < 0) {
-                        $('row:eq(' + index + ') c[r^="L"]', sheet).attr('s',
-                            textred1); //ROJO
-                    } else {
-                        $('row:eq(' + index + ') c[r^="L"]', sheet).attr('s',
-                            textgreen1); //VERDE
+                        $('row:eq(' + index + ') c[r^="N"]', sheet).attr('s',textgreen1); //VERDE
                     }
                     <?php
                     }
                   ?>
-
-
-                    if (parseFloat($('row:eq(' + index + ') c[r^="G"]', sheet).text()) <
+                    if (parseFloat($('row:eq(' + index + ') c[r^="I"]', sheet).text()) <
                         0) {
-                        $('row:eq(' + index + ') c[r^="G"]', sheet).attr('s',
+                        $('row:eq(' + index + ') c[r^="I"]', sheet).attr('s',
                             textred2); //ROJO
                     } else {
-                        $('row:eq(' + index + ') c[r^="G"]', sheet).attr('s',
+                        $('row:eq(' + index + ') c[r^="I"]', sheet).attr('s',
+                            textgreen2); //VERDE
+                    }
+                    if (parseFloat($('row:eq(' + index + ') c[r^="O"]', sheet).text()) <
+                        0) {
+                        $('row:eq(' + index + ') c[r^="O"]', sheet).attr('s',
+                            textred2); //ROJO
+                    } else {
+                        $('row:eq(' + index + ') c[r^="O"]', sheet).attr('s',
                             textgreen2); //VERDE
                     }
                 }

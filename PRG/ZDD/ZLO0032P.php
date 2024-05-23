@@ -121,7 +121,7 @@
       document.getElementById('fecha').value = new Date().toISOString().split('T')[0];
       document.getElementById('descrp').value = '';
       document.getElementById('soli').value = '';
-      document.getElementById('depa').value = '';
+      document.getElementById('depa_flexselect').value = '';
       document.getElementById('entrega').value = "<?php echo isset($_SESSION['NOMUSU'])? $_SESSION['NOMUSU']: ''; ?>";
       document.getElementById('recibi').value = '';
       document.getElementById('imagen').value = '';
@@ -637,8 +637,8 @@
       cancelButtonText: 'Cancelar'
     }).then((result) => {
       if (result.isConfirmed) {
-        box1.innerHTML =
-          `<input id="imagen" type="file" class="form-control" >`;
+        box1.innerHTML =`<input id="imagen" type="file" class="form-control" >`;
+        imgUrl.value = '';
       }
     });
   }

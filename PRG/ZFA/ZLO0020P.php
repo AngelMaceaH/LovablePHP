@@ -603,6 +603,15 @@
                     text: '<i class="fa-solid fa-file-excel me-1"></i><b>Enviar a Excel</b>',
                     className: "btn btn-success text-light fs-6 mb-2",
                     title: 'Comparativo de ventas resumidas - Países',
+                    customizeData: function (data) {
+                        data.body.forEach(function(row, index) {
+                                for ($i = 1; $i <= 3; $i++) {
+                                    if (row[$i] && (row[$i].startsWith('D.') || row[$i].startsWith('L.')|| row[$i].startsWith('Q.')|| row[$i].startsWith('C.') || row[$i].startsWith('P.'))) {
+                                        row[$i] = row[$i].substring(2);
+                                    }
+                                }
+                            });
+                        },
                     customize: function(xlsx) {
                         var sheet = xlsx.xl.worksheets['sheet1.xml'];
                         var sSh = xlsx.xl['styles.xml'];
@@ -667,8 +676,7 @@
                             $('row:eq(' + index + ') c[r^="C"]', sheet).attr('s', 52);
                             $('row:eq(' + index + ') c[r^="D"]', sheet).attr('s', 52);
                             $('row:eq(' + index + ') c[r^="E"]', sheet).attr('s', 52);
-                            if (parseFloat(($('row:eq(' + index + ') c[r^="D"]', sheet).text()).slice(
-                                    2)) < 0) {
+                            if (parseFloat($('row:eq(' + index + ') c[r^="D"]', sheet).text()) < 0) {
                                 $('row:eq(' + index + ') c[r^="D"]', sheet).attr('s',
                                     textred1); //ROJO
                             } else {
@@ -676,12 +684,12 @@
                                     textgreen1); //VERDE
                             }
                             if (parseFloat($('row:eq(' + index + ') c[r^="E"]', sheet).text()) < 0) {
-                        $('row:eq(' + index + ') c[r^="E"]', sheet).attr('s',
-                            textred1); //ROJO
-                    } else {
-                        $('row:eq(' + index + ') c[r^="E"]', sheet).attr('s',
-                            textgreen1); //VERDE
-                    }
+                                 $('row:eq(' + index + ') c[r^="E"]', sheet).attr('s',
+                            textred2); //ROJO
+                            } else {
+                                $('row:eq(' + index + ') c[r^="E"]', sheet).attr('s',
+                                    textgreen2); //VERDE
+                            }
                             var tagName = sSh.getElementsByTagName('sz');
                             for (i = 0; i < tagName.length; i++) {
                                 tagName[i].setAttribute("val", "13");
@@ -996,6 +1004,15 @@
                     text: '<i class="fa-solid fa-file-excel me-1"></i><b>Enviar a Excel</b>',
                     className: "btn btn-success text-light fs-6 mb-2",
                     title: 'Comparativo de ventas resumidas - Países',
+                    customizeData: function (data) {
+                        data.body.forEach(function(row, index) {
+                                for ($i = 1; $i <= 3; $i++) {
+                                    if (row[$i] && (row[$i].startsWith('D.') || row[$i].startsWith('L.')|| row[$i].startsWith('Q.')|| row[$i].startsWith('C.') || row[$i].startsWith('P.'))) {
+                                        row[$i] = row[$i].substring(2);
+                                    }
+                                }
+                            });
+                        },
                     customize: function(xlsx) {
                         var sheet = xlsx.xl.worksheets['sheet1.xml'];
                         var sSh = xlsx.xl['styles.xml'];
@@ -1060,8 +1077,7 @@
                             $('row:eq(' + index + ') c[r^="C"]', sheet).attr('s', 52);
                             $('row:eq(' + index + ') c[r^="D"]', sheet).attr('s', 52);
                             $('row:eq(' + index + ') c[r^="E"]', sheet).attr('s', 52);
-                            if (parseFloat(($('row:eq(' + index + ') c[r^="D"]', sheet).text()).slice(
-                                    2)) < 0) {
+                            if (parseFloat($('row:eq(' + index + ') c[r^="D"]', sheet).text()) < 0) {
                                 $('row:eq(' + index + ') c[r^="D"]', sheet).attr('s',
                                     textred1); //ROJO
                             } else {
@@ -1069,12 +1085,12 @@
                                     textgreen1); //VERDE
                             }
                             if (parseFloat($('row:eq(' + index + ') c[r^="E"]', sheet).text()) < 0) {
-                        $('row:eq(' + index + ') c[r^="E"]', sheet).attr('s',
-                            textred1); //ROJO
-                    } else {
-                        $('row:eq(' + index + ') c[r^="E"]', sheet).attr('s',
-                            textgreen1); //VERDE
-                    }
+                                 $('row:eq(' + index + ') c[r^="E"]', sheet).attr('s',
+                            textred2); //ROJO
+                            } else {
+                                $('row:eq(' + index + ') c[r^="E"]', sheet).attr('s',
+                                    textgreen2); //VERDE
+                            }
                             var tagName = sSh.getElementsByTagName('sz');
                             for (i = 0; i < tagName.length; i++) {
                                 tagName[i].setAttribute("val", "13");
@@ -1380,6 +1396,15 @@
                     text: '<i class="fa-solid fa-file-excel me-1"></i><b>Enviar a Excel</b>',
                     className: "btn btn-success text-light fs-6 mb-2",
                     title: 'Comparativo de ventas resumidas - Países',
+                    customizeData: function (data) {
+                        data.body.forEach(function(row, index) {
+                                for ($i = 1; $i <= 3; $i++) {
+                                    if (row[$i] && (row[$i].startsWith('D.') || row[$i].startsWith('L.')|| row[$i].startsWith('Q.')|| row[$i].startsWith('C.') || row[$i].startsWith('P.'))) {
+                                        row[$i] = row[$i].substring(2);
+                                    }
+                                }
+                            });
+                        },
                     customize: function(xlsx) {
                         var sheet = xlsx.xl.worksheets['sheet1.xml'];
                         var sSh = xlsx.xl['styles.xml'];
@@ -1444,8 +1469,7 @@
                             $('row:eq(' + index + ') c[r^="C"]', sheet).attr('s', 52);
                             $('row:eq(' + index + ') c[r^="D"]', sheet).attr('s', 52);
                             $('row:eq(' + index + ') c[r^="E"]', sheet).attr('s', 52);
-                            if (parseFloat(($('row:eq(' + index + ') c[r^="D"]', sheet).text()).slice(
-                                    2)) < 0) {
+                            if (parseFloat($('row:eq(' + index + ') c[r^="D"]', sheet).text()) < 0) {
                                 $('row:eq(' + index + ') c[r^="D"]', sheet).attr('s',
                                     textred1); //ROJO
                             } else {
@@ -1453,12 +1477,12 @@
                                     textgreen1); //VERDE
                             }
                             if (parseFloat($('row:eq(' + index + ') c[r^="E"]', sheet).text()) < 0) {
-                        $('row:eq(' + index + ') c[r^="E"]', sheet).attr('s',
-                            textred1); //ROJO
-                    } else {
-                        $('row:eq(' + index + ') c[r^="E"]', sheet).attr('s',
-                            textgreen1); //VERDE
-                    }
+                                 $('row:eq(' + index + ') c[r^="E"]', sheet).attr('s',
+                            textred2); //ROJO
+                            } else {
+                                $('row:eq(' + index + ') c[r^="E"]', sheet).attr('s',
+                                    textgreen2); //VERDE
+                            }
                             var tagName = sSh.getElementsByTagName('sz');
                             for (i = 0; i < tagName.length; i++) {
                                 tagName[i].setAttribute("val", "13");
@@ -1771,6 +1795,15 @@
                     text: '<i class="fa-solid fa-file-excel me-1"></i><b>Enviar a Excel</b>',
                     className: "btn btn-success text-light fs-6 mb-2",
                     title: 'Comparativo de ventas resumidas - Países',
+                    customizeData: function (data) {
+                        data.body.forEach(function(row, index) {
+                                for ($i = 1; $i <= 3; $i++) {
+                                    if (row[$i] && (row[$i].startsWith('D.') || row[$i].startsWith('L.')|| row[$i].startsWith('Q.')|| row[$i].startsWith('C.') || row[$i].startsWith('P.'))) {
+                                        row[$i] = row[$i].substring(2);
+                                    }
+                                }
+                            });
+                        },
                     customize: function(xlsx) {
                         var sheet = xlsx.xl.worksheets['sheet1.xml'];
                         var sSh = xlsx.xl['styles.xml'];
@@ -1835,8 +1868,7 @@
                             $('row:eq(' + index + ') c[r^="C"]', sheet).attr('s', 52);
                             $('row:eq(' + index + ') c[r^="D"]', sheet).attr('s', 52);
                             $('row:eq(' + index + ') c[r^="E"]', sheet).attr('s', 52);
-                            if (parseFloat(($('row:eq(' + index + ') c[r^="D"]', sheet).text()).slice(
-                                    2)) < 0) {
+                            if (parseFloat($('row:eq(' + index + ') c[r^="D"]', sheet).text()) < 0) {
                                 $('row:eq(' + index + ') c[r^="D"]', sheet).attr('s',
                                     textred1); //ROJO
                             } else {
@@ -1844,12 +1876,12 @@
                                     textgreen1); //VERDE
                             }
                             if (parseFloat($('row:eq(' + index + ') c[r^="E"]', sheet).text()) < 0) {
-                        $('row:eq(' + index + ') c[r^="E"]', sheet).attr('s',
-                            textred1); //ROJO
-                    } else {
-                        $('row:eq(' + index + ') c[r^="E"]', sheet).attr('s',
-                            textgreen1); //VERDE
-                    }
+                                 $('row:eq(' + index + ') c[r^="E"]', sheet).attr('s',
+                            textred2); //ROJO
+                            } else {
+                                $('row:eq(' + index + ') c[r^="E"]', sheet).attr('s',
+                                    textgreen2); //VERDE
+                            }
                             var tagName = sSh.getElementsByTagName('sz');
                             for (i = 0; i < tagName.length; i++) {
                                 tagName[i].setAttribute("val", "13");

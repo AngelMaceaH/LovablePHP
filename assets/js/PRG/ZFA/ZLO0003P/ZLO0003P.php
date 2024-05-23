@@ -488,7 +488,20 @@ $(document).ready(function() {
             },
             title: 'ReporteMarcas',
             messageTop: 'MARCA: ' + $('#cbbMarca option:selected').text() +
-                '                                                                            <?php echo $labelSelect; ?>',
+                '                                                                            <?php echo $labelSelect; ?>                                                                        Moneda: Dólares',
+            customizeData: function (data) {
+                data.body.forEach(function(row, index) {
+                    if (row[2] && row[2].startsWith('D.')) {
+                        row[2] = row[2].substring(2);
+                    }
+                    if (row[4] && row[4].startsWith('D.')) {
+                        row[4] = row[4].substring(2);
+                    }
+                    if (row[5] && row[5].startsWith('D.')) {
+                        row[5] = row[5].substring(2);
+                    }
+                });
+            },
             customize: function(xlsx) {
                 var sheet = xlsx.xl.worksheets['sheet1.xml'];
                 var sSh = xlsx.xl['styles.xml'];
@@ -551,8 +564,7 @@ $(document).ready(function() {
                 for (let index = 3; index <= 9; index++) {
 
                     if (($('row:eq(' + index + ') c[r^="G"]', sheet).text() * 1 < 0)) {
-                        $('row:eq(' + index + ') c[r^="G"]', sheet).attr('s',
-                            textred2); //ROJO
+                        $('row:eq(' + index + ') c[r^="G"]', sheet).attr('s',textred2); //ROJO
                     } else {
                         $('row:eq(' + index + ') c[r^="G"]', sheet).attr('s',
                             textgreen2); //VERDE
@@ -560,16 +572,12 @@ $(document).ready(function() {
                 }
                 for (let index = 3; index <= 9; index++) {
 
-                    if (parseFloat(($('row:eq(' + index + ') c[r^="F"]', sheet).text())
-                            .slice(2)) < 0) {
-                        $('row:eq(' + index + ') c[r^="F"]', sheet).attr('s',
-                            textred1); //ROJO
+                    if (parseFloat($('row:eq(' + index + ') c[r^="F"]', sheet).text()) < 0) {
+                        $('row:eq(' + index + ') c[r^="F"]', sheet).attr('s',textred1); //ROJO
                     } else {
-                        $('row:eq(' + index + ') c[r^="F"]', sheet).attr('s',
-                            textgreen1); //VERDE
+                        $('row:eq(' + index + ') c[r^="F"]', sheet).attr('s',textgreen1); //VERDE
                     }
                 }
-
                 var tagName = sSh.getElementsByTagName('sz');
                 for (i = 0; i < tagName.length; i++) {
                     tagName[i].setAttribute("val", "13");
@@ -594,15 +602,13 @@ $(document).ready(function() {
     var validator2 = true;
     if (responseTiendas.code == 200) {
         validator2 = false;
+        let totund1=0; let totund2=0;
+        let totval1=0; let totval2=0;
         for (let i = 0; i < responseTiendas.data.length; i++) {
-            ano1hon = (responseTiendas.data[i]['HONVALANO1'] != 0) ? (responseTiendas.data[i]['HONVALANO1']) :
-                0;
-            ano2hon = (responseTiendas.data[i]['HONVALANO2'] != 0) ? (responseTiendas.data[i]['HONVALANO2']) :
-                0;
-            can1hon = (responseTiendas.data[i]['HONCANANO1'] != 0) ? (responseTiendas.data[i]['HONCANANO1']) :
-                0;
-            can2hon = (responseTiendas.data[i]['HONCANANO2'] != 0) ? (responseTiendas.data[i]['HONCANANO2']) :
-                0;
+            ano1hon = (responseTiendas.data[i]['HONVALANO1'] != 0) ? (responseTiendas.data[i]['HONVALANO1']) :0;
+            ano2hon = (responseTiendas.data[i]['HONVALANO2'] != 0) ? (responseTiendas.data[i]['HONVALANO2']) :0;
+            can1hon = (responseTiendas.data[i]['HONCANANO1'] != 0) ? (responseTiendas.data[i]['HONCANANO1']) :0;
+            can2hon = (responseTiendas.data[i]['HONCANANO2'] != 0) ? (responseTiendas.data[i]['HONCANANO2']) :0;
             varhon = ano1hon - ano2hon;
             crehon = (ano1hon != 0 && ano2hon != 0) ? parseFloat(((ano1hon / ano2hon) - 1) * 100) : 0;
             if (parseFloat(varhon) < 0) {
@@ -630,6 +636,10 @@ $(document).ready(function() {
                 "ANO1": parseFloat(ano1hon),
                 "ANO2": parseFloat(ano2hon)
             });
+            totund1+=parseFloat(can1hon);
+            totund2+=parseFloat(can2hon);
+            totval1+=parseFloat(ano1hon);
+            totval2+=parseFloat(ano2hon);
             rows += "<tr>";
             rows += "<td>" + responseTiendas.data[i]['CODCIA'] + "</td>";
             rows += "<td class='text-start'>" + responseTiendas.data[i]['NOMCIA'] + "</td>";
@@ -647,7 +657,39 @@ $(document).ready(function() {
             rows += crehon;
             rows += "</tr>";
         }
+        //TOTALES
+        rows+=`<td class='fw-bold'>1</td>`;
+        rows+=`<td class='fw-bold text-start'>TOTAL FINAL</td>`;
+        rows += "<td class='text-end'>" + parseFloat(totund1).toLocaleString('es-419') + "</td>";
+        rows += "<td class='text-end'>D." + parseFloat(totval1).toLocaleString('es-419', {minimumFractionDigits: 2,maximumFractionDigits: 2}) + "</td>";
+        rows += "<td class='text-end'>" + parseFloat(totund2).toLocaleString('es-419') + "</td>";
+        rows += "<td class='text-end'>D." + parseFloat(totval2).toLocaleString('es-419', {minimumFractionDigits: 2,maximumFractionDigits: 2}) + "</td>";
+        varhon = totval1 - totval2;
+        crehon = (totval1 != 0 && totval2 != 0) ? parseFloat(((totval1 / totval2) - 1) * 100) : 0;
+            if (parseFloat(varhon) < 0) {
+                varhon = "<td class='fw-bold  text-danger text-end'>D." + varhon.toLocaleString('es-419', {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
+                }) + "</td>";
+            } else {
+                varhon = "<td class='fw-bold  text-success text-end'>D." + varhon.toLocaleString('es-419', {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
+                }) + "</td>";
+            }
+            if (parseFloat(crehon) < 0) {
+                crehon = "<td class='fw-bold  text-danger text-end'>" + crehon.toLocaleString('es-419', {
+                    maximumFractionDigits: 0
+                }) + "%</td>";
+            } else {
+                crehon = "<td class='fw-bold  text-success text-end'>" + crehon.toLocaleString('es-419', {
+                    maximumFractionDigits: 0
+                }) + "%</td>";
+            }
+        rows += varhon;
+        rows += crehon;
         tiendasBody.append(rows);
+
     }
     tiendasValores.sort((a, b) => b.ANO1 - a.ANO1);
     for (let i = 0; i < tiendasValores.length; i++) {
@@ -678,7 +720,20 @@ $(document).ready(function() {
             },
             title: 'ReporteMarcas',
             messageTop: 'MARCA: ' + $('#cbbMarca option:selected').text() +
-                '                                                                            <?php echo $labelSelect; ?>',
+                '                                                                            <?php echo $labelSelect; ?>                                                                        Moneda: Dólares',
+            customizeData: function (data) {
+                data.body.forEach(function(row, index) {
+                    if (row[2] && row[2].startsWith('D.')) {
+                        row[2] = row[2].substring(2);
+                    }
+                    if (row[4] && row[4].startsWith('D.')) {
+                        row[4] = row[4].substring(2);
+                    }
+                    if (row[5] && row[5].startsWith('D.')) {
+                        row[5] = row[5].substring(2);
+                    }
+                });
+            },
             customize: function(xlsx) {
                 var sheet = xlsx.xl.worksheets['sheet1.xml'];
                 var sSh = xlsx.xl['styles.xml'];
@@ -750,8 +805,7 @@ $(document).ready(function() {
                 }
                 for (let index = 3; index <= 40; index++) {
 
-                    if (parseFloat(($('row:eq(' + index + ') c[r^="F"]', sheet).text())
-                            .slice(2)) < 0) {
+                    if (parseFloat($('row:eq(' + index + ') c[r^="F"]', sheet).text()) < 0) {
                         $('row:eq(' + index + ') c[r^="F"]', sheet).attr('s',
                             textred1); //ROJO
                     } else {

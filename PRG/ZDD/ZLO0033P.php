@@ -119,6 +119,7 @@
       box1.innerHTML =
         `<input id="imagen" type="file" class="form-control" >`;
       document.getElementById('nreq').value = '';
+      document.getElementById('orden').value = '';
       document.getElementById('fecha').value = new Date().toISOString().split('T')[0];
       document.getElementById('descrp').value = '';
       document.getElementById('entrega').value = "<?php echo isset($_SESSION['NOMUSU'])? $_SESSION['NOMUSU']: ''; ?>";
@@ -144,7 +145,9 @@
     });
 
     setTimeout(() => {
-      urlTable = "/API.LovablePHP/ZLO0033P/List/?hora=" + ck;
+      ck1 = (isAdmin.checked) ? 1 : 0;
+      ck2 = (isRecib.checked) ? 1 : 0;
+      urlTable = "/API.LovablePHP/ZLO0033P/List/?hora=" + ck1 + "&fecha=" + ck2;
       table = $('#mainTable').DataTable({
         language: {
           url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json',
@@ -158,6 +161,7 @@
           "type": "POST",
           "dataSrc": function(json) {
             if (json.data) {
+              console.log(json);
               return json.data;
             } else {
               console.error(json);
@@ -297,9 +301,10 @@
         dom: 'tip',
       });
     }, 50);
-    $('#mainTable thead input').not('#srcDepa_flexselect').on('keyup', function() {
+    $('#mainTable thead input').on('keyup', function() {
       var columnIndex = $(this).parent().index();
       var inputValue = $(this).val().trim();
+      console.log(columnIndex,inputValue);
       if (table.column(columnIndex).search() !== inputValue) {
         table
           .column(columnIndex)
@@ -607,6 +612,7 @@
       if (result.isConfirmed) {
         box1.innerHTML =
           `<input id="imagen" type="file" class="form-control" >`;
+          imgUrl.value = '';
       }
     });
   }
