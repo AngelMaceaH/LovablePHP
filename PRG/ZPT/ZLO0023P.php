@@ -48,7 +48,7 @@
 
                                             </div>
                                             <div class="col-12 col-lg-3">
-                                                <label class="mt-2">País:</label>
+                                                <label class="mt-2">Punto de venta:</label>
                                                 <select class="form-select mt-1 fw-bold" id="cbbAgrup">
                                                 </select>
                                             </div>
@@ -295,7 +295,7 @@
     window.addEventListener('DOMContentLoaded', (event) => {
         const cbbAgrup = document.getElementById('cbbAgrup');
         let usuario = '<?php echo $_SESSION["CODUSU"];?>';
-        let urlTiendas = '/API.LovablePHP/ZLO0015P/ListTiendas/?user=' + usuario + '';
+        let urlTiendas = '/API.LovablePHP/Users/FindAgrupT/?codusu=' + usuario + '';
         let responseTiendas = ajaxRequest(urlTiendas);
         let tiendasOptions = '';
         if (responseTiendas.code == 200) {

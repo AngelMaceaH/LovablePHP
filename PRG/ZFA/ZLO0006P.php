@@ -93,41 +93,31 @@
                     </form>
                 </div>
                 <hr>
+                <div id="menuPaises">
+                    <div class="btn-group flex-wrap d-flex justify-content-center justify-content-md-start mb-2 mt-2" role="group" aria-label="Basic radio toggle button group">
+                        <input type="radio" class="btn-check " name="btncols" id="btncolHon" autocomplete="off" checked>
+                        <label class="btn btn-outline-secondary responsive-font-example pt-3 pb-3 text-black d-none" id="lblHon" for="btncolHon"><b>Honduras</b></label>
 
-                <div class="btn-group flex-wrap d-flex justify-content-center justify-content-md-start mb-2 mt-2"
-                    role="group" aria-label="Basic radio toggle button group">
-                    <input type="radio" class="btn-check " name="btncols" id="btncolHon" autocomplete="off" checked>
-                    <label class="btn btn-outline-secondary responsive-font-example pt-3 pb-3 text-black"
-                        for="btncolHon"><b>Honduras</b></label>
+                        <input type="radio" class="btn-check" name="btncols" id="btncolGua" autocomplete="off">
+                        <label class="btn btn-outline-secondary responsive-font-example  pt-3 pb-3 text-black d-none"  id="lblGua"   for="btncolGua" id="btnnradio2"><b>Guatemala</b></label>
 
-                    <input type="radio" class="btn-check" name="btncols" id="btncolGua" autocomplete="off">
-                    <label class="btn btn-outline-secondary responsive-font-example  pt-3 pb-3 text-black"
-                        for="btncolGua" id="btnnradio2"><b>Guatemala</b></label>
+                        <input type="radio" class="btn-check" name="btncols" id="btncolSal" autocomplete="off">
+                        <label class="btn btn-outline-secondary responsive-font-example  pt-3 pb-3 text-black d-none"  id="lblSal"  for="btncolSal"><b>El Salvador</b></label>
 
-                    <input type="radio" class="btn-check" name="btncols" id="btncolSal" autocomplete="off">
-                    <label class="btn btn-outline-secondary responsive-font-example  pt-3 pb-3 text-black"
-                        for="btncolSal"><b>El Salvador</b></label>
+                        <input type="radio" class="btn-check" name="btncols" id="btncolCos" autocomplete="off">
+                        <label class="btn btn-outline-secondary responsive-font-example  pt-3 pb-3 text-black d-none"  id="lblCos"  for="btncolCos"><b>Costa Rica</b></label>
+                    </div>
+                    <div class="btn-group flex-wrap d-flex justify-content-center justify-content-md-start mb-2 mt-2" role="group" aria-label="Basic radio toggle button group">
+                        <input type="radio" class="btn-check" name="btncols" id="btncolNic" autocomplete="off">
+                        <label class="btn btn-outline-secondary responsive-font-example  pt-3 pb-3 text-black d-none"  id="lblNic"  for="btncolNic"><b>Nicaragua</b></label>
 
-                    <input type="radio" class="btn-check" name="btncols" id="btncolCos" autocomplete="off">
-                    <label class="btn btn-outline-secondary responsive-font-example  pt-3 pb-3 text-black"
-                        for="btncolCos"><b>Costa Rica</b></label>
+                        <input type="radio" class="btn-check" name="btncols" id="btncolRep" autocomplete="off">
+                        <label class="btn btn-outline-secondary responsive-font-example  pt-3 pb-3 text-black d-none"  id="lblRep"  for="btncolRep"><b>Rep. Dominicana</b></label>
+
+                        <input type="radio" class="btn-check" name="btncols" id="btncolTot" autocomplete="off">
+                        <label class="btn btn-outline-secondary responsive-font-example  pt-3 pb-3 text-black d-none"  id="lblTot"  for="btncolTot"><b>Total</b></label>
+                    </div>
                 </div>
-                <div class="btn-group flex-wrap d-flex justify-content-center justify-content-md-start mb-2 mt-2"
-                    role="group" aria-label="Basic radio toggle button group">
-                    <input type="radio" class="btn-check" name="btncols" id="btncolNic" autocomplete="off">
-                    <label class="btn btn-outline-secondary responsive-font-example  pt-3 pb-3 text-black"
-                        for="btncolNic"><b>Nicaragua</b></label>
-
-                    <input type="radio" class="btn-check" name="btncols" id="btncolRep" autocomplete="off">
-                    <label class="btn btn-outline-secondary responsive-font-example  pt-3 pb-3 text-black"
-                        for="btncolRep"><b>Rep. Dominicana</b></label>
-
-                    <input type="radio" class="btn-check" name="btncols" id="btncolTot" autocomplete="off">
-                    <label class="btn btn-outline-secondary responsive-font-example  pt-3 pb-3 text-black"
-                        for="btncolTot"><b>Total</b></label>
-
-                </div>
-
 
                 <div class="table-responsive">
 

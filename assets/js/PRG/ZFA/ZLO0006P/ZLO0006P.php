@@ -231,6 +231,59 @@
                 $('#tottd1, #tottd2, #tottd3, #tottd4').removeClass('d-none');
                 $('#totth1, #totth2, #totth3, #totth4').removeClass('d-none');
             });
+            var usuario = '<?php echo $_SESSION["CODUSU"];?>';
+            const urlVal="http://172.16.15.20/API.LovablePHP/Users/FindAgrupP/?codusu="+usuario+"";
+            fetch(urlVal).then(response => response.json()).then(data => {
+                if(data.code==200){
+                    let count=0;
+                    if (data.data.length>1) {
+                        data.data.forEach(element => {
+                       if (element.DESCRI.includes("honduras")) {
+                            $("#lblHon").removeClass("d-none");
+                            count++;
+                       }else if (element.DESCRI.includes("guatemala")) {
+                            $("#lblGua").removeClass("d-none");
+                            count++;
+                       }else if (element.DESCRI.includes("salvador")) {
+                            $("#lblSal").removeClass("d-none");
+                            count++;
+                       }else if(element.DESCRI.includes("costa rica")){
+                            $("#lblCos").removeClass("d-none");
+                            count++;
+                       }else if(element.DESCRI.includes("nicaragua")){
+                            $("#lblNic").removeClass("d-none");
+                            count++;
+                       }else if(element.DESCRI.includes("republica dominicana")){
+                            $("#lblRep").removeClass("d-none");
+                            count++;
+                      }
+                    });
+                    }
 
+                    const firstCountry = data.data[0].DESCRI;
+                    if(count==6){
+                     $("#lblTot").removeClass("d-none");
+                     $('#btncolHon').click();
+                    }else{
+                        if(firstCountry.includes("honduras")){
+                        $('#btncolHon').click();
+                        }else if(firstCountry.includes("guatemala")){
+                            $('#btncolGua').click();
+                        }else if(firstCountry.includes("salvador")){
+                            $('#btncolSal').click();
+                        } else if(firstCountry.includes("costa rica")){
+                            $('#btncolCos').click();
+                        } else if(firstCountry.includes("nicaragua")){
+                            $('#btncolNic').click();
+                        } else if(firstCountry.includes("republica dominicana")){
+                            $('#btncolRep').click();
+                        }
+                    }
+
+
+
+                }
+
+            });
         });
     </script>

@@ -308,6 +308,43 @@
     window.addEventListener('DOMContentLoaded', (event) => {
         const cbbAgrup = document.getElementById('cbbAgrup');
         let usuario = '<?php echo $_SESSION["CODUSU"];?>';
+        const urlVal="http://172.16.15.20/API.LovablePHP/Users/FindAgrupP/?codusu="+usuario+"";
+        fetch(urlVal).then(response => response.json()).then(data => {
+                if(data.code==200){
+                    cbbAgrup.innerHTML = '';
+                    const dataResponse= data.data;
+                    let count=0;
+                    if (dataResponse.length>0) {
+                        dataResponse.forEach(element => {
+                            if (element.DESCRI.includes("honduras")) {
+                                count++;
+                            cbbAgrup.innerHTML += `<option value="11">Tiendas Honduras (Lov. Ecommerce)</option>
+                                                    <option value="9">Tiendas Honduras (Mod. Íntima)</option>`;
+                            }else if (element.DESCRI.includes("guatemala")) {
+                                count++;
+                            cbbAgrup.innerHTML += '<option value="10">Tiendas Guatemala</option>';
+                            }else if (element.DESCRI.includes("salvador")) {
+                                count++;
+                            cbbAgrup.innerHTML += '<option value="12">Tiendas El Salvador</option>';
+                            }else if(element.DESCRI.includes("costa rica")){
+                                count++;
+                            cbbAgrup.innerHTML += '<option value="13">Tiendas Costa Rica</option>';
+                            }else if(element.DESCRI.includes("nicaragua")){
+                                count++;
+                            cbbAgrup.innerHTML += '<option value="16">Tiendas Nicaragua</option>';
+                            }else if(element.DESCRI.includes("republica dominicana")){
+                                count++;
+                            cbbAgrup.innerHTML += '<option value="15">Tiendas Republica Dominicana</option>';
+                            }
+                    });
+                    }
+                    if (count==6) {
+                        cbbAgrup.value=11;
+                    }
+
+                }
+
+            });
         const cbbAno = document.getElementById('cbbAno');
         const cbbGrafica = document.getElementById('selectGrafica');
         let valAno = parseInt(cbbAno.value);
