@@ -202,9 +202,9 @@
                 <option value="7">Inventario Proceso</option>
                 <option value="8">Inventario Cortado</option>
                 <option value="9">Corte</option>
-                <option value="10">Programa</option>
-                <option value="11">Programa 1</option>
-                <option value="12">Programa 2</option>
+                <option value="10">Programa 1</option>
+                <option value="11">Programa 2</option>
+                <option value="12">Programa Total</option>
                 <option value="13">Meses Inv.</option>
                 <option value="14">Meses Inv. Antes MTP</option>
                 <option value="15">Doc. Vend. Año/Ant</option>
@@ -366,9 +366,9 @@
             <th>MESES INV ANTES MTP</th>
             <th>INV. MTP</th>
             <th>MESES INV</th>
-            <th>PROGRAMA</th>
             <th>PROGRAMA 1</th>
             <th>PROGRAMA 2</th>
+            <th>PROGRAMA TOTAL</th>
             <th>LEAD TIME</th>
             <th>MESES <br>PRG 12M</th>
             <th>PROM.MEN. <br>12M</th>
@@ -595,14 +595,14 @@
       "VAL. VEN. AÑO/ACT", "PROM. MES", "# MESES", "UND VTAS. MES/ANT", "PERDIDA. VTAS",
       "PROM. PERDIDA VTAS", "APARTADO VENDEDOR", "APARTADO VENTA X CATALOGO", "INVENTARIO DISPONBLE",
       "INVENTARIO PROCESO", "INVENTARIO CORTADO", "CORTE", "MESES INV ANTES MTP", "INV. MTP",
-      "MESES INV", "PROGRAMA", "PROGRAMA 1", "PROGRAMA 2", "LEAD TIME", "MESES PRG 12M",
+      "MESES INV", "PROGRAMA 1", "PROGRAMA 2", "PROGRAMA TOTAL", "LEAD TIME", "MESES PRG 12M",
       "PROM.MEN. 12M", "# MESES 12M", "MESES INV. 6M", "PROM. MEN. 6M", "# MESES 6M",
       "PROM X MES AÑO/ANT", "# MESES AÑO/ANT", "DOC. VEND. AÑO/ANT.", "VALOR VENDIDO AÑO/ANT",
       "IMPORTADO", "DOC. TOTALES", "NUEVO INV.", "NUEVO BALANCE", "MAT. PRIMA EN ALMACEN"
     ];
      columnDataValues = ["ROWNUM", "MARCA", "ESTILO", "COLOR", "TALLA", "TIPINV", "UNIVAA", "VALVAA", "UPRMAC",
       "NUMMES", "DOCVAL", "UVENRE", "UVNRPR", "INVAPA", "APAVXC", "INVPTE", "INVPRO", "INVPR1", "INVCOR",
-      "WUNIINV2", "INVMTP", "WUNIINV", "INVPGR", "INVPG1", "INVPG2", "LEATIE", "MESINV", "UPRM1A", "NUMME1",
+      "WUNIINV2", "INVMTP", "WUNIINV",  "INVPG1", "INVPG2","INVPGR", "LEATIE", "MESINV", "UPRM1A", "NUMME1",
       "MESIN6", "UPRM6A", "NUMME6", "UPRMAV", "NUMMEV", "DOCANT", "VALANT", "IMPORT", "DOZTOT", "NUEINV",
       "BALANCE", "MATPRIMA"
     ];
