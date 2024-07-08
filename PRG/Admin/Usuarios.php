@@ -4,6 +4,7 @@
 <head>
     <meta charset="utf-8">
     <link rel="icon" type="image/x-icon" href="../../assets/img/favicon.ico">
+    <link rel="stylesheet" href="../../assets/css/flexselect.css">
     <style>
     </style>
 </head>
@@ -57,6 +58,8 @@
     <script src="https://code.highcharts.com/modules/accessibility.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="../../assets/js/PRG/Admin/Usuarios.js"></script>
+    <script src="../../assets/js/liquidmetal.js"></script>
+    <script src="../../assets/js/jquery.flexselect.js"></script>
     <div class="modal fade" id="modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
         aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable modal-lg ">
@@ -377,6 +380,17 @@
                             <div class="col-12">
                                 <div id='menuAccesos' class="overflow-auto" style="height:300px;">
                                     <div class="row">
+                                        <div class="col-12">&nbsp;&nbsp;</div>
+                                        <div class="col-12 d-flex">
+                                            <label class="form-label mt-3" >Copiar&nbsp;accesos&nbsp;del&nbsp;usuario:</label>
+                                            <select class="form-select ms-2" id="usuaAccesos">
+                                                <option value="">Seleccione un usuario</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-12">
+                                            <label class="form-label text-success mt-2" id="lblprogramas"></label>
+                                            <hr>
+                                        </div>
                                         <div class="col-12 col-lg-6">
                                             <label class="form-label mt-3">Módulo</label>
                                             <select class="form-select" id="txtModulo">
@@ -720,6 +734,17 @@
                             <div class="col-12">
                                 <div id='menuAccesosEdit' class="overflow-auto" style="height:300px;">
                                     <div class="row">
+                                        <div class="col-12">&nbsp;&nbsp;</div>
+                                        <div class="col-12 d-flex">
+                                            <label class="form-label mt-3" >Copiar&nbsp;accesos&nbsp;del&nbsp;usuario:</label>
+                                            <select class="form-select ms-2" id="usuaAccesosEdit">
+                                                <option value="">Seleccione un usuario</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-12">
+                                            <label class="form-label text-success mt-2" id="lblprogramasEdit"></label>
+                                            <hr>
+                                        </div>
                                         <div class="col-12 col-lg-6">
                                             <label class="form-label mt-3">Módulo</label>
                                             <select class="form-select" id="txtModuloEdit">

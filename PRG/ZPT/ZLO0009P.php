@@ -28,7 +28,7 @@
                 <h1 class="fs-4 mb-1 mt-2 text-center">Análisis de Inventario por clasificación de productos por país
                 </h1>
             </div>
-            <div class="card-body">
+            <div class="card-body" id="body-page">
                 <div id="loaderExcel" class="d-none">
                     <button class="btn btn-success position-absolute top-0 start-50 translate-top p-4"
                         style="z-index: 9999; margin-top: 350px;" type="button" disabled>
@@ -302,6 +302,46 @@
     window.addEventListener('DOMContentLoaded', (event) => {
         const cbbAgrup = document.getElementById('cbbAgrup');
         let usuario = '<?php echo $_SESSION["CODUSU"];?>';
+        const urlVal="http://172.16.15.20/API.LovablePHP/Users/FindAgrupP/?codusu="+usuario+"";
+        fetch(urlVal).then(response => response.json()).then(data => {
+                if(data.code==200){
+                    cbbAgrup.innerHTML = '';
+                    const dataResponse= data.data;
+                    let count=0;
+                    if (dataResponse.length>0) {
+                        dataResponse.forEach(element => {
+                            if (element.DESCRI.includes("honduras")) {
+                                count++;
+                            cbbAgrup.innerHTML += `<option value="11">Tiendas Honduras (Lov. Ecommerce)</option>
+                                                    <option value="9">Tiendas Honduras (Mod. Íntima)</option>`;
+                            }else if (element.DESCRI.includes("guatemala")) {
+                                count++;
+                            cbbAgrup.innerHTML += '<option value="10">Tiendas Guatemala</option>';
+                            }else if (element.DESCRI.includes("salvador")) {
+                                count++;
+                            cbbAgrup.innerHTML += '<option value="12">Tiendas El Salvador</option>';
+                            }else if(element.DESCRI.includes("costa rica")){
+                                count++;
+                            cbbAgrup.innerHTML += '<option value="13">Tiendas Costa Rica</option>';
+                            }else if(element.DESCRI.includes("nicaragua")){
+                                count++;
+                            cbbAgrup.innerHTML += '<option value="16">Tiendas Nicaragua</option>';
+                            }else if(element.DESCRI.includes("republica dominicana")){
+                                count++;
+                            cbbAgrup.innerHTML += '<option value="15">Tiendas Republica Dominicana</option>';
+                            }
+                    });
+                    }
+                    if (count==6) {
+                        cbbAgrup.value=11;
+                    }
+                    if (data.acceso==0) {
+                    $("#body-page").empty();
+                    $("#body-page").append('<div class="text-center p-5 fs-3 m-5" style="height:600px;"><div class="border border-1 rounded p-5 m-5"><i class="fa-solid fa-question fa-fade fa-2xl mb-4"></i><br /> No hay contenido para mostrar.</div></div>');
+                     }
+                }
+
+            });
         const cbbAno = document.getElementById('cbbAno');
         const cbbGrafica = document.getElementById('selectGrafica');
         let valAno = parseInt(cbbAno.value);

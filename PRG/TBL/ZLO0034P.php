@@ -82,6 +82,7 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/dragula/3.6.6/dragula.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="../../assets/vendors/dayrangepicker/index.umd.min.js"></script>
   <script>
   let user = '';
   let nivel = 0;
@@ -357,7 +358,27 @@
         this.value = 99;
       }
     });
+      let d1ini = getCookie("d1ini");
+      let d1fin = getCookie("d1fin");
 
+        let currentDate = new Date();
+        let currentDateString = currentDate.toISOString().split('T')[0];
+        let pastYearDate = new Date();
+        pastYearDate.setFullYear(currentDate.getFullYear() - 1);
+        let pastYearDateString = pastYearDate.toISOString().split('T')[0];
+
+        if (!d1ini || !d1fin) {
+          d1ini = pastYearDateString.replace(/-/g, '').slice(0, -2) + "01";
+          d1fin = pastYearDateString.replace(/-/g, '');
+        }
+      Date1 = formatFecha(d1ini);
+      Date2 = formatFecha(d1fin);
+      const picker1 = new easepick.create({
+        element: "#datepicker1",
+        css: ["../../assets/vendors/dayrangepicker/index.css"],
+        zIndex: 10,
+        plugins: ["RangePlugin"]
+      });
   });
 
   function chargeHeader() {
@@ -373,11 +394,12 @@
           let totalColumn = header.TOTALROWS;
           let widthColumn = 100 / totalColumn;
           divHeader = document.createElement('div');
-          divHeader.className = 'p-2 rounded fw-bold text-title border border-2 shadow text-white';
+          divHeader.className = 'p-2 rounded fw-bold text-title border border-2 shadow text-white d-flex justify-content-center align-items-center';
           divHeader.style.backgroundColor = '#6B1816';
           divHeader.style.width = `${widthColumn - 0.5}%`;
           divHeader.innerHTML = header.DESCRI;
           tableHeader.appendChild(divHeader);
+          console.log(header.ESTADO, header.DESCRI,nivel);
           if (header.ESTADO == 'A') {
             let buttonCreate = document.createElement('button');
             buttonCreate.className = 'btn btn-light rounded m-0 pt-0 pb-0';
@@ -390,6 +412,16 @@
             span.innerHTML = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
             divHeader.appendChild(span);
             divHeader.appendChild(buttonCreate);
+          }else{
+            if (nivel==1) {
+              if (header.ESTADO=='C' || header.ESTADO=='D') {
+                const inputs=`<button id="${header.ESTADO}-dropdown" data-bs-toggle="modal" data-bs-target="#${header.ESTADO}-Modal" class="btn btn-secondary bg-transparent border border-0  m-0 p-0 p-2 rounded fw-bold text-title border border-2 shadow text-white dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                ${header.DESCRI}
+                              </button>`;
+
+                divHeader.innerHTML = inputs;
+              }
+            }
           }
           divBody = document.createElement('div');
           divBody.id = 'column-' + contador;
@@ -554,7 +586,8 @@
     }
     let urlTasks =
       `http://172.16.15.20/API.LovablePHP/ZLO0034P/GetTasks/?ano=${ano}&mes=${mes}&usuario=${usuario}&area=${area}&servi=${servi}&opc=${opcion}`;
-    const columnTables = document.querySelectorAll('.columnTable');
+    console.log(urlTasks);
+      const columnTables = document.querySelectorAll('.columnTable');
     columnTables.forEach(function(div) {
       div.innerHTML = '';
     });
@@ -1139,6 +1172,13 @@
     };
     reader.readAsDataURL(blob);
   }
+
+  function sendForm() {
+    const rangeDocumento = $('#datepicker1').val();
+    const d1ini = rangeDocumento.split(' - ')[0].split('/').reverse().join('');
+    const d1fin = rangeDocumento.split(' - ')[1].split('/').reverse().join('');
+    console.log(d1ini, d1fin);
+  }
   </script>
   <div class="modal fade" id="detaModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
     aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -1403,6 +1443,73 @@
       </div>
     </div>
   </div>
+  <!-- Modal -->
+  <div class="modal fade" id="C-Modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Buscar caso - Revisión terminada</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="container">
+            <div class="row">
+              <div class="col-12">
+                <label for="" class="form-control border border-0 p-0 m-0">Busca por número de caso</label>
+                  <div class="input-group rounded">
+                        <input id="inputSearch" type="text" class="form-control rounded"
+                          placeholder="Escribe el número de caso" onkeypress="validateInput(event)">
+                        <button class="btn btn-danger text-white fw-bold rounded" onclick="searchCase()"><i
+                            class="fa-solid fa-search fs-4"></i></button>
+                  </div>
+              </div>
+              <div class="col-12 mt-3 d-none">
+                <div class="form-control border border-0 border-bottom shadow" style="width:100%;">
+                  <div class="row">
+                    <div class="col-12">
+                      <span class="fw-bold text-start">Descripción Técnica Final</span>
+                    </div>
+                    <div class="col-12">
+                      <span id="descrpTecnicaFinal"></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 mt-3">
+                <label for="" class="form-control border border-0 p-0 m-0">Ordena por un rango de fechas</label>
+                <div class="input-group mt-1">
+                  <input class="form-control" id="datepicker1" name="datepicker1" />
+                  <span class="input-group-text" id="basic-addon2"><svg xmlns="http://www.w3.org/2000/svg" width="16"
+                      height="16" fill="currentColor" class="bi bi-calendar" viewBox="0 0 16 16">
+                      <path
+                        d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z" />
+                    </svg></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Modal -->
+<div class="modal fade" id="D-Modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
 </body>
 
 </html>

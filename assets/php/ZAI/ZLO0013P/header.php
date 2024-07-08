@@ -67,17 +67,17 @@
     }
     @media only screen and (min-width: 1200px) {
         #menuFilter {
-            height: 50%;
+            height: 57%;
         }
     }
     @media only screen and (min-width: 1400px) {
         #menuFilter {
-            height: 58%;
+            height: 67%;
         }
     }
     @media only screen and (min-width: 1540px) {
         #menuFilter {
-            height: 50%;
+            height: 65%;
         }
     }
 

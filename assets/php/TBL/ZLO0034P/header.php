@@ -194,6 +194,10 @@
     background: #555; /* color de fondo del thumb al hacer hover */
 }
 
+.dropdown-menu{
+  /*transform: translate(-110px, 38px) !important;*/
+}
+
   </style>
 </head>
 

@@ -63,12 +63,12 @@
                                     <option value="2">Solo tiendas</option>
                                 </select>
                         </div>
-                        <div class="col-6 col-lg-2" id="year-div">
+                        <div class="col-6 col-lg-2">
                             <label class="form-control border border-0">Mostrar año:</label>
                             <select id="setYearTab" class="form-select fw-bold">
                             </select>
                         </div>
-                        <div class="col-6 col-lg-2"  id="month-div">
+                        <div class="col-6 col-lg-2">
                         <label class="form-control border border-0">Mostrar mes:</label>
                         <select id="setMesTab" class="form-select fw-bold">
                          </select>
@@ -170,8 +170,6 @@
             mes1Tab = mes1;
             mes2Tab = mes2;
         }
-        mes1Tab = (mes1Tab).toString().padStart(2, '0');
-        mes2Tab = (mes2Tab).toString().padStart(2, '0');
         document.getElementById("tab1").innerHTML = 'MES VS MES ANTERIOR';
         chargeTab1(ano1Tab, ano2Tab, mes1Tab, mes2Tab);
         //TAB2
@@ -298,28 +296,6 @@
             }, 1000);
             $("#loaderTable").addClass('d-none');
         });
-
-        $("#tab3").on('click', function() {
-            $("#year-div").removeClass('col-lg-2');
-            $("#year-div").addClass('col-lg-4');
-            $("#month-div").addClass('d-none');
-        });
-        $("#tab1").on('click', function() {
-            $("#year-div").removeClass('col-lg-4');
-            $("#year-div").addClass('col-lg-2');
-            $("#month-div").removeClass('d-none');
-        });
-        $("#tab2").on('click', function() {
-            $("#year-div").removeClass('col-lg-4');
-            $("#year-div").addClass('col-lg-2');
-            $("#month-div").removeClass('d-none');
-        });
-        $("#tab4").on('click', function() {
-            $("#year-div").removeClass('col-lg-4');
-            $("#year-div").addClass('col-lg-2');
-            $("#month-div").removeClass('d-none');
-        });
-
     });
 
     function chargeTab1(ano1, ano2, mes1, mes2) {
@@ -1527,6 +1503,7 @@
         });
     }
     function chargeTab4(ano1, ano2, mes1) {
+        console.log(ano1, ano2, mes1)
         var filterBy = document.getElementById("filterBy");
         var showBy = document.getElementById("showBy");
         var url = '/API.LovablePHP/ZLO0020P/ListPanel4/?fechaFiltro=' + ano1 + mes1 + '01&usuario=' +

@@ -170,7 +170,6 @@
     });
     setTimeout(() => {
       urlTable = "/API.LovablePHP/ZLO0032P/List/?hora=" + ck;
-      console.log(urlTable);
       table = $('#mainTable').DataTable({
         language: {
           url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json',
@@ -178,7 +177,7 @@
         "ordering": false,
         "processing": true,
         "serverSide": true,
-        "pageLength": 15,
+        "pageLength": 1000,
         "ajax": {
           "url": urlTable,
           "type": "POST",
@@ -248,9 +247,9 @@
                                         <i class="fa-solid fa-ellipsis-vertical fs-5"></i>
                                     </button>
                                     <div class="dropdown-menu dropdown-menu-end" style="">
-                                        <a class="dropdown-item fw-bold" onclick="checkReq('${data.NUMREQ}')">Marcar recibido &nbsp;&nbsp;<i class="fa-solid fa-square-check"></i></a>
-                                        <a class="dropdown-item fw-bold" onclick="findReq('${data.NUMREQ}')">Editar <i class="fa-solid fa-pen-to-square"></i></a>
-                                        <a class="dropdown-item fw-bold text-danger" onclick="deleteConfirm('${data.NUMREQ}')">Eliminar <i class="fa-solid fa-trash"></i></a>
+                                        <a class="dropdown-item fw-bold" onclick="checkReq('${data.NUMREQ}','${data.FECGRA}','${data.HORGRA}')">Marcar recibido &nbsp;&nbsp;<i class="fa-solid fa-square-check"></i></a>
+                                        <a class="dropdown-item fw-bold" onclick="findReq('${data.NUMREQ}','${data.FECGRA}','${data.HORGRA}')">Editar <i class="fa-solid fa-pen-to-square"></i></a>
+                                        <a class="dropdown-item fw-bold text-danger" onclick="deleteConfirm('${data.NUMREQ}','${data.FECGRA}','${data.HORGRA}')">Eliminar <i class="fa-solid fa-trash"></i></a>
                                     </div>
                                 </div>`;
                   } else {
@@ -260,10 +259,10 @@
                                         <i class="fa-solid fa-ellipsis-vertical fs-5"></i>
                                     </button>
                                     <div class="dropdown-menu dropdown-menu-end" style="">
-                                        <a class="dropdown-item fw-bold" onclick="checkReq('${data.NUMREQ}')">Marcar recibido &nbsp;&nbsp;<i class="fa-solid fa-square-check"></i></a>
+                                        <a class="dropdown-item fw-bold" onclick="checkReq('${data.NUMREQ}','${data.FECGRA}','${data.HORGRA}')">Marcar recibido &nbsp;&nbsp;<i class="fa-solid fa-square-check"></i></a>
                                         <a class="dropdown-item fw-bold" onclick="showImg('${data.IMAGEN}','${data.FECGRA}','${data.HORGRA}','${data.USUREC}','${data.FECREC}','${data.HORREC}','${data.ESTADO}')">Ver imagen <i class="fa-solid fa-images"></i></a>
-                                        <a class="dropdown-item fw-bold" onclick="findReq('${data.NUMREQ}')">Editar <i class="fa-solid fa-pen-to-square"></i></a>
-                                        <a class="dropdown-item fw-bold text-danger" onclick="deleteConfirm('${data.NUMREQ}')">Eliminar <i class="fa-solid fa-trash"></i></a>
+                                        <a class="dropdown-item fw-bold" onclick="findReq('${data.NUMREQ}','${data.FECGRA}','${data.HORGRA}')">Editar <i class="fa-solid fa-pen-to-square"></i></a>
+                                        <a class="dropdown-item fw-bold text-danger" onclick="deleteConfirm('${data.NUMREQ}','${data.FECGRA}','${data.HORGRA}')">Eliminar <i class="fa-solid fa-trash"></i></a>
                                     </div>
                                 </div>`;
                   }
@@ -277,7 +276,7 @@
                                         <i class="fa-solid fa-ellipsis-vertical fs-5"></i>
                                     </button>
                                     <div class="dropdown-menu dropdown-menu-end" style="">
-                                        <a class="dropdown-item fw-bold" onclick="checkReq('${data.NUMREQ}')">Marcar recibido &nbsp;&nbsp;<i class="fa-solid fa-square-check"></i></a>
+                                        <a class="dropdown-item fw-bold" onclick="checkReq('${data.NUMREQ}','${data.FECGRA}','${data.HORGRA}')">Marcar recibido &nbsp;&nbsp;<i class="fa-solid fa-square-check"></i></a>
                                     </div>
                                 </div>`;
                     }
@@ -289,7 +288,7 @@
                                         <i class="fa-solid fa-ellipsis-vertical fs-5"></i>
                                     </button>
                                     <div class="dropdown-menu dropdown-menu-end" style="">
-                                        <a class="dropdown-item fw-bold" onclick="checkReq('${data.NUMREQ}')">Marcar recibido &nbsp;&nbsp;<i class="fa-solid fa-square-check"></i></a>
+                                        <a class="dropdown-item fw-bold" onclick="checkReq('${data.NUMREQ}','${data.FECGRA}','${data.HORGRA}')">Marcar recibido &nbsp;&nbsp;<i class="fa-solid fa-square-check"></i></a>
                                         <a class="dropdown-item fw-bold" onclick="showImg('${data.IMAGEN}','${data.FECGRA}','${data.HORGRA}','${data.USUREC}','${data.FECREC}','${data.HORREC}','${data.ESTADO}')">Ver imagen <i class="fa-solid fa-images"></i></a>
                                     </div>
                                 </div>`;
@@ -426,7 +425,7 @@
     }
   }
 
-  function deleteConfirm(numreq) {
+  function deleteConfirm(numreq,fecgra,horgra) {
     Swal.fire({
       title: '¿Está seguro de eliminar la requisición?',
       icon: 'warning',
@@ -437,13 +436,13 @@
       cancelButtonText: 'Cancelar'
     }).then((result) => {
       if (result.isConfirmed) {
-        deleteReq(numreq);
+        deleteReq(numreq,fecgra,horgra);
       }
     });
   }
 
-  function deleteReq(numreq) {
-    let url = `/API.LovablePHP/ZLO0032P/Del/?numreq=${numreq}`;
+  function deleteReq(numreq,fecgra,horgra) {
+    let url = `/API.LovablePHP/ZLO0032P/Del/?numreq=${numreq}&fecgra=${fecgra}&horgra=${horgra}`;
     fetch(url, {
       method: 'DELETE',
       headers: {
@@ -460,14 +459,14 @@
     });
   }
 
-  function findReq(numreq) {
+  function findReq(numreq,fecgra,horgra) {
     reqModalLabel.innerHTML = 'Actualizar una requisición';
     footerModal.innerHTML =
       `<button type="button" class="btn btn-secondary text-white fw-bold" data-bs-dismiss="modal">Cerrar</button>
                                  <button type="button" class="btn btn-primary text-white fw-bold" onclick="updateReq()">Actualizar</button>`;
     box1.innerHTML = ``;
     /*ENCONTRANDO*/
-    let url = `/API.LovablePHP/ZLO0032P/Find/?numreq=${numreq}`;
+    let url = `/API.LovablePHP/ZLO0032P/Find/?numreq=${numreq}&fecgra=${fecgra}&horgra=${horgra}`;
     fetch(url, {
       method: 'GET',
       headers: {
@@ -480,6 +479,8 @@
       if (data.code == 200) {
         let req = data.data[0];
         document.getElementById('nreq1').value = req.NUMREQ;
+        document.getElementById('fecgra1').value = req.FECGRA;
+        document.getElementById('horgra1').value = req.HORGRA;
         document.getElementById('nreq').value = req.NUMREQ;
         document.getElementById('fecha').value = formatFecha(req.FECREQ, 1);
         document.getElementById('descrp').value = req.DESCRP;
@@ -528,10 +529,10 @@
     });
   }
 
-  function checkReq(numreq) {
+  function checkReq(numreq,fecgra,horgra) {
     let fecha = currentDate();
     let hora = currentTime();
-    let url = `/API.LovablePHP/ZLO0032P/Check/?numreq=${numreq}&usua=${user}&fecha=${fecha}&hora=${hora}`;
+    let url = `/API.LovablePHP/ZLO0032P/Check/?numreq=${numreq}&fecgra=${fecgra}&horgra=${horgra}&usua=${user}&fecha=${fecha}&hora=${hora}`;
     fetch(url, {
       method: 'GET',
       headers: {
@@ -547,7 +548,9 @@
   }
 
   function updateReq() {
-    let nreq1 = document.getElementById('nreq1').value;
+    const nreq1 = document.getElementById('nreq1').value;
+    const fecgra1= document.getElementById('fecgra1').value;
+    const horgra1= document.getElementById('horgra1').value;
     let nreq = document.getElementById('nreq').value;
     let fecha = document.getElementById('fecha').value;
     let descrp = document.getElementById('descrp').value;
@@ -569,6 +572,8 @@
       lblError.classList.add('d-none');
       let dataSave2 = {
         nreq1: nreq1,
+        fecgra1: fecgra1,
+        horgra1: horgra1,
         nreq: nreq,
         fecha: formatFecha(fecha, 0),
         descrp: descrp,
@@ -688,7 +693,7 @@
             let img = document.createElement('img');
             img.src = `http://172.16.15.20${imagen}`;
             img.style.width = '100%';
-            img.style.height = '100%';
+            img.style.height = '70vh';
             box2.innerHTML = '';
             box2.appendChild(img);
           }
@@ -741,6 +746,8 @@
               <label for="nreq" class="form-control border border-0">N. Requisición <span class="text-danger">(*)</span>
               </label>
               <input id="nreq1" type="text" class="d-none">
+              <input id="fecgra1" type="text" class="d-none">
+              <input id="horgra1" type="text" class="d-none">
               <input id="nreq" type="text" maxlength="10" class="form-control" placeholder="Ingrese la requisición">
             </div>
             <div class="col-12 col-lg-6">

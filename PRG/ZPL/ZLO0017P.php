@@ -50,7 +50,7 @@
     </div>
     </header>
     <div id="body-div" class="body ">
-        <div class="card m-0 p-0">
+        <div class="card m-0 p-0" id="body-page">
             <div class="card-body  m-0 p-0 overflow-auto table-container" id="tableDiv">
 
             </div>
@@ -1468,6 +1468,11 @@
                                 tbody.append(rowtd);
                             }
                     }, 1);
+                    if (data.acceso==0) {
+                    $("#body-page").empty();
+                    $("#body-page").append('<div class="text-center p-5 fs-3 m-5" style="height:600px;"><div class="border border-1 rounded p-5 m-5"><i class="fa-solid fa-question fa-fade fa-2xl mb-4"></i><br /> No hay contenido para mostrar.</div></div>');
+                    $("#exportExcel").addClass("d-none");
+                    }
                 }
             });
     });

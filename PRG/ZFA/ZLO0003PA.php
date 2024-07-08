@@ -74,33 +74,11 @@
                     </ul>
                     <div id="panel1" class="tablist__panel p-3" aria-labelledby="tab1" aria-hidden="false"
                         role="tabpanel">
-                        <div class="btn-group flex-wrap d-flex justify-content-center justify-content-md-start mb-2 mt-2"
-                            role="group" aria-label="Basic radio toggle button group">
-                            <input type="radio" class="btn-check " name="btncols" id="btncolHon" autocomplete="off"
-                                checked>
-                            <label class="btn btn-outline-secondary responsive-font-example pt-3 pb-3 text-black"
-                                for="btncolHon"><b>Honduras</b></label>
-                            <input type="radio" class="btn-check" name="btncols" id="btncolGua" autocomplete="off">
-                            <label class="btn btn-outline-secondary responsive-font-example  pt-3 pb-3 text-black"
-                                for="btncolGua" id="btnnradio2"><b>Guatemala</b></label>
-                            <input type="radio" class="btn-check" name="btncols" id="btncolSal" autocomplete="off">
-                            <label class="btn btn-outline-secondary responsive-font-example  pt-3 pb-3 text-black"
-                                for="btncolSal"><b>El Salvador</b></label>
-
+                        <div id="btngroups-1" class="btn-group flex-wrap d-flex justify-content-center justify-content-md-start mb-2 mt-2" role="group" aria-label="Basic radio toggle button group">
 
                         </div>
-                        <div class="btn-group flex-wrap d-flex justify-content-center justify-content-md-start mb-2 mt-2"
-                            role="group" aria-label="Basic radio toggle button group">
-                            <input type="radio" class="btn-check" name="btncols" id="btncolCos" autocomplete="off">
-                            <label class="btn btn-outline-secondary responsive-font-example  pt-3 pb-3 text-black"
-                                for="btncolCos"><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Costa
-                                    Rica&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
-                            <input type="radio" class="btn-check" name="btncols" id="btncolNic" autocomplete="off">
-                            <label class="btn btn-outline-secondary responsive-font-example  pt-3 pb-3 text-black"
-                                for="btncolNic"><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Nicaragua&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>
-                            <input type="radio" class="btn-check" name="btncols" id="btncolRep" autocomplete="off">
-                            <label class="btn btn-outline-secondary responsive-font-example  pt-3 pb-3 text-black"
-                                for="btncolRep"><b>Rep. Dominicana</b></label>
+                        <div id="btngroups-2"  class="btn-group flex-wrap d-flex justify-content-center justify-content-md-start mb-2 mt-2" role="group" aria-label="Basic radio toggle button group">
+
                         </div>
                         <hr>
                         <div class="row" id="grafica">
@@ -474,7 +452,7 @@
                                         <label>Punto de venta:</label>
                                         <select class="form-select  mt-1 " id="cbbCia" name="cbbCia[]" name="states[]"
                                             multiple="multiple" style="width: 100%;">
-                                            <option value="999" selected>Todos los puntos de ventas</option>
+
 
                                         </select>
                                     </div>
@@ -501,34 +479,295 @@
     <script src="https://code.highcharts.com/modules/accessibility.js"></script>
     <script>
     $(document).ready(function() {
-        $('#cbbCia').select2({});
-        var usuario = '<?php echo $_SESSION["CODUSU"];?>';
-        var urlComarc = '/API.LovablePHP/ZLO0001P/ListComarc/?usuario=' + usuario + '';
-        var responseComarc = ajaxRequest(urlComarc);
-        if (responseComarc.code == 200) {
-            for (let i = 0; i < responseComarc.data.length; i++) {
-                if (responseComarc.data[i]['COMCOD'] != 1) {
-                    $("#cbbCia").append(' <option value=' + responseComarc.data[i]['COMCOD'] + '>&nbsp;&nbsp;' +
-                        responseComarc.data[i]['COMDES'] + '&nbsp;&nbsp;</option>');
-                }
-            }
-        }
+        let usuario = '<?php echo $_SESSION["CODUSU"];?>';
+        const urlVal="http://172.16.15.20/API.LovablePHP/Users/FindAgrupP/?codusu="+usuario+"";
+        let columnasExcel=[1];
+        let titleExcel='_____________________|';
+        fetch(urlVal).then(response => response.json()).then(data => {
+                if(data.code==200){
+                  const group1=$("#btngroups-1");
+                  const group2=$("#btngroups-2");
+                  group1.empty();
+                  group2.empty();
+                  let counter=0;
+                  const arrayPais=[];
+                  data.data.forEach(element => {
+                    arrayPais.push(element['CODIGO']);
+                    if (counter<3) {
+                        switch (element['CODIGO']) {
+                            case '11':
+                                group1.append(`<input type="radio" class="btn-check " name="btncols" id="btncolHon" autocomplete="off">
+                                        <label class="btn btn-outline-secondary responsive-font-example pt-3 pb-3 text-black"
+                                        for="btncolHon" id="btnnradio1"><b>Honduras</b></label>`);
+                                        columnasExcel.push(2,3,4,5,6,7);
+                                        titleExcel+='__________________________________________________________________________________________________HONDURAS_______________________________________________________________________________________________________________________________________|';
+                                break;
+                            case '10':
+                                group1.append(`<input type="radio" class="btn-check" name="btncols" id="btncolGua" autocomplete="off">
+                            <label class="btn btn-outline-secondary responsive-font-example  pt-3 pb-3 text-black"
+                                for="btncolGua" id="btnnradio2"><b>Guatemala</b></label>`);
+                                        columnasExcel.push(8,9,10,11,12,13);
+                                        titleExcel+='__________________________________________________________________________________________________GUATEMALA______________________________________________________________________________________________________________________________________|';
+                                break;
+                            case '12':
+                                group1.append(`<input type="radio" class="btn-check" name="btncols" id="btncolSal" autocomplete="off">
+                            <label class="btn btn-outline-secondary responsive-font-example  pt-3 pb-3 text-black"
+                                for="btncolSal" id="btnnradio3"><b>El Salvador</b></label>`);
+                                        columnasExcel.push(14,15,16,17,18,19);
+                                        titleExcel+='__________________________________________________________________________________________________EL SALVADOR______________________________________________________________________________________________________________________________________|';
 
-        $("#cbbMes").val("<?php echo $mesfiltro; ?>");
-        $("#cbbMarca").val(<?php echo $marcaFiltro;  ?>);
-        $("#cbbAno").val(<?php echo $anofiltro;  ?>);
-        $("#daterangepicker").val("<?php echo $labelSelect;  ?>");
+                                break;
+                            case '13':
+                                group1.append(`<input type="radio" class="btn-check" name="btncols" id="btncolCos" autocomplete="off">
+                            <label class="btn btn-outline-secondary responsive-font-example  pt-3 pb-3 text-black"
+                                for="btncolCos" id="btnnradio4"><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Costa
+                                    Rica&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>`);
+                                        columnasExcel.push(20,21,22,23,24,25);
+                                        titleExcel+='__________________________________________________________________________________________________COSTA RICA______________________________________________________________________________________________________________________________________|';
 
-        $("#cbbMarca, #cbbAno, #cbbMes").change(function() {
-            $("#formFiltros").submit();
-        });
+                                break;
+                            case '16':
+                                group1.append(`<input type="radio" class="btn-check" name="btncols" id="btncolNic" autocomplete="off">
+                            <label class="btn btn-outline-secondary responsive-font-example  pt-3 pb-3 text-black"
+                                for="btncolNic" id="btnnradio5"><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Nicaragua&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>`);
+                                        columnasExcel.push(32,33,34,35,36,37);
+                                        titleExcel+='__________________________________________________________________________________________________NICARAGUA______________________________________________________________________________________________________________________________________|';
 
-        chargeTable();
-        $("#cbbCia").change(function() {
-            chargeTable();
-        });
+                            break;
+                            case '15':
+                                group1.append(`<input type="radio" class="btn-check" name="btncols" id="btncolRep" autocomplete="off">
+                            <label class="btn btn-outline-secondary responsive-font-example  pt-3 pb-3 text-black"
+                                for="btncolRep" id="btnnradio6"><b>Rep. Dominicana</b></label>`);
+                                    columnasExcel.push(26,27,28,29,30,31);
+                                        titleExcel+='__________________________________________________________________________________________________REP. DOMINICANA_________________________________________________________________________________________________________________________________|';
+                                    break;
+                        }
+                    }else{
+                        switch (element['CODIGO']) {
+                            case '11':
+                                group2.append(`<input type="radio" class="btn-check " name="btncols" id="btncolHon" autocomplete="off">
+                                        <label class="btn btn-outline-secondary responsive-font-example pt-3 pb-3 text-black"
+                                        for="btncolHon" id="btnnradio1"><b>Honduras</b></label>`);
+                                        columnasExcel.push(2,3,4,5,6,7);
+                                        titleExcel+='__________________________________________________________________________________________________HONDURAS_______________________________________________________________________________________________________________________________________|';
+                                break;
+                            case '10':
+                                group2.append(`<input type="radio" class="btn-check" name="btncols" id="btncolGua" autocomplete="off">
+                            <label class="btn btn-outline-secondary responsive-font-example  pt-3 pb-3 text-black"
+                                for="btncolGua" id="btnnradio2"><b>Guatemala</b></label>`);
+                                        columnasExcel.push(8,9,10,11,12,13);
+                                        titleExcel+='__________________________________________________________________________________________________GUATEMALA______________________________________________________________________________________________________________________________________|';
+                                break;
+                            case '12':
+                                group2.append(`<input type="radio" class="btn-check" name="btncols" id="btncolSal" autocomplete="off">
+                            <label class="btn btn-outline-secondary responsive-font-example  pt-3 pb-3 text-black"
+                                for="btncolSal" id="btnnradio3"><b>El Salvador</b></label>`);
+                                        columnasExcel.push(14,15,16,17,18,19);
+                                        titleExcel+='__________________________________________________________________________________________________EL SALVADOR______________________________________________________________________________________________________________________________________|';
 
-        var table5 = $('#myTableMarcas').DataTable({
+                                break;
+                            case '13':
+                                group2.append(`<input type="radio" class="btn-check" name="btncols" id="btncolCos" autocomplete="off">
+                            <label class="btn btn-outline-secondary responsive-font-example  pt-3 pb-3 text-black"
+                                for="btncolCos" id="btnnradio4"><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Costa
+                                    Rica&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>`);
+                                        columnasExcel.push(20,21,22,23,24,25);
+                                        titleExcel+='__________________________________________________________________________________________________COSTA RICA______________________________________________________________________________________________________________________________________|';
+
+                                break;
+                            case '16':
+                                group2.append(`<input type="radio" class="btn-check" name="btncols" id="btncolNic" autocomplete="off">
+                            <label class="btn btn-outline-secondary responsive-font-example  pt-3 pb-3 text-black"
+                                for="btncolNic" id="btnnradio5"><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Nicaragua&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>`);
+                                        columnasExcel.push(32,33,34,35,36,37);
+                                        titleExcel+='__________________________________________________________________________________________________NICARAGUA______________________________________________________________________________________________________________________________________|';
+
+                            break;
+                            case '15':
+                                group2.append(`<input type="radio" class="btn-check" name="btncols" id="btncolRep" autocomplete="off">
+                            <label class="btn btn-outline-secondary responsive-font-example  pt-3 pb-3 text-black"
+                                for="btncolRep" id="btnnradio6"><b>Rep. Dominicana</b></label>`);
+                                    columnasExcel.push(26,27,28,29,30,31);
+                                        titleExcel+='__________________________________________________________________________________________________REP. DOMINICANA_________________________________________________________________________________________________________________________________|';
+                                    break;
+                        }
+                    }
+                    counter++;
+                });
+                $('#guatd1, #guatd2, #guatd3, #guatd4, #guatd5, #guatd6').addClass('d-none');
+                $('#saltd1, #saltd2, #saltd3, #saltd4, #saltd5, #saltd6').addClass('d-none');
+                $('#costd1, #costd2, #costd3, #costd4, #costd5, #costd6').addClass('d-none');
+                $('#reptd1, #reptd2, #reptd3, #reptd4, #reptd5, #reptd6').addClass('d-none');
+                $('#nictd1, #nictd2, #nictd3, #nictd4, #nictd5, #nictd6').addClass('d-none');
+                $('#GRGUA, #GRSAL, #GRCOS, #GRNIC, #GRREP').addClass('d-none');
+                $('#btncolHon').click(function() {
+                    $('#Enca').text('Honduras');
+                    $('#GRHON').removeClass('d-none');
+                    $('#GRGUA, #GRSAL, #GRCOS, #GRNIC, #GRREP').addClass('d-none');
+
+                    $('#hontd1, #hontd2, #hontd3, #hontd4, #hontd5, #hontd6').removeClass('d-none');
+                    $('#guatd1, #guatd2, #guatd3, #guatd4, #guatd5, #guatd6').addClass('d-none');
+                    $('#saltd1, #saltd2, #saltd3, #saltd4, #saltd5, #saltd6').addClass('d-none');
+                    $('#costd1, #costd2, #costd3, #costd4, #costd5, #costd6').addClass('d-none');
+                    $('#reptd1, #reptd2, #reptd3, #reptd4, #reptd5, #reptd6').addClass('d-none');
+                    $('#nictd1, #nictd2, #nictd3, #nictd4, #nictd5, #nictd6').addClass('d-none');
+
+                });
+                $('#btncolGua').click(function() {
+                    $('#Enca').text('Guatemala');
+                    $('#GRGUA').removeClass('d-none');
+                    $('#GRHON, #GRSAL, #GRCOS, #GRNIC, #GRREP').addClass('d-none');
+                    $('#hontd1, #hontd2, #hontd3, #hontd4, #hontd5, #hontd6').addClass('d-none');
+                    $('#guatd1, #guatd2, #guatd3, #guatd4, #guatd5, #guatd6').removeClass('d-none');
+                    $('#saltd1, #saltd2, #saltd3, #saltd4, #saltd5, #saltd6').addClass('d-none');
+                    $('#costd1, #costd2, #costd3, #costd4, #costd5, #costd6').addClass('d-none');
+                    $('#reptd1, #reptd2, #reptd3, #reptd4, #reptd5, #reptd6').addClass('d-none');
+                    $('#nictd1, #nictd2, #nictd3, #nictd4, #nictd5, #nictd6').addClass('d-none');
+
+                });
+                $('#btncolSal').click(function() {
+                    $('#GRSAL').removeClass('d-none');
+                    $('#GRGUA, #GRHON, #GRCOS, #GRNIC, #GRREP').addClass('d-none');
+                    $('#Enca').text('El Salvador');
+                    $('#hontd1, #hontd2, #hontd3, #hontd4, #hontd5, #hontd6').addClass('d-none');
+                    $('#guatd1, #guatd2, #guatd3, #guatd4, #guatd5, #guatd6').addClass('d-none');
+                    $('#costd1, #costd2, #costd3, #costd4, #costd5, #costd6').addClass('d-none');
+                    $('#reptd1, #reptd2, #reptd3, #reptd4, #reptd5, #reptd6').addClass('d-none');
+                    $('#nictd1, #nictd2, #nictd3, #nictd4, #nictd5, #nictd6').addClass('d-none');
+                    $('#saltd1, #saltd2, #saltd3, #saltd4, #saltd5, #saltd6').removeClass('d-none');
+                });
+                $('#btncolCos').click(function() {
+                    $('#GRCOS').removeClass('d-none');
+                    $('#GRGUA, #GRHON, #GRSAL, #GRNIC, #GRREP').addClass('d-none');
+                    $('#Enca').text('Costa Rica');
+                    $('#hontd1, #hontd2, #hontd3, #hontd4, #hontd5, #hontd6').addClass('d-none');
+                    $('#guatd1, #guatd2, #guatd3, #guatd4, #guatd5, #guatd6').addClass('d-none');
+                    $('#saltd1, #saltd2, #saltd3, #saltd4, #saltd5, #saltd6').addClass('d-none');
+                    $('#reptd1, #reptd2, #reptd3, #reptd4, #reptd5, #reptd6').addClass('d-none');
+                    $('#nictd1, #nictd2, #nictd3, #nictd4, #nictd5, #nictd6').addClass('d-none');
+                    $('#costd1, #costd2, #costd3, #costd4, #costd5, #costd6').removeClass('d-none');
+                });
+                $('#btncolNic').click(function() {
+                    $('#GRNIC').removeClass('d-none');
+                    $('#GRGUA, #GRHON, #GRSAL, #GRCOS, #GRREP').addClass('d-none');
+                    $('#Enca').text('Nicaragua');
+                    $('#hontd1, #hontd2, #hontd3, #hontd4, #hontd5, #hontd6').addClass('d-none');
+                    $('#guatd1, #guatd2, #guatd3, #guatd4, #guatd5, #guatd6').addClass('d-none');
+                    $('#saltd1, #saltd2, #saltd3, #saltd4, #saltd5, #saltd6').addClass('d-none');
+                    $('#costd1, #costd2, #costd3, #costd4, #costd5, #costd6').addClass('d-none');
+                    $('#reptd1, #reptd2, #reptd3, #reptd4, #reptd5, #reptd6').addClass('d-none');
+                    $('#nictd1, #nictd2, #nictd3, #nictd4, #nictd5, #nictd6').removeClass('d-none');
+                });
+                $('#btncolRep').click(function() {
+                    $('#GRREP').removeClass('d-none');
+                    $('#GRGUA, #GRHON, #GRSAL, #GRCOS, #GRNIC').addClass('d-none');
+                    $('#Enca').text('República Dominicana');
+                    $('#hontd1, #hontd2, #hontd3, #hontd4, #hontd5, #hontd6').addClass('d-none');
+                    $('#guatd1, #guatd2, #guatd3, #guatd4, #guatd5, #guatd6').addClass('d-none');
+                    $('#saltd1, #saltd2, #saltd3, #saltd4, #saltd5, #saltd6').addClass('d-none');
+                    $('#costd1, #costd2, #costd3, #costd4, #costd5, #costd6').addClass('d-none');
+                    $('#nictd1, #nictd2, #nictd3, #nictd4, #nictd5, #nictd6').addClass('d-none');
+                    $('#reptd1, #reptd2, #reptd3, #reptd4, #reptd5, #reptd6').removeClass('d-none');
+                });
+                    if (arrayPais.length==6) {
+                        $("#btnnradio1").trigger('click');
+                        $('#Enca').text('Honduras');
+                        $('#GRHON').removeClass('d-none');
+                        $('#GRGUA, #GRSAL, #GRCOS, #GRNIC, #GRREP').addClass('d-none');
+
+                        $('#hontd1, #hontd2, #hontd3, #hontd4, #hontd5, #hontd6').removeClass('d-none');
+                        $('#guatd1, #guatd2, #guatd3, #guatd4, #guatd5, #guatd6').addClass('d-none');
+                        $('#saltd1, #saltd2, #saltd3, #saltd4, #saltd5, #saltd6').addClass('d-none');
+                        $('#costd1, #costd2, #costd3, #costd4, #costd5, #costd6').addClass('d-none');
+                        $('#reptd1, #reptd2, #reptd3, #reptd4, #reptd5, #reptd6').addClass('d-none');
+                        $('#nictd1, #nictd2, #nictd3, #nictd4, #nictd5, #nictd6').addClass('d-none');
+                        $("#cbbCia").append(`<option value="999" selected>Todos los puntos de ventas</option>`);
+                        columnasExcel.push(2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37);
+                        titleExcel='_____________________|';
+                        titleExcel+='__________________________________________________________________________________________________HONDURAS_______________________________________________________________________________________________________________________________________|';
+                        titleExcel+='__________________________________________________________________________________________________GUATEMALA______________________________________________________________________________________________________________________________________|';
+                        titleExcel+='__________________________________________________________________________________________________EL SALVADOR____________________________________________________________________________________________________________________________________|';
+                        titleExcel+='__________________________________________________________________________________________________COSTA RICA_____________________________________________________________________________________________________________________________________|';
+                        titleExcel+='__________________________________________________________________________________________________REP. DOMINICANA________________________________________________________________________________________________________________________________|';
+                        titleExcel+='__________________________________________________________________________________________________NICARAGUA______________________________________________________________________________________________________________________________________|';
+                    }else{
+                       switch (arrayPais[0]) {
+                            case '10':
+                                $("#btnnradio2").trigger('click');
+                                $('#Enca').text('Guatemala');
+                                $('#GRGUA').removeClass('d-none');
+                                $('#GRHON, #GRSAL, #GRCOS, #GRNIC, #GRREP').addClass('d-none');
+                                $('#hontd1, #hontd2, #hontd3, #hontd4, #hontd5, #hontd6').addClass('d-none');
+                                $('#guatd1, #guatd2, #guatd3, #guatd4, #guatd5, #guatd6').removeClass('d-none');
+                                $('#saltd1, #saltd2, #saltd3, #saltd4, #saltd5, #saltd6').addClass('d-none');
+                                $('#costd1, #costd2, #costd3, #costd4, #costd5, #costd6').addClass('d-none');
+                                $('#reptd1, #reptd2, #reptd3, #reptd4, #reptd5, #reptd6').addClass('d-none');
+                                $('#nictd1, #nictd2, #nictd3, #nictd4, #nictd5, #nictd6').addClass('d-none');
+                                break;
+                            case '11':
+                                $("#btnnradio1").trigger('click');
+                                $('#Enca').text('Honduras');
+                                $('#GRHON').removeClass('d-none');
+                                $('#GRGUA, #GRSAL, #GRCOS, #GRNIC, #GRREP').addClass('d-none');
+
+                                $('#hontd1, #hontd2, #hontd3, #hontd4, #hontd5, #hontd6').removeClass('d-none');
+                                $('#guatd1, #guatd2, #guatd3, #guatd4, #guatd5, #guatd6').addClass('d-none');
+                                $('#saltd1, #saltd2, #saltd3, #saltd4, #saltd5, #saltd6').addClass('d-none');
+                                $('#costd1, #costd2, #costd3, #costd4, #costd5, #costd6').addClass('d-none');
+                                $('#reptd1, #reptd2, #reptd3, #reptd4, #reptd5, #reptd6').addClass('d-none');
+                                $('#nictd1, #nictd2, #nictd3, #nictd4, #nictd5, #nictd6').addClass('d-none');
+                                break;
+                            case '12':
+                                $("#btnnradio3").trigger('click');
+                                $('#GRSAL').removeClass('d-none');
+                                $('#GRGUA, #GRHON, #GRCOS, #GRNIC, #GRREP').addClass('d-none');
+                                $('#Enca').text('El Salvador');
+                                $('#hontd1, #hontd2, #hontd3, #hontd4, #hontd5, #hontd6').addClass('d-none');
+                                $('#guatd1, #guatd2, #guatd3, #guatd4, #guatd5, #guatd6').addClass('d-none');
+                                $('#costd1, #costd2, #costd3, #costd4, #costd5, #costd6').addClass('d-none');
+                                $('#reptd1, #reptd2, #reptd3, #reptd4, #reptd5, #reptd6').addClass('d-none');
+                                $('#nictd1, #nictd2, #nictd3, #nictd4, #nictd5, #nictd6').addClass('d-none');
+                                $('#saltd1, #saltd2, #saltd3, #saltd4, #saltd5, #saltd6').removeClass('d-none');
+                                break;
+                            case '13':
+                                $("#btnnradio4").trigger('click');
+                                $('#GRCOS').removeClass('d-none');
+                                $('#GRGUA, #GRHON, #GRSAL, #GRNIC, #GRREP').addClass('d-none');
+                                $('#Enca').text('Costa Rica');
+                                $('#hontd1, #hontd2, #hontd3, #hontd4, #hontd5, #hontd6').addClass('d-none');
+                                $('#guatd1, #guatd2, #guatd3, #guatd4, #guatd5, #guatd6').addClass('d-none');
+                                $('#saltd1, #saltd2, #saltd3, #saltd4, #saltd5, #saltd6').addClass('d-none');
+                                $('#reptd1, #reptd2, #reptd3, #reptd4, #reptd5, #reptd6').addClass('d-none');
+                                $('#nictd1, #nictd2, #nictd3, #nictd4, #nictd5, #nictd6').addClass('d-none');
+                                $('#costd1, #costd2, #costd3, #costd4, #costd5, #costd6').removeClass('d-none');
+                                break;
+                            case '16':
+                                $("#btnnradio5").trigger('click');
+                                $('#GRNIC').removeClass('d-none');
+                                $('#GRGUA, #GRHON, #GRSAL, #GRCOS, #GRREP').addClass('d-none');
+                                $('#Enca').text('Nicaragua');
+                                $('#hontd1, #hontd2, #hontd3, #hontd4, #hontd5, #hontd6').addClass('d-none');
+                                $('#guatd1, #guatd2, #guatd3, #guatd4, #guatd5, #guatd6').addClass('d-none');
+                                $('#saltd1, #saltd2, #saltd3, #saltd4, #saltd5, #saltd6').addClass('d-none');
+                                $('#costd1, #costd2, #costd3, #costd4, #costd5, #costd6').addClass('d-none');
+                                $('#reptd1, #reptd2, #reptd3, #reptd4, #reptd5, #reptd6').addClass('d-none');
+                                $('#nictd1, #nictd2, #nictd3, #nictd4, #nictd5, #nictd6').removeClass('d-none');
+                                break;
+                            case '15':
+                                $("#btnnradio6").trigger('click');
+                                $('#GRREP').removeClass('d-none');
+                                $('#GRGUA, #GRHON, #GRSAL, #GRCOS, #GRNIC').addClass('d-none');
+                                $('#Enca').text('República Dominicana');
+                                $('#hontd1, #hontd2, #hontd3, #hontd4, #hontd5, #hontd6').addClass('d-none');
+                                $('#guatd1, #guatd2, #guatd3, #guatd4, #guatd5, #guatd6').addClass('d-none');
+                                $('#saltd1, #saltd2, #saltd3, #saltd4, #saltd5, #saltd6').addClass('d-none');
+                                $('#costd1, #costd2, #costd3, #costd4, #costd5, #costd6').addClass('d-none');
+                                $('#nictd1, #nictd2, #nictd3, #nictd4, #nictd5, #nictd6').addClass('d-none');
+                                $('#reptd1, #reptd2, #reptd3, #reptd4, #reptd5, #reptd6').removeClass('d-none');
+                                break;
+                        }
+                    }
+            var table5 = $('#myTableMarcas').DataTable({
             autoWidth: false,
             stateSave: true,
             "ordering": false,
@@ -548,10 +787,7 @@
                 text: '<i class="fa-solid fa-file-excel"></i> <b >Enviar a Excel</b>',
                 className: "btn btn-success text-light fs-6 ",
                 exportOptions: {
-                    columns: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
-                        11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
-                        21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37
-                    ]
+                    columns: columnasExcel
                 },
                 createEmptyCells: true,
                 messageTop: 'a',
@@ -672,9 +908,7 @@
                     $('c[r=A1] t', sheet).text(
                         'REPORTE DE VENTAS COMPARATIVO TIENDAS POR MARCAS, PAIS Y RANGO DE MESES                  <?php echo $labelSelect;  ?>'
                     );
-                    $('c[r=A2] t', sheet).text(
-                        '_____________________|__________________________________________________________________________________________________HONDURAS____________________________________________________________________|__________________________________________________________________________________________________________________________________________________________________________________________________________________________________________GUATEMALA________________________________________________________________________________________________________________________________________|________________________________________________________EL SALVADOR___________________________________________________|__________________________________________________COSTA RICA___________________________________________________________|__________________________________________________REP. DOMINICANA_______________________________________________|__________________________________________________NICARAGUA____________________________________________________________|'
-                    );
+                    $('c[r=A2] t', sheet).text(titleExcel);
                     $('row:eq(0) c', sheet).attr('s', greyBoldCentered);
                     $('row:eq(1) c', sheet).attr('s', 7);
                     $('row:eq(2) c', sheet).attr('s', greyBoldCentered);
@@ -812,85 +1046,39 @@
             }],
             paging: false,
         });
+                }
+            });
 
 
 
-        $('#guatd1, #guatd2, #guatd3, #guatd4, #guatd5, #guatd6').addClass('d-none');
-        $('#saltd1, #saltd2, #saltd3, #saltd4, #saltd5, #saltd6').addClass('d-none');
-        $('#costd1, #costd2, #costd3, #costd4, #costd5, #costd6').addClass('d-none');
-        $('#reptd1, #reptd2, #reptd3, #reptd4, #reptd5, #reptd6').addClass('d-none');
-        $('#nictd1, #nictd2, #nictd3, #nictd4, #nictd5, #nictd6').addClass('d-none');
-        $('#GRGUA, #GRSAL, #GRCOS, #GRNIC, #GRREP').addClass('d-none');
-        $('#btncolHon').click(function() {
-            $('#Enca').text('Honduras');
-            $('#GRHON').removeClass('d-none');
-            $('#GRGUA, #GRSAL, #GRCOS, #GRNIC, #GRREP').addClass('d-none');
+        $('#cbbCia').select2({});
+        var urlComarc = '/API.LovablePHP/ZLO0001P/ListComarc/?usuario=' + usuario + '';
+        var responseComarc = ajaxRequest(urlComarc);
+        if (responseComarc.code == 200) {
+            for (let i = 0; i < responseComarc.data.length; i++) {
+                if (responseComarc.data[i]['COMCOD'] != 1) {
+                    $("#cbbCia").append(' <option value=' + responseComarc.data[i]['COMCOD'] + '>&nbsp;&nbsp;' +
+                        responseComarc.data[i]['COMDES'] + '&nbsp;&nbsp;</option>');
+                }
+            }
+        }
 
-            $('#hontd1, #hontd2, #hontd3, #hontd4, #hontd5, #hontd6').removeClass('d-none');
-            $('#guatd1, #guatd2, #guatd3, #guatd4, #guatd5, #guatd6').addClass('d-none');
-            $('#saltd1, #saltd2, #saltd3, #saltd4, #saltd5, #saltd6').addClass('d-none');
-            $('#costd1, #costd2, #costd3, #costd4, #costd5, #costd6').addClass('d-none');
-            $('#reptd1, #reptd2, #reptd3, #reptd4, #reptd5, #reptd6').addClass('d-none');
-            $('#nictd1, #nictd2, #nictd3, #nictd4, #nictd5, #nictd6').addClass('d-none');
+        $("#cbbMes").val("<?php echo $mesfiltro; ?>");
+        $("#cbbMarca").val(<?php echo $marcaFiltro;  ?>);
+        $("#cbbAno").val(<?php echo $anofiltro;  ?>);
+        $("#daterangepicker").val("<?php echo $labelSelect;  ?>");
 
+        $("#cbbMarca, #cbbAno, #cbbMes").change(function() {
+            $("#formFiltros").submit();
         });
 
-        $('#btncolGua').click(function() {
-            $('#Enca').text('Guatemala');
-            $('#GRGUA').removeClass('d-none');
-            $('#GRHON, #GRSAL, #GRCOS, #GRNIC, #GRREP').addClass('d-none');
-            $('#hontd1, #hontd2, #hontd3, #hontd4, #hontd5, #hontd6').addClass('d-none');
-            $('#guatd1, #guatd2, #guatd3, #guatd4, #guatd5, #guatd6').removeClass('d-none');
-            $('#saltd1, #saltd2, #saltd3, #saltd4, #saltd5, #saltd6').addClass('d-none');
-            $('#costd1, #costd2, #costd3, #costd4, #costd5, #costd6').addClass('d-none');
-            $('#reptd1, #reptd2, #reptd3, #reptd4, #reptd5, #reptd6').addClass('d-none');
-            $('#nictd1, #nictd2, #nictd3, #nictd4, #nictd5, #nictd6').addClass('d-none');
+        chargeTable();
+        $("#cbbCia").change(function() {
+            chargeTable();
+        });
 
-        });
-        $('#btncolSal').click(function() {
-            $('#GRSAL').removeClass('d-none');
-            $('#GRGUA, #GRHON, #GRCOS, #GRNIC, #GRREP').addClass('d-none');
-            $('#Enca').text('El Salvador');
-            $('#hontd1, #hontd2, #hontd3, #hontd4, #hontd5, #hontd6').addClass('d-none');
-            $('#guatd1, #guatd2, #guatd3, #guatd4, #guatd5, #guatd6').addClass('d-none');
-            $('#costd1, #costd2, #costd3, #costd4, #costd5, #costd6').addClass('d-none');
-            $('#reptd1, #reptd2, #reptd3, #reptd4, #reptd5, #reptd6').addClass('d-none');
-            $('#nictd1, #nictd2, #nictd3, #nictd4, #nictd5, #nictd6').addClass('d-none');
-            $('#saltd1, #saltd2, #saltd3, #saltd4, #saltd5, #saltd6').removeClass('d-none');
-        });
-        $('#btncolCos').click(function() {
-            $('#GRCOS').removeClass('d-none');
-            $('#GRGUA, #GRHON, #GRSAL, #GRNIC, #GRREP').addClass('d-none');
-            $('#Enca').text('Costa Rica');
-            $('#hontd1, #hontd2, #hontd3, #hontd4, #hontd5, #hontd6').addClass('d-none');
-            $('#guatd1, #guatd2, #guatd3, #guatd4, #guatd5, #guatd6').addClass('d-none');
-            $('#saltd1, #saltd2, #saltd3, #saltd4, #saltd5, #saltd6').addClass('d-none');
-            $('#reptd1, #reptd2, #reptd3, #reptd4, #reptd5, #reptd6').addClass('d-none');
-            $('#nictd1, #nictd2, #nictd3, #nictd4, #nictd5, #nictd6').addClass('d-none');
-            $('#costd1, #costd2, #costd3, #costd4, #costd5, #costd6').removeClass('d-none');
-        });
-        $('#btncolNic').click(function() {
-            $('#GRNIC').removeClass('d-none');
-            $('#GRGUA, #GRHON, #GRSAL, #GRCOS, #GRREP').addClass('d-none');
-            $('#Enca').text('Nicaragua');
-            $('#hontd1, #hontd2, #hontd3, #hontd4, #hontd5, #hontd6').addClass('d-none');
-            $('#guatd1, #guatd2, #guatd3, #guatd4, #guatd5, #guatd6').addClass('d-none');
-            $('#saltd1, #saltd2, #saltd3, #saltd4, #saltd5, #saltd6').addClass('d-none');
-            $('#costd1, #costd2, #costd3, #costd4, #costd5, #costd6').addClass('d-none');
-            $('#reptd1, #reptd2, #reptd3, #reptd4, #reptd5, #reptd6').addClass('d-none');
-            $('#nictd1, #nictd2, #nictd3, #nictd4, #nictd5, #nictd6').removeClass('d-none');
-        });
-        $('#btncolRep').click(function() {
-            $('#GRREP').removeClass('d-none');
-            $('#GRGUA, #GRHON, #GRSAL, #GRCOS, #GRNIC').addClass('d-none');
-            $('#Enca').text('República Dominicana');
-            $('#hontd1, #hontd2, #hontd3, #hontd4, #hontd5, #hontd6').addClass('d-none');
-            $('#guatd1, #guatd2, #guatd3, #guatd4, #guatd5, #guatd6').addClass('d-none');
-            $('#saltd1, #saltd2, #saltd3, #saltd4, #saltd5, #saltd6').addClass('d-none');
-            $('#costd1, #costd2, #costd3, #costd4, #costd5, #costd6').addClass('d-none');
-            $('#nictd1, #nictd2, #nictd3, #nictd4, #nictd5, #nictd6').addClass('d-none');
-            $('#reptd1, #reptd2, #reptd3, #reptd4, #reptd5, #reptd6').removeClass('d-none');
-        });
+
+
         //GRAFICAS
         //HONDURAS
         var chart = Highcharts.chart('containerHon', {
@@ -1615,8 +1803,21 @@
 
     function chargeTable() {
         var cias = $("#cbbCia").val();
+        const lengthCia = cias.length;
         if (cias.length == 0) {
-            cias = [999];
+            //cias = [999];
+            let usuario = '<?php echo $_SESSION["CODUSU"];?>';
+            var urlComarc = '/API.LovablePHP/ZLO0001P/ListComarc/?usuario=' + usuario + '';
+            var responseComarc = ajaxRequest(urlComarc);
+            if (responseComarc.code == 200) {
+                if (responseComarc.data.length>30) {
+                    cias = [999];
+                }else{
+                    for (let i = 0; i < responseComarc.data.length; i++) {
+                    cias.push(responseComarc.data[i].COMCOD);
+                 }
+                }
+            }
             $("#cbbCia").val(cias).trigger('change');
         }
         if (cias.includes("999") && cias.length > 1) {

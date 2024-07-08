@@ -104,7 +104,7 @@
     </div>
     <?php
   date_default_timezone_set('America/Tegucigalpa');
-  session_set_cookie_params(86400);
+  session_set_cookie_params(604800);
   session_start();
   $_SESSION['DEV'] = "";
   include 'assets/php/conn.php';

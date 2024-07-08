@@ -23,89 +23,6 @@
             $("#formFiltros").submit();
             });
 
-            var table5 = $('#myTableMarcas').DataTable({
-                autoWidth: false,
-                stateSave: true,
-                "ordering": false,
-                "pageLength": 100,
-                "language": {
-                    url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json',
-                },
-                columns: [{}, {}, {}, {}, {}, {}, {}, {}, {}, {},
-                    {}, {}, {}, {}, {}, {}, {}, {}, {}, {},
-                    {}, {}, {}, {}, {}, {}, {}, {}, {}, {},
-                ],
-                "columnDefs": [{
-                    target: 0,
-                    visible: false,
-                    searchable: true,
-                }, ],
-                dom: 'Bfrtip',
-                buttons: [{
-                    extend: 'excelHtml5',
-                    text: '<i class="fa-solid fa-file-excel"></i> <b >Enviar a Excel</b>',
-                    className: "btn btn-success text-light fs-6 ",
-                    exportOptions: {
-                        columns: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
-                            11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
-                            21, 22, 23, 24, 25, 26, 27, 28, 29
-                        ]
-                    },
-                    createEmptyCells: true,
-                    messageTop: 'a',
-                    title: 'Comparativo marcas y país',
-                    customize: function(xlsx) {
-                        var sheet = xlsx.xl.worksheets['sheet1.xml'];
-                        var sSh = xlsx.xl['styles.xml'];
-                        var lastXfIndex = $('cellXfs xf', sSh).length - 1;
-                        var i;
-                        var y;
-
-                        var n1 = '<numFmt formatCode="##0.0000%" numFmtId="300"/>';
-                        var s1 =
-                            '<xf numFmtId="300" fontId="0" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyNumberFormat="1"/>';
-                        var s2 =
-                            '<xf numFmtId="0" fontId="2" fillId="2" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">' +
-                            '<alignment horizontal="center"/></xf>';
-                        var s3 =
-                            '<xf numFmtId="4" fontId="2" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyNumberFormat="1"/>'
-                        var s4 =
-                            '<xf numFmtId="0" fontId="2" fillId="2" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">' +
-                            '<alignment horizontal="center" wrapText="1"/></xf>'
-                        sSh.childNodes[0].childNodes[0].innerHTML += n1;
-                        sSh.childNodes[0].childNodes[5].innerHTML += s1 + s2 + s3 + s4;
-
-                        var fourDecPlaces = lastXfIndex + 1;
-                        var greyBoldCentered = lastXfIndex + 2;
-                        var twoDecPlacesBold = lastXfIndex + 3;
-                        var greyBoldWrapText = lastXfIndex + 4;
-                        if ((<?php echo $ckfiltro;  ?>) == 1) {
-                            $('c[r=A1] t', sheet).text(
-                                'REPORTE DE VENTAS COMPARATIVO MARCAS Y PAIS                  AÑO: <?php echo $anofiltro;  ?>  MES:  <?php echo obtenerNombreMes($mesfiltro); ?>'
-                                );
-                        } else {
-                            $('c[r=A1] t', sheet).text(
-                                'REPORTE DE VENTAS COMPARATIVO MARCAS Y PAIS                  AÑO: <?php echo $anofiltro;  ?>  DESDE:  <?php echo obtenerNombreMes(1); ?>   HASTA:  <?php echo obtenerNombreMes($mesfiltro); ?>'
-                                );
-                        }
-
-                        $('c[r=A2] t', sheet).text(
-                            '                                                                            HONDURAS                                                             GUATEMALA                                                        EL SALVADOR                                                                        COSTA RICA                                                              REP. DOMINICANA                                                    NICARAGUA                                                       TOTAL      '
-                            );
-                        $('row:eq(0) c', sheet).attr('s', greyBoldCentered);
-                        $('row:eq(1) c', sheet).attr('s', 7);
-                        $('row:eq(2) c', sheet).attr('s', greyBoldCentered);
-                        var tagName = sSh.getElementsByTagName('sz');
-
-                        for (i = 0; i < tagName.length; i++) {
-                            tagName[i].setAttribute("val", "13")
-                        }
-
-                    }
-
-                }],
-                paging: false,
-            });
             $('#guatd1, #guatd2, #guatd3, #guatd4').addClass('d-none');
             $('#saltd1, #saltd2, #saltd3, #saltd4').addClass('d-none');
             $('#costd1, #costd2, #costd3, #costd4').addClass('d-none');
@@ -259,31 +176,137 @@
                       }
                     });
                     }
-
+                    let columnasExcel=[1];
+                    let titleExcel='';
                     const firstCountry = data.data[0].DESCRI;
                     if(count==6){
                      $("#lblTot").removeClass("d-none");
                      $('#btncolHon').click();
+                     columnasExcel.push(2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29);
+                     titleExcel+='                                                                            HONDURAS';
+                     titleExcel+='                                                             GUATEMALA';
+                     titleExcel+='                                                        EL SALVADOR';
+                     titleExcel+='                                                                        COSTA RICA';
+                     titleExcel+='                                                              REP. DOMINICANA';
+                     titleExcel+='                                                    NICARAGUA';
+                     titleExcel+='                                                       TOTAL      ';
                     }else{
                         if(firstCountry.includes("honduras")){
                         $('#btncolHon').click();
+                        columnasExcel.push(2,3,4,5);
+                        titleExcel+='                                                                            HONDURAS';
                         }else if(firstCountry.includes("guatemala")){
                             $('#btncolGua').click();
+                            columnasExcel.push(6,7,8,9);
+                            titleExcel+='                                                             GUATEMALA';
                         }else if(firstCountry.includes("salvador")){
                             $('#btncolSal').click();
+                            columnasExcel.push(10,11,12,13);
+                            titleExcel='                                                        EL SALVADOR';
                         } else if(firstCountry.includes("costa rica")){
                             $('#btncolCos').click();
+                            columnasExcel.push(14,15,16,17);
+                            titleExcel+='                                                                        COSTA RICA';
                         } else if(firstCountry.includes("nicaragua")){
                             $('#btncolNic').click();
+                            columnasExcel.push(22,23,24,25);
+                            titleExcel+='                                                    NICARAGUA';
                         } else if(firstCountry.includes("republica dominicana")){
                             $('#btncolRep').click();
+                            columnasExcel.push(18,19,20,21);
+                            titleExcel+='                                                              REP. DOMINICANA';
                         }
                     }
 
 
+                    setTimeout(() => {
+                        var table5 = $('#myTableMarcas').DataTable({
+                        autoWidth: false,
+                        stateSave: true,
+                        "ordering": false,
+                        "pageLength": 100,
+                        "language": {
+                            url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json',
+                        },
+                        columns: [{}, {}, {}, {}, {}, {}, {}, {}, {}, {},
+                            {}, {}, {}, {}, {}, {}, {}, {}, {}, {},
+                            {}, {}, {}, {}, {}, {}, {}, {}, {}, {},
+                        ],
+                        "columnDefs": [{
+                            target: 0,
+                            visible: false,
+                            searchable: true,
+                        }, ],
+                        dom: 'Bfrtip',
+                        buttons: [{
+                            extend: 'excelHtml5',
+                            text: '<i class="fa-solid fa-file-excel"></i> <b >Enviar a Excel</b>',
+                            className: "btn btn-success text-light fs-6 ",
+                            exportOptions: {
+                                columns: columnasExcel
+                            },
+                            createEmptyCells: true,
+                            messageTop: 'a',
+                            title: 'Comparativo marcas y país',
+                            customize: function(xlsx) {
+                                var sheet = xlsx.xl.worksheets['sheet1.xml'];
+                                var sSh = xlsx.xl['styles.xml'];
+                                var lastXfIndex = $('cellXfs xf', sSh).length - 1;
+                                var i;
+                                var y;
 
+                                var n1 = '<numFmt formatCode="##0.0000%" numFmtId="300"/>';
+                                var s1 =
+                                    '<xf numFmtId="300" fontId="0" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyNumberFormat="1"/>';
+                                var s2 =
+                                    '<xf numFmtId="0" fontId="2" fillId="2" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">' +
+                                    '<alignment horizontal="center"/></xf>';
+                                var s3 =
+                                    '<xf numFmtId="4" fontId="2" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyNumberFormat="1"/>'
+                                var s4 =
+                                    '<xf numFmtId="0" fontId="2" fillId="2" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">' +
+                                    '<alignment horizontal="center" wrapText="1"/></xf>'
+                                sSh.childNodes[0].childNodes[0].innerHTML += n1;
+                                sSh.childNodes[0].childNodes[5].innerHTML += s1 + s2 + s3 + s4;
+
+                                var fourDecPlaces = lastXfIndex + 1;
+                                var greyBoldCentered = lastXfIndex + 2;
+                                var twoDecPlacesBold = lastXfIndex + 3;
+                                var greyBoldWrapText = lastXfIndex + 4;
+                                if ((<?php echo $ckfiltro;  ?>) == 1) {
+                                    $('c[r=A1] t', sheet).text(
+                                        'COMPARATIVO DE VENTAS MARCAS Y PAIS'
+                                        );
+                                } else {
+                                    $('c[r=A1] t', sheet).text(
+                                        'COMPARATIVO DE VENTAS MARCAS Y PAIS   DESDE:  <?php echo obtenerNombreMes(1); ?>   HASTA:  <?php echo obtenerNombreMes($mesfiltro); ?>'
+                                        );
+                                }
+
+                                $('c[r=A2] t', sheet).text(titleExcel);
+                                $('row:eq(0) c', sheet).attr('s', greyBoldCentered);
+                                $('row:eq(1) c', sheet).attr('s', 7);
+                                $('row:eq(2) c', sheet).attr('s', greyBoldCentered);
+                                var tagName = sSh.getElementsByTagName('sz');
+
+                                for (i = 0; i < tagName.length; i++) {
+                                    tagName[i].setAttribute("val", "13")
+                                }
+
+                                }
+
+                            }],
+                            paging: false,
+                        });
+
+                    }, 200);
+                    if (data.acceso==0) {
+                    $("#body-page").empty();
+                    $("#body-page").append('<div class="text-center p-5 fs-3 m-5" style="height:600px;"><div class="border border-1 rounded p-5 m-5"><i class="fa-solid fa-question fa-fade fa-2xl mb-4"></i><br /> No hay contenido para mostrar.</div></div>');
+                     }
                 }
 
             });
+
         });
     </script>

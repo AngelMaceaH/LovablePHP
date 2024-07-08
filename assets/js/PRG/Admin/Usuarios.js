@@ -30,6 +30,71 @@ $(document).ready(function() {
             html: true
         })
     });
+    const usuaAccesos=$("#usuaAccesos");
+    const usuaAccesosEdit=$("#usuaAccesosEdit");
+    const urlUsuario='http://172.16.15.20/API.LovablePHP/Users/GET/';
+    fetch(urlUsuario).then(response=>response.json()).then(data=>{
+        if (data.code==200) {
+            usuaAccesos.empty();
+            usuaAccesosEdit.empty();
+            let options='<option value="0">Seleccione un usuario</option>';
+            data.data.forEach(element => {
+                options+=`<option value="${element.CODUSU}">${element.NOMUSU}</option>`;
+            });
+            usuaAccesos.append(options);
+            usuaAccesosEdit.append(options);
+        }
+    });
+    usuaAccesos.on('change',function(){
+        var usuario=usuaAccesos.val();
+        if (usuario!=0) {
+            const url=`http://172.16.15.20/API.LovablePHP/Users/FIND/?codusu=${usuario}`;
+            fetch(url).then(response=>response.json()).then(data=>{
+                if (data.code==200) {
+                    document.querySelectorAll('.checkId').forEach(element => {
+                        element.checked = false;
+                    });
+                    programasAsignados = [];
+
+                   const programas=data.data[0]['PROGRAMAS'];
+                    programas.forEach(element => {
+                        $("#"+element).prop('checked',true);
+                          programasAsignados.push(element);
+                     });
+                    $("#lblprogramas").text(`Se han copiado los accesos de ${programas.length} programas.`)
+                }
+            });
+        }else{
+            $("#lblprogramas").text('');
+        }
+    });
+
+    usuaAccesosEdit.on('change',function(){
+        var usuario=usuaAccesosEdit.val();
+        if (usuario!=0) {
+            const url=`http://172.16.15.20/API.LovablePHP/Users/FIND/?codusu=${usuario}`;
+            fetch(url).then(response=>response.json()).then(data=>{
+                if (data.code==200) {
+                    document.querySelectorAll('.checkId').forEach(element => {
+                        element.checked = false;
+                    });
+                    programasAsignadosEdit = [];
+
+                   const programas=data.data[0]['PROGRAMAS'];
+                    programas.forEach(element => {
+                        $("#"+element).prop('checked',true);
+                        programasAsignadosEdit.push(element);
+                     });
+                    $("#lblprogramasEdit").text(`Se han copiado los accesos de ${programas.length} programas.`)
+                }
+            });
+        }else{
+            $("#lblprogramasEdit").text('');
+        }
+
+    });
+
+
     var table = $('#tbUsers').DataTable({
         language: {
             url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json',
@@ -884,6 +949,8 @@ function create() {
     $("#tbTiposDetalles").empty();
     $("#divTiposDoc").addClass("d-none");
     setTimeout(() => {
+        $("#usuaAccesos").val(0);
+        $("#lblprogramas").text(' ');
         $('#modal').modal('show');
     }, 500);
 }
@@ -1063,6 +1130,8 @@ function edit(codusu) {
     var responseFind = ajaxRequest(urlFind);
     $("#permisosEsp1Edit").prop("checked", false);
     $("#permisosEsp2Edit").prop("checked", false);
+    $("#lblprogramasEdit").text(' ');
+    $("#usuaAccesosEdit").val(0);
     if (responseFind.code == 200) {
         $("#txtUserEdit").text(responseFind.data[0]['CODUSU']);
         $("#txtPassEdit").val(responseFind.data[0]['CONTRA']);

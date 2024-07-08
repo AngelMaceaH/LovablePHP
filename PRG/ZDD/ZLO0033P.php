@@ -670,7 +670,7 @@
       let img = document.createElement('img');
       img.src = `http://172.16.15.20${imagen}`;
       img.style.width = '100%';
-      img.style.height = '100%';
+      img.style.height = '70vh';
       box2.innerHTML = '';
       box2.appendChild(img);
     }

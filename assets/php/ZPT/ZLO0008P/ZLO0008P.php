@@ -1,7 +1,73 @@
 <script>
     $( document ).ready(function() {
+        let optgroups=``;
+        let usuario = '<?php echo $_SESSION["CODUSU"];?>';
+        const urlVal="http://172.16.15.20/API.LovablePHP/Users/FindAgrupP/?codusu="+usuario+"";
+        fetch(urlVal).then(response => response.json()).then(data => {
+                if(data.code==200){
+                  optgroups+=`<optgroup>
+                              <option class="fw-bold" value="0" disabled>País</option>`;
+                    const dataResponse= data.data;
+                    let count=0;
+                    if (dataResponse.length>0) {
+                        dataResponse.forEach(element => {
+                            if (element.DESCRI.includes("honduras")) {
+                                count++;
+                                optgroups+= `<option value="1">Honduras (Lov. Ecommerce)</option>
+                                                    <option value="2">Honduras (Mod. Íntima)</option>`;
+                            }else if (element.DESCRI.includes("guatemala")) {
+                                count++;
+                                optgroups+= '<option value="3">Guatemala</option>';
+                            }else if (element.DESCRI.includes("salvador")) {
+                                count++;
+                                optgroups+= '<option value="4">El Salvador</option>';
+                            }else if(element.DESCRI.includes("costa rica")){
+                                count++;
+                                optgroups+= '<option value="5">Costa Rica</option>';
+                            }else if(element.DESCRI.includes("nicaragua")){
+                                count++;
+                                optgroups+= '<option value="6">Nicaragua</option>';
+                            }else if(element.DESCRI.includes("republica dominicana")){
+                                count++;
+                                optgroups+= '<option value="7">Republica Dominicana</option>';
+                            }
+                    });
+                     optgroups+=`</optgroup>`;
+                    }
+                    if (count==6) {
+                      optgroups+=`<optgroup>
+                                        <option class="fw-bold" value="0" disabled>Fabrica</option>
+                                        <option class="fw-bold" value="01">Lovable Honduras</option>
+                                    </optgroup>`;
+                    }
+                    let urlTiendas = '/API.LovablePHP/Users/FindAgrupT/?codusu=' + usuario + '';
+                    let responseTiendas = ajaxRequest(urlTiendas);
+                    if (responseTiendas.code == 200) {
+                      optgroups+=`<optgroup>
+                      <option class="fw-bold" value="0" disabled>Punto de Venta</option>`;
+                        for (let i = 0; i < responseTiendas.data.length; i++) {
+                            if (responseTiendas.data[i].COMCOD != 1 && responseTiendas.data[i].COMCOD != 35) {
+                              optgroups += '<option value="' + responseTiendas.data[i].COMCOD.padStart(2, '0') +'">' +responseTiendas.data[i].COMDES + '</option>';
+                            }
+                        }
+                        optgroups+=`</optgroup>`;
+                    }
+                    $("#cbbPais").append(optgroups);
+                    const valInput="<?php echo $paisfiltro;?>";
+                    const ischange=getCookie("changeSel");
+                    if (count==6) {
+                      $("#cbbPais").val("1");
+                    }
+                    if (ischange==1) {
+                      $("#cbbPais").val(valInput);
+                    }
+                    if (data.acceso==0) {
+                    $("#body-page").empty();
+                    $("#body-page").append('<div class="text-center p-5 fs-3 m-5" style="height:600px;"><div class="border border-1 rounded p-5 m-5"><i class="fa-solid fa-question fa-fade fa-2xl mb-4"></i><br /> No hay contenido para mostrar.</div></div>');
+                     }
+                }
+            });
 
-   
 //BOTONES
 var tab;
     $(".tablist__tab").click(function() {
@@ -11,7 +77,7 @@ var tab;
       tab=(activeTab.substring(3,4));
       document.cookie="tabselected="+tab;
     });
-   
+
     var tabSeleccionado=<?php echo isset($_SESSION['tab']) ? $_SESSION['tab'] : "false"; ?>;
     if (tabSeleccionado != false) {
             var tabs = $('.tablist__tab'),
@@ -26,17 +92,18 @@ var tab;
         }
 
     $("#cbbMes").val("<?php echo $mesfiltro; ?>");
-    $("#cbbPais").val("<?php echo $paisfiltro;?>"); 
-    $("#cbbAno").val(<?php echo $anofiltro;  ?>); 
+    $("#cbbPais").val("<?php echo $paisfiltro;?>");
+    $("#cbbAno").val(<?php echo $anofiltro;  ?>);
 
-    
+
       $("#cbbPais, #cbbAno, #cbbMes, #cbbOrden").change(function() {
         $("#formFiltros").submit();
+        setCookie("changeSel",1,1);
        });
 
        var labelActual="";
       labelActual=$('#cbbPais').find(":selected").text();
-       
+
         $("#myTableInvMeses").DataTable( {
             stateSave: true,
         language: {
@@ -97,7 +164,7 @@ var tab;
                     columns: [1,2,3,4,5,6,7]
                 },
                 title: 'ReporteMeses Lineas',
-                
+
                 customize: function (xlsx) {
                     var sheet = xlsx.xl.worksheets['sheet1.xml'];
                     var sSh = xlsx.xl['styles.xml'];
@@ -123,17 +190,17 @@ var tab;
                     var s4 = '<xf numFmtId="0" fontId="2" fillId="2" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
                                 '<alignment horizontal="center" wrapText="1"/></xf>'
                     var s5 = '<xf  numFmtId="200" fontId="'+(lastFontIndex+1)+'" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
-                     '<alignment horizontal="right"/></xf>';  
+                     '<alignment horizontal="right"/></xf>';
                      var s6 = '<xf  numFmtId="200" fontId="'+(lastFontIndex+2)+'" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
-                     '<alignment horizontal="right"/></xf>';  
+                     '<alignment horizontal="right"/></xf>';
                      var s7 = '<xf  numFmtId="300" fontId="'+(lastFontIndex+1)+'" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
-                     '<alignment horizontal="right"/></xf>';  
+                     '<alignment horizontal="right"/></xf>';
                      var s8 = '<xf  numFmtId="300" fontId="'+(lastFontIndex+2)+'" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
                      '<alignment horizontal="right"/></xf>';
                     sSh.childNodes[0].childNodes[0].innerHTML += n1 + n2;
                     sSh.childNodes[0].childNodes[1].innerHTML += f1 + f2;
-                    sSh.childNodes[0].childNodes[5].innerHTML += s1 + s2 + s3 + s4 + s5 + s6 + s7 + s8; 
-                     
+                    sSh.childNodes[0].childNodes[5].innerHTML += s1 + s2 + s3 + s4 + s5 + s6 + s7 + s8;
+
                     var fourDecPlaces    = lastXfIndex + 1;
                     var greyBoldCentered = lastXfIndex + 2;
                     var twoDecPlacesBold = lastXfIndex + 3;
@@ -142,7 +209,7 @@ var tab;
                     var textgreen1 = lastXfIndex + 6;
                     var textred2 = lastXfIndex + 7;
                     var textgreen2 = lastXfIndex + 8;
-                    
+
                     $('c[r=A1] t', sheet).text( 'COMPARATIVO MESES DE INVENTARIO POR LÍNEA '+labelActual.toUpperCase()+' (MESES)' );
                     $('row:eq(0) c', sheet).attr( 's', greyBoldCentered );
                     $('row:eq(1) c', sheet).attr( 's', 7 );
@@ -231,7 +298,7 @@ var tab;
                      '<name val="Calibri" />'+
                      '<color rgb="007800" />'+ // color verde en la fuente
                    '</font>';
-                     
+
                     var n1 = '<numFmt formatCode="##0%"   numFmtId="300"/>';
                     var n2 = '<numFmt formatCode="#,##0"   numFmtId="200"/>';
                     var s1 = '<xf numFmtId="300" fontId="0" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyNumberFormat="1"/>';
@@ -241,17 +308,17 @@ var tab;
                     var s4 = '<xf numFmtId="0" fontId="2" fillId="2" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
                                 '<alignment horizontal="center" wrapText="1"/></xf>'
                     var s5 = '<xf  numFmtId="200" fontId="'+(lastFontIndex+1)+'" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
-                     '<alignment horizontal="right"/></xf>';  
+                     '<alignment horizontal="right"/></xf>';
                      var s6 = '<xf  numFmtId="200" fontId="'+(lastFontIndex+2)+'" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
-                     '<alignment horizontal="right"/></xf>';  
+                     '<alignment horizontal="right"/></xf>';
                      var s7 = '<xf  numFmtId="300" fontId="'+(lastFontIndex+1)+'" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
-                     '<alignment horizontal="right"/></xf>';  
+                     '<alignment horizontal="right"/></xf>';
                      var s8 = '<xf  numFmtId="300" fontId="'+(lastFontIndex+2)+'" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
                      '<alignment horizontal="right"/></xf>';
                     sSh.childNodes[0].childNodes[0].innerHTML += n1 + n2;
                     sSh.childNodes[0].childNodes[1].innerHTML += f1 + f2;
-                    sSh.childNodes[0].childNodes[5].innerHTML += s1 + s2 + s3 + s4 + s5 + s6 + s7 + s8; 
-                     
+                    sSh.childNodes[0].childNodes[5].innerHTML += s1 + s2 + s3 + s4 + s5 + s6 + s7 + s8;
+
                     var fourDecPlaces    = lastXfIndex + 1;
                     var greyBoldCentered = lastXfIndex + 2;
                     var twoDecPlacesBold = lastXfIndex + 3;
@@ -260,7 +327,7 @@ var tab;
                     var textgreen1 = lastXfIndex + 6;
                     var textred2 = lastXfIndex + 7;
                     var textgreen2 = lastXfIndex + 8;
-                    
+
                     $('c[r=A1] t', sheet).text( 'COMPARATIVO MESES DE INVENTARIO POR LINEA '+labelActual.toUpperCase()+' (<?php if ($paisfiltro==="01") { echo "DOCENAS";}else{echo "UNIDADES";}  ?>)');
                     $('row:eq(0) c', sheet).attr( 's', greyBoldCentered );
                     $('row:eq(1) c', sheet).attr( 's', 7 );
@@ -277,10 +344,10 @@ var tab;
                     for (i = 0; i < tagName.length; i++) {
                       tagName[i].setAttribute("val", "13")
                     }
-                    
- 
+
+
                   }
-                  
+
             }
         ]
           });
@@ -292,7 +359,7 @@ var tab;
 
 
 
-  //GRAFICAS---------------------------------------------------------------       
+  //GRAFICAS---------------------------------------------------------------
   //PAISES UNIDADES COMPRADAS VS UNIDADES VENDIDAS
     var chart = Highcharts.chart('container2', {
 
@@ -300,7 +367,7 @@ var tab;
       height:600,
         type: 'column'
     },
-    lang: {      
+    lang: {
           viewFullscreen:"Ver en pantalla completa",
           exitFullscreen:"Salir de pantalla completa",
           downloadJPEG:"Descargar imagen JPEG",
@@ -382,7 +449,7 @@ var tab;
     }
     },
     ],
-    
+
 
     responsive: {
         rules: [{
@@ -422,7 +489,7 @@ var tab;
       height:600,
         type: 'column'
     },
-    lang: {      
+    lang: {
           viewFullscreen:"Ver en pantalla completa",
           exitFullscreen:"Salir de pantalla completa",
           downloadJPEG:"Descargar imagen JPEG",
@@ -523,13 +590,13 @@ var tab;
     });
     Highcharts.setOptions({
     colors: [
-      "rgba(222, 84, 44,0.6)","rgba(239, 126, 50,0.6)","rgba(238, 154, 58,0.6)","rgba(234, 219, 56,0.6)","rgba(79, 32, 13,0.6)","rgba(231, 227, 78,0.6)", 
+      "rgba(222, 84, 44,0.6)","rgba(239, 126, 50,0.6)","rgba(238, 154, 58,0.6)","rgba(234, 219, 56,0.6)","rgba(79, 32, 13,0.6)","rgba(231, 227, 78,0.6)",
       "rgba(20, 36, 89,0.6)","rgba(23, 107, 160,0.6)","rgba(25, 170, 222,0.6)","rgba(26, 201, 230,0.6)","rgba(29, 228, 219,0.6)","rgba(109, 240, 210,0.6)",
     ]
   });
   //PAISES INVENTARIO
   Highcharts.chart('container', {
-    lang: {      
+    lang: {
           viewFullscreen:"Ver en pantalla completa",
           exitFullscreen:"Salir de pantalla completa",
           downloadJPEG:"Descargar imagen JPEG",
@@ -591,7 +658,7 @@ var tab;
                 color: '#000',
             }
         }],
-        }, 
+        },
         {
           name: 'Meses Inv. 6M (Mes Anterior)',
           data: <?php echo json_encode($paisesM2); ?>,
@@ -603,7 +670,7 @@ var tab;
                 color: '#000',
             }
         }],
-        }, 
+        },
         {
           name: 'Meses Inv. 6M (2 Meses Anterior)',
           data: <?php echo json_encode($paisesM3); ?>,
@@ -615,7 +682,7 @@ var tab;
                 color: '#000',
             }
         }],
-        }, 
+        },
         {
           name: 'Meses Inv. 6M (3 Meses Anterior)',
           data: <?php echo json_encode($paisesM4); ?>,
@@ -627,7 +694,7 @@ var tab;
                 color: '#000',
             }
         }],
-        }, 
+        },
         {
           name: 'Meses Inv. 6M (4 Meses Anterior)',
           data: <?php echo json_encode($paisesM5); ?>,
@@ -639,7 +706,7 @@ var tab;
                 color: '#000',
             }
         }],
-        }, 
+        },
         {
           name: 'Meses Inv. 6M (5 Meses Anterior)',
           data: <?php echo json_encode($paisesM6); ?>,
@@ -651,7 +718,7 @@ var tab;
                 color: '#000',
             }
         }],
-        }, 
+        },
     ],
     exporting: {
           buttons: {
@@ -664,7 +731,7 @@ var tab;
     sourceWidth: 900,
     sourceHeight: 2500,
     chartOptions: {
-     
+
       title: {
         style: {
             fontSize: (<?php echo $paisfiltro;?>==1)? '30px':'20px',
@@ -678,7 +745,7 @@ var tab;
           }
         }
       }],
-      
+
       xAxis: {
         //lineWidth: 1,
         labels: {
@@ -713,7 +780,7 @@ var tab;
       },
     },
       },
-      
+
   });
 
   if (<?php echo $validator1;?>) {

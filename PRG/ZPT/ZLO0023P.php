@@ -28,7 +28,7 @@
                 <h1 class="fs-4 mb-1 mt-2 text-center">Análisis de Inventario por clasificación de productos por tienda
                 </h1>
             </div>
-            <div class="card-body">
+            <div class="card-body" id="body-page">
                 <div id="loaderExcel" class="d-none">
                     <button class="btn btn-success position-absolute top-0 start-50 translate-top p-4"
                         style="z-index: 9999; margin-top: 350px;" type="button" disabled>
@@ -307,6 +307,10 @@
                             i].COMDES + '</option>';
                 }
             }
+            if (responseTiendas.acceso==0) {
+                    $("#body-page").empty();
+                    $("#body-page").append('<div class="text-center p-5 fs-3 m-5" style="height:600px;"><div class="border border-1 rounded p-5 m-5"><i class="fa-solid fa-question fa-fade fa-2xl mb-4"></i><br /> No hay contenido para mostrar.</div></div>');
+                     }
         }
         cbbAgrup.innerHTML = tiendasOptions;
         const cbbAno = document.getElementById('cbbAno');

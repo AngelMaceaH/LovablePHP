@@ -1388,7 +1388,6 @@
         var month = inputDate.substring(4, 6);
         var day = inputDate.substring(6, 8);
         var formattedDate = day + "/" + month + "/" + year;
-
         return formattedDate;
     }
 

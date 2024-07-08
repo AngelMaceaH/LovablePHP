@@ -10,44 +10,44 @@
     <link href="assets/css/mystyle.css" rel="stylesheet">
     <style>
       .login,
-.image {
-  min-height: 100vh;
-}
-.bg-image1, .bg-image2, .bg-image3 {
-  animation: carouselAnimation 5s infinite;
-}
-.bg-image1 {
-  background-image: url('assets/img/loginbg1.jpg');
-  background-size: cover;
-  background-position: center center;
-  animation-delay: 0s;
-}
-.bg-image2 {
-  background-image: url('assets/img/loginbg2.jpg');
-  background-size: cover;
-  background-position: center center;
-  animation-delay: 0s;
-}
-.bg-image3 {
-  background-image: url('assets/img/loginbg3.jpg');
-  background-size: cover;
-  background-position: center center;
-  animation-delay: 0s;
-}
-@keyframes carouselAnimation {
-  0% {
-    opacity: 0.4;
-  }
-  33% {
-    opacity: 1;
-  }
-  66% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0.4;
-  }
-}
+      .image {
+        min-height: 100vh;
+      }
+      .bg-image1, .bg-image2, .bg-image3 {
+        animation: carouselAnimation 5s infinite;
+      }
+      .bg-image1 {
+        background-image: url('assets/img/loginbg1.jpg');
+        background-size: cover;
+        background-position: center center;
+        animation-delay: 0s;
+      }
+      .bg-image2 {
+        background-image: url('assets/img/loginbg2.jpg');
+        background-size: cover;
+        background-position: center center;
+        animation-delay: 0s;
+      }
+      .bg-image3 {
+        background-image: url('assets/img/loginbg3.jpg');
+        background-size: cover;
+        background-position: center center;
+        animation-delay: 0s;
+      }
+      @keyframes carouselAnimation {
+        0% {
+          opacity: 0.4;
+        }
+        33% {
+          opacity: 1;
+        }
+        66% {
+          opacity: 1;
+        }
+        100% {
+          opacity: 0.4;
+        }
+      }
 
 
     </style>
@@ -94,8 +94,8 @@
                           </div>
                           <div id="Labelerror" class="Labelerror mb-3 text-start" ></div>
                         </div>
-                        
-                        
+
+
                         <div class="col-12">
                           <button class="btn bg-blck btn-dark px-5" type="submit">Ingresar</button>
                         </div>
@@ -118,13 +118,13 @@
     </div>
 </div>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
       function bg1(){
             $("#bg-image1").removeClass('d-none');
             $("#bg-image2").addClass('d-none');
             $("#bg-image3").addClass('d-none');
-            setTimeout(bg2, 4000); 
+            setTimeout(bg2, 4000);
         }
 
         function bg2(){
@@ -132,7 +132,7 @@
             $("#bg-image2").removeClass('d-none');
             $("#bg-image3").addClass('d-none');
 
-            setTimeout(bg3, 4000); 
+            setTimeout(bg3, 4000);
         }
 
         function bg3(){
@@ -140,14 +140,14 @@
             $("#bg-image2").addClass('d-none');
             $("#bg-image3").removeClass('d-none');
 
-            setTimeout(bg1, 4000); 
+            setTimeout(bg1, 4000);
         }
 
-        bg1(); 
+        bg1();
 
-      
+
         $( document ).ready(function() {
-         
+
           function ajaxRequest(url, data = {}, method = "GET") {
           var dataResponse = null;
           var Token = null;
@@ -173,7 +173,7 @@
                   HTTPError.code = jqXHR.status;
                   HTTPError.data = jqXHR;
                   HTTPError.message += "Request http Error: " + url + ", Exception: ";
-                  // http errors 
+                  // http errors
                   if (jqXHR.status === 0) {
                       HTTPError.message += 'Not connect.\n Verify Network.';
                   } else if (jqXHR.status == 404) {
@@ -198,7 +198,7 @@
           });
           return dataResponse;
           }
-                
+
       var val = "<?php echo isset($_SESSION["val"]) ? $_SESSION["val"] : "";?>";
       if (val=="2" && $("#user").val()!=' ' && $("#password").val()!=' ') {
         $( "#Labelerror" ).append( "El usuario y/o la contraseña son incorrectos." );
@@ -218,13 +218,13 @@
               event.stopPropagation()
               $("#Labelerror").remove();
             }else{
-             
+
             }
 
             form.classList.add('was-validated')
           }, false)
         })
-    
+
         function uppercase(this_) {
           var upper = this_.value.toUpperCase();
           return this_.value = upper;

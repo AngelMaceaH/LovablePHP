@@ -38,8 +38,8 @@
       }
       }
       $paisFiltro=isset($_SESSION['paisFiltro'])? $_SESSION['paisFiltro']:1;
-      $cia=" AND CODCIA IN(35,47,50,52,56,57,59,63,64,65,68,70,72,73,74,75,76,78,82,85,88)";
 
+      $cia=" AND CODCIA IN(35,47,50,52,56,57,59,63,64,65,68,70,72,73,74,75,76,78,82,85,88)";
       if (isset($_SESSION['clickPais']) && isset($_SESSION['clickCia'])) {
         if ($_SESSION['clickCia']==1) {
               if ($ciaFiltro!=1 && $ciaFiltro!=999) {
@@ -89,6 +89,45 @@
             $cia=" AND CODCIA IN(81)";
           }
         }
+      }else {
+        $usuario=$_SESSION["CODUSU"];
+        $urlVal = "http://172.16.15.20/API.LovablePHP/Users/FindAgrupP/?codusu=" . $usuario;
+        $response = file_get_contents($urlVal);
+        if ($response === FALSE) {
+            die('Error occurred!');
+        }
+        $responseArray = json_decode($response, true);
+        $data = $responseArray['data'];
+        $counter=0;
+        for ($k=0; $k < count($data) ; $k++) {
+            if ($data[$k]['CODIGO']==11) {
+                $counter++;
+                $ciaFiltro=[999];
+                $cia=" AND CODCIA IN(35,47,50,52,56,57,59,63,64,65,68,70,72,73,74,75,76,78,82,85,88)";
+            }else if ($data[$k]['CODIGO']==10) {
+               $counter++;
+               $cia=" AND CODCIA IN(49,66,69,71,86)";
+            }else if ($data[$k]['CODIGO']==12) {
+                $counter++;
+                $cia=" AND CODCIA IN(48,53,61,62,77)";
+            }else if($data[$k]['CODIGO']==13){
+                  $counter++;
+                  $cia=" AND CODCIA IN(60,80,54)";
+            }else if($data[$k]['CODIGO']==16){
+                  $counter++;
+                  $cia=" AND CODCIA IN(83,87)";
+            }else if($data[$k]['CODIGO']==15){
+                  $counter++;
+                  $cia=" AND CODCIA IN(81)";
+            }
+        }
+        if ($counter==6) {
+          $ciaFiltro=[999];
+          $cia=" AND CODCIA IN(35,47,50,52,56,57,59,63,64,65,68,70,72,73,74,75,76,78,82,85,88)";
+        }
+        if(strlen($arrayConversion)>0){
+          $cia=" AND CODCIA IN($arrayConversion)";
+        }
       }
   //VENTAS
     $sqlVentas="SELECT T1.CODVEN, T1.MAENO3, T1.CANTRA, T1.CANTID, T1.VALOR VALOR1, T2.VALOR VALOR2, T3.VALOR VALOR3 FROM
@@ -131,7 +170,7 @@
             <div class="card-header">
                 <h1 class="fs-4 mb-1 mt-2 text-center">Consulta de ventas por vendedor</h1>
             </div>
-            <div class="card-body">
+            <div class="card-body" id="body-page">
                 <div class="position-relative">
                     <form id="formFiltros" action="../../assets/php/ZFA/ZLO0007P/filtroLogica.php" method="POST">
                         <input class="d-none" id="cbbClick" name="cbbClick" />
@@ -149,11 +188,7 @@
                                 <select class="form-select  mt-1" id="cbbCia" name="cbbCia[]" name="states[]"
                                     multiple="multiple" style="width: 100%;">
                                     <option value="999">Todos los puntos de ventas</option>
-                                    <?php
-                            while ($rowCOMARC = odbc_fetch_array($resultCOMARC)) {
-                              echo "<option value='" . $rowCOMARC['COMCOD'] . "'>" . rtrim(utf8_encode($rowCOMARC['COMDES'])) . "</option>";
-                            }
-                          ?>
+
                                 </select>
                             </div>
                             <div class="col-sm-12 col-lg-3 mt-2">
@@ -395,7 +430,6 @@
                         </tbody>
                     </table>
                 </div>
-
             </div>
         </div>
         <div class="card-footer">

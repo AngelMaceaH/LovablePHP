@@ -95,14 +95,6 @@
         $marcasLabel[$cont]=$rowMarcas['DESDES'];
         $cont++;
       }
-       //COMBOBOX
-        $sqlCOMARC = "SELECT T2.CODSEC,LO0705.CODCIA COMCOD, LO0705.NOMCIA COMDES
-        FROM LBPRDDAT/LO0705
-        INNER JOIN LBPRDDAT/LO0686 AS T2 ON T2.CODCIA = LO0705.CODCIA
-        WHERE LO0705.CODCIA<>1
-        ORDER BY T2.CODSEC";
-        $resultCOMARC=odbc_exec($connIBM,$sqlCOMARC);
-
         $lblDocenas="";
         if ($paisfiltro==="01") {
           $lblDocenas="(Docenas)";
@@ -124,36 +116,14 @@
             <div class="card-header">
                 <h1 class="fs-4 mb-1 mt-2 text-center">Meses de inventario por Línea</h1>
             </div>
-            <div class="card-body">
+            <div class="card-body" id="body-page">
                 <div class="position-relative">
                     <form id="formFiltros" action="../../assets/php/ZPT/ZLO0008P/filtrosLogica.php" method="POST">
                         <div class="row mb-2">
                             <div class="col-sm-12 col-lg-6 mt-2">
                                 <label>País:</label>
                                 <select class="form-select  mt-1" id="cbbPais" name="cbbPais">
-                                    <!--<option class="fw-bold" value="8">Todos los países</option>-->
-                                    <optgroup>
-                                        <option class="fw-bold" value="0" disabled>País</option>
-                                        <option class="fw-bold" value="1">Honduras (Lov. Ecommerce)</option>
-                                        <option class="fw-bold" value="2">Honduras (Mod. Íntima)</option>
-                                        <option class="fw-bold" value="3">Guatemala</option>
-                                        <option class="fw-bold" value="4">El Salvador</option>
-                                        <option class="fw-bold" value="5">Costa Rica</option>
-                                        <option class="fw-bold" value="6">Nicaragua</option>
-                                        <option class="fw-bold" value="7">Rep. Dominicana</option>
-                                    </optgroup>
-                                    <optgroup>
-                                        <option class="fw-bold" value="0" disabled>Fabrica</option>
-                                        <option class="fw-bold" value="01">Lovable Honduras</option>
-                                    </optgroup>
-                                    <optgroup>
-                                        <option class="fw-bold" value="0" disabled>Punto de Venta</option>
-                                        <?php
-                                            while ($rowCOMARC = odbc_fetch_array($resultCOMARC)) {
-                                              echo "<option value='" . $rowCOMARC['COMCOD'] . "'>" . rtrim(utf8_encode($rowCOMARC['COMDES'])) . "</option>";
-                                            }
-                                        ?>
-                                    </optgroup>
+
                                 </select>
                             </div>
                             <div class="col-sm-12 col-lg-3 mt-2">

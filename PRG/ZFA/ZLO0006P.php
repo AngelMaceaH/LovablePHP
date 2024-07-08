@@ -34,7 +34,7 @@
             <div class="card-header">
                 <h1 class="fs-4 mb-1 mt-2 text-center">Ventas comparativos marcas y país</h1>
             </div>
-            <div class="card-body">
+            <div class="card-body" id="body-page">
                 <div class="position-relative">
                     <form id="formFiltros" action="../../assets/php/ZFA/ZLO0006P/filtrosLogicaA.php" method="POST">
                         <div class="row mb-2">

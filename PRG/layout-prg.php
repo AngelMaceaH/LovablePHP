@@ -50,6 +50,7 @@
       <span class="loader p-0 mb-5 me-4 "></span>
   </div>
     <?php
+  session_set_cookie_params(604800);
   session_start();
   date_default_timezone_set('America/Tegucigalpa');
   //session_set_cookie_params(86400);

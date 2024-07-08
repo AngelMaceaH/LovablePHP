@@ -29,7 +29,7 @@
             <div class="card-header">
                 <h1 class="fs-4 mb-1 mt-2 text-center">Consulta Comp.Ventas x marca,pais y meses(tiendas)</h1>
             </div>
-            <div class="card-body">
+            <div class="card-body" id="body-page">
 
                 <div class="position-relative">
                     <form id="formFiltros" action="../../assets/php/ZFA/ZLO0003P/filtrosLogica.php" method="POST">
