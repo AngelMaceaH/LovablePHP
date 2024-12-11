@@ -20,10 +20,10 @@
     <?php
       include '../layout-prg.php';
       include '../../assets/php/ZPT/ZLO0012P/header.php';
+      $valAgrup=isset($_SESSION['agrup'])? "true":"false";
       $agrup=isset($_SESSION['agrup'])? $_SESSION['agrup']:'1';
       $ckProductos1 = isset($_SESSION['productosCk1']) ? $_SESSION['productosCk1'] : "0";
       $filtro=isset($_SESSION['filtro'])? $_SESSION['filtro']:'1';
-
     ?>
     <div class="container-fluid">
         <nav aria-label="breadcrumb">
@@ -39,7 +39,7 @@
     <div id="body-div" class="body flex-grow-1">
         <div class="card mb-5">
             <div class="card-header">
-                <h1 class="fs-4 mb-1 mt-2 text-center">Análisis de movimiento de estilos</h1>
+                <h1 class="fs-4 mb-1 mt-2 text-center">Análisis de movimiento de estilos <br> <b>(UNIDADES)</b> </h1>
             </div>
             <div class="card-body">
                 <div class="position-relative">
@@ -165,8 +165,7 @@
     var filtroP = "";
     document.addEventListener('DOMContentLoaded', function() {
         var usuario = '<?php echo $_SESSION['CODUSU']; ?>';
-        var urlAgrupaciones = "/API.LOVABLEPHP/ZLO0012P/ListAgrupacion/?user=" + usuario +
-        "";
+        var urlAgrupaciones = "/API.LOVABLEPHP/ZLO0012P/ListAgrupacion/?user=" + usuario +"";
         var responseAgrupaciones = ajaxRequest(urlAgrupaciones);
         if (responseAgrupaciones && responseAgrupaciones.code == 200) {
             var options = "";
@@ -174,8 +173,12 @@
                 options += "<option value='" + item['CODIGO'] + "'>" + item['DESCRI'] + "</option>";
             });
             document.getElementById('cbbAgrupacion').innerHTML += options;
-
-            agrupSelect = '<?php echo $agrup; ?>';
+            const validator= '<?php echo $valAgrup; ?>';
+            if(validator=="false"){
+                agrupSelect = responseAgrupaciones.data[0]['CODIGO'];
+            }else{
+                agrupSelect = '<?php echo $agrup; ?>';
+            }
             if (agrupSelect == "0") {
                 agrupSelect = responseAgrupaciones.data[0]['CODIGO'];
             }
@@ -276,8 +279,8 @@
                                 valor = '';
                             }
                             return valor.toLocaleString('es-419', {
-                                minimumFractionDigits: 2,
-                                maximumFractionDigits: 2
+                                minimumFractionDigits: 0,
+                                maximumFractionDigits: 0
                             });
                         }
                     },
@@ -306,8 +309,8 @@
                                 valor = '';
                             }
                             return valor.toLocaleString('es-419', {
-                                minimumFractionDigits: 2,
-                                maximumFractionDigits: 2
+                                minimumFractionDigits: 0,
+                                maximumFractionDigits: 0
                             });
                         }
                     },
@@ -464,7 +467,7 @@
                         }, 100);
                     },
                     exportOptions: {
-                        columns: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]
+                        columns: [0, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]
                     },
                     title: 'Analis-MovimientoEstilos',
                     customize: function(xlsx) {
@@ -578,7 +581,7 @@
                         var textYellow = lastXfIndex + 13;
                         var textNaranja = lastXfIndex + 14;
                         $('c[r=A1] t', sheet).text(
-                            'REPORTE DE ANALISIS DE MOVIMIENTO DE ESTILOS ' + ($(
+                            'REPORTE DE ANALISIS DE MOVIMIENTO DE ESTILOS (UNIDADES) ' + ($(
                                 "#cbbAgrupacion option:selected").text()).toUpperCase());
                         $('row:eq(0) c', sheet).attr('s', greyBoldCentered);
                         $('row:eq(1) c', sheet).attr('s', 7);
@@ -880,7 +883,7 @@
                         var textDarkGreen = lastXfIndex + 12;
                         var textYellow = lastXfIndex + 13;
                         var textNaranja = lastXfIndex + 14;
-                        $('c[r=A1] t', sheet).text('REPORTE DE ANALISIS DE MOVIMIENTO DE ESTILOS ' +
+                        $('c[r=A1] t', sheet).text('REPORTE DE ANALISIS DE MOVIMIENTO DE ESTILOS (UNIDADES) ' +
                             estilo.toString().toUpperCase());
                         $('row:eq(0) c', sheet).attr('s', greyBoldCentered);
                         $('row:eq(1) c', sheet).attr('s', 7);

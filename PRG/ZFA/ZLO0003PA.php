@@ -364,6 +364,7 @@
 
                                         }
                                         if ( $validator!="true") {
+                                            print '<tr class="bg-secondary">';
                                             print '<td>1000000</td>';
                                             print '<td class=" responsive-font-example text-start"><b>TOTAL FINAL</b></td>';
                                             //HONDURAS
@@ -1832,6 +1833,7 @@
         var mesNum2 = '<?php echo $mesNum2; ?>';
         var urlGet = "/API.LovablePHP/ZLO0003P/ListMarcasTiendas2/?ano=" + ano2 + "&mes=" + mesNum1 +
             "&mes2=" + mesNum2 + "&marca=" + cias + "";
+        console.log(urlGet)
         var response = ajaxRequest(urlGet);
         var tiendasAno1 = [];
         var tiendasAno2 = [];
@@ -1841,10 +1843,10 @@
             let totund1=0; let totund2=0;
             let totval1=0; let totval2=0;
             for (let i = 0; i < data.length; i++) {
-                ano1hon = (data[i]['HONVALANO1'] != 0) ? (data[i]['HONVALANO1']) : 0;
-                ano2hon = (data[i]['HONVALANO2'] != 0) ? (data[i]['HONVALANO2']) : 0;
-                can1hon = (data[i]['HONCANANO1'] != 0) ? (data[i]['HONCANANO1']) : 0;
-                can2hon = (data[i]['HONCANANO2'] != 0) ? (data[i]['HONCANANO2']) : 0;
+                ano1hon = (parseFloat(data[i]['HONVALANO1']) != 0) ? (parseFloat(data[i]['HONVALANO1'])) : 0;
+                ano2hon = (parseFloat(data[i]['HONVALANO2']) != 0) ? (parseFloat(data[i]['HONVALANO2'])) : 0;
+                can1hon = (parseFloat(data[i]['HONCANANO1']) != 0) ? (parseFloat(data[i]['HONCANANO1'])) : 0;
+                can2hon = (parseFloat(data[i]['HONCANANO2']) != 0) ? (parseFloat(data[i]['HONCANANO2'])) : 0;
                 varhon = ano1hon - ano2hon;
                 crehon = (ano1hon != 0 && ano2hon != 0) ? parseFloat(((ano1hon / ano2hon) - 1) * 100) : 0;
                 if (parseFloat(varhon) < 0) {
@@ -1890,12 +1892,12 @@
                 totval1+=parseFloat(ano1hon);
                 totval2+=parseFloat(ano2hon);
             }
-            rows += "<tr>";
+            rows += "<tr class='bg-secondary'>";
             rows += "<td></td>";
             rows += "<td class='text-start'>TOTAL FINAL</td>";
             rows += "<td class='text-end'>" + parseFloat(totund1).toLocaleString('es-419') + "</td>";
-            rows += "<td class='text-end'>" + parseFloat(totval1).toLocaleString('es-419', {minimumFractionDigits: 2,maximumFractionDigits: 2}) + "</td>";
-            rows += "<td class='text-end'>D." + parseFloat(totund2).toLocaleString('es-419') + "</td>";
+            rows += "<td class='text-end'>" + parseFloat(totund2).toLocaleString('es-419', {minimumFractionDigits: 2,maximumFractionDigits: 2}) + "</td>";
+            rows += "<td class='text-end'>D." + parseFloat(totval1).toLocaleString('es-419') + "</td>";
             rows += "<td class='text-end'>D." + parseFloat(totval2).toLocaleString('es-419', {minimumFractionDigits: 2,maximumFractionDigits: 2}) + "</td>";
             varhon = totval1 - totval2;
             crehon = (totval1 != 0 && totval2 != 0) ? parseFloat(((totval1 / totval2) - 1) * 100) : 0;

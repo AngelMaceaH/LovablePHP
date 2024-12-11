@@ -50,6 +50,11 @@
       <span class="loader p-0 mb-5 me-4 "></span>
   </div>
     <?php
+        if (substr($_SERVER['REMOTE_ADDR'], 0, 4) !== '172.') {
+            http_response_code(403);
+            echo json_encode(["error" => "Acceso denegado"]);
+            exit;
+        }
   session_set_cookie_params(604800);
   session_start();
   date_default_timezone_set('America/Tegucigalpa');
@@ -121,6 +126,39 @@
                                                 <div class="fw-semibold">Opciones de administrador</div></div>
                                                 <a class="dropdown-item p-2" href="/<?php echo $_SESSION['DEV'] ?>LovablePHP/PRG/Admin/Usuarios.php"><i class="fa-solid fa-user me-2"></i>Usuarios</a>
                                                 <a class="dropdown-item p-2" href="/<?php echo $_SESSION['DEV'] ?>LovablePHP/PRG/Admin/Opciones.php"><i class="fa-solid fa-bars me-2"></i>Menú</a>`);
+        }
+        var anoing = "<?php echo isset($_SESSION['ANOING'])? $_SESSION['ANOING']: ''; ?>";
+        var numemp = "<?php echo isset($_SESSION['NUMEMP'])? $_SESSION['NUMEMP']: ''; ?>";
+        var getArea="/API.LovablePHP/ZLO0016P/FindArea/?anoing="+anoing+"&numemp="+numemp+"";
+            var responseArea = ajaxRequest(getArea);
+            if (responseArea.code==200){
+                $("#descripArea").text(responseArea.data['SECDES']);
+            }
+        if (anoing == 0 && numemp == 0) {
+          anoing=1;
+          numemp=1;
+        }else{
+          var getArea="/API.LovablePHP/ZLO0016P/FindArea/?anoing="+anoing+"&numemp="+numemp+"";
+            var responseArea = ajaxRequest(getArea);
+            var areaDesc='';
+            var areaId='';
+            var seccionId='';
+            if (responseArea.code==200){
+              areaDesc=responseArea.data['SECDES'];
+              areaId=responseArea.data['SECDEP'];
+              seccionId=responseArea.data['SECCOD'];
+            }
+          /*$("#hasNumber").append(`<div class="col-12">
+                                        <span class="text-end" style="font-size: 14px;">ID: `+combineNumbers(anoing, numemp)+`</span>
+                                    </div>`);*/
+          $("#isEmpleado").append(`<div class="col-12">
+                                        <span class="text-end" style="font-size: 14px;">Depto: (`+areaId+`) `+areaDesc+`</span>&nbsp;&nbsp;
+                                    </div>`);
+        }
+        var urlCia="/API.LovablePHP/Access/GetCia/?anoing="+anoing+"&numemp="+numemp+"";
+        var responseCia=ajaxRequest(urlCia);
+        if(responseCia.code==200){
+          $("#userCia").text(responseCia.data[0]['COMDES']);
         }
         //MODULOS
         var urlModulos = '/API.LovablePHP/Opc/LayoutM/?code=' + usuario + '';
@@ -243,39 +281,7 @@
             });
         });
 
-        var anoing = "<?php echo isset($_SESSION['ANOING'])? $_SESSION['ANOING']: ''; ?>";
-        var numemp = "<?php echo isset($_SESSION['NUMEMP'])? $_SESSION['NUMEMP']: ''; ?>";
-        var getArea="/API.LovablePHP/ZLO0016P/FindArea/?anoing="+anoing+"&numemp="+numemp+"";
-            var responseArea = ajaxRequest(getArea);
-            if (responseArea.code==200){
-                $("#descripArea").text(responseArea.data['SECDES']);
-            }
-        if (anoing == 0 && numemp == 0) {
-          anoing=1;
-          numemp=1;
-        }else{
-          var getArea="/API.LovablePHP/ZLO0016P/FindArea/?anoing="+anoing+"&numemp="+numemp+"";
-            var responseArea = ajaxRequest(getArea);
-            var areaDesc='';
-            var areaId='';
-            var seccionId='';
-            if (responseArea.code==200){
-              areaDesc=responseArea.data['SECDES'];
-              areaId=responseArea.data['SECDEP'];
-              seccionId=responseArea.data['SECCOD'];
-            }
-          /*$("#hasNumber").append(`<div class="col-12">
-                                        <span class="text-end" style="font-size: 14px;">ID: `+combineNumbers(anoing, numemp)+`</span>
-                                    </div>`);*/
-          $("#isEmpleado").append(`<div class="col-12">
-                                        <span class="text-end" style="font-size: 14px;">Depto: (`+areaId+`) `+areaDesc+`</span>&nbsp;&nbsp;
-                                    </div>`);
-        }
-        var urlCia="/API.LovablePHP/Access/GetCia/?anoing="+anoing+"&numemp="+numemp+"";
-        var responseCia=ajaxRequest(urlCia);
-        if(responseCia.code==200){
-          $("#userCia").text(responseCia.data[0]['COMDES']);
-        }
+
     });
     </script>
 
@@ -342,7 +348,7 @@
                         </div>
                     </div>
 
-                    <button type="button" class="btn btn-light" onclick="logOut()" style="height:50px;" data-bs-toggle="tooltip" data-bs-placement="left" data-bs-title="Salir">
+                    <button type="button" class="btn btn-light rounded" onclick="logOut()" style="height:50px;" data-bs-toggle="tooltip" data-bs-placement="left" data-bs-title="Salir">
                         <svg class="icon me-2">
                             <use xlink:href="../../assets/vendors/@coreui/icons/svg/free.svg#cil-account-logout"></use>
                         </svg>
@@ -365,7 +371,7 @@
                 src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"> </script>
             <script type="text/javascript" charset="utf8"
                 src="https://cdn.datatables.net/buttons/2.3.4/js/dataTables.buttons.min.js"> </script>
-            <script type="text/javascript" charset="utf8" src="../../assets/js/buttons.html5.js"> </script>
+            <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/2.3.4/js/buttons.html5.min.js"> </script>
             <script type="text/javascript" charset="utf8"
                 src="https://cdn.datatables.net/buttons/2.3.4/js/buttons.print.min.js"> </script>
                 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>

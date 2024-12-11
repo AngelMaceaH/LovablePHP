@@ -20,6 +20,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@500&display=swap" rel="stylesheet">
     <style>
+
     h1,
     h2,
     h3,
@@ -103,6 +104,11 @@
         <span class="loader p-0 mb-5 me-4 "></span>
     </div>
     <?php
+    if (substr($_SERVER['REMOTE_ADDR'], 0, 4) !== '172.') {
+        http_response_code(403);
+        //echo json_encode(["error" => "Acceso denegado"]);
+        exit;
+    }
   date_default_timezone_set('America/Tegucigalpa');
   session_set_cookie_params(604800);
   session_start();
@@ -142,6 +148,46 @@
                                                         href="/<?php echo $_SESSION['DEV'] ?>LovablePHP/PRG/Admin/Opciones.php"><i
                                                             class="fa-solid fa-bars me-2"></i>Menú</a>`);
 
+        }
+
+        var anoing = "<?php echo isset($_SESSION['ANOING'])? $_SESSION['ANOING']: ''; ?>";
+        var numemp = "<?php echo isset($_SESSION['NUMEMP'])? $_SESSION['NUMEMP']: ''; ?>";
+        var getArea = "/API.LovablePHP/ZLO0016P/FindArea/?anoing=" + anoing + "&numemp=" +
+            numemp + "";
+        var responseArea = ajaxRequest(getArea);
+        if (responseArea.code == 200) {
+            $("#descripArea").text(responseArea.data['SECDES']);
+        }
+        if (anoing == 0 && numemp == 0) {
+            anoing = 1;
+            numemp = 1;
+        } else {
+            var getArea = "/API.LovablePHP/ZLO0016P/FindArea/?anoing=" + anoing +
+                "&numemp=" + numemp + "";
+            var responseArea = ajaxRequest(getArea);
+            var areaDesc = '';
+            var areaId = '';
+            var seccionId = '';
+            if (responseArea.code == 200) {
+                areaDesc = responseArea.data['SECDES'];
+                areaId = responseArea.data['SECDEP'];
+                seccionId = responseArea.data['SECCOD'];
+            }
+            /*$("#hasNumber").append(`<div class="col-12">
+                                        <span class="text-end" style="font-size: 14px;">ID: ` + combineNumbers(anoing,
+                numemp) + `</span>
+                                    </div>`);*/
+            $("#isEmpleado").append(`<div class="col-12">
+                                        <span class="text-end" style="font-size: 14px;">Depto: (` + areaId + `) ` +
+                areaDesc + `</span>&nbsp;&nbsp;
+                                    </div>
+                                   `);
+        }
+        var urlCia = "/API.LovablePHP/Access/GetCia/?anoing=" + anoing + "&numemp=" +
+            numemp + "";
+        var responseCia = ajaxRequest(urlCia);
+        if (responseCia.code == 200) {
+            $("#userCia").text(responseCia.data[0]['COMDES']);
         }
         //MODULOS
         var urlModulos = '/API.LovablePHP/Opc/LayoutM/?code=' + usuario + '';
@@ -254,47 +300,6 @@
                 }, 300);
             });
         });
-
-
-        var anoing = "<?php echo isset($_SESSION['ANOING'])? $_SESSION['ANOING']: ''; ?>";
-        var numemp = "<?php echo isset($_SESSION['NUMEMP'])? $_SESSION['NUMEMP']: ''; ?>";
-        var getArea = "/API.LovablePHP/ZLO0016P/FindArea/?anoing=" + anoing + "&numemp=" +
-            numemp + "";
-        var responseArea = ajaxRequest(getArea);
-        if (responseArea.code == 200) {
-            $("#descripArea").text(responseArea.data['SECDES']);
-        }
-        if (anoing == 0 && numemp == 0) {
-            anoing = 1;
-            numemp = 1;
-        } else {
-            var getArea = "/API.LovablePHP/ZLO0016P/FindArea/?anoing=" + anoing +
-                "&numemp=" + numemp + "";
-            var responseArea = ajaxRequest(getArea);
-            var areaDesc = '';
-            var areaId = '';
-            var seccionId = '';
-            if (responseArea.code == 200) {
-                areaDesc = responseArea.data['SECDES'];
-                areaId = responseArea.data['SECDEP'];
-                seccionId = responseArea.data['SECCOD'];
-            }
-            /*$("#hasNumber").append(`<div class="col-12">
-                                        <span class="text-end" style="font-size: 14px;">ID: ` + combineNumbers(anoing,
-                numemp) + `</span>
-                                    </div>`);*/
-            $("#isEmpleado").append(`<div class="col-12">
-                                        <span class="text-end" style="font-size: 14px;">Depto: (` + areaId + `) ` +
-                areaDesc + `</span>&nbsp;&nbsp;
-                                    </div>
-                                   `);
-        }
-        var urlCia = "/API.LovablePHP/Access/GetCia/?anoing=" + anoing + "&numemp=" +
-            numemp + "";
-        var responseCia = ajaxRequest(urlCia);
-        if (responseCia.code == 200) {
-            $("#userCia").text(responseCia.data[0]['COMDES']);
-        }
     });
     </script>
 

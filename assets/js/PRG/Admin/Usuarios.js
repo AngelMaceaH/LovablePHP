@@ -49,6 +49,7 @@ $(document).ready(function() {
         var usuario=usuaAccesos.val();
         if (usuario!=0) {
             const url=`http://172.16.15.20/API.LovablePHP/Users/FIND/?codusu=${usuario}`;
+
             fetch(url).then(response=>response.json()).then(data=>{
                 if (data.code==200) {
                     document.querySelectorAll('.checkId').forEach(element => {
@@ -520,7 +521,7 @@ $(document).ready(function() {
         const departamentosEdit = $("#cbbDepartamentosEdit");
         departamentos.empty();
         departamentos.append(
-            `<option value="0-0" class="text-muted" selected>Agrega un departamento al usuario</option>`
+            `<option value="0-0" class="text-muted" selected></option>`
         );
         for (let i = 0; i < responseDepas.data.length; i++) {
             departamentos.append(`<option value="` + responseDepas.data[i].SECDEP + `-` + responseDepas
@@ -528,12 +529,14 @@ $(document).ready(function() {
         }
         departamentosEdit.empty();
         departamentosEdit.append(
-            `<option value="0-0" class="text-muted" selected>Agrega un departamento al usuario</option>`
+            `<option value="0-0" class="text-muted" selected></option>`
         );
         for (let i = 0; i < responseDepas.data.length; i++) {
             departamentosEdit.append(`<option value="` + responseDepas.data[i].SECDEP + `-` + responseDepas
                 .data[i].SECCOD + `">` + responseDepas.data[i].SECDES + `</option>`);
         }
+        $("#cbbDepartamentos").flexselect();
+        $("#cbbDepartamentosEdit").flexselect();
     }
     var urlTipos = "/API.LovablePHP/ZLO0015P/ListTipos/";
     var responseTipos = ajaxRequest(urlTipos);
@@ -664,7 +667,7 @@ function delRow(button) {
     }
 }
 
-    function addRowEdit() {
+function addRowEdit() {
         const departamentos = $("#cbbDepartamentosEdit");
         if (departamentos.val() == "0-0" || departamentos.val() == null) {
             $("#lblCbbErrorEdit").text("Debe seleccionar un departamento");
@@ -689,7 +692,7 @@ function delRow(button) {
                 $("#lblCbbErrorEdit").text("El departamento ya fue agregado");
             }
         }
-    }
+}
 
 function delRowEdit(button) {
     var container = button.closest('tr');
@@ -884,6 +887,9 @@ function create() {
     $("#proveedorId").val("Selecciona un proveedor");
     $("#permisosEsp1").prop("checked", false);
     $("#permisosEsp2").prop("checked", false);
+    $("#permisosTBL").prop("checked",false);
+    $("#permisosTBLIN").prop("checked",false);
+    $("#permisosCXP").prop("checked",false);
     $("#txtModulo").val("0");
     $("#txtOpcion").val("0");
     $("#divProgramas").empty();
@@ -933,6 +939,34 @@ function create() {
             height: 'toggle'
         });
         let icon = $("#iconArrow5");
+        icon.removeClass("fa-angles-up");
+        icon.addClass("fa-angles-down");
+    }
+    const menuCuentas = $("#menuCuentas");
+    if (menuCuentas.css("display") != "none") {
+        menuCuentas.animate({
+            height: 'toggle'
+        });
+        let icon = $("#iconArrow11");
+        icon.removeClass("fa-angles-up");
+        icon.addClass("fa-angles-down");
+    }
+    const menuFacturas = $("#menuFacturas");
+    if (menuFacturas.css("display") != "none") {
+        menuFacturas.animate({
+            height: 'toggle'
+        });
+        let icon = $("#iconArrow14");
+        icon.removeClass("fa-angles-up");
+        icon.addClass("fa-angles-down");
+    }
+    //
+    const menuTablero = $("#menuTablero");
+    if (menuTablero.css("display") != "none") {
+        menuTablero.animate({
+            height: 'toggle'
+        });
+        let icon = $("#iconArrow12");
         icon.removeClass("fa-angles-up");
         icon.addClass("fa-angles-down");
     }
@@ -1057,6 +1091,30 @@ function saveUser() {
         } else {
             peresp[0] = 'N';
         }
+        let percas="";
+        if($("#permisosTBL").is(":checked")){
+            percas='S';
+        }else{
+            percas='';
+        }
+        let percasin="";
+        if($("#permisosTBLIN").is(":checked")){
+            percasin='S';
+        }else{
+            percasin='';
+        }
+        let percxp="";
+        if($("#permisosCXP").is(":checked")){
+            percxp='S';
+        }else{
+            percxp='N';
+        }
+        let perfac="";
+        if($("#permisosFAC").is(":checked")){
+            perfac='S';
+        }else{
+            perfac='N';
+        }
         var usugra = '<?php echo $_SESSION["CODUSU"];?>';
         var fecgra = ('<?php echo date("Y-m-d");?>').replace(/-/g, "");
         var data = {
@@ -1070,6 +1128,10 @@ function saveUser() {
             'PROV1': (prov1 == "") ? "0" : prov1,
             'PROV2': (prov2 == undefined) ? "0" : prov2,
             'PERESP': peresp,
+            'PERCXP': percxp,
+            'PERFAC': perfac,
+            'PERCAS': percas,
+            'PERCIN': percasin,
             'PROGRAMAS': programasAsignados,
             'USUGRA': usugra,
             'FECGRA': fecgra,
@@ -1126,6 +1188,7 @@ function delUser() {
 }
 
 function edit(codusu) {
+    $("#cbbDepartamentosEdit").val('').trigger('change');
     var urlFind = "/API.LovablePHP/Users/FIND/?codusu=" + codusu;
     var responseFind = ajaxRequest(urlFind);
     $("#permisosEsp1Edit").prop("checked", false);
@@ -1182,21 +1245,49 @@ function edit(codusu) {
         if (permisos.includes("A")) {
             $("#permisosEsp2Edit").prop("checked", true);
         }
+        var permisosTBL=responseFind.data[0]['PERCAS'];
+        if (permisosTBL.includes('S')){
+            $("#permisosTBLEdit").prop("checked", true);
+        }else{
+            $("#permisosTBLEdit").prop("checked", false);
+        }
+
+        var permisosTBLIN=responseFind.data[0]['PERCIN'];
+        if (permisosTBLIN.includes('S')){
+            $("#permisosTBLINEdit").prop("checked", true);
+        }else{
+            $("#permisosTBLINEdit").prop("checked", false);
+        }
+
+        var permisosCXP=responseFind.data[0]['PERCXP'];
+        if (permisosCXP.includes('S')){
+            $("#permisosCXPEdit").prop("checked", true);
+        }else{
+            $("#permisosCXPEdit").prop("checked", false);
+        }
+        var permisosFAC=responseFind.data[0]['PERFAC'];
+        if (permisosFAC.includes('S')){
+            $("#permisosFACEdit").prop("checked", true);
+        }else{
+            $("#permisosFACEdit").prop("checked", false);
+        }
         programasAsignadosEdit = responseFind.data[0]['PROGRAMAS'];
         departamentosUsuarioEdit = responseFind.data[0]['AREAS'];
         agrupacionesAsignadasEdit = responseFind.data[0]['AGRUPA'];
         $("#tbDetallesDepaEdit").empty();
         $("#tbDetallesDepaEdit").append(
             `<tr><td class="p-0 p-2 m-0" colspan="2"><span id="depaFixedEdit"></span></td></tr>`);
-        if (departamentosUsuarioEdit.length > 0) {
+        /*if (departamentosUsuarioEdit.length > 0) {
             var splitDepa = departamentosUsuarioEdit[0].split("-");
             var depa = splitDepa[0];
             var cod = splitDepa[1];
             var desc = $("#cbbDepartamentosEdit option[value='" + depa + "-" + cod + "']").text();
             $("#depaFixedEdit").text(desc);
-            if (departamentosUsuarioEdit.length > 1) {
+
+        }*/
+            if (departamentosUsuarioEdit.length > 0) {
                 $("#divDepartamentosEdit").removeClass("d-none");
-                for (let i = 1; i < departamentosUsuarioEdit.length; i++) {
+                for (let i = 0; i < departamentosUsuarioEdit.length; i++) {
                     var splitDepa = departamentosUsuarioEdit[i].split("-");
                     var depa = splitDepa[0];
                     var cod = splitDepa[1];
@@ -1211,7 +1302,6 @@ function edit(codusu) {
                     $("#tableDepartamentosEdit").append(row);
                 }
             }
-        }
         tiposDocsEdit = responseFind.data[0]['TIPOSDOC'];
         $("#tbTiposDetallesEdit").empty();
         $("#divTiposDocEdit").addClass("d-none");
@@ -1347,6 +1437,34 @@ function edit(codusu) {
             icon.removeClass("fa-angles-up");
             icon.addClass("fa-angles-down");
         }
+        const menuCXP = $("#menuCuentasEdit");
+        if (menuCXP.css("display") != "none") {
+            menuCXP.animate({
+                height: 'toggle'
+            });
+            let icon = $("#iconArrow10");
+            icon.removeClass("fa-angles-up");
+            icon.addClass("fa-angles-down");
+        }
+        const menuFAC = $("#menuFacturasEdit");
+        if (menuFAC.css("display") != "none") {
+            menuFAC.animate({
+                height: 'toggle'
+            });
+            let icon = $("#iconArrow15");
+            icon.removeClass("fa-angles-up");
+            icon.addClass("fa-angles-down");
+        }
+        //
+        const menuTableroEdit = $("#menuTableroEdit");
+        if (menuTableroEdit.css("display") != "none") {
+            menuTableroEdit.animate({
+                height: 'toggle'
+            });
+            let icon = $("#iconArrow13");
+            icon.removeClass("fa-angles-up");
+            icon.addClass("fa-angles-down");
+        }
         //
         $("#AllckEdit").prop("checked", false);
         $(".checkAgrupEdit").prop("checked", false);
@@ -1402,6 +1520,32 @@ function saveUserEdit() {
         } else {
             peresp[0] = 'N';
         }
+        let percas="";
+        if($("#permisosTBLEdit").is(":checked")){
+            percas='S';
+        }else{
+            percas='N';
+        }
+
+        let percasin="";
+        if($("#permisosTBLINEdit").is(":checked")){
+            percasin='S';
+        }else{
+            percasin='N';
+        }
+
+        let percxp="";
+        if($("#permisosCXPEdit").is(":checked")){
+            percxp='S';
+        }else{
+            percxp='N';
+        }
+        let perfac="";
+        if($("#permisosFACEdit").is(":checked")){
+            perfac='S';
+        }else{
+            perfac='N';
+        }
         var usugra = '<?php echo $_SESSION["CODUSU"];?>';
         var fecgra = ('<?php echo date("Y-m-d");?>').replace(/-/g, "");
         var data = {
@@ -1415,6 +1559,10 @@ function saveUserEdit() {
             'PROV1': (prov1 == "") ? "0" : prov1,
             'PROV2': (prov2 == undefined) ? "0" : prov2,
             'PERESP': peresp,
+            'PERCXP': percxp,
+            'PERFAC': perfac,
+            'PERCAS': percas,
+            'PERCIN': percasin,
             'PROGRAMAS': programasAsignadosEdit,
             'USUGRA': usugra,
             'FECGRA': fecgra,
@@ -1451,6 +1599,7 @@ function cleanEmpleadosEdit() {
     $("#empleadoIdEdit").val('Selecciona un empleado');
     $("#depaFixedEdit").text('');
     $("#divDepartamentosEdit").addClass("d-none");
+    $("#empleadoId2").val('0-0')
     empleIdEdit = "";
     departamentosUsuarioEdit = [0];
 }
@@ -1650,6 +1799,106 @@ function sendEmpleadosEdit(row) {
                 }
                 // Anima el menú de edición de accesos
                 $("#menuAccesosEdit").animate({
+                    height: 'toggle'
+                });
+            }
+
+             // Función para animar el menú 10
+             function animateMenu10() {
+                let icon = $("#iconArrow10");
+                // Cambia la clase del ícono dependiendo de su estado actual
+                if (icon.hasClass("fa-angles-up")) {
+                    icon.removeClass("fa-angles-up");
+                    icon.addClass("fa-angles-down");
+                } else {
+                    icon.removeClass("fa-angles-down");
+                    icon.addClass("fa-angles-up");
+                }
+                // Anima el menú de edición de digitalización
+                $("#menuCuentasEdit").animate({
+                    height: 'toggle'
+                });
+            }
+
+               // Función para animar el menú 11
+               function animateMenu11() {
+                let icon = $("#iconArrow11");
+                // Cambia la clase del ícono dependiendo de su estado actual
+                if (icon.hasClass("fa-angles-up")) {
+                    icon.removeClass("fa-angles-up");
+                    icon.addClass("fa-angles-down");
+                } else {
+                    icon.removeClass("fa-angles-down");
+                    icon.addClass("fa-angles-up");
+                }
+                // Anima el menú de edición de digitalización
+                $("#menuCuentas").animate({
+                    height: 'toggle'
+                });
+            }
+
+               // Función para animar el menú 12
+               function animateMenu12() {
+                let icon = $("#iconArrow12");
+                // Cambia la clase del ícono dependiendo de su estado actual
+                if (icon.hasClass("fa-angles-up")) {
+                    icon.removeClass("fa-angles-up");
+                    icon.addClass("fa-angles-down");
+                } else {
+                    icon.removeClass("fa-angles-down");
+                    icon.addClass("fa-angles-up");
+                }
+                // Anima el menú de edición de digitalización
+                $("#menuTablero").animate({
+                    height: 'toggle'
+                });
+            }
+
+               // Función para animar el menú 13
+               function animateMenu13() {
+                let icon = $("#iconArrow13");
+                // Cambia la clase del ícono dependiendo de su estado actual
+                if (icon.hasClass("fa-angles-up")) {
+                    icon.removeClass("fa-angles-up");
+                    icon.addClass("fa-angles-down");
+                } else {
+                    icon.removeClass("fa-angles-down");
+                    icon.addClass("fa-angles-up");
+                }
+                // Anima el menú de edición de digitalización
+                $("#menuTableroEdit").animate({
+                    height: 'toggle'
+                });
+            }
+               // Función para animar el menú 14
+               function animateMenu14() {
+                let icon = $("#iconArrow14");
+                // Cambia la clase del ícono dependiendo de su estado actual
+                if (icon.hasClass("fa-angles-up")) {
+                    icon.removeClass("fa-angles-up");
+                    icon.addClass("fa-angles-down");
+                } else {
+                    icon.removeClass("fa-angles-down");
+                    icon.addClass("fa-angles-up");
+                }
+                // Anima el menú de edición de digitalización
+                $("#menuFacturas").animate({
+                    height: 'toggle'
+                });
+            }
+               // Función para animar el menú 15
+               function animateMenu15() {
+                let icon = $("#iconArrow15");
+                // Cambia la clase del ícono dependiendo de su estado actual
+                if (icon.hasClass("fa-angles-up")) {
+                    icon.removeClass("fa-angles-up");
+                    icon.addClass("fa-angles-down");
+                } else {
+                    icon.removeClass("fa-angles-down");
+                    icon.addClass("fa-angles-up");
+                }
+                // Anima el menú de edición de digitalización
+                $("#menuFacturasEdit").animate({
                     height: 'toggle'
                 });
             }

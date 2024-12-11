@@ -1,6 +1,12 @@
 <?php
-// Establecer la duración de la sesión a 86400 segundos (1 día)
-session_set_cookie_params(604800);
+session_set_cookie_params([
+  'lifetime' => 604800, // 7 días en segundos
+  'path' => '/',
+  'domain' => '',
+  'secure' => false,
+  'httponly' => true,
+  'samesite' => 'Lax',
+]);
 // Iniciar la sesión
 session_start();
 // Inicializar la variable de sesión 'DEV' a vacío
@@ -45,8 +51,12 @@ if ($code == 200) {
   $_SESSION['ANOING'] = $registros[0]['data'][0]['ANOING'];
   $_SESSION['NUMEMP'] = $registros[0]['data'][0]['NUMEMP'];
   $_SESSION['PERESP'] = $registros[0]['data'][0]['PERESP'];
+  $_SESSION['PERCAS'] = $registros[0]['data'][0]['PERCAS'];
+  $_SESSION['PERCIN'] = $registros[0]['data'][0]['PERCIN'];
   $_SESSION['PROVE1'] = $registros[0]['data'][0]['PROVE1'];
   $_SESSION['PROVE2'] = $registros[0]['data'][0]['PROVE2'];
+  $_SESSION['PERCXP'] = $registros[0]['data'][0]['PERCXP'];
+  $_SESSION['PERFAC'] = $registros[0]['data'][0]['PERFAC'];
 }
 
 // Cerrar la conexión cURL

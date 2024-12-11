@@ -357,7 +357,8 @@
     cias = $("#cbbPais").val();
     urlTable =
       `/API.LovablePHP/ZLO0035P/${endpoint}/?d1ini=${d1ini}&d1fin=${d1fin}&d2ini=${d2ini}&d2fin=${d2fin}&usuario=${usuario}&case=${option}&cia=${cias}`;
-    const columns = [{
+    console.log(urlTable);
+      const columns = [{
         "data": "COMDES"
       },
       {
@@ -591,70 +592,72 @@
         }
       },
       footerCallback: function(row, data, start, end, display) {
-        setTimeout(() => {
-          if (option == '3') {
-          var api = this.api();
-          var intVal = function(i) {
-            return typeof i === 'string' ?
-              i.replace(/[\$,]/g, '') * 1 :
-              typeof i === 'number' ?
-              i : 0;
-          };
-          var total1 = api
-            .column(2)
-            .data()
-            .reduce(function(a, b) {
-              return parseFloat(a) + parseFloat(b);
-            }, 0);
+          setTimeout(() => {
+            var api = this.api();
+              var intVal = function(i) {
+                return typeof i === 'string' ?
+                  i.replace(/[\$,]/g, '') * 1 :
+                  typeof i === 'number' ?
+                  i : 0;
+              };
+              var filteredData = data.filter(function(d, i) {
+                var rowNode = api.row(i).node();
+                return d.VENDEDOR === '0' && !$(rowNode).hasClass('bg-secondary2');
+              });
 
-          var total2 = api
-            .column(3)
-            .data()
-            .reduce(function(a, b) {
-              return parseFloat(a) + parseFloat(b);
-            }, 0);
+              var total1 = filteredData
+                .map(function(d) {
+                  return intVal(d.R1);
+                })
+                .reduce(function(a, b) {
+                  return a + b;
+                }, 0);
+              var total2 = filteredData
+                .map(function(d) {
+                  return intVal(d.R2);
+                })
+                .reduce(function(a, b) {
+                  return a + b;
+                }, 0);
+              $(api.column(1).footer()).html('D');
+              $(api.column(2).footer()).html(parseFloat(total1).toLocaleString('es-419', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+              }));
+              $(api.column(3).footer()).html(parseFloat(total2).toLocaleString('es-419', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+              }));
+              const difference = total2 - total1;
+              const growthPercentage = (isNaN(((total2 / total1) - 1) * 100))? 0:((total2 / total1) - 1) * 100;
+              $(api.column(4).footer()).html(parseFloat(difference).toLocaleString('es-419', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+              }));
+              if (parseInt(difference) >= 0) {
+                $(api.column(4).footer()).removeClass('text-danger');
+                $(api.column(4).footer()).addClass('text-success');
+              } else {
+                $(api.column(4).footer()).removeClass('text-success');
+                $(api.column(4).footer()).addClass('text-danger');
+              }
+              $(api.column(5).footer()).html(parseFloat(growthPercentage).toLocaleString('es-419', {
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0
+              }));
+              if (parseInt(growthPercentage) >= 0) {
+                $(api.column(5).footer()).removeClass('text-danger');
+                $(api.column(5).footer()).addClass('text-success');
+              } else {
+                $(api.column(5).footer()).removeClass('text-success');
+                $(api.column(5).footer()).addClass('text-danger');
+              }
+              $('#table-data tfoot').addClass('bg-secondary3 text-white');
+              $('#table-data tfoot').removeClass('d-none');
 
-          // Agrega el total al pie de la tabla
-          $(api.column(1).footer()).html('D');
-          $(api.column(2).footer()).html(parseFloat(total1).toLocaleString('es-419', {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2
-          }));
-          $(api.column(3).footer()).html(parseFloat(total2).toLocaleString('es-419', {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2
-          }));
-          const difference = total2 - total1;
-          const growthPercentage = ((total2 / total1) - 1) * 100;
-          $(api.column(4).footer()).html(parseFloat(difference).toLocaleString('es-419', {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2
-          }));
-          if (parseInt(difference) >= 0) {
-            $(api.column(4).footer()).removeClass('text-danger');
-            $(api.column(4).footer()).addClass('text-success');
-          } else {
-            $(api.column(4).footer()).removeClass('text-success');
-            $(api.column(4).footer()).addClass('text-danger');
-          }
-          $(api.column(5).footer()).html(parseFloat(growthPercentage).toLocaleString('es-419', {
-            minimumFractionDigits: 0,
-            maximumFractionDigits: 0
-          }));
-          if (parseInt(growthPercentage) >= 0) {
-            $(api.column(5).footer()).removeClass('text-danger');
-            $(api.column(5).footer()).addClass('text-success');
-          } else {
-            $(api.column(5).footer()).removeClass('text-success');
-            $(api.column(5).footer()).addClass('text-danger');
-          }
-          $('#table-data tfoot').addClass('bg-secondary3 text-white');
-          $('#table-data tfoot').removeClass('d-none');
-        } else {
-          $('#table-data tfoot').addClass('d-none');
-        }
-        }, 500);
+          }, 500);
       }
+
     });
     chargeChart(d1ini, d1fin, d2ini, d2fin, usuario, option)
   }
@@ -919,70 +922,74 @@
         }
       },
       footerCallback: function(row, data, start, end, display) {
-        setTimeout(() => {
-          if (option == '3') {
-          var api = this.api();
-          var intVal = function(i) {
-            return typeof i === 'string' ?
-              i.replace(/[\$,]/g, '') * 1 :
-              typeof i === 'number' ?
-              i : 0;
-          };
-          var total1 = api
-            .column(2)
-            .data()
-            .reduce(function(a, b) {
-              return parseFloat(a) + parseFloat(b);
-            }, 0);
+          setTimeout(() => {
+            /*if (option == '3') {
 
-          var total2 = api
-            .column(3)
-            .data()
-            .reduce(function(a, b) {
-              return parseFloat(a) + parseFloat(b);
-            }, 0);
+            } else {
+              $('#table-data tfoot').addClass('d-none');
+            }*/
+            var api = this.api();
+              var intVal = function(i) {
+                return typeof i === 'string' ?
+                  i.replace(/[\$,]/g, '') * 1 :
+                  typeof i === 'number' ?
+                  i : 0;
+              };
+              var filteredData = data.filter(function(d, i) {
+                var rowNode = api.row(i).node();
+                return d.VENDEDOR === '0' && !$(rowNode).hasClass('bg-secondary2');
+              });
 
-          // Agrega el total al pie de la tabla
-
-          $(api.column(1).footer()).html('D');
-          $(api.column(2).footer()).html(parseFloat(total1).toLocaleString('es-419', {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2
-          }));
-          $(api.column(3).footer()).html(parseFloat(total2).toLocaleString('es-419', {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2
-          }));
-          const difference = total2 - total1;
-          const growthPercentage = ((total2 / total1) - 1) * 100;
-          $(api.column(4).footer()).html(parseFloat(difference).toLocaleString('es-419', {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2
-          }));
-          if (parseInt(difference) >= 0) {
-            $(api.column(4).footer()).removeClass('text-danger');
-            $(api.column(4).footer()).addClass('text-success');
-          } else {
-            $(api.column(4).footer()).removeClass('text-success');
-            $(api.column(4).footer()).addClass('text-danger');
-          }
-          $(api.column(5).footer()).html(parseFloat(growthPercentage).toLocaleString('es-419', {
-            minimumFractionDigits: 0,
-            maximumFractionDigits: 0
-          }));
-          if (parseInt(growthPercentage) >= 0) {
-            $(api.column(5).footer()).removeClass('text-danger');
-            $(api.column(5).footer()).addClass('text-success');
-          } else {
-            $(api.column(5).footer()).removeClass('text-success');
-            $(api.column(5).footer()).addClass('text-danger');
-          }
-          $('#table-data tfoot').addClass('bg-secondary3 text-white');
-          $('#table-data tfoot').removeClass('d-none');
-        } else {
-          $('#table-data tfoot').addClass('d-none');
-        }
-        }, 500);
+              var total1 = filteredData
+                .map(function(d) {
+                  return intVal(d.R1);
+                })
+                .reduce(function(a, b) {
+                  return a + b;
+                }, 0);
+              var total2 = filteredData
+                .map(function(d) {
+                  return intVal(d.R2);
+                })
+                .reduce(function(a, b) {
+                  return a + b;
+                }, 0);
+              $(api.column(1).footer()).html('D');
+              $(api.column(2).footer()).html(parseFloat(total1).toLocaleString('es-419', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+              }));
+              $(api.column(3).footer()).html(parseFloat(total2).toLocaleString('es-419', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+              }));
+              const difference = total2 - total1;
+              const growthPercentage = (isNaN(((total2 / total1) - 1) * 100))? 0:((total2 / total1) - 1) * 100;
+              $(api.column(4).footer()).html(parseFloat(difference).toLocaleString('es-419', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+              }));
+              if (parseInt(difference) >= 0) {
+                $(api.column(4).footer()).removeClass('text-danger');
+                $(api.column(4).footer()).addClass('text-success');
+              } else {
+                $(api.column(4).footer()).removeClass('text-success');
+                $(api.column(4).footer()).addClass('text-danger');
+              }
+              $(api.column(5).footer()).html(parseFloat(growthPercentage).toLocaleString('es-419', {
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0
+              }));
+              if (parseInt(growthPercentage) >= 0) {
+                $(api.column(5).footer()).removeClass('text-danger');
+                $(api.column(5).footer()).addClass('text-success');
+              } else {
+                $(api.column(5).footer()).removeClass('text-success');
+                $(api.column(5).footer()).addClass('text-danger');
+              }
+              $('#table-data tfoot').addClass('bg-secondary3 text-white');
+              $('#table-data tfoot').removeClass('d-none');
+          }, 500);
       }
     });
     chargeChart(d1ini, d1fin, d2ini, d2fin, usuario, option)

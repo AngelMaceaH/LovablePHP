@@ -659,7 +659,7 @@
                     color: '#ffd700'
                 }]
             });
-        }, 1500);
+        }, 1700);
     });
     function chargeTable(valAno, valAgrup) {
         //AÑO 1

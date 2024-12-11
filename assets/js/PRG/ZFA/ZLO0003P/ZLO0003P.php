@@ -51,6 +51,7 @@ if (strlen($mesfiltro)==1) {
 <script>
 $(document).ready(function() {
   var urlComarc = '/API.LovablePHP/ZLO0003P/ListComarc/';
+  console.log(urlComarc);
   var responseComarc = ajaxRequest(urlComarc);
 
   //LLENADO DE MARCAS

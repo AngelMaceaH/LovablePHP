@@ -6,7 +6,7 @@
             var ciaHon1 =
                 '<?php echo "AND LO2261.CODCIA IN(35,47,50,52,56,57,59,63,64,65,68,70,72,73,74,75,76,78,82,85,88)"; ?>';
             var ciaHon2 = '<?php echo "AND LO2261.CODCIA IN(20,22,21,23,24)"; ?>';
-            var ciaGua = '<?php echo "AND LO2261.CODCIA IN(49,66,69,71,86)"; ?>';
+            var ciaGua = '<?php echo "AND LO2261.CODCIA IN(49,66,69,71,86,89)"; ?>';
             var ciaSal = '<?php echo "AND LO2261.CODCIA IN(48,53,61,62,77)"; ?>';
             var ciaCos = '<?php echo "AND LO2261.CODCIA IN(60,80,54)"; ?>';
             var ciaNic = '<?php echo "AND LO2261.CODCIA IN(83,87)"; ?>';

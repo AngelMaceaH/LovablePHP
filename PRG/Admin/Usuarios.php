@@ -329,6 +329,115 @@
                                     <div class="row">
                                         <div class="col-9 text-center">
                                             <label class="form-control bg-dark text-white mt-2  border border-0 p-0">
+                                                Tablero de casos para usuarios
+                                            </label>
+                                        </div>
+                                        <div class="col-3 text-end">
+                                            <button type="button" class="btn btn-secondary"
+                                                style="width:70px; margin-right:15px;" onclick="animateMenu12()"> <i
+                                                    id="iconArrow12"
+                                                    class="fa-solid fa-angles-down text-white"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div id='menuTablero'>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="form-control border border-success d-flex mt-4">
+                                                <label class="form-check-label mt-2 me-3">Permiso para <span
+                                                        class="text-success fw-bold">crear</span> casos para usuarios</label>
+                                                <div class="form-check form-switch fs-5 mt-1">
+                                                    <input class="form-check-input mt-2 text-success"
+                                                        id="permisosTBL" type="checkbox" role="switch">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="form-control border border-primary d-flex mt-4">
+                                                <label class="form-check-label mt-2 me-3">Permiso para <span
+                                                        class="text-primary fw-bold">interactuar</span> y mover los casos en el tablero</label>
+                                                <div class="form-check form-switch fs-5 mt-1">
+                                                    <input class="form-check-input mt-2 text-primary"
+                                                        id="permisosTBLIN" type="checkbox" role="switch">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 text-center mt-2 mb-2">
+                                <div class="form-control bg-dark text-white mt-2">
+                                    <div class="row">
+                                        <div class="col-9 text-center">
+                                            <label class="form-control bg-dark text-white mt-2  border border-0 p-0">
+                                                Cuentas por cobrar
+                                            </label>
+                                        </div>
+                                        <div class="col-3 text-end">
+                                            <button type="button" class="btn btn-secondary"
+                                                style="width:70px; margin-right:15px;" onclick="animateMenu11()"> <i
+                                                    id="iconArrow11"
+                                                    class="fa-solid fa-angles-down text-white"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div id='menuCuentas'>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="form-control border border-success d-flex mt-4">
+                                                <label class="form-check-label mt-2 me-3">Permiso para <span
+                                                        class="text-success fw-bold">agregar</span> clientes o documentos</label>
+                                                <div class="form-check form-switch fs-5 mt-1">
+                                                    <input class="form-check-input mt-2 text-success"
+                                                        id="permisosCXP" type="checkbox" role="switch">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 text-center mt-2 mb-2">
+                                <div class="form-control bg-dark text-white mt-2">
+                                    <div class="row">
+                                        <div class="col-9 text-center">
+                                            <label class="form-control bg-dark text-white mt-2  border border-0 p-0">
+                                                Digitalización de facturas o requisiciones
+                                            </label>
+                                        </div>
+                                        <div class="col-3 text-end">
+                                            <button type="button" class="btn btn-secondary"
+                                                style="width:70px; margin-right:15px;" onclick="animateMenu14()"> <i
+                                                    id="iconArrow14"
+                                                    class="fa-solid fa-angles-down text-white"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div id='menuFacturas'>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="form-control border border-success d-flex mt-4">
+                                                <label class="form-check-label mt-2 me-3">Permiso para <span
+                                                        class="text-success fw-bold">digitalizar</span> facturas o requisiciones</label>
+                                                <div class="form-check form-switch fs-5 mt-1">
+                                                    <input class="form-check-input mt-2 text-success"
+                                                        id="permisosFAC" type="checkbox" role="switch">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 text-center mt-2 mb-2">
+                                <div class="form-control bg-dark text-white mt-2">
+                                    <div class="row">
+                                        <div class="col-9 text-center">
+                                            <label class="form-control bg-dark text-white mt-2  border border-0 p-0">
                                                 Acceso a agrupaciones de companías
                                             </label>
                                         </div>
@@ -671,6 +780,115 @@
                                                             </tbody>
                                                         </table>
                                                     </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 text-center mt-2 mb-2">
+                                <div class="form-control bg-dark text-white mt-2">
+                                    <div class="row">
+                                        <div class="col-9 text-center">
+                                            <label class="form-control bg-dark text-white mt-2  border border-0 p-0">
+                                                Tablero de casos para usuarios
+                                            </label>
+                                        </div>
+                                        <div class="col-3 text-end">
+                                            <button type="button" class="btn btn-secondary"
+                                                style="width:70px; margin-right:15px;" onclick="animateMenu13()"> <i
+                                                    id="iconArrow13"
+                                                    class="fa-solid fa-angles-down text-white"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div id='menuTableroEdit'>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="form-control border border-success d-flex mt-4">
+                                                <label class="form-check-label mt-2 me-3">Permiso para <span
+                                                        class="text-success fw-bold">crear</span> casos para usuarios</label>
+                                                <div class="form-check form-switch fs-5 mt-1">
+                                                    <input class="form-check-input mt-2 text-success"
+                                                        id="permisosTBLEdit" type="checkbox" role="switch">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="form-control border border-primary d-flex mt-4">
+                                                <label class="form-check-label mt-2 me-3">Permiso para <span
+                                                        class="text-primary fw-bold">interactuar</span> y mover los casos en el tablero</label>
+                                                <div class="form-check form-switch fs-5 mt-1">
+                                                    <input class="form-check-input mt-2 text-primary"
+                                                        id="permisosTBLINEdit" type="checkbox" role="switch">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 text-center mt-2 mb-2">
+                                <div class="form-control bg-dark text-white mt-2">
+                                    <div class="row">
+                                        <div class="col-9 text-center">
+                                            <label class="form-control bg-dark text-white mt-2  border border-0 p-0">
+                                               Cuentas por cobrar
+                                            </label>
+                                        </div>
+                                        <div class="col-3 text-end">
+                                            <button type="button" class="btn btn-secondary"
+                                                style="width:70px; margin-right:15px;" onclick="animateMenu10()"> <i
+                                                    id="iconArrow10"
+                                                    class="fa-solid fa-angles-down text-white"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div id='menuCuentasEdit'>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="form-control border border-success d-flex mt-4">
+                                                <label class="form-check-label mt-2 me-3">Permiso para <span
+                                                        class="text-success fw-bold">agregar</span> clientes o documentos</label>
+                                                <div class="form-check form-switch fs-5 mt-1">
+                                                    <input class="form-check-input mt-2 text-success"
+                                                        id="permisosCXPEdit" type="checkbox" role="switch">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 text-center mt-2 mb-2">
+                                <div class="form-control bg-dark text-white mt-2">
+                                    <div class="row">
+                                        <div class="col-9 text-center">
+                                            <label class="form-control bg-dark text-white mt-2  border border-0 p-0">
+                                               Digitalización de facturas o requisiciones
+                                            </label>
+                                        </div>
+                                        <div class="col-3 text-end">
+                                            <button type="button" class="btn btn-secondary"
+                                                style="width:70px; margin-right:15px;" onclick="animateMenu15()"> <i
+                                                    id="iconArrow15"
+                                                    class="fa-solid fa-angles-down text-white"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div id='menuFacturasEdit'>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="form-control border border-success d-flex mt-4">
+                                                <label class="form-check-label mt-2 me-3">Permiso para <span
+                                                        class="text-success fw-bold">digitalizar</span> facturas o requisiciones</label>
+                                                <div class="form-check form-switch fs-5 mt-1">
+                                                    <input class="form-check-input mt-2 text-success"
+                                                        id="permisosFACEdit" type="checkbox" role="switch">
                                                 </div>
                                             </div>
                                         </div>

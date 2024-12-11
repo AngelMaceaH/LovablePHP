@@ -314,6 +314,7 @@
                             'ACUMULADOS VIP',
                             'ACUMULADOS NORMALES'
                         ];
+                        const insRegistros=['','','Suma entre los clientes nuevos y actualizados','','','','Suma de todos los clientes registrados en el programa lealtad hasta el mes.','Suma de todos los clientes registrados en VIP hasta el mes.','Suma de todos los clientes que NO están registrados hasta el mes.']
                         var rowtd = "";
                         var urlRegistros = "/API.LovablePHP/ZLO0017P/PaisesR/?anio=" +yearSelected+"&tiendas="+arrayCountries.toString()+"";
                         var responseRegistros = ajaxRequest(urlRegistros);
@@ -382,9 +383,20 @@
                             for (let k = 0; k < arrayRegistros.length; k++) {
                                 rowtd += '<tr class="border border-dark" style="background-color: ' + backgroundColor[k] +
                                     '; height:50px;">';
-                                rowtd +=
+                                if(insRegistros[k]!="")
+                                {
+                                    rowtd +=
+                                    '<td class="text-center align-middle fontS border border-dark sticky-col" style="background-color: ' +
+                                    backgroundColor[k] + '" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="'+insRegistros[k]+'">' + arrayRegistros[k] + '</td>';
+                                }else{
+                                    rowtd +=
                                     '<td class="text-center align-middle fontS border border-dark sticky-col" style="background-color: ' +
                                     backgroundColor[k] + '">' + arrayRegistros[k] + '</td>';
+                                }
+
+
+
+
                                 var totalRow = 0;
                                 switch (rowIndex) {
                                     case 1:
@@ -1475,6 +1487,10 @@
                     }
                 }
             });
+            setTimeout(() => {
+                const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+            const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+            }, 1000);
     });
 
     function acumularFila(array) {

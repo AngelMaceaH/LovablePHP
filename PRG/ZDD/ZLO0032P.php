@@ -56,7 +56,7 @@
         <thead class="table-light fw-semibold">
           <tr>
             <th style="width:9%;">No. Requisición</th>
-            <th style="width:11%;">Fecha entregado</th>
+            <th style="width:16%;">Fecha entregado</th>
             <th style="width:18%;">Descripcion</th>
             <th style="width:14%;">Solicitante</th>
             <th style="width:17%;">Departamento</th>
@@ -324,6 +324,8 @@
         ],
         dom: 'tip',
       });
+
+
     }, 50);
     $('#mainTable thead input').not('#srcDepa_flexselect').on('keyup', function() {
       var columnIndex = $(this).parent().index();

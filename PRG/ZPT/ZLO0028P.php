@@ -658,7 +658,7 @@
                     color: '#ffd700'
                 }]
             });
-        }, 1500);
+        }, 1700);
     });
     //MESES
     function chargeTable(valAno, valAgrup) {

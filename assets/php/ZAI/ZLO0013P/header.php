@@ -49,37 +49,18 @@
       background-color: rgba(100, 100, 100,0.9);
     }
     #hiddenColumns {
-    z-index: 1050; /* Más alto que el loader */
-    position: relative; /* El z-index solo funciona en elementos posicionados */
+    z-index: 1050;
+    position: relative;
 }
     #menuFilter {
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
-      height: 100%;
+      height: 500px !important;
       z-index: 1050;
     }
-    @media only screen and (min-width: 992px) {
-        #menuFilter {
-            height: 60%;
-        }
-    }
-    @media only screen and (min-width: 1200px) {
-        #menuFilter {
-            height: 57%;
-        }
-    }
-    @media only screen and (min-width: 1400px) {
-        #menuFilter {
-            height: 67%;
-        }
-    }
-    @media only screen and (min-width: 1540px) {
-        #menuFilter {
-            height: 65%;
-        }
-    }
+
 
 
   /* Contenedor de paginación */
@@ -250,7 +231,6 @@
 
 .btn.btn-success .btn-inner,
 .btn.btn-primary .btn-inner {
-
     display: inline-block;
     vertical-align: middle;
     line-height: normal;
@@ -258,9 +238,7 @@
 }
 .fixed-scrollbar {
     overflow:auto;
-    }
-
-
+}
 .text-transparent{
     color: transparent !important;
 }
@@ -343,6 +321,9 @@ span.selectOption:hover {
     color:#f6f6f6;
     background:#000;
 /*     opacity:0.5; */
+}
+.fs-10{
+    font-size: 10px;
 }
 </style>
 </head>

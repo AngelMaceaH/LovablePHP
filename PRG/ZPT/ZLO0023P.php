@@ -454,7 +454,7 @@
                     }
                 ]
             });
-        }, 1500);
+        }, 1700);
 
         const exportExcel = document.getElementById('exportExcel');
         exportExcel.addEventListener('click', (event) => {

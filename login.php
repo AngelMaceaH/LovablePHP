@@ -54,7 +54,13 @@
   </head>
   <body>
     <?php
-      session_start();
+      if (substr($_SERVER['REMOTE_ADDR'], 0, 4) !== '172.') {
+          http_response_code(403);
+          //echo json_encode(["error" => "Acceso denegado"]);
+          exit;
+      }else{
+        session_start();
+      }
     ?>
     <div class="container-fluid  m-0">
     <div class="row no-gutter">

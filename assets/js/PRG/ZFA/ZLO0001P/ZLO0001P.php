@@ -285,7 +285,7 @@ $(document).ready(function() {
             className: "btn btn-success text-light mt-2 fs-6 ",
 
             exportOptions: {
-                columns: <?php if($_SESSION['filtro']!=2){
+                columns: <?php if($_SESSION['filtro']!=2 && $_SESSION['filtro']!=1){
                 echo "[2,3,4,5,6,7,8,9,10,11,12,13,14,15,16],";
               }else{
                 echo "[2,3,4,5,6,7,8],";

@@ -1,0 +1,26 @@
+# Bloquear una IP específica
+Order Allow,Deny
+Allow from all
+Deny from 45.166.93.26
+Deny from 191.103.86.105
+
+# Deshabilitar el listado de directorios
+Options -Indexes
+
+# Proteger el archivo .htaccess de ser visto
+<Files .htaccess>
+    Order Allow,Deny
+    Deny from all
+</Files>
+
+# Proteger archivos de configuración importantes
+<FilesMatch "(^\.|wp-config\.php|php\.ini|php5\.ini|readme\.html|license\.txt)">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Evitar el acceso a archivos sensibles
+<FilesMatch "(^\.|\.git|\.svn|composer\.json|composer\.lock)">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
