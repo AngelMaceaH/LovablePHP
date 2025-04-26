@@ -68,7 +68,7 @@
     border-top-right-radius: 8px;
     border-top-left-radius: 8px;
     cursor: pointer;
-    width: 20%;
+    width: 19%;
   }
   @media (max-width: 900px) {
     .tablist__tab {

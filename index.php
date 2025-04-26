@@ -6,9 +6,9 @@
     <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico">
     <style type='text/css'>
         @media (min-width: 1200px) {
-            <?php $FiltroDiv=(float)(isset($_GET['c']) ? $_GET['c'] : 1);
+            <?php $FiltroDiv = (float) (isset($_GET['c']) ? $_GET['c'] : 1);
 
-            if ($FiltroDiv==2 || $FiltroDiv==3 || $FiltroDiv==4 || $FiltroDiv==5 || $FiltroDiv==6 || $FiltroDiv==7) {
+            if ($FiltroDiv == 2 || $FiltroDiv == 3 || $FiltroDiv == 4 || $FiltroDiv == 5 || $FiltroDiv == 6 || $FiltroDiv == 7) {
                 echo '#colHonMes3,#colHonMes2 {margin-top:11%; margin-bottom:13%;}';
             }
 
@@ -16,9 +16,9 @@
         }
 
         @media (min-width: 1600px) {
-            <?php $FiltroDiv=(float)(isset($_GET['c']) ? $_GET['c'] : 1);
+            <?php $FiltroDiv = (float) (isset($_GET['c']) ? $_GET['c'] : 1);
 
-            if ($FiltroDiv==2 || $FiltroDiv==3 || $FiltroDiv==4 || $FiltroDiv==5 || $FiltroDiv==6 || $FiltroDiv==7) {
+            if ($FiltroDiv == 2 || $FiltroDiv == 3 || $FiltroDiv == 4 || $FiltroDiv == 5 || $FiltroDiv == 6 || $FiltroDiv == 7) {
                 echo '#colHonMes3,#colHonMes2 {margin-top:11%; margin-bottom:15%;}';
             }
 
@@ -26,10 +26,11 @@
         }
     </style>
 </head>
+
 <body>
     <?php
-        include 'layout.php';
-        include 'assets/php/index/phpindex.php';
+    include 'layout.php';
+    include 'assets/php/index/phpindex.php';
     ?>
     <div class="container-fluid">
         <nav aria-label="breadcrumb">
@@ -92,31 +93,31 @@
                                 <div class="card-body row align-items-center">
                                     <div class="row justify-content-evenly">
                                         <?php
-                                            if ($compFiltroP == 2 || $compFiltroP == 3 || $compFiltroP == 4 || $compFiltroP == 5 || $compFiltroP == 6 || $compFiltroP == 7) {
-                                                echo '<div id="colHonDia" class="col-12 col-lg-6">
+                                        if ($compFiltroP == 2 || $compFiltroP == 3 || $compFiltroP == 4 || $compFiltroP == 5 || $compFiltroP == 6 || $compFiltroP == 7) {
+                                            echo '<div id="colHonDia" class="col-12 col-lg-6">
                                                             <h5 class="mt-2 mb-1 text-center">Ventas del día</h5>
                                                             <canvas id="HonDia"></canvas>
                                                         </div>';
-                                            } else {
-                                                echo '<div id="colHonDia" class="col-12">
+                                        } else {
+                                            echo '<div id="colHonDia" class="col-12">
                                                             <h5 class="mt-2 mb-4 text-center">Ventas del día</h5>
                                                             <canvas id="HonDia" class="mt-3 mb-5"></canvas>
                                                         </div>';
-                                                echo '<script>$("#HonDia").hide()</script>';
-                                            }
+                                            echo '<script>$("#HonDia").hide()</script>';
+                                        }
 
-                                            if ($compFiltroP == 2 || $compFiltroP == 3 || $compFiltroP == 4 || $compFiltroP == 5 || $compFiltroP == 6 || $compFiltroP == 7) {
-                                                echo '<div id="colHonMes" class="col-12 col-lg-6">
+                                        if ($compFiltroP == 2 || $compFiltroP == 3 || $compFiltroP == 4 || $compFiltroP == 5 || $compFiltroP == 6 || $compFiltroP == 7) {
+                                            echo '<div id="colHonMes" class="col-12 col-lg-6">
                                                             <h5 class="mt-2 mb-1 text-center">Ventas del Mes</h5>
                                                             <canvas id="HonMes1"></canvas>
                                                         </div>';
-                                            } else {
-                                                echo '<div id="colHonMes" class="col-12">
+                                        } else {
+                                            echo '<div id="colHonMes" class="col-12">
                                                             <h5 class="mt-5 mb-4 text-center">Ventas del Mes</h5>
                                                             <canvas id="HonMes1" class="mt-3 mb-3"></canvas>
                                                         </div>';
-                                                echo '<script>$("#HonMes1").hide()</script>';
-                                            }
+                                            echo '<script>$("#HonMes1").hide()</script>';
+                                        }
                                         ?>
                                     </div>
                                 </div>
@@ -125,19 +126,23 @@
                         <div class="col-12 col-lg-4">
                             <div class="card mb-2 ">
                                 <div class="card-body">
-                                    <div class="input-group ">
-                                        <input class="me-2" type="checkbox" value="1" id="fechaCk" name="fechaCk">
-                                        <label for="productosCk">Mostrar valores hasta <b>final de mes</b></label>
+                                    <div class="form-check form-switch ms-2">
+                                        <input class="form-check-input fs-5 " type="checkbox" role="switch" id="fechaCk"
+                                            name="fechaCk">
+                                        <h6 class="form-check-label" for="fechaCk">Mostrar valores hasta <b><span>final
+                                                    de mes</span></b></h6>
                                     </div>
                                 </div>
                             </div>
                             <div class="card ">
                                 <div class="card-body  ">
-                                    <h5 class="text-center fw-bold">Comparativo Mensual</h5>
+                                    <h6 class="text-center fw-bold">Comparativo con mes anterior</h6>
+                                    <h6 class="text-center mb-3">hasta el <span id="lblFechaCk1">día 7</span> del mes
+                                    </h6>
                                     <div class="row justify-content-center ">
                                         <?php
-                            if ($mesGraficas2 == 12) {
-                            echo '
+                                        if ($mesGraficas2 == 12) {
+                                            echo '
                                 <div id="colHonMes2" class="col-12 col-lg-9">
                                 <div class="d-flex justify-content-evenly">
                                 <div  class="text-center">
@@ -152,10 +157,10 @@
                                 <div class="position-relative">
                                 <canvas id="HonMes2" height="230px" ></canvas>
                                 </div>
-                                <label for="productosCk">Mostrar valores hasta <b>final de mes</b></label>
+                                <label for="productosCk d-none">Mostrar valores hasta <b>final de mes</b></label>
                             </div>';
-                            } else {
-                            echo '
+                                        } else {
+                                            echo '
                                 <div id="colHonMes2" class="col-12 col-lg-9">
                                 <div class="d-flex justify-content-evenly">
                                 <div  class="text-center">
@@ -170,10 +175,10 @@
                                 <div class="position-relative">
                                 <canvas id="HonMes2" height="230px" ></canvas>
                                 </div>
-                                <label class="fs-6">Valores hasta: <b>' . (($fechacheck == "true") ? 'Final del mes' : 'Fecha Actual') . '</b></label>
+                                <label class="fs-6 d-none">Valores hasta: <b>' . (($fechacheck == "true") ? 'Final del mes' : 'Fecha Actual') . '</b></label>
                             </div>';
-                            }
-                            ?>
+                                        }
+                                        ?>
                                     </div>
                                 </div>
                             </div>
@@ -201,7 +206,7 @@
                                     echo '
                                     <div class="d-flex justify-content-center">
                                     <div id="" class="col-12 col-lg-4">
-                                    <h5 class="text-center fw-bold mt-1 mb-2">Comparativo Anual</h5>
+                                    <h6 class="text-center fw-bold mt-1 mb-2">Comparativo Año actual vs Año Anterior</h6>
                                     <div class="position-relative">
                                     <canvas id="AnualGrafica" height="250px" ></canvas>
                                     </div>
@@ -224,7 +229,9 @@
                         <div class="col-12 col-lg-4 d-flex flex-column">
                             <div class="card mt-2" style="height:100%;">
                                 <div class="card-body">
-                                    <h5 class="text-center fw-bold">Comparativo Mensual</h5>
+                                    <h6 class="text-center fw-bold">Comparativo con mismo mes del año anterior</h6>
+                                    <h6 class="text-center mb-3">hasta el <span id="lblFechaCk2">día 7</span> del mes
+                                    </h6>
                                     <div class="row justify-content-center ">
                                         <?php
                                         echo '<div id="colHonMes3" class="col-12 col-lg-9">
@@ -241,7 +248,7 @@
                                             <div class="position-relative">
                                                 <canvas id="HonMes3" height="230px"></canvas>
                                             </div>
-                                            <label class="fs-6">Valores hasta: <b>' . (($fechacheck == "true") ? 'Final del mes' : 'Fecha Actual') . '</b></label>
+                                            <label class="fs-6 d-none">Valores hasta: <b>' . (($fechacheck == "true") ? 'Final del mes' : 'Fecha Actual') . '</b></label>
                                         </div>';
                                         ?>
                                     </div>
@@ -258,15 +265,15 @@
                                 <div class="card-body">
                                     <div class="row">
                                         <?php
-                                            // Aquí se imprime un div con un título de Variación Anual
-                                            print '<div id="varAnual1" class="col-12 col-md-6">';
-                                            print '<h5 class="mt-md-2 text-center">Variación Anual</h5>';
-                                            print '</div>';
+                                        // Aquí se imprime un div con un título de Variación Anual
+                                        print '<div id="varAnual1" class="col-12 col-md-6">';
+                                        print '<h5 class="mt-md-2 text-center">Variación Anual</h5>';
+                                        print '</div>';
 
-                                            // Aquí se imprime un div con un título de Crecimiento Anual
-                                            print '<div id="varAnual2" class="col-12 col-md-6">';
-                                            print '<h5 class="mt-2 text-center">Crecimiento Anual</h5>';
-                                            print '</div>';
+                                        // Aquí se imprime un div con un título de Crecimiento Anual
+                                        print '<div id="varAnual2" class="col-12 col-md-6">';
+                                        print '<h5 class="mt-2 text-center">Crecimiento Anual</h5>';
+                                        print '</div>';
                                         ?>
                                     </div>
                                 </div>

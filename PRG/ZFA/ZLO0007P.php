@@ -39,18 +39,18 @@
       }
       $paisFiltro=isset($_SESSION['paisFiltro'])? $_SESSION['paisFiltro']:1;
 
-      $cia=" AND CODCIA IN(35,47,50,52,56,57,59,63,64,65,68,70,72,73,74,75,76,78,82,85,88)";
+      $cia=" AND CODCIA IN(35,47,50,52,56,57,59,63,64,65,68,70,72,73,74,75,76,78,82,85,88,90)";
       if (isset($_SESSION['clickPais']) && isset($_SESSION['clickCia'])) {
         if ($_SESSION['clickCia']==1) {
               if ($ciaFiltro!=1 && $ciaFiltro!=999) {
                 for ($i=0; $i <count($ciaFiltro) ; $i++) {
                 if ($ciaFiltro[$i]==1 ||$ciaFiltro[$i]==35 || $ciaFiltro[$i]==47 || $ciaFiltro[$i]==50 || $ciaFiltro[$i]==52 || $ciaFiltro[$i]==56 || $ciaFiltro[$i]==57 || $ciaFiltro[$i]==59
               || $ciaFiltro[$i]==63 || $ciaFiltro[$i]==64 || $ciaFiltro[$i]==65 || $ciaFiltro[$i]==68 || $ciaFiltro[$i]==70 || $ciaFiltro[$i]==72 || $ciaFiltro[$i]==73
-              || $ciaFiltro[$i]==74 || $ciaFiltro[$i]==75 || $ciaFiltro[$i]==76 || $ciaFiltro[$i]==78 || $ciaFiltro[$i]==82 || $ciaFiltro[$i]==85) {
+              || $ciaFiltro[$i]==74 || $ciaFiltro[$i]==75 || $ciaFiltro[$i]==76 || $ciaFiltro[$i]==78 || $ciaFiltro[$i]==82 || $ciaFiltro[$i]==85 || $ciaFiltro[$i]==90) {
                 $paisFiltro=1;
               }elseif ($ciaFiltro[$i]==20 || $ciaFiltro[$i]==21|| $ciaFiltro[$i]==22|| $ciaFiltro[$i]==23|| $ciaFiltro[$i]==24) {
                 $paisFiltro=2;
-              }elseif ($ciaFiltro[$i]==49 || $ciaFiltro[$i]==66 || $ciaFiltro[$i]==69 || $ciaFiltro[$i]==71 || $ciaFiltro[$i]==86) {
+              }elseif ($ciaFiltro[$i]==49 || $ciaFiltro[$i]==66 || $ciaFiltro[$i]==69 || $ciaFiltro[$i]==71 || $ciaFiltro[$i]==86 || $ciaFiltro[$i]==89) {
                 $paisFiltro=3;
               }elseif ($ciaFiltro[$i]==48 || $ciaFiltro[$i]==53 || $ciaFiltro[$i]==61 || $ciaFiltro[$i]==62|| $ciaFiltro[$i]==77) {
                 $paisFiltro=4;
@@ -58,14 +58,14 @@
                 $paisFiltro=5;
               }elseif ($ciaFiltro[$i]==83 || $ciaFiltro[$i]==87) {
                 $paisFiltro=6;
-              }elseif ($ciaFiltro[$i]==81) {
+              }elseif ($ciaFiltro[$i]==81 || $ciaFiltro[$i]==91) {
                 $paisFiltro=7;
               }
 
                 $cia=" AND CODCIA IN($arrayConversion)";
               }
            }else{
-                $cia= " AND CODCIA IN(35,47,50,52,56,57,59,63,64,65,68,70,72,73,74,75,76,78,82,85,88)";
+                $cia= " AND CODCIA IN(35,47,50,52,56,57,59,63,64,65,68,70,72,73,74,75,76,78,82,85,88,90)";
                 $paisFiltro=1;
            }
 
@@ -74,11 +74,11 @@
           $ciaFiltro=[999];
           $_SESSION['ciaFiltro']=[999];
           if ($paisFiltro==1) {
-            $cia=" AND CODCIA IN(35,47,50,52,56,57,59,63,64,65,68,70,72,73,74,75,76,78,82,85,88)";
+            $cia=" AND CODCIA IN(35,47,50,52,56,57,59,63,64,65,68,70,72,73,74,75,76,78,82,85,88,90)";
           }elseif ($paisFiltro==2) {
             $cia=" AND CODCIA IN(20,22,21,23,24)";
           }elseif ($paisFiltro==3) {
-            $cia=" AND CODCIA IN(49,66,69,71,86)";
+            $cia=" AND CODCIA IN(49,66,69,71,86,89)";
           }elseif ($paisFiltro==4) {
             $cia=" AND CODCIA IN(48,53,61,62,77)";
           }elseif ($paisFiltro==5) {
@@ -86,7 +86,7 @@
           }elseif ($paisFiltro==6) {
             $cia=" AND CODCIA IN(83,87)";
           }elseif ($paisFiltro==7) {
-            $cia=" AND CODCIA IN(81)";
+            $cia=" AND CODCIA IN(81,91)";
           }
         }
       }else {
@@ -103,10 +103,10 @@
             if ($data[$k]['CODIGO']==11) {
                 $counter++;
                 $ciaFiltro=[999];
-                $cia=" AND CODCIA IN(35,47,50,52,56,57,59,63,64,65,68,70,72,73,74,75,76,78,82,85,88)";
+                $cia=" AND CODCIA IN(35,47,50,52,56,57,59,63,64,65,68,70,72,73,74,75,76,78,82,85,88,90)";
             }else if ($data[$k]['CODIGO']==10) {
                $counter++;
-               $cia=" AND CODCIA IN(49,66,69,71,86)";
+               $cia=" AND CODCIA IN(49,66,69,71,86,89)";
             }else if ($data[$k]['CODIGO']==12) {
                 $counter++;
                 $cia=" AND CODCIA IN(48,53,61,62,77)";
@@ -118,12 +118,12 @@
                   $cia=" AND CODCIA IN(83,87)";
             }else if($data[$k]['CODIGO']==15){
                   $counter++;
-                  $cia=" AND CODCIA IN(81)";
+                  $cia=" AND CODCIA IN(81,91)";
             }
         }
         if ($counter==6) {
           $ciaFiltro=[999];
-          $cia=" AND CODCIA IN(35,47,50,52,56,57,59,63,64,65,68,70,72,73,74,75,76,78,82,85,88)";
+          $cia=" AND CODCIA IN(35,47,50,52,56,57,59,63,64,65,68,70,72,73,74,75,76,78,82,85,88,90)";
         }
         if(strlen($arrayConversion)>0){
           $cia=" AND CODCIA IN($arrayConversion)";
@@ -321,7 +321,7 @@
                                 <th class=" text-start">Vendedor</th>
                                 <th class=" text-end">Transacciones</th>
                                 <th class=" text-end">Unidades</th>
-                                <th class=" text-end">Venta</th>
+                                <th class=" text-end">Venta Año actual</th>
                                 <th class=" text-end">Promedio de Ventas</th>
                                 <th class=" text-end">Venta Año Anterior</th>
                                 <th class=" text-end">Variación</th>
@@ -468,6 +468,7 @@
     <script src="https://code.highcharts.com/stock/highstock.js"></script>
     <script src="https://code.highcharts.com/highcharts-3d.js"></script>
     <script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/offline-exporting.js"></script>
     <script src="https://code.highcharts.com/stock/modules/accessibility.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.2.1"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>

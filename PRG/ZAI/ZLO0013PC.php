@@ -4,13 +4,13 @@
 <head>
   <meta charset="utf-8">
   <link rel="icon" type="image/x-icon" href="../../assets/img/favicon.ico">
-  <script src="../../assets/js/PRG/ZAI/ZLO0013P.js"></script>
 </head>
+
 <body>
   <?php
-      include '../layout-prg.php';
-      include '../../assets/php/ZAI/ZLO0013P/header.php';
-    ?>
+  include '../layout-prg.php';
+  include '../../assets/php/ZAI/ZLO0013P/header.php';
+  ?>
   <div class="container-fluid">
     <div class="row" style="width:100%;">
       <div class="col-12 col-lg-4">
@@ -34,9 +34,6 @@
           <i class="fa-solid fa-filter"></i> Filtrar
         </button>
       </div>
-
-
-
       <div class="col-12 col-lg-3">
         <div class="input-group mt-2">
           <input type="text" class="form-control fw-bold text-black" id="searchBox"
@@ -59,95 +56,268 @@
         <div class="col-12 ">
           <input type="text" class="d-none" id="boole" name="boole">
           <div id="isComputer">
-            <div class="btn-group flex-wrap d-flex justify-content-center justify-content-lg-start mb-2 mt-2"
-              role="group" aria-label="Basic radio toggle button group">
-              <input type="radio" class="btn-check btnMar" name="btncols" value="100" id="btn100" autocomplete="off">
-              <label class="btn btn-outline-secondary responsive-font-example pt-3 pb-3 text-black menuMarca"
-                for="btn100"><b><img class="img-fluid round1 imgButtons" src="../../assets/img/icons/100.GIF"
-                    alt=""></b></label>
+            <div class="btn-group flex-wrap d-flex justify-content-center justify-content-lg-start" role="group"
+              aria-label="Basic radio toggle button group">
+              <input type="radio" class="btn-check btnMar " name="btncols" value="100" id="btn100" autocomplete="off">
+              <label
+                class="btn btn-outline-secondary responsive-font-example  text-black menuMarca  d-flex flex-column align-items-center justify-content-center"
+                for="btn100">
+                <b class="d-flex flex-column align-items-center justify-content-center">
+                  <img class="img-fluid round1 imgButtons" src="../../assets/img/icons/100.GIF" alt="">
+                  <p class="fs-10 mt-2">BOUTIQUE</p>
+                </b>
+              </label>
 
-              <input type="radio" class="btn-check btnMar" name="btncols" value="200" id="btn200" autocomplete="off">
-              <label class="btn btn-outline-secondary responsive-font-example  pt-3 pb-3 text-black menuMarca"
-                for="btn200"><b><img class="img-fluid round1 imgButtons" src="../../assets/img/icons/200.GIF"
-                    alt=""></b></label>
+              <input type="radio" class="btn-check btnMar " name="btncols" value="200" id="btn200" autocomplete="off">
+              <label
+                class="btn btn-outline-secondary responsive-font-example   text-black menuMarca d-flex flex-column align-items-center justify-content-center"
+                for="btn200">
+                <b class="d-flex flex-column align-items-center justify-content-center">
+                  <img class="img-fluid round1 imgButtons" src="../../assets/img/icons/200.GIF" alt="">
+                  <p class="fs-10 mt-2">LOVABLE</p>
+                </b>
+              </label>
 
-              <input type="radio" class="btn-check btnMar" name="btncols" value="210" id="btn210" autocomplete="off">
-              <label class="btn btn-outline-secondary responsive-font-example  pt-3 pb-3 text-black menuMarca"
-                for="btn210"><b><img class="img-fluid round1 imgButtons" src="../../assets/img/icons/210.GIF"
-                    alt=""></b></label>
+              <input type="radio" class="btn-check btnMar " name="btncols" value="210" id="btn210" autocomplete="off">
+              <label
+                class="btn btn-outline-secondary responsive-font-example  d-flex flex-column align-items-center justify-content-center  text-black menuMarca"
+                for="btn210">
+                <b class="d-flex flex-column align-items-center justify-content-center">
+                  <img class="img-fluid round1 imgButtons" src="../../assets/img/icons/210.GIF" alt="">
+                  <p class="fs-10 mt-2">LOVABLE SOCK</p>
+                </b>
+              </label>
 
-              <input type="radio" class="btn-check btnMar" name="btncols" value="250" id="btn250" autocomplete="off">
-              <label class="btn btn-outline-secondary responsive-font-example  pt-3 pb-3 text-black menuMarca"
-                for="btn250"><b><img class="img-fluid round1 imgButtons" src="../../assets/img/icons/250.JPG" alt=""
-                    style="height: 50px; margin-top:10px;"></b></label>
+              <input type="radio" class="btn-check btnMar " name="btncols" value="240" id="btn240" autocomplete="off">
+              <label
+                class="btn btn-outline-secondary responsive-font-example  d-flex flex-column align-items-center justify-content-center  text-black menuMarca"
+                for="btn240">
+                <b class="d-flex flex-column align-items-center justify-content-center">
+                  <img class="img-fluid round1 imgButtons" src="../../assets/img/icons/240.png" alt=""
+                    style="height: 50px; margin-top:10px;">
+                  <p class="fs-10 mt-2">LOVABLE MATERNAL</p>
+                </b>
+              </label>
 
-              <input type="radio" class="btn-check btnMar" name="btncols" value="450" id="btn450" autocomplete="off">
-              <label class="btn btn-outline-secondary responsive-font-example  pt-3 pb-3 text-black menuMarca"
-                for="btn450"><b><img class="img-fluid round1 imgButtons" src="../../assets/img/icons/450.GIF"
-                    alt=""></b></label>
+              <input type="radio" class="btn-check btnMar " name="btncols" value="250" id="btn250" autocomplete="off">
+              <label
+                class="btn btn-outline-secondary responsive-font-example  d-flex flex-column align-items-center justify-content-center  text-black menuMarca"
+                for="btn250">
+                <b class="d-flex flex-column align-items-center justify-content-center">
+                  <img class="img-fluid round1 imgButtons" src="../../assets/img/icons/250.JPG" alt=""
+                    style="height: 50px; margin-top:10px;">
+                  <p class="fs-10 mt-2">LOVABLE BODY</p>
+                </b>
+              </label>
 
-              <input type="radio" class="btn-check btnMar" name="btncols" value="500" id="btn500" autocomplete="off">
-              <label class="btn btn-outline-secondary responsive-font-example  pt-3 pb-3 text-black menuMarca"
-                for="btn500"><b><img class="img-fluid round1 imgButtons" src="../../assets/img/icons/500.GIF"
-                    alt=""></b></label>
+              <input type="radio" class="btn-check btnMar " name="btncols" value="450" id="btn450" autocomplete="off">
+              <label
+                class="btn btn-outline-secondary responsive-font-example  d-flex flex-column align-items-center justify-content-center  text-black menuMarca"
+                for="btn450">
+                <b class="d-flex flex-column align-items-center justify-content-center">
+                  <img class="img-fluid round1 imgButtons" src="../../assets/img/icons/450.GIF" alt="">
+                  <p class="fs-10 mt-2">SPLASH</p>
+                </b>
+              </label>
+              <input type="radio" class="btn-check btnMar " name="btncols" value="460" id="btn460" autocomplete="off">
+              <label
+                class="btn btn-outline-secondary responsive-font-example  d-flex flex-column align-items-center justify-content-center  text-black menuMarca"
+                for="btn460">
+                <b class="d-flex flex-column align-items-center justify-content-center">
+                  <img class="img-fluid round1 " src="../../assets/img/icons/460.png" alt="">
+                  <p class="fs-10 mt-2">LOVABLE SWIMWEAR</p>
+                </b>
+              </label>
+              <input type="radio" class="btn-check btnMar " name="btncols" value="470" id="btn470" autocomplete="off">
+              <label
+                class="btn btn-outline-secondary responsive-font-example  d-flex flex-column align-items-center justify-content-center  text-black menuMarca"
+                for="btn470">
+                <b class="d-flex flex-column align-items-center justify-content-center">
+                  <img class="img-fluid round1 " src="../../assets/img/icons/460.png" alt="">
+                  <p class="fs-10 mt-2">LOVABLE SWIMWEAR BL</p>
+                </b>
+              </label>
+              <input type="radio" class="btn-check btnMar " name="btncols" value="480" id="btn480" autocomplete="off">
+              <label
+                class="btn btn-outline-secondary responsive-font-example  d-flex flex-column align-items-center justify-content-center  text-black menuMarca"
+                for="btn480">
+                <b class="d-flex flex-column align-items-center justify-content-center">
+                  <img class="img-fluid round1 imgButtons" src="../../assets/img/icons/480.png" alt="">
+                  <p class="fs-10 mt-2">LOVABLE KIDS SPKASH</p>
+                </b>
+              </label>
+              <input type="radio" class="btn-check btnMar " name="btncols" value="500" id="btn500" autocomplete="off">
+              <label
+                class="btn btn-outline-secondary responsive-font-example  d-flex flex-column align-items-center justify-content-center  text-black menuMarca"
+                for="btn500">
+                <b class="d-flex flex-column align-items-center justify-content-center">
+                  <img class="img-fluid round1 imgButtons" src="../../assets/img/icons/500.GIF" alt="">
+                  <p class="fs-10 mt-2">FEMINA</p>
+                </b>
+              </label>
 
-              <input type="radio" class="btn-check btnMar" name="btncols" value="550" id="btn550" autocomplete="off">
-              <label class="btn btn-outline-secondary responsive-font-example  pt-3 pb-3 text-black menuMarca"
-                for="btn550"><b><img class="img-fluid round1 imgButtons" src="../../assets/img/icons/550.GIF" alt=""
-                    style="height: 50px; margin-top:10px;"></b></label>
+              <input type="radio" class="btn-check btnMar " name="btncols" value="550" id="btn550" autocomplete="off">
+              <label
+                class="btn btn-outline-secondary responsive-font-example  d-flex flex-column align-items-center justify-content-center  text-black menuMarca"
+                for="btn550">
+                <b class="d-flex flex-column align-items-center justify-content-center">
+                  <img class="img-fluid round1 imgButtons" src="../../assets/img/icons/550.GIF" alt=""
+                    style="height: 50px; margin-top:10px;">
+                  <p class="fs-10 mt-2">LOVABLE TEENS</p>
+                </b>
+              </label>
 
-              <input type="radio" class="btn-check btnMar" name="btncols" value="600" id="btn600" autocomplete="off">
-              <label class="btn btn-outline-secondary responsive-font-example  pt-3 pb-3 text-black menuMarca"
-                for="btn600"><b><img class="img-fluid round1 imgButtons" src="../../assets/img/icons/600.GIF"
-                    alt=""></b></label>
+              <input type="radio" class="btn-check btnMar " name="btncols" value="600" id="btn600" autocomplete="off">
+              <label
+                class="btn btn-outline-secondary responsive-font-example  d-flex flex-column align-items-center justify-content-center  text-black menuMarca"
+                for="btn600">
+                <b class="d-flex flex-column align-items-center justify-content-center">
+                  <img class="img-fluid round1 imgButtons" src="../../assets/img/icons/600.GIF" alt="">
+                  <p class="fs-10 mt-2">LOVABLE KIDS</p>
+                </b>
+              </label>
 
-              <input type="radio" class="btn-check btnMar" name="btncols" value="650" id="btn650" autocomplete="off">
-              <label class="btn btn-outline-secondary responsive-font-example  pt-3 pb-3 text-black menuMarca"
-                for="btn650"><b><img class="img-fluid round1 imgButtons" src="../../assets/img/icons/650.GIF"
-                    alt=""></b></label>
-              <input type="radio" class="btn-check btnMar" name="btncols" value="700" id="btn700" autocomplete="off">
-              <label class="btn btn-outline-secondary responsive-font-example  pt-3 pb-3 text-black menuMarca"
-                for="btn700"><b><img class="img-fluid round1 imgButtons" src="../../assets/img/icons/700.GIF"
-                    alt=""></b></label>
+              <input type="radio" class="btn-check btnMar " name="btncols" value="650" id="btn650" autocomplete="off">
+              <label
+                class="btn btn-outline-secondary responsive-font-example  d-flex flex-column align-items-center justify-content-center  text-black menuMarca"
+                for="btn650">
+                <b class="d-flex flex-column align-items-center justify-content-center">
+                  <img class="img-fluid round1 imgButtons" src="../../assets/img/icons/650.GIF" alt="">
+                  <p class="fs-10 mt-2">DOLCE AMORE</p>
+                </b>
+              </label>
+            </div>
+            <div class="btn-group flex-wrap d-flex justify-content-center justify-content-lg-start" role="group"
+              aria-label="Basic radio toggle button group">
+              <input type="radio" class="btn-check btnMar " name="btncols" value="700" id="btn700" autocomplete="off">
+              <label
+                class="btn btn-outline-secondary responsive-font-example  d-flex flex-column align-items-center justify-content-center  text-black menuMarca"
+                for="btn700">
+                <b class="d-flex flex-column align-items-center justify-content-center">
+                  <img class="img-fluid round1 imgButtons" src="../../assets/img/icons/700.GIF" alt="">
+                  <p class="fs-10 mt-2">LE GEMME</p>
+                </b>
+              </label>
+              <input type="radio" class="btn-check btnMar " name="btncols" value="800" id="btn800" autocomplete="off">
+              <label
+                class="btn btn-outline-secondary responsive-font-example  d-flex flex-column align-items-center justify-content-center  text-black menuMarca"
+                for="btn800">
+                <b class="d-flex flex-column align-items-center justify-content-center">
+                  <img class="img-fluid round1 imgButtons" src="../../assets/img/icons/800.GIF" alt="">
+                  <p class="fs-10 mt-2">SEDUCCION</p>
+                </b>
+              </label>
 
-              <input type="radio" class="btn-check btnMar" name="btncols" value="800" id="btn800" autocomplete="off">
-              <label class="btn btn-outline-secondary responsive-font-example  pt-3 pb-3 text-black menuMarca"
-                for="btn800"><b><img class="img-fluid round1 imgButtons" src="../../assets/img/icons/800.GIF"
-                    alt=""></b></label>
+              <input type="radio" class="btn-check btnMar " name="btncols" value="900" id="btn900" autocomplete="off">
+              <label
+                class="btn btn-outline-secondary responsive-font-example  d-flex flex-column align-items-center justify-content-center  text-black menuMarca"
+                for="btn900">
+                <b class="d-flex flex-column align-items-center justify-content-center">
+                  <img class="img-fluid round1 imgButtons" src="../../assets/img/icons/900.GIF" alt="">
+                  <p class="fs-10 mt-2">FRENCH CURVES</p>
+                </b>
+              </label>
 
-              <input type="radio" class="btn-check btnMar" name="btncols" value="900" id="btn900" autocomplete="off">
-              <label class="btn btn-outline-secondary responsive-font-example  pt-3 pb-3 text-black menuMarca"
-                for="btn900"><b><img class="img-fluid round1 imgButtons" src="../../assets/img/icons/900.GIF"
-                    alt=""></b></label>
+              <input type="radio" class="btn-check btnMar " name="btncols" value="360" id="btn360" autocomplete="off">
+              <label
+                class="btn btn-outline-secondary responsive-font-example  d-flex flex-column align-items-center justify-content-center  text-black menuMarca"
+                for="btn360">
+                <b class="d-flex flex-column align-items-center justify-content-center">
+                  <img class="img-fluid round1 imgButtons" src="../../assets/img/icons/360.GIF" alt=""
+                    style="height: 50px; margin-top:10px;">
+                  <p class="fs-10 mt-2">ENCANTOS</p>
+                </b>
+              </label>
+              <input type="radio" class="btn-check btnMar " name="btncols" value="920" id="btn920" autocomplete="off">
+              <label
+                class="btn btn-outline-secondary responsive-font-example  d-flex flex-column align-items-center justify-content-center  text-black menuMarca"
+                for="btn920">
+                <b class="d-flex flex-column align-items-center justify-content-center">
+                  <img class="img-fluid round1 imgButtons" src="../../assets/img/icons/920.png" alt=""
+                    style="height: 50px; margin-top:10px;">
+                  <p class="fs-10 mt-2">LOVABLE BODY CARE</p>
+                </b>
+              </label>
 
-              <input type="radio" class="btn-check btnMar" name="btncols" value="360" id="btn360" autocomplete="off">
-              <label class="btn btn-outline-secondary responsive-font-example  pt-3 pb-3 text-black menuMarca"
-                for="btn360"><b><img class="img-fluid round1 imgButtons" src="../../assets/img/icons/360.GIF" alt=""
-                    style="height: 50px; margin-top:10px;"></b></label>
+              <input type="radio" class="btn-check btnMar " name="btncols" value="930" id="btn930" autocomplete="off">
+              <label
+                class="btn btn-outline-secondary responsive-font-example  d-flex flex-column align-items-center justify-content-center  text-black menuMarca"
+                for="btn930">
+                <b class="d-flex flex-column align-items-center justify-content-center">
+                  <img class="img-fluid round1 imgButtons" src="../../assets/img/icons/930.GIF" alt="">
+                  <p class="fs-10 mt-2">ANDROS KIDS</p>
+                </b>
+              </label>
 
-              <input type="radio" class="btn-check btnMar" name="btncols" value="930" id="btn930" autocomplete="off">
-              <label class="btn btn-outline-secondary responsive-font-example  pt-3 pb-3 text-black menuMarca"
-                for="btn930"><b><img class="img-fluid round1 imgButtons" src="../../assets/img/icons/930.GIF"
-                    alt=""></b></label>
+              <input type="radio" class="btn-check btnMar " name="btncols" value="940" id="btn940" autocomplete="off">
+              <label
+                class="btn btn-outline-secondary responsive-font-example  d-flex flex-column align-items-center justify-content-center  text-black menuMarca"
+                for="btn940">
+                <b class="d-flex flex-column align-items-center justify-content-center">
+                  <img class="img-fluid round1 imgButtons" src="../../assets/img/icons/940.GIF" alt="">
+                  <p class="fs-10 mt-2">ANDROS JR</p>
+                </b>
+              </label>
 
-              <input type="radio" class="btn-check btnMar" name="btncols" value="940" id="btn940" autocomplete="off">
-              <label class="btn btn-outline-secondary responsive-font-example  pt-3 pb-3 text-black menuMarca"
-                for="btn940"><b><img class="img-fluid round1 imgButtons" src="../../assets/img/icons/940.GIF"
-                    alt=""></b></label>
+              <input type="radio" class="btn-check btnMar " name="btncols" value="950" id="btn950" autocomplete="off">
+              <label
+                class="btn btn-outline-secondary responsive-font-example  d-flex flex-column align-items-center justify-content-center  text-black menuMarca"
+                for="btn950">
+                <b class="d-flex flex-column align-items-center justify-content-center">
+                  <img class="img-fluid round1 imgButtons" src="../../assets/img/icons/950.GIF" alt="">
+                  <p class="fs-10 mt-2">ANDROS</p>
+                </b>
+              </label>
+              <input type="radio" class="btn-check btnMar " name="btncols" value="910" id="btn910" autocomplete="off">
+              <label
+                class="btn btn-outline-secondary responsive-font-example  d-flex flex-column align-items-center justify-content-center  text-black menuMarca"
+                for="btn910">
+                <b class="d-flex flex-column align-items-center justify-content-center">
+                  <img class="img-fluid round1" src="../../assets/img/icons/910.png" alt="">
+                  <p class="fs-10 mt-2">ANDROS SWIMWEAR</p>
+                </b>
+              </label>
+              <input type="radio" class="btn-check btnMar " name="btncols" value="990" id="btn990" autocomplete="off">
+              <label
+                class="btn btn-outline-secondary responsive-font-example  d-flex flex-column align-items-center justify-content-center  text-black menuMarca"
+                for="btn990">
+                <b class="d-flex flex-column align-items-center justify-content-center">
 
-              <input type="radio" class="btn-check btnMar" name="btncols" value="950" id="btn950" autocomplete="off">
-              <label class="btn btn-outline-secondary responsive-font-example  pt-3 pb-3 text-black menuMarca"
-                for="btn950"><b><img class="img-fluid round1 imgButtons" src="../../assets/img/icons/950.GIF"
-                    alt=""></b></label>
+                  <p class="fs-10 mt-2">ANDROS KIDS SWIMWEAR</p>
+                </b>
+              </label>
+              <input type="radio" class="btn-check btnMar " name="btncols" value="230" id="btn230" autocomplete="off">
+              <label
+                class="btn btn-outline-secondary responsive-font-example  d-flex flex-column align-items-center justify-content-center  text-black menuMarca"
+                for="btn230">
+                <b class="d-flex flex-column align-items-center justify-content-center">
+                  <img class="img-fluid round1 imgButtons" src="../../assets/img/icons/230.GIF" alt="">
+                  <p class="fs-10 mt-2">LOVABLE SPORT</p>
+                </b>
+              </label>
 
-              <input type="radio" class="btn-check btnMar" name="btncols" value="230" id="btn230" autocomplete="off">
-              <label class="btn btn-outline-secondary responsive-font-example  pt-3 pb-3 text-black menuMarca"
-                for="btn230"><b><img class="img-fluid round1 imgButtons" src="../../assets/img/icons/230.GIF"
-                    alt=""></b></label>
+              <input type="radio" class="btn-check btnMar " name="btncols" value="res" id="btnres" autocomplete="off">
+              <label
+                class="btn btn-outline-secondary responsive-font-example  d-flex flex-column align-items-center justify-content-center text-black menuMarca"
+                style="padding-top: 10px;" for="btnres">
+                <b class="fs-10">OTRAS MARCAS</b>
+              </label>
 
-              <input type="radio" class="btn-check btnMar" name="btncols" value="all" id="btnall" autocomplete="off">
-              <label class="btn btn-outline-secondary responsive-font-example  text-black menuMarca"
-                style="padding-top: 30px;" for="btnall"><b style="font-size:12px">TODOS</b></label>
+              <input type="radio" class="btn-check btnMar " name="btncols" value="all" id="btnall" autocomplete="off">
+              <label
+                class="btn btn-outline-secondary responsive-font-example  d-flex flex-column align-items-center justify-content-center text-black menuMarca"
+                style="padding-top: 10px;" for="btnall">
+                <b class="fs-10">TODAS LAS MARCAS</b>
+              </label>
+              <input type="radio" class="btn-check btnMar " name="btncols" value="all" id="btnall" autocomplete="off"
+                disabled>
+              <!--
+                    <label
+                              class="btn btn-outline-secondary responsive-font-example  d-flex flex-column align-items-center justify-content-center text-black menuMarca"
+                              style="padding-top: 10px;" for="btnall">
+                              <b class="fs-10"> &nbsp; &nbsp;</b>
+                            </label>
+              -->
             </div>
           </div>
           <div id="isPhone">
@@ -155,7 +325,32 @@
               <div class="col-12">
                 <label class="mb-2">Marcas:</label>
                 <select class="form-select  mt-1 mb-3 mb-lg-0" id="cbbMarca" name="cbbMarca">
-                  <option value="all">TODOS</option>
+                  <option value="100">BOUTIQUE </option>
+                  <option value="200">LOVABLE </option>
+                  <option value="210">LOVABLE SOCK </option>
+                  <option value="240">LOVABLE MATERNAL</option>
+                  <option value="250">LOVABLE BODY </option>
+                  <option value="450">SPLASH </option>
+                  <option value="460">LOVABLE SWIMWEAR </option>
+                  <option value="470">LOVABLE SWIMWEAR BL </option>
+                  <option value="480">LOVABLE KIDS SWINWEAR </option>
+                  <option value="500">FEMINA </option>
+                  <option value="550">LOVABLE TEENS </option>
+                  <option value="600">LOVABLE KIDS </option>
+                  <option value="650">DOLCE AMORE </option>
+                  <option value="700">LE GEMME </option>
+                  <option value="800">SEDUCCION </option>
+                  <option value="900">FRENCH CURVES </option>
+                  <option value="360">ENCANTOS </option>
+                  <option value="920">LOVABLE BODY CARE</option>
+                  <option value="930">ANDROSKID </option>
+                  <option value="940">ANDROSJR </option>
+                  <option value="950">ANDROS </option>
+                  <option value="910">ANDROS SWIMWEAR</option>
+                  <option value="990">ANDROS KIDS SWIMWEAR</option>
+                  <option value="230">LOVABLE SPORT </option>
+                  <option value="res">OTRAS MARCAS</option>
+                  <option value="all">TODAS LAS MARCAS</option>
                 </select>
               </div>
             </div>
@@ -218,16 +413,16 @@
                 <div class="col-12">
                   <input type="radio" class="btn-check" name="btnOrderValue" value="1" id="btnOrder1"
                     autocomplete="off">
-                  <label class="btn btn-danger mt-2" id="lblOrder1" for="btnOrder1" style="width:100%;" data-bs-toggle="tooltip"
-                    data-bs-placement="left" data-bs-title="Ascendente">
+                  <label class="btn btn-danger mt-2" id="lblOrder1" for="btnOrder1" style="width:100%;"
+                    data-bs-toggle="tooltip" data-bs-placement="left" data-bs-title="Ascendente">
                     <i class="fa-solid fa-up-long text-white f-2"></i>
                   </label>
                 </div>
                 <div class="col-12">
                   <input type="radio" class="btn-check" name="btnOrderValue" value="2" id="btnOrder2"
                     autocomplete="off">
-                  <label class="btn btn-danger mt-2" id="lblOrder2" for="btnOrder2" style="width:100%;" data-bs-toggle="tooltip"
-                    data-bs-placement="left" data-bs-title="Descendente">
+                  <label class="btn btn-danger mt-2" id="lblOrder2" for="btnOrder2" style="width:100%;"
+                    data-bs-toggle="tooltip" data-bs-placement="left" data-bs-title="Descendente">
                     <i class="fa-solid fa-down-long text-white f-2"></i>
                   </label>
                 </div>
@@ -346,7 +541,11 @@
       <table class="table table-sm " id="myTablePlaneacion">
         <thead>
           <tr>
-            <th colspan="6" style="text-align: start;">*Presione doble clic sobre el estilo para ver sus Ventas**</th>
+            <th colspan="5" style="text-align: end;"><span>INDICACIONES:</span></th>
+            <th colspan="4" style="text-align: start;"><span>1. Presione doble clic sobre la fila para ver sus
+                Ventas</span></th>
+            <th colspan="4" style="text-align: start;"><span>2. Presione clic sobre el estilo para ser sus
+                imágenes</span></th>
           </tr>
           <tr class="sticky-top bg-white">
             <th>N.</th>
@@ -487,6 +686,93 @@
       </div>
     </div>
   </div>
+
+  <div class="modal fade" id="photosModal" tabindex="-1" aria-labelledby="photosModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="photosModalLabel"></h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-12">
+              <div id="carouselExampleIndicators" class="carousel carousel-dark slide w-100">
+                <div class="carousel-inner" id="carouselInnerPhotos"></div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+                  data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+                  data-bs-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Next</span>
+                </button>
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="carousel-images w-100 d-flex justify-content-center py-3" id="carouselInnerPhotosButtons">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="cantidadesModal" tabindex="-1" aria-labelledby="cantidadesModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="max-width: 3000px !important;">
+      <div class="modal-content" style="width:100%px;">
+        <div class="modal-header">
+          <div class="row">
+            <div class="col-12">
+              <h1 class="modal-title fs-5" id="cantidadesModalLabel">Detalle de cantidades apartadas</h1>
+            </div>
+            <div class="col-12">
+              <div class="row">
+                <div class="col-12 py-2">
+                  <th class="text-start">Marca: </th>
+                  <th class="text-start"><span id="spnMarca"></span></th>
+                  <th class="text-start">Estilo: </th>
+                  <th class="text-start"><span id="spnEstilo"></span></th>
+                </div>
+                <div class="col-12 py-2">
+                  <th class="text-start">Color: </th>
+                  <th class="text-start"><span id="spnColor"></span></th>
+                  <th class="text-start">Talla: </th>
+                  <th class="text-start"><span id="spnTalla"></span></th>
+                </div>
+              </div>
+            </div>
+          </div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="col-12 fw-bold text-center py-3 table-responsive">
+            <table class="table table-hover border fs-6">
+              <thead>
+                <tr>
+                  <th style="width:6.5%;" class="text-center">Num. Preventa</th>
+                  <th style="width:6.5%;" class="text-end">Docenas apartadas</th>
+                  <th style="width:24.5%;" class="text-start">Vendedor</th>
+                  <th style="width:24.5%;" class="text-start">Cliente</th>
+                  <th style="width:8.5%;" class="text-start">Fecha Preventa</th>
+                  <th style="width:8.5%;" class="text-end">Días transcurridos</th>
+                  <th style="width:3.5%;" class="text-end">Moneda</th>
+                  <th style="width:9.5%;" class="text-end">Valor neto</th>
+
+                </tr>
+              </thead>
+              <tbody id="tableCantidadesBody">
+
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="../../assets/js/PRG/ZAI/ZLO0013PA.js?v=1"></script>
 </body>
 
 </html>

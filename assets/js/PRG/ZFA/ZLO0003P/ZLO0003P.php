@@ -916,7 +916,8 @@ $(document).ready(function() {
         contextButton: {
           menuItems: ["viewFullscreen", "separator", "downloadJPEG", "downloadPDF"]
         }
-      }
+      },
+      fallbackToExportServer: false
     },
     title: {
       text: 'Año <?php echo $anofiltro; ?> vs Año <?php echo $anofiltro-1; ?>',
@@ -1010,7 +1011,8 @@ $(document).ready(function() {
         contextButton: {
           menuItems: ["viewFullscreen", "separator", "downloadJPEG", "downloadPDF"]
         }
-      }
+      },
+      fallbackToExportServer: false
     },
     title: {
       text: 'Año <?php echo $anofiltro; ?> vs Año <?php echo $anofiltro-1; ?>',

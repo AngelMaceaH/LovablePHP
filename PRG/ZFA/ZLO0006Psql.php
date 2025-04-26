@@ -43,12 +43,7 @@ if ($ckfiltro==1) {
         FROM (
             SELECT CODCIA, MARCA, CANVEN, VALVEN
             FROM LBPRDDAT/LO2234
-            WHERE ANOPRO=".$anofiltro." AND ".$selectMes." AND (
-                CODCIA=35 OR CODCIA=47 OR CODCIA=50 OR CODCIA=52 OR CODCIA=56 OR
-                CODCIA=57 OR CODCIA=59 OR CODCIA=63 OR CODCIA=64 OR CODCIA=65 OR 
-                CODCIA=68 OR CODCIA=70 OR CODCIA=72 OR CODCIA=73 OR CODCIA=74 OR 
-                CODCIA=75 OR CODCIA=76 OR CODCIA=78 OR CODCIA=82 OR CODCIA=85
-            )
+            WHERE ANOPRO=".$anofiltro." AND ".$selectMes." AND CODCIA IN(35,47,50,52,56,57,59,63,64,65,68,70,72,73,74,75,76,78,82,85,88,90)
         ) T1
         INNER JOIN LBPRDDAT/DESARC T2 ON T1.MARCA=T2.DESCO1 AND T1.CODCIA=T2.DESCOD
         GROUP BY MARCA))AS HON LEFT JOIN 
@@ -58,9 +53,7 @@ if ($ckfiltro==1) {
         FROM (
             SELECT CODCIA, MARCA, CANVEN, VALVEN
             FROM LBPRDDAT/LO2234
-            WHERE ANOPRO=".$anofiltro." AND ".$selectMes." AND (
-                CODCIA=49 OR CODCIA=66 OR CODCIA=69 OR CODCIA=71 OR CODCIA=86
-            )
+            WHERE ANOPRO=".$anofiltro." AND ".$selectMes." AND CODCIA IN(49,66,69,71,86,89)
         ) T1
         INNER JOIN LBPRDDAT/DESARC T2 ON T1.MARCA=T2.DESCO1 AND T1.CODCIA=T2.DESCOD
         GROUP BY MARCA) ORDER BY MARCA
@@ -71,9 +64,7 @@ if ($ckfiltro==1) {
         FROM (
             SELECT CODCIA, MARCA, CANVEN, VALVEN
             FROM LBPRDDAT/LO2234
-            WHERE ANOPRO=".$anofiltro." AND ".$selectMes." AND (
-                CODCIA=48 OR CODCIA=53 OR CODCIA=61 OR CODCIA=62 OR CODCIA=77
-            )
+            WHERE ANOPRO=".$anofiltro." AND ".$selectMes." AND CODCIA IN(48,53,61,62,77)
         ) T1
         INNER JOIN LBPRDDAT/DESARC T2 ON T1.MARCA=T2.DESCO1 AND T1.CODCIA=T2.DESCOD
         GROUP BY MARCA) ORDER BY MARCA
@@ -84,9 +75,7 @@ if ($ckfiltro==1) {
         FROM (
             SELECT CODCIA, MARCA, CANVEN, VALVEN
             FROM LBPRDDAT/LO2234
-            WHERE ANOPRO=".$anofiltro." AND ".$selectMes." AND (
-                CODCIA=54 OR CODCIA=60 OR CODCIA=80
-            )
+            WHERE ANOPRO=".$anofiltro." AND ".$selectMes." AND CODCIA IN(54,60,80)
         ) T1
         INNER JOIN LBPRDDAT/DESARC T2 ON T1.MARCA=T2.DESCO1 AND T1.CODCIA=T2.DESCOD
         GROUP BY MARCA) ORDER BY MARCA
@@ -98,7 +87,7 @@ if ($ckfiltro==1) {
             SELECT CODCIA, MARCA, CANVEN, VALVEN
             FROM LBPRDDAT/LO2234
             WHERE ANOPRO=".$anofiltro." AND ".$selectMes." AND (
-                CODCIA=81
+                CODCIA IN (81,91)
             )
         ) T1
         INNER JOIN LBPRDDAT/DESARC T2 ON T1.MARCA=T2.DESCO1 AND T1.CODCIA=T2.DESCOD

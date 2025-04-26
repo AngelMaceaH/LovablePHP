@@ -8,9 +8,9 @@
 
 <body>
     <?php
-      include '../layout-prg.php';
-      include '../../assets/php/ZPT/ZLO0024P/header.php';
-  ?>
+    include '../layout-prg.php';
+    include '../../assets/php/ZPT/ZLO0024P/header.php';
+    ?>
     <div class="container-fluid">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb my-0 ms-2">
@@ -48,11 +48,11 @@
                                                 <label class="mt-2">Año:</label>
                                                 <select class="form-select  mt-1" id="cbbAno" name="cbbAno">
                                                     <?php
-                                                      $anio_actual = date('Y');
-                                                      for ($i = $anio_actual; $i >= 2021; $i--) {
-                                                      echo "<option value='$i'>$i</option>";
-                                                      }
-                                                  ?>
+                                                    $anio_actual = date('Y');
+                                                    for ($i = $anio_actual; $i >= 2021; $i--) {
+                                                        echo "<option value='$i'>$i</option>";
+                                                    }
+                                                    ?>
                                                 </select>
                                             </div>
                                             <div class="col-0 col-lg-3">
@@ -69,226 +69,83 @@
                     </div>
                 </div>
 
-                <div class="demo">
-                    <ul class="tablist" role="tablist">
-                        <li id="tab1" class="tablist__tab text-center p-3  is-active" aria-controls="panel1"
-                            aria-selected="true" role="tab" tabindex="0">Meses</li>
-                        <li id="tab2" class="tablist__tab text-center p-3" aria-controls="panel2" aria-selected="false"
-                            role="tab" tabindex="0">Unidades</li>
-                        <li id="tab3" class="tablist__tab text-center p-3" aria-controls="panel3" aria-selected="false"
-                            role="tab" tabindex="0">Promedios</li>
-                    </ul>
-                    <div id="panel1" class="tablist__panel p-3" aria-labelledby="tab1" aria-hidden="false"
-                        role="tabpanel">
-                        <div class="card border border-0">
-                            <div class="card-body ">
-                                <div class="row ">
-                                    <div class="col-12">
-                                        <label class="form-control border border-0 fw-bold">Visualizar
-                                            gráfica:</label>
-                                        <select id="selectGrafica" class="form-select fw-bold">
-                                            <option value="G1">Meses inventario 12 meses
-                                            </option>
-                                            <option value="G2">Meses inventario 6 meses</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-12">
-                                        <div class="mt-4">
-                                            <figure class="highcharts-figure">
-                                                <div id="container" class="highcharts-dark text-white Math.rounded">
-                                                </div>
-                                            </figure>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="table-responsive container-fluid p-3" style="width:100%">
-                            <table id="tableInventario" class="table stripe table-hover text-center "
-                                style="width:100%; font-size:15px; color:#000;">
-                                <thead>
-                                    <tr>
-                                        <th colspan="5" class=" border border-dark bg-secondary align-middle">
-                                            <span id="lblano1" class="fs-5"></span>
-                                        </th>
-                                    </tr>
-                                    <tr>
-                                        <th style="width:8%"
-                                            class=" border border-dark bg-secondary border-bottom-0 border-top-0 boder-end-0 ">
-                                            Mes</th>
-                                        <th style="width:24%" class=" border border-dark bgSky">Meses Inv.12M</th>
-                                        <th style="width:24%" class=" border border-dark bgGold">Mes</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="tableInventarioDetalle">
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="table-responsive mt-4 container-fluid p-3" style="width:100%">
-                            <table id="tableInventario2" class="table stripe table-hover text-center "
-                                style="width:100%; font-size:15px; color:#000;">
-                                <thead>
-                                    <tr>
-                                        <th colspan="5" class=" border border-dark bg-secondary align-middle">
-                                            <span id="lblano2" class="fs-5"></span>
-                                        </th>
-                                    </tr>
-                                    <tr>
-                                        <th style="width:8%"
-                                            class=" border border-dark bg-secondary border-bottom-0 border-top-0 boder-end-0 ">
-                                            Mes</th>
-                                        <th style="width:24%" class=" border border-dark bgSky">Meses Inv.12M</th>
-                                        <th style="width:24%" class=" border border-dark bgGold">Mes</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="tableInventarioDetalle2">
-                                </tbody>
-                            </table>
-                        </div>
+                <figure class="highcharts-figure">
+                    <div id="container" class="highcharts-dark text-white Math.rounded">
                     </div>
-                    <div id="panel2" class="tablist__panel is-hidden p-3" aria-labelledby="tab2" aria-hidden="true"
-                        role="tabpanel">
-                        <div class="card border border-0">
-                            <div class="card-body ">
-                                <div class="row ">
-                                    <div class="col-12">
-                                        <label class="form-control border border-0 fw-bold">Visualizar
-                                            gráfica:</label>
-                                        <select id="selectGrafica2" class="form-select fw-bold">
-                                            <option value="G1">Unidades Compradas 12M
-                                            </option>
-                                            <option value="G2">Unidades Vendidas 12M
-                                            </option>
-                                            <option value="G3">Unidades Existencia
-                                            </option>
-                                        </select>
-                                    </div>
-                                    <div class="col-12">
-                                        <div class="mt-4">
-                                            <figure class="highcharts-figure">
-                                                <div id="container2" class="highcharts-dark text-white Math.rounded">
-                                                </div>
-                                            </figure>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="table-responsive container-fluid p-3" style="width:100%">
-                            <table id="tableInventario3" class="table stripe table-hover text-center "
-                                style="width:100%; font-size:15px; color:#000;">
-                                <thead>
-                                    <tr>
-                                        <th colspan="5" class=" border border-dark bg-secondary align-middle">
-                                            <span id="lblano3" class="fs-5"></span>
-                                        </th>
-                                    </tr>
-                                    <tr>
-                                        <th style="width:8%"
-                                            class=" border border-dark bg-secondary border-bottom-0 border-top-0 boder-end-0 ">
-                                            Mes</th>
-                                        <th style="width:24%" class=" border border-dark bgSky">Unidades Compradas 12M</th>
-                                        <th style="width:24%" class=" border border-dark bgGold">Unidades Vendidas 12M</th>
-                                        <th style="width:24%" class=" border border-dark bgGreen">Variación</th>
-                                        <th style="width:24%" class=" border border-dark bgSea">Unidades Existencia</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="tableInventarioDetalle3">
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="table-responsive mt-4 container-fluid p-3" style="width:100%">
-                            <table id="tableInventario4" class="table stripe table-hover text-center "
-                                style="width:100%; font-size:15px; color:#000;">
-                                <thead>
-                                    <tr>
-                                        <th colspan="5" class=" border border-dark bg-secondary align-middle">
-                                            <span id="lblano4" class="fs-5"></span>
-                                        </th>
-                                    </tr>
-                                    <tr>
-                                        <th style="width:8%"
-                                            class=" border border-dark bg-secondary border-bottom-0 border-top-0 boder-end-0 ">
-                                            Mes</th>
-                                        <th style="width:24%" class=" border border-dark bgSky">Unidades Compradas 12M</th>
-                                        <th style="width:24%" class=" border border-dark bgGold">Unidades Vendidas 12M</th>
-                                        <th style="width:24%" class=" border border-dark bgGreen">Variación</th>
-                                        <th style="width:24%" class=" border border-dark bgSea">Unidades Existencia</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="tableInventarioDetalle4">
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div id="panel3" class="tablist__panel is-hidden p-3" aria-labelledby="tab3" aria-hidden="true"
-                        role="tabpanel">
-                        <div class="card border border-0">
-                            <div class="card-body ">
-                                <div class="row ">
-                                    <div class="col-12">
-                                        <label class="form-control border border-0 fw-bold">Visualizar
-                                            gráfica:</label>
-                                        <select id="selectGrafica3" class="form-select fw-bold">
-                                            <option value="G1">Promedio ventas 12 meses
-                                            </option>
-                                            <option value="G2">Promedio ventas 6 meses
-                                            </option>
-                                        </select>
-                                    </div>
-                                    <div class="col-12">
-                                        <div class="mt-4">
-                                            <figure class="highcharts-figure">
-                                                <div id="container3" class="highcharts-dark text-white Math.rounded">
-                                                </div>
-                                            </figure>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="table-responsive container-fluid p-3" style="width:100%">
-                            <table id="tableInventario5" class="table stripe table-hover text-center "
-                                style="width:100%; font-size:15px; color:#000;">
-                                <thead>
-                                    <tr>
-                                        <th colspan="5" class=" border border-dark bg-secondary align-middle">
-                                            <span id="lblano5" class="fs-5"></span>
-                                        </th>
-                                    </tr>
-                                    <tr>
-                                        <th style="width:8%"
-                                            class=" border border-dark bg-secondary border-bottom-0 border-top-0 boder-end-0 ">
-                                            Mes</th>
-                                            <th style="width:24%" class=" border border-dark bgSky">Prom. Vta 12M</th>
-                                            <th style="width:24%" class=" border border-dark bgGold">Prom. Vta 6M</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="tableInventarioDetalle5">
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="table-responsive mt-4 container-fluid p-3" style="width:100%">
-                            <table id="tableInventario6" class="table stripe table-hover text-center "
-                                style="width:100%; font-size:15px; color:#000;">
-                                <thead>
-                                    <tr>
-                                        <th colspan="5" class=" border border-dark bg-secondary align-middle">
-                                            <span id="lblano6" class="fs-5"></span>
-                                        </th>
-                                    </tr>
-                                    <tr>
-                                        <th style="width:8%"
-                                            class=" border border-dark bg-secondary border-bottom-0 border-top-0 boder-end-0 ">Mes</th>
-                                            <th style="width:24%" class=" border border-dark bgSky">Prom. Vta 12M</th>
-                                            <th style="width:24%" class=" border border-dark bgGold">Prom. Vta 6M</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="tableInventarioDetalle6">
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+                </figure>
+                <div class="table-responsive container-fluid p-3" style="width:100%">
+                    <button type="button" id="btnExport" class="btn btn-success text-light fs-6 text-center mb-3"
+                        style="width:280px;">
+                        <i class="fa-solid fa-file-excel me-1"></i><b>Enviar a Excel</b>
+                    </button>
+                    <table id="tableInventario" class="table stripe table-hover text-center "
+                        style="width:100%; font-size:15px; color:#000;">
+                        <thead>
+                            <tr>
+                                <th colspan="6" class=" border border-dark bg-secondary align-middle fs-5">
+                                    Meses inventario 6 meses
+                                </th>
+                            </tr>
+                            <tr>
+                                <th class=" border border-dark bg-secondary align-middle fs-5">
+                                    Mes
+                                </th>
+                                <th class=" border border-dark bg-secondary align-middle">
+                                    <span id="lblano1" class="fs-5"></span>
+                                </th>
+                                <th class=" border border-dark bg-secondary align-middle">
+                                    <span id="lblano2" class="fs-5"></span>
+                                </th>
+                                <th class=" border border-dark bg-secondary align-middle">
+                                    <span id="lblano3" class="fs-5"></span>
+                                </th>
+                                <th class=" border border-dark bg-secondary align-middle">
+                                    <span id="lblano4" class="fs-5"></span>
+                                </th>
+                                <th class=" border border-dark bg-secondary align-middle">
+                                    <span id="lblano5" class="fs-5"></span>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableInventarioDetalle">
+                            <tr id="tr1">
+                                <td>Enero</td>
+                            </tr>
+                            <tr id="tr2">
+                                <td>Febrero</td>
+                            </tr>
+                            <tr id="tr3">
+                                <td>Marzo</td>
+                            </tr>
+                            <tr id="tr4">
+                                <td>Abril</td>
+                            </tr>
+                            <tr id="tr5">
+                                <td>Mayo</td>
+                            </tr>
+                            <tr id="tr6">
+                                <td>Junio</td>
+                            </tr>
+                            <tr id="tr7">
+                                <td>Julio</td>
+                            </tr>
+                            <tr id="tr8">
+                                <td>Agosto</td>
+                            </tr>
+                            <tr id="tr9">
+                                <td>Septiembre</td>
+                            </tr>
+                            <tr id="tr10">
+                                <td>Octubre</td>
+                            </tr>
+                            <tr id="tr11">
+                                <td>Noviembre</td>
+                            </tr>
+                            <tr id="tr12">
+                                <td>Diciembre</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
 
@@ -303,102 +160,121 @@
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
     <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/offline-exporting.js"></script>
     <script src="https://code.highcharts.com/modules/accessibility.js"></script>
     <script>
-    let responseDataA1 = [];
-    let responseDataA2 = [];
+        let lineMIN06M1 = [];
+        let lineMIN06M2 = [];
+        let lineMIN06M3 = [];
+        let lineMIN06M4 = [];
+        let lineMIN06M5 = [];
 
-    let responseDataA3 = [];
-    let responseDataA4 = [];
+        let chart1 = null;
+        window.addEventListener('DOMContentLoaded', (event) => {
+            const cbbAgrup = document.getElementById('cbbAgrup');
+            let usuario = '<?php echo $_SESSION["CODUSU"]; ?>';
+            const cbbAno = document.getElementById('cbbAno');
+            cbbAgrup.addEventListener('change', (event) => {
+                chargeTable();
+            });
+            cbbAno.addEventListener('change', (event) => {
+                chargeTable();
+            });
 
-    let linePRV12M1 = [];
-    let linePVR06M1 = [];
-    let lineMIN12M1 = [];
-    let lineMIN06M1 = [];
+            const btnExport = document.getElementById('btnExport');
+            btnExport.addEventListener("click", async () => {
+                let valAno = parseInt(cbbAno.value);
+                let valAgrup = cbbAgrup.value;
+                const url = `/API.LovablePHP/ZLO0028P/Export/?anopro=${valAno}&cia=${valAgrup}`;
 
-    let linePRV12M2 = [];
-    let linePVR06M2 = [];
-    let lineMIN12M2 = [];
-    let lineMIN06M2 = [];
+                try {
+                    const response = await fetch(url);
 
-    let lineUNICOM1 = [];
-    let lineUNIVEN1 = [];
-    let lineUNIEXI1 = [];
-    let lineVaria1=[];
+                    if (!response.ok) {
+                        throw new Error(`Error en la descarga: ${response.statusText}`);
+                    }
 
-    let lineUNICOM2 = [];
-    let lineUNIVEN2 = [];
-    let lineUNIEXI2 = [];
-    let lineVaria2=[];
+                    const blob = await response.blob();
+                    const fileUrl = window.URL.createObjectURL(blob);
+                    const a = document.createElement("a");
 
-    let chart1 = null;
-    let chart2 = null;
-    let chart3 = null;
-    window.addEventListener('DOMContentLoaded', (event) => {
-        const cbbAgrup = document.getElementById('cbbAgrup');
-        let usuario = '<?php echo $_SESSION["CODUSU"];?>';
+                    a.href = fileUrl;
+                    a.download = `MesesInventario_${valAno}.xlsx`;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    window.URL.revokeObjectURL(fileUrl);
 
-        const cbbAno = document.getElementById('cbbAno');
-        const cbbGrafica = document.getElementById('selectGrafica');
-        const cbbGrafica2 = document.getElementById('selectGrafica2');
-        const cbbGrafica3 = document.getElementById('selectGrafica3');
-        let valAno = parseInt(cbbAno.value);
-        let valAno2 = valAno - 1;
-        let valAgrup = cbbAgrup.value;
-        chargeTable(valAno, valAgrup);
-        chargeTable2(valAno2, valAgrup);
-        chargeTable3(valAno, valAgrup);
-        chargeTable4(valAno2, valAgrup);
-        cbbAgrup.addEventListener('change', (event) => {
+                } catch (error) {
+                    console.error("Error al descargar el archivo:", error);
+                }
+            });
+
+            chargeTable();
+        });
+        async function chargeTable() {
+            lineMIN06M1 = []; lineMIN06M2 = []; lineMIN06M3 = []; lineMIN06M4 = []; lineMIN06M5 = [];
             let valAno = parseInt(cbbAno.value);
-            let valAno2 = valAno - 1;
             let valAgrup = cbbAgrup.value;
-            chargeTable(valAno, valAgrup);
-            chargeTable2(valAno2, valAgrup);
-            setTimeout(() => {
-              chargeTable3(valAno, valAgrup);
-              chargeTable4(valAno2, valAgrup);
-                chargeGrafica();
-                chargeGrafica2();
-                chargeGrafica3();
-            }, 700);
-        });
+            let cont = 1;
+            const responseData = [];
+            const tbody = document.getElementById('tableInventarioDetalle');
+            tbody.innerHTML = `<tr id="tr1" class="bg-light border border-dark"><td>Enero</td></tr><tr id="tr2" class="bg-light border border-dark"><td>Febrero</td></tr><tr id="tr3" class="bg-light border border-dark"><td>Marzo</td></tr><tr id="tr4" class="bg-light border border-dark"><td>Abril</td></tr><tr id="tr5" class="bg-light border border-dark"><td>Mayo</td></tr><tr id="tr6" class="bg-light border border-dark"><td>Junio</td></tr><tr id="tr7" class="bg-light border border-dark"><td>Julio</td></tr><tr id="tr8" class="bg-light border border-dark"><td>Agosto</td></tr><tr id="tr9" class="bg-light border border-dark"><td>Septiembre</td></tr><tr id="tr10" class="bg-light border border-dark"><td>Octubre</td></tr><tr id="tr11" class="bg-light border border-dark"><td>Noviembre</td></tr><tr id="tr12" class="bg-light border border-dark"><td>Diciembre</td></tr>`;
+            for (let index = (valAno - 4); index <= valAno; index++) {
+                document.getElementById(`lblano${cont}`).innerHTML = 'Año ' + index;
+                cont++;
+                const urlList = `/API.LovablePHP/ZLO0028P/List/?anopro=${index}&cia=${valAgrup}`;
+                try {
+                    const response = await fetch(urlList);
+                    const data = await response.json();
 
-        cbbAno.addEventListener('change', (event) => {
-            let valAno = parseInt(cbbAno.value);
-            let valAno2 = valAno - 1;
-            let valAgrup = cbbAgrup.value;
-            chargeTable(valAno, valAgrup);
-            chargeTable2(valAno2, valAgrup);
-            chargeTable3(valAno, valAgrup);
-            chargeTable4(valAno2, valAgrup);
-            setTimeout(() => {
-              chargeTable5(valAno, valAgrup);
-              chargeTable6(valAno2, valAgrup);
-                chargeGrafica();
-                chargeGrafica2();
-                chargeGrafica3();
-            }, 700);
-        });
-
-        cbbGrafica.addEventListener('change', (event) => {
-            chargeGrafica();
-        });
-        cbbGrafica2.addEventListener('change', (event) => {
-            chargeGrafica2();
-        });
-        cbbGrafica3.addEventListener('change', (event) => {
-            chargeGrafica3();
-        });
-
-        setTimeout(() => {
-            chargeTable5(valAno, valAgrup);
-            chargeTable6(valAno2, valAgrup);
+                    if (data.code == 200) {
+                        responseData.push(data.data);
+                    }
+                } catch (error) {
+                    console.error(`Error en el año ${index}:`, error);
+                }
+            }
+            let anoCont = 1;
+            responseData.forEach((data) => {
+                cont = 1
+                data.forEach((item) => {
+                    const tdRow = document.getElementById(`tr${cont}`);
+                    const td2 = document.createElement('td');
+                    td2.classList.add('bgGoldSoft', 'border', 'border-dark');
+                    td2.innerHTML = parseFloat(item.MIN06M) === 0 ? '‎' : parseFloat(item.MIN06M).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                    tdRow.appendChild(td2);
+                    cont++
+                })
+                data.forEach((item) => {
+                    switch (anoCont) {
+                        case 1:
+                            lineMIN06M1.push(parseFloat(item.MIN06M));
+                            break;
+                        case 2:
+                            lineMIN06M2.push(parseFloat(item.MIN06M));
+                            break;
+                        case 3:
+                            lineMIN06M3.push(parseFloat(item.MIN06M));
+                            break;
+                        case 4:
+                            lineMIN06M4.push(parseFloat(item.MIN06M));
+                            break;
+                        case 5:
+                            lineMIN06M5.push(parseFloat(item.MIN06M));
+                            break;
+                        default:
+                            break;
+                    }
+                })
+                anoCont++
+            });
             chart1 = Highcharts.chart('container', {
                 chart: {
                     type: 'line',
+                    height: 500,
                     style: {
-                        color: '#FFFFFF'
+                        color: '#FFFFFF' // Aplica color blanco a todos los textos
                     }
                 },
                 lang: {
@@ -408,11 +284,11 @@
                     downloadPDF: "Descargar en PDF",
                 },
                 title: {
-                    text: cbbGrafica.options[cbbGrafica.selectedIndex].text + '<br>' + cbbAgrup
+                    text: 'Meses inventario 6 meses <br>' + cbbAgrup
                         .options[cbbAgrup.selectedIndex].text,
                     align: 'center',
                     style: {
-                        color: '#FFFFFF'
+                        color: '#FFFFFF' // Color blanco para el título
                     }
                 },
                 xAxis: {
@@ -429,38 +305,97 @@
                     title: {
                         text: ' ',
                         style: {
-                            color: '#FFFFFF'
+                            color: '#FFFFFF' // Color blanco para el título del eje Y
                         }
                     },
                     labels: {
                         style: {
-                            color: '#FFFFFF'
+                            color: '#FFFFFF' // Color blanco para etiquetas del eje Y
                         }
                     }
+                },
+                legend: {
+                    itemStyle: {
+                        color: '#FFFFFF' // Color blanco para los nombres de las series
+                    }
+                },
+                tooltip: {
+                    style: {
+                        color: '#FFFFFF' // Color blanco para el texto del tooltip
+                    },
+                    backgroundColor: '#000000', // Fondo negro para mejor visibilidad
+                    borderColor: '#FFFFFF' // Borde blanco
                 },
                 plotOptions: {
                     line: {
                         dataLabels: {
                             enabled: true,
-                            format: '{point.y}'
+                            formatter: function () {
+                                return this.y.toLocaleString('es-ES').replace('.', ',');
+                            },
+                            style: {
+                                color: '#FFFFFF', // Color blanco para etiquetas en líneas
+                                fontWeight: 'bold'
+                            }
                         },
-                        enableMouseTracking: false
+                        enableMouseTracking: true
+                    },
+                    series: {
+                        lineWidth: 4,
+                        states: {
+                            hover: {
+                                enabled: true,
+                                lineWidth: 4
+                            }
+                        }
                     }
                 },
                 credits: {
                     enabled: false
                 },
-                legend: {
-                    itemStyle: {
-                        color: '#FFFFFF'
-                    }
-                },
                 exporting: {
                     buttons: {
                         contextButton: {
-                            menuItems: ["viewFullscreen", "separator", "downloadJPEG",
-                                "downloadPDF"
-                            ]
+                            menuItems: ["viewFullscreen", "separator", "downloadJPEG", "downloadPDF"],
+                            theme: {
+                                fill: '#000000',
+                                stroke: '#FFFFFF',
+                                style: {
+                                    color: '#FFFFFF' // Color blanco para los botones de exportación
+                                }
+                            }
+                        },
+                        showAllButton: {
+                            text: 'Mostrar todos',
+                            onclick: function () {
+                                this.series.forEach(function (series) {
+                                    series.setVisible(true, false);
+                                });
+                                this.redraw();
+                            },
+                            theme: {
+                                fill: '#000000',
+                                stroke: 'silver',
+                                style: {
+                                    color: '#FFFFFF' // Texto blanco en el botón "Mostrar todos"
+                                }
+                            }
+                        },
+                        removeAllButton: {
+                            text: 'Quitar todos',
+                            onclick: function () {
+                                this.series.forEach(function (series) {
+                                    series.setVisible(false, false);
+                                });
+                                this.redraw();
+                            },
+                            theme: {
+                                fill: '#000000',
+                                stroke: 'silver',
+                                style: {
+                                    color: '#FFFFFF' // Texto blanco en el botón "Quitar todos"
+                                }
+                            }
                         }
                     },
                     enabled: true,
@@ -470,598 +405,33 @@
                         chart: {
                             backgroundColor: '#303030'
                         }
-                    }
-                },
-                series: [{
-                    name: 'Ano ' + valAno,
-                    data: lineMIN12M1,
-                    color: '#20c997'
-                }, {
-                    name: 'Ano ' + valAno2,
-                    data: lineMIN12M2,
-                    color: '#ffd700'
-                }]
-            });
-            chart2 = Highcharts.chart('container2', {
-                chart: {
-                    type: 'line',
-                    style: {
-                        color: '#FFFFFF'
-                    }
-                },
-                lang: {
-                    viewFullscreen: "Ver en pantalla completa",
-                    exitFullscreen: "Salir de pantalla completa",
-                    downloadJPEG: "Descargar imagen JPEG",
-                    downloadPDF: "Descargar en PDF",
-                },
-                title: {
-                    text: cbbGrafica.options[cbbGrafica.selectedIndex].text + '<br>' + cbbAgrup
-                        .options[cbbAgrup.selectedIndex].text,
-                    align: 'center',
-                    style: {
-                        color: '#FFFFFF'
-                    }
-                },
-                xAxis: {
-                    categories: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio',
-                        'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
-                    ],
-                    labels: {
-                        style: {
-                            color: '#FFFFFF'
-                        }
-                    }
-                },
-                yAxis: {
-                    title: {
-                        text: ' ',
-                        style: {
-                            color: '#FFFFFF'
-                        }
                     },
-                    labels: {
-                        style: {
-                            color: '#FFFFFF'
-                        }
-                    }
+                    fallbackToExportServer: false
                 },
-                plotOptions: {
-                    line: {
-                        dataLabels: {
-                            enabled: true,
-                            format: '{point.y}'
-                        },
-                        enableMouseTracking: false
-                    }
-                },
-                credits: {
-                    enabled: false
-                },
-                legend: {
-                    itemStyle: {
-                        color: '#FFFFFF'
-                    }
-                },
-                exporting: {
-                    buttons: {
-                        contextButton: {
-                            menuItems: ["viewFullscreen", "separator", "downloadJPEG",
-                                "downloadPDF"
-                            ]
-                        }
+                series: [
+                    {
+                        name: 'Año ' + (valAno - 4),
+                        data: lineMIN06M1
                     },
-                    enabled: true,
-                    sourceWidth: 1600,
-                    sourceHeight: 700,
-                    chartOptions: {
-                        chart: {
-                            backgroundColor: '#303030'
-                        }
-                    }
-                },
-                series: [{
-                    name: 'Ano ' + valAno,
-                    data: lineUNICOM1,
-                    color: '#20c997'
-                }, {
-                    name: 'Ano ' + valAno2,
-                    data: lineUNICOM2,
-                    color: '#ffd700'
-                }]
-            });
-            chart3 = Highcharts.chart('container3', {
-                chart: {
-                    type: 'line',
-                    style: {
-                        color: '#FFFFFF'
-                    }
-                },
-                lang: {
-                    viewFullscreen: "Ver en pantalla completa",
-                    exitFullscreen: "Salir de pantalla completa",
-                    downloadJPEG: "Descargar imagen JPEG",
-                    downloadPDF: "Descargar en PDF",
-                },
-                title: {
-                    text: cbbGrafica.options[cbbGrafica.selectedIndex].text + '<br>' + cbbAgrup
-                        .options[cbbAgrup.selectedIndex].text,
-                    align: 'center',
-                    style: {
-                        color: '#FFFFFF'
-                    }
-                },
-                xAxis: {
-                    categories: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio',
-                        'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
-                    ],
-                    labels: {
-                        style: {
-                            color: '#FFFFFF'
-                        }
-                    }
-                },
-                yAxis: {
-                    title: {
-                        text: ' ',
-                        style: {
-                            color: '#FFFFFF'
-                        }
+                    {
+                        name: 'Año ' + (valAno - 3),
+                        data: lineMIN06M2
                     },
-                    labels: {
-                        style: {
-                            color: '#FFFFFF'
-                        }
-                    }
-                },
-                plotOptions: {
-                    line: {
-                        dataLabels: {
-                            enabled: true,
-                            format: '{point.y}'
-                        },
-                        enableMouseTracking: false
-                    }
-                },
-                credits: {
-                    enabled: false
-                },
-                legend: {
-                    itemStyle: {
-                        color: '#FFFFFF'
-                    }
-                },
-                exporting: {
-                    buttons: {
-                        contextButton: {
-                            menuItems: ["viewFullscreen", "separator", "downloadJPEG",
-                                "downloadPDF"
-                            ]
-                        }
+                    {
+                        name: 'Año ' + (valAno - 2),
+                        data: lineMIN06M3
                     },
-                    enabled: true,
-                    sourceWidth: 1600,
-                    sourceHeight: 700,
-                    chartOptions: {
-                        chart: {
-                            backgroundColor: '#303030'
-                        }
+                    {
+                        name: 'Año ' + (valAno - 1),
+                        data: lineMIN06M4
+                    },
+                    {
+                        name: 'Año ' + valAno,
+                        data: lineMIN06M5
                     }
-                },
-                series: [{
-                    name: 'Ano ' + valAno,
-                    data: linePRV12M1,
-                    color: '#20c997'
-                }, {
-                    name: 'Ano ' + valAno2,
-                    data: linePRV12M2,
-                    color: '#ffd700'
-                }]
+                ]
             });
-        }, 1700);
-    });
-    //MESES
-    function chargeTable(valAno, valAgrup) {
-        //AÑO 1
-        linePRV12M1 = [];
-        linePVR06M1 = [];
-        lineMIN12M1 = [];
-        lineMIN06M1 = [];
-        var urlList = "/API.LovablePHP/ZLO0028P/List/?anopro=" + valAno + "&cia=" + valAgrup;
-        let lblAno1 = document.getElementById('lblano1');
-        lblAno1.innerHTML = 'Año ' + valAno;
-        const tbDetalle = document.getElementById('tableInventarioDetalle');
-        tbDetalle.innerHTML = '';
-        fetch(urlList)
-            .then(response => response.json())
-            .then(data => {
-                if (data.code == 200) {
-                    responseDataA1 = [...data.data];
-                    data.data.forEach((item) => {
-                        const row = document.createElement('tr');
-                        row.innerHTML = `
-                  <td class="bg-light border border-dark">${item.MESDES}</td>
-                  <td class="bgSkySoft border border-dark">${parseFloat(item.MIN12M) === 0 ? '‎' : parseFloat(item.MIN12M).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
-                  <td class="bgGoldSoft border border-dark">${parseFloat(item.MIN06M) === 0 ? '‎' : parseFloat(item.MIN06M).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
-                  `;
-                        linePRV12M1.push(parseFloat(item.PRV12M));
-                        linePVR06M1.push(parseFloat(item.PRV06M));
-                        lineMIN12M1.push(parseFloat(item.MIN12M));
-                        lineMIN06M1.push(parseFloat(item.MIN06M));
-                        tbDetalle.appendChild(row);
-                    });
-                } else {
-                    const row = document.createElement('tr');
-                    row.innerHTML = `<td colspan="5"><span style="font-size:16px; margin:50px;">No hay datos</span></td> `;
-                    tbDetalle.appendChild(row);
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                const row = document.createElement('tr');
-                row.innerHTML = `<td colspan="5">No hay datos</td>`;
-                tbDetalle.appendChild(row);
-            });
-    }
-    function chargeTable2(valAno, valAgrup) {
-        //AÑO 1
-        linePRV12M2 = [];
-        linePVR06M2 = [];
-        lineMIN12M2 = [];
-        lineMIN06M2 = [];
-        var urlList = "/API.LovablePHP/ZLO0028P/List/?anopro=" + valAno + "&cia=" + valAgrup;
-        let lblAno1 = document.getElementById('lblano2');
-        lblAno1.innerHTML = 'Año ' + valAno;
-        const tbDetalle = document.getElementById('tableInventarioDetalle2');
-        tbDetalle.innerHTML = '';
-        fetch(urlList)
-            .then(response => response.json())
-            .then(data => {
-                if (data.code == 200) {
-                    responseDataA2 = [...data.data];
-                    data.data.forEach((item) => {
-                        const row = document.createElement('tr');
-                        row.innerHTML = `
-                  <td class="bg-light border border-dark">${item.MESDES}</td>
-                  <td class="bgSkySoft border border-dark">${parseFloat(item.MIN12M) === 0 ? '‎' : parseFloat(item.MIN12M).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
-                  <td class="bgGoldSoft border border-dark">${parseFloat(item.MIN06M) === 0 ? '‎' : parseFloat(item.MIN06M).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
-                  `;
-                        linePRV12M2.push(parseFloat(item.PRV12M));
-                        linePVR06M2.push(parseFloat(item.PRV06M));
-                        lineMIN12M2.push(parseFloat(item.MIN12M));
-                        lineMIN06M2.push(parseFloat(item.MIN06M));
-                        tbDetalle.appendChild(row);
-                    });
-                } else {
-                    const row = document.createElement('tr');
-                    row.innerHTML = `<td colspan="5"><span style="font-size:16px; margin:50px;">No hay datos</span></td>`;
-                    tbDetalle.appendChild(row);
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                const row = document.createElement('tr');
-                row.innerHTML = `<td colspan="5">No hay datos</td> `;
-                tbDetalle.appendChild(row);
-            });
-    }
-    //UNIDADES
-    function chargeTable3(valAno, valAgrup) {
-        //AÑO 1
-        lineUNICOM1 = [];
-        lineUNIVEN1 = [];
-        lineUNIEXI1 = [];
-        var urlList = "/API.LovablePHP/ZLO0028P/ListUnd/?anopro=" + valAno + "&cia=" + valAgrup;
-        let lblAno1 = document.getElementById('lblano3');
-        lblAno1.innerHTML = 'Año ' + valAno;
-        const tbDetalle = document.getElementById('tableInventarioDetalle3');
-        tbDetalle.innerHTML = '';
-        fetch(urlList)
-            .then(response => response.json())
-            .then(data => {
-                if (data.code == 200) {
-                    responseDataA3 = [...data.data];
-                    data.data.forEach((item) => {
-                        const row = document.createElement('tr');
-                        row.innerHTML = `<td class="bg-light border border-dark">${item.MESDES}</td>`;
-                        row.innerHTML+= `<td class="bgSkySoft border border-dark">${parseFloat(item.UNICOM) === 0 ? '‎' : parseFloat(item.UNICOM).toLocaleString('es-419', {minimumFractionDigits: 0, maximumFractionDigits: 0})}</td>`;
-                        row.innerHTML+= `<td class="bgGoldSoft border border-dark">${parseFloat(item.UNIVEN) === 0 ? '‎' : parseFloat(item.UNIVEN).toLocaleString('es-419', {minimumFractionDigits: 0, maximumFractionDigits: 0})}</td>`;
-                        let variacion = parseFloat(item.UNIVEN) - parseFloat(item.UNICOM);
-                        if (variacion>0) {
-                          row.innerHTML+= `<td class="bgGreenSoft text-success fw-bold border border-dark">${parseFloat(variacion) === 0 ? '‎' : parseFloat(variacion).toLocaleString('es-419', {minimumFractionDigits: 0, maximumFractionDigits: 0})}</td>`;
-                        }else{
-                          row.innerHTML+= `<td class="bgGreenSoft text-danger fw-bold border border-dark">${parseFloat(variacion) === 0 ? '‎' : parseFloat(variacion).toLocaleString('es-419', {minimumFractionDigits: 0, maximumFractionDigits: 0})}</td>`;
-                        }
-                         row.innerHTML+= `<td class="bgSeaSoft border border-dark">${parseFloat(item.UNIEXI) === 0 ? '‎' : parseFloat(item.UNIEXI).toLocaleString('es-419', {minimumFractionDigits: 0, maximumFractionDigits: 0})}</td>`;
-                        lineUNICOM1.push(parseFloat(item.UNICOM));
-                        lineUNIVEN1.push(parseFloat(item.UNIVEN));
-                        lineUNIEXI1.push(parseFloat(item.UNIEXI));
-                        lineVaria1.push(parseFloat(variacion));
-                        tbDetalle.appendChild(row);
-                    });
-                } else {
-                    const row = document.createElement('tr');
-                    row.innerHTML = `<td colspan="5"><span style="font-size:16px; margin:50px;">No hay datos</span></td> `;
-                    tbDetalle.appendChild(row);
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                const row = document.createElement('tr');
-                row.innerHTML = `<td colspan="5">No hay datos</td>`;
-                tbDetalle.appendChild(row);
-            });
-    }
-    function chargeTable4(valAno, valAgrup) {
-        //AÑO 1
-        lineUNICOM2 = [];
-        lineUNIVEN2 = [];
-        lineUNIEXI2 = [];
-        var urlList = "/API.LovablePHP/ZLO0028P/ListUnd/?anopro=" + valAno + "&cia=" + valAgrup;
-        let lblAno1 = document.getElementById('lblano4');
-        lblAno1.innerHTML = 'Año ' + valAno;
-        const tbDetalle = document.getElementById('tableInventarioDetalle4');
-        tbDetalle.innerHTML = '';
-        fetch(urlList)
-            .then(response => response.json())
-            .then(data => {
-                if (data.code == 200) {
-                    responseDataA3 = [...data.data];
-                    data.data.forEach((item) => {
-                      const row = document.createElement('tr');
-                        row.innerHTML = `<td class="bg-light border border-dark">${item.MESDES}</td>`;
-                        row.innerHTML+= `<td class="bgSkySoft border border-dark">${parseFloat(item.UNICOM) === 0 ? '‎' : parseFloat(item.UNICOM).toLocaleString('es-419', {minimumFractionDigits: 0, maximumFractionDigits: 0})}</td>`;
-                        row.innerHTML+= `<td class="bgGoldSoft border border-dark">${parseFloat(item.UNIVEN) === 0 ? '‎' : parseFloat(item.UNIVEN).toLocaleString('es-419', {minimumFractionDigits: 0, maximumFractionDigits: 0})}</td>`;
-                        let variacion = parseFloat(item.UNIVEN) - parseFloat(item.UNICOM);
-                        if (variacion>0) {
-                          row.innerHTML+= `<td class="bgGreenSoft text-success fw-bold border border-dark">${parseFloat(variacion) === 0 ? '‎' : parseFloat(variacion).toLocaleString('es-419', {minimumFractionDigits: 0, maximumFractionDigits: 0})}</td>`;
-                        }else{
-                          row.innerHTML+= `<td class="bgGreenSoft text-danger fw-bold border border-dark">${parseFloat(variacion) === 0 ? '‎' : parseFloat(variacion).toLocaleString('es-419', {minimumFractionDigits: 0, maximumFractionDigits: 0})}</td>`;
-                        }
-                         row.innerHTML+= `<td class="bgSeaSoft border border-dark">${parseFloat(item.UNIEXI) === 0 ? '‎' : parseFloat(item.UNIEXI).toLocaleString('es-419', {minimumFractionDigits: 0, maximumFractionDigits: 0})}</td>`;
-                        lineUNICOM2.push(parseFloat(item.UNICOM));
-                        lineUNIVEN2.push(parseFloat(item.UNIVEN));
-                        lineUNIEXI2.push(parseFloat(item.UNIEXI));
-                        lineVaria2.push(parseFloat(variacion));
-                        tbDetalle.appendChild(row);
-                    });
-                } else {
-                    const row = document.createElement('tr');
-                    row.innerHTML = `<td colspan="5"><span style="font-size:16px; margin:50px;">No hay datos</span></td> `;
-                    tbDetalle.appendChild(row);
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                const row = document.createElement('tr');
-                row.innerHTML = `<td colspan="5">No hay datos</td>`;
-                tbDetalle.appendChild(row);
-            });
-    }
-    //PROMEDIOS
-    function chargeTable5(valAno, valAgrup) {
-        let lblAno1 = document.getElementById('lblano5');
-        lblAno1.innerHTML = 'Año ' + valAno;
-        const tbDetalle = document.getElementById('tableInventarioDetalle5');
-        tbDetalle.innerHTML = '';
-        if (responseDataA1.length > 0) {
-            responseDataA1.forEach((item) => {
-                        const row = document.createElement('tr');
-                        row.innerHTML = `
-                          <td class="bg-light border border-dark">${item.MESDES}</td>
-                          <td class="bgSkySoft border border-dark">${parseFloat(item.PRV12M) === 0 ? '‎' : parseFloat(item.PRV12M).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
-                          <td class="bgGoldSoft border border-dark">${parseFloat(item.PRV06M) === 0 ? '‎' : parseFloat(item.PRV06M).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
-                          `;
-                        tbDetalle.appendChild(row);
-                    });
-                } else {
-                    const row = document.createElement('tr');
-                    row.innerHTML = `<td colspan="5"><span style="font-size:16px; margin:50px;">No hay datos</span></td> `;
-                    tbDetalle.appendChild(row);
-                }
-    }
-    function chargeTable6(valAno, valAgrup) {
-        let lblAno1 = document.getElementById('lblano6');
-        lblAno1.innerHTML = 'Año ' + valAno;
-        const tbDetalle = document.getElementById('tableInventarioDetalle6');
-        tbDetalle.innerHTML = '';
-
-                if (responseDataA2.length > 0) {
-                    responseDataA2.forEach((item) => {
-                        const row = document.createElement('tr');
-                        row.innerHTML = `
-                          <td class="bg-light border border-dark">${item.MESDES}</td>
-                          <td class="bgSkySoft border border-dark">${parseFloat(item.PRV12M) === 0 ? '‎' : parseFloat(item.PRV12M).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
-                          <td class="bgGoldSoft border border-dark">${parseFloat(item.PRV06M) === 0 ? '‎' : parseFloat(item.PRV06M).toLocaleString('es-419', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
-                          `;
-                        tbDetalle.appendChild(row);
-                    });
-                } else {
-                    const row = document.createElement('tr');
-                    row.innerHTML = `<td colspan="5"><span style="font-size:16px; margin:50px;">No hay datos</span></td>`;
-                    tbDetalle.appendChild(row);
-                }
         }
-
-
-
-    function chargeGrafica() {
-        const cbbGrafica = document.getElementById('selectGrafica');
-        let valGrafica = cbbGrafica.value;
-
-        const cbbAno = document.getElementById('cbbAno');
-        let valAno = parseInt(cbbAno.value);
-        let valAno2 = valAno - 1;
-        let valoresLineal1 = [];
-        let valoresLineal2 = [];
-        switch (valGrafica) {
-            case 'G1':
-                valoresLineal1 = lineMIN12M1;
-                valoresLineal2 = lineMIN12M2;
-                break;
-            case 'G2':
-                valoresLineal1 = lineMIN06M1;
-                valoresLineal2 = lineMIN06M2;
-                break;
-            default:
-                valoresLineal1 = lineMIN12M1;
-                valoresLineal2 = lineMIN12M2;
-                break;
-        }
-
-        chart1.update({
-            chart: {
-                type: 'line'
-            },
-            title: {
-                text: cbbGrafica.options[cbbGrafica.selectedIndex].text + '<br>' + cbbAgrup.options[cbbAgrup
-                    .selectedIndex].text,
-                align: 'center'
-            },
-            xAxis: {
-                categories: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto',
-                    'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
-                ],
-            },
-            plotOptions: {
-                line: {
-                    dataLabels: {
-                        enabled: true
-                    },
-                    enableMouseTracking: false
-                }
-            },
-            credits: {
-                enabled: false
-            },
-            series: [{
-                name: 'Año ' + valAno,
-                data: valoresLineal1,
-            }, {
-                name: 'Año ' + valAno2,
-                data: valoresLineal2,
-            }]
-        });
-    }
-    function chargeGrafica2() {
-        const cbbGrafica = document.getElementById('selectGrafica2');
-        let valGrafica = cbbGrafica.value;
-
-        const cbbAno = document.getElementById('cbbAno');
-        let valAno = parseInt(cbbAno.value);
-        let valAno2 = valAno - 1;
-        let valoresLineal1 = [];
-        let valoresLineal2 = [];
-        switch (valGrafica) {
-            case 'G1':
-                valoresLineal1 = lineUNICOM1;
-                valoresLineal2 = lineUNICOM2;
-                break;
-            case 'G2':
-                valoresLineal1 = lineUNIVEN1;
-                valoresLineal2 = lineUNIVEN2;
-                break;
-            case 'G3':
-                valoresLineal1 = lineUNIEXI1;
-                valoresLineal2 = lineUNIEXI2;
-                break;
-            default:
-                valoresLineal1 = lineUNICOM1;
-                valoresLineal2 = lineUNICOM2;
-                break;
-        }
-        chart2.update({
-            chart: {
-                type: 'line'
-            },
-            title: {
-                text: cbbGrafica.options[cbbGrafica.selectedIndex].text + '<br>' + cbbAgrup.options[cbbAgrup
-                    .selectedIndex].text,
-                align: 'center'
-            },
-            xAxis: {
-                categories: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto',
-                    'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
-                ],
-            },
-            plotOptions: {
-                line: {
-                    dataLabels: {
-                        enabled: true
-                    },
-                    enableMouseTracking: false
-                }
-            },
-            credits: {
-                enabled: false
-            },
-            series: [{
-                name: 'Año ' + valAno,
-                data: valoresLineal1,
-            }, {
-                name: 'Año ' + valAno2,
-                data: valoresLineal2,
-            }]
-        });
-    }
-    function chargeGrafica3() {
-        const cbbGrafica = document.getElementById('selectGrafica3');
-        let valGrafica = cbbGrafica.value;
-
-        const cbbAno = document.getElementById('cbbAno');
-        let valAno = parseInt(cbbAno.value);
-        let valAno2 = valAno - 1;
-        let valoresLineal1 = [];
-        let valoresLineal2 = [];
-        switch (valGrafica) {
-            case 'G1':
-                valoresLineal1 = linePRV12M1;
-                valoresLineal2 = linePRV12M2;
-                break;
-            case 'G2':
-                valoresLineal1 = linePVR06M1;
-                valoresLineal2 = linePVR06M2;
-                break;
-            default:
-                valoresLineal1 = linePRV12M1;
-                valoresLineal2 = linePRV12M2;
-                break;
-        }
-
-        chart3.update({
-            chart: {
-                type: 'line'
-            },
-            title: {
-                text: cbbGrafica.options[cbbGrafica.selectedIndex].text + '<br>' + cbbAgrup.options[cbbAgrup
-                    .selectedIndex].text,
-                align: 'center'
-            },
-            xAxis: {
-                categories: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto',
-                    'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
-                ],
-            },
-            plotOptions: {
-                line: {
-                    dataLabels: {
-                        enabled: true
-                    },
-                    enableMouseTracking: false
-                }
-            },
-            credits: {
-                enabled: false
-            },
-            series: [{
-                name: 'Año ' + valAno,
-                data: valoresLineal1,
-            }, {
-                name: 'Año ' + valAno2,
-                data: valoresLineal2,
-            }]
-        });
-    }
     </script>
 </body>
 

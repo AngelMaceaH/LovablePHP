@@ -10,7 +10,7 @@ var tab;
       tab=(activeTab.substring(3,4));
       document.cookie="tabselected="+tab;
     });
-   
+
     var tabSeleccionado=<?php echo isset($_SESSION['tab']) ? $_SESSION['tab'] : "false"; ?>;
     if (tabSeleccionado != false) {
             var tabs = $('.tablist__tab'),
@@ -26,14 +26,14 @@ var tab;
 
 
     $("#cbbMes").val("<?php echo $mesfiltro; ?>");
-    $("#cbbPais").val("<?php echo $paisfiltro;?>"); 
-    $("#cbbAno").val(<?php echo $anofiltro;  ?>); 
-    $("#cbbOrden").val(<?php echo $ordenFiltro;  ?>); 
-    
+    $("#cbbPais").val("<?php echo $paisfiltro;?>");
+    $("#cbbAno").val(<?php echo $anofiltro;  ?>);
+    $("#cbbOrden").val(<?php echo $ordenFiltro;  ?>);
+
       $("#cbbPais, #cbbAno, #cbbMes, #cbbOrden").change(function() {
         $("#formFiltros").submit();
        });
-       
+
         $("#myTableInvMeses").DataTable( {
             stateSave: true,
         language: {
@@ -94,7 +94,7 @@ var tab;
                     columns: [1,2,3,4,5,6,7]
                 },
                 title: 'ReporteMeses Países',
-                
+
                 customize: function (xlsx) {
                     var sheet = xlsx.xl.worksheets['sheet1.xml'];
                     var sSh = xlsx.xl['styles.xml'];
@@ -120,17 +120,17 @@ var tab;
                     var s4 = '<xf numFmtId="0" fontId="2" fillId="2" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
                                 '<alignment horizontal="center" wrapText="1"/></xf>'
                     var s5 = '<xf  numFmtId="200" fontId="'+(lastFontIndex+1)+'" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
-                     '<alignment horizontal="right"/></xf>';  
+                     '<alignment horizontal="right"/></xf>';
                      var s6 = '<xf  numFmtId="200" fontId="'+(lastFontIndex+2)+'" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
-                     '<alignment horizontal="right"/></xf>';  
+                     '<alignment horizontal="right"/></xf>';
                      var s7 = '<xf  numFmtId="300" fontId="'+(lastFontIndex+1)+'" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
-                     '<alignment horizontal="right"/></xf>';  
+                     '<alignment horizontal="right"/></xf>';
                      var s8 = '<xf  numFmtId="300" fontId="'+(lastFontIndex+2)+'" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
                      '<alignment horizontal="right"/></xf>';
                     sSh.childNodes[0].childNodes[0].innerHTML += n1 + n2;
                     sSh.childNodes[0].childNodes[1].innerHTML += f1 + f2;
-                    sSh.childNodes[0].childNodes[5].innerHTML += s1 + s2 + s3 + s4 + s5 + s6 + s7 + s8; 
-                     
+                    sSh.childNodes[0].childNodes[5].innerHTML += s1 + s2 + s3 + s4 + s5 + s6 + s7 + s8;
+
                     var fourDecPlaces    = lastXfIndex + 1;
                     var greyBoldCentered = lastXfIndex + 2;
                     var twoDecPlacesBold = lastXfIndex + 3;
@@ -139,7 +139,7 @@ var tab;
                     var textgreen1 = lastXfIndex + 6;
                     var textred2 = lastXfIndex + 7;
                     var textgreen2 = lastXfIndex + 8;
-                    
+
                     $('c[r=A1] t', sheet).text( 'COMPARATIVO MESES DE INVENTARIO PAÍSES (MESES)' );
                     $('row:eq(0) c', sheet).attr( 's', greyBoldCentered );
                     $('row:eq(1) c', sheet).attr( 's', 7 );
@@ -228,7 +228,7 @@ var tab;
                      '<name val="Calibri" />'+
                      '<color rgb="007800" />'+ // color verde en la fuente
                    '</font>';
-                     
+
                     var n1 = '<numFmt formatCode="##0%"   numFmtId="300"/>';
                     var n2 = '<numFmt formatCode="#,##0"   numFmtId="200"/>';
                     var s1 = '<xf numFmtId="300" fontId="0" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyNumberFormat="1"/>';
@@ -238,17 +238,17 @@ var tab;
                     var s4 = '<xf numFmtId="0" fontId="2" fillId="2" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
                                 '<alignment horizontal="center" wrapText="1"/></xf>'
                     var s5 = '<xf  numFmtId="200" fontId="'+(lastFontIndex+1)+'" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
-                     '<alignment horizontal="right"/></xf>';  
+                     '<alignment horizontal="right"/></xf>';
                      var s6 = '<xf  numFmtId="200" fontId="'+(lastFontIndex+2)+'" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
-                     '<alignment horizontal="right"/></xf>';  
+                     '<alignment horizontal="right"/></xf>';
                      var s7 = '<xf  numFmtId="300" fontId="'+(lastFontIndex+1)+'" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
-                     '<alignment horizontal="right"/></xf>';  
+                     '<alignment horizontal="right"/></xf>';
                      var s8 = '<xf  numFmtId="300" fontId="'+(lastFontIndex+2)+'" fillId="0" borderId="0" applyFont="1" applyFill="1" applyBorder="1" xfId="0" applyAlignment="1">'+
                      '<alignment horizontal="right"/></xf>';
                     sSh.childNodes[0].childNodes[0].innerHTML += n1 + n2;
                     sSh.childNodes[0].childNodes[1].innerHTML += f1 + f2;
-                    sSh.childNodes[0].childNodes[5].innerHTML += s1 + s2 + s3 + s4 + s5 + s6 + s7 + s8; 
-                     
+                    sSh.childNodes[0].childNodes[5].innerHTML += s1 + s2 + s3 + s4 + s5 + s6 + s7 + s8;
+
                     var fourDecPlaces    = lastXfIndex + 1;
                     var greyBoldCentered = lastXfIndex + 2;
                     var twoDecPlacesBold = lastXfIndex + 3;
@@ -257,7 +257,7 @@ var tab;
                     var textgreen1 = lastXfIndex + 6;
                     var textred2 = lastXfIndex + 7;
                     var textgreen2 = lastXfIndex + 8;
-                    
+
                     $('c[r=A1] t', sheet).text( 'COMPARATIVO MESES DE INVENTARIO PAÍSES (UNIDADES)');
                     $('row:eq(0) c', sheet).attr( 's', greyBoldCentered );
                     $('row:eq(1) c', sheet).attr( 's', 7 );
@@ -274,10 +274,10 @@ var tab;
                     for (i = 0; i < tagName.length; i++) {
                       tagName[i].setAttribute("val", "13")
                     }
-                    
- 
+
+
                   }
-                  
+
             }
         ]
           });
@@ -289,14 +289,14 @@ var tab;
 
 
 
-  //GRAFICAS---------------------------------------------------------------       
+  //GRAFICAS---------------------------------------------------------------
   //PAISES UNIDADES COMPRADAS VS UNIDADES VENDIDAS
     var chart = Highcharts.chart('container2', {
 
     chart: {
         type: 'column'
     },
-    lang: {      
+    lang: {
           viewFullscreen:"Ver en pantalla completa",
           exitFullscreen:"Salir de pantalla completa",
           downloadJPEG:"Descargar imagen JPEG",
@@ -316,7 +316,8 @@ var tab;
                         enabled: true
                     }
                 }
-            }
+            },
+            fallbackToExportServer: false
       },
     title: {
         text: 'Unidades Compradas vs. Unidades vendidas',
@@ -369,7 +370,7 @@ var tab;
     }
     },
     ],
-    
+
 
     responsive: {
         rules: [{
@@ -408,7 +409,7 @@ var tab;
     chart: {
         type: 'column'
     },
-    lang: {      
+    lang: {
           viewFullscreen:"Ver en pantalla completa",
           exitFullscreen:"Salir de pantalla completa",
           downloadJPEG:"Descargar imagen JPEG",
@@ -428,7 +429,8 @@ var tab;
                         enabled: true
                     }
                 }
-            }
+            },
+            fallbackToExportServer: false
       },
     title: {
         text: 'Unidades Existencias',
@@ -500,13 +502,13 @@ var tab;
     });
     Highcharts.setOptions({
     colors: [
-      "rgba(222, 84, 44,0.6)","rgba(239, 126, 50,0.6)","rgba(238, 154, 58,0.6)","rgba(234, 219, 56,0.6)","rgba(79, 32, 13,0.6)","rgba(231, 227, 78,0.6)", 
+      "rgba(222, 84, 44,0.6)","rgba(239, 126, 50,0.6)","rgba(238, 154, 58,0.6)","rgba(234, 219, 56,0.6)","rgba(79, 32, 13,0.6)","rgba(231, 227, 78,0.6)",
       "rgba(20, 36, 89,0.6)","rgba(23, 107, 160,0.6)","rgba(25, 170, 222,0.6)","rgba(26, 201, 230,0.6)","rgba(29, 228, 219,0.6)","rgba(109, 240, 210,0.6)",
     ]
   });
   //PAISES INVENTARIO
   Highcharts.chart('container', {
-    lang: {      
+    lang: {
           viewFullscreen:"Ver en pantalla completa",
           exitFullscreen:"Salir de pantalla completa",
           downloadJPEG:"Descargar imagen JPEG",
@@ -523,7 +525,7 @@ var tab;
       xAxis: {
         className: 'fw-bold',
           categories: <?php echo json_encode($paisesLabel); ?>,
-          
+
       },
       yAxis: {
       min: 0,
@@ -632,7 +634,7 @@ var tab;
               color: '#000'
             }
           }
-        }, 
+        },
         {
           name: 'Meses Inv. 6M (2 Meses Anterior)',
           data: <?php if ($firstvalue!=0) {echo "[".$paisesM3[0].",".($paisesM3[1]*2).",".($paisesM3[2]*2).",".($paisesM3[3]*4).",".($paisesM3[4]*4).",".($paisesM3[5]*4).",".($paisesM3[6]*4).","."]";}else{ echo "[0,0,0,0,0,0]";} ?>,
@@ -671,7 +673,7 @@ var tab;
               color: '#000'
             }
           }
-        }, 
+        },
         {
           name: 'Meses Inv. 6M (4 Meses Anterior)',
           data: <?php if ($firstvalue!=0) {echo "[".$paisesM4[0].",".($paisesM4[1]*2).",".($paisesM4[2]*2).",".($paisesM4[3]*4).",".($paisesM4[4]*4).",".($paisesM4[5]*4).",".($paisesM4[6]*4).","."]";}else{ echo "[0,0,0,0,0,0]";} ?>,
@@ -710,7 +712,7 @@ var tab;
               color: '#000'
             }
           }
-        }, 
+        },
         {
           name: 'Meses Inv. 6M (4 Meses Anterior)',
           data: <?php if ($firstvalue!=0) {echo "[".$paisesM5[0].",".($paisesM5[1]*2).",".($paisesM5[2]*2).",".($paisesM5[3]*4).",".($paisesM5[4]*4).",".($paisesM5[5]*4).",".($paisesM5[6]*4).","."]";}else{ echo "[0,0,0,0,0,0]";} ?>,
@@ -749,7 +751,7 @@ var tab;
               color: '#000'
             }
           }
-        }, 
+        },
         {
           name: 'Meses Inv. 6M (5 Meses Anterior)',
           data: <?php if ($firstvalue!=0) {echo "[".$paisesM6[0].",".($paisesM6[1]*2).",".($paisesM6[2]*2).",".($paisesM6[3]*4).",".($paisesM6[4]*4).",".($paisesM6[5]*4).",".($paisesM6[6]*4).","."]";}else{ echo "[0,0,0,0,0,0]";} ?>,
@@ -788,7 +790,7 @@ var tab;
               color: '#000'
             }
           }
-        }, 
+        },
     ],
     exporting: {
           buttons: {
@@ -801,7 +803,7 @@ var tab;
     sourceWidth: (<?php echo $paisfiltro;?>==8)? 1600:800,
     sourceHeight:(<?php echo $paisfiltro;?>==8)? 900:600,
     chartOptions: {
-     
+
       title: {
         style: {
             fontSize: (<?php echo $paisfiltro;?>==1)? '30px':'20px',
@@ -815,7 +817,7 @@ var tab;
           }
         }
       }],
-      
+
       xAxis: {
         //lineWidth: 1,
         labels: {
@@ -849,8 +851,9 @@ var tab;
         gridLineWidth: 0
       },
     },
+    fallbackToExportServer: false
       },
-      
+
   });
 
   if (<?php echo $validator1;?>) {

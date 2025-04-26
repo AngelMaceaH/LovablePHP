@@ -7,8 +7,8 @@
   <link rel="stylesheet" href="../../assets/vendors/dayrangepicker/index.css">
   <link rel="stylesheet" href="../../assets/css/flexselect.css">
   <style>
-    .bg-adver{
-      background-color: rgba(144, 0, 0,0.1) !important;
+    .bg-adver {
+      background-color: rgba(144, 0, 0, 0.1) !important;
       border: 2px solid rgb(144, 0, 0) !important;
     }
   </style>
@@ -144,12 +144,13 @@
         table.ajax.url(urlTable).load();
       });
       btnNuevo.addEventListener('click', function () {
-        $("#isrepet").prop("disabled",false);
+        $("#isrepet").prop("disabled", false);
         $("#btnEditar").addClass("d-none");
         reqModalLabel.innerHTML = 'Agregar una Factura';
         footerModal.innerHTML =
           `<button type="button" class="btn btn-secondary text-white fw-bold" data-bs-dismiss="modal">Cerrar</button>
-                                    <button type="button" class="btn btn-primary text-white fw-bold" onclick="saveReq()">Guardar</button>`;
+                                    <button type="button" id="btnSend" class="btn btn-primary text-white fw-bold" onclick="saveReq()">Guardar</button>
+                                    <button type="button" id="btnLoad" class="btn btn-primary text-white fw-bold d-none" style="width:100px !important;"><i class="fa-solid fa-spinner fa-spin"></i></button>`;
         box1.innerHTML =
           `<input id="imagen" type="file" class="form-control" >`;
         document.getElementById('nreq').value = '';
@@ -187,22 +188,22 @@
         $("#cbbDescrip_flexselect").toggleClass('d-none');
         $("#descrp").toggleClass('d-none');
       });
-        $("#btnEditar").on('click', () => {
-            const btn = $("#btnEditar");
-            if (btn.text().trim().includes('Editar')) {
-              btn.text("Cancelar");
-              btn.removeClass('btn-warning');
-              btn.addClass('btn-danger');
-            } else {
-              btn.text("Editar");
-              btn.removeClass('btn-danger');
-              btn.addClass('btn-warning');
-            }
-            $("#cbbDescrip").toggleClass('d-none');
-            $("#cbbDescrip_flexselect").toggleClass('d-none');
-            $("#descrp").toggleClass('d-none');
-            $("#descrp").val($("#txtEditar").val());
-          });
+      $("#btnEditar").on('click', () => {
+        const btn = $("#btnEditar");
+        if (btn.text().trim().includes('Editar')) {
+          btn.text("Cancelar");
+          btn.removeClass('btn-warning');
+          btn.addClass('btn-danger');
+        } else {
+          btn.text("Editar");
+          btn.removeClass('btn-danger');
+          btn.addClass('btn-warning');
+        }
+        $("#cbbDescrip").toggleClass('d-none');
+        $("#cbbDescrip_flexselect").toggleClass('d-none');
+        $("#descrp").toggleClass('d-none');
+        $("#descrp").val($("#txtEditar").val());
+      });
 
       isrepet.addEventListener('change', () => {
         let urlRepe = "http://172.16.15.20/API.LovablePHP/ZLO0033P/ListRepe/";
@@ -250,7 +251,7 @@
                 style="height:150px; resize: none;"></textarea>`);
               $("#btnAgregar").addClass("d-none");
             }
-             $("#facturaDiv").append(`<input type="input" class="d-none" placeholder="descripcion de edicion" id="txtEditar" />`)
+            $("#facturaDiv").append(`<input type="input" class="d-none" placeholder="descripcion de edicion" id="txtEditar" />`)
           })
 
 
@@ -308,6 +309,7 @@
         ck2 = (isRecib.checked) ? 1 : 0;
         ck3 = (isUsuario.checked) ? 1 : 0;
         urlTable = "/API.LovablePHP/ZLO0033P/ListDEV/?hora=" + ck1 + "&fecha=" + ck2 + "&horgra=" + ck3 + "&usua=" + user;
+        console.log(urlTable);
         table = $('#mainTable').DataTable({
           language: {
             url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json',
@@ -315,12 +317,13 @@
           "ordering": false,
           "processing": true,
           "serverSide": true,
-          "pageLength": 15,
+          "pageLength": 50,
           "ajax": {
             "url": urlTable,
             "type": "POST",
             "dataSrc": function (json) {
               if (json.data) {
+                console.log(json);
                 return json.data;
               } else {
                 console.error(json);
@@ -375,11 +378,11 @@
             "render": function (data, type, row) {
               let buttons = '';
               if (data.ADVER != 1) {
-              switch (user) {
-                case 'MARVIN':
-                  if (row.IMAGEN == '') {
+                switch (user) {
+                  case 'MARVIN':
+                    if (row.IMAGEN == '') {
 
-                    buttons = `<div class="dropdown text-end">
+                      buttons = `<div class="dropdown text-end">
                                         <button class="btn btn-light p-1" type="button" data-coreui-toggle="dropdown" aria-haspopup="true"
                                             aria-expanded="false">
                                             <i class="fa-solid fa-ellipsis-vertical fs-5"></i>
@@ -390,8 +393,8 @@
                                             <a class="dropdown-item fw-bold text-danger" onclick="deleteConfirm('${data.NUMREQ}','${data.FECGRA}','${data.HORGRA}')">Eliminar <i class="fa-solid fa-trash"></i></a>
                                         </div>
                                     </div>`;
-                  } else {
-                    buttons = `<div class="dropdown text-end">
+                    } else {
+                      buttons = `<div class="dropdown text-end">
                                         <button class="btn btn-light p-1" type="button" data-coreui-toggle="dropdown" aria-haspopup="true"
                                             aria-expanded="false">
                                             <i class="fa-solid fa-ellipsis-vertical fs-5"></i>
@@ -403,22 +406,22 @@
                                             <a class="dropdown-item fw-bold text-danger" onclick="deleteConfirm('${data.NUMREQ}','${data.FECGRA}','${data.HORGRA}')">Eliminar <i class="fa-solid fa-trash"></i></a>
                                         </div>
                                     </div>`;
-                  }
-                  break;
-                default:
-                  if (perfac == 'S') {
-                    let buttonsMarcar2 = '';
-                    if (data.RECIBI.toLowerCase().includes(user.toLowerCase())) {
-                      buttonsMarcar2 = `<a class="dropdown-item fw-bold" onclick="checkReq('${data.NUMREQ}','${data.FECGRA}','${data.HORGRA}')">Marcar recibido &nbsp;&nbsp;<i class="fa-solid fa-square-check"></i></a>`;
                     }
-                    let buttonsEliminar = '';
-                    if (data.ENTREG.toLowerCase().includes(user.toLowerCase())) {
-                      buttonsEliminar = `<a class="dropdown-item fw-bold" onclick="findReq('${data.NUMREQ}','${data.FECGRA}','${data.HORGRA}')">Editar <i class="fa-solid fa-pen-to-square"></i></a>
+                    break;
+                  default:
+                    if (perfac == 'S') {
+                      let buttonsMarcar2 = '';
+                      if (data.RECIBI.toLowerCase().includes(user.toLowerCase())) {
+                        buttonsMarcar2 = `<a class="dropdown-item fw-bold" onclick="checkReq('${data.NUMREQ}','${data.FECGRA}','${data.HORGRA}')">Marcar recibido &nbsp;&nbsp;<i class="fa-solid fa-square-check"></i></a>`;
+                      }
+                      let buttonsEliminar = '';
+                      if (data.ENTREG.toLowerCase().includes(user.toLowerCase())) {
+                        buttonsEliminar = `<a class="dropdown-item fw-bold" onclick="findReq('${data.NUMREQ}','${data.FECGRA}','${data.HORGRA}')">Editar <i class="fa-solid fa-pen-to-square"></i></a>
                                   <a class="dropdown-item fw-bold text-danger" onclick="deleteConfirm('${data.NUMREQ}','${data.FECGRA}','${data.HORGRA}')">Eliminar <i class="fa-solid fa-trash"></i></a>`
-                    }
-                    if (row.IMAGEN == '') {
+                      }
+                      if (row.IMAGEN == '') {
 
-                      buttons = `<div class="dropdown text-end">
+                        buttons = `<div class="dropdown text-end">
                                               <button class="btn btn-light p-1" type="button" data-coreui-toggle="dropdown" aria-haspopup="true"
                                                   aria-expanded="false">
                                                   <i class="fa-solid fa-ellipsis-vertical fs-5"></i>
@@ -428,8 +431,8 @@
                                                   ${buttonsEliminar}
                                               </div>
                                           </div>`;
-                    } else {
-                      buttons = `<div class="dropdown text-end">
+                      } else {
+                        buttons = `<div class="dropdown text-end">
                                               <button class="btn btn-light p-1" type="button" data-coreui-toggle="dropdown" aria-haspopup="true"
                                                   aria-expanded="false">
                                                   <i class="fa-solid fa-ellipsis-vertical fs-5"></i>
@@ -440,13 +443,13 @@
                                                   ${buttonsEliminar}
                                               </div>
                                           </div>`;
-                    }
-                  } else {
-                    let buttonsMarcar = '';
-                    if (row.IMAGEN == '') {
-                      if (row.ESTADO == 0) {
-                        if (data.RECIBI.toLowerCase().includes(user.toLowerCase())) {
-                          buttons = `<div class="dropdown text-end">
+                      }
+                    } else {
+                      let buttonsMarcar = '';
+                      if (row.IMAGEN == '') {
+                        if (row.ESTADO == 0) {
+                          if (data.RECIBI.toLowerCase().includes(user.toLowerCase())) {
+                            buttons = `<div class="dropdown text-end">
                                               <button class="btn btn-light p-1" type="button" data-coreui-toggle="dropdown" aria-haspopup="true"
                                                   aria-expanded="false">
                                                   <i class="fa-solid fa-ellipsis-vertical fs-5"></i>
@@ -455,16 +458,16 @@
                                                   <a class="dropdown-item fw-bold" onclick="checkReq('${data.NUMREQ}','${data.FECGRA}','${data.HORGRA}')">Marcar recibido &nbsp;&nbsp;<i class="fa-solid fa-square-check"></i></a>
                                               </div>
                                           </div>`;
+                          }
+
+
                         }
-
-
-                      }
-                    } else {
-                      if (data.RECIBI.toLowerCase().includes(user.toLowerCase())) {
-                        buttonsMarcar = ` <a class="dropdown-item fw-bold" onclick="checkReq('${data.NUMREQ}','${data.FECGRA}','${data.HORGRA}')">Marcar recibido &nbsp;&nbsp;<i class="fa-solid fa-square-check"></i></a>`;
-                      }
-                      if (row.ESTADO == 0) {
-                        buttons = `<div class="dropdown text-end">
+                      } else {
+                        if (data.RECIBI.toLowerCase().includes(user.toLowerCase())) {
+                          buttonsMarcar = ` <a class="dropdown-item fw-bold" onclick="checkReq('${data.NUMREQ}','${data.FECGRA}','${data.HORGRA}')">Marcar recibido &nbsp;&nbsp;<i class="fa-solid fa-square-check"></i></a>`;
+                        }
+                        if (row.ESTADO == 0) {
+                          buttons = `<div class="dropdown text-end">
                                             <button class="btn btn-light p-1" type="button" data-coreui-toggle="dropdown" aria-haspopup="true"
                                                 aria-expanded="false">
                                                 <i class="fa-solid fa-ellipsis-vertical fs-5"></i>
@@ -474,8 +477,8 @@
                                                 <a class="dropdown-item fw-bold" onclick="showImg('${data.IMAGEN}','${data.FECGRA}','${data.HORGRA}','${data.USUREC}','${data.FECREC}','${data.HORREC}','${data.ESTADO}')">Ver imagen <i class="fa-solid fa-images"></i></a>
                                             </div>
                                         </div>`;
-                      } else {
-                        buttons = `<div class="dropdown text-end">
+                        } else {
+                          buttons = `<div class="dropdown text-end">
                                             <button class="btn btn-light p-1" type="button" data-coreui-toggle="dropdown" aria-haspopup="true"
                                                 aria-expanded="false">
                                                 <i class="fa-solid fa-ellipsis-vertical fs-5"></i>
@@ -484,13 +487,13 @@
                                                 <a class="dropdown-item fw-bold" onclick="showImg('${data.IMAGEN}','${data.FECGRA}','${data.HORGRA}','${data.USUREC}','${data.FECREC}','${data.HORREC}','${data.ESTADO}')">Ver imagen <i class="fa-solid fa-images"></i></a>
                                             </div>
                                         </div>`;
+                        }
                       }
                     }
-                  }
 
 
-                  break;
-              }
+                    break;
+                }
               }
               return buttons;
             },
@@ -503,14 +506,12 @@
               }
               return ` `;
             },
-          },
-
-          ],
+          }],
           "rowCallback": function (row, data, index) {
-                if (data.ADVER == 1) {
-                    $(row).addClass('bg-adver');
-                }
-            },
+            if (data.ADVER == 1) {
+              $(row).addClass('bg-adver');
+            }
+          },
           dom: 'tip',
         });
       }, 50);
@@ -688,14 +689,15 @@
       btn.addClass('btn-warning');
       btn.addClass('d-none');
       $("#facturaDiv").empty();
-        $("#facturaDiv").append(` <label for="descrp" class="form-control border border-0">Descripción <span
+      $("#facturaDiv").append(` <label for="descrp" class="form-control border border-0">Descripción <span
                   class="text-danger">(*)</span></label>
               <textarea id="descrp" placeholder="Ingrese una descripcion de la Factura" class="form-control" rows="5"
                 style="height:150px; resize: none;"></textarea>`);
       reqModalLabel.innerHTML = 'Actualizar una Factura';
       footerModal.innerHTML =
         `<button type="button" class="btn btn-secondary text-white fw-bold" data-bs-dismiss="modal">Cerrar</button>
-                                    <button type="button" class="btn btn-primary text-white fw-bold" onclick="updateReq()">Actualizar</button>`;
+                                    <button type="button" id="btnSend" class="btn btn-primary text-white fw-bold" onclick="updateReq()">Actualizar</button>
+                                    <button type="button" id="btnLoad" class="btn btn-primary text-white fw-bold d-none" style="width:100px !important;"><i class="fa-solid fa-spinner fa-spin"></i></button>`;
       box1.innerHTML = ``;
       /*ENCONTRANDO*/
       let url = `/API.LovablePHP/ZLO0033P/Find/?numreq=${numreq}&fecgra=${fecgra}&horgra=${horgra}`;
@@ -718,19 +720,19 @@
           document.getElementById('descrp').value = req.DESCRP;
           document.getElementById('entrega').value = req.ENTREG;
           $("#recibi").val(req.RECIBI).trigger('change');
-          $("#isrepet").prop("disabled",false);
+          $("#isrepet").prop("disabled", false);
           document.getElementById('isrepet').checked = false;
-          if(req.ESREPE==1){
+          if (req.ESREPE == 1) {
             $("#isrepet").trigger("click")
             $("#btnEditar").removeClass("d-none");
-           setTimeout(() => {
-            $("#cbbDescrip").val(req.DESCRP2);
-            $("#cbbDescrip_flexselect").val(req.DESCRP2);
-            $("#valor").val(req.VALOR);
-            $("#txtEditar").val(req.DESCRP2);
-           }, 1000);
+            setTimeout(() => {
+              $("#cbbDescrip").val(req.DESCRP2);
+              $("#cbbDescrip_flexselect").val(req.DESCRP2);
+              $("#valor").val(req.VALOR);
+              $("#txtEditar").val(req.DESCRP2);
+            }, 1000);
           }
-          $("#isrepet").prop("disabled",true);
+          $("#isrepet").prop("disabled", true);
           if (req.IMAGEN != '') {
             if (req.IMAGEN.includes('pdf')) {
               let pdf = document.createElement('embed');
@@ -808,17 +810,17 @@
       }
       let check = document.getElementById('isrepet');
       let isrepet = (check.checked) ? 1 : 0;
-      let cia = 1; let valor = 0; let descrpOriginal="";
+      let cia = 1; let valor = 0; let descrpOriginal = "";
       if (isrepet == 1) {
         valor = document.getElementById('valor').value;
         descrpOriginal = document.getElementById('txtEditar').value;
-        if (descrp=="") {
+        if (descrp == "") {
           //const cbb = document.getElementById('cbbDescrip');
           //descrp = cbb.options[cbb.selectedIndex].text;
           descrp = $("#cbbDescrip_flexselect").val();
         }
       }
-      if (nreq == '' || fecha == ''  || entrega == '') {
+      if (nreq == '' || fecha == '' || entrega == '') {
         lblError.classList.remove('d-none');
       } else {
         lblError.classList.add('d-none');
@@ -830,7 +832,7 @@
           nord: (nord == '') ? 0 : nord,
           fecha: formatFecha(fecha, 0),
           descrp: descrp,
-          descrpOriginal:descrpOriginal,
+          descrpOriginal: descrpOriginal,
           cia: cia,
           valor: valor,
           isrepet: isrepet,
@@ -858,22 +860,28 @@
     }
 
     function fetchData(url, dataSave) {
-      fetch(url, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(dataSave)
-      }).then(response => {
-        return response.json();
-      }).then(data => {
-        if (data.code == 200) {
-          $('#reqModal').modal('hide');
-          $('#mainTable').DataTable().ajax.reload();
-        } else {
-          console.log(data.message);
-        }
-      });
+      $("#btnSend").addClass("d-none");
+      $("#btnLoad").removeClass("d-none");
+      setTimeout(() => {
+        fetch(url, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(dataSave)
+        }).then(response => {
+          return response.json();
+        }).then(data => {
+          if (data.code == 200) {
+            $("#btnSend").removeClass("d-none");
+            $("#btnLoad").addClass("d-none");
+            $('#reqModal').modal('hide');
+            $('#mainTable').DataTable().ajax.reload();
+          } else {
+            console.log(data.message);
+          }
+        });
+      }, 500);
     }
 
     function blobToBase64(blob, callback) {
@@ -942,17 +950,21 @@
       fechaGra.innerHTML = fecha;
       horaGra.innerHTML = hora;
       if (imagen.includes('pdf')) {
-        let pdf = document.createElement('embed');
-        pdf.src = `http://172.16.15.20${imagen}`;
-        pdf.style.width = '100%';
-        pdf.style.height = '70vh';
-        box2.innerHTML = '';
-        box2.appendChild(pdf);
+        if (/Mobi|Android/i.test(navigator.userAgent)) {
+          window.open(`http://172.16.15.20${imagen}`, '_blank');
+        } else {
+          let pdf = document.createElement('embed');
+          pdf.src = `http://172.16.15.20${imagen}#zoom=125`;
+          pdf.style.width = '100%';
+          pdf.style.height = '85vh';
+          box2.innerHTML = '';
+          box2.appendChild(pdf);
+        }
       } else {
         let img = document.createElement('img');
         img.src = `http://172.16.15.20${imagen}`;
         img.style.width = '100%';
-        img.style.height = '70vh';
+        img.style.height = '85vh';
         box2.innerHTML = '';
         box2.appendChild(img);
       }
@@ -1033,7 +1045,7 @@
                 <div class="col-3 d-flex justify-content-end">
                   <button class="btn btn-info fw-bold text-white w-100 d-none" id="btnAgregar">Agregar una
                     nueva</button>
-                    <button class="btn btn-warning fw-bold text-white w-100 d-none" id="btnEditar">Editar</button>
+                  <button class="btn btn-warning fw-bold text-white w-100 d-none" id="btnEditar">Editar</button>
                 </div>
               </div>
             </div>
@@ -1074,7 +1086,7 @@
     </div>
   </div>
   <div class="modal fade" id="imgModal" tabindex="-1" aria-labelledby="reqModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-fullscreen">
       <div class="modal-content">
         <div class="modal-header">
           <h1 class="modal-title fs-6">
@@ -1083,7 +1095,7 @@
           </h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div class="modal-body" style="height:85vh;">
+        <div class="modal-body" style="height:95vh;">
           <div class="row">
             <div class="col-12 text-center" id="box2">
 

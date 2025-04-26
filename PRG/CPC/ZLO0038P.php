@@ -79,7 +79,9 @@
                 <div class="card border border-0">
                   <div class="card-body border border-0">
                     <div class="row ">
-                      <div class="col-12 text-center fw-bold my-3"><h4>COMPARATIVO POR AGRUPACIÓN</h4></div>
+                      <div class="col-12 text-center fw-bold my-3">
+                        <h4>COMPARATIVO POR AGRUPACIÓN</h4>
+                      </div>
                       <div class="col-12">
                         <figure class="highcharts-figure">
                           <div id="container10" class="highcharts-dark text-white Math.rounded"></div>
@@ -87,12 +89,14 @@
                       </div>
                       <div class="col-12">
                         <div class="row w-100 my-5">
-                          <div class="col-12 text-center fw-bold"><h4>COMPARATIVO POR TIENDA</h4></div>
+                          <div class="col-12 text-center fw-bold">
+                            <h4>COMPARATIVO POR TIENDA</h4>
+                          </div>
                           <div class="col-4"></div>
                           <div class="col-4">
-                          <select class="form-select mt-1 fw-bold" id="cbbAgrupTienda">
+                            <select class="form-select mt-1 fw-bold" id="cbbAgrupTienda">
 
-                          </select>
+                            </select>
                           </div>
                           <div class="col-4"></div>
                         </div>
@@ -148,22 +152,24 @@
             </div>
             <div class="row">
               <div class="col-12 d-flex justify-content-end">
-              <div class="d-none" id="divCXP">
-              <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle text-white fw-bold" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <i class="fa-solid fa-gear"></i> Configuraciones
-                </button>
-                <ul class="dropdown-menu">
-                  <li><button type="button" class="btn btn-light fs-6 text-center mb-3 me-3" onclick="showClients()" ;
-                  style="width:100%;">
-                      <i class="fa-solid fa-user me-1"></i><b>Otros clientes</b>
-                    </button></li>
-                  <li><button type="button" class="btn btn-light fs-6 text-center mb-3" style="width:250px;" onclick="showDocs()">
-                      <i class="fa-solid fa-book me-1"></i><b>Tipo de documentos</b>
-                    </button></li>
-                </ul>
-              </div>
-              </div>
+                <div class="d-none" id="divCXP">
+                  <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle text-white fw-bold" type="button"
+                      data-bs-toggle="dropdown" aria-expanded="false">
+                      <i class="fa-solid fa-gear"></i> Configuraciones
+                    </button>
+                    <ul class="dropdown-menu">
+                      <li><button type="button" class="btn btn-light fs-6 text-center mb-3 me-3" onclick="showClients()"
+                          ; style="width:100%;">
+                          <i class="fa-solid fa-user me-1"></i><b>Otros clientes</b>
+                        </button></li>
+                      <li><button type="button" class="btn btn-light fs-6 text-center mb-3" style="width:250px;"
+                          onclick="showDocs()">
+                          <i class="fa-solid fa-book me-1"></i><b>Tipo de documentos</b>
+                        </button></li>
+                    </ul>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -174,14 +180,15 @@
   <script src="https://code.highcharts.com/highcharts.js"></script>
   <script src="https://code.highcharts.com/modules/exporting.js"></script>
   <script src="https://code.highcharts.com/modules/export-data.js"></script>
+  <script src="https://code.highcharts.com/modules/offline-exporting.js"></script>
   <script src="https://code.highcharts.com/modules/accessibility.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script>
     let compras = []; let retenciones = []; let notaDebito = []; let abonoCuentas = []; let notaCredito = []; let saldoCuentas = [];
-    var table =null; var table2 =null; let optgroupstiendas="";
+    var table = null; var table2 = null; let optgroupstiendas = "";
     document.addEventListener('DOMContentLoaded', function () {
-      const percxp= '<?php echo isset($_SESSION['PERCXP'])? $_SESSION['PERCXP']:''; ?>';
-      if(percxp=='S'){
+      const percxp = '<?php echo isset($_SESSION['PERCXP']) ? $_SESSION['PERCXP'] : ''; ?>';
+      if (percxp == 'S') {
         $("#divCXP").removeClass('d-none');
       }
 
@@ -252,184 +259,185 @@
       });
 
 
-        $('#tbClientesList thead th').each(function() {
-            var title = $(this).text();
-            $(this).html(title +
-                '<br /><input type="text"  oninput="this.value = this.value.toUpperCase()" class="form-control mt-2"/>'
-                );
-        });
-         table = $('#tbClientesList').DataTable({
-            language: {
-                url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json',
-            },
-            "pageLength": 10,
-            "processing": true,
-            "serverSide": true,
-            "ajax": {
-                "url": "/API.LovablePHP/ZLO0038PB/GetClientsList/",
-                "type": "POST",
-                "complete": function(xhr) {
-                },
-                error: function(xhr, status, error) {
-                    console.log(error);
-                    requestError = true;
-                }
-            },
-            "ordering": false,
-            "dom": 'rtip',
-            "columns": [{
-                    "data": "MAEC19",
-                    render: function(data) {
-                        return data.padStart(2, '0');
-                    }
-                },
-                {
-                    "data": "MAENU3",
-                    render: function(data) {
-                        return data.padStart(4, '0');
-                    }
-                },
-                {
-                    "data": "MAENO4"
-                },
-            ],
-            "drawCallback": function() {
-                $('#tbClientesList tbody tr').on('click', function() {
-                    sendClientes(this);
-                });
-            }
-        });
-        $('#tbClientesList thead input').on('keyup', function() {
-            var columnIndex = $(this).parent().index();
-            var inputValue = $(this).val().trim();
+      $('#tbClientesList thead th').each(function () {
+        var title = $(this).text();
+        $(this).html(title +
+          '<br /><input type="text"  oninput="this.value = this.value.toUpperCase()" class="form-control mt-2"/>'
+        );
+      });
+      table = $('#tbClientesList').DataTable({
+        language: {
+          url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json',
+        },
+        "pageLength": 10,
+        "processing": true,
+        "serverSide": true,
+        "ajax": {
+          "url": "/API.LovablePHP/ZLO0038P/GetClientsList/",
+          "type": "POST",
+          "complete": function (xhr) {
+          },
+          error: function (xhr, status, error) {
+            console.log(error);
+            requestError = true;
+          }
+        },
+        "ordering": false,
+        "dom": 'rtip',
+        "columns": [{
+          "data": "MAEC19",
+          render: function (data) {
+            return data.padStart(2, '0');
+          }
+        },
+        {
+          "data": "MAENU3",
+          render: function (data) {
+            return data.padStart(4, '0');
+          }
+        },
+        {
+          "data": "MAENO4"
+        },
+        ],
+        "drawCallback": function () {
+          $('#tbClientesList tbody tr').on('click', function () {
+            sendClientes(this);
+          });
+        }
+      });
+      $('#tbClientesList thead input').on('keyup', function () {
+        var columnIndex = $(this).parent().index();
+        var inputValue = $(this).val().trim();
 
-            if (table.column(columnIndex).search() !== inputValue) {
-                table
-                    .column(columnIndex)
-                    .search(inputValue)
-                    .draw();
-            }
-        });
+        if (table.column(columnIndex).search() !== inputValue) {
+          table
+            .column(columnIndex)
+            .search(inputValue)
+            .draw();
+        }
+      });
 
 
-        $('#tbDocumentosList thead th').each(function() {
-            var title = $(this).text();
-            $(this).html(title +
-                '<br /><input type="text"  oninput="this.value = this.value.toUpperCase()" class="form-control mt-2"/>'
-                );
-        });
-         table2 = $('#tbDocumentosList').DataTable({
-            language: {
-                url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json',
-            },
-            "pageLength": 10,
-            "processing": true,
-            "serverSide": true,
-            "ajax": {
-                "url": "/API.LovablePHP/ZLO0038PB/GetDocumentosList/",
-                "type": "POST",
-                "complete": function(xhr) {
-                },
-                error: function(xhr, status, error) {
-                    console.log(error);
-                    requestError = true;
-                }
-            },
-            "ordering": false,
-            "dom": 'rtip',
-            "columns": [
-                {
-                    "data": "TIPTI1"
-                },
-                {
-                    "data": "TIPDE3"
-                },
-            ],
-            "drawCallback": function() {
-                $('#tbDocumentosList tbody tr').on('click', function() {
-                  sendDocumentos(this);
-                });
-            }
-        });
-        $('#tbDocumentosList thead input').on('keyup', function() {
-            var columnIndex = $(this).parent().index();
-            var inputValue = $(this).val().trim();
+      $('#tbDocumentosList thead th').each(function () {
+        var title = $(this).text();
+        $(this).html(title +
+          '<br /><input type="text"  oninput="this.value = this.value.toUpperCase()" class="form-control mt-2"/>'
+        );
+      });
+      table2 = $('#tbDocumentosList').DataTable({
+        language: {
+          url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json',
+        },
+        "pageLength": 10,
+        "processing": true,
+        "serverSide": true,
+        "ajax": {
+          "url": "/API.LovablePHP/ZLO0038P/GetDocumentosList/",
+          "type": "POST",
+          "complete": function (xhr) {
+          },
+          error: function (xhr, status, error) {
+            console.log(error);
+            requestError = true;
+          }
+        },
+        "ordering": false,
+        "dom": 'rtip',
+        "columns": [
+          {
+            "data": "TIPTI1"
+          },
+          {
+            "data": "TIPDE3"
+          },
+        ],
+        "drawCallback": function () {
+          $('#tbDocumentosList tbody tr').on('click', function () {
+            sendDocumentos(this);
+          });
+        }
+      });
+      $('#tbDocumentosList thead input').on('keyup', function () {
+        var columnIndex = $(this).parent().index();
+        var inputValue = $(this).val().trim();
 
-            if (table2.column(columnIndex).search() !== inputValue) {
-                table2
-                    .column(columnIndex)
-                    .search(inputValue)
-                    .draw();
-            }
-        });
+        if (table2.column(columnIndex).search() !== inputValue) {
+          table2
+            .column(columnIndex)
+            .search(inputValue)
+            .draw();
+        }
+      });
 
     });
-    function exportExcel1 (agrup,ano){
-        document.getElementById('loaderExcel').classList.remove('d-none');
-        var url = `/API.LovablePHP/ZLO0038PB/ExportExcel1/?agrup=${agrup}&ano=${ano}`;
-        fetch(url)
-          .then(response => response.blob())
-          .then(blob => {
-            var tempUrl = window.URL.createObjectURL(blob);
-            var a = document.createElement('a');
-            a.href = tempUrl;
-            a.download =
-              `Reporte-Facturacion-${ano}.xlsx`;
-            document.body.appendChild(a);
-            a.click();
-            window.URL.revokeObjectURL(tempUrl);
-            a.remove();
-            document.getElementById('loaderExcel').classList.add('d-none');
-          })
-          .catch(error => {
-            console.error('Hubo un problema con la petición Fetch:', error);
-          });
+    function exportExcel1(agrup, ano) {
+      document.getElementById('loaderExcel').classList.remove('d-none');
+      var url = `/API.LovablePHP/ZLO0038P/ExportExcel1/?agrup=${agrup}&ano=${ano}`;
+      console.log(url)
+      fetch(url)
+        .then(response => response.blob())
+        .then(blob => {
+          var tempUrl = window.URL.createObjectURL(blob);
+          var a = document.createElement('a');
+          a.href = tempUrl;
+          a.download =
+            `Reporte-Facturacion-${ano}.xlsx`;
+          document.body.appendChild(a);
+          a.click();
+          window.URL.revokeObjectURL(tempUrl);
+          a.remove();
+          document.getElementById('loaderExcel').classList.add('d-none');
+        })
+        .catch(error => {
+          console.error('Hubo un problema con la petición Fetch:', error);
+        });
     }
-    function exportExcel2(agrup,ano){
-        document.getElementById('loaderExcel').classList.remove('d-none');
-        var url = `/API.LovablePHP/ZLO0038PB/ExportExcel2/?agrup=${agrup}&ano=${ano}`;
-        fetch(url)
-          .then(response => response.blob())
-          .then(blob => {
-            var tempUrl = window.URL.createObjectURL(blob);
-            var a = document.createElement('a');
-            a.href = tempUrl;
-            a.download =
-              `Reporte-SaldosCXC-${ano}.xlsx`;
-            document.body.appendChild(a);
-            a.click();
-            window.URL.revokeObjectURL(tempUrl);
-            a.remove();
-            document.getElementById('loaderExcel').classList.add('d-none');
-          })
-          .catch(error => {
-            console.error('Hubo un problema con la petición Fetch:', error);
-          });
+    function exportExcel2(agrup, ano) {
+      document.getElementById('loaderExcel').classList.remove('d-none');
+      var url = `/API.LovablePHP/ZLO0038P/ExportExcel2/?agrup=${agrup}&ano=${ano}`;
+      fetch(url)
+        .then(response => response.blob())
+        .then(blob => {
+          var tempUrl = window.URL.createObjectURL(blob);
+          var a = document.createElement('a');
+          a.href = tempUrl;
+          a.download =
+            `Reporte-SaldosCXC-${ano}.xlsx`;
+          document.body.appendChild(a);
+          a.click();
+          window.URL.revokeObjectURL(tempUrl);
+          a.remove();
+          document.getElementById('loaderExcel').classList.add('d-none');
+        })
+        .catch(error => {
+          console.error('Hubo un problema con la petición Fetch:', error);
+        });
     }
     function sendClientes(row) {
-        var tr = $(row).closest('tr');
-        var tds = tr.find('td');
-        var desc = tds.eq(2).text();
-        var tipo = tds.eq(0).text();
-        var id = tds.eq(1).text();
-        tipo = tipo.padStart(2, '0');
-        id = id.padStart(4, '0');
-        codigo = tipo + '-' + id;
-        $("#clienteId").val(codigo);
-        $("#clienteInput").val(tipo + ' ' + id + ' ' + desc);
-        $("#modalClientes").modal('hide');
-        $("#clientsModal").modal('show');
-        saveClients();
+      var tr = $(row).closest('tr');
+      var tds = tr.find('td');
+      var desc = tds.eq(2).text();
+      var tipo = tds.eq(0).text();
+      var id = tds.eq(1).text();
+      tipo = tipo.padStart(2, '0');
+      id = id.padStart(4, '0');
+      codigo = tipo + '-' + id;
+      $("#clienteId").val(codigo);
+      $("#clienteInput").val(tipo + ' ' + id + ' ' + desc);
+      $("#modalClientes").modal('hide');
+      $("#clientsModal").modal('show');
+      saveClients();
     }
     function sendDocumentos(row) {
-        var tr = $(row).closest('tr');
-        var tds = tr.find('td');
-        var desc = tds.eq(1).text();
-        var tipo = tds.eq(0).text();
-        $("#docuId").val(tipo);
-        $("#modalDocumentos").modal('hide');
-        $("#documentsModal").modal('show');
-        saveDocuments();
+      var tr = $(row).closest('tr');
+      var tds = tr.find('td');
+      var desc = tds.eq(1).text();
+      var tipo = tds.eq(0).text();
+      $("#docuId").val(tipo);
+      $("#modalDocumentos").modal('hide');
+      $("#documentsModal").modal('show');
+      saveDocuments();
     }
 
     function showClientes() {
@@ -447,34 +455,34 @@
     function chargeTable1(agrup, ano) {
       $("#loaderData").removeClass('d-none');
       $("#tablesFacturacion").empty();
-      let valorMon="";
+      let valorMon = "";
       switch (agrup) {
         case '11':
         case '9':
-          valorMon="LEMPIRAS";
+          valorMon = "LEMPIRAS";
           break;
         default:
-          valorMon="DÓLARES";
+          valorMon = "DÓLARES";
           break;
       }
-      const urlTiendas=`http://172.16.15.20/API.LovablePHP/ZLO0038PB/ListTiendas/?agrup=${agrup}`;
+      const urlTiendas = `http://172.16.15.20/API.LovablePHP/ZLO0038P/ListTiendas/?agrup=${agrup}`;
       fetch(urlTiendas)
         .then(response => response.json())
         .then(data => {
           if (data.code == 200) {
-            optgroupstiendas="";
-            data.data.map((tienda)=>{
+            optgroupstiendas = "";
+            data.data.map((tienda) => {
               optgroupstiendas +=
-                    `<option value="${tienda.CODCIA}">${tienda.NOMCIA}</option>`;
+                `<option value="${tienda.CODCIA}">${tienda.NOMCIA}</option>`;
             });
             $("#cbbAgrupTienda").empty();
             $("#cbbAgrupTienda").append(optgroupstiendas);
           }
         }
-      );
+        );
 
       for (let j = ano; j >= (ano - 5); j--) {
-      $("#tablesFacturacion").append(`
+        $("#tablesFacturacion").append(`
                  <div class="row">
                   <div class="col-12 col-lg-6">
                     <button type="button" onclick="exportExcel1('${agrup}','${j}')" class="btn btn-success text-light fs-6 text-center mb-3"
@@ -525,49 +533,49 @@
 
                   </tbody>
                 </table>`);
-      let response1 = [];
-      const url = `http://172.16.15.20/API.LovablePHP/ZLO0038PB/ListFac1/?agrup=${agrup}&ano=${j}`;
-      fetch(url)
-        .then(response => response.json())
-        .then(data => {
-          if (data.code == 200 || data.code==500) {
-            $(`#lblCia${j}`).text($("#cbbAgrup").find('option:selected').text());
-            $(`#lblano${j}`).text(j);
-            const responseData = data.data;
-            response1 = responseData;
-            const table1 = $(`#tableFacturacion${j}Detalle`);
-            table1.empty();
-            const anoActual = new Date().getFullYear();
-            const mesActual = new Date().getMonth();
-            let mesprom = 0;
-            if (anoActual != ano) {
-              mesprom = 12;
-            } else {
-              mesprom = mesActual + 1;
-            }
-            const totales = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-            responseData.forEach(element => {
-              let total = 0;
-              let promedio = 0;
-              total = parseFloat(element.ENE) + parseFloat(element.FEB) + parseFloat(element.MAR) + parseFloat(
-                element.ABR) + parseFloat(element.MAY) + parseFloat(element.JUN) + parseFloat(element.JUL) +
-                parseFloat(element.AGO) + parseFloat(element.SEP) + parseFloat(element.OCT) + parseFloat(element
-                  .NOV) + parseFloat(element.DIC);
-              promedio = total / mesprom;
-              totales[0] += parseFloat(element.ENE);
-              totales[1] += parseFloat(element.FEB);
-              totales[2] += parseFloat(element.MAR);
-              totales[3] += parseFloat(element.ABR);
-              totales[4] += parseFloat(element.MAY);
-              totales[5] += parseFloat(element.JUN);
-              totales[6] += parseFloat(element.JUL);
-              totales[7] += parseFloat(element.AGO);
-              totales[8] += parseFloat(element.SEP);
-              totales[9] += parseFloat(element.OCT);
-              totales[10] += parseFloat(element.NOV);
-              totales[11] += parseFloat(element.DIC);
-              totales[12] += total;
-              table1.append(`<tr>
+        let response1 = [];
+        const url = `http://172.16.15.20/API.LovablePHP/ZLO0038P/ListFac1/?agrup=${agrup}&ano=${j}`;
+        fetch(url)
+          .then(response => response.json())
+          .then(data => {
+            if (data.code == 200 || data.code == 500) {
+              $(`#lblCia${j}`).text($("#cbbAgrup").find('option:selected').text());
+              $(`#lblano${j}`).text(j);
+              const responseData = data.data;
+              response1 = responseData;
+              const table1 = $(`#tableFacturacion${j}Detalle`);
+              table1.empty();
+              const anoActual = new Date().getFullYear();
+              const mesActual = new Date().getMonth();
+              let mesprom = 0;
+              if (anoActual != ano) {
+                mesprom = 12;
+              } else {
+                mesprom = mesActual + 1;
+              }
+              const totales = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+              responseData.forEach(element => {
+                let total = 0;
+                let promedio = 0;
+                total = parseFloat(element.ENE) + parseFloat(element.FEB) + parseFloat(element.MAR) + parseFloat(
+                  element.ABR) + parseFloat(element.MAY) + parseFloat(element.JUN) + parseFloat(element.JUL) +
+                  parseFloat(element.AGO) + parseFloat(element.SEP) + parseFloat(element.OCT) + parseFloat(element
+                    .NOV) + parseFloat(element.DIC);
+                promedio = total / mesprom;
+                totales[0] += parseFloat(element.ENE);
+                totales[1] += parseFloat(element.FEB);
+                totales[2] += parseFloat(element.MAR);
+                totales[3] += parseFloat(element.ABR);
+                totales[4] += parseFloat(element.MAY);
+                totales[5] += parseFloat(element.JUN);
+                totales[6] += parseFloat(element.JUL);
+                totales[7] += parseFloat(element.AGO);
+                totales[8] += parseFloat(element.SEP);
+                totales[9] += parseFloat(element.OCT);
+                totales[10] += parseFloat(element.NOV);
+                totales[11] += parseFloat(element.DIC);
+                totales[12] += total;
+                table1.append(`<tr>
                     <td class="sticky-col border border-dark bgYellow text-darkblue fw-bold"><span>${element.NOMCIA}<br> </span><span>${element.CODCL1.padStart(2, "0")}&nbsp;-&nbsp;${element.CODCL2.padStart(4, "0")} </span></td>
                     <td class="border border-dark bgYellowSoft text-darkblue fnumber">${(element.ENE == 0) ? "" : parseFloat(element.ENE).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
                     <td class="border border-dark bgYellowSoft text-darkblue fnumber">${(element.FEB == 0) ? "" : parseFloat(element.FEB).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
@@ -584,9 +592,9 @@
                     <td class="border border-dark text-darkblue fnumber">${(total == 0) ? "" : parseFloat(total).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
                     <td class="border border-dark bgOrangeSoft text-darkblue fnumber">${(promedio == 0) ? "" : parseFloat(promedio).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
                   </tr>`);
-            });
-            totales[13] = totales[12] / mesprom;
-            table1.append(`<tr>
+              });
+              totales[13] = totales[12] / mesprom;
+              table1.append(`<tr>
                     <td class="sticky-col border border-dark bgGreen text-darkblue fw-bold">TOTALES</td>
                     <td class="border border-dark bgGreenSoft text-darkblue fnumber">${(totales[0] == 0) ? "" : parseFloat(totales[0]).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
                     <td class="border border-dark bgGreenSoft text-darkblue fnumber">${(totales[1] == 0) ? "" : parseFloat(totales[1]).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
@@ -603,17 +611,17 @@
                     <td class="border border-dark text-darkblue fnumber">${(totales[12] == 0) ? "" : parseFloat(totales[12]).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
                     <td class="border border-dark bgOrangeSoft text-darkblue fnumber">${(totales[13] == 0) ? "" : parseFloat(totales[13]).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
                   </tr>`);
-          }
-        })
+            }
+          })
       }
       chargeChart1(agrup, ano);
       setTimeout(() => {
-        chargeChartComp($("#cbbAgrupTienda").val(),ano);
+        chargeChartComp($("#cbbAgrupTienda").val(), ano);
       }, 2000);
     }
-    function chargeChartComp(agrup,ano){
-      let seriesData=[];
-      const url=`http://172.16.15.20/API.LovablePHP/ZLO0038PB/ListCompara2/?agrup=${agrup}&ano=${ano}`;
+    function chargeChartComp(agrup, ano) {
+      let seriesData = [];
+      const url = `http://172.16.15.20/API.LovablePHP/ZLO0038P/ListCompara2/?agrup=${agrup}&ano=${ano}`;
 
       fetch(url)
         .then(response => response.json())
@@ -640,150 +648,151 @@
             });
           }
         }
-      ).then(()=>{
-        Highcharts.chart('container1', {
-        chart: {
-          type: 'line',
-          height: 500,
-          style: {
-            color: '#FFFFFF'
-          }
-        },
-        lang: {
-          viewFullscreen: "Ver en pantalla completa",
-          exitFullscreen: "Salir de pantalla completa",
-          downloadJPEG: "Descargar imagen JPEG",
-          downloadPDF: "Descargar en PDF",
-        },
-        title: {
-          text: "FACTURACIÓN " + $("#cbbAgrupTienda").find('option:selected').text() + " 5 AÑOS ANTERIORES",
-          align: 'center',
-          style: {
-            color: '#FFFFFF'
-          }
-        },
-        xAxis: {
-          categories: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio',
-            'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
-          ],
-          labels: {
-            style: {
-              color: '#FFFFFF'
-            }
-          }
-        },
-        yAxis: {
-          title: {
-            text: ' ',
-            style: {
-              color: '#FFFFFF'
-            }
-          },
-          labels: {
-            style: {
-              color: '#FFFFFF'
-            }
-          }
-        },
-        tooltip: {
-          style: {
-            color: '#FFFFFF'
-          }
-        },
-        plotOptions: {
-          line: {
-            dataLabels: {
-              enabled: true,
-              format: '{y}',
+        ).then(() => {
+          Highcharts.chart('container1', {
+            chart: {
+              type: 'line',
+              height: 500,
               style: {
                 color: '#FFFFFF'
               }
             },
-            enableMouseTracking: true
-          }
-        },
-        series: seriesData,
-        credits: {
-          enabled: false
-        },
-        legend: {
-          itemStyle: {
-            color: '#FFFFFF'
-          }
-        },
-        exporting: {
-          buttons: {
-            contextButton: {
-              menuItems: ["viewFullscreen", "separator", "downloadJPEG", "downloadPDF"]
+            lang: {
+              viewFullscreen: "Ver en pantalla completa",
+              exitFullscreen: "Salir de pantalla completa",
+              downloadJPEG: "Descargar imagen JPEG",
+              downloadPDF: "Descargar en PDF",
             },
-            showAllButton: {
-              text: 'Mostrar todos',
-              onclick: function () {
-                this.series.forEach(function (series) {
-                  series.setVisible(true, false);
-                });
-                this.redraw();
-              },
-              theme: {
-                fill: 'white',
-                stroke: 'silver',
-                r: 0,
+            title: {
+              text: "FACTURACIÓN " + $("#cbbAgrupTienda").find('option:selected').text() + " 5 AÑOS ANTERIORES",
+              align: 'center',
+              style: {
+                color: '#FFFFFF'
+              }
+            },
+            xAxis: {
+              categories: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio',
+                'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
+              ],
+              labels: {
                 style: {
                   color: '#FFFFFF'
-                },
-                states: {
-                  hover: {
-                    fill: '#a4edba'
-                  },
-                  select: {
-                    stroke: '#039',
-                    fill: '#a4edba'
-                  }
                 }
               }
             },
-            removeAllButton: {
-              text: 'Quitar todos',
-              onclick: function () {
-                this.series.forEach(function (series) {
-                  series.setVisible(false, false);
-                });
-                this.redraw();
-              },
-              theme: {
-                fill: 'white',
-                stroke: 'silver',
-                r: 0,
+            yAxis: {
+              title: {
+                text: ' ',
                 style: {
                   color: '#FFFFFF'
-                },
-                states: {
-                  hover: {
-                    fill: '#a4edba'
-                  },
-                  select: {
-                    stroke: '#039',
-                    fill: '#a4edba'
-                  }
+                }
+              },
+              labels: {
+                style: {
+                  color: '#FFFFFF'
                 }
               }
+            },
+            tooltip: {
+              style: {
+                color: '#FFFFFF'
+              }
+            },
+            plotOptions: {
+              line: {
+                dataLabels: {
+                  enabled: true,
+                  format: '{y}',
+                  style: {
+                    color: '#FFFFFF'
+                  }
+                },
+                enableMouseTracking: true
+              }
+            },
+            series: seriesData,
+            credits: {
+              enabled: false
+            },
+            legend: {
+              itemStyle: {
+                color: '#FFFFFF'
+              }
+            },
+            exporting: {
+              buttons: {
+                contextButton: {
+                  menuItems: ["viewFullscreen", "separator", "downloadJPEG", "downloadPDF"]
+                },
+                showAllButton: {
+                  text: 'Mostrar todos',
+                  onclick: function () {
+                    this.series.forEach(function (series) {
+                      series.setVisible(true, false);
+                    });
+                    this.redraw();
+                  },
+                  theme: {
+                    fill: 'white',
+                    stroke: 'silver',
+                    r: 0,
+                    style: {
+                      color: '#FFFFFF'
+                    },
+                    states: {
+                      hover: {
+                        fill: '#a4edba'
+                      },
+                      select: {
+                        stroke: '#039',
+                        fill: '#a4edba'
+                      }
+                    }
+                  }
+                },
+                removeAllButton: {
+                  text: 'Quitar todos',
+                  onclick: function () {
+                    this.series.forEach(function (series) {
+                      series.setVisible(false, false);
+                    });
+                    this.redraw();
+                  },
+                  theme: {
+                    fill: 'white',
+                    stroke: 'silver',
+                    r: 0,
+                    style: {
+                      color: '#FFFFFF'
+                    },
+                    states: {
+                      hover: {
+                        fill: '#a4edba'
+                      },
+                      select: {
+                        stroke: '#039',
+                        fill: '#a4edba'
+                      }
+                    }
+                  }
+                }
+              },
+              enabled: true,
+              sourceWidth: 1600,
+              sourceHeight: 700,
+              chartOptions: {
+                chart: {
+                  backgroundColor: '#303030'
+                }
+              },
+              fallbackToExportServer: false
             }
-          },
-          enabled: true,
-          sourceWidth: 1600,
-          sourceHeight: 700,
-          chartOptions: {
-            chart: {
-              backgroundColor: '#303030'
-            }
-          }
-        }
-      });
-      });
+          });
+        });
     }
     function chargeChart1(agrup, ano) {
-      let seriesData=[];
-      const url = `http://172.16.15.20/API.LovablePHP/ZLO0038PB/ListCompara1/?agrup=${agrup}&ano=${ano}`;
+      let seriesData = [];
+      const url = `http://172.16.15.20/API.LovablePHP/ZLO0038P/ListCompara1/?agrup=${agrup}&ano=${ano}`;
       fetch(url)
         .then(response => response.json())
         .then(data => {
@@ -809,155 +818,156 @@
             });
           }
         }
-      ).then(()=>{
-        Highcharts.chart('container10', {
-        chart: {
-          type: 'line',
-          height: 500,
-          style: {
-            color: '#FFFFFF'
-          }
-        },
-        lang: {
-          viewFullscreen: "Ver en pantalla completa",
-          exitFullscreen: "Salir de pantalla completa",
-          downloadJPEG: "Descargar imagen JPEG",
-          downloadPDF: "Descargar en PDF",
-        },
-        title: {
-          text: "FACTURACIÓN " + $("#cbbAgrup").find('option:selected').text() + " 5 AÑOS ANTERIORES",
-          align: 'center',
-          style: {
-            color: '#FFFFFF'
-          }
-        },
-        xAxis: {
-          categories: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio',
-            'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
-          ],
-          labels: {
-            style: {
-              color: '#FFFFFF'
-            }
-          }
-        },
-        yAxis: {
-          title: {
-            text: ' ',
-            style: {
-              color: '#FFFFFF'
-            }
-          },
-          labels: {
-            style: {
-              color: '#FFFFFF'
-            }
-          }
-        },
-        tooltip: {
-          style: {
-            color: '#FFFFFF'
-          }
-        },
-        plotOptions: {
-          line: {
-            dataLabels: {
-              enabled: true,
-              format: '{y}',
+        ).then(() => {
+          Highcharts.chart('container10', {
+            chart: {
+              type: 'line',
+              height: 500,
               style: {
                 color: '#FFFFFF'
               }
             },
-            enableMouseTracking: true
-          }
-        },
-        series: seriesData,
-        credits: {
-          enabled: false
-        },
-        legend: {
-          itemStyle: {
-            color: '#FFFFFF'
-          }
-        },
-        exporting: {
-          buttons: {
-            contextButton: {
-              menuItems: ["viewFullscreen", "separator", "downloadJPEG", "downloadPDF"]
+            lang: {
+              viewFullscreen: "Ver en pantalla completa",
+              exitFullscreen: "Salir de pantalla completa",
+              downloadJPEG: "Descargar imagen JPEG",
+              downloadPDF: "Descargar en PDF",
             },
-            showAllButton: {
-              text: 'Mostrar todos',
-              onclick: function () {
-                this.series.forEach(function (series) {
-                  series.setVisible(true, false);
-                });
-                this.redraw();
-              },
-              theme: {
-                fill: 'white',
-                stroke: 'silver',
-                r: 0,
+            title: {
+              text: "FACTURACIÓN " + $("#cbbAgrup").find('option:selected').text() + " 5 AÑOS ANTERIORES",
+              align: 'center',
+              style: {
+                color: '#FFFFFF'
+              }
+            },
+            xAxis: {
+              categories: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio',
+                'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
+              ],
+              labels: {
                 style: {
                   color: '#FFFFFF'
-                },
-                states: {
-                  hover: {
-                    fill: '#a4edba'
-                  },
-                  select: {
-                    stroke: '#039',
-                    fill: '#a4edba'
-                  }
                 }
               }
             },
-            removeAllButton: {
-              text: 'Quitar todos',
-              onclick: function () {
-                this.series.forEach(function (series) {
-                  series.setVisible(false, false);
-                });
-                this.redraw();
-              },
-              theme: {
-                fill: 'white',
-                stroke: 'silver',
-                r: 0,
+            yAxis: {
+              title: {
+                text: ' ',
                 style: {
                   color: '#FFFFFF'
-                },
-                states: {
-                  hover: {
-                    fill: '#a4edba'
-                  },
-                  select: {
-                    stroke: '#039',
-                    fill: '#a4edba'
-                  }
+                }
+              },
+              labels: {
+                style: {
+                  color: '#FFFFFF'
                 }
               }
+            },
+            tooltip: {
+              style: {
+                color: '#FFFFFF'
+              }
+            },
+            plotOptions: {
+              line: {
+                dataLabels: {
+                  enabled: true,
+                  format: '{y}',
+                  style: {
+                    color: '#FFFFFF'
+                  }
+                },
+                enableMouseTracking: true
+              }
+            },
+            series: seriesData,
+            credits: {
+              enabled: false
+            },
+            legend: {
+              itemStyle: {
+                color: '#FFFFFF'
+              }
+            },
+            exporting: {
+              buttons: {
+                contextButton: {
+                  menuItems: ["viewFullscreen", "separator", "downloadJPEG", "downloadPDF"]
+                },
+                showAllButton: {
+                  text: 'Mostrar todos',
+                  onclick: function () {
+                    this.series.forEach(function (series) {
+                      series.setVisible(true, false);
+                    });
+                    this.redraw();
+                  },
+                  theme: {
+                    fill: 'white',
+                    stroke: 'silver',
+                    r: 0,
+                    style: {
+                      color: '#FFFFFF'
+                    },
+                    states: {
+                      hover: {
+                        fill: '#a4edba'
+                      },
+                      select: {
+                        stroke: '#039',
+                        fill: '#a4edba'
+                      }
+                    }
+                  }
+                },
+                removeAllButton: {
+                  text: 'Quitar todos',
+                  onclick: function () {
+                    this.series.forEach(function (series) {
+                      series.setVisible(false, false);
+                    });
+                    this.redraw();
+                  },
+                  theme: {
+                    fill: 'white',
+                    stroke: 'silver',
+                    r: 0,
+                    style: {
+                      color: '#FFFFFF'
+                    },
+                    states: {
+                      hover: {
+                        fill: '#a4edba'
+                      },
+                      select: {
+                        stroke: '#039',
+                        fill: '#a4edba'
+                      }
+                    }
+                  }
+                }
+              },
+              enabled: true,
+              sourceWidth: 1600,
+              sourceHeight: 700,
+              chartOptions: {
+                chart: {
+                  backgroundColor: '#303030'
+                }
+              },
+              fallbackToExportServer: false
             }
-          },
-          enabled: true,
-          sourceWidth: 1600,
-          sourceHeight: 700,
-          chartOptions: {
-            chart: {
-              backgroundColor: '#303030'
-            }
-          }
-        }
-      });
-      });
-     }
+          });
+        });
+    }
 
     function chargeTable2(agrup, ano) {
       $("#tablesCuentas").empty();
-      compras=[]; retenciones=[]; notaDebito=[];abonoCuentas=[];notaCredito=[];saldoCuentas=[];
+      compras = []; retenciones = []; notaDebito = []; abonoCuentas = []; notaCredito = []; saldoCuentas = [];
       for (let k = ano; k >= (ano - 5); k--) {
         let response2 = [];
-      const url = `http://172.16.15.20/API.LovablePHP/ZLO0038PB/ListFac2/?agrup=${agrup}&ano=${k}`;
-      $("#tablesCuentas").append(`<div class="row">
+        const url = `http://172.16.15.20/API.LovablePHP/ZLO0038P/ListFac2/?agrup=${agrup}&ano=${k}`;
+        $("#tablesCuentas").append(`<div class="row">
                   <div class="col-12 col-lg-6">
                     <button type="button" onclick="exportExcel2('${agrup}','${k}')" class="btn btn-success text-light fs-6 text-center mb-3"
                       style="width:280px;">
@@ -980,7 +990,7 @@
                     <tr>
                       <th colspan="1" class="border border-0 bg-white"></th>
                       <th colspan="5" class=" border border-dark align-middle bgGreen">
-                        <span class="fs-6 ">SALDO INICIAL "CUENTAS POR COBRAR" A LOVABLE DE HONDURAS</span>
+                        <span class="fs-6 ">SALDO INICIAL "CUENTAS POR COBRAR" LOVABLE DE HONDURAS</span>
                       </th>
                       <th colspan="2"
                         class=" border border-dark align-middle bgOrange text-darkblue fw-bold text-center">
@@ -1005,34 +1015,49 @@
 
                   </tbody>
                 </table>`);
-      let mesesCompras = []; let mesesRetenciones = []; let mesesNotaDebito = []; let mesesAbonoCuentas = []; let mesesNotaCredito = []; let mesesSaldoCuentas = [];
+        let mesesCompras = []; let mesesRetenciones = []; let mesesNotaDebito = []; let mesesAbonoCuentas = []; let mesesNotaCredito = []; let mesesSaldoCuentas = [];
         fetch(url)
-        .then(response => response.json())
-        .then(data => {
-          if (data.code == 200) {
-            $(`#lblCia2${k}`).text($("#cbbAgrup").find('option:selected').text());
-            const responseData = data.data;
-            response2 = responseData;
-            const table2 = $(`#tableCuentas${k}Detalle`);
-            table2.empty();
-            $(`#saldoIni${k}`).text(parseFloat(responseData.SALDO).toLocaleString('es-419', {
-              minimumFractionDigits: 2,
-              maximumFractionDigits: 2
-            }));
-            const meses = ["ENE", "FEB", "MAR", "ABR", "MAY", "JUN", "JUL", "AGO", "SEP", "OCT", "NOV", "DIC"];
-            let cont = 1;
-            meses.forEach(mes => {
-              let msg = "";
-              if (parseFloat(responseData[mes][6]) < 0) {
-                msg = "SALDO&nbsp;A&nbsp;FAVOR&nbsp;PARA&nbsp;E-COMMERCE";
-              }
-              mesesCompras.push(parseFloat(responseData[mes][1]));
-              mesesRetenciones.push(parseFloat(responseData[mes][2]));
-              mesesNotaDebito.push(parseFloat(responseData[mes][3]));
-              mesesAbonoCuentas.push(parseFloat(responseData[mes][4]));
-              mesesNotaCredito.push(parseFloat(responseData[mes][5]));
-              mesesSaldoCuentas.push(parseFloat(responseData[mes][6]));
-              table2.append(`<tr>
+          .then(response => response.json())
+          .then(data => {
+            if (data.code == 200) {
+              $(`#lblCia2${k}`).text($("#cbbAgrup").find('option:selected').text());
+              const responseData = data.data;
+              response2 = responseData;
+              const table2 = $(`#tableCuentas${k}Detalle`);
+              table2.empty();
+              $(`#saldoIni${k}`).text(parseFloat(responseData.SALDO).toLocaleString('es-419', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+              }));
+              const meses = ["ENE", "FEB", "MAR", "ABR", "MAY", "JUN", "JUL", "AGO", "SEP", "OCT", "NOV", "DIC"];
+              let cont = 1;
+              meses.forEach(mes => {
+                let msg = "";
+                if (parseFloat(responseData[mes][6]) < 0) {
+                  msg = "SALDO&nbsp;A&nbsp;FAVOR&nbsp;PARA&nbsp;E-COMMERCE";
+                }
+                mesesCompras.push(parseFloat(responseData[mes][1]));
+                mesesRetenciones.push(parseFloat(responseData[mes][2]));
+                mesesNotaDebito.push(parseFloat(responseData[mes][3]));
+                mesesAbonoCuentas.push(parseFloat(responseData[mes][4]));
+                mesesNotaCredito.push(parseFloat(responseData[mes][5]));
+                mesesSaldoCuentas.push(parseFloat(responseData[mes][6]));
+                if (mes == 'DIC' && responseData[mes][6] != 0) {
+                  const sendData = {
+                    agrup: agrup,
+                    anopro: k,
+                    valor: responseData[mes][6]
+                  }
+                  fetch('/API.LovablePHP/ZLO0038P/SaveTemp/', {
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(sendData)
+                  })
+                }
+
+                table2.append(`<tr>
                             <td> <button class="btn btn-light" onclick="showHistorial(this,'row-${cont}-${k}','${agrup}','${k}')" ><i class="fa-solid fa-caret-right"></i></button> </td>
                             <td class="border border-dark bg-light text-darkblue fw-bold">${responseData[mes][0]}</td>
                             <td class="border border-dark bgGreenSoft text-darkblue">${(parseFloat(responseData[mes][1]) == 0) ? " " : parseFloat(responseData[mes][1]).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
@@ -1046,49 +1071,78 @@
                           <tr id="row-${cont}-${k}">
                           </tr>
                           `);
-              cont++;
-            });
-            const totales = ['TOTALES', compras.reduce((a, b) => a + b, 0), retenciones.reduce((a, b) => a + b, 0), notaDebito.reduce((a, b) => a + b, 0), abonoCuentas.reduce((a, b) => a + b, 0), notaCredito.reduce((a, b) => a + b, 0), saldoCuentas.reduce((a, b) => a + b, 0)];
-            table2.append(`<tr>
+                cont++;
+              });
+              const totalCompras = compras
+                .filter(year => year.name === "AÑO " + k)
+                .reduce((acc, year) => {
+                  const yearTotal = year.data.reduce((sum, value) => sum + value, 0);
+                  return acc + yearTotal;
+                }, 0);
+              const totalRetenciones = retenciones
+                .filter(year => year.name === "AÑO " + k)
+                .reduce((acc, year) => {
+                  const yearTotal = year.data.reduce((sum, value) => sum + value, 0);
+                  return acc + yearTotal;
+                }, 0);
+              const totalNotaDebito = notaDebito
+                .filter(year => year.name === "AÑO " + k)
+                .reduce((acc, year) => {
+                  const yearTotal = year.data.reduce((sum, value) => sum + value, 0);
+                  return acc + yearTotal;
+                }, 0);
+              const totalAbonoCuentas = abonoCuentas
+                .filter(year => year.name === "AÑO " + k)
+                .reduce((acc, year) => {
+                  const yearTotal = year.data.reduce((sum, value) => sum + value, 0);
+                  return acc + yearTotal;
+                }, 0);
+              const totalNotaCredito = notaCredito
+                .filter(year => year.name === "AÑO " + k)
+                .reduce((acc, year) => {
+                  const yearTotal = year.data.reduce((sum, value) => sum + value, 0);
+                  return acc + yearTotal;
+                }, 0);
+              table2.append(`<tr>
                             <td></td>
-                            <td class="border border-dark bg-white text-darkblue fw-bold">${totales[0]}</td>
-                            <td class="border border-dark bg-white text-darkblue">${(parseFloat(totales[1]) == 0) ? " " : parseFloat(totales[1]).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
-                            <td class="border border-dark bg-white text-darkblue">${(parseFloat(totales[2]) == 0) ? " " : parseFloat(totales[2]).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
-                            <td class="border border-dark bg-white text-darkblue">${(parseFloat(totales[3]) == 0) ? " " : parseFloat(totales[3]).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
-                            <td class="border border-dark bg-white text-darkblue">${(parseFloat(totales[4]) == 0) ? " " : parseFloat(totales[4]).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
-                            <td class="border border-dark bg-white text-darkblue">${(parseFloat(totales[5]) == 0) ? " " : parseFloat(totales[5]).toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                            <td class="border border-dark bg-white text-darkblue fw-bold">TOTALES</td>
+                            <td class="border border-dark bg-white text-darkblue">${(totalCompras == 0) ? " " : totalCompras.toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                            <td class="border border-dark bg-white text-darkblue">${(totalRetenciones == 0) ? " " : totalRetenciones.toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                            <td class="border border-dark bg-white text-darkblue">${(totalNotaDebito == 0) ? " " : totalNotaDebito.toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                            <td class="border border-dark bg-white text-darkblue">${(totalAbonoCuentas == 0) ? " " : totalAbonoCuentas.toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                            <td class="border border-dark bg-white text-darkblue">${(totalNotaCredito == 0) ? " " : totalNotaCredito.toLocaleString('es-419', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
                             <td class="border border-dark bg-white text-darkblue"></td>
                             <td class="border border-0 text-start fs12 "></td>
                           </tr>
                           <tr id="row-${cont}-${k}">
                           </tr>
                           `);
-          }
+            }
+          })
+        compras.push({
+          name: `AÑO ${k}`,
+          data: mesesCompras
+        });
+        retenciones.push({
+          name: `AÑO ${k}`,
+          data: mesesRetenciones
+        });
+        notaDebito.push({
+          name: `AÑO ${k}`,
+          data: mesesNotaDebito
         })
-            compras.push({
-                name: `AÑO ${k}`,
-                data: mesesCompras
-              });
-              retenciones.push({
-                name: `AÑO ${k}`,
-                data: mesesRetenciones
-              });
-              notaDebito.push({
-                name: `AÑO ${k}`,
-                data: mesesNotaDebito
-              })
-              abonoCuentas.push({
-                name: `AÑO ${k}`,
-                data: mesesAbonoCuentas
-              })
-              notaCredito.push({
-                name: `AÑO ${k}`,
-                data: mesesNotaCredito
-              })
-              saldoCuentas.push({
-                name: `AÑO ${k}`,
-                data: mesesSaldoCuentas
-              })
+        abonoCuentas.push({
+          name: `AÑO ${k}`,
+          data: mesesAbonoCuentas
+        })
+        notaCredito.push({
+          name: `AÑO ${k}`,
+          data: mesesNotaCredito
+        })
+        saldoCuentas.push({
+          name: `AÑO ${k}`,
+          data: mesesSaldoCuentas
+        })
       }
       setTimeout(() => {
         chargeChart2();
@@ -1097,7 +1151,7 @@
     }
 
     function chargeChart2() {
-      let arrayData =[];
+      let arrayData = [];
       const graficaSelected = $("#selectGrafica").val();
       switch (graficaSelected) {
         case 'G1':
@@ -1121,148 +1175,149 @@
       }
       setTimeout(() => {
         chart2 = Highcharts.chart('container2', {
-        chart: {
-          type: 'line',
-          height: 500,
-          style: {
-            color: '#FFFFFF'
-          }
-        },
-        lang: {
-          viewFullscreen: "Ver en pantalla completa",
-          exitFullscreen: "Salir de pantalla completa",
-          downloadJPEG: "Descargar imagen JPEG",
-          downloadPDF: "Descargar en PDF",
-        },
-        title: {
+          chart: {
+            type: 'line',
+            height: 500,
+            style: {
+              color: '#FFFFFF'
+            }
+          },
+          lang: {
+            viewFullscreen: "Ver en pantalla completa",
+            exitFullscreen: "Salir de pantalla completa",
+            downloadJPEG: "Descargar imagen JPEG",
+            downloadPDF: "Descargar en PDF",
+          },
+          title: {
             text: ($("#selectGrafica").find('option:selected').text() + " " + $("#cbbAgrup").find('option:selected').text() + " 5 AÑOS ANTERIORES"),
             align: 'center',
             style: {
               color: '#FFFFFF'
             }
-        },
-        xAxis: {
-          categories: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio',
-            'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
-          ],
-          labels: {
-            style: {
-              color: '#FFFFFF'
-            }
-          }
-        },
-        yAxis: {
-          title: {
-            text: ' ',
-            style: {
-              color: '#FFFFFF'
+          },
+          xAxis: {
+            categories: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio',
+              'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
+            ],
+            labels: {
+              style: {
+                color: '#FFFFFF'
+              }
             }
           },
-          labels: {
-            style: {
-              color: '#FFFFFF'
-            }
-          }
-        },
-        tooltip: {
-          style: {
-            color: '#FFFFFF'
-          }
-        },
-        plotOptions: {
-          line: {
-            dataLabels: {
-              enabled: true,
-              format: '{y}',
+          yAxis: {
+            title: {
+              text: ' ',
               style: {
                 color: '#FFFFFF'
               }
             },
-            enableMouseTracking: true
-          }
-        },
-        series: arrayData,
-        credits: {
-          enabled: false
-        },
-        legend: {
-          itemStyle: {
-            color: '#FFFFFF'
-          }
-        },
-        exporting: {
-          buttons: {
-            contextButton: {
-              menuItems: ["viewFullscreen", "separator", "downloadJPEG", "downloadPDF"]
-            },
-            showAllButton: {
-              text: 'Mostrar todos',
-              onclick: function () {
-                this.series.forEach(function (series) {
-                  series.setVisible(true, false);
-                });
-                this.redraw();
-              },
-              theme: {
-                fill: 'white',
-                stroke: 'silver',
-                r: 0,
-                style: {
-                  color: '#FFFFFF'
-                },
-                states: {
-                  hover: {
-                    fill: '#a4edba'
-                  },
-                  select: {
-                    stroke: '#039',
-                    fill: '#a4edba'
-                  }
-                }
-              }
-            },
-            removeAllButton: {
-              text: 'Quitar todos',
-              onclick: function () {
-                this.series.forEach(function (series) {
-                  series.setVisible(false, false);
-                });
-                this.redraw();
-              },
-              theme: {
-                fill: 'white',
-                stroke: 'silver',
-                r: 0,
-                style: {
-                  color: '#FFFFFF'
-                },
-                states: {
-                  hover: {
-                    fill: '#a4edba'
-                  },
-                  select: {
-                    stroke: '#039',
-                    fill: '#a4edba'
-                  }
-                }
+            labels: {
+              style: {
+                color: '#FFFFFF'
               }
             }
           },
-          enabled: true,
-          sourceWidth: 1600,
-          sourceHeight: 700,
-          chartOptions: {
-            chart: {
-              backgroundColor: '#303030'
+          tooltip: {
+            style: {
+              color: '#FFFFFF'
             }
+          },
+          plotOptions: {
+            line: {
+              dataLabels: {
+                enabled: true,
+                format: '{y}',
+                style: {
+                  color: '#FFFFFF'
+                }
+              },
+              enableMouseTracking: true
+            }
+          },
+          series: arrayData,
+          credits: {
+            enabled: false
+          },
+          legend: {
+            itemStyle: {
+              color: '#FFFFFF'
+            }
+          },
+          exporting: {
+            buttons: {
+              contextButton: {
+                menuItems: ["viewFullscreen", "separator", "downloadJPEG", "downloadPDF"]
+              },
+              showAllButton: {
+                text: 'Mostrar todos',
+                onclick: function () {
+                  this.series.forEach(function (series) {
+                    series.setVisible(true, false);
+                  });
+                  this.redraw();
+                },
+                theme: {
+                  fill: 'white',
+                  stroke: 'silver',
+                  r: 0,
+                  style: {
+                    color: '#FFFFFF'
+                  },
+                  states: {
+                    hover: {
+                      fill: '#a4edba'
+                    },
+                    select: {
+                      stroke: '#039',
+                      fill: '#a4edba'
+                    }
+                  }
+                }
+              },
+              removeAllButton: {
+                text: 'Quitar todos',
+                onclick: function () {
+                  this.series.forEach(function (series) {
+                    series.setVisible(false, false);
+                  });
+                  this.redraw();
+                },
+                theme: {
+                  fill: 'white',
+                  stroke: 'silver',
+                  r: 0,
+                  style: {
+                    color: '#FFFFFF'
+                  },
+                  states: {
+                    hover: {
+                      fill: '#a4edba'
+                    },
+                    select: {
+                      stroke: '#039',
+                      fill: '#a4edba'
+                    }
+                  }
+                }
+              }
+            },
+            enabled: true,
+            sourceWidth: 1600,
+            sourceHeight: 700,
+            chartOptions: {
+              chart: {
+                backgroundColor: '#303030'
+              }
+            },
+            fallbackToExportServer: false
           }
-        }
-      });
-      ;
+        });
+        ;
       }, 1500);
     }
 
-    function showHistorial(button, id,agrup,ano) {
+    function showHistorial(button, id, agrup, ano) {
       const icon = $(button).find('svg');
       if (icon.length > 0) {
         if (icon.hasClass('fa-caret-right')) {
@@ -1274,7 +1329,7 @@
                             </td>
                             <td colspan="1" class="bg-white" ></td>`);
 
-          const url = `http://172.16.15.20/API.LovablePHP/ZLO0038PB/FindMes/?agrup=${agrup}&ano=${ano}&mes=${mes}`;
+          const url = `http://172.16.15.20/API.LovablePHP/ZLO0038P/FindMes/?agrup=${agrup}&ano=${ano}&mes=${mes}`;
           fetch(url)
             .then(response => response.json())
             .then(data => {
@@ -1324,7 +1379,7 @@
     }
     function chargeClients() {
       const agrup = $("#cbbAgrup").val();
-      const url = `http://172.16.15.20/API.LovablePHP/ZLO0038PB/GetClients/?agrup=${agrup}`;
+      const url = `http://172.16.15.20/API.LovablePHP/ZLO0038P/GetClients/?agrup=${agrup}`;
       fetch(url)
         .then(response => response.json())
         .then(data => {
@@ -1351,7 +1406,7 @@
     }
     function deleteClients(tipo, numero) {
       const agrup = $("#cbbAgrup").val();
-      const url = `http://172.16.15.20/API.LovablePHP/ZLO0038PB/DeleteClients/?agrup=${agrup}&ano=${tipo}&mes=${numero}`;
+      const url = `http://172.16.15.20/API.LovablePHP/ZLO0038P/DeleteClients/?agrup=${agrup}&ano=${tipo}&mes=${numero}`;
       fetch(url)
         .then(response => response.json())
         .then(data => {
@@ -1378,55 +1433,55 @@
     }
 
     function saveClients() {
-      const value=$("#clienteId").val();
-      if(value!=""){
-        const tipo=value.split('-')[0];
-      const numero=value.split('-')[1];
-      const agrup = $("#cbbAgrup").val();
-      const url = `http://172.16.15.20/API.LovablePHP/ZLO0038PB/CreateClients/?agrup=${agrup}&ano=${tipo}&mes=${numero}`;
-      fetch(url)
-        .then(response => response.json())
-        .then(data => {
-          if (data.code == 200) {
-            chargeClients();
-            const agrup = $("#cbbAgrup").val();
-            const ano = $("#cbbAno").val();
-            $("#clienteId").val(' ');
-            $("#clienteInput").val('');
-            chargeTable1(agrup, ano);
-            chargeTable2(agrup, ano);
-          } else if (data.code == 501) {
-            Swal.fire({
-              icon: 'warning',
-              title: 'Error',
-              text: 'Este código de cliente no existe',
-            });
-          } else {
-            Swal.fire({
-              icon: 'error',
-              title: 'Error',
-              text: 'Ha sucedido un error',
-            });
-          }
-        });
+      const value = $("#clienteId").val();
+      if (value != "") {
+        const tipo = value.split('-')[0];
+        const numero = value.split('-')[1];
+        const agrup = $("#cbbAgrup").val();
+        const url = `http://172.16.15.20/API.LovablePHP/ZLO0038P/CreateClients/?agrup=${agrup}&ano=${tipo}&mes=${numero}`;
+        fetch(url)
+          .then(response => response.json())
+          .then(data => {
+            if (data.code == 200) {
+              chargeClients();
+              const agrup = $("#cbbAgrup").val();
+              const ano = $("#cbbAno").val();
+              $("#clienteId").val(' ');
+              $("#clienteInput").val('');
+              chargeTable1(agrup, ano);
+              chargeTable2(agrup, ano);
+            } else if (data.code == 501) {
+              Swal.fire({
+                icon: 'warning',
+                title: 'Error',
+                text: 'Este código de cliente no existe',
+              });
+            } else {
+              Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Ha sucedido un error',
+              });
+            }
+          });
 
-      }else{
+      } else {
         Swal.fire({
-              icon: 'warning',
-              title: 'Error',
-              text: 'El campo no puede estar vacío',
-            });
+          icon: 'warning',
+          title: 'Error',
+          text: 'El campo no puede estar vacío',
+        });
       }
-      }
+    }
 
-    async function showDocs(){
+    async function showDocs() {
       $("#txtDoc").val('');
       await chargeDocuments();
       $('#documentsModal').modal('show');
     }
     function chargeDocuments() {
       const agrup = $("#cbbAgrup").val();
-      const url = `http://172.16.15.20/API.LovablePHP/ZLO0038PB/GetDocuments/?agrup=${agrup}`;
+      const url = `http://172.16.15.20/API.LovablePHP/ZLO0038P/GetDocuments/?agrup=${agrup}`;
       fetch(url)
         .then(response => response.json())
         .then(data => {
@@ -1455,7 +1510,7 @@
     function saveDocuments() {
       const agrup = $("#cbbAgrup").val();
       const tipo = $("#docuId").val().toUpperCase();
-      const url = `http://172.16.15.20/API.LovablePHP/ZLO0038PB/CreateDocuments/?agrup=${agrup}&ano=${tipo}`;
+      const url = `http://172.16.15.20/API.LovablePHP/ZLO0038P/CreateDocuments/?agrup=${agrup}&ano=${tipo}`;
       fetch(url)
         .then(response => response.json())
         .then(data => {
@@ -1483,7 +1538,7 @@
 
     function deleteDocuments(tipo) {
       const agrup = $("#cbbAgrup").val();
-      const url = `http://172.16.15.20/API.LovablePHP/ZLO0038PB/DeleteDocuments/?agrup=${agrup}&ano=${tipo}`;
+      const url = `http://172.16.15.20/API.LovablePHP/ZLO0038P/DeleteDocuments/?agrup=${agrup}&ano=${tipo}`;
       fetch(url)
         .then(response => response.json())
         .then(data => {
@@ -1546,15 +1601,16 @@
             </div>-->
             <div class="row">
               <div class="col-12">
-                  <span class="" onclick="showClientes()">
-                    <input type="text" class="text-muted form-select mt-3" id="clienteInput" placeholder="Selecciona un cliente" readonly />
-                  </span>
-                  <input class="d-none" id="clienteId"  />
+                <span class="" onclick="showClientes()">
+                  <input type="text" class="text-muted form-select mt-3" id="clienteInput"
+                    placeholder="Selecciona un cliente" readonly />
+                </span>
+                <input class="d-none" id="clienteId" />
               </div>
               <div class="col-12 col-md-3 d-none">
                 <button type="button" class="btn btn-success text-white w100 mt-3" onclick="saveClients()">
-                    <i class="fa-solid fa-user-plus me-1"></i>Agregar
-                  </button>
+                  <i class="fa-solid fa-user-plus me-1"></i>Agregar
+                </button>
               </div>
             </div>
           </div>
@@ -1601,10 +1657,11 @@
           </div>-->
           <div class="row mb-3">
             <div class="col-12">
-            <span class="" onclick="showDocumentos()">
-                    <input type="text" class="text-muted form-select mt-3" id="documentosInput" placeholder="Selecciona un documento" readonly />
-                  </span>
-                  <input class="d-none" id="docuId"  />
+              <span class="" onclick="showDocumentos()">
+                <input type="text" class="text-muted form-select mt-3" id="documentosInput"
+                  placeholder="Selecciona un documento" readonly />
+              </span>
+              <input class="d-none" id="docuId" />
 
             </div>
           </div>
@@ -1631,52 +1688,53 @@
   </div>
 </div>
 <div class="modal fade" id="modalClientes" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel"></h1>
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel"></h1>
 
-                    <button type="button" class="btn-close" onclick="$('#modalClientes').modal('hide')"></button>
-                </div>
-                <div class="modal-body">
-                <table id="tbClientesList" class="table stripe table-hover " style="width:100%">
-                            <thead>
-                                <tr>
-                                    <th colspan="10%" class="text-black text-start">Tipo</th>
-                                    <th colspan="10%" class="text-black text-start">Numero</th>
-                                    <th colspan="10%" class="text-black text-start">Cliente</th>
-                                </tr>
-                            </thead>
-                            <tbody id="tbClientesListBody">
+        <button type="button" class="btn-close" onclick="$('#modalClientes').modal('hide')"></button>
+      </div>
+      <div class="modal-body">
+        <table id="tbClientesList" class="table stripe table-hover " style="width:100%">
+          <thead>
+            <tr>
+              <th colspan="10%" class="text-black text-start">Tipo</th>
+              <th colspan="10%" class="text-black text-start">Numero</th>
+              <th colspan="10%" class="text-black text-start">Cliente</th>
+            </tr>
+          </thead>
+          <tbody id="tbClientesListBody">
 
-                            </tbody>
-                        </table>
-                </div>
-            </div>
-        </div>
+          </tbody>
+        </table>
+      </div>
     </div>
-    <div class="modal fade" id="modalDocumentos" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel"></h1>
+  </div>
+</div>
+<div class="modal fade" id="modalDocumentos" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel"></h1>
 
-                    <button type="button" class="btn-close" onclick="$('#modalDocumentos').modal('hide')"></button>
-                </div>
-                <div class="modal-body">
-                <table id="tbDocumentosList" class="table stripe table-hover " style="width:100%">
-                            <thead>
-                                <tr>
-                                    <th colspan="10%" class="text-black text-start">Tipo</th>
-                                    <th colspan="10%" class="text-black text-start">Documento</th>
-                                </tr>
-                            </thead>
-                            <tbody id="tbDocumentosListBody">
+        <button type="button" class="btn-close" onclick="$('#modalDocumentos').modal('hide')"></button>
+      </div>
+      <div class="modal-body">
+        <table id="tbDocumentosList" class="table stripe table-hover " style="width:100%">
+          <thead>
+            <tr>
+              <th colspan="10%" class="text-black text-start">Tipo</th>
+              <th colspan="10%" class="text-black text-start">Documento</th>
+            </tr>
+          </thead>
+          <tbody id="tbDocumentosListBody">
 
-                            </tbody>
-                        </table>
-                </div>
-            </div>
-        </div>
+          </tbody>
+        </table>
+      </div>
     </div>
+  </div>
+</div>
+
 </html>

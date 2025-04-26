@@ -260,6 +260,7 @@
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
     <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/offline-exporting.js"></script>
     <script src="https://code.highcharts.com/modules/accessibility.js"></script>
     <script>
     let responseDataA1 = [];
@@ -425,7 +426,9 @@
                         chart: {
                             backgroundColor: '#303030'
                         }
-                    }
+                    },
+                    fallbackToExportServer: false
+
                 },
                 series: [{
                         name: 'Ano ' + valAno,
@@ -996,7 +999,8 @@
                             chart: {
                                 backgroundColor: '#303030'
                             }
-                        }
+                        },
+                        fallbackToExportServer: false
                     },
                     series: seriesData,
                 });

@@ -389,7 +389,8 @@ var tab;
                         enabled: true
                     }
                 }
-            }
+            },
+            fallbackToExportServer: false
       },
     title: {
         text: '<?php if ($paisfiltro==="01") { echo "Docenas";}else{echo "Unidades";}  ?> Compradas vs. <?php if ($paisfiltro==="01") { echo "Docenas";}else{echo "Unidades";}  ?> vendidas',
@@ -511,7 +512,8 @@ var tab;
                         enabled: true
                     }
                 }
-            }
+            },
+            fallbackToExportServer: false
       },
     title: {
         text: '<?php if ($paisfiltro==="01") { echo "Docenas";}else{echo "Unidades";}  ?> Existencias',
@@ -779,6 +781,7 @@ var tab;
         gridLineWidth: 0
       },
     },
+    fallbackToExportServer: false
       },
 
   });

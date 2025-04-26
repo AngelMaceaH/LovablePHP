@@ -8,13 +8,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>Lovable </title>
     <link rel="icon" type="image/x-icon" href="../../assets/img/favicon.ico">
-    <link rel="stylesheet" href="../../assets/vendors/simplebar/css/simplebar.css">
-    <link rel="stylesheet" href="../../assets/css/vendors/simplebar.css">
-    <link href="../../assets/css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/vendors/simplebar/css/simplebar.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="../../assets/css/vendors/simplebar.css?v=<?php echo time(); ?>">
+    <link href="../../assets/css/style.css?v=<?php echo time(); ?>" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/themes/prism.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css" />
-    <link href="../../assets/css/examples.css" rel="stylesheet">
-    <link href="../../assets/css/mystyle.css" rel="stylesheet">
+    <link href="../../assets/css/examples.css?v=<?php echo time(); ?>" rel="stylesheet">
+    <link href="../../assets/css/mystyle.css?v=<?php echo time(); ?>" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/js/all.min.js"
         integrity="sha512-2bMhOkE/ACz21dJT8zBOMgMecNxx0d37NND803ExktKiKdSzdwn+L7i9fdccw/3V06gM/DBWKbYmQvKMdAA9Nw=="
@@ -242,8 +242,9 @@
 
             let currentPgm='<?php echo trim(substr($_SERVER["REQUEST_URI"],20,8)); ?>';
             switch (currentPgm) {
-                case 'ZLO0034P':
+                    case 'ZLO0034P':
                     case 'ZLO0035P':
+                    case 'ZLO0013P':
                         $("#sidebar").addClass('hide');
                     break;
                 default:
@@ -310,11 +311,9 @@
         <header class="header header-sticky mb-4">
             <div class="container-fluid">
 
-                <button class="header-toggler px-md-0 me-md-5" type="button"
+                <button id="btnToggle" class="btn btn-dark shadow"
                     onclick="coreui.Sidebar.getInstance(document.querySelector('#sidebar')).toggle()">
-                    <svg class="icon icon-lg">
-                        <use xlink:href="../../assets/vendors/@coreui/icons/svg/free.svg#cil-menu"></use>
-                    </svg>
+                    <i class="fa-solid fa-bars"></i>
                 </button><a class="header-brand d-md-none" href="/<?php echo $_SESSION['DEV'] ?>LovablePHP/">
                     <img src="../../assets/img/lovableLogo.png" width="205px" alt="Lovable Logo">
                 </a>
@@ -374,7 +373,7 @@
             <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/2.3.4/js/buttons.html5.min.js"> </script>
             <script type="text/javascript" charset="utf8"
                 src="https://cdn.datatables.net/buttons/2.3.4/js/buttons.print.min.js"> </script>
-                <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
             <!--<script src="../../js/table.js"></script>-->
             <script>

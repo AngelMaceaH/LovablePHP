@@ -8,9 +8,9 @@
 
 <body>
     <?php
-      include '../layout-prg.php';
-      include '../../assets/php/ENC/ZLO0021P/header.php';
-?>
+    include '../layout-prg.php';
+    include '../../assets/php/ENC/ZLO0021P/header.php';
+    ?>
     <div class="container-fluid">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb my-0 ms-2">
@@ -46,10 +46,11 @@
                             <label class="form-control border border-0">Cliente</label>
                         </div>
                         <div class="col-9">
-                                <span class="" onclick="showClientes()">
-                                <input type="text" class="text-muted form-select" id="lblCliente" placeholder="Selecciona un cliente" readonly />
-                                </span>
-                                <input class="d-none" id="clieId"  />
+                            <span class="" onclick="showClientes()">
+                                <input type="text" class="text-muted form-select" id="lblCliente"
+                                    placeholder="Selecciona un cliente" readonly />
+                            </span>
+                            <input class="d-none" id="clieId" />
                             <div class="form-check mt-1">
                                 <input class="form-check-input" type="checkbox" value="" id="sendCliente">
                                 <label class="form-check-label mt-1" for="flexCheckDefault">
@@ -76,123 +77,123 @@
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous">
-    </script>
+        </script>
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
     <script src="https://code.highcharts.com/modules/export-data.js"></script>
     <script src="https://code.highcharts.com/modules/accessibility.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-    document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
 
-        $('#tbClientes thead th').each(function() {
-            var title = $(this).text();
-            $(this).html(title +
-                '<br /><input type="text"  oninput="this.value = this.value.toUpperCase()" class="form-control mt-2"/>'
+            $('#tbClientes thead th').each(function () {
+                var title = $(this).text();
+                $(this).html(title +
+                    '<br /><input type="text"  oninput="this.value = this.value.toUpperCase()" class="form-control mt-2"/>'
                 );
-        });
-        var table = $('#tbClientes').DataTable({
-            language: {
-                url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json',
-            },
-            "pageLength": 10,
-            "processing": true,
-            "serverSide": true,
-            "ajax": {
-                "url": "/API.LovablePHP/ZLO0030P/ListClientesAsync/",
-                "type": "POST",
-                "complete": function(xhr) {
-                    //console.log(xhr.responseJSON);
+            });
+            var table = $('#tbClientes').DataTable({
+                language: {
+                    url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json',
                 },
-                error: function(xhr, status, error) {
-                    console.log(error);
-                    requestError = true;
+                "pageLength": 10,
+                "processing": true,
+                "serverSide": true,
+                "ajax": {
+                    "url": "/API.LovablePHP/ZLO0030P/ListClientesAsync/",
+                    "type": "POST",
+                    "complete": function (xhr) {
+                        //console.log(xhr.responseJSON);
+                    },
+                    error: function (xhr, status, error) {
+                        console.log(error);
+                        requestError = true;
+                    }
+                },
+                "ordering": false,
+                "dom": 'rtip',
+                "columns": [{
+                    "data": "SITWEB",
+                },
+                {
+                    "data": "CODCLI",
+                },
+                {
+                    "data": "NOMCLI"
+                },
+                ],
+                "drawCallback": function () {
+                    $('#tbClientes tbody tr').on('click', function () {
+                        sendCliente(this);
+                    });
                 }
-            },
-            "ordering": false,
-            "dom": 'rtip',
-            "columns": [{
-                            "data": "SITWEB",
-                        },
-                        {
-                            "data": "CODCLI",
-                        },
-                        {
-                            "data": "NOMCLI"
-                        },
-            ],
-            "drawCallback": function() {
-                $('#tbClientes tbody tr').on('click', function() {
-                    sendCliente(this);
-                });
-            }
-        });
-        $('#tbClientes thead input').on('keyup', function() {
-            var columnIndex = $(this).parent().index();
-            var inputValue = $(this).val().trim();
+            });
+            $('#tbClientes thead input').on('keyup', function () {
+                var columnIndex = $(this).parent().index();
+                var inputValue = $(this).val().trim();
 
-            if (table.column(columnIndex).search() !== inputValue) {
-                table
-                    .column(columnIndex)
-                    .search(inputValue)
-                    .draw();
-            }
+                if (table.column(columnIndex).search() !== inputValue) {
+                    table
+                        .column(columnIndex)
+                        .search(inputValue)
+                        .draw();
+                }
+            });
+
         });
 
-    });
-
-    function sendCorreo() {
-        var numClie = document.getElementById("clieId");
-        var clienteck = document.getElementById("sendCliente");
-        var valueCk = 0;
-        if (clienteck.checked) {
-            valueCk = 1;
-        }
-        var value = numClie.value;
-        if (value == "") {
-            document.getElementById("lblError").classList.remove("d-none");
-        } else {
-            document.getElementById("lblError").classList.add("d-none");
-            bgLoader.classList.remove("d-none");
-            sendingEmail.classList.remove("d-none");
-            let url = "/API.LovablePHP/ZLO0031P/SEND/?codcli=" + value + "&sendclie=" + valueCk;
-            console.log(url);
-            fetch(url)
-                .then(() => {
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Correo enviado',
-                        text: 'El correo se envió correctamente',
+        function sendCorreo() {
+            var numClie = document.getElementById("clieId");
+            var clienteck = document.getElementById("sendCliente");
+            var valueCk = 0;
+            if (clienteck.checked) {
+                valueCk = 1;
+            }
+            var value = numClie.value;
+            if (value == "") {
+                document.getElementById("lblError").classList.remove("d-none");
+            } else {
+                document.getElementById("lblError").classList.add("d-none");
+                bgLoader.classList.remove("d-none");
+                sendingEmail.classList.remove("d-none");
+                let url = "/API.LovablePHP/ZLO0031P/SEND/?codcli=" + value + "&sendclie=" + valueCk;
+                console.log(url);
+                fetch(url)
+                    .then(() => {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Correo enviado',
+                            text: 'El correo se envió correctamente',
+                        });
+                        numClie.value = "";
+                        clienteck.checked = false;
+                        bgLoader.classList.add("d-none");
+                        sendingEmail.classList.add("d-none");
+                        $("#clieId").val('');
+                        $("#lblCliente").val('');
+                    })
+                    .catch(() => {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: 'El correo no se envió correctamente',
+                        });
                     });
-                    numClie.value = "";
-                    clienteck.checked = false;
-                    bgLoader.classList.add("d-none");
-                    sendingEmail.classList.add("d-none");
-                    $("#clieId").val('');
-                    $("#lblCliente").val('');
-                })
-                .catch(() => {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error',
-                        text: 'El correo no se envió correctamente',
-                    });
-                });
+            }
         }
-    }
-    function showClientes() {
-        $("#modalClientes").modal('show');
-    }
-    function sendCliente(row) {
-        var tr = $(row).closest('tr');
-        var tds = tr.find('td');
-        var clie = tds.eq(2).text();
-        var stweb = tds.eq(0).text();
-        var code = tds.eq(1).text();
-        $("#clieId").val(code);
-        $("#lblCliente").val(clie);
-        $("#modalClientes").modal('hide');
-    }
+        function showClientes() {
+            $("#modalClientes").modal('show');
+        }
+        function sendCliente(row) {
+            var tr = $(row).closest('tr');
+            var tds = tr.find('td');
+            var clie = tds.eq(2).text();
+            var stweb = tds.eq(0).text();
+            var code = tds.eq(1).text();
+            $("#clieId").val(code);
+            $("#lblCliente").val(clie);
+            $("#modalClientes").modal('hide');
+        }
     </script>
     <div class="modal fade" id="modalClientes" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">

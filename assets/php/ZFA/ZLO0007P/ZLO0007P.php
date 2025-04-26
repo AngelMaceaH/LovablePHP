@@ -1,191 +1,191 @@
 <script>
-const picker2 = new easepick.create({
-  element: "#datepicker2",
-  css: ["../../assets/vendors/dayrangepicker/index.css"],
-  zIndex: 10,
-  plugins: ["RangePlugin"]
-});
-$(document).ready(function() {
-  var compfiltro = ("<?php echo $arrayConversion;?>").split(",")
-    .filter(item => item)
-    .map(item => Number(item));
-  let recharge = 0;
-  if (compfiltro.length == 0) {
-    compfiltro.push(999);
-  } else {
-    recharge = 1;
-  }
-  if (compfiltro.length > 1) {
-    let index = compfiltro.indexOf(999);
-    if (index !== -1) {
-      compfiltro.splice(index, 1);
+  const picker2 = new easepick.create({
+    element: "#datepicker2",
+    css: ["../../assets/vendors/dayrangepicker/index.css"],
+    zIndex: 10,
+    plugins: ["RangePlugin"]
+  });
+  $(document).ready(function () {
+    var compfiltro = ("<?php echo $arrayConversion; ?>").split(",")
+      .filter(item => item)
+      .map(item => Number(item));
+    let recharge = 0;
+    if (compfiltro.length == 0) {
+      compfiltro.push(999);
+    } else {
+      recharge = 1;
     }
-  }
-  let firstCountry = 0;
-  var paisfiltro = "<?php echo $paisFiltro; ?>";
-  let usuario = '<?php echo $_SESSION["CODUSU"];?>';
-  let hasAllCountries = 0;
-  const cbbAgrupP = document.getElementById('cbbPais');
-  const countriesonscreen = [];
-  const urlVal = "http://172.16.15.20/API.LovablePHP/Users/FindAgrupP/?codusu=" + usuario + "";
-  fetch(urlVal).then(response => response.json()).then(data => {
-    if (data.code == 200) {
-      cbbAgrupP.innerHTML = '';
-      const dataResponse = data.data;
-      let count = 0;
-      if (dataResponse.length > 0) {
-        dataResponse.forEach(element => {
-          if (element.DESCRI.includes("honduras")) {
-            count++;
-            cbbAgrupP.innerHTML += `<option value="1">Honduras (Lov. Ecommerce)</option>
+    if (compfiltro.length > 1) {
+      let index = compfiltro.indexOf(999);
+      if (index !== -1) {
+        compfiltro.splice(index, 1);
+      }
+    }
+    let firstCountry = 0;
+    var paisfiltro = "<?php echo $paisFiltro; ?>";
+    let usuario = '<?php echo $_SESSION["CODUSU"]; ?>';
+    let hasAllCountries = 0;
+    const cbbAgrupP = document.getElementById('cbbPais');
+    const countriesonscreen = [];
+    const urlVal = "http://172.16.15.20/API.LovablePHP/Users/FindAgrupP/?codusu=" + usuario + "";
+    fetch(urlVal).then(response => response.json()).then(data => {
+      if (data.code == 200) {
+        cbbAgrupP.innerHTML = '';
+        const dataResponse = data.data;
+        let count = 0;
+        if (dataResponse.length > 0) {
+          dataResponse.forEach(element => {
+            if (element.DESCRI.includes("honduras")) {
+              count++;
+              cbbAgrupP.innerHTML += `<option value="1">Honduras (Lov. Ecommerce)</option>
                                                     <option value="2">Honduras (Mod. Íntima)</option>`;
-            countriesonscreen.push('1')
-          } else if (element.DESCRI.includes("guatemala")) {
-            count++;
-            cbbAgrupP.innerHTML += '<option value="3">Guatemala</option>';
-            countriesonscreen.push('3')
-          } else if (element.DESCRI.includes("salvador")) {
-            count++;
-            cbbAgrupP.innerHTML += '<option value="4">El Salvador</option>';
-            countriesonscreen.push('4')
-          } else if (element.DESCRI.includes("costa rica")) {
-            count++;
-            cbbAgrupP.innerHTML += '<option value="5">Costa Rica</option>';
-            countriesonscreen.push('5')
-          } else if (element.DESCRI.includes("nicaragua")) {
-            count++;
-            cbbAgrupP.innerHTML += '<option value="6">Nicaragua</option>';
-            countriesonscreen.push('6')
-          } else if (element.DESCRI.includes("republica dominicana")) {
-            count++;
-            cbbAgrupP.innerHTML += '<option value="7">Republica Dominicana</option>';
-            countriesonscreen.push('7')
-          }
-        });
-      }
-      if (count == 6) {
-        cbbAgrupP.value = 11;
-        hasAllCountries = 1;
-      }
+              countriesonscreen.push('1')
+            } else if (element.DESCRI.includes("guatemala")) {
+              count++;
+              cbbAgrupP.innerHTML += '<option value="3">Guatemala</option>';
+              countriesonscreen.push('3')
+            } else if (element.DESCRI.includes("salvador")) {
+              count++;
+              cbbAgrupP.innerHTML += '<option value="4">El Salvador</option>';
+              countriesonscreen.push('4')
+            } else if (element.DESCRI.includes("costa rica")) {
+              count++;
+              cbbAgrupP.innerHTML += '<option value="5">Costa Rica</option>';
+              countriesonscreen.push('5')
+            } else if (element.DESCRI.includes("nicaragua")) {
+              count++;
+              cbbAgrupP.innerHTML += '<option value="6">Nicaragua</option>';
+              countriesonscreen.push('6')
+            } else if (element.DESCRI.includes("republica dominicana")) {
+              count++;
+              cbbAgrupP.innerHTML += '<option value="7">Republica Dominicana</option>';
+              countriesonscreen.push('7')
+            }
+          });
+        }
+        if (count == 6) {
+          cbbAgrupP.value = 11;
+          hasAllCountries = 1;
+        }
 
-      const cbbAgrup = $('#cbbCia');
-      let urlTiendas = '/API.LovablePHP/Users/FindAgrupT/?codusu=' + usuario + '';
-      let responseTiendas = ajaxRequest(urlTiendas);
-      let tiendasOptions = '';
-      if (responseTiendas.code == 200) {
-        for (let i = 0; i < responseTiendas.data.length; i++) {
-          if (responseTiendas.data[i].COMCOD != 1 && responseTiendas.data[i].COMCOD != 35) {
-            tiendasOptions += '<option value="' + responseTiendas.data[i].COMCOD.padStart(2, '0') +
-              '">' +
-              responseTiendas.data[
-                i].COMDES + '</option>';
+        const cbbAgrup = $('#cbbCia');
+        let urlTiendas = '/API.LovablePHP/Users/FindAgrupT/?codusu=' + usuario + '';
+        let responseTiendas = ajaxRequest(urlTiendas);
+        let tiendasOptions = '';
+        if (responseTiendas.code == 200) {
+          for (let i = 0; i < responseTiendas.data.length; i++) {
+            if (responseTiendas.data[i].COMCOD != 1 && responseTiendas.data[i].COMCOD != 35) {
+              tiendasOptions += '<option value="' + responseTiendas.data[i].COMCOD.padStart(2, '0') +
+                '">' +
+                responseTiendas.data[
+                  i].COMDES + '</option>';
+            }
           }
         }
-      }
-      if (hasAllCountries == 0) {
-        cbbAgrup.empty();
-      }
-      cbbAgrup.append(tiendasOptions);
-      if (countriesonscreen.includes('1')) {
-        firstCountry = 1;
-      } else {
-        firstCountry = countriesonscreen[0];
-      }
-      if (recharge == 0) {
-        if (firstCountry == 1) {
-          compfiltro = [35, 47, 50, 52, 56, 57, 59, 63, 64, 65, 68, 70, 72, 73, 74, 75, 76, 78, 82, 85, 88];
-          if (count == 6) {
-            compfiltro = [999];
-          }
-        } else if (firstCountry == 2) {
-          compfiltro = [20, 22, 21, 23, 24];
-        } else if (firstCountry == 3) {
-          compfiltro = [49, 66, 69, 71, 86];
-        } else if (firstCountry == 4) {
-          compfiltro = [48, 53, 61, 62, 77];
-        } else if (firstCountry == 5) {
-          compfiltro = [60, 80, 54];
-        } else if (firstCountry == 6) {
-          compfiltro = [83, 87];
-        } else if (firstCountry == 7) {
-          compfiltro = [81];
+        if (hasAllCountries == 0) {
+          cbbAgrup.empty();
         }
-      } else {
-        <?php if(isset($_SESSION['clickPais'])){?>
-        const ckPais = <?php echo $_SESSION['clickPais'];?>;
-        if (ckPais == 1) {
-          if (paisfiltro == 1) {
-            compfiltro = [35, 47, 50, 52, 56, 57, 59, 63, 64, 65, 68, 70, 72, 73, 74, 75, 76, 78, 82, 85, 88];
+        cbbAgrup.append(tiendasOptions);
+        if (countriesonscreen.includes('1')) {
+          firstCountry = 1;
+        } else {
+          firstCountry = countriesonscreen[0];
+        }
+        if (recharge == 0) {
+          if (firstCountry == 1) {
+            compfiltro = [35, 47, 50, 52, 56, 57, 59, 63, 64, 65, 68, 70, 72, 73, 74, 75, 76, 78, 82, 85, 88, 90];
             if (count == 6) {
               compfiltro = [999];
             }
-          } else if (paisfiltro == 2) {
+          } else if (firstCountry == 2) {
             compfiltro = [20, 22, 21, 23, 24];
-          } else if (paisfiltro == 3) {
-            compfiltro = [49, 66, 69, 71, 86];
-          } else if (paisfiltro == 4) {
+          } else if (firstCountry == 3) {
+            compfiltro = [49, 66, 69, 71, 86, 89];
+          } else if (firstCountry == 4) {
             compfiltro = [48, 53, 61, 62, 77];
-          } else if (paisfiltro == 5) {
+          } else if (firstCountry == 5) {
             compfiltro = [60, 80, 54];
-          } else if (paisfiltro == 6) {
+          } else if (firstCountry == 6) {
             compfiltro = [83, 87];
-          } else if (paisfiltro == 7) {
-            compfiltro = [81];
+          } else if (firstCountry == 7) {
+            compfiltro = [81, 91];
           }
-        }
-        <?php } ?>
-      }
-
-
-      $('#cbbCia').select2({
-        closeOnSelect: false
-      });
-
-      $("#cbbCia").val(compfiltro).trigger('change');
-      if (countriesonscreen.includes(paisfiltro)) {
-        $("#cbbPais").val(paisfiltro);
-      } else {
-        $("#cbbPais").val(firstCountry);
-      }
-
-
-
-      $("#cbbCia, #cbbPais").on("change", function() {
-
-        var selectId = event.target.id;
-        if (selectId === "cbbPais") {
-          $("#cbbClick").val("cbbPais");
         } else {
-          $("#cbbClick").val("cbbCia");
+          <?php if (isset($_SESSION['clickPais'])) { ?>
+            const ckPais = <?php echo $_SESSION['clickPais']; ?>;
+            if (ckPais == 1) {
+              if (paisfiltro == 1) {
+                compfiltro = [35, 47, 50, 52, 56, 57, 59, 63, 64, 65, 68, 70, 72, 73, 74, 75, 76, 78, 82, 85, 88, 90];
+                if (count == 6) {
+                  compfiltro = [999];
+                }
+              } else if (paisfiltro == 2) {
+                compfiltro = [20, 22, 21, 23, 24];
+              } else if (paisfiltro == 3) {
+                compfiltro = [49, 66, 69, 71, 86, 89];
+              } else if (paisfiltro == 4) {
+                compfiltro = [48, 53, 61, 62, 77];
+              } else if (paisfiltro == 5) {
+                compfiltro = [60, 80, 54];
+              } else if (paisfiltro == 6) {
+                compfiltro = [83, 87];
+              } else if (paisfiltro == 7) {
+                compfiltro = [81, 91];
+              }
+            }
+          <?php } ?>
         }
-        // $("#formFiltros").submit();
-      });
-      if (data.acceso==0) {
-        $("#body-page").empty();
-        $("#body-page").append('<div class="text-center p-5 fs-3 m-5" style="height:600px;"><div class="border border-1 rounded p-5 m-5"><i class="fa-solid fa-question fa-fade fa-2xl mb-4"></i><br /> No hay contenido para mostrar.</div></div>');
+
+
+        $('#cbbCia').select2({
+          closeOnSelect: false
+        });
+
+        $("#cbbCia").val(compfiltro).trigger('change');
+        if (countriesonscreen.includes(paisfiltro)) {
+          $("#cbbPais").val(paisfiltro);
+        } else {
+          $("#cbbPais").val(firstCountry);
+        }
+
+
+
+        $("#cbbCia, #cbbPais").on("change", function () {
+
+          var selectId = event.target.id;
+          if (selectId === "cbbPais") {
+            $("#cbbClick").val("cbbPais");
+          } else {
+            $("#cbbClick").val("cbbCia");
+          }
+          // $("#formFiltros").submit();
+        });
+        if (data.acceso == 0) {
+          $("#body-page").empty();
+          $("#body-page").append('<div class="text-center p-5 fs-3 m-5" style="height:600px;"><div class="border border-1 rounded p-5 m-5"><i class="fa-solid fa-question fa-fade fa-2xl mb-4"></i><br /> No hay contenido para mostrar.</div></div>');
+        }
       }
+
+    });
+
+
+
+
+
+    if (<?php echo $validator1; ?>) {
+      $("#grafica1").addClass("d-none");
+    }
+    var labelActual = "";
+  /*if (<?php echo isset($_SESSION['clickCia']) ? $_SESSION['clickCia'] : 0; ?>== 1) {
+    if ($("#cbbCia").val() == 999) {
+      labelActual = $('#cbbCia').find(":selected").text() + ' ' + $('#cbbPais').find(":selected").text() + '';
+    } else {
+      labelActual = $('#cbbCia').find(":selected").text();
     }
 
-  });
-
-
-
-
-
-  if (<?php echo $validator1;?>) {
-    $("#grafica1").addClass("d-none");
   }
-  var labelActual = "";
-  /*if (<?php echo isset($_SESSION['clickCia'])? $_SESSION['clickCia']:0;?>==1) {
-      if ($("#cbbCia").val()==999) {
-          labelActual=$('#cbbCia').find(":selected").text()+' '+$('#cbbPais').find(":selected").text()+'';
-      }else{
-          labelActual=$('#cbbCia').find(":selected").text();
-      }
-
-  }
-  if (<?php echo isset($_SESSION['clickPais'])? $_SESSION['clickPais']:0;?>==1) {
-      labelActual=$('#cbbCia').find(":selected").text()+'     '+$('#cbbPais').find(":selected").text()+'';
+  if (<?php echo isset($_SESSION['clickPais']) ? $_SESSION['clickPais'] : 0; ?> == 1) {
+    labelActual = $('#cbbCia').find(":selected").text() + '     ' + $('#cbbPais').find(":selected").text() + '';
   }
   $("#lblRadial").text(labelActual);*/
 
@@ -197,49 +197,49 @@ $(document).ready(function() {
     "ordering": true,
     "pageLength": 100,
     "columnDefs": [{
-        "targets": [0],
-        "type": "string"
-      },
-      {
-        "targets": [1],
-        "type": "num-fmt"
-      },
-      {
-        "targets": [2],
-        "type": "num-fmt"
-      },
-      {
-        "targets": [3],
-        "type": "num-fmt"
-      },
-      {
-        "targets": [4],
-        "type": "num-fmt"
-      },
-      {
-        "targets": [5],
-        "type": "num-fmt"
-      },
-      {
-        "targets": [6],
-        "type": "num-fmt"
-      },
-      {
-        "targets": [7],
-        "type": "num-fmt"
-      },
-      {
-        "targets": [8],
-        "type": "num-fmt"
-      },
-      {
-        "targets": [9],
-        "type": "num-fmt"
-      },
-      {
-        "targets": [10],
-        "type": "num-fmt"
-      },
+      "targets": [0],
+      "type": "string"
+    },
+    {
+      "targets": [1],
+      "type": "num-fmt"
+    },
+    {
+      "targets": [2],
+      "type": "num-fmt"
+    },
+    {
+      "targets": [3],
+      "type": "num-fmt"
+    },
+    {
+      "targets": [4],
+      "type": "num-fmt"
+    },
+    {
+      "targets": [5],
+      "type": "num-fmt"
+    },
+    {
+      "targets": [6],
+      "type": "num-fmt"
+    },
+    {
+      "targets": [7],
+      "type": "num-fmt"
+    },
+    {
+      "targets": [8],
+      "type": "num-fmt"
+    },
+    {
+      "targets": [9],
+      "type": "num-fmt"
+    },
+    {
+      "targets": [10],
+      "type": "num-fmt"
+    },
     ],
     dom: 'Bfrtip',
     buttons: [{
@@ -251,7 +251,7 @@ $(document).ready(function() {
       },
       title: 'ReportesVentas Vendedor',
 
-      customize: function(xlsx) {
+      customize: function (xlsx) {
         var sheet = xlsx.xl.worksheets['sheet1.xml'];
         var sSh = xlsx.xl['styles.xml'];
         var lastXfIndex = $('cellXfs xf', sSh).length - 1;
@@ -372,7 +372,7 @@ $(document).ready(function() {
         downloadPDF: "Descargar en PDF",
       },
       chart: {
-        height: (compfiltro[0] == 999 && <?php echo $paisFiltro;?> == 1) ? 1000 : 800,
+        height: (compfiltro[0] == 999 && <?php echo $paisFiltro; ?> == 1) ? 1000 : 800,
         type: 'bar'
       },
       title: {
@@ -389,12 +389,12 @@ $(document).ready(function() {
       },
       xAxis: {
         min: 0,
-        max: <?php echo (count($vendedoresLabel)>10)? 10: count($vendedoresLabel)-1;?>,
+        max: <?php echo (count($vendedoresLabel) > 10) ? 10 : count($vendedoresLabel) - 1; ?>,
         scrollbar: {
           enabled: true
         },
         className: 'fw-bold',
-        categories: <?php echo json_encode($vendedoresLabel);?>,
+        categories: <?php echo json_encode($vendedoresLabel); ?>,
       },
       yAxis: {
         scrollbar: {
@@ -424,7 +424,7 @@ $(document).ready(function() {
       },
       series: [{
         name: 'Ventas',
-        data: <?php echo json_encode($vendedoresVentas2);?>,
+        data: <?php echo json_encode($vendedoresVentas2); ?>,
         dataLabels: [{
           enabled: true,
           inside: true,
@@ -433,7 +433,7 @@ $(document).ready(function() {
             color: '#000',
           }
         }],
-      }, ],
+      },],
       exporting: {
         buttons: {
           contextButton: {
@@ -442,13 +442,13 @@ $(document).ready(function() {
         },
         enabled: true,
         filename: 'Reporte de ventas - Vendedores',
-        sourceWidth: (compfiltro[0] == 999 && <?php echo $paisFiltro;?> == 1) ? 800 : 1600,
-        sourceHeight: (compfiltro[0] == 999 && <?php echo $paisFiltro;?> == 1) ? 2500 : 900,
+        sourceWidth: (compfiltro[0] == 999 && <?php echo $paisFiltro; ?> == 1) ? 800 : 1600,
+        sourceHeight: (compfiltro[0] == 999 && <?php echo $paisFiltro; ?> == 1) ? 2500 : 900,
         chartOptions: {
 
           title: {
             style: {
-              fontSize: (<?php echo $paisFiltro;?> == 1) ? '30px' : '20px',
+              fontSize: (<?php echo $paisFiltro; ?> == 1) ? '30px' : '20px',
             }
           },
           series: [{
@@ -494,6 +494,7 @@ $(document).ready(function() {
             gridLineWidth: 0
           },
         },
+        fallbackToExportServer: false
       },
 
     });
@@ -508,7 +509,7 @@ $(document).ready(function() {
         downloadPDF: "Descargar en PDF",
       },
       chart: {
-        height: (compfiltro[0] == 999 && <?php echo $paisFiltro;?> == 1) ? 1000 : 600,
+        height: (compfiltro[0] == 999 && <?php echo $paisFiltro; ?> == 1) ? 1000 : 600,
         type: 'pie',
         /* options3d: {
              enabled: true,
@@ -545,10 +546,10 @@ $(document).ready(function() {
             enabled: true,
 
             color: '#333333',
-            formatter: function() {
+            formatter: function () {
               return '<b>' + this.point.name +
                 '</b>: <br/> <span class="fw-bold fs-6">' + this.point.y
-                .toLocaleString('en-ES') + '</span>';
+                  .toLocaleString('en-ES') + '</span>';
             }
           },
         },
@@ -561,14 +562,13 @@ $(document).ready(function() {
         name: 'Ventas',
         data: [
           <?php
-                        for ($i=0; $i < count($vendedoresVentas) ; $i++) {
-                          foreach($vendedoresVentas[$i] as $x=>$x_value)
-                          {
-                          echo "['". $x . "'," . $x_value."],";
-                          }
-                        }
+          for ($i = 0; $i < count($vendedoresVentas); $i++) {
+            foreach ($vendedoresVentas[$i] as $x => $x_value) {
+              echo "['" . $x . "'," . $x_value . "],";
+            }
+          }
 
-                      ?>
+          ?>
         ],
         dataLabels: {
           enabled: boolVal,
@@ -582,13 +582,13 @@ $(document).ready(function() {
         },
         enabled: true,
         filename: 'Reporte de ventas - Vendedores',
-        sourceWidth: (compfiltro[0] == 999 && <?php echo $paisFiltro;?> == 1) ? 3000 : 1600,
-        sourceHeight: (compfiltro[0] == 999 && <?php echo $paisFiltro;?> == 1) ? 3000 : 900,
+        sourceWidth: (compfiltro[0] == 999 && <?php echo $paisFiltro; ?> == 1) ? 3000 : 1600,
+        sourceHeight: (compfiltro[0] == 999 && <?php echo $paisFiltro; ?> == 1) ? 3000 : 900,
         chartOptions: {
 
           title: {
             style: {
-              fontSize: (<?php echo $paisFiltro;?> == 1) ? '30px' : '20px',
+              fontSize: (<?php echo $paisFiltro; ?> == 1) ? '30px' : '20px',
             }
           },
           series: [{
@@ -633,6 +633,7 @@ $(document).ready(function() {
             gridLineWidth: 0
           },
         },
+        fallbackToExportServer: false
       },
     });
   }
@@ -648,7 +649,7 @@ $(document).ready(function() {
         downloadPDF: "Descargar en PDF",
       },
       chart: {
-        height: (compfiltro[0] == 999 && <?php echo $paisFiltro;?> == 1) ? 1000 : 800,
+        height: (compfiltro[0] == 999 && <?php echo $paisFiltro; ?> == 1) ? 1000 : 800,
         type: 'bar'
       },
       title: {
@@ -665,12 +666,12 @@ $(document).ready(function() {
       },
       xAxis: {
         min: 0,
-        max: <?php echo (count($vendedoresLabel)>10)? 10: count($vendedoresLabel)-1;?>,
+        max: <?php echo (count($vendedoresLabel) > 10) ? 10 : count($vendedoresLabel) - 1; ?>,
         scrollbar: {
           enabled: true
         },
         className: 'fw-bold',
-        categories: <?php echo json_encode($vendedoresLabel);?>,
+        categories: <?php echo json_encode($vendedoresLabel); ?>,
       },
       yAxis: {
         scrollbar: {
@@ -700,7 +701,7 @@ $(document).ready(function() {
       },
       series: [{
         name: 'Unidades',
-        data: <?php echo json_encode($vendedoresUnidades2);?>,
+        data: <?php echo json_encode($vendedoresUnidades2); ?>,
         dataLabels: [{
           enabled: true,
           inside: true,
@@ -709,7 +710,7 @@ $(document).ready(function() {
             color: '#000',
           }
         }],
-      }, ],
+      },],
       exporting: {
         buttons: {
           contextButton: {
@@ -718,13 +719,13 @@ $(document).ready(function() {
         },
         enabled: true,
         filename: 'Reporte de unidades - Vendedores',
-        sourceWidth: (compfiltro[0] == 999 && <?php echo $paisFiltro;?> == 1) ? 800 : 1600,
-        sourceHeight: (compfiltro[0] == 999 && <?php echo $paisFiltro;?> == 1) ? 2500 : 900,
+        sourceWidth: (compfiltro[0] == 999 && <?php echo $paisFiltro; ?> == 1) ? 800 : 1600,
+        sourceHeight: (compfiltro[0] == 999 && <?php echo $paisFiltro; ?> == 1) ? 2500 : 900,
         chartOptions: {
 
           title: {
             style: {
-              fontSize: (<?php echo $paisFiltro;?> == 1) ? '30px' : '20px',
+              fontSize: (<?php echo $paisFiltro; ?> == 1) ? '30px' : '20px',
             }
           },
           series: [{
@@ -738,7 +739,7 @@ $(document).ready(function() {
 
           xAxis: {
             min: 0,
-            max: <?php echo count($vendedoresLabel)-1; ?>,
+            max: <?php echo count($vendedoresLabel) - 1; ?>,
             labels: {
               rotate: -45,
               enabled: true,
@@ -770,6 +771,7 @@ $(document).ready(function() {
             gridLineWidth: 0
           },
         },
+        fallbackToExportServer: false
       },
 
     });
@@ -784,7 +786,7 @@ $(document).ready(function() {
         downloadPDF: "Descargar en PDF",
       },
       chart: {
-        height: (compfiltro[0] == 999 && <?php echo $paisFiltro;?> == 1) ? 1000 : 600,
+        height: (compfiltro[0] == 999 && <?php echo $paisFiltro; ?> == 1) ? 1000 : 600,
         type: 'pie',
         /* options3d: {
              enabled: true,
@@ -812,10 +814,10 @@ $(document).ready(function() {
             enabled: true,
 
             color: '#333333',
-            formatter: function() {
+            formatter: function () {
               return '<b>' + this.point.name +
                 '</b>: <br/> <span class="fw-bold fs-6">' + this.point.y
-                .toLocaleString('en-ES') + ' Und.</span>';
+                  .toLocaleString('en-ES') + ' Und.</span>';
             }
           },
         }
@@ -827,14 +829,13 @@ $(document).ready(function() {
         name: 'Unidades',
         data: [
           <?php
-                        for ($i=0; $i < count($vendedoresUnidades) ; $i++) {
-                          foreach($vendedoresUnidades[$i] as $x=>$x_value)
-                          {
-                          echo "['". $x . "'," . $x_value."],";
-                          }
-                        }
+          for ($i = 0; $i < count($vendedoresUnidades); $i++) {
+            foreach ($vendedoresUnidades[$i] as $x => $x_value) {
+              echo "['" . $x . "'," . $x_value . "],";
+            }
+          }
 
-                      ?>
+          ?>
         ],
         dataLabels: {
           enabled: boolVal,
@@ -850,13 +851,13 @@ $(document).ready(function() {
         },
         enabled: true,
         filename: 'Reporte de transacciones - Vendedores',
-        sourceWidth: (compfiltro[0] == 999 && <?php echo $paisFiltro;?> == 1) ? 800 : 1600,
-        sourceHeight: (compfiltro[0] == 999 && <?php echo $paisFiltro;?> == 1) ? 2500 : 900,
+        sourceWidth: (compfiltro[0] == 999 && <?php echo $paisFiltro; ?> == 1) ? 800 : 1600,
+        sourceHeight: (compfiltro[0] == 999 && <?php echo $paisFiltro; ?> == 1) ? 2500 : 900,
         chartOptions: {
 
           title: {
             style: {
-              fontSize: (<?php echo $paisFiltro;?> == 1) ? '30px' : '20px',
+              fontSize: (<?php echo $paisFiltro; ?> == 1) ? '30px' : '20px',
             }
           },
           series: [{
@@ -901,6 +902,7 @@ $(document).ready(function() {
             gridLineWidth: 0
           },
         },
+        fallbackToExportServer: false
       },
     });
   }
@@ -919,7 +921,7 @@ $(document).ready(function() {
       downloadPDF: "Descargar en PDF",
     },
     chart: {
-      height: (compfiltro[0] == 999 && <?php echo $paisFiltro;?> == 1) ? 1000 : 800,
+      height: (compfiltro[0] == 999 && <?php echo $paisFiltro; ?> == 1) ? 1000 : 800,
       type: 'bar'
     },
     title: {
@@ -936,12 +938,12 @@ $(document).ready(function() {
     },
     xAxis: {
       min: 0,
-      max: <?php echo (count($vendedoresLabel)>10)? 10: count($vendedoresLabel)-1;?>,
+      max: <?php echo (count($vendedoresLabel) > 10) ? 10 : count($vendedoresLabel) - 1; ?>,
       scrollbar: {
         enabled: true
       },
       className: 'fw-bold',
-      categories: <?php echo json_encode($vendedoresLabel);?>,
+      categories: <?php echo json_encode($vendedoresLabel); ?>,
     },
     yAxis: {
       scrollbar: {
@@ -971,7 +973,7 @@ $(document).ready(function() {
     },
     series: [{
       name: 'Transacciones',
-      data: <?php echo json_encode($transacciones);?>,
+      data: <?php echo json_encode($transacciones); ?>,
       dataLabels: [{
         enabled: true,
         inside: true,
@@ -980,7 +982,7 @@ $(document).ready(function() {
           color: '#000',
         }
       }],
-    }, ],
+    },],
     exporting: {
       buttons: {
         contextButton: {
@@ -989,13 +991,13 @@ $(document).ready(function() {
       },
       enabled: true,
       filename: 'Reporte de transacciones - Vendedores',
-      sourceWidth: (compfiltro[0] == 999 && <?php echo $paisFiltro;?> == 1) ? 800 : 1600,
-      sourceHeight: (compfiltro[0] == 999 && <?php echo $paisFiltro;?> == 1) ? 2500 : 900,
+      sourceWidth: (compfiltro[0] == 999 && <?php echo $paisFiltro; ?> == 1) ? 800 : 1600,
+      sourceHeight: (compfiltro[0] == 999 && <?php echo $paisFiltro; ?> == 1) ? 2500 : 900,
       chartOptions: {
 
         title: {
           style: {
-            fontSize: (<?php echo $paisFiltro;?> == 1) ? '30px' : '20px',
+            fontSize: (<?php echo $paisFiltro; ?> == 1) ? '30px' : '20px',
           }
         },
         series: [{
@@ -1009,7 +1011,7 @@ $(document).ready(function() {
 
         xAxis: {
           min: 0,
-          max: <?php echo count($vendedoresLabel)-1; ?>,
+          max: <?php echo count($vendedoresLabel) - 1; ?>,
           labels: {
             rotate: -45,
             enabled: true,
@@ -1041,6 +1043,7 @@ $(document).ready(function() {
           gridLineWidth: 0
         },
       },
+      fallbackToExportServer: false
     },
 
   });
@@ -1061,7 +1064,7 @@ $(document).ready(function() {
       downloadPDF: "Descargar en PDF",
     },
     chart: {
-      height: (compfiltro[0] == 999 && <?php echo $paisFiltro;?> == 1) ? 1000 : 800,
+      height: (compfiltro[0] == 999 && <?php echo $paisFiltro; ?> == 1) ? 1000 : 800,
       type: 'bar'
     },
     title: {
@@ -1078,12 +1081,12 @@ $(document).ready(function() {
     },
     xAxis: {
       min: 0,
-      max: <?php echo (count($vendedoresLabel)>10)? 10: count($vendedoresLabel)-1;?>,
+      max: <?php echo (count($vendedoresLabel) > 10) ? 10 : count($vendedoresLabel) - 1; ?>,
       scrollbar: {
         enabled: true
       },
       className: 'fw-bold',
-      categories: <?php echo json_encode($vendedoresLabel);?>,
+      categories: <?php echo json_encode($vendedoresLabel); ?>,
     },
     yAxis: {
       scrollbar: {
@@ -1112,50 +1115,50 @@ $(document).ready(function() {
       enabled: false
     },
     series: [{
-        name: 'Venta',
-        data: <?php echo json_encode($v1);?>,
-        dataLabels: [{
-          enabled: true,
-          inside: true,
-          style: {
-            fontSize: '16px',
-            color: '#000',
-          },
-          formatter: function() {
-            return abreviarNumero(this.y);
-          },
-        }],
-      },
-      {
-        name: 'Venta Año Anterior',
-        data: <?php echo json_encode($v2);?>,
-        dataLabels: [{
-          enabled: true,
-          inside: true,
-          style: {
-            fontSize: '16px',
-            color: '#000',
-          },
-          formatter: function() {
-            return abreviarNumero(this.y);
-          },
-        }],
-      },
-      {
-        name: 'Venta 2 Años Antes',
-        data: <?php echo json_encode($v3);?>,
-        dataLabels: [{
-          enabled: true,
-          inside: true,
-          style: {
-            fontSize: '16px',
-            color: '#000',
-          },
-          formatter: function() {
-            return abreviarNumero(this.y);
-          },
-        }],
-      },
+      name: 'Venta',
+      data: <?php echo json_encode($v1); ?>,
+      dataLabels: [{
+        enabled: true,
+        inside: true,
+        style: {
+          fontSize: '16px',
+          color: '#000',
+        },
+        formatter: function () {
+          return abreviarNumero(this.y);
+        },
+      }],
+    },
+    {
+      name: 'Venta Año Anterior',
+      data: <?php echo json_encode($v2); ?>,
+      dataLabels: [{
+        enabled: true,
+        inside: true,
+        style: {
+          fontSize: '16px',
+          color: '#000',
+        },
+        formatter: function () {
+          return abreviarNumero(this.y);
+        },
+      }],
+    },
+    {
+      name: 'Venta 2 Años Antes',
+      data: <?php echo json_encode($v3); ?>,
+      dataLabels: [{
+        enabled: true,
+        inside: true,
+        style: {
+          fontSize: '16px',
+          color: '#000',
+        },
+        formatter: function () {
+          return abreviarNumero(this.y);
+        },
+      }],
+    },
 
     ],
     exporting: {
@@ -1166,13 +1169,13 @@ $(document).ready(function() {
       },
       enabled: true,
       filename: 'Reporte de ventas - Vendedores',
-      sourceWidth: (compfiltro[0] == 999 && <?php echo $paisFiltro;?> == 1) ? 800 : 1600,
-      sourceHeight: (compfiltro[0] == 999 && <?php echo $paisFiltro;?> == 1) ? 2500 : 900,
+      sourceWidth: (compfiltro[0] == 999 && <?php echo $paisFiltro; ?> == 1) ? 800 : 1600,
+      sourceHeight: (compfiltro[0] == 999 && <?php echo $paisFiltro; ?> == 1) ? 2500 : 900,
       chartOptions: {
 
         title: {
           style: {
-            fontSize: (<?php echo $paisFiltro;?> == 1) ? '30px' : '20px',
+            fontSize: (<?php echo $paisFiltro; ?> == 1) ? '30px' : '20px',
           }
         },
         series: [{
@@ -1186,7 +1189,7 @@ $(document).ready(function() {
 
         xAxis: {
           min: 0,
-          max: <?php echo count($vendedoresLabel)-1; ?>,
+          max: <?php echo count($vendedoresLabel) - 1; ?>,
           labels: {
             rotate: -45,
             enabled: true,
@@ -1218,153 +1221,154 @@ $(document).ready(function() {
           gridLineWidth: 0
         },
       },
+      fallbackToExportServer: false
     },
 
   });
 });
 
-function abreviarNumero(numero) {
-  if (numero >= 1000000000) {
-    return (numero / 1000000000).toFixed(1) + ' MMill.';
+  function abreviarNumero(numero) {
+    if (numero >= 1000000000) {
+      return (numero / 1000000000).toFixed(1) + ' MMill.';
+    }
+    if (numero >= 1000000) {
+      return (numero / 1000000).toFixed(1) + ' Mill.';
+    }
+    if (numero >= 1000) {
+      return (numero / 1000).toFixed(1) + ' Mil';
+    }
+    return numero.toString();
   }
-  if (numero >= 1000000) {
-    return (numero / 1000000).toFixed(1) + ' Mill.';
-  }
-  if (numero >= 1000) {
-    return (numero / 1000).toFixed(1) + ' Mil';
-  }
-  return numero.toString();
-}
-<?php
-    if (true) {
+  <?php
+  if (true) {
     ?>
-const ventas1 = <?php echo $venano1; ?>;
-const ventas2 = <?php echo $venano2; ?>;
-const totalVentas = ventas2 + ventas1;
+    const ventas1 = <?php echo $venano1; ?>;
+    const ventas2 = <?php echo $venano2; ?>;
+    const totalVentas = ventas2 + ventas1;
 
-const data = {
+    const data = {
 
-  datasets: [{
-    label: ["Venta"],
-    data: [ventas1, totalVentas],
-    backgroundColor: ["rgba(25, 170, 222,1)", "rgba(20, 36, 89,0.6)"],
-    borderColor: ["#fff"],
-    borderWidth: 1
-  }, {
-    label: ["Venta 2 Años antes"],
-    data: [ventas2, totalVentas],
-    backgroundColor: ["rgba(125, 58, 193,1)", "rgba(20, 36, 89,0.6)"],
-    borderColor: ["#fff"],
-    borderWidth: 1
-  }]
-};
-//gaugeChartText plugin block
-const gaugeChartText = {
-  id: 'gaugeChartText',
-  afterDatasetsDraw(chart, args, pluginOptions) {
-    const {
-      ctx,
+      datasets: [{
+        label: ["Venta"],
+        data: [ventas1, totalVentas],
+        backgroundColor: ["rgba(25, 170, 222,1)", "rgba(20, 36, 89,0.6)"],
+        borderColor: ["#fff"],
+        borderWidth: 1
+      }, {
+        label: ["Venta 2 Años antes"],
+        data: [ventas2, totalVentas],
+        backgroundColor: ["rgba(125, 58, 193,1)", "rgba(20, 36, 89,0.6)"],
+        borderColor: ["#fff"],
+        borderWidth: 1
+      }]
+    };
+    //gaugeChartText plugin block
+    const gaugeChartText = {
+      id: 'gaugeChartText',
+      afterDatasetsDraw(chart, args, pluginOptions) {
+        const {
+          ctx,
+          data,
+          chartArea: {
+            top,
+            bottom,
+            left,
+            right,
+            width,
+            height
+          },
+          scales: {
+            r
+          }
+        } = chart;
+
+        ctx.save();
+        const xCoor = chart.getDatasetMeta(0).data[0].x;
+        const yCoor = chart.getDatasetMeta(0).data[0].y;
+        const score = data.datasets[0].data[0];
+        let rating;
+
+        if (score < 600) {
+          rating = ''
+        }
+        //ctx.fillRect(xCoor, yCoor, 400, 5);
+        ctx.font = '14px sans-serif';
+        ctx.fillStyle = '#666';
+        ctx.textBaseLine = 'top';
+        ctx.textAlign = 'left';
+        //ctx.fillText('0.00 mill.',left + 15,yCoor + 20);
+
+        ctx.textAlign = 'right';
+        //ctx.fillText(abreviarNumero(totalVentas),right - 15,yCoor + 20);
+        ctx.class = 'responsive-font-example';
+        //ctx.font = '20px sans-serif';
+        ctx.textAlign = 'center';
+        const yCoor3 = yCoor - 1.6 * (height / 2);
+        ctx.fillText(abreviarNumero(ventas2), xCoor, yCoor - yCoor3);
+
+
+        ctx.textAlign = 'center';
+        const yCoor2 = yCoor - ((window.screen.width < 900) ? 0.50 : 0.05) * (height / 2);
+        ctx.fillText(abreviarNumero(ventas1), xCoor, yCoor - yCoor2);
+        /* ctx.font = '150px sans-serif';
+         ctx.textAlign='center';
+         ctx.textBaseLine = 'bottom';
+         ctx.fillText('Fair',xCoor,yCoor - 35);*/
+      }
+    }
+    // config
+    const config = {
+      type: 'doughnut',
       data,
-      chartArea: {
-        top,
-        bottom,
-        left,
-        right,
-        width,
-        height
-      },
-      scales: {
-        r
-      }
-    } = chart;
+      options: {
 
-    ctx.save();
-    const xCoor = chart.getDatasetMeta(0).data[0].x;
-    const yCoor = chart.getDatasetMeta(0).data[0].y;
-    const score = data.datasets[0].data[0];
-    let rating;
-
-    if (score < 600) {
-      rating = ''
-    }
-    //ctx.fillRect(xCoor, yCoor, 400, 5);
-    ctx.font = '14px sans-serif';
-    ctx.fillStyle = '#666';
-    ctx.textBaseLine = 'top';
-    ctx.textAlign = 'left';
-    //ctx.fillText('0.00 mill.',left + 15,yCoor + 20);
-
-    ctx.textAlign = 'right';
-    //ctx.fillText(abreviarNumero(totalVentas),right - 15,yCoor + 20);
-    ctx.class = 'responsive-font-example';
-    //ctx.font = '20px sans-serif';
-    ctx.textAlign = 'center';
-    const yCoor3 = yCoor - 1.6 * (height / 2);
-    ctx.fillText(abreviarNumero(ventas2), xCoor, yCoor - yCoor3);
-
-
-    ctx.textAlign = 'center';
-    const yCoor2 = yCoor - ((window.screen.width < 900) ? 0.50 : 0.05) * (height / 2);
-    ctx.fillText(abreviarNumero(ventas1), xCoor, yCoor - yCoor2);
-    /* ctx.font = '150px sans-serif';
-     ctx.textAlign='center';
-     ctx.textBaseLine = 'bottom';
-     ctx.fillText('Fair',xCoor,yCoor - 35);*/
-  }
-}
-// config
-const config = {
-  type: 'doughnut',
-  data,
-  options: {
-
-    layout: {
-      padding: {
-        top: 20
-      }
-    },
-    cutout: '50%',
-    tooltips: {
-      enabled: false
-    },
-    maintainAspectRatio: false,
-    responsive: true,
-    "plugins": {
-      "legend": {
-        "display": false,
-        "position": "bottom",
-      },
-      datalabels: {
-        "display": false,
-        formatter: (value, ctx) => {
-          const datapoints = ctx.chart.data.datasets[0].data
-          const total = datapoints.reduce((total, datapoint) => total + datapoint, 0)
-          const percentage = value / total * 100
-          return percentage.toFixed(2) + "%";
+        layout: {
+          padding: {
+            top: 20
+          }
         },
-        color: '#fff',
-        offset: -10,
-      }
-    },
-    animation: {
-      animateScale: true,
-      animateRotate: true
-    },
-    rotation: -90,
-    circumference: 180,
-  },
-  plugins: [gaugeChartText]
-};
-// render init block
-const ctx = new Chart(
-  document.getElementById('compRadial'),
-  config
-);
-<?php
-    }
-    ?>
+        cutout: '50%',
+        tooltips: {
+          enabled: false
+        },
+        maintainAspectRatio: false,
+        responsive: true,
+        "plugins": {
+          "legend": {
+            "display": false,
+            "position": "bottom",
+          },
+          datalabels: {
+            "display": false,
+            formatter: (value, ctx) => {
+              const datapoints = ctx.chart.data.datasets[0].data
+              const total = datapoints.reduce((total, datapoint) => total + datapoint, 0)
+              const percentage = value / total * 100
+              return percentage.toFixed(2) + "%";
+            },
+            color: '#fff',
+            offset: -10,
+          }
+        },
+        animation: {
+          animateScale: true,
+          animateRotate: true
+        },
+        rotation: -90,
+        circumference: 180,
+      },
+      plugins: [gaugeChartText]
+    };
+    // render init block
+    const ctx = new Chart(
+      document.getElementById('compRadial'),
+      config
+    );
+    <?php
+  }
+  ?>
 
-function searchF() {
-  $("#formFiltros").submit();
-}
+  function searchF() {
+    $("#formFiltros").submit();
+  }
 </script>

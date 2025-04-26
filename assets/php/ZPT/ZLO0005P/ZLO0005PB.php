@@ -331,7 +331,8 @@
               }
             }
           }
-        }
+        },
+        fallbackToExportServer: false
       },
       title: {
         text: 'Ingresado a planta vs. Docenas vendidas (Ultimos 12 meses)',
@@ -477,7 +478,8 @@
               }
             }
           }
-        }
+        },
+        fallbackToExportServer: false
       },
       title: {
         text: 'Existencias',
@@ -573,14 +575,14 @@
         }]
       }
     });
-    Highcharts.setOptions({
+    /*Highcharts.setOptions({
       colors: [
         "rgba(222, 84, 44,0.6)", "rgba(239, 126, 50,0.6)", "rgba(238, 154, 58,0.6)", "rgba(234, 219, 56,0.6)",
         "rgba(79, 32, 13,0.6)", "rgba(231, 227, 78,0.6)",
         "rgba(20, 36, 89,0.6)", "rgba(23, 107, 160,0.6)", "rgba(25, 170, 222,0.6)", "rgba(26, 201, 230,0.6)",
         "rgba(29, 228, 219,0.6)", "rgba(109, 240, 210,0.6)",
       ]
-    });
+    });*/
     //PAISES INVENTARIO
     Highcharts.chart('container', {
       chart: {
@@ -612,7 +614,8 @@
               }
             }
           }
-        }
+        },
+        fallbackToExportServer: false
       },
       title: {
         text: '',
@@ -789,6 +792,7 @@
             gridLineWidth: 0
           },
         },
+        fallbackToExportServer: false
       },
 
     });
@@ -915,7 +919,8 @@
                 color: '#FFFFFF'
               }
             }
-          }
+          },
+          fallbackToExportServer: false
         },
         series: [{
           "name": "Ingresado a planta",
@@ -1011,7 +1016,8 @@
                 color: '#FFFFFF'
               }
             }
-          }
+          },
+          fallbackToExportServer: false
         },
         series: [{
           "name": "Docenas en existencia",

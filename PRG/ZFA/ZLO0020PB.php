@@ -117,6 +117,7 @@
     <script src="https://code.highcharts.com/modules/variable-pie.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
     <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/offline-exporting.js"></script>
     <script src="https://code.highcharts.com/modules/accessibility.js"></script>
 
     <script>
@@ -498,6 +499,7 @@
                 filename: 'Comparativo de ventas resumidas - Países',
                 sourceWidth: 1600,
                 sourceHeight: 900,
+                fallbackToExportServer: false
             }
         });
         const table = $("#tablePanel1").DataTable({
@@ -899,6 +901,7 @@
                 filename: 'Comparativo de ventas resumidas - Países',
                 sourceWidth: 1600,
                 sourceHeight: 900,
+                fallbackToExportServer: false
             }
         });
         const table = $("#tablePanel2").DataTable({
@@ -1291,6 +1294,7 @@
                 filename: 'Comparativo de ventas resumidas - Países',
                 sourceWidth: 1600,
                 sourceHeight: 900,
+                fallbackToExportServer: false
             }
         });
         const table = $("#tablePanel3").DataTable({
@@ -1691,6 +1695,7 @@
                 filename: 'Comparativo de ventas resumidas - Países',
                 sourceWidth: 1600,
                 sourceHeight: 900,
+                fallbackToExportServer: false
             }
         });
         const table = $("#tablePanel4").DataTable({

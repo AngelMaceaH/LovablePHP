@@ -113,8 +113,8 @@
         var tipoWeb = "";
         var usuario = "";
         let cons2 = false;
-        var depas="";
-        var secs="";
+        var depas = "";
+        var secs = "";
         $(document).ready(function () {
             var anoing = "<?php echo isset($_SESSION['ANOING']) ? $_SESSION['ANOING'] : ''; ?>";
             var numemp = "<?php echo isset($_SESSION['NUMEMP']) ? $_SESSION['NUMEMP'] : ''; ?>";
@@ -147,6 +147,7 @@
                     descrp = paramsData['DESCRP'];
                     depas = paramsData['DEPAS'];
                     secs = paramsData['SECS'];
+                    $("#sidebar").addClass('hide');
                 }
             }
 
@@ -226,11 +227,11 @@
 
                         for (var j = 0; j < secs1.length; j++) {
                             if (item.SECDEP === secs1[j] && item.SECCOD === depas1[j]) {
-                            $("#cbbDepartamentos").val(item.SECDEP + '-' + item.SECCOD);
-                            break;
+                                $("#cbbDepartamentos").val(item.SECDEP + '-' + item.SECCOD);
+                                break;
                             }
                         }
-                        }
+                    }
                 } else {
                     $("#isGerencia").append(`<div class="col-12"> <h6 class="mb-3 text-start">Tipo de documento</h6>
                                         <select class="form-select mt-1" id="tiposDoc">
@@ -1190,8 +1191,19 @@
                 $("#docInfo2").modal('show');
                 cons2 = false;
             } else {
+                const num = parseFloat($("#numDocumentos").text());
                 findCons1(nomcard, usugra, fecgra, horgra, extdoc, urldoc, tipdoc, descrp, fecha, cam0, cam1, cam2, cam3, cam4, cam5, cam6, cam7, cam8, cam9, coddep, codsec, apr)
-                $("#docInfo").modal('show');
+                const currentUrl = window.location.href;
+                var url = new URL(currentUrl);
+                var user = url.searchParams.get("user");
+                if (user) {
+                    if (num == 1) {
+                        $("#docInfo").modal('show');
+                    }
+                } else {
+                    $("#docInfo").modal('show');
+                }
+
             }
         }
         function findCons2(nomcard, usugra, fecgra, horgra, extdoc, urldoc, tipdoc, descrp, fecha, cam0, cam1, cam2, cam3, cam4, cam5, cam6, cam7, cam8, cam9, coddep, codsec, apr, modulo) {
@@ -1658,7 +1670,7 @@
                                     case 'png':
                                     case 'jpg':
                                     case 'jpeg':
-                                        $("#downloadFrame2").append('<img src="' + urldoc2 +'"  style="width:100%;" alt="">');
+                                        $("#downloadFrame2").append('<img src="' + urldoc2 + '"  style="width:100%;" alt="">');
                                         break;
                                     case 'pdf':
                                         const box2 = document.getElementById('downloadFrame2');
@@ -1841,7 +1853,6 @@
             </div>
             `);
             }
-            $("#trashDoc").empty();
             $("#AuthDoc").empty();
             var permisos = "<?php echo isset($_SESSION['PERESP']) ? $_SESSION['PERESP'] : ''; ?>";
             if (permisos === 'S') {
@@ -1852,11 +1863,12 @@
                     for (let i = 0; i < data.length; i++) {
                         if (data[i]['ACCION'] == 'E') {
                             if (apr != 'A') {
+                                $("#trashDoc").empty();
                                 $("#trashDoc").append(
                                     ` <button type="button" class="btn btn-danger m-0 mt-2 me-3  text-white" onclick="deleteCard('` +
                                     nomcard +
                                     `','` + usugra + `','` + fecgra + `','` + horgra + `','` + extdoc + `','` + urldoc +
-                                    `','`+tipdoc+`')" ><i class="fa-solid fa-trash-can fw-bold"></i></button>`);
+                                    `','` + tipdoc + `')" ><i class="fa-solid fa-trash-can fw-bold"></i></button>`);
                             }
                         } else {
                             if (data[i]['ACCION'] == 'A') {
@@ -1882,6 +1894,39 @@
                         }
                     }
                 }
+                fetch('/API.LovablePHP/ZLO0016P/GetTipos')
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.code == 200) {
+                            const tipos = data.data;
+                            const documento = tipos.find(t => t.TIPWEB === tipdoc);
+                            if (documento && usugra == usuario) {
+                                $("#trashDoc").empty();
+                                $("#trashDoc").append(
+                                    ` <button type="button" class="btn btn-danger m-0 mt-2 me-3  text-white" onclick="deleteCard('` +
+                                    nomcard +
+                                    `','` + usugra + `','` + fecgra + `','` + horgra + `','` + extdoc + `','` + urldoc +
+                                    `','` + tipdoc + `')" ><i class="fa-solid fa-trash-can fw-bold"></i></button>`);
+                            }
+                        }
+                    });
+            } else {
+                fetch('/API.LovablePHP/ZLO0016P/GetTipos')
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.code == 200) {
+                            const tipos = data.data;
+                            const documento = tipos.find(t => t.TIPWEB === tipdoc);
+                            if (documento && usugra == usuario) {
+                                $("#trashDoc").empty();
+                                $("#trashDoc").append(
+                                    ` <button type="button" class="btn btn-danger m-0 mt-2 me-3  text-white" onclick="deleteCard('` +
+                                    nomcard +
+                                    `','` + usugra + `','` + fecgra + `','` + horgra + `','` + extdoc + `','` + urldoc +
+                                    `','` + tipdoc + `')" ><i class="fa-solid fa-trash-can fw-bold"></i></button>`);
+                            }
+                        }
+                    });
 
             }
             let titleDoc = apr === 'A' ? `${nomcard}<span class="badge text-bg-success text-white ms-4">Aprobado</span>` : nomcard;
@@ -1972,8 +2017,8 @@
             //return texto.substring(0, 11) + "...";
         }
 
-        function deleteCard(nomcard, usugra, fecgra, horgra, extdoc, urldoc,tipdoc) {
-            var urlDelete = "/API.LovablePHP/ZLO0016P/Delete/?nomdoc=" + nomcard + "&urldoc=" + urldoc +"&tipdoc="+tipdoc+"";
+        function deleteCard(nomcard, usugra, fecgra, horgra, extdoc, urldoc, tipdoc) {
+            var urlDelete = "/API.LovablePHP/ZLO0016P/Delete/?nomdoc=" + nomcard + "&urldoc=" + urldoc + "&tipdoc=" + tipdoc + "";
             var response = ajaxRequest(urlDelete);
             if (response.code == 200) {
                 chargeTable();

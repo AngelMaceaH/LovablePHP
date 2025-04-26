@@ -16,11 +16,11 @@
         $_SESSION['cia']=isset($_SESSION['cia'])? $_SESSION['cia']:1;
       }
       if ($_SESSION['cia']==1) {
-        $cia=" AND LO2261.CODCIA IN(35,47,50,52,56,57,59,63,64,65,68,70,72,73,74,75,76,78,82,85,88)";
+        $cia=" AND LO2261.CODCIA IN(35,47,50,52,56,57,59,63,64,65,68,70,72,73,74,75,76,78,82,85,88,90)";
       }elseif ($_SESSION['cia']==2) {
         $cia=" AND LO2261.CODCIA IN(20,22,21,23,24)";
       }elseif ($_SESSION['cia']==3) {
-       $cia=" AND LO2261.CODCIA IN(49,66,69,71,86)";
+       $cia=" AND LO2261.CODCIA IN(49,66,69,71,86,89)";
       }elseif ($_SESSION['cia']==4) {
        $cia=" AND LO2261.CODCIA IN(48,53,61,62,77)";
       }elseif ($_SESSION['cia']==5) {
@@ -28,7 +28,7 @@
       }elseif ($_SESSION['cia']==6) {
        $cia=" AND LO2261.CODCIA IN(83,87)";
       }elseif ($_SESSION['cia']==7) {
-       $cia=" AND LO2261.CODCIA IN(81)";
+       $cia=" AND LO2261.CODCIA IN(81,91)";
       }
     ?>
      <div class="container-fluid">
@@ -136,6 +136,7 @@
       <script src="https://code.highcharts.com/highcharts.js"></script>
       <script src="https://code.highcharts.com/modules/exporting.js"></script>
       <script src="https://code.highcharts.com/modules/export-data.js"></script>
+      <script src="https://code.highcharts.com/modules/offline-exporting.js"></script>
       <script src="https://code.highcharts.com/modules/accessibility.js"></script>
       <script>
         $( document ).ready(function() {

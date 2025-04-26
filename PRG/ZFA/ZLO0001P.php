@@ -126,7 +126,7 @@
                                         $label3="Trans. Anual"; $label4="Trans. Año Comparación";
                                         break;
                                     default:
-                                        $label1="Ventas día"; $label2="Ventas mes";
+                                        $label1="Ventas día"; $label2="Ventas mes actual";
                                         $label3="Venta Anual"; $label4="Venta Año Comparación";
                                         $label5="Comparativo mes anterior";$label6="Comparativo mes actual ".($_SESSION['AnoFiltro']-1);
                                         break;
@@ -144,7 +144,11 @@
                                 // Si el filtro no es 1 ni 2, imprimimos dos columnas adicionales
                                 if ($_SESSION['filtro']!=1 && $_SESSION['filtro']!=2) {
                                     print '             <th id="thdia3" class="text-end responsive-font-example">'. $label5.'</th>';
+                                    print '             <th id="thdia5" class="text-end responsive-font-example">Variación</th>';
+                                    print '             <th id="thdia6" class="text-end responsive-font-example">Crecimiento</th>';
                                     print '             <th id="thdia4" class="text-end responsive-font-example">'. $label6.'</th>';
+                                    print '             <th id="thdia7" class="text-end responsive-font-example">Variación</th>';
+                                    print '             <th id="thdia8" class="text-end responsive-font-example">Crecimiento</th>';
                                 }
 
                                 // Continuamos imprimiendo el resto de las columnas
@@ -181,7 +185,7 @@
     <div class="footer bg-blck flex-grow-1 d-flex justify-content-center">
         <p class="bggray responsive-font-example"><i>Lovable de Honduras S.A. de C.V</i></p>
     </div>
-    <?php include '../../assets/js/PRG/ZFA/ZLO0001P/ZLO0001P.php'; ?>
+    <?php include '../../assets/js/PRG/ZFA/ZLO0001P/ZLO0001PC.php'; ?>
 </body>
 
 </html>

@@ -138,10 +138,10 @@
                     if (dataResponse.length>0) {
                         dataResponse.forEach(element => {
                        if (element.DESCRI.includes("honduras")) {
-                            selectTiendas.innerHTML += '<option class="fw-bold" value="47,52,56,57,59,63,64,65,68,70,72,73,74,75,76,78,82,85,88,50">Tiendas Honduras</option>';
+                            selectTiendas.innerHTML += '<option class="fw-bold" value="47,52,56,57,59,63,64,65,68,70,72,73,74,75,76,78,82,85,88,90,50">Tiendas Honduras</option>';
                             count++;
                        }else if (element.DESCRI.includes("guatemala")) {
-                            selectTiendas.innerHTML += '<option class="fw-bold" value="49,66,69,71,86">Tiendas Guatemala</option>';
+                            selectTiendas.innerHTML += '<option class="fw-bold" value="49,66,69,71,86,89">Tiendas Guatemala</option>';
                             count++;
                        }else if (element.DESCRI.includes("salvador")) {
                             selectTiendas.innerHTML += '<option class="fw-bold" value="48,53,61,62">Tiendas El Salvador</option>';
@@ -153,19 +153,19 @@
                             selectTiendas.innerHTML += '<option class="fw-bold" value="83,87">Tiendas Nicaragua</option>';
                             count++;
                        }else if(element.DESCRI.includes("republica dominicana")){
-                            selectTiendas.innerHTML += '<option class="fw-bold" value="81">Tiendas Republica Dominicana</option>';
+                            selectTiendas.innerHTML += '<option class="fw-bold" value="81,91">Tiendas Republica Dominicana</option>';
                             count++;
                       }
                     });
                     }
                     const firstCountry = data.data[0].DESCRI;
                     if(count==6){
-                        defaultArray="47,52,56,57,59,63,64,65,68,70,72,73,74,75,76,78,82,85,88,50";
+                        defaultArray="47,52,56,57,59,63,64,65,68,70,72,73,74,75,76,78,82,85,88,90,50";
                     }else{
                         if(firstCountry.includes("honduras")){
-                            defaultArray="47,52,56,57,59,63,64,65,68,70,72,73,74,75,76,78,82,85,88,50";
+                            defaultArray="47,52,56,57,59,63,64,65,68,70,72,73,74,75,76,78,82,85,88,90,50";
                         }else if(firstCountry.includes("guatemala")){
-                            defaultArray="49,66,69,71,86";
+                            defaultArray="49,66,69,71,86,89";
                         }else if(firstCountry.includes("salvador")){
                             defaultArray="48,53,61,62";
                         } else if(firstCountry.includes("costa rica")){
@@ -205,12 +205,13 @@
         }
         var width = 30000;
         var widthTh = "1.2";
-        switch (ciasSelected.length){
-            case 21:
+        const ciasLength = ciasSelected.length;
+        switch (ciasLength){
+            case 22:
                 width = 30000;
                 widthTh = "1.2";
                 break;
-            case 6:
+            case 7:
                 width = 9000;
                 widthTh = "4.5";
                 break;

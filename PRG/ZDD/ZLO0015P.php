@@ -244,6 +244,7 @@
                 var getParamsurl = "/API.LovablePHP/ZLO0015P/GetParams2/?cod=" + cor + "";
                 var responseParams = ajaxRequest(getParamsurl);
                 if (responseParams.code == 200) {
+                    $("#sidebar").addClass('hide');
                     paramsData = responseParams.data;
                     inputsData = paramsData;
                     paramsLength = paramsData['LENGTH'];
@@ -357,7 +358,6 @@
                     "url": "/API.LovablePHP/ZLO0015P/ListProveedoresAsync/",
                     "type": "POST",
                     "complete": function (xhr) {
-                        //console.log(xhr.responseJSON);
                     },
                     error: function (xhr, status, error) {
                         console.log(error);
@@ -682,7 +682,6 @@
                         $("#codigoTienda").val(data[1]);
                         $("#inputIdTienda").val(tipoweb);
                     }else if (data[0]=='numero doc. fiscal'){
-                        console.log(data[0]);
                         $("#2" + tipoweb + (i+1) + "").val(data[1]);
                     }
                 }
@@ -805,6 +804,7 @@
                 }
             }
             var urlList = baseUrl + "?" + queryParams.join("&");
+            console.log(urlList);
             var response = ajaxRequest(urlList);
             const body = $("#myTableBody");
             if (response.code == 200) {
@@ -1055,6 +1055,7 @@
             }
 
             var nameFile = documentosSeleccionados[0].nomcard;
+            nameFile = nameFile.replace(/#/g, '').trim();
             var fecha = $("#fechaDoc").val();
             var descrip = $("#descrpDoc").val();
             var dataSave = {
@@ -1092,7 +1093,7 @@
                     'success'
                 ).then((result) => {
                     if (result.isConfirmed) {
-                       location.href = 'http://172.16.15.20/LovablePHP/PRG/ZDD/ZLO0015P2.php';
+                       location.href = 'http://172.16.15.20/LovablePHP/PRG/ZDD/ZLO0015P.php';
                     }
                 }
                 )
@@ -1770,7 +1771,7 @@
                 result.successful.forEach(file => {
                     var promise = new Promise((resolve, reject) => {
                         blobToBase64(file.data, (base64) => {
-                            var fileExtension = file.name.split('.').pop();
+                            var fileExtension = file.name.replace(/#/g, '').trim().split('.').pop();
                             var campos = {
                                 "CAM0": "",
                                 "CAM1": "",
@@ -1796,6 +1797,7 @@
 
                             var nameFile = file.name;
                             nameFile = nameFile.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+                            nameFile = nameFile.replace(/#/g, '').trim();
                             var fecha = $("#fechaDoc").val();
                             var descrip = $("#descrpDoc").val();
                             var dataSave = {
@@ -1864,7 +1866,6 @@
                         });
                     })
                     .catch((errorCode) => {
-                        console.log(errorCode);
                         Swal.fire({
                             icon: 'error',
                             title: 'Ha ocurrido un error.',

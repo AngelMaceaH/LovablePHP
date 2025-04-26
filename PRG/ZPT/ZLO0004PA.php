@@ -15,16 +15,16 @@
       $ordenFiltro=isset($_SESSION['Orden']) ? $_SESSION['Orden'] : 1;
       $mes_actual=date("m")-1;
       $ano_actual=date("Y");
-           $mesfiltro=isset($_SESSION['mesfiltro3'])? $_SESSION['mesfiltro3']: $mes_actual; 
-           $anofiltro=isset($_SESSION['anofiltro2'])? $_SESSION['anofiltro2']: $ano_actual; 
-           $paisfiltro=isset($_SESSION['paisfiltro9'])? $_SESSION['paisfiltro9']: 1; 
-           $cia1="CODCIA IN (35,47,50,52,56,57,59,63,64,65,68,70,72,73,74,75,76,78,82,85,88)";
+           $mesfiltro=isset($_SESSION['mesfiltro3'])? $_SESSION['mesfiltro3']: $mes_actual;
+           $anofiltro=isset($_SESSION['anofiltro2'])? $_SESSION['anofiltro2']: $ano_actual;
+           $paisfiltro=isset($_SESSION['paisfiltro9'])? $_SESSION['paisfiltro9']: 1;
+           $cia1="CODCIA IN (35,47,50,52,56,57,59,63,64,65,68,70,72,73,74,75,76,78,82,85,88,90)";
            $cia7="CODCIA IN (20,22)";
-           $cia2="CODCIA IN (49,66,69,71,86)";
+           $cia2="CODCIA IN (49,66,69,71,86,89)";
            $cia3="CODCIA IN (48,53,61,62)";
            $cia4="CODCIA IN (60,80)";
            $cia5="CODCIA IN (83,87)";
-           $cia6="CODCIA IN (81)";
+           $cia6="CODCIA IN (81,91)";
            $anoConsulta=array();
            $mesConsulta=array();
            for ($i = 0; $i < 6; $i++) {
@@ -41,169 +41,169 @@
         }else{
           $sqlOrden=" ORDER BY Orden ASC";
         }
-      
+
 
      $sqlmeses="SELECT 'Honduras (Lov. Ecommerce)' AS NOMCIA, SUM(PRV12M) PRV12M,SUM(PRV06M) PRV06M,SUM(MIN12M) MIN12M,
      SUM(M1) M1,SUM(M2) M2,SUM(M3) M3,SUM(M4) M4,SUM(M5) M5,SUM(M6) M6,SUM(ORDEN) ORDEN FROM
-     (SELECT T1.CODCIA,PRV12M,PRV06M,MIN12M,M1,M2,M3,M4,M5,M6,(M1+M2+M3+M4+M5+M6)Orden FROM( 
+     (SELECT T1.CODCIA,PRV12M,PRV06M,MIN12M,M1,M2,M3,M4,M5,M6,(M1+M2+M3+M4+M5+M6)Orden FROM(
       SELECT M1.CODCIA, M1.PRV12M,M1.PRV06M, M1.MIN12M,M1.MIN06M M1, M2.MIN06M M2, M3.MIN06M M3,M4.MIN06M M4,M5.MIN06M M5, M6.MIN06M M6 FROM (
       SELECT CODCIA,PRV12M,PRV06M,MIN12M,MIN06M FROM lbprddat/LO1960 WHERE
       ".$cia1." and ANOPRO=".$anoConsulta[0]." AND MESPRO=".$mesConsulta[0].") AS M1
       LEFT JOIN (
       SELECT CODCIA,MIN06M FROM lbprddat/LO1960 WHERE
-      ".$cia1." and ANOPRO=".$anoConsulta[1]." AND MESPRO=".($mesConsulta[1]).") AS M2 ON M1.CODCIA=M2.CODCIA  
+      ".$cia1." and ANOPRO=".$anoConsulta[1]." AND MESPRO=".($mesConsulta[1]).") AS M2 ON M1.CODCIA=M2.CODCIA
       LEFT JOIN (
       SELECT CODCIA,MIN06M FROM lbprddat/LO1960 WHERE
-      ".$cia1." and ANOPRO=".$anoConsulta[2]." AND MESPRO=".($mesConsulta[2]).") AS M3 ON M1.CODCIA=M3.CODCIA 
+      ".$cia1." and ANOPRO=".$anoConsulta[2]." AND MESPRO=".($mesConsulta[2]).") AS M3 ON M1.CODCIA=M3.CODCIA
       LEFT JOIN (
         SELECT CODCIA,MIN06M FROM lbprddat/LO1960 WHERE
-        ".$cia1." and ANOPRO=".$anoConsulta[3]." AND MESPRO=".($mesConsulta[3]).") AS M4 ON M1.CODCIA=M4.CODCIA 
+        ".$cia1." and ANOPRO=".$anoConsulta[3]." AND MESPRO=".($mesConsulta[3]).") AS M4 ON M1.CODCIA=M4.CODCIA
       LEFT JOIN (
           SELECT CODCIA,MIN06M FROM lbprddat/LO1960 WHERE
-          ".$cia1." and ANOPRO=".$anoConsulta[4]." AND MESPRO=".($mesConsulta[4]).") AS M5 ON M1.CODCIA=M5.CODCIA 
+          ".$cia1." and ANOPRO=".$anoConsulta[4]." AND MESPRO=".($mesConsulta[4]).") AS M5 ON M1.CODCIA=M5.CODCIA
       LEFT JOIN (
             SELECT CODCIA,MIN06M FROM lbprddat/LO1960 WHERE
-            ".$cia1." and ANOPRO=".$anoConsulta[5]." AND MESPRO=".($mesConsulta[5]).") AS M6 ON M1.CODCIA=M6.CODCIA 
-      )AS T1) 
-      UNION ALL 
+            ".$cia1." and ANOPRO=".$anoConsulta[5]." AND MESPRO=".($mesConsulta[5]).") AS M6 ON M1.CODCIA=M6.CODCIA
+      )AS T1)
+      UNION ALL
       SELECT 'Honduras (Mod. Íntima)' AS NOMCIA, SUM(PRV12M) PRV12M,SUM(PRV06M) PRV06M,SUM(MIN12M) MIN12M,
      SUM(M1) M1,SUM(M2) M2,SUM(M3) M3,SUM(M4) M4,SUM(M5) M5,SUM(M6) M6,SUM(ORDEN) ORDEN FROM
-     (SELECT T1.CODCIA,PRV12M,PRV06M,MIN12M,M1,M2,M3,M4,M5,M6,(M1+M2+M3+M4+M5+M6)Orden FROM( 
+     (SELECT T1.CODCIA,PRV12M,PRV06M,MIN12M,M1,M2,M3,M4,M5,M6,(M1+M2+M3+M4+M5+M6)Orden FROM(
       SELECT M1.CODCIA, M1.PRV12M,M1.PRV06M, M1.MIN12M,M1.MIN06M M1, M2.MIN06M M2, M3.MIN06M M3,M4.MIN06M M4,M5.MIN06M M5, M6.MIN06M M6 FROM (
       SELECT CODCIA,PRV12M,PRV06M,MIN12M,MIN06M FROM lbprddat/LO1960 WHERE
       ".$cia7." and ANOPRO=".$anoConsulta[0]." AND MESPRO=".$mesConsulta[0].") AS M1
       LEFT JOIN (
       SELECT CODCIA,MIN06M FROM lbprddat/LO1960 WHERE
-      ".$cia7." and ANOPRO=".$anoConsulta[1]." AND MESPRO=".($mesConsulta[1]).") AS M2 ON M1.CODCIA=M2.CODCIA  
+      ".$cia7." and ANOPRO=".$anoConsulta[1]." AND MESPRO=".($mesConsulta[1]).") AS M2 ON M1.CODCIA=M2.CODCIA
       LEFT JOIN (
       SELECT CODCIA,MIN06M FROM lbprddat/LO1960 WHERE
-      ".$cia7." and ANOPRO=".$anoConsulta[2]." AND MESPRO=".($mesConsulta[2]).") AS M3 ON M1.CODCIA=M3.CODCIA 
+      ".$cia7." and ANOPRO=".$anoConsulta[2]." AND MESPRO=".($mesConsulta[2]).") AS M3 ON M1.CODCIA=M3.CODCIA
       LEFT JOIN (
         SELECT CODCIA,MIN06M FROM lbprddat/LO1960 WHERE
-        ".$cia7." and ANOPRO=".$anoConsulta[3]." AND MESPRO=".($mesConsulta[3]).") AS M4 ON M1.CODCIA=M4.CODCIA 
+        ".$cia7." and ANOPRO=".$anoConsulta[3]." AND MESPRO=".($mesConsulta[3]).") AS M4 ON M1.CODCIA=M4.CODCIA
       LEFT JOIN (
           SELECT CODCIA,MIN06M FROM lbprddat/LO1960 WHERE
-          ".$cia7." and ANOPRO=".$anoConsulta[4]." AND MESPRO=".($mesConsulta[4]).") AS M5 ON M1.CODCIA=M5.CODCIA 
+          ".$cia7." and ANOPRO=".$anoConsulta[4]." AND MESPRO=".($mesConsulta[4]).") AS M5 ON M1.CODCIA=M5.CODCIA
       LEFT JOIN (
             SELECT CODCIA,MIN06M FROM lbprddat/LO1960 WHERE
-            ".$cia7." and ANOPRO=".$anoConsulta[5]." AND MESPRO=".($mesConsulta[5]).") AS M6 ON M1.CODCIA=M6.CODCIA 
-      )AS T1) 
-      UNION ALL 
+            ".$cia7." and ANOPRO=".$anoConsulta[5]." AND MESPRO=".($mesConsulta[5]).") AS M6 ON M1.CODCIA=M6.CODCIA
+      )AS T1)
+      UNION ALL
       SELECT 'Guatemala' AS NOMCIA, SUM(PRV12M) PRV12M,SUM(PRV06M) PRV06M,SUM(MIN12M) MIN12M,
      SUM(M1) M1,SUM(M2) M2,SUM(M3) M3,SUM(M4) M4,SUM(M5) M5,SUM(M6) M6,SUM(ORDEN) ORDEN FROM
-     (SELECT T1.CODCIA,PRV12M,PRV06M,MIN12M,M1,M2,M3,M4,M5,M6,(M1+M2+M3+M4+M5+M6)Orden FROM( 
+     (SELECT T1.CODCIA,PRV12M,PRV06M,MIN12M,M1,M2,M3,M4,M5,M6,(M1+M2+M3+M4+M5+M6)Orden FROM(
       SELECT M1.CODCIA, M1.PRV12M,M1.PRV06M, M1.MIN12M,M1.MIN06M M1, M2.MIN06M M2, M3.MIN06M M3,M4.MIN06M M4,M5.MIN06M M5, M6.MIN06M M6 FROM (
       SELECT CODCIA,PRV12M,PRV06M,MIN12M,MIN06M FROM lbprddat/LO1960 WHERE
       ".$cia2." and ANOPRO=".$anoConsulta[0]." AND MESPRO=".$mesConsulta[0].") AS M1
       LEFT JOIN (
       SELECT CODCIA,MIN06M FROM lbprddat/LO1960 WHERE
-      ".$cia2." and ANOPRO=".$anoConsulta[1]." AND MESPRO=".($mesConsulta[1]).") AS M2 ON M1.CODCIA=M2.CODCIA  
+      ".$cia2." and ANOPRO=".$anoConsulta[1]." AND MESPRO=".($mesConsulta[1]).") AS M2 ON M1.CODCIA=M2.CODCIA
       LEFT JOIN (
       SELECT CODCIA,MIN06M FROM lbprddat/LO1960 WHERE
-      ".$cia2." and ANOPRO=".$anoConsulta[2]." AND MESPRO=".($mesConsulta[2]).") AS M3 ON M1.CODCIA=M3.CODCIA 
+      ".$cia2." and ANOPRO=".$anoConsulta[2]." AND MESPRO=".($mesConsulta[2]).") AS M3 ON M1.CODCIA=M3.CODCIA
       LEFT JOIN (
         SELECT CODCIA,MIN06M FROM lbprddat/LO1960 WHERE
-        ".$cia2." and ANOPRO=".$anoConsulta[3]." AND MESPRO=".($mesConsulta[3]).") AS M4 ON M1.CODCIA=M4.CODCIA 
+        ".$cia2." and ANOPRO=".$anoConsulta[3]." AND MESPRO=".($mesConsulta[3]).") AS M4 ON M1.CODCIA=M4.CODCIA
       LEFT JOIN (
           SELECT CODCIA,MIN06M FROM lbprddat/LO1960 WHERE
-          ".$cia2." and ANOPRO=".$anoConsulta[4]." AND MESPRO=".($mesConsulta[4]).") AS M5 ON M1.CODCIA=M5.CODCIA 
+          ".$cia2." and ANOPRO=".$anoConsulta[4]." AND MESPRO=".($mesConsulta[4]).") AS M5 ON M1.CODCIA=M5.CODCIA
       LEFT JOIN (
             SELECT CODCIA,MIN06M FROM lbprddat/LO1960 WHERE
-            ".$cia2." and ANOPRO=".$anoConsulta[5]." AND MESPRO=".($mesConsulta[5]).") AS M6 ON M1.CODCIA=M6.CODCIA 
-      )AS T1) 
-      UNION ALL 
+            ".$cia2." and ANOPRO=".$anoConsulta[5]." AND MESPRO=".($mesConsulta[5]).") AS M6 ON M1.CODCIA=M6.CODCIA
+      )AS T1)
+      UNION ALL
       SELECT 'El Salvador' AS NOMCIA, SUM(PRV12M) PRV12M,SUM(PRV06M) PRV06M,SUM(MIN12M) MIN12M,
      SUM(M1) M1,SUM(M2) M2,SUM(M3) M3,SUM(M4) M4,SUM(M5) M5,SUM(M6) M6,SUM(ORDEN) ORDEN FROM
-     (SELECT T1.CODCIA,PRV12M,PRV06M,MIN12M,M1,M2,M3,M4,M5,M6,(M1+M2+M3+M4+M5+M6)Orden FROM( 
+     (SELECT T1.CODCIA,PRV12M,PRV06M,MIN12M,M1,M2,M3,M4,M5,M6,(M1+M2+M3+M4+M5+M6)Orden FROM(
       SELECT M1.CODCIA, M1.PRV12M,M1.PRV06M, M1.MIN12M,M1.MIN06M M1, M2.MIN06M M2, M3.MIN06M M3,M4.MIN06M M4,M5.MIN06M M5, M6.MIN06M M6 FROM (
       SELECT CODCIA,PRV12M,PRV06M,MIN12M,MIN06M FROM lbprddat/LO1960 WHERE
       ".$cia3." and ANOPRO=".$anoConsulta[0]." AND MESPRO=".$mesConsulta[0].") AS M1
       LEFT JOIN (
       SELECT CODCIA,MIN06M FROM lbprddat/LO1960 WHERE
-      ".$cia3." and ANOPRO=".$anoConsulta[1]." AND MESPRO=".($mesConsulta[1]).") AS M2 ON M1.CODCIA=M2.CODCIA  
+      ".$cia3." and ANOPRO=".$anoConsulta[1]." AND MESPRO=".($mesConsulta[1]).") AS M2 ON M1.CODCIA=M2.CODCIA
       LEFT JOIN (
       SELECT CODCIA,MIN06M FROM lbprddat/LO1960 WHERE
-      ".$cia3." and ANOPRO=".$anoConsulta[2]." AND MESPRO=".($mesConsulta[2]).") AS M3 ON M1.CODCIA=M3.CODCIA 
+      ".$cia3." and ANOPRO=".$anoConsulta[2]." AND MESPRO=".($mesConsulta[2]).") AS M3 ON M1.CODCIA=M3.CODCIA
       LEFT JOIN (
         SELECT CODCIA,MIN06M FROM lbprddat/LO1960 WHERE
-        ".$cia3." and ANOPRO=".$anoConsulta[3]." AND MESPRO=".($mesConsulta[3]).") AS M4 ON M1.CODCIA=M4.CODCIA 
+        ".$cia3." and ANOPRO=".$anoConsulta[3]." AND MESPRO=".($mesConsulta[3]).") AS M4 ON M1.CODCIA=M4.CODCIA
       LEFT JOIN (
           SELECT CODCIA,MIN06M FROM lbprddat/LO1960 WHERE
-          ".$cia3." and ANOPRO=".$anoConsulta[4]." AND MESPRO=".($mesConsulta[4]).") AS M5 ON M1.CODCIA=M5.CODCIA 
+          ".$cia3." and ANOPRO=".$anoConsulta[4]." AND MESPRO=".($mesConsulta[4]).") AS M5 ON M1.CODCIA=M5.CODCIA
       LEFT JOIN (
             SELECT CODCIA,MIN06M FROM lbprddat/LO1960 WHERE
-            ".$cia3." and ANOPRO=".$anoConsulta[5]." AND MESPRO=".($mesConsulta[5]).") AS M6 ON M1.CODCIA=M6.CODCIA 
+            ".$cia3." and ANOPRO=".$anoConsulta[5]." AND MESPRO=".($mesConsulta[5]).") AS M6 ON M1.CODCIA=M6.CODCIA
       )AS T1)
-      UNION ALL 
+      UNION ALL
       SELECT 'Costa Rica' AS NOMCIA, SUM(PRV12M) PRV12M,SUM(PRV06M) PRV06M,SUM(MIN12M) MIN12M,
      SUM(M1) M1,SUM(M2) M2,SUM(M3) M3,SUM(M4) M4,SUM(M5) M5,SUM(M6) M6,SUM(ORDEN) ORDEN FROM
-     (SELECT T1.CODCIA,PRV12M,PRV06M,MIN12M,M1,M2,M3,M4,M5,M6,(M1+M2+M3+M4+M5+M6)Orden FROM( 
+     (SELECT T1.CODCIA,PRV12M,PRV06M,MIN12M,M1,M2,M3,M4,M5,M6,(M1+M2+M3+M4+M5+M6)Orden FROM(
       SELECT M1.CODCIA, M1.PRV12M,M1.PRV06M, M1.MIN12M,M1.MIN06M M1, M2.MIN06M M2, M3.MIN06M M3,M4.MIN06M M4,M5.MIN06M M5, M6.MIN06M M6 FROM (
       SELECT CODCIA,PRV12M,PRV06M,MIN12M,MIN06M FROM lbprddat/LO1960 WHERE
       ".$cia4." and ANOPRO=".$anoConsulta[0]." AND MESPRO=".$mesConsulta[0].") AS M1
       LEFT JOIN (
       SELECT CODCIA,MIN06M FROM lbprddat/LO1960 WHERE
-      ".$cia4." and ANOPRO=".$anoConsulta[1]." AND MESPRO=".($mesConsulta[1]).") AS M2 ON M1.CODCIA=M2.CODCIA  
+      ".$cia4." and ANOPRO=".$anoConsulta[1]." AND MESPRO=".($mesConsulta[1]).") AS M2 ON M1.CODCIA=M2.CODCIA
       LEFT JOIN (
       SELECT CODCIA,MIN06M FROM lbprddat/LO1960 WHERE
-      ".$cia4." and ANOPRO=".$anoConsulta[2]." AND MESPRO=".($mesConsulta[2]).") AS M3 ON M1.CODCIA=M3.CODCIA 
+      ".$cia4." and ANOPRO=".$anoConsulta[2]." AND MESPRO=".($mesConsulta[2]).") AS M3 ON M1.CODCIA=M3.CODCIA
       LEFT JOIN (
         SELECT CODCIA,MIN06M FROM lbprddat/LO1960 WHERE
-        ".$cia4." and ANOPRO=".$anoConsulta[3]." AND MESPRO=".($mesConsulta[3]).") AS M4 ON M1.CODCIA=M4.CODCIA 
+        ".$cia4." and ANOPRO=".$anoConsulta[3]." AND MESPRO=".($mesConsulta[3]).") AS M4 ON M1.CODCIA=M4.CODCIA
       LEFT JOIN (
           SELECT CODCIA,MIN06M FROM lbprddat/LO1960 WHERE
-          ".$cia4." and ANOPRO=".$anoConsulta[4]." AND MESPRO=".($mesConsulta[4]).") AS M5 ON M1.CODCIA=M5.CODCIA 
+          ".$cia4." and ANOPRO=".$anoConsulta[4]." AND MESPRO=".($mesConsulta[4]).") AS M5 ON M1.CODCIA=M5.CODCIA
       LEFT JOIN (
             SELECT CODCIA,MIN06M FROM lbprddat/LO1960 WHERE
-            ".$cia4." and ANOPRO=".$anoConsulta[5]." AND MESPRO=".($mesConsulta[5]).") AS M6 ON M1.CODCIA=M6.CODCIA 
+            ".$cia4." and ANOPRO=".$anoConsulta[5]." AND MESPRO=".($mesConsulta[5]).") AS M6 ON M1.CODCIA=M6.CODCIA
       )AS T1)
-      UNION ALL 
+      UNION ALL
       SELECT 'Nicaragua' AS NOMCIA, SUM(PRV12M) PRV12M,SUM(PRV06M) PRV06M,SUM(MIN12M) MIN12M,
      SUM(M1) M1,SUM(M2) M2,SUM(M3) M3,SUM(M4) M4,SUM(M5) M5,SUM(M6) M6,SUM(ORDEN) ORDEN FROM
-     (SELECT T1.CODCIA,PRV12M,PRV06M,MIN12M,M1,M2,M3,M4,M5,M6,(M1+M2+M3+M4+M5+M6)Orden FROM( 
+     (SELECT T1.CODCIA,PRV12M,PRV06M,MIN12M,M1,M2,M3,M4,M5,M6,(M1+M2+M3+M4+M5+M6)Orden FROM(
       SELECT M1.CODCIA, M1.PRV12M,M1.PRV06M, M1.MIN12M,M1.MIN06M M1, M2.MIN06M M2, M3.MIN06M M3,M4.MIN06M M4,M5.MIN06M M5, M6.MIN06M M6 FROM (
       SELECT CODCIA,PRV12M,PRV06M,MIN12M,MIN06M FROM lbprddat/LO1960 WHERE
       ".$cia5." and ANOPRO=".$anoConsulta[0]." AND MESPRO=".$mesConsulta[0].") AS M1
       LEFT JOIN (
       SELECT CODCIA,MIN06M FROM lbprddat/LO1960 WHERE
-      ".$cia5." and ANOPRO=".$anoConsulta[1]." AND MESPRO=".($mesConsulta[1]).") AS M2 ON M1.CODCIA=M2.CODCIA  
+      ".$cia5." and ANOPRO=".$anoConsulta[1]." AND MESPRO=".($mesConsulta[1]).") AS M2 ON M1.CODCIA=M2.CODCIA
       LEFT JOIN (
       SELECT CODCIA,MIN06M FROM lbprddat/LO1960 WHERE
-      ".$cia5." and ANOPRO=".$anoConsulta[2]." AND MESPRO=".($mesConsulta[2]).") AS M3 ON M1.CODCIA=M3.CODCIA 
+      ".$cia5." and ANOPRO=".$anoConsulta[2]." AND MESPRO=".($mesConsulta[2]).") AS M3 ON M1.CODCIA=M3.CODCIA
       LEFT JOIN (
         SELECT CODCIA,MIN06M FROM lbprddat/LO1960 WHERE
-        ".$cia5." and ANOPRO=".$anoConsulta[3]." AND MESPRO=".($mesConsulta[3]).") AS M4 ON M1.CODCIA=M4.CODCIA 
+        ".$cia5." and ANOPRO=".$anoConsulta[3]." AND MESPRO=".($mesConsulta[3]).") AS M4 ON M1.CODCIA=M4.CODCIA
       LEFT JOIN (
           SELECT CODCIA,MIN06M FROM lbprddat/LO1960 WHERE
-          ".$cia5." and ANOPRO=".$anoConsulta[4]." AND MESPRO=".($mesConsulta[4]).") AS M5 ON M1.CODCIA=M5.CODCIA 
+          ".$cia5." and ANOPRO=".$anoConsulta[4]." AND MESPRO=".($mesConsulta[4]).") AS M5 ON M1.CODCIA=M5.CODCIA
       LEFT JOIN (
             SELECT CODCIA,MIN06M FROM lbprddat/LO1960 WHERE
-            ".$cia5." and ANOPRO=".$anoConsulta[5]." AND MESPRO=".($mesConsulta[5]).") AS M6 ON M1.CODCIA=M6.CODCIA 
+            ".$cia5." and ANOPRO=".$anoConsulta[5]." AND MESPRO=".($mesConsulta[5]).") AS M6 ON M1.CODCIA=M6.CODCIA
       )AS T1)
-      UNION ALL 
+      UNION ALL
       SELECT 'Rep. Dominicana' AS NOMCIA, SUM(PRV12M) PRV12M,SUM(PRV06M) PRV06M,SUM(MIN12M) MIN12M,
      SUM(M1) M1,SUM(M2) M2,SUM(M3) M3,SUM(M4) M4,SUM(M5) M5,SUM(M6) M6,SUM(ORDEN) ORDEN FROM
-     (SELECT T1.CODCIA,PRV12M,PRV06M,MIN12M,M1,M2,M3,M4,M5,M6,(M1+M2+M3+M4+M5+M6)Orden FROM( 
+     (SELECT T1.CODCIA,PRV12M,PRV06M,MIN12M,M1,M2,M3,M4,M5,M6,(M1+M2+M3+M4+M5+M6)Orden FROM(
       SELECT M1.CODCIA, M1.PRV12M,M1.PRV06M, M1.MIN12M,M1.MIN06M M1, M2.MIN06M M2, M3.MIN06M M3,M4.MIN06M M4,M5.MIN06M M5, M6.MIN06M M6 FROM (
       SELECT CODCIA,PRV12M,PRV06M,MIN12M,MIN06M FROM lbprddat/LO1960 WHERE
       ".$cia6." and ANOPRO=".$anoConsulta[0]." AND MESPRO=".$mesConsulta[0].") AS M1
       LEFT JOIN (
       SELECT CODCIA,MIN06M FROM lbprddat/LO1960 WHERE
-      ".$cia6." and ANOPRO=".$anoConsulta[1]." AND MESPRO=".($mesConsulta[1]).") AS M2 ON M1.CODCIA=M2.CODCIA  
+      ".$cia6." and ANOPRO=".$anoConsulta[1]." AND MESPRO=".($mesConsulta[1]).") AS M2 ON M1.CODCIA=M2.CODCIA
       LEFT JOIN (
       SELECT CODCIA,MIN06M FROM lbprddat/LO1960 WHERE
-      ".$cia6." and ANOPRO=".$anoConsulta[2]." AND MESPRO=".($mesConsulta[2]).") AS M3 ON M1.CODCIA=M3.CODCIA 
+      ".$cia6." and ANOPRO=".$anoConsulta[2]." AND MESPRO=".($mesConsulta[2]).") AS M3 ON M1.CODCIA=M3.CODCIA
       LEFT JOIN (
         SELECT CODCIA,MIN06M FROM lbprddat/LO1960 WHERE
-        ".$cia6." and ANOPRO=".$anoConsulta[3]." AND MESPRO=".($mesConsulta[3]).") AS M4 ON M1.CODCIA=M4.CODCIA 
+        ".$cia6." and ANOPRO=".$anoConsulta[3]." AND MESPRO=".($mesConsulta[3]).") AS M4 ON M1.CODCIA=M4.CODCIA
       LEFT JOIN (
           SELECT CODCIA,MIN06M FROM lbprddat/LO1960 WHERE
-          ".$cia6." and ANOPRO=".$anoConsulta[4]." AND MESPRO=".($mesConsulta[4]).") AS M5 ON M1.CODCIA=M5.CODCIA 
+          ".$cia6." and ANOPRO=".$anoConsulta[4]." AND MESPRO=".($mesConsulta[4]).") AS M5 ON M1.CODCIA=M5.CODCIA
       LEFT JOIN (
             SELECT CODCIA,MIN06M FROM lbprddat/LO1960 WHERE
-            ".$cia6." and ANOPRO=".$anoConsulta[5]." AND MESPRO=".($mesConsulta[5]).") AS M6 ON M1.CODCIA=M6.CODCIA 
+            ".$cia6." and ANOPRO=".$anoConsulta[5]." AND MESPRO=".($mesConsulta[5]).") AS M6 ON M1.CODCIA=M6.CODCIA
       )AS T1)";
-      $resultMeses=odbc_exec($connIBM,$sqlmeses); 
+      $resultMeses=odbc_exec($connIBM,$sqlmeses);
 
       $sqlUnidades="SELECT * FROM (SELECT 'Honduras' NOMCIA,SUM(UNICOM) UNICOM,SUM(UNIVEN) UNIVEN, SUM(UNIEXI) UNIEXI FROM LBPRDDAT/LO1960 AS T1
       WHERE T1.".$cia1." AND ANOPRO=".$anofiltro." AND MESPRO=".$mesfiltro.")
@@ -217,7 +217,7 @@
       WHERE T1.".$cia5." AND ANOPRO=".$anofiltro." AND MESPRO=".$mesfiltro.")
       UNION ALL (SELECT 'Rep. Dominicana' NOMCIA,SUM(UNICOM) UNICOM,SUM(UNIVEN) UNIVEN, SUM(UNIEXI) UNIEXI FROM LBPRDDAT/LO1960 AS T1
       WHERE T1.".$cia6." AND ANOPRO=".$anofiltro." AND MESPRO=".$mesfiltro.")";
-      $resultUnidades=odbc_exec($connIBM,$sqlUnidades); 
+      $resultUnidades=odbc_exec($connIBM,$sqlUnidades);
 ?>
      <div class="container-fluid">
           <nav aria-label="breadcrumb">
@@ -302,8 +302,8 @@
                       <figure class="highcharts-figure" >
                                 <div id="container" ></div>
                         </figure>
-                    </div>    
-                    
+                    </div>
+
                     <div class="table-responsive mt-3" style="width:100%">
                           <table id="myTableInvMeses" class="table stripe table-hover " style="width:100%">
                             <thead>
@@ -331,7 +331,7 @@
                                 $i=0;
                                 $firstvalue=0;
                                    while($rowMeses = odbc_fetch_array($resultMeses)){
-                                    for ($i; $i <=1; $i++) { 
+                                    for ($i; $i <=1; $i++) {
                                       $firstvalue=number_format($rowMeses['PRV12M'],2);
                                     }
                                     $i=5;
@@ -394,7 +394,7 @@
                   <span class="visually-hidden">Next</span>
                 </button>
                       </div>
-                                
+
                     </div>
                     <div class="table-responsive mt-3">
                           <table id="myTableInvUnidades" class="table stripe table-hover " style="width:100%">
@@ -415,7 +415,7 @@
                                  $i=0;
                                  $firstvalue=0;
                                    while($rowUni = odbc_fetch_array($resultUnidades)){
-                                    for ($i; $i <=1; $i++) { 
+                                    for ($i; $i <=1; $i++) {
                                       $firstvalue=number_format($rowUni['UNICOM'],2);
                                     }
                                     $i=5;
@@ -449,7 +449,7 @@
         </div>
         </div>
       </div>
-      
+
     </div>
     <div class="footer bg-blck flex-grow-1 d-flex justify-content-center">
       <p class="bggray responsive-font-example"><i>Lovable de Honduras S.A. de C.V</i></p>
@@ -458,9 +458,10 @@
       <script src="https://code.highcharts.com/highcharts.js"></script>
       <script src="https://code.highcharts.com/modules/exporting.js"></script>
       <script src="https://code.highcharts.com/modules/export-data.js"></script>
+      <script src="https://code.highcharts.com/modules/offline-exporting.js"></script>
       <script src="https://code.highcharts.com/modules/accessibility.js"></script>
       <?php include '../../assets/php/ZPT/ZLO0004P/ZLO0004PA.php';?>
-      
-    
+
+
 </body>
 </html>

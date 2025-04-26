@@ -8,13 +8,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>Lovable </title>
     <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico">
-    <link rel="stylesheet" href="assets/vendors/simplebar/css/simplebar.css">
-    <link rel="stylesheet" href="assets/css/vendors/simplebar.css">
-    <link href="assets/css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/vendors/simplebar/css/simplebar.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="assets/css/vendors/simplebar.css?v=<?php echo time(); ?>">
+    <link href="assets/css/style.css?v=<?php echo time(); ?>" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/themes/prism.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
-    <link href="assets/css/examples.css" rel="stylesheet">
-    <link href="assets/css/mystyle.css" rel="stylesheet">
+    <link href="assets/css/examples.css?v=<?php echo time(); ?>" rel="stylesheet">
+    <link href="assets/css/mystyle.css?v=<?php echo time(); ?>" rel="stylesheet">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

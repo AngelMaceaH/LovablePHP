@@ -26,13 +26,13 @@
            $cia="";
            switch ($paisfiltro) {
             case 1:
-              $cia="CODCIA IN (35,47,50,52,56,57,59,63,64,65,68,70,72,73,74,75,76,78,82,85,88)";
+              $cia="CODCIA IN (35,47,50,52,56,57,59,63,64,65,68,70,72,73,74,75,76,78,82,85,88,90)";
               break;
               case 2:
                 $cia="CODCIA IN (20,22)";
                 break;
               case 3:
-                $cia="CODCIA IN (49,66,69,71,86)";
+                $cia="CODCIA IN (49,66,69,71,86,89)";
                 break;
                 case 4:
                   $cia="CODCIA IN (48,53,61,62)";
@@ -44,7 +44,7 @@
                       $cia="CODCIA IN (83,87)";
                       break;
                       case 7:
-                        $cia="CODCIA IN (81)";
+                        $cia="CODCIA IN (81,91)";
                         break;
             default:
               # code...
@@ -397,6 +397,7 @@
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
     <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/offline-exporting.js"></script>
     <script src="https://code.highcharts.com/modules/accessibility.js"></script>
     <?php include '../../assets/php/ZPT/ZLO0004P/ZLO0004P.php';?>
 </body>
