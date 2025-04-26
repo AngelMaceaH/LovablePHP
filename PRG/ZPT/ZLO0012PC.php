@@ -304,23 +304,16 @@
                         "data": "EXIACT",
                         className: "text-end text-green",
                         "searchable": false,
-                        render: function (data, type, row) {
-                            if (type === 'display') {
-                                var valor = parseFloat(data);
-                                if (isNaN(valor)) {
-                                    valor = '';
-                                    return valor;
-                                } else {
-                                    const value = valor.toLocaleString('es-419', {
-                                        minimumFractionDigits: 0,
-                                        maximumFractionDigits: 0
-                                    });
-                                    return `<button onClick="cantidadesByStyle(this,'${row.ESTILO}')" class="btn btn-light p-0 m-0 px-1" style="font-size: 13px;" data-bs-toggle="tooltip" data-bs-placement="left" data-bs-title="Ver detalles de existencias">${value}</button>`;
-                                }
+                        render: function (data) {
+                            var valor = parseFloat(data);
+                            if (isNaN(valor)) {
+                                valor = '';
                             }
-                            return data;
+                            return valor.toLocaleString('es-419', {
+                                minimumFractionDigits: 0,
+                                maximumFractionDigits: 0
+                            });
                         }
-
                     },
                     {
                         "data": "ROTINV",
@@ -368,7 +361,7 @@
                                 const year = fechaOriginal.slice(0, 4);
                                 const month = fechaOriginal.slice(4, 6);
                                 const day = fechaOriginal.slice(6, 8);
-                                const fechaConvertida = `${day} / ${month} / ${year}`;
+                                const fechaConvertida = `${day}/${month}/${year}`;
                                 return fechaConvertida;
                             }
                         },
@@ -385,7 +378,7 @@
                                 const year = fechaOriginal.slice(0, 4);
                                 const month = fechaOriginal.slice(4, 6);
                                 const day = fechaOriginal.slice(6, 8);
-                                const fechaConvertida = `${day} / ${month} / ${year}`;
+                                const fechaConvertida = `${day}/${month}/${year}`;
                                 return fechaConvertida;
                             }
                         },
@@ -402,7 +395,7 @@
                                 const year = fechaOriginal.slice(0, 4);
                                 const month = fechaOriginal.slice(4, 6);
                                 const day = fechaOriginal.slice(6, 8);
-                                const fechaConvertida = `${day} / ${month} / ${year}`;
+                                const fechaConvertida = `${day}/${month}/${year}`;
                                 return fechaConvertida;
                             }
                         },
@@ -465,7 +458,6 @@
                         extend: 'excelHtml5',
                         text: '<i class="fa-solid fa-file-excel"></i> <b >Enviar a Excel</b>',
                         className: "btn btn-success text-light fs-6 ",
-                        title: 'Analis-MovimientoEstilos',
                         action: function (e, dt, button, config) {
                             document.getElementById('loaderTable').classList.remove('d-none');
                             setTimeout(() => {
@@ -478,7 +470,7 @@
                         exportOptions: {
                             columns: [0, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]
                         },
-
+                        title: 'Analis-MovimientoEstilos',
                         customize: function (xlsx) {
                             var sheet = xlsx.xl.worksheets['sheet1.xml'];
                             var sSh = xlsx.xl['styles.xml'];
@@ -637,23 +629,15 @@
                     var searchTerm = table.search();
                     $('#myTableSeguimiento_filter input').val(searchTerm.toUpperCase())
                 });
-                table.on('draw.dt', function () {
-                    const tooltipTriggerList = document.querySelectorAll(
-                        '[data-bs-toggle="tooltip"]'
-                    );
-                    const tooltipList = [...tooltipTriggerList].map(
-                        (tooltipTriggerEl) => new bootstrap.Tooltip(tooltipTriggerEl)
-                    );
-                });
             } else {
                 var table = $('#myTableSeguimiento').DataTable({
                     language: {
                         url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json',
-                        loadingRecords: `< button class= "btn btn-danger " type = "button" disabled >
+                        loadingRecords: `<button class="btn btn-danger " type="button" disabled>
                                                 <span class="spinner-border text-white" style="width: 1.5rem; height: 1.5rem;"
                                                     aria-hidden="true"></span>
                                                 <span role="status" class="ms-2 text-white fs-4">Cargando...</span>
-                                            </button > `
+                                            </button>`
                     },
                     ordering: true,
                     order: [
@@ -664,12 +648,11 @@
                 });
 
             }
-
         });
 
         function openModalDetalles(estilo) {
             $("#tableAppend").empty();
-            $("#tableAppend").append(`< table id = "myTableDetalles" class="table stripe"style = "width:100%;" >
+            $("#tableAppend").append(`<table id="myTableDetalles" class="table stripe"style="width:100%;">
                         <thead>
                             <tr class="sticky-top bg-white" style="font-size: 14px;">
                                 <th class="text-black text-center">ESTILO</th>
@@ -698,7 +681,7 @@
                         <tbody id="myTableDetallesBody" style="font-size: 13px;">
 
                         </tbody>
-                    </table > `)
+                    </table>`)
 
             var agrup = $("#cbbAgrupacion").val();
             var urlDeta = "/API.LOVABLEPHP/ZLO0012P/GetDeta/?agrup=" + agrup + "&estilo=" + estilo + "";
@@ -969,79 +952,102 @@
                 const year = fechaOriginal.slice(0, 4);
                 const month = fechaOriginal.slice(4, 6);
                 const day = fechaOriginal.slice(6, 8);
-                const fechaConvertida = `${day} /${month}/${year} `;
+                const fechaConvertida = `${day}/${month}/${year}`;
                 return fechaConvertida;
             }
         }
-        function cantidadesByStyle(button, estilo) {
-            const agrupacion = $("#cbbAgrupacion").val();
-            $("#spnEstilo").text('');
-            if ($.fn.DataTable.isDataTable('#tableCantidades')) {
-                $('#tableCantidades').DataTable().destroy();
-            }
-            $("#tableCantidadesBody").empty();
-            fetch('http://172.16.15.20/API.LovablePHP/ZLO0012P/GetExist', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ agrup: agrupacion, estilo: estilo })
+        function cantidadesByStyle(button, vend, total, lbl) {
+            document.getElementById("lblModo").textContent = lbl;
+            const row = button.closest("tr");
+            const cells = row.querySelectorAll("td");
+            const Marca = cells[0].textContent.trim();
+            const Estilo = cells[1].textContent.trim();
+            const Color = cells[2].textContent.trim();
+            const Talla = cells[3].textContent.trim();
+            const sendData = {
+                marca: Marca,
+                estilo: Estilo,
+                color: Color,
+                talla: Talla,
+                vend: vend,
+            };
+            fetch("/API.LovablePHP/ZLO0013P/CantidadApar", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(sendData),
             })
-                .then(response => response.json())
-                .then(data => {
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then((data) => {
+                    document.getElementById("spnMarca").textContent = Marca;
+                    document.getElementById("spnEstilo").textContent = Estilo;
+                    document.getElementById("spnColor").textContent = Color;
+                    document.getElementById("spnTalla").textContent = Talla;
+                    const tableCantidadesBody = document.getElementById(
+                        "tableCantidadesBody"
+                    );
+                    tableCantidadesBody.innerHTML = "";
                     if (data.code == 200) {
-                        let options = "";
-                        let total = 0;
-                        for (let i = 0; i < data.data.length; i++) {
-                            options += `
-                    <tr>
-                        <td class="text-start">${data.data[i]['NOMCIA']}</td>
-                        <td class="text-end">${parseInt(data.data[i]['CANTID']).toLocaleString('es-419')}</td>
-                    </tr>`;
-                            total += parseInt(data.data[i]['CANTID']);
-                        }
-
-                        $("#tableCantidadesBody").html(options);
-                        $("#spnEstilo").text(estilo);
-                        $("#tableCantidadesBody").append(`
-                <tr class="bg-secondary text-white">
-                    <td class="text-start fw-bold">Total</td>
-                    <td class="text-end fw-bold">${total.toLocaleString('es-419')}</td>
-                </tr>
-            `);
-                        $('#tableCantidades').DataTable({
-                            dom: 'Bfrtip',
-                            buttons: [
-                                {
-                                    extend: 'excelHtml5',
-                                    text: '<i class="fa-solid fa-file-excel"></i> <b >Enviar a Excel</b>',
-                                    className: "btn btn-success text-light fs-6 mb-2",
-                                    title: 'DetallesExistencia-' + estilo + '',
-                                    exportOptions: {
-                                        columns: ':visible'
-                                    }
-                                }
-                            ],
-                            responsive: true,
-                            paging: false,
-                            searching: false,
-                            info: false,
-                            ordering: false,
+                        let hoy = new Date();
+                        const fec = `${hoy.getFullYear()}${String(hoy.getMonth() + 1).padStart(
+                            2,
+                            "0"
+                        )}${String(hoy.getDate()).padStart(2, "0")}`;
+                        data.data.forEach((apartado) => {
+                            const dias = diasTranscurridos(apartado.FECTRA, fec);
+                            tableCantidadesBody.innerHTML += `<tr>
+                                            <td class="text-center fw-light">${apartado.NUMPED
+                                }</td>
+                                            <td class="text-end fw-light">${parseFloat(
+                                    apartado.CANAPA
+                                ).toFixed(2)}</td>
+                                            <td class="text-start fw-light">${apartado.CODVEN
+                                } ${apartado.MAENO3}</td>
+                                            <td class="text-start fw-light">${apartado.CODCL1
+                                } ${apartado.CODCL2} ${apartado.MAENO4
+                                }</td>
+                                            <td class="text-start fw-light">${formatFecha(
+                                    apartado.FECTRA
+                                )}</td>
+                                            <td class="text-end fw-light">${dias}</td>
+                                            <td class="text-end fw-light">${apartado.TIPMON
+                                }</td>
+                                            <td class="text-end fw-light">${parseFloat(
+                                    apartado.VALNET
+                                ).toLocaleString("en-US", {
+                                    minimumFractionDigits: 2,
+                                })}</td>
+                                            
+                                          </tr>`;
                         });
-
+                        tableCantidadesBody.innerHTML += `<tr class="bg-light">
+                                          <td class="text-center">TOTAL: </td>
+                                          <td class="text-end">${parseFloat(
+                            total
+                        ).toFixed(2)}</td>
+                                          <td colspan="6"></td>             
+                                        </tr>`;
                     } else {
-                        $("#tableCantidadesBody").html(`
-                <tr><td colspan="2" class="text-center">No se encontraron datos</td></tr>
-            `);
-                        alert("No se encontraron datos para el estilo seleccionado.");
+                        tableCantidadesBody.innerHTML = `<tr>
+                                          <td colspan="8" class="text-center">
+                                              No se encontraron apartados para este estilo
+                                          </td>  
+                                        </tr>`;
                     }
                 })
                 .then(() => {
-                    $('#cantidadesModal').modal('show');
+                    $("#cantidadesModal").modal("show");
                 })
-                .catch(error => {
-                    console.error('Error:', error);
+                .catch((error) => {
+                    console.error("Error en la petición:", error);
                 });
         }
-
     </script>
 
     <div class="modal fade" id="detallesModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -1073,19 +1079,27 @@
     </div>
     <div class="modal fade" id="cantidadesModal" tabindex="-1" aria-labelledby="cantidadesModalLabel"
         aria-hidden="true">
-        <div class="modal-dialog modal-dialog-scrollable">
-            <div class="modal-content">
+        <div class="modal-dialog" style="max-width: 3000px !important;">
+            <div class="modal-content" style="width:100%px;">
                 <div class="modal-header">
                     <div class="row w-100">
                         <div class="col-12">
-                            <h1 class="modal-title fs-6 fw-bold " id="cantidadesModalLabel">Detalle de
-                                cantidades en existencia</h1>
+                            <h1 class="modal-title fs-4 fw-bold text-center" id="cantidadesModalLabel">Detalle de
+                                cantidades apartadas para <span id="lblModo"></span> </h1>
                         </div>
                         <div class="col-12">
                             <div class="row">
                                 <div class="col-12 py-2">
-                                    <th class="text-start fw-bold">Estilo: </th>
-                                    <th class="text-start  fw-bold"><span id="spnEstilo"></span></th>
+                                    <th class="text-start">Marca: </th>
+                                    <th class="text-start"><span id="spnMarca"></span></th>
+                                    <th class="text-start">Estilo: </th>
+                                    <th class="text-start"><span id="spnEstilo"></span></th>
+                                </div>
+                                <div class="col-12 py-2">
+                                    <th class="text-start">Color: </th>
+                                    <th class="text-start"><span id="spnColor"></span></th>
+                                    <th class="text-start">Talla: </th>
+                                    <th class="text-start"><span id="spnTalla"></span></th>
                                 </div>
                             </div>
                         </div>
@@ -1093,12 +1107,19 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="col-12 fw-bold py-3 table-responsive">
-                        <table class="table table-hover border fs-6" id="tableCantidades" style="width:100%;">
+                    <div class="col-12 fw-bold text-center py-3 table-responsive">
+                        <table class="table table-hover border fs-6">
                             <thead>
                                 <tr>
-                                    <th>Punto de venta</th>
-                                    <th>Existencia</th>
+                                    <th style="width:6.5%;" class="text-center">Num. Preventa</th>
+                                    <th style="width:6.5%;" class="text-end">Docenas apartadas</th>
+                                    <th style="width:24.5%;" class="text-start">Vendedor</th>
+                                    <th style="width:24.5%;" class="text-start">Cliente</th>
+                                    <th style="width:8.5%;" class="text-start">Fecha Preventa</th>
+                                    <th style="width:8.5%;" class="text-end">Días transcurridos</th>
+                                    <th style="width:3.5%;" class="text-end">Moneda</th>
+                                    <th style="width:9.5%;" class="text-end">Valor neto</th>
+
                                 </tr>
                             </thead>
                             <tbody id="tableCantidadesBody">
