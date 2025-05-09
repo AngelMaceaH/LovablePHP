@@ -382,7 +382,18 @@
                 const intervalo = setInterval(() => {
                     let card1 = document.querySelector("#card1");
                     if (card1) {
-                        card1.click();
+                        const num = parseFloat($("#numDocumentos").text());
+                        const currentUrl = window.location.href;
+                        var url = new URL(currentUrl);
+                        var user = url.searchParams.get("user");
+                        if (user) {
+                            if (num == 1) {
+                                card1.click();
+                            }
+                        } else {
+                            card1.click();
+                        }
+
                         clearInterval(intervalo);
                     } else {
                         intentos++;
@@ -1191,18 +1202,8 @@
                 $("#docInfo2").modal('show');
                 cons2 = false;
             } else {
-                const num = parseFloat($("#numDocumentos").text());
                 findCons1(nomcard, usugra, fecgra, horgra, extdoc, urldoc, tipdoc, descrp, fecha, cam0, cam1, cam2, cam3, cam4, cam5, cam6, cam7, cam8, cam9, coddep, codsec, apr)
-                const currentUrl = window.location.href;
-                var url = new URL(currentUrl);
-                var user = url.searchParams.get("user");
-                if (user) {
-                    if (num == 1) {
-                        $("#docInfo").modal('show');
-                    }
-                } else {
-                    $("#docInfo").modal('show');
-                }
+                $("#docInfo").modal('show');
 
             }
         }

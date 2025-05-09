@@ -181,12 +181,14 @@
                                                 <div class="row">
                                                     <div class="col-12 col-lg-4">
                                                         <label for=""> Ancho (Pulg.)</label>
-                                                        <input type="number" placeholder="Ingrese el ancho del margen"
+                                                        <input type="number"
+                                                            placeholder="Ingrese el ancho del area de impresion"
                                                             class="form-control mt-2" id="arImAncho1">
                                                     </div>
                                                     <div class="col-12 col-lg-4">
                                                         <label for=""> Largo/Alto (Pulg.)</label>
-                                                        <input type="number" placeholder="Ingrese el largo del margen"
+                                                        <input type="number"
+                                                            placeholder="Ingrese el largo del area de impresion"
                                                             class="form-control mt-2" id="arImLargo1">
                                                     </div>
                                                     <div class="col-12 col-lg-2">
@@ -213,12 +215,14 @@
                                                 <div class="row">
                                                     <div class="col-12 col-lg-4">
                                                         <label for=""> Ancho (Pulg.)</label>
-                                                        <input type="number" placeholder="Ingrese el ancho del margen"
+                                                        <input type="number"
+                                                            placeholder="Ingrese el ancho del area sobrante"
                                                             class="form-control mt-2" id="arSoAncho1">
                                                     </div>
                                                     <div class="col-12 col-lg-4">
                                                         <label for=""> Largo/Alto (Pulg.)</label>
-                                                        <input type="number" placeholder="Ingrese el largo del margen"
+                                                        <input type="number"
+                                                            placeholder="Ingrese el largo del area sobrante"
                                                             class="form-control mt-2" id="arSoLargo1">
                                                     </div>
                                                     <div class="col-12 col-lg-2">
@@ -240,12 +244,14 @@
                                                 <div class="row">
                                                     <div class="col-12 col-lg-4">
                                                         <label for=""> Ancho (Pulg.)</label>
-                                                        <input type="number" placeholder="Ingrese el ancho del margen"
+                                                        <input type="number"
+                                                            placeholder="Ingrese el ancho del area desperdicio"
                                                             class="form-control mt-2" id="arDesAncho1">
                                                     </div>
                                                     <div class="col-12 col-lg-4">
                                                         <label for=""> Largo/Alto (Pulg.)</label>
-                                                        <input type="number" placeholder="Ingrese el largo del margen"
+                                                        <input type="number"
+                                                            placeholder="Ingrese el largo del area desperdicio"
                                                             class="form-control mt-2" id="arDesLargo1">
                                                     </div>
                                                     <div class="col-12 col-lg-2">
@@ -288,29 +294,77 @@
                                                 class="btn btn-danger w-100 fw-bold text-white mt-4 fs-4 p-0"><i
                                                     class="fa-solid fa-delete-left"></i></button>
                                         </div>
-                                        <div class="col-12 py-2">
-                                            <label class="mb-2">Area Impresión</label>
-                                            <div class="gap-4 mt-3 form-control  ">
+                                        <div class="row">
+                                            <div class="col-12 col-lg-9">
                                                 <div class="row">
-                                                    <div class="col-12 col-lg-4">
-                                                        <label for=""> Ancho (Pulg.)</label>
-                                                        <input type="number" placeholder="Ingrese el ancho del margen"
-                                                            class="form-control mt-2" id="arImAncho2">
+                                                    <div class="col-12 py-2">
+                                                        <label class="mb-2">Area Impresión</label>
+                                                        <div class="gap-4 mt-3 form-control  ">
+                                                            <div class="row">
+                                                                <div class="col-12 col-lg-6">
+                                                                    <label for=""> Ancho (Pulg.)</label>
+                                                                    <input type="number"
+                                                                        placeholder="Ingrese el ancho del area visible"
+                                                                        class="form-control mt-2" id="arImAncho2">
+                                                                </div>
+                                                                <div class="col-12 col-lg-6">
+                                                                    <label for=""> Largo/Alto (Pulg.)</label>
+                                                                    <input type="number"
+                                                                        placeholder="Ingrese el largo del area visible"
+                                                                        class="form-control mt-2" id="arImLargo2">
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                    <div class="col-12 col-lg-4">
-                                                        <label for=""> Largo/Alto (Pulg.)</label>
-                                                        <input type="number" placeholder="Ingrese el largo del margen"
-                                                            class="form-control mt-2" id="arImLargo2">
-                                                    </div>
-                                                    <div class="col-12 col-lg-4">
-                                                        <label for="cosTotImpresion">Costo Total</label>
-                                                        <input type="text" id="cosTotImpresion2"
-                                                            class="form-control mt-2">
+                                                    <div class="col-12 py-2">
+                                                        <label class="mb-2">Area Sobrante</label>
+                                                        <div class="gap-4 mt-3 form-control  ">
+                                                            <div class="row">
+                                                                <div class="col-12 col-lg-6">
+                                                                    <label for=""> Ancho (Pulg.)</label>
+                                                                    <input type="number"
+                                                                        placeholder="Ingrese el ancho del area margen"
+                                                                        class="form-control mt-2" id="arSoAncho2">
+                                                                </div>
+                                                                <div class="col-12 col-lg-6">
+                                                                    <label for=""> Largo/Alto (Pulg.)</label>
+                                                                    <input type="number"
+                                                                        placeholder="Ingrese el largo del area margen"
+                                                                        class="form-control mt-2" id="arSoLargo2">
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                            <div class="col-12 col-lg-3">
+                                                <div class="row mt-5">
+                                                    <div class="col-12 py-2">
+                                                        <label for="cosTotImpresion">Costo Total</label>
+                                                        <input type="number" id="cosTotImpresion2"
+                                                            class="form-control mt-2">
+                                                    </div>
+                                                    <div class="col-12 py-2">
+                                                        <label for="cosTotImpuesto2">Impuesto 15%</label>
+                                                        <input type="number" id="cosTotImpuesto2"
+                                                            class="form-control mt-2" disabled>
+                                                    </div>
+                                                    <div class="col-12 py-2">
+                                                        <label for="cosTotGeneral2">Costo Total General</label>
+                                                        <input type="number" id="cosTotGeneral2"
+                                                            class="form-control mt-2" disabled>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 py-2">
+                                                <label class="py-2">Fotografía</label>
+                                                <div class="w-100 d-flex justify-content-center " id="divFoto">
 
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -327,12 +381,6 @@
 
                             <textarea id="descrp" placeholder="Ingrese la descripcion" class="form-control mt-2"
                                 maxlength="300"></textarea>
-                        </div>
-                        <div class="col-12 py-2 mb-3">
-                            <label for="inputFile" class="d-none" id="lblFoto">Fotografía</label>
-                            <div class="w-100 d-flex justify-content-center" id="divFoto">
-
-                            </div>
                         </div>
                         <div class="col-lg-4">
                             <div class="d-flex gap-3 justify-content-between d-none" id="divButtons">
@@ -509,7 +557,40 @@
                         ccostot = parseFloat(data.data[0].COSTOT) / parseFloat(data.data[0].PCULIT);
                     }
                 })
-
+            $("#cosTotImpresion2").on("input", () => {
+                const value = parseFloat($("#cosTotImpresion2").val());
+                const impuesto = value * 0.15;
+                if (isNaN(value)) {
+                    $("#cosTotImpuesto2").val("");
+                    $("#cosTotGeneral2").val("");
+                    return;
+                }
+                $("#cosTotImpuesto2").val(impuesto.toFixed(2));
+                const total = value + impuesto;
+                $("#cosTotGeneral2").val(total.toFixed(2));
+            })
+            $("#numord").on('input', function () {
+                limpiar()
+                if ($(this).val().length == 9) {
+                    const ano = $(this).val().substring(0, 2);
+                    const mes = $(this).val().substring(2, 4);
+                    const numtra = parseInt($(this).val().substring(4, 9))
+                    console.log({
+                        'ano': `20${ano}`,
+                        'mes': mes,
+                        'numtra': numtra
+                    })
+                    if (ano != "" && mes != "") {
+                        fetchOrden({
+                            'ano': `20${ano}`,
+                            'mes': mes,
+                            'numtra': numtra
+                        })
+                    }
+                }
+            });
+            $("#divFoto").empty();
+            $("#divFoto").append('<input type="file" class="form-control mt-2" id="inputFile" accept="image/*">');
             $("#loaderScreen").fadeOut("fast", function () { });
             //CLIENTE
             $('#tbClientes thead th').each(function () {
@@ -540,7 +621,7 @@
                         });
                     },
                     error: function (xhr, status, error) {
-                        console.log(error);
+                        console.error(error);
                         requestError = true;
                     }
                 },
@@ -649,7 +730,7 @@
                                 });
                             },
                             error: function (xhr, status, error) {
-                                console.log(error);
+                                console.error(error);
                                 requestError = true;
                             }
                         },
@@ -753,7 +834,7 @@
                                 });
                             },
                             error: function (xhr, status, error) {
-                                console.log(error);
+                                console.error(error);
                                 requestError = true;
                             }
                         },
@@ -857,7 +938,7 @@
                                 });
                             },
                             error: function (xhr, status, error) {
-                                console.log(error);
+                                console.error(error);
                                 requestError = true;
                             }
                         },
@@ -910,19 +991,6 @@
 
                 })
                 .catch(error => console.error(error));
-            $("#numord").on('input', function () {
-                limpiar()
-                if (($(this).val()).length == 9) {
-                    const ano = $(this).val().substring(0, 2);
-                    const mes = $(this).val().substring(2, 4);
-                    fetchConsumo({
-                        'anopro': `20${ano}`,
-                        'mespro': mes,
-                        'numtra': $("#transa").val(),
-                        'orden': $(this).val()
-                    })
-                }
-            });
             $("#arImAncho1, #arImLargo1").on('input', function () {
                 if ($("#arImAncho1").val() != "" && $("#arImLargo1").val() != "") {
                     const ancho = parseFloat($("#arImAncho1").val());
@@ -1058,12 +1126,16 @@
             $("#cosImpresion1").val("");
             $("#cosTotImpresion1").val("").trigger('change');
             $("#cosTotImpresion2").val("").trigger('change');
+            $("#cosTotImpuesto2").val("")
+            $("#cosTotGeneral2").val("")
             $("#cosSobrante1").val("");
             $("#cosTotSobrante1").val("").trigger('change');
             $("#cosDesperdicio1").val("");
             $("#cosTotDesperdicio1").val("").trigger('change');
             $("#arSoAncho1").val("");
+            $("#arSoAncho2").val("");
             $("#arSoLargo1").val("");
+            $("#arSoLargo2").val("");
             $("#arDesAncho1").val("");
             $("#arDesLargo1").val("");
             $("#cosTinta1").val("");
@@ -1071,6 +1143,7 @@
             $("#descrp").val("");
             $("#lblFoto").addClass('d-none');
             $("#divFoto").empty();
+            $("#divFoto").append('<input type="file" class="form-control mt-2" id="inputFile" accept="image/*">');
             $(".ckTipo").each(function () {
                 $(this).prop('checked', false);
             });
@@ -1185,14 +1258,12 @@
             const tds = tr.find('td');
             const ano = tds.eq(4).text();
             const mes = tds.eq(5).text();
-            const numtra = $("#transa").val();
-            const orden = tds.eq(0).text();
+            const numtra = parseInt(tds.eq(0).text().substring(4, 9))
             if (ano != "" && mes != "") {
-                fetchConsumo({
-                    'anopro': ano,
-                    'mespro': mes,
-                    'numtra': numtra,
-                    'orden': orden
+                fetchOrden({
+                    'ano': ano,
+                    'mes': mes,
+                    'numtra': numtra
                 })
                 $("#modalOrdenes").modal('hide');
             }
@@ -1221,6 +1292,71 @@
 
             return `${año}-${mes}-${dia}`;
         }
+        function fetchOrden(sendData) {
+            fetch('/API.LovablePHP/ZLO0052P/FindOrder', {
+                "method": 'POST',
+                "headers": {
+                    'Content-Type': 'application/json'
+                },
+                'body': JSON.stringify(sendData)
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.code == 200) {
+                        $("#divButtons").removeClass('d-none');
+                        const dataOrder = data.data[0];
+                        $("#fectra").val(formatFecha2(dataOrder.FECTRA));
+                        $("#numord").val(dataOrder.ORDEN);
+                        $("#cliente").val(`${dataOrder.CLIENTE}`);
+                        $("#clieId").val(`${dataOrder.CODCL1}-${dataOrder.CODCL2}`);
+                        $("#ciudad").val(dataOrder.CIUDES);
+                        $("#ciuId").val(`${dataOrder.CODPAI}-${dataOrder.CODCIU}`);
+                        $(".ckTipo").each(function () {
+                            if ($(this).val() == dataOrder.TIPIMP) {
+                                $(this).prop('checked', true);
+                            }
+                        });
+                        $("#cantidad").val(dataOrder.CANTID).trigger('change');
+                        $("#divFoto").empty();
+                        if (dataOrder.PATHFO != "") {
+                            $("#divFoto").append(`<img src="${dataOrder.PATHFO}" class="img-fluid mx400" alt="Foto">`);
+                            $("#divFoto").append('<input type="file" class="form-control mt-2 d-none" id="inputFile" accept="image/*">');
+                        } else {
+                            $("#divFoto").append('<input type="file" class="form-control mt-2" id="inputFile" accept="image/*">');
+                        }
+                        $("#lblFoto").addClass('d-none');
+                        $("#descrp").val(dataOrder.DESCRLRG);
+                        $(".material").val(`${dataOrder.MATERIAL}`);
+                        $(".matId").val(dataOrder.NUMMAT);
+                        $("#cosMaterial").val(dataOrder.PPCAIM);
+                        $("#arImAncho1").val(dataOrder.ANCVIS).trigger('input');
+                        $("#arImLargo1").val(dataOrder.LARVIS).trigger('input');
+                        $("#arImAncho2").val(dataOrder.ANCVIS);
+                        $("#arImLargo2").val(dataOrder.ANCVIS);
+                        $("#cosImpresion1").val(dataOrder.PCUAIM);
+                        $("#cosTotImpresion1").val(dataOrder.COSAIM);
+                        $("#cosTotImpresion2").val(dataOrder.COSAIM);
+                        $("#cosTinta1").val(dataOrder.COSTIN);
+                        $("#arSoAncho1").val(dataOrder.ANCASO);
+                        $("#arSoAncho2").val(dataOrder.ANCASO);
+                        $("#arSoLargo1").val(dataOrder.LARASO);
+                        $("#arSoLargo2").val(dataOrder.LARASO);
+                        $("#cosSobrante1").val(dataOrder.PCUASO);
+                        $("#cosTotSobrante1").val(dataOrder.COSASO);
+                        $("#arDesAncho1").val(dataOrder.ANCADE);
+                        $("#arDesLargo1").val(dataOrder.LARADE);
+                        $("#cosDesperdicio1").val(dataOrder.PCUADE);
+                        $("#cosTotDesperdicio1").val(dataOrder.COSADE);
+                        $("#cantidad").val(dataOrder.CANTID).trigger('change');
+                        if (dataOrder.PCUAIM == 0 && dataOrder.COSAIM != 0) {
+                            $("#tab2").click();
+                        } else {
+                            $("#tab1").click();
+                        }
+                    }
+                })
+        }
+
         function fetchConsumo(sendData) {
             fetch('/API.LovablePHP/ZLO0052P/FindConsumo', {
                 "method": 'POST',
@@ -1247,6 +1383,7 @@
                         });
                         $("#cantidad").val(dataOrder.CANTID).trigger('change');
                         $("#divFoto").empty();
+                        $("#divFoto").append('<input type="file" class="form-control mt-2" id="inputFile" accept="image/*">');
                         $("#lblFoto").addClass('d-none');
                         $("#numord").val(dataOrder.NUMORD);
                         $("#descrp").val(dataOrder.DESCRLRG);
@@ -1259,10 +1396,19 @@
                         $("#arImLargo2").val(dataOrder.LARAIM);
                         $("#cosImpresion1").val(dataOrder.PCUAIM);
                         $("#cosTotImpresion1").val(dataOrder.COSAIM);
-                        $("#cosTotImpresion2").val(dataOrder.COSAIM);
+                        $("#cosTotImpresion2").val(dataOrder.COSAIM).trigger('input');
+                        $("#divFoto").empty();
+                        if (dataOrder.PATHFO != "") {
+                            $("#divFoto").append(`<img src="${dataOrder.PATHFO}" class="img-fluid mx400" alt="Foto">`);
+                            $("#divFoto").append('<input type="file" class="form-control mt-2 d-none" id="inputFile" accept="image/*">');
+                        } else {
+                            $("#divFoto").append('<input type="file" class="form-control mt-2" id="inputFile" accept="image/*">');
+                        }
                         $("#cosTinta1").val(dataOrder.COSTIN);
                         $("#arSoAncho1").val(dataOrder.ANCASO);
+                        $("#arSoAncho2").val(dataOrder.ANCASO);
                         $("#arSoLargo1").val(dataOrder.LARASO);
+                        $("#arSoLargo2").val(dataOrder.LARASO);
                         $("#cosSobrante1").val(dataOrder.PCUASO);
                         $("#cosTotSobrante1").val(dataOrder.COSASO);
                         $("#arDesAncho1").val(dataOrder.ANCADE);
@@ -1296,7 +1442,9 @@
             const arImAncho1 = $("#arImAncho1").val();
             const arImLargo1 = $("#arImLargo1").val();
             const arSoAncho1 = $("#arSoAncho1").val();
+            const arSoAncho2 = $("#arSoAncho2").val();
             const arSoLargo1 = $("#arSoLargo1").val();
+            const arSoLargo2 = $("#arSoLargo2").val();
             const arDesAncho1 = $("#arDesAncho1").val();
             const arDesLargo1 = $("#arDesLargo1").val();
             const cosMaterial = $("#cosMaterial").val();
@@ -1308,6 +1456,7 @@
             const cosDesperdicio1 = $("#cosDesperdicio1").val();
             const cosTotDesperdicio1 = $("#cosTotDesperdicio1").val();
             const cosTotGeneral1 = $("#cosTotGeneral1").val();
+            const file = document.getElementById("inputFile").files[0] || "";
             const anoval = parseInt(fectra.substring(0, 4))
             const mesval = parseInt(fectra.substring(7, 5))
             if (parseInt(ano) != anoval && parseInt(mes) != mesval) {
@@ -1317,7 +1466,6 @@
                     text: "La fecha es inválida.",
                 });
             } else if (ano == "" || mes == "" || fectra == "" || tipimp == "" || clieId == "" || ciudad == "" || material == "" || cantidad == "") {
-                console.log(anoval, mesval)
                 Swal.fire({
                     icon: 'error',
                     title: 'Error',
@@ -1326,67 +1474,63 @@
                 return;
             }
             let sendData = [];
+            const formData = new FormData();
             $(".tablist__tab").each(function () {
                 if ($(this).attr("aria-selected") === "true") {
                     const activeTab = $(this).attr("id");
                     if (activeTab === "tab1") {
-                        sendData = {
-                            'anopro': ano,
-                            'mespro': mes,
-                            'numtra': numtra,
-                            'orden': orden,
-                            'fectra': fectra,
-                            'tipimp': tipimp,
-                            'codcli': clieId,
-                            'ciudad': ciudad,
-                            'material': material,
-                            'cantidad': cantidad,
-                            'descrp': descrp,
-                            'arImAncho1': arImAncho1,
-                            'arImLargo1': arImLargo1,
-                            'arSoAncho1': arSoAncho1,
-                            'arSoLargo1': arSoLargo1,
-                            'arDesAncho1': arDesAncho1,
-                            'arDesLargo1': arDesLargo1,
-                            'cosMaterial': cosMaterial,
-                            'cosImpresion1': cosImpresion1,
-                            'cosTotImpresion1': cosTotImpresion1,
-                            'cosTinta': cosTinta,
-                            'cosSobrante1': cosSobrante1,
-                            'cosTotSobrante1': cosTotSobrante1,
-                            'cosDesperdicio1': cosDesperdicio1,
-                            'cosTotDesperdicio1': cosTotDesperdicio1,
-                            'cosTotGeneral1': cosTotGeneral1,
-                            'usugra': usuario
-                        };
+                        formData.append('anopro', ano);
+                        formData.append('mespro', mes);
+                        formData.append('numtra', numtra);
+                        formData.append('orden', orden);
+                        formData.append('fectra', fectra);
+                        formData.append('tipimp', tipimp);
+                        formData.append('codcli', clieId);
+                        formData.append('ciudad', ciudad);
+                        formData.append('material', material);
+                        formData.append('cantidad', cantidad);
+                        formData.append('descrp', descrp);
+                        formData.append('arImAncho1', arImAncho1);
+                        formData.append('arImLargo1', arImLargo1);
+                        formData.append('arSoAncho1', arSoAncho1);
+                        formData.append('arSoLargo1', arSoLargo1);
+                        formData.append('arDesAncho1', arDesAncho1);
+                        formData.append('arDesLargo1', arDesLargo1);
+                        formData.append('cosMaterial', cosMaterial);
+                        formData.append('cosImpresion1', cosImpresion1);
+                        formData.append('cosTotImpresion1', cosTotImpresion1);
+                        formData.append('cosTinta', cosTinta);
+                        formData.append('cosSobrante1', cosSobrante1);
+                        formData.append('cosTotSobrante1', cosTotSobrante1);
+                        formData.append('cosDesperdicio1', cosDesperdicio1);
+                        formData.append('cosTotDesperdicio1', cosTotDesperdicio1);
+                        formData.append('cosTotGeneral1', cosTotGeneral1);
+                        formData.append('usugra', usuario);
                     } else if (activeTab === "tab2") {
-                        sendData = {
-                            'anopro': ano,
-                            'mespro': mes,
-                            'numtra': numtra,
-                            'orden': orden,
-                            'fectra': fectra,
-                            'tipimp': tipimp,
-                            'codcli': clieId,
-                            'ciudad': ciudad,
-                            'material': material,
-                            'cantidad': cantidad,
-                            'descrp': descrp,
-                            'arImAncho2': arImAncho2,
-                            'arImLargo2': arImLargo2,
-                            'cosTotImpresion2': cosTotImpresion2,
-                            'usugra': usuario
-                        };
+                        formData.append('anopro', ano);
+                        formData.append('mespro', mes);
+                        formData.append('numtra', numtra);
+                        formData.append('orden', orden);
+                        formData.append('fectra', fectra);
+                        formData.append('tipimp', tipimp);
+                        formData.append('codcli', clieId);
+                        formData.append('ciudad', ciudad);
+                        formData.append('material', material);
+                        formData.append('cantidad', cantidad);
+                        formData.append('descrp', descrp);
+                        formData.append('arImAncho2', arImAncho2);
+                        formData.append('arImLargo2', arImLargo2);
+                        formData.append('arSoAncho2', arSoAncho2);
+                        formData.append('arSoLargo2', arSoLargo2);
+                        formData.append('cosTotImpresion2', cosTotImpresion2);
+                        formData.append("imagen", file);
+                        formData.append('usugra', usuario);
                     }
                 }
             });
-            console.log(JSON.stringify(sendData))
             fetch('/API.LovablePHP/ZLO0052P/SaveConsumo', {
                 "method": 'POST',
-                "headers": {
-                    'Content-Type': 'application/json'
-                },
-                'body': JSON.stringify(sendData)
+                'body': formData
             })
                 .then(response => response.json())
                 .then(data => {

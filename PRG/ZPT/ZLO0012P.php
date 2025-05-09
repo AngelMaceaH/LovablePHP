@@ -668,40 +668,9 @@
         });
 
         function openModalDetalles(estilo) {
-            $("#tableAppend").empty();
-            $("#tableAppend").append(`< table id = "myTableDetalles" class="table stripe"style = "width:100%;" >
-                        <thead>
-                            <tr class="sticky-top bg-white" style="font-size: 14px;">
-                                <th class="text-black text-center">ESTILO</th>
-                                <th class="text-black text-center">COLOR</th>
-                                <th class="text-black text-center">TALLA</th>
-                                <th class="text-black text-center">UNIDADES VTAS<br>TOTALES</th>
-                                <th class="text-black text-center">UNIDADES VTAS <br>MES PROCESO</th>
-                                <th class="text-black text-center">UNIDADES VTAS <br>ULT 12 MESES</th>
-                                <th class="text-black text-center">PROMEDIO<br>MENSUAL</th>
-                                <th class="text-black text-center">EXISTENCIA<br>ACTUAL</th>
-                                <th class="text-black text-center">ROT. INV.</th>
-                                <th class="text-black text-center">MESES<br>INVENTARIO</th>
-                                <th class="text-black text-center">%<br>DESCUENTO</th>
-                                <th class="text-black text-center">FECHA INGRESO</th>
-                                <th class="text-black text-center">FECHA<br>ULT/COMPRA</th>
-                                <th class="text-black text-center">FECHA<br>ULT/VENTA</th>
-                                <th class="text-black text-center">DIAS<br>ANTIGUEDAD</th>
-                                <th class="text-black text-center">DIAS ANT.<br>ULT/COMPRA</th>
-                                <th class="text-black text-center">DIAS ANT.<br>ULT/VENTA</th>
-                                <th class="text-black text-center">TIPO<br>INVENTARIO</th>
-                                <th class="text-black text-center">MARCA</th>
-                                <th class="text-black text-center">GENERO</th>
-                                <th class=" d-none text-black text-center">ISTOT</th>
-                            </tr>
-                        </thead>
-                        <tbody id="myTableDetallesBody" style="font-size: 13px;">
-
-                        </tbody>
-                    </table > `)
-
             var agrup = $("#cbbAgrupacion").val();
             var urlDeta = "/API.LOVABLEPHP/ZLO0012P/GetDeta/?agrup=" + agrup + "&estilo=" + estilo + "";
+            console.log(urlDeta)
             var responseDeta = ajaxRequest(urlDeta);
             var lastcolor = null;
             var color = ' ';
@@ -771,6 +740,10 @@
                     options += "<td class=' d-none text-start'>" + returnBlank(responseDeta.data[i]['ISTOT']) + "</td>";
                     options += "</tr>";
                 }
+                if ($.fn.DataTable.isDataTable('#myTableDetalles')) {
+                    $('#myTableDetalles').DataTable().destroy();
+                }
+                $('#myTableDetallesBody').empty();
                 tableDetalles.append(options);
                 $("#myTableDetalles").DataTable({
                     language: {
@@ -945,7 +918,6 @@
                             }
                         }
                     }],
-
                 });
                 $('#detallesModal').modal('show');
             }
@@ -1062,7 +1034,36 @@
                             <h5 class="text-center breakMargin">Estilo, color y talla</h5>
                             <div class="overflow-auto mt-3  rounded" style="width:100%; height:600px;">
                                 <div id="tableAppend">
+                                    <table id="myTableDetalles" class="table stripe" style="width:100%;">
+                                        <thead>
+                                            <tr class="sticky-top bg-white" style="font-size: 14px;">
+                                                <th class="text-black text-center">ESTILO</th>
+                                                <th class="text-black text-center">COLOR</th>
+                                                <th class="text-black text-center">TALLA</th>
+                                                <th class="text-black text-center">UNIDADES VTAS<br>TOTALES</th>
+                                                <th class="text-black text-center">UNIDADES VTAS <br>MES PROCESO</th>
+                                                <th class="text-black text-center">UNIDADES VTAS <br>ULT 12 MESES</th>
+                                                <th class="text-black text-center">PROMEDIO<br>MENSUAL</th>
+                                                <th class="text-black text-center">EXISTENCIA<br>ACTUAL</th>
+                                                <th class="text-black text-center">ROT. INV.</th>
+                                                <th class="text-black text-center">MESES<br>INVENTARIO</th>
+                                                <th class="text-black text-center">%<br>DESCUENTO</th>
+                                                <th class="text-black text-center">FECHA INGRESO</th>
+                                                <th class="text-black text-center">FECHA<br>ULT/COMPRA</th>
+                                                <th class="text-black text-center">FECHA<br>ULT/VENTA</th>
+                                                <th class="text-black text-center">DIAS<br>ANTIGUEDAD</th>
+                                                <th class="text-black text-center">DIAS ANT.<br>ULT/COMPRA</th>
+                                                <th class="text-black text-center">DIAS ANT.<br>ULT/VENTA</th>
+                                                <th class="text-black text-center">TIPO<br>INVENTARIO</th>
+                                                <th class="text-black text-center">MARCA</th>
+                                                <th class="text-black text-center">GENERO</th>
+                                                <th class=" d-none text-black text-center">ISTOT</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="myTableDetallesBody" style="font-size: 13px;">
 
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>

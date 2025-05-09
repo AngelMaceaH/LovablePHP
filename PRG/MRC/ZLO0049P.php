@@ -29,8 +29,8 @@
             <div class="card-body">
                 <div class="container p-5">
                     <div class="row">
-                        <div class="col-4"></div>
-                        <div class="col-12 col-lg-4 d-flex flex-column flex-lg-row justify-content-center gap-3">
+                        <div class="col-3"></div>
+                        <div class="col-12 col-lg-6 d-flex flex-column flex-lg-row justify-content-center gap-3">
                             <div class="text-center">
                                 <label for="ano">Año proceso actual</label>
                                 <input type="text" class="form-control mt-2" id="ano" disabled>
@@ -40,49 +40,27 @@
                                 <input type="text" class="form-control mt-2" id="mes" disabled>
                             </div>
                         </div>
-                        <div class="col-4"></div>
+                        <div class="col-3"></div>
 
-                        <div class="col-4"></div>
-                        <div class="col-12 col-lg-4 text-center">
+                        <div class="col-4 d-none"></div>
+                        <div class="col-12 col-lg-4 text-center d-none">
                             <label for="" class="mt-5">Año de proceso</label>
-                            <select id="cbbAno" class="form-select my-2 ">
-                                <option value="" disabled selected>Selecciona un año</option>
-                                <option value="2024">2024</option>
-                                <option value="2025">2025</option>
-                                <option value="2026">2026</option>
-                                <option value="2027">2027</option>
-                                <option value="2028">2028</option>
-                                <option value="2029">2029</option>
-                                <option value="2030">2030</option>
-                            </select>
+                            <input type="text" class="form-control my-2" id="cbbAno" placeholder="Año de proceso"
+                                maxlength="4">
                         </div>
-                        <div class="col-4"></div>
-                        <div class="col-4"></div>
-                        <div class="col-12 col-lg-4 text-center mt-5">
+                        <div class="col-4 d-none"></div>
+                        <div class="col-4 d-none"></div>
+                        <div class="col-12 col-lg-4 text-center mt-5 d-none">
                             <label for="">Mes de proceso</label>
-                            <select class="form-select my-2" id="cbbMes">
-                                <option value="" disabled selected>Selecciona un mes</option>
-                                <option value="1">Enero</option>
-                                <option value="2">Febrero</option>
-                                <option value="3">Marzo</option>
-                                <option value="4">Abril</option>
-                                <option value="5">Mayo</option>
-                                <option value="6">Junio</option>
-                                <option value="7">Julio</option>
-                                <option value="8">Agosto</option>
-                                <option value="9">Septiembre</option>
-                                <option value="10">Octubre</option>
-                                <option value="11">Noviembre</option>
-                                <option value="12">Diciembre</option>
-                            </select>
+                            <input type="text" class="form-control my-2" id="cbbMes" placeholder="Mes de proceso" maxlength="2">
                         </div>
-                        <div class="col-4"></div>
+                        <div class="col-4 d-none"></div>
                         <div class="col-4">
                         </div>
                         <div class="col-12 col-lg-4">
                             <button id="btnSave" class="btn btn-primary w-100 mt-5 fw-bold text-white">
                                 <i class="fa-solid fa-floppy-disk me-2"></i>
-                                <span>Guardar</span></button>
+                                <span>Confirmar</span></button>
                         </div>
                         <div class="col-4">
 
@@ -111,16 +89,25 @@
                 .then(response => response.json())
                 .then(data => {
                     if (data.code == 200) {
-                        $("#ano").val(data.data[0].ANOPRO);
-                        $("#mes").val(meses[parseInt(data.data[0].MESPRO) - 1]);
+                        const currentAno = parseInt(data.data[0].ANOPRO);
+                        const currentMes = parseInt(data.data[0].MESPRO);
+                        $("#ano").val(currentAno);
+                        $("#mes").val(meses[currentMes - 1]);
+
+                        let newAno = currentAno;
+                        let newMes = currentMes + 1;
+                        if (newMes > 12) {
+                            newMes = 1;
+                            newAno++;
+                        }
+                        $('#cbbAno').val(newAno);
+                        $('#cbbMes').val(newMes);
+
                     }
                 });
             $('#btnSave').on('click', () => {
                 const ano = $('#cbbAno').val();
                 const mes = $('#cbbMes').val();
-                if (ano != '' && mes != '') {
-                    console.log(ano + ' ' + mes);
-                }
                 Swal.fire({
                     title: '¿Estás seguro?',
                     text: "Esto ejecutará el cierre del mes",
@@ -128,7 +115,8 @@
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33',
-                    confirmButtonText: 'Aceptar'
+                    confirmButtonText: 'Aceptar',
+                    cancelButtonText: 'Cancelar'
                 }).then((result) => {
                     if (result.isConfirmed) {
                         fetch('/API.LovablePHP/ZLO0049P/Cierre', {
